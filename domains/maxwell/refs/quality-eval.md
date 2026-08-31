@@ -37,5 +37,16 @@ links: [maxwell]
 - Transcript:只持久化 64KiB excerpt(`eval_scores.trace_excerpt_json`),完整 trace 只在打分时传给 judge,不落库。
 - 无 CI eval gate;无 suite 一等实体(靠 case_ids[] + coverage tags)。
 
+## 交互设计结论(2026-07-24)
+
+差距分析后连做 4 版交互原型,最终版在 `~/Downloads/sandai-code/maxwell-ai/docs/eval-interaction-prototype.html`(v4,浏览器直接打开)。关键设计结论:
+
+- **数据核心是一个一个自包含的任务**(评测/优化任务:冻结 target revision、case 集、判分配置、环境快照,其下是 case×trial,对应 Anthropic 文章的 Task/Trial 模型);**项目与场景是聚合维度(可空外键),不是容器**;UI 第一入口 = Eval 任务中心,项目工作区(孵化/运行两态)是第二入口的汇总视图。(2026-07-24 与 Leslie 讨论定稿,推翻过一版"项目为顶层容器"的设计)
+- 三层对象模型:**用例挂场景、revision 挂组件(prompt/skill/tool)、分数挂 agent×场景**;场景⇄组件双向索引(场景→组件=失败归因,组件→场景=影响面/带保护修改)。
+- 能力地图=用例的聚类标签(系统起草、随使用生长),不是前置建模作业;场景来源:配置自反推/流量聚类/PRD/坏例子倒推。
+- 自迭代交互=挂机战报(批量)+ 爬山日志 attempt chain(单任务,含被拒原因和喂给下轮的教训)。
+- 「A 好了 BCD 变差」由依赖图+影响面 gate 解:发布单位是"依赖图上没有人变红"。
+- IA:项目工作区左侧导航,一页一对象,总览只放状态+需要我;异步状态机(交棒/通知拉回),不是向导。
+
 **Why:** 2026-07-23 做过一次与 Anthropic《Demystifying evals for AI agents》的差距分析,以上是当时确认的现状,后续讨论 eval 能力建设时可直接引用。
 **How to apply:** 改 Quality 域前先读 `docs/eval-product-architecture.md` 和该文件列的 schema;讨论差距/路线图时注意上面"要点"可能已过期,先 spot-check 代码。
