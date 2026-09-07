@@ -24,10 +24,10 @@ links: [thread-analytics-read-path-3s, vidmuse-admin]
 
 **How to apply:**
 - 看到 analytics 库写入报警,先查 DAS 语句指纹是否是 `agent_thread_analytics_daily_metrics` 逐行 INSERT 和 500 行一批的 tool_usage 删除;再看 Worker 日志 `metric=analytics_projection_rebuild_stage trigger=… scope=…` 判断是审计/reconcile/token 哪条触发、同一日期一天重建几次。
-- 修法不是修调度器,是退役它。方案页(artifact「Analytics 维护调度器退役方案」,会话 2026-09-07)分 5 阶段。PR #853(分支 `feat/analytics-retire-maintenance-rebuild`,三个提交)已完成阶段 0–3:
+- 修法不是修调度器,是退役它。方案页(artifact「Analytics 维护调度器退役方案」,会话 2026-09-07)分 5 阶段。PR #853(前两个提交,2026-09-07 已合并 main)与 PR #854(第三个提交,分支 `feat/analytics-retire-daily-rollup-fallback`)完成阶段 0–3:
   - ad24be39b:止血配置、审计通过不重写、日表多行 INSERT、规则同步迁入 Worker(`ANALYTICS_WORKER_FEATURE_RULE_SYNC_ENABLED`)、tool_daily 冻结线 `ANALYTICS_TOOL_DAILY_FREEZE_DAYS`=14 + plugin 规则标脏 400→14 天。
   - b5295d470:删 maintenance 容器与 `workers/analytics_maintenance_worker.py`;`ANALYTICS_FEATURE_SYNC_ENABLED` 默认 false;`observability_scheduler_loop` 迁入 Worker 主容器(同开关,监控 secret 随迁)。
-  - bd62f8977:五个端点(funnel_overview / latency_with_trends / latency_hot_metrics / credits_distribution / period_comparison)删 daily_rollup、hourly、长窗口 row_scan 兜底,facts 未命中返回 `query_source=unsupported`+`reason`;Plugin 对比不读 legacy 日表、超 3 天明细窗口返回空;`ANALYTICS_LEGACY_DAILY_WRITE_ENABLED` 默认 false 关三张 legacy 日表逐 Thread 写;prod 关 hourly rollup/read;tool_daily 今天永远读明细、消费者只处理闭合日 + 300s 去抖 + `_heavy_work_lock`。
+  - PR #854(01dc000c5):五个端点(funnel_overview / latency_with_trends / latency_hot_metrics / credits_distribution / period_comparison)删 daily_rollup、hourly、长窗口 row_scan 兜底,facts 未命中返回 `query_source=unsupported`+`reason`;Plugin 对比不读 legacy 日表、超 3 天明细窗口返回空;`ANALYTICS_LEGACY_DAILY_WRITE_ENABLED` 默认 false 关三张 legacy 日表逐 Thread 写;prod 关 hourly rollup/read;tool_daily 今天永远读明细、消费者只处理闭合日 + 300s 去抖 + `_heavy_work_lock`。
   - 剩余阶段 4:DROP 四张日表、小时表与脏队列、dirty-day ledger、维护锁、campaign watermark,并删 `analytics_feature_sync_scheduler.py` 等无调用方模块。发布观察一个周期后再做。
 - 退役后分析写入只剩:Thread 完成时一次 facts + tool_usage upsert、2 天 lookback 的 facts 对账、闭合日 tool_daily 一次聚合、每小时规则同步。验证:DAS 日表/小时表写入归零;日志筛 `path=unsupported` 应无真实用户请求。
 - 单独建库解决不了:同集群建表算同一 writer;独立实例只是转移(写入模式不变照样报警,读端仍扫业务库);跨区更糟(实时 Worker 同事务写 facts 会被加延迟)。隔离只在退役后作为故障域隔离考虑。
