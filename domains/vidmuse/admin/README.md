@@ -18,6 +18,8 @@ links: [vidmuse-admin, test-center-v2-mcp-direct-tool-call, vidmcp-auth-runtime-
 - [2026-06 admin 知识地图](projects/2026-06-admin-knowledge-map.md) — 过去一个月 admin 子系统主题索引。
 - [Test Center V2 MCP direct tool call](projects/test-center-v2-mcp-direct-tool-call.md) — `mcp_tool_call` case/job/run 闭环。
 
+- [Thread Analytics 读路径 3 秒体检](projects/2026-09-02-thread-analytics-read-path-3s.md) — 2026-09-02 五个病根与四阶段方向。
+
 ## Pitfalls
 
 - [VidMCP auth/runtime context](pitfalls/vidmcp-auth-runtime-context.md) — `MCP_URL` / bearer token / `X-Auth-*` 职责边界。

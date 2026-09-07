@@ -2,7 +2,7 @@
 name: maxwell
 type: system
 created: 2026-07-23
-updated: 2026-07-23
+updated: 2026-09-04
 tags: [maxwell, agent-platform, eval, optimization]
 links: [maxwell-quality-eval]
 ---
@@ -33,6 +33,8 @@ links: [maxwell-quality-eval]
 - 2026-07 时点正在做 eval 独立产品化解耦(branch `codex/eval-migration-cleanup`)。
 
 Quality 域的 eval/自迭代机制详见 [[maxwell-quality-eval]]。
+
+2026-09 时点 Quality 已退役,评测/调优产品改为独立 `services/evolve-server` + `apps/studio/src/products/evolve`(EVOLVE),设计文档在仓库 `docs/evolve-*.md`;多业务共享调优 Agent 的坑见 [[evolve-agent-preset-business-scoped]]。
 
 ## TODO(现场确认后回填)
 - [ ] maxwell 与 vidmuse 业务的关系(是否同一团队/服务于谁)

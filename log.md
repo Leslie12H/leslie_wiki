@@ -12,3 +12,21 @@
 - 2026-07-24 update: quality-eval refs 补交互设计结论(v4 原型指针、三层对象模型、能力地图=聚类标签、爬山日志、影响面 gate)
 - 2026-08-31 ingest: monitoring-dashboard-window-and-day-semantics(线上监控处置大盘三套"天"的时间基准 + 全量 vs 窗口计数;修了 UTC/UTC+8 桶错位、新增 window_incident_count/window_problem_count 与 day_basis、删掉分页数据算出来的假火花图)
 - 2026-08-31 ingest: admin-scheduled-report-mechanisms(admin 两套定时报表机制:外部 /cron 端点 vs 进程内 asyncio+next_fire_at;BugBotConfig.schedules 是没人读的死配置;app.py startup 有一道提前 return 的总闸会静默吞掉新后台循环;FeishuMessageClient 的 webhook_url 优先于 chat_id)
+- 2026-09-02 ingest: thread-analytics-read-path-3s(Thread Analytics 8 个 Tab 30 天做不到 3 秒的读路径体检:聚合在 Python 逐行合并 MEDIUMTEXT JSON、四类指标五套完整性定义、campaign 级 fail-closed 脏门禁、outcome 窗口判断不传 end_time;方向=小时事实派生日投影+单一发布契约)
+- 2026-09-02 update: thread-analytics-read-path-3s 补最终方案 v2:放弃日投影路线,改为 Thread 级窄事实表 + MySQL 直接聚合 + 读时排除过滤,退役小时表/日表/脏队列/维护锁;五步落地与决策门
+- 2026-09-02 update: thread-analytics-read-path-3s 补实测证据(小时合并 30 天 1.59s;latency 明细路径无 N+1;漏斗明细路径 execution_summary_json 真 N+1)与 v3 两层设计(窄事实 + 派生日聚合 + 行数路由)、探针 SQL 位置
+- 2026-09-02 update: thread-analytics-read-path-3s 补强候选根因:排除规则 NOT EXISTS 的 collation 不一致(规则表 DDL 未显式 COLLATE)导致规则表索引失效、外表逐行全扫;修法 DDL 对齐 + hash anti-join
+- 2026-09-02 update: thread-analytics-read-path-3s 生产实测定根因:随机主键聚簇 + 胖行 → 30 天聚合 67k 次随机页读 13.4s(覆盖索引 COUNT 仅 93ms);规则表 collation 0900_ai_ci vs 事实表 unicode_ci 已确认
+- 2026-09-02 update: thread-analytics 实施启动(分支 feat/thread-analytics-facts);Q7b tool_usage_metric 30 天 400 万行 → Tool 日聚合纳入首期,跨日 project 去重口径变化待业务确认
+- 2026-09-02 correction: 漏斗明细 N+1 在 main 6cf0e384c 已修(调用方批量预加载),E3 复现绕过了调用方;批次 0 去掉该项
+- 2026-09-02 update: thread-analytics 实施进度:批次 0/1 与读路径前两个端点已提交(6 个提交),漏斗/Credits 进行中;部署 runbook 定稿
+- 2026-09-02 update: thread-analytics Tool 家族读路径改混合窗口(整日日表 + 零头明细 + UNION 去重),消除整日约束;模版/实验/规则接线子任务进行中
+- 2026-09-04 ingest: evolve-agent-preset-business-scoped(maxwell EVOLVE 调优 Agent 单 Preset 写死跨业务不可用;根因链 + 平台模板/托管实例方案指针);maxwell README 补 Quality→EVOLVE 演进一句
+- 2026-09-04 update: evolve-agent-preset-business-scoped 方案改 v2(evolve-server 当门面 + 会话表映射目标业务,不改 agent-server;否决 v1 模板复制)
+- 2026-09-04 update: evolve-agent-preset-business-scoped 补两条:API Key 只能建 business 可见 Thread(门面需自做账号隔离);Variant 应用固定在被测侧适配器,否决影子 Preset
+- 2026-09-04 update: evolve-agent-preset-business-scoped 补闭环差距分析指针(候选=基线、L0 证据路径两个沉默错误)
+- 2026-09-07 add: analytics-maintenance-historical-rebuild-pressure(PolarDB writer 报警根因=旧维护调度器 30s 逐日重建 62 天+审计也重写;方案=退役旧路径+新路径冻结线 14 天;分支 feat/analytics-retire-maintenance-rebuild ad24be39b)
+- 2026-09-07 update: analytics-maintenance-historical-rebuild-pressure 阶段 2 落地(b5295d470 删 maintenance 容器、FEATURE_SYNC 默认 false、observability 循环迁入 Worker 主容器;H=14 拍板)
+- 2026-09-07 add: evolve-original-design-vs-current(原始 index.html 方案对象→当前 artifacts/表/Studio 映射表;Base 缺失、探索期 Frozen Facts 空白)
+- 2026-09-07 update: evolve-original-design-vs-current 补 EVOLVE 会话页无 File Explorer 的根因(门面无 files 代理、物理 Thread 不下发、Preset 无文件工具)
+- 2026-09-07 update: analytics-maintenance-historical-rebuild-pressure 第三轮:读侧五端点 daily_rollup/hourly 兜底下线(unsupported+reason)、legacy 日表写入开关默认关、hourly rollup 关、tool_daily 当天读明细+闭合日去抖消费;PR #853
