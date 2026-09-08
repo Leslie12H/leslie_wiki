@@ -31,3 +31,4 @@
 - 2026-09-07 update: evolve-original-design-vs-current 补 EVOLVE 会话页无 File Explorer 的根因(门面无 files 代理、物理 Thread 不下发、Preset 无文件工具)
 - 2026-09-07 update: analytics-maintenance-historical-rebuild-pressure 第三轮:读侧五端点 daily_rollup/hourly 兜底下线(unsupported+reason)、legacy 日表写入开关默认关、hourly rollup 关、tool_daily 当天读明细+闭合日去抖消费;PR #853
 - 2026-09-07 update: evolve-original-design-vs-current 补执行目标自助接入+草稿层落地要点(分支 feat/evolve-executor-onboarding,两份设计文档指针)
+- 2026-09-08 update: 知识库维护规则改为相关改动检查后自动 commit、push（用户明确授权）；同步 Codex 全局入口，限定 wiki 范围并保留无关工作。
