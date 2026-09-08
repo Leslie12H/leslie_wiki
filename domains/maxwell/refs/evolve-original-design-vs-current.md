@@ -33,3 +33,7 @@ links: [maxwell, evolve-agent-preset-business-scoped, maxwell-quality-eval]
 ## 2026-09-07 补充:为什么 EVOLVE 会话页没有 File Explorer
 
 通用 Chat(`apps/studio/src/pages/chat/ChatThreadView.tsx`)右栏 = Files(agent-server runtime thread-files API,按 businessId+threadId)+ preset 中间件视图(Todo/Plan、Summarization、Task)。EVOLVE 会话页走 evolve-server 门面,只有 sessions/events/messages/stream/assets-sign 五类接口,事件白名单只放 user.action / agent.content(.delta) / agent.tool.call / agent.tool.result / runtime.checkpoint.updated;物理 Thread 在平台业务 P 且不下发浏览器,所以 Studio 拿不到 (business, threadId) 去列文件。另外共享 Preset 的 tool allowlist 只有 7 个 evolve_* 工具,没有 read_file/write_file,Agent 本来也写不了草稿。要恢复"目录即记忆",需要门面加 files 代理 + Preset 加文件工具 + 约定草稿路径;注意 thread files 是会话级,Work 是跨会话的,草稿会随会话过期丢失。
+
+## 2026-09-07 落地:执行目标自助接入 + 草稿层(分支 feat/evolve-executor-onboarding)
+
+去代码看,不抄:`docs/evolve-executor-onboarding-design.md`(v3.1)、`docs/evolve-draft-layer-and-loop-fixes-design.md`(v1)、`services/evolve-server/docs/executor-kit/`。要点:执行目标改业务级注册表(maxwell_preset / external_a2a / http_simple)+ 异步四步预检判级 l0/l1;业务级执行凭据一业务一把,由 agent-server 唯一新增路由 `POST /api/business/{id}/evolve/executor-key` 以 eval_manage 自动创建;Work 级草稿层 `evolve_draft`(Agent 只能 put,确认只在 UI)承接三道门;`create_revisions` 批量、有界重试、多轮 `turns`、compare 可比性、内联 256 KiB;`evolve_run explore` 供 Agent 探索。未做(维持现状):Thread 仍在平台业务、Files 面板不可见、隐藏 Case 共享会话可见。下一步先跑真实案例,再决定判卷校准与定时回归。
