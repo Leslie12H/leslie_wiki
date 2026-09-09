@@ -54,3 +54,5 @@
 - 2026-09-09: PR #269 fixes and Prompt/Skill audit validation pointers added.
 
 - 2026-09-09：补充 PR #269 DEV 发布记录、调优业务资产入口及逐文件读回核验方法。
+
+- 2026-09-09：记录 EVOLVE 抽屉溢出与完整展示验收方法，补充真实组件、长文本及窄屏验证指针。
