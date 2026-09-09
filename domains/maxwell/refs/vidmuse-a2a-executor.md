@@ -38,3 +38,11 @@ links: [maxwell-quality-eval, vidmuse-zeus, vidmuse-aion]
 - Maxwell `internal/app/integration/a2a/registry.go`（相对 evolve-server）：dispatchTurns 复用 invocationId，不能按它对每一轮独立去重；协议方法以 SDK 和 executor-kit 当前示例为准。
 
 建议外层确定性 A2A 服务负责持久化 Task、下游恢复及证据；候选使用隔离 commit 缓存，避免借共享环境发布流程切换 A/B。仍为建议，未授权实施或部署。
+
+
+## 2026-09-09 飞书完整方案交付
+
+- 完整方案：https://j0yswlgboxz.feishu.cn/wiki/FXkdwOqIpiSfrNka96vc07jnnFc 。父目录“Maxwell自迭代&AtoA”：https://j0yswlgboxz.feishu.cn/wiki/So33wJG4biIGcGklx9rc7HEsnvf 。文档内容会变，以回读为准。
+- 用户明确选择：每次调优新建 Git 分支，从指定现有分支冻结 commit 开始；在隔离 checkout 编写 plugin；每轮候选固定 commit，保护原 ref、原工作目录和共享部署。
+- 用户先要求在 Maxwell / VidMuse 业务空间实现，随后明确要求“实现之前出完整方案写飞书”。截至本次交付仍为方案评审阶段，未实现、注册、迁移或部署。
+- 为什么：分支隔离不能单独防止共享目录切换影响运行；可信调优还需要 Manager/Runner 同源版本和实读回执。应用方式：实施前读飞书第 5–9 章，按第 12–13 章拆分接口与验收；不要从登记意图推断已经存在在线执行器。

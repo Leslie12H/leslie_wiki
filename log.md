@@ -40,3 +40,4 @@
 - 2026-09-09：补充 VidMuse plugin GitHub 发布、AION revision cache、Zeus 创建幂等与 Maxwell 多轮契约指针，形成外层 A2A 服务设计。
 
 - 2026-09-09：新增旧 Quality 退役核验指针，区分代码退出、物理清理与数据库删除证据。
+- 2026-09-09：VidMuse A2A 与 Plugin 分支隔离完整方案写入飞书自迭代目录并回读核验；记录用户要求先方案后实现。
