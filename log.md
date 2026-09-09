@@ -47,3 +47,4 @@
 - 2026-09-09：修订 VidMuse A2A 执行器：独立仓库、接口复用与候选版本执行分层，补架构图指针。
 
 - 2026-09-09 ingest: Kling billing/500 case 原始 SLS 根因与请求字段证据，见 domains/vidmuse/pitfalls/kling-billing-missing-resolution-20260909.md。
+- 2026-09-09：新增 EVOLVE 对 Maxwell 调优接应项目页，记录三项拍板与第二轮待追加清单。
