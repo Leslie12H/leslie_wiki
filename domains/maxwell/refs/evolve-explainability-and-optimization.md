@@ -30,3 +30,9 @@ links: [evolve-maxwell-tuning-receiving, maxwell]
 - queries/evidence.go Statistics：同题前一次通过、后一次错误，最近结果需要保留错误 Trial。
 
 **Why:** CI 与固定顺序、无错误的 fixture 未覆盖这些边界。**How to apply:** 增加顺序反转、错误比例变化、满分量纲及最近错误回归，再判断是否可合并。
+
+## 修复与资产审查指针（2026-09-09）
+
+PR #269 的修复验收见仓库 docs/evolve-explainability-implementation-20260909.md。回归分别位于 e2e_optimization_test.go（反向选择）、queries/evidence_streaming_test.go（最近错误）、methods/optimization/statistics_test.go（覆盖与评分量纲）、Studio check-evolve-explainability.mjs（错误与有效样本展示）。是否已合并或部署仍以 PR 和部署记录为准。
+
+Prompt/Skill 核查还需区分 Wilson 通过率估计精度和配对改进检验、存在校准报告和校准通过、hidden 对调优侧的隔离和对目标发送输入；完整基线资源与只修改部分资源的候选不能混为同一 payload 规则。已有授权应复用，无 inline Prompt 时不能循环调用 propose。代码契约和静态场景检查不证明真实模型自然对话符合指引。
