@@ -35,3 +35,5 @@
 - 2026-09-08 add: timeline-preview-duration-and-export-version，记录 Take Me Over 核验入口及预览时间码与历史导出版本的证据边界。
 
 - 2026-09-08 ingest: Suno media_urls MCP 三路回归 Case、证据入口与工具成功/音频解码验收边界。
+
+- 2026-09-09：录入 VidMuse 接入 EVOLVE 的 A2A 执行器契约指针与评测/调优边界；本地代码核对，未实施。
