@@ -45,3 +45,5 @@
 - 2026-09-09：补记 orchestration-v4 Prompt + 7 Skill 已上线但本地未提交，对照审计 8 点标注哪些已解。
 
 - 2026-09-09：修订 VidMuse A2A 执行器：独立仓库、接口复用与候选版本执行分层，补架构图指针。
+
+- 2026-09-09 ingest: Kling billing/500 case 原始 SLS 根因与请求字段证据，见 domains/vidmuse/pitfalls/kling-billing-missing-resolution-20260909.md。
