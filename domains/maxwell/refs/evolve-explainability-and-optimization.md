@@ -36,3 +36,12 @@ links: [evolve-maxwell-tuning-receiving, maxwell]
 PR #269 的修复验收见仓库 docs/evolve-explainability-implementation-20260909.md。回归分别位于 e2e_optimization_test.go（反向选择）、queries/evidence_streaming_test.go（最近错误）、methods/optimization/statistics_test.go（覆盖与评分量纲）、Studio check-evolve-explainability.mjs（错误与有效样本展示）。是否已合并或部署仍以 PR 和部署记录为准。
 
 Prompt/Skill 核查还需区分 Wilson 通过率估计精度和配对改进检验、存在校准报告和校准通过、hidden 对调优侧的隔离和对目标发送输入；完整基线资源与只修改部分资源的候选不能混为同一 payload 规则。已有授权应复用，无 inline Prompt 时不能循环调用 propose。代码契约和静态场景检查不证明真实模型自然对话符合指引。
+
+## DEV 发布与线上资产核验入口（2026-09-09）
+
+- [PR #269 DEV 发布记录](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34344855696)：检查 Studio 构建号、EVOLVE API/Worker 镜像与运行健康步骤；部署范围由 workflow inputs 决定。
+- [Agent 调优业务 Prompt](https://agent.sandaii.cn/prompts?businessId=74d72fe4-e4f0-46ad-958a-da68d9fdd651) 与 [调优 Preset](https://agent.sandaii.cn/agents/746f0d19-f019-4b04-b09e-78305744e603?businessId=74d72fe4-e4f0-46ad-958a-da68d9fdd651)：核验当前业务和实际绑定，避免按旧业务名定位。
+
+**Why:** 仓库合并和服务部署不会自动更新数据库中的 Prompt/Skill；V4 名称不代表正文是最新版本。
+
+**How to apply:** 使用合并提交的 agent-resources 更新已有资源，保留 Preset 引用；保存后重新读取 Prompt 全文及七个 Skill 的所有文件，比对实际内容，并检查 Skill Loader 选中项。Studio 页面 script URL 的构建号须与发布记录一致。资产持久化一致不等同真实模型对话行为验收。

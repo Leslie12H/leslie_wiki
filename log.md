@@ -52,3 +52,5 @@
 - 2026-09-09：录入 EVOLVE 判卷解释、候选优化及业务 Judge 配置兼容的实现和验收指针（PR #269）。
 - 2026-09-09: PR #269 review regression pointers added; fix status follows PR.
 - 2026-09-09: PR #269 fixes and Prompt/Skill audit validation pointers added.
+
+- 2026-09-09：补充 PR #269 DEV 发布记录、调优业务资产入口及逐文件读回核验方法。
