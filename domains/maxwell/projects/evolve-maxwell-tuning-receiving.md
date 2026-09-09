@@ -16,7 +16,9 @@ links: [maxwell, evolve-tuning-agent-loop-audit-20260909, evolve-agent-preset-bu
 - level 一律由预检决定，代码/Prompt/Skill/文档里不许有 maxwell_preset ⇒ l0 的常量。
 - 候选资源不用累计 patch，VariantManifest 携带每个资源完整内容 + hash，Adapter 幂等覆盖；超限才用引用。
 
-第一轮交付后追加（待做）：trial-evidence 回执结构化 applied 块 + Run 级 baselineHash/variantApplied + 跨 Trial 漂移检测；VariantManifest resources 内容模型；EVOLVE 读取 Preset 内容的权限与获取实现；Dispatch 前按能力声明校验 apply 操作；Studio 目标草稿"允许修改范围"与 Run 详情实际执行版本。
+第二轮已于 2026-09-09 完成（分支共 16 提交，未 push；独立复核 go test 52 包、node 7 pass、studio check 通过）：resolve_baseline（读 preset/prompt/skill 三路由，baselineHash）、VariantManifest resources 模型、结构化 applied 回执 + driftDetected、派发前按 card 扩展参数校验、Studio 同步、三个 Skill 补厚。第二轮原清单：trial-evidence 回执结构化 applied 块 + Run 级 baselineHash/variantApplied + 跨 Trial 漂移检测；VariantManifest resources 内容模型；EVOLVE 读取 Preset 内容的权限与获取实现；Dispatch 前按能力声明校验 apply 操作；Studio 目标草稿"允许修改范围"与 Run 详情实际执行版本。
+
+阻塞点（等 agent-server）：card 声明 `ai.maxwell/evolve-variant@1`、按 message.metadata 幂等覆盖资源、Task.metadata 回执 `evolve.variant-receipt/1`、执行凭据补 `preset_read/prompt_read/skill_read`（现只有 runtime_run，真实环境 resolve_baseline 会报可读的缺权限错误）。契约在仓库 `docs/evolve-maxwell-variant-apply-contract.md`。已知遗留：`a2a.classify` 把 URL 里的 403 当状态码的偶发测试失败；Trial 详情不返回回执原文。
 
 **Why:** 仅改 EVOLVE 无法让调优跑通（Variant 应用在 agent-server 侧），但接口先就位可以用假执行器验证，agent-server 交付后即可对接；基准由 EVOLVE 获取是为了让冻结内容与 hash 掌握在评测方手里，不依赖目标侧自报。
 **How to apply:** 追加第二轮任务时，先读子 agent 写的 `docs/evolve-maxwell-variant-apply-contract.md`，回执字段、资源模型必须与它一致，不要另定一套；权限方案要和 agent-server 团队确认 Business API Key 能否授予 Preset 读权限。
