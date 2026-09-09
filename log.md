@@ -38,3 +38,5 @@
 
 - 2026-09-09：录入 VidMuse 接入 EVOLVE 的 A2A 执行器契约指针与评测/调优边界；本地代码核对，未实施。
 - 2026-09-09：补充 VidMuse plugin GitHub 发布、AION revision cache、Zeus 创建幂等与 Maxwell 多轮契约指针，形成外层 A2A 服务设计。
+
+- 2026-09-09：新增旧 Quality 退役核验指针，区分代码退出、物理清理与数据库删除证据。
