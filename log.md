@@ -50,3 +50,4 @@
 - 2026-09-09：新增 EVOLVE 对 Maxwell 调优接应项目页，记录三项拍板与第二轮待追加清单。
 - 2026-09-09：EVOLVE 调优接应第二轮完成并复核，记录 agent-server 阻塞点与遗留。
 - 2026-09-09：录入 EVOLVE 判卷解释、候选优化及业务 Judge 配置兼容的实现和验收指针（PR #269）。
+- 2026-09-09: PR #269 review regression pointers added; fix status follows PR.
