@@ -58,3 +58,4 @@
 - 2026-09-09：记录 EVOLVE 抽屉溢出与完整展示验收方法，补充真实组件、长文本及窄屏验证指针。
 
 - 2026-09-09：记录 EVOLVE remote_running 重试转换 Bug、持久化恢复验收及未评分 Run 的展示口径。
+- 2026-09-10：记录 EVOLVE 三轮升级已随 PR #269 合入 main；剩余为 agent-server 侧接口与线上 Prompt/Skill 同步。
