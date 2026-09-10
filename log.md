@@ -68,3 +68,5 @@
 - 2026-09-10：录入 Workflow Catalog 的 Thread/Plugin 排查指针，强调检查字符串 null 过滤与真实目录状态。
 - 2026-09-10：补充 Test Plugin Workflow 发布验收指针：ZIP 导入能力边界、源码哈希、Runner 挂载和目录查询。
 - 2026-09-10：核对已部署 Runner 固定启动时 Workflow Catalog，补充文件发布与旧 Thread 重载的分层验收指针。
+
+- 2026-09-10：记录报警历史 Problem 标题与当次报告不一致的核验指针及摘要口径。
