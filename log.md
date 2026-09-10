@@ -76,3 +76,5 @@
 - 2026-09-10 ingest：报警日报证据丢失链路，记录输入、综合、渲染与真实语义验收边界。
 - 2026-09-10：核对 Workflow Thread 重启仍绑定旧 revision 缓存，补充实际 Plugin 缓存目录与版本发布验收指针，纠正重启即加载源目录的假设。
 - 2026-09-10：补充 Test Workflow 正式 Git 发布、DEV revision 缓存和目标 Runner 重建后的三项 Catalog 验收指针，不包含真实生成验收。
+
+- 2026-09-10 ingest: EVOLVE 已接收输出与未冻结 EvidenceSet 的展示差异；CAS 具体竞争写入仍待定位。
