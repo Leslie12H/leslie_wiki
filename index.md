@@ -49,7 +49,7 @@
 - [dev](disciplines/dev/README.md) — 开发实践 *(暂空)*
 
 ## Global(通用)
-- pitfalls / refs — *(暂空)*
+- [飞书表格字段与合并行同步](global/pitfalls/feishu-sheet-header-and-merge-sync.md) — 表头映射、完整读取、状态优先级及幂等核验指针
 
 ---
 *开新业务:`cp -r domains/_template domains/<新业务名>` 并在此加一节。*
