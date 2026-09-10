@@ -55,3 +55,5 @@
 
 ---
 *开新业务:`cp -r domains/_template domains/<新业务名>` 并在此加一节。*
+
+- [Admin 服务 JWT 权限与有效期](domains/vidmuse/admin/pitfalls/service-jwt-permissions-and-expiry.md) — 部署鉴权、type 字段映射、权限范围与 WAF 假 200 的验证指针
