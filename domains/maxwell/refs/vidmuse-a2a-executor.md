@@ -2,7 +2,7 @@
 name: vidmuse-a2a-executor
 type: reference
 created: 2026-09-09
-updated: 2026-09-09
+updated: 2026-09-10
 tags: [maxwell, evolve, vidmuse, a2a, evaluation]
 links: [maxwell-quality-eval, vidmuse-zeus, vidmuse-aion]
 ---
@@ -54,3 +54,17 @@ links: [maxwell-quality-eval, vidmuse-zeus, vidmuse-aion]
 - Why：外层任务管理可独立交付，Zeus 现有产品身份、权限与计费不应重复实现。基础任务创建、续跑与查询优先复用已有 API。
 - How：在飞书方案第 3、6、8、12 章核对最新范围。当前部署 plugin 评测与新分支 commit 执行分开验收；后者需核定隔离 Manager/Runner 环境，或受控版本引用扩展。只 checkout 执行器目录不能改变 AION 版本；隔离部署可行性和实读证据仍须验证。
 - 用户要求补系统边界、候选版本承载、执行与评测证据链架构图。图和实施状态以飞书回读为准；未创建代码仓库或部署。
+
+
+## 2026-09-10 方案评估：Variant 合同冲突
+
+按 Maxwell `origin/main`（a2a-go v2.4.0）核对 `services/evolve-server/docs/executor-kit/README.md`、`schemas/execute-trial.v1.json`、`schemas/trial-evidence.v1.json`、`application/evaluation/variant.go`、`application/execution/contract.go` 的 `VariantApplied`。
+
+- EVOLVE 侧 Variant 已定型：`variant.content` 是 VariantManifest，`resources[]` 携带每个文件的**完整内容 + contentHash**；回执要 `applied=true` 且 `variantHash == request.variant.contentHash`，否则 `evidence_query compare` 判 `comparable=false`，候选 Run 不可比。
+- 飞书方案第 7 章拟把 `variant.content` 改成 `vidmuse.plugin-revision/v1`（仅 commit SHA 引用），回执只有 `requestedCommit/loadedCommit`，没有 `applied/variantHash`。两边直接对接会出现：EVOLVE 无法生成这种 Variant，也不承认这种回执。
+- Agent Card 的 `ai.maxwell/evolve-variant@1` 扩展可声明 `pathPrefixes/resourceKinds`，天然对应方案第 5 章的 plugin 文件白名单；方案未提及。
+- 探针 `probe:true` 必须回显 marker 但不应真实生成视频；方案未写。
+
+**Why:** 方案把"候选内容的事实源"放到执行器的 Git 控制面，而 EVOLVE 已把事实源放在自己冻结的 VariantManifest。两个事实源会让 diff、可比性和回执校验各说各话。
+
+**How to apply:** 以 EVOLVE 的 `resources[]` 为内容事实源；执行器把 resources 物化成 Work 分支上的 commit（同 variantHash → 同 commit，幂等），回执同时带 `applied/variantHash` 和 `requestedCommit/loadedCommit`。方案第 8 章的 workspaces/candidates 内部接口退化为执行器内部步骤，不需要调优 Agent 直接调 Git 工具。交给 Codex 时先做 P1（当前部署 plugin、l0_evaluate、通过 `evolve-executor-check`），P3 的 A/B 承载先做 spike 再决定 P2。
