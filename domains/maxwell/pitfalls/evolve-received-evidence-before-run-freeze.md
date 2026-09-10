@@ -26,3 +26,11 @@ links: [evolve-evaluation-blockers-20260910, evolve-retry-state-transition]
 **How to apply:** 状态机读应使用主节点一致性语义；CAS 冲突后核对最新状态和 Run 租约再协调，不能盲目重发远端任务。优先调整 EVOLVE 自身连接策略，勿直接更改共享集群全局配置。日志补操作、Attempt、预期/实际版本。重跑前先检查已存输出。
 
 审计入口：PolarDB 集群 `pc-2zemufe66p6g9lc6h` 的 SQL 洞察，数据库 `dev_maxwell_evolve`，2026-09-10 17:17:48–17:17:55（UTC+8）；故障 Attempt `attempt_c112f20c209c9507abcc92d4119ee0fb`。代码及复现指针：Maxwell `.tmp/evolve-cas-diagnosis-20260910/ROOT-CAUSE.md`、其中的部署版本源码和 `live_stale_read_diagnosis_test.go`。临时目录可能被清理，永久判断以版本化源码与审计为准。
+
+## 2026-09-10：修复与验证入口
+
+修复 PR：[maxwell-ai #276](https://github.com/world-sim-dev/maxwell-ai/pull/276)。生命周期读取使用主节点路由，CAS 冲突后重读并校验租约，持续冲突让出处理片段；失去租约时不允许旧处理器终止 Run。部署与合并状态以 PR 和运行环境为准。
+
+**Why:** 即使接管前后 Worker ID 相同，新 claim 的版本也必须隔离旧处理器；只比较 owner 会让旧处理器误终止新任务。
+
+**How to apply:** 参考 application/evaluation/live_conflict_test.go 的旧快照、已有证据、连续冲突、取消及同名/异名接管回归场景；真实 PostgreSQL 的 CAS 错误详情见 infrastructure/postgres/cleanup_integration_test.go。2026-09-10 本地全量单元测试和其余 PostgreSQL 集成测试通过；TestRepositoryIntegration 的 artifact_objective 缺失在未修改 main 同样复现，不应记成全量集成通过。主节点 hint 的实际代理路由仍需部署后核验，历史失败 Run 不因代码修复自动恢复。
