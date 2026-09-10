@@ -30,3 +30,5 @@ links: [evolve-retry-state-transition, evolve-tuning-agent-loop-audit-20260909]
 - `methods/judge/llmrubric/transient_test.go`：判卷临时错误共享有界尝试预算，取消中止退避；旧评分不静默改写，同证据重新判卷走 evidence_only 新 Run。
 
 本地回归通过不代表部署完成、历史 Run 已修复或真实远端已停止。上线验收继续核对 Worker 版本、远端任务、证据和评分。
+
+- 取消确认还需核对 `app/integration/a2a/registry.go`：`TaskNotCancelable` 本身不是终态证明，必须回查原任务；取消响应也需核对任务 ID 与终态。对应 `TestCancelRequiresConfirmedOriginalTaskTermination`。恢复取消时没有持久化原失败类别，采用停止该 Trial 的保守策略，不补写虚构的超时原因。
