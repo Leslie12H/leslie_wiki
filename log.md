@@ -66,3 +66,4 @@
 
 - 2026-09-10：补充 A2A 取消拒绝不等于终态的 Adapter 回归指针，以及中断恢复不编造超时原因的边界。
 - 2026-09-10：录入 Workflow Catalog 的 Thread/Plugin 排查指针，强调检查字符串 null 过滤与真实目录状态。
+- 2026-09-10：补充 Test Plugin Workflow 发布验收指针：ZIP 导入能力边界、源码哈希、Runner 挂载和目录查询。

@@ -6,7 +6,7 @@
 ## Domains(业务系统)
 
 ### vidmuse — [业务全景](domains/vidmuse/README.md)
-- [Workflow Catalog、Thread 与 Plugin](domains/vidmuse/refs/workflow-catalog-thread-plugin.md) — 目录绑定、路径执行和字符串 null 过滤排查指针
+- [Workflow Catalog、Thread 与 Plugin](domains/vidmuse/refs/workflow-catalog-thread-plugin.md) — 目录绑定、Plugin 发布验收、路径执行和字符串 null 过滤排查指针
 - [aion](domains/vidmuse/systems/aion.md) — agent/runtime/media generation 后端平台
 - [vidmuse-zeus](domains/vidmuse/systems/zeus.md) — Vidmuse 产品 REST API + AION relay
 - [vidmuse.ai](domains/vidmuse/systems/vidmuse-ai.md) — 面向用户的 Web 前端

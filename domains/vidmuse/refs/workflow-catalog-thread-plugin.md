@@ -18,5 +18,7 @@ links: [vidmuse-aion, test-center-v2-mcp-direct-tool-call]
 - Aion：apps/runner/tools/workflow/list_workflow.py 与 apps/runner/workflow/service.py；检查 list_workflows 的可选 ID 精确过滤和当前 revision 投影。
 - Aion：packages/vidmuse_workflow/src/vidmuse_workflow/loader.py；检查 Plugin workflows 与 workflow_refs 发现路径，以及 run 的 ext_params/context 签名要求。
 - Aion：apps/runner/tests/test_workflow_path_execution.py；检查路径执行不改变 Catalog 的断言。
+- Admin：apps/admin/service/plugin.py 的 _validate_and_extract_zip / update_plugin_from_zip；发布前确认 ZIP 导入是否保留 workflows/，不能把上传成功当作源码已注册。config.workflow_refs 是公共 Workflow 名称与版本映射，不是任意脚本路径。
+- DEV Plugin 注册验收：检查 Test/workflows 下源码与本地 .codex-artifacts/workflow-test-pack-20260907/workflows 的 SHA256、目标 Runner 的只读挂载和实际 list_workflow 返回。打包时排除 macOS ._ 元数据文件，以免被 Python 文件发现逻辑误读；保留已有 Prompt、配置与 Skills。
 - 2026-09-10 排查样本：[DEV Thread Chat](https://dev-vidmuse-admin.sandaii.cn/playground/thread/5247ac19-f757-411e-a159-2936a3efc050?tab=chat)。定位北京时间 11:35:28 的 list_workflow 调用，核对 workflow_id 参数类型，不能只看 Agent 的“无模板”结论。
 - [Workflow 测试方案](https://j0yswlgboxz.feishu.cn/wiki/Nhc0wN6t3ipm0pkVllscS2GynJd)：已验证范围与业务场景入口；运行状态和代码版本以实时查询为准。
