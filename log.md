@@ -59,3 +59,5 @@
 
 - 2026-09-09：记录 EVOLVE remote_running 重试转换 Bug、持久化恢复验收及未评分 Run 的展示口径。
 - 2026-09-10：记录 EVOLVE 三轮升级已随 PR #269 合入 main；剩余为 agent-server 侧接口与线上 Prompt/Skill 同步。
+
+- 2026-09-10：录入 EVOLVE 全流程稳定性审计指针，记录四个本地缺陷复现，并纠正草稿确认校验的旧结论。

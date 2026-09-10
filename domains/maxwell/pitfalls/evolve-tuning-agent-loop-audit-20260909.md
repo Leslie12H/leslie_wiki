@@ -2,7 +2,7 @@
 name: evolve-tuning-agent-loop-audit-20260909
 type: pitfall
 created: 2026-09-09
-updated: 2026-09-09
+updated: 2026-09-10
 tags: [maxwell, evolve, tuning-agent, system-prompt, draft-layer, mcp]
 links: [maxwell, evolve-agent-preset-business-scoped, evolve-original-design-vs-current]
 ---
@@ -27,3 +27,7 @@ links: [maxwell, evolve-agent-preset-business-scoped, evolve-original-design-vs-
 补记（2026-09-09 同日）：线上 Preset `746f0d19…` 的 Prompt 已换成 orchestration-v4（60 行）+ 7 个 Skill（target-recon/case-design/judge-design/evidence-diagnosis/optimization-strategy/eval-meta-check/evolve-workspace-view），源码在 maxwell 仓库 worktree `.tmp/evolve-flow-repair-20260908`（分支 `codex/evolve-flow-repair-20260908`）**未提交**。V4 用 Skill 承载产物形状（解第 3 点）、明确 context 不自动发目标（解第 4 点的文字面）、两条冻结路径都允许但优先 Studio（第 1 点变成"双路径可选"，仍无确认通知）。第 2、5、6 点未变。
 
 **How to apply:** 讨论"Agent 为什么没按流程走"时，先分清是 Prompt 矛盾（1）、schema 缺形状（3）、还是双路径归属（1/2）；不要先怪模型。改动优先级建议：确认时校验 payload → Studio 确认后向会话发一条自动消息或 Prompt 明确"冻结只由 Studio 做" → 把产物 JSON Schema 暴露进 `describe_method`/工具 schema → 修 playbook 示例的 context 位置。核对时以 `schemas.go` 和 `draftGateObject`/`FreezeDraft` 为准，不以文档为准。
+
+## 2026-09-10 复核
+
+origin/main `f3dea511` 的 `commands/draft.go:ConfirmDraft` 已调用 `validateDraftForFreeze`。上文第 2 项“确认不校验 payload”已不适用，保留为历史记录。当前稳定性缺口与复现入口见 [全流程审计](../refs/evolve-evaluation-blockers-20260910.md)。
