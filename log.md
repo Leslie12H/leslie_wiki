@@ -78,3 +78,4 @@
 - 2026-09-10：补充 Test Workflow 正式 Git 发布、DEV revision 缓存和目标 Runner 重建后的三项 Catalog 验收指针，不包含真实生成验收。
 
 - 2026-09-10 ingest: EVOLVE 已接收输出与未冻结 EvidenceSet 的展示差异；CAS 具体竞争写入仍待定位。
+- 2026-09-10：补充 Workflow 返回体与 envelope 限额、重复 context 和摘要精简的代码及 PR 指针。

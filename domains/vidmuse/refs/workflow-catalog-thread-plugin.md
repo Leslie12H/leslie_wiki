@@ -15,6 +15,7 @@ links: [vidmuse-aion, test-center-v2-mcp-direct-tool-call]
 
 ## 代码与证据指针
 
+- 返回体超限：检查 Aion packages/vidmuse_workflow/src/vidmuse_workflow/executor.py 的 _validate_result 与完整 envelope 两层限制，以及 context.py 的 to_bounded_dict。不要在业务返回中再塞 context 或完整 provider 响应；精简文本时保留截断标记和媒体路径，并给框架 context 留预算。2026-09-10 [Test 返回值精简 PR #1795](https://github.com/world-sim-dev/vidmuse-plugins/pull/1795) 是实现与状态入口；离线大响应回归不等于线上真实生成通过。
 - Aion：apps/runner/tools/workflow/list_workflow.py 与 apps/runner/workflow/service.py；检查 list_workflows 的可选 ID 精确过滤和当前 revision 投影。
 - Aion：packages/vidmuse_workflow/src/vidmuse_workflow/loader.py；检查 Plugin workflows 与 workflow_refs 发现路径，以及 run 的 ext_params/context 签名要求。
 - Aion：apps/runner/tests/test_workflow_path_execution.py；检查路径执行不改变 Catalog 的断言。
