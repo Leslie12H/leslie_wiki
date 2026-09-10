@@ -32,3 +32,9 @@ links: [evolve-retry-state-transition, evolve-tuning-agent-loop-audit-20260909]
 本地回归通过不代表部署完成、历史 Run 已修复或真实远端已停止。上线验收继续核对 Worker 版本、远端任务、证据和评分。
 
 - 取消确认还需核对 `app/integration/a2a/registry.go`：`TaskNotCancelable` 本身不是终态证明，必须回查原任务；取消响应也需核对任务 ID 与终态。对应 `TestCancelRequiresConfirmedOriginalTaskTermination`。恢复取消时没有持久化原失败类别，采用停止该 Trial 的保守策略，不补写虚构的超时原因。
+
+## DEV 发布证据入口（2026-09-10）
+
+修复由 [PR #273](https://github.com/world-sim-dev/maxwell-ai/pull/273) 合入 main。该次 DEV 发布记录为 [workflow 34439061069](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34439061069)，源提交 `14df1d1b271bd188403d96da5fd11dcdb098886e`；Studio 子构建为 [34439070085](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34439070085)（构建号 184）。
+
+验收时发布流程成功，API/Worker rollout 与 runtime verification 通过，DEV Studio 部署产物回读为 184，带业务标识的未登录 REST 返回 401。该次未执行数据库迁移、未重跑真实评测。后续查询当前线上版本时应重新核对发布记录与实际服务，不以此历史快照代替当前状态。
