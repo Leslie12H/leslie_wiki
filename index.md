@@ -64,3 +64,5 @@
 *开新业务:`cp -r domains/_template domains/<新业务名>` 并在此加一节。*
 
 - [Admin 服务 JWT 权限与有效期](domains/vidmuse/admin/pitfalls/service-jwt-permissions-and-expiry.md) — 部署鉴权、type 字段映射、权限范围与 WAF 假 200 的验证指针
+
+- [Tool 日汇总更新状态隐藏已有数据](domains/vidmuse/admin/pitfalls/tool-daily-updating-hides-existing-data.md) — 2026-09-11 DMS 验证反复 thread_upsert 标脏 + 前端拒收 updating，不能把暂无数据直接当作未回填
