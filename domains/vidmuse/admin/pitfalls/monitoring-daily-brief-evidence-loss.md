@@ -2,7 +2,7 @@
 name: monitoring-daily-brief-evidence-loss
 type: pitfall
 created: 2026-09-10
-updated: 2026-09-10
+updated: 2026-09-11
 tags: [vidmuse, admin, monitoring, daily-brief]
 links: [monitoring-problem-title-vs-incident-report]
 ---
@@ -20,3 +20,9 @@ links: [monitoring-problem-title-vs-incident-report]
 - 同分支 `docs/monitoring-daily-brief-quality.md`：时间窗口、七类语义验收目标及已验证边界。
 - `POST /admin/api/v1/monitoring/incidents/daily-brief/preview` 只预览；不要用 send 代替。重新核对当前版本参数与诊断字段。
 - [历史 Problem 标题与当次报告](monitoring-problem-title-vs-incident-report.md)。
+
+## 发送身份与群成员不一致
+
+**Why:** 2026-09-11 的生产诊断返回 HTTP 400 / `230002`。截图里有抓虫机器人，但实际 token 对应通用后台机器人；专用 App ID 未配置导致客户端回退。仅看显示名称或 HTTP 状态会误判为未入群、卡片过长。
+
+**How to apply:** 对照 Admin `service/feishu_bug_bot/clients.py` 的实际凭据选择，读取所选 App ID 与 `/bot/v3/info/` 返回身份，再核对目标群。专用 App ID 与 Secret 应成对配置。不要打印 Secret/token；先保留业务错误码再决定是否重试。卡片正文长度与整卡字节预算是独立校验，来源折叠只改善展示。当前配置、代码和发布状态到 Admin `docs/monitoring-daily-brief-quality.md` 及生产现场核验，不从历史快照推断。
