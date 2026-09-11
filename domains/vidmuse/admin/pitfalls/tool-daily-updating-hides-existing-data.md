@@ -38,3 +38,7 @@ main tailer 每轮可见 recent-priority 和增量处理；facts_reconcile 在�
 ## 2026-09-11 PR Review 指针
 
 PR https://github.com/world-sim-dev/vidmuse-admin/pull/871 的 review 记录见分支操作文档。不要把测试通过视作生产降载验收：人口快照重写、窗口 DISTINCT 聚合、历史 Facts 完整性分别需要验证。MySQL FLOAT 精度差异也可能使精确比较误判更新，比较策略必须与存储精度相容，同时保留真实数值变化测试。
+
+## 2026-09-11 目标设计修订
+
+原 #871 已整合到 #870。重新设计文档位于 #870 的 `docs/operations/tool-metrics-incremental-design.md`：普通更新使用 Thread 新旧贡献及项目引用计数；整日计算仅用于受控初始化/修复。该文档是尚未实现的目标，不能当作上线证明。整日删除的现有原因是全量替换要清除已消失的汇总键，简单改成 upsert 会残留旧键；项目 OR 位图没有可直接撤销的旧贡献。

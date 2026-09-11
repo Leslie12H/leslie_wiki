@@ -72,3 +72,5 @@
 - Tool 指标发布实现与迁移检查：见 [tool daily 更新门禁](domains/vidmuse/admin/pitfalls/tool-daily-updating-hides-existing-data.md) 的本地实现指针（2026-09-11）。
 
 - [Tool 发布 PR review](domains/vidmuse/admin/pitfalls/tool-daily-updating-hides-existing-data.md)：数据库工作量、人口完整性与 FLOAT 比较边界（2026-09-11）。
+
+- Tool 增量维护目标设计：见 tool-daily-updating-hides-existing-data 的 2026-09-11 设计指针；尚未实现。
