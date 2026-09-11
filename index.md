@@ -54,6 +54,7 @@
 - [dev](disciplines/dev/README.md) — 开发实践 *(暂空)*
 
 ## Global(通用)
+- [2026 年 9–10 月 OKR 照野责任范围](global/projects/2026-09-okr-zhaoye-scope.md) — O2 整体 owner、O1-KR4 独担、O1-KR1 / O3-KR3 共担，及跨团队阻塞的排期含义
 - [飞书表格字段与合并行同步](global/pitfalls/feishu-sheet-header-and-merge-sync.md) — 表头映射、完整读取、状态优先级及幂等核验指针
 
 ---
