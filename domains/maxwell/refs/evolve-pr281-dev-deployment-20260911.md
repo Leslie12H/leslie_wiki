@@ -53,3 +53,7 @@ UI 分支把 text envelope 摘要改为 Markdown 正文，维度条可打开标�
 ## 2026-09-11 评测体系复盘入口
 
 参见 Maxwell 分支 `codex/evolve-result-details-20260911` 的 `docs/evolve-evaluation-system-audit-20260911.md`。**Why:** 历史 Run 前端对照与服务端候选比较的可信度检查尚不对齐；展示均分差不能证明版本提升。**How to apply:** 复用服务端 JudgeQuality/VariantApplication 证据与可比性规则，分别验证业务交付、运行收敛、评分质量和优化留出集；不要从本轮六题回归推定全部能力通过。
+
+## 2026-09-11 可信度检查落实
+
+实现指针：上述分支 `application/queries/compare_runs.go`、HTTP OpenAPI 和 `docs/evolve-evaluation-system-audit-20260911.md` 的后续落实节。历史 Run 已接入服务端回执/Judge 质量校验；业务代码仍未提交发布，查后续 PR 确认线上状态。**Why:** 前端配置相同不足以证明真实版本生效；pending 已包含在 outcomeCounts，叠加 executionCounts 会错算进度。**How to apply:** 统一用服务端证据校验并区分两种分母，结合新路由权限/隐藏 Run 回归和完整 TaskDetail 窄屏验收；不要把演示页或校验接口验收当作业务评分校准完成。

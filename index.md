@@ -70,3 +70,5 @@
 - [EVOLVE 历史运行对比入口](domains/maxwell/refs/evolve-pr281-dev-deployment-20260911.md) — 2026-09-11，同任务 Run 对照、有效评分分母和可比性边界的实现指针。
 
 - [EVOLVE 评测体系复盘](domains/maxwell/refs/evolve-pr281-dev-deployment-20260911.md) — 2026-09-11，业务完成标准、Run 可比性证据与端到端验收边界。
+
+- [历史 Run 服务端可信度校验](domains/maxwell/refs/evolve-pr281-dev-deployment-20260911.md) — 2026-09-11，回执/Judge 检查、双分母、pending 计数与完整任务页验收指针。
