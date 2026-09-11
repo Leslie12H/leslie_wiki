@@ -19,3 +19,7 @@ links: [monitoring-problem-title-vs-incident-report, admin-scheduled-report-mech
 - 数据指针：`monitoring_incident.agent_claimed_at/agent_run_id/handling_status` 与 `monitoring_incident_outbox.status/create_time/last_error`。使用只读事务，UTC 转 Asia/Shanghai。2026-09-11 查询时最后认领 14:29:22，15 条派发事件 pending；未来必须重查，不能沿用数量。
 - 同次近 48 小时查询另有 73 条 `invalid_incident_report: runtime_evidence_invalid` 和 1 条模型超时 failed。这是历史失败分类，不能直接断言与当前范围问题同因。恢复 readiness 不等于旧 failed 自动补跑。
 - 恢复前核对实际 GitHub App 安装范围与已审查配置，对齐权限需相应授权；再验证 readyz 200、新认领、Run、报告和通知。此次仅排查，未改生产配置或补跑任务。
+
+## 2026-09-11 权限新增后的修正方向
+
+用户确认曾新增 GitHub 仓库权限。就绪检查应要求配置集合是安装可见集合的子集，而不要求完全相等；新增可见仓库仍不能绕过工具层的仓库与路径白名单。隔离实现指针：`/Users/leslie/Downloads/sandai-code/monitoring-mcp-readiness-fix`，分支 `fix/code-readiness-repository-superset`。修改 `Health` 集合比较并覆盖额外仓库、缺少仓库、同数量替换、重复响应和额外仓库的三个查询入口拒绝。部署状态请查 Git/CI/线上镜像，不从本页推断已恢复。
