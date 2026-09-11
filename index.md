@@ -89,3 +89,5 @@
 - 启动摘要层级、结果加载语义与交互验收：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
 
 - 启动摘要统一现有 Tag、Collapse 与设计 tokens：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
+
+- 结果摘要、维度布局和侧栏一致性：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
