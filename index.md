@@ -72,3 +72,4 @@
 - [EVOLVE 评测体系复盘](domains/maxwell/refs/evolve-pr281-dev-deployment-20260911.md) — 2026-09-11，业务完成标准、Run 可比性证据与端到端验收边界。
 
 - [历史 Run 服务端可信度校验](domains/maxwell/refs/evolve-pr281-dev-deployment-20260911.md) — 2026-09-11，回执/Judge 检查、双分母、pending 计数与完整任务页验收指针。
+- [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md) — Prompt/Skills/知识分工、测试样例隔离与实际交付验证入口。
