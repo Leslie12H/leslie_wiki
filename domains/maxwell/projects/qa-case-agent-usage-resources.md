@@ -21,3 +21,9 @@ links: [evolve-maxwell-tuning-receiving]
 - 冒烟证据会话：`thr_01M27PAKZMSZ27Q0G9PHJRS7KN`。单轮检索与 4 条虚构需求用例成功交付，不代表完整 PRD 与长任务运行稳定性已验收。
 
 PRD 入口索引不等于正文知识。加入实际规则必须记录来源、版本与批准状态；过期规则退出检索。EVOLVE 历史基线保持原快照，新评测应捕获更新后完整资源和知识范围。
+
+## 长任务验收边界
+
+**Why:** 放大执行预算只能解决提前超时，不能证明任务能够跨进程恢复。2026-09-11 的本地修复用模拟时间分别验证长时间运行后按远端任务 ID 恢复、预算耗尽取消，以及不隐式重派；这些测试不等于线上连续运行数小时的验收。
+
+**How to apply:** 检查 `services/evolve-server/internal/modules/evolve/domain/executor/executor.go` 与 `internal/app/integration/a2a/config.go` 的预算及重试默认值，再检查目标的实际 limits。已有目标不会因代码默认值变化自动更新。异步单任务恢复与进程内多轮编排要分开验收；后者需单独验证逐轮状态持久化。测试指针为 evaluation 下 `live_test.go` 的 `TestLongLiveRun*` 及 `processing_window_test.go`。预计两小时的任务应配置大于预计耗时的预算，并明确允许多少次完整重试。
