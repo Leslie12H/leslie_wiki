@@ -47,3 +47,9 @@ PRD 入口索引不等于正文知识。加入实际规则必须记录来源、�
 **Why:** 2026-09-11 工具管理页刷新并同步六项已有工具后，实际知识 ingest 成功，但 critique 返回缺少 reviewer endpoint。代码显示 critique 读取静态全局方法注册表，而正常判卷与校准使用业务模型配置和凭据工厂；工具 schema 同步只能消除入口契约阻塞。
 
 **How to apply:** 检查 `application/commands/business_basis.go` 的 CritiqueCases 是否在 Work 访问检查后使用业务模型工厂；不可通过全局密钥绕开业务隔离。对应回归见 `business_basis_test.go`。用户要求预算宽松且免填，修复分支 `codex/evolve-readiness-ui-20260911` 将新目标默认设为 3h/1 Attempt，编辑入口置于高级设置，PATCH 保留其他已有 limits。发布与已有目标配置必须分别核验；本条记录时修改尚未部署，不能据默认值声称线上旧目标已经更新。UI 长标题布局、Case 同 revision 内容冲突校验也在该分支，线上 Skill 及真实新 Run 仍须后续核验。
+
+## 真实用户路径检查
+
+**Why:** 2026-09-11 真实页面检查发现确认后需额外生成正式资产、启动表单暴露内部引用、目录版本数冒充当前清单数量；首页 limit:1 配合 Run API 时间正序导致显示首轮状态。完整用户体验不能由单接口或静态预览验收替代。
+
+**How to apply:** 分支 `codex/evolve-readiness-ui-20260911` 的 EvolveWorkspaceStore、DraftsPanel、StartRunDialog、CasesPanel 包含本地修复与回归。截图和逐步边界见该工作树 `.tmp/user-flow-audit/report.md`。检查时未发布、未启动新真实 Run，仍需用正常页面完整走通，不依赖手工改库、填引用或改 JSON。业务模型与凭据应一次接入、后续复用；读取失败应显示未知，不能保留过期成功。
