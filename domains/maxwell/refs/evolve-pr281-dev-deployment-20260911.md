@@ -49,3 +49,7 @@ UI 分支把 text envelope 摘要改为 Markdown 正文，维度条可打开标�
 实现与验收指针：Maxwell 分支 `codex/evolve-result-details-20260911` 的 `RunComparisonStore.ts`、`panels/RunComparison.tsx`、`WorkbenchStore.test.mjs`，及 `docs/evolve-prd-run-root-cause-20260911.md`。本地实现为同任务历史 Run 对照，发布状态须查该分支后续 PR 和部署记录。
 
 **Why:** 候选对比只覆盖候选最新 Run，不能替代同一目标多次运行的稳定性观察；错误不能进入有效评分分母。**How to apply:** 核查 Case/Judge/聚合与执行模式，缺失或变更时仅并列看证据；按不可变 Case ID 对照，缺分不补零，样本均值不等于统计显著提升。
+
+## 2026-09-11 评测体系复盘入口
+
+参见 Maxwell 分支 `codex/evolve-result-details-20260911` 的 `docs/evolve-evaluation-system-audit-20260911.md`。**Why:** 历史 Run 前端对照与服务端候选比较的可信度检查尚不对齐；展示均分差不能证明版本提升。**How to apply:** 复用服务端 JudgeQuality/VariantApplication 证据与可比性规则，分别验证业务交付、运行收敛、评分质量和优化留出集；不要从本轮六题回归推定全部能力通过。

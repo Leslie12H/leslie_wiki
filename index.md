@@ -68,3 +68,5 @@
 - [PRD 回归异常追查](domains/maxwell/refs/evolve-pr281-dev-deployment-20260911.md) — 模型 stop 空交付、model_stream_failed 与双层重试预算、取消确认边界，及正文/维度详情 UI 修复入口。
 
 - [EVOLVE 历史运行对比入口](domains/maxwell/refs/evolve-pr281-dev-deployment-20260911.md) — 2026-09-11，同任务 Run 对照、有效评分分母和可比性边界的实现指针。
+
+- [EVOLVE 评测体系复盘](domains/maxwell/refs/evolve-pr281-dev-deployment-20260911.md) — 2026-09-11，业务完成标准、Run 可比性证据与端到端验收边界。
