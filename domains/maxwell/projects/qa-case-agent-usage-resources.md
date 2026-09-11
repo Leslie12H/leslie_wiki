@@ -66,3 +66,5 @@ PRD 入口索引不等于正文知识。加入实际规则必须记录来源、�
 **设计一致性补充（2026-09-11）:** 用户指出独立芯片图标、大号数字及 16px 圆角与已有页面割裂。启动摘要复用 Tag 与 Collapse plain，字号、间距、圆角消费 Studio tokens；保持对象/范围优先，不另建局部视觉体系。验收截图指针 `.tmp/user-flow-audit/06-start-card-aligned.png`。
 
 **结果区一致性（2026-09-11）:** 将摘要解释收进共用 Statistic 的可选 description，维度宽屏双列/窄屏单列，标题保持中性而未达线信息着色；保留详情入口与减少动态效果处理。侧栏已产出结果时优先解释和优化。页脚数量取当前冻结清单，未知显示破折号。Why 是减少长条图和散落说明带来的阅读负担；How 的代码入口为 RunOutcomeSummary、WorkbenchResults、EvolveTaskOverview 与 workbench.css，验收指针 `.tmp/user-flow-audit/07-results-workspace-wide.png`、`08-results-workspace-narrow.png`。1440px/584px 模拟数据组件验证不能替代线上验收。
+
+**PR #284 DEV 发布（2026-09-11）:** 用户授权后，通过 maxwell-cicd 发布已合并 main `a158e6c1` 的 Studio 与 EVOLVE API/Worker，迁移关闭。部署及运行时验证成功，证据指针 https://github.com/world-sim-dev/maxwell-ai/actions/runs/34593101119 。Why 是让免填预算、审查接入和结果交互修复生效；How 是核对 PR 合并和 CI 后选定组件发布。未更改旧目标预算、未同步线上 Skill 资源、未发起新的真实评测，不能由发布成功推断完整 PRD 走通。
