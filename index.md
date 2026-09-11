@@ -93,3 +93,5 @@
 - 结果摘要、维度布局和侧栏一致性：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
 
 - PR #284 DEV 发布与真实评测边界：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
+
+- [监控代码源范围阻断认领](domains/vidmuse/admin/pitfalls/monitoring-code-scope-blocks-claim.md) — 安装权限扩展、取证令牌范围、PR 63 与恢复核验指针（2026-09-11）。
