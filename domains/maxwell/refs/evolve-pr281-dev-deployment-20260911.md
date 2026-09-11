@@ -43,3 +43,9 @@ links: []
 忠实性题目标 gpt-5.6-sol 仅一次模型调用，finishReason=stop、textLength=40、outputTokens=33、toolCallCount=0，约 6.7s 正常结束；EVOLVE 收到的声明与远端原消息一致，不是输出截断。批注首次和全文题在加载 Skill 后于 11:48:16.123 同时出现 model_stream_failed，内部重试期间撞上 EVOLVE 两分钟总时限。Provider 底层错误仍缺失，不断言限流或固定超时。全文取消在 11:49:12.964 已落库，但回复未赶上 EVOLVE 5 秒取消期限；后续幂等清理确认。
 
 UI 分支把 text envelope 摘要改为 Markdown 正文，维度条可打开标准、逐题分数和理由，再查看 Trial。Studio typecheck/check 和本地真实组件点击验收通过；尚未部署 UI，也未修改目标 Prompt/预算。**How to apply:** Runtime completed 仅证明运行正常终止，不证明交付成果；双层重试需共同预算，取消已生效与客户端收到确认须区分。
+
+## 2026-09-11 运行对比入口
+
+实现与验收指针：Maxwell 分支 `codex/evolve-result-details-20260911` 的 `RunComparisonStore.ts`、`panels/RunComparison.tsx`、`WorkbenchStore.test.mjs`，及 `docs/evolve-prd-run-root-cause-20260911.md`。本地实现为同任务历史 Run 对照，发布状态须查该分支后续 PR 和部署记录。
+
+**Why:** 候选对比只覆盖候选最新 Run，不能替代同一目标多次运行的稳定性观察；错误不能进入有效评分分母。**How to apply:** 核查 Case/Judge/聚合与执行模式，缺失或变更时仅并列看证据；按不可变 Case ID 对照，缺分不补零，样本均值不等于统计显著提升。
