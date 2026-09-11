@@ -70,3 +70,5 @@
 - [Tool 重建日志样本](domains/vidmuse/admin/pitfalls/tool-daily-updating-hides-existing-data.md) — 2026-09-11：30 分钟 332 次分析、145 个 Thread、6 次成功日重建；日志不支持推算 DB 负载
 
 - Tool 指标发布实现与迁移检查：见 [tool daily 更新门禁](domains/vidmuse/admin/pitfalls/tool-daily-updating-hides-existing-data.md) 的本地实现指针（2026-09-11）。
+
+- [Tool 发布 PR review](domains/vidmuse/admin/pitfalls/tool-daily-updating-hides-existing-data.md)：数据库工作量、人口完整性与 FLOAT 比较边界（2026-09-11）。

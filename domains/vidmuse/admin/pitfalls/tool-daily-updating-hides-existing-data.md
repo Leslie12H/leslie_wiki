@@ -34,3 +34,7 @@ main tailer 每轮可见 recent-priority 和增量处理；facts_reconcile 在�
 **Why:** 已发布分子必须配套同版人口分母；InnoDB 的 INSERT SELECT 不能直接当作普通一致性 SELECT 使用。
 
 **How to apply:** 在同一 REPEATABLE READ 事务内用普通 SELECT 分页读取人口，和汇总、完成标记一起提交；启用旧快照读取前完成 Facts 与预期错误物化迁移，并排除旧重建 Worker 混跑。
+
+## 2026-09-11 PR Review 指针
+
+PR https://github.com/world-sim-dev/vidmuse-admin/pull/871 的 review 记录见分支操作文档。不要把测试通过视作生产降载验收：人口快照重写、窗口 DISTINCT 聚合、历史 Facts 完整性分别需要验证。MySQL FLOAT 精度差异也可能使精确比较误判更新，比较策略必须与存储精度相容，同时保留真实数值变化测试。
