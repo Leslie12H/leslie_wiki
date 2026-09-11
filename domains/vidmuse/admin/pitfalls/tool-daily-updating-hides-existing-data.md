@@ -26,3 +26,11 @@ ACK 生产部署 prod-vidmuse-admin-analytics-worker，Pod 7cb6665474-9zr9j，ma
 6 条 tool_daily_consume 均 processed=1、failed=0，完成时间 10:30:35、10:35:49、10:41:06、10:46:20、10:51:35、10:56:51；remaining 依次 5、5、5、5、10、9（包括当天不可消费记录，不等于全部历史日积压）。相邻完成间隔约 314–317 秒。日志无单日开始时间、日期、扫描/写入行数，不能将间隔直接算为重建耗时，也不能推导数据库 CPU/IO 压力。
 
 main tailer 每轮可见 recent-priority 和增量处理；facts_reconcile 在样本内均 checked=0/repaired=0。应优先核对重复 Thread 的源 update_time、版本和维度门禁，而非将重复归咎于 facts 对账；尚未把先前 09-03 至 09-09 标脏记录精确关联到具体 Thread/循环。新增量写方案未实现，当前日志不能代替其压测。诊断只读取日志，未触发重建。
+
+## 2026-09-11 本地实现指针
+
+后续实现位于 vidmuse-admin 分支 `codex/tool-metrics-published-state`，部署前置条件、额外读写开销、验收和回滚见该分支 `docs/operations/tool-metrics-publication.md`。本地测试不代表生产已部署或数据库负载已下降。按日重建仍保留；Thread 增量聚合尚未实现。
+
+**Why:** 已发布分子必须配套同版人口分母；InnoDB 的 INSERT SELECT 不能直接当作普通一致性 SELECT 使用。
+
+**How to apply:** 在同一 REPEATABLE READ 事务内用普通 SELECT 分页读取人口，和汇总、完成标记一起提交；启用旧快照读取前完成 Facts 与预期错误物化迁移，并排除旧重建 Worker 混跑。

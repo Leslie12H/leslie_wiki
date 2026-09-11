@@ -68,3 +68,5 @@
 - [Tool 日汇总更新状态隐藏已有数据](domains/vidmuse/admin/pitfalls/tool-daily-updating-hides-existing-data.md) — 2026-09-11 DMS 验证反复 thread_upsert 标脏 + 前端拒收 updating，不能把暂无数据直接当作未回填
 
 - [Tool 重建日志样本](domains/vidmuse/admin/pitfalls/tool-daily-updating-hides-existing-data.md) — 2026-09-11：30 分钟 332 次分析、145 个 Thread、6 次成功日重建；日志不支持推算 DB 负载
+
+- Tool 指标发布实现与迁移检查：见 [tool daily 更新门禁](domains/vidmuse/admin/pitfalls/tool-daily-updating-hides-existing-data.md) 的本地实现指针（2026-09-11）。
