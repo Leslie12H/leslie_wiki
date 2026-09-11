@@ -74,3 +74,5 @@
 - [Tool 发布 PR review](domains/vidmuse/admin/pitfalls/tool-daily-updating-hides-existing-data.md)：数据库工作量、人口完整性与 FLOAT 比较边界（2026-09-11）。
 
 - Tool 增量维护目标设计：见 tool-daily-updating-hides-existing-data 的 2026-09-11 设计指针；尚未实现。
+
+- [生产 Admin 表退役审计](domains/vidmuse/admin/refs/prod-table-retirement-audit.md)：三张注册表候选、旧日汇总退役边界与生产只读核验入口（2026-09-11）。
