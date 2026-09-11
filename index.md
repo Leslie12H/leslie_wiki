@@ -62,3 +62,5 @@
 - [Admin 服务 JWT 权限与有效期](domains/vidmuse/admin/pitfalls/service-jwt-permissions-and-expiry.md) — 部署鉴权、type 字段映射、权限范围与 WAF 假 200 的验证指针
 
 - [EVOLVE PR 281 DEV 发布证据](domains/maxwell/refs/evolve-pr281-dev-deployment-20260911.md) — 2026-09-11，0007 迁移、API/Worker 与 Studio 188 发布和验收指针。
+
+- [广告画布 PRD 六题回归](domains/maxwell/refs/evolve-pr281-dev-deployment-20260911.md)：4 pass / 1 fail / 1 error，含重试成功及取消清理收敛的边界。
