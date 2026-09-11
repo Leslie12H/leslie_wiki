@@ -27,3 +27,7 @@ PRD 入口索引不等于正文知识。加入实际规则必须记录来源、�
 **Why:** 放大执行预算只能解决提前超时，不能证明任务能够跨进程恢复。2026-09-11 的本地修复用模拟时间分别验证长时间运行后按远端任务 ID 恢复、预算耗尽取消，以及不隐式重派；这些测试不等于线上连续运行数小时的验收。
 
 **How to apply:** 检查 `services/evolve-server/internal/modules/evolve/domain/executor/executor.go` 与 `internal/app/integration/a2a/config.go` 的预算及重试默认值，再检查目标的实际 limits。已有目标不会因代码默认值变化自动更新。异步单任务恢复与进程内多轮编排要分开验收；后者需单独验证逐轮状态持久化。测试指针为 evaluation 下 `live_test.go` 的 `TestLongLiveRun*` 及 `processing_window_test.go`。预计两小时的任务应配置大于预计耗时的预算，并明确允许多少次完整重试。
+
+## 配置归属与同步核验
+
+2026-09-11：PR #282 移出新增 QA 配置副本，保留线上 Studio 配置；后续以 Studio 当前资源为准。调优 Agent 的官方 manifest 与业务实例 ID 不同，核验须从 Preset 实际绑定出发，逐项比较正文和 Skill 附属文件，不能只比较名称或版本。审计入口：maxwell-ai 工作树 `.tmp/evolve-result-details-20260911/.tmp/tuning-preset-audit/report.md`。该审计发现内容与绑定漂移，未执行线上覆盖。

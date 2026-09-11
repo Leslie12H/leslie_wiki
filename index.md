@@ -75,3 +75,5 @@
 - [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md) — Prompt/Skills/知识分工、测试样例隔离与实际交付验证入口。
 
 - 长任务预算、恢复与多轮编排验收边界：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
+
+- Agent 配置归属与实际绑定核验：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
