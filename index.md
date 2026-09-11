@@ -49,6 +49,9 @@
 - [EVOLVE 调优 Agent 运行逻辑审计](domains/maxwell/pitfalls/evolve-tuning-agent-loop-audit-20260909.md) — 2026-09-09 main 审计：双冻结路径无通知、确认不校验 payload、产物形状对 Agent 不可见、context 混入被测输入等 8 点
 - [EVOLVE 对 Maxwell 目标的调优接应](domains/maxwell/projects/evolve-maxwell-tuning-receiving.md) — 2026-09-09 进行中：分支/拍板点（基准由 EVOLVE 获取、level 由预检决定、不用累计 patch）/第二轮待追加项
 
+### sisyphus — [质量平台](domains/sisyphus/README.md)
+- [Sisyphus 质量平台](domains/sisyphus/README.md) — quality_dashboard 日投影/发版门禁、automation_triggers、Agent Token 与 project 边界；调度模型与 admin 不同
+
 ## Disciplines(职业知识)
 - [testing](disciplines/testing/README.md) — 测试方法论 *(暂空)*
 - [dev](disciplines/dev/README.md) — 开发实践 *(暂空)*
