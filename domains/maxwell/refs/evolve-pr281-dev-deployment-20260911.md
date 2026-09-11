@@ -35,3 +35,11 @@ links: []
 - 本轮 7 Attempts 的 interaction_count 均为 0，没有执行候选对比或优化搜索，不能从 completed 推断 PR 281 的所有新增能力已端到端验收。
 
 **How to apply:** 优先从上述 Run 的完整 Trial 查看输入、输出、Judge 理由与重试记录；区别执行完成、真实用例产出、判卷通过、远端清理完成四种结果。整体通过比例 4/6，剔除错误项的有效评分通过率 4/5，两个分母不可混用。
+
+## 2026-09-11 异常根因追查与 UI 修复入口
+
+深查入口：Maxwell 分支 `codex/evolve-result-details-20260911` 的 `docs/evolve-prd-run-root-cause-20260911.md`；关联 dev Agent 的 agent_runs/agent_thread_events 和 dev-maxwell-agent-temporal-worker 日志，避免从 Judge 摘录推定模型过程。
+
+忠实性题目标 gpt-5.6-sol 仅一次模型调用，finishReason=stop、textLength=40、outputTokens=33、toolCallCount=0，约 6.7s 正常结束；EVOLVE 收到的声明与远端原消息一致，不是输出截断。批注首次和全文题在加载 Skill 后于 11:48:16.123 同时出现 model_stream_failed，内部重试期间撞上 EVOLVE 两分钟总时限。Provider 底层错误仍缺失，不断言限流或固定超时。全文取消在 11:49:12.964 已落库，但回复未赶上 EVOLVE 5 秒取消期限；后续幂等清理确认。
+
+UI 分支把 text envelope 摘要改为 Markdown 正文，维度条可打开标准、逐题分数和理由，再查看 Trial。Studio typecheck/check 和本地真实组件点击验收通过；尚未部署 UI，也未修改目标 Prompt/预算。**How to apply:** Runtime completed 仅证明运行正常终止，不证明交付成果；双层重试需共同预算，取消已生效与客户端收到确认须区分。

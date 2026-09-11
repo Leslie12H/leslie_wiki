@@ -64,3 +64,5 @@
 - [EVOLVE PR 281 DEV 发布证据](domains/maxwell/refs/evolve-pr281-dev-deployment-20260911.md) — 2026-09-11，0007 迁移、API/Worker 与 Studio 188 发布和验收指针。
 
 - [广告画布 PRD 六题回归](domains/maxwell/refs/evolve-pr281-dev-deployment-20260911.md)：4 pass / 1 fail / 1 error，含重试成功及取消清理收敛的边界。
+
+- [PRD 回归异常追查](domains/maxwell/refs/evolve-pr281-dev-deployment-20260911.md) — 模型 stop 空交付、model_stream_failed 与双层重试预算、取消确认边界，及正文/维度详情 UI 修复入口。
