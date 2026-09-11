@@ -87,3 +87,5 @@
 - 真实用户评测路径、一次确认准备与首页旧 Run 状态坑：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
 
 - 启动摘要层级、结果加载语义与交互验收：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
+
+- 启动摘要统一现有 Tag、Collapse 与设计 tokens：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。

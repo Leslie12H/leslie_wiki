@@ -62,3 +62,5 @@ PRD 入口索引不等于正文知识。加入实际规则必须记录来源、�
 **How:** 启动卡片按对象/用例数、配置明细、自动执行流程分层；高级设置默认收起。结果使用独立详情加载状态，后台刷新保留现有内容；逐题对照收起，维度可进入详情，减少动态效果模式停用结果动画。
 
 **证据指针:** Maxwell 分支 `codex/evolve-readiness-ui-20260911` 的 `dialogs/StartRunDialog.tsx`、`panels/WorkbenchResults.tsx`、`panels/RunComparison.tsx`；本地 `.tmp/user-flow-audit/05-start-card.png`。584px 真实组件预览验证启动高级设置、统计开合、维度详情、逐题对比及无页面横向溢出。模拟数据预览不能代替 DEV 部署或真实评测验收。
+
+**设计一致性补充（2026-09-11）:** 用户指出独立芯片图标、大号数字及 16px 圆角与已有页面割裂。启动摘要复用 Tag 与 Collapse plain，字号、间距、圆角消费 Studio tokens；保持对象/范围优先，不另建局部视觉体系。验收截图指针 `.tmp/user-flow-audit/06-start-card-aligned.png`。
