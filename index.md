@@ -81,3 +81,5 @@
 - 调优资源同步与 PR #282 DEV 验证：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
 
 - 新 Skill 试用、知识工具契约与 Case 版本/预算启动阻塞：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
+
+- 默认免填预算、业务审查模型接入与工具契约分层排障：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。

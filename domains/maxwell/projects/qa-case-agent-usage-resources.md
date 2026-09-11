@@ -41,3 +41,9 @@ PRD 入口索引不等于正文知识。加入实际规则必须记录来源、�
 **Why:** 2026-09-11 用 revision 802 需求摘要重新准备评测，实际会话 `agent_session_93305091c35e8f3b341296bf5c4a08f0`、运行追踪 `thr_01M27WECB2WGV2W86QF7BSYJES` 记录了 case-design、judge-design、knowledge-ingest、evolve-workspace-view 加载。知识草稿/ingest 操作被工具 inputSchema oneOf 拒绝；未见 critique 或 Judge 校准实际执行。Prompt/Skills 同步不能代替工具契约同步。Agent 曾将报告批注推断成套件 DSL 自动联动，人工审阅后纠正；该推断不能作为需求或评分依据。
 
 **How to apply:** 同时检查 Preset 工具 schema 与后端方法目录；Case 内容发生变化时使用真实 supersedesCaseRef 与新 revision，完全相同的旧题可幂等复用。Studio FreezeDraft 只把 payload.cases 纳入最终 manifest，不能遗漏旧题并声称会自动拼回。核对真实冻结清单而非目录累计数量。此轮 cases v5 八题与 judge v7 已冻结；新 Run 尚未启动：现有目标仍为 2m/maxAttempts2，重复登记同 Preset 会复用旧目标而不应用新 limits，自动审批拦截了不匹配预算的启动。后续从该会话和目标实际 limits 重新核验，勿把旧 Run 结果当作本轮。
+
+## 默认预算与审查配置排障
+
+**Why:** 2026-09-11 工具管理页刷新并同步六项已有工具后，实际知识 ingest 成功，但 critique 返回缺少 reviewer endpoint。代码显示 critique 读取静态全局方法注册表，而正常判卷与校准使用业务模型配置和凭据工厂；工具 schema 同步只能消除入口契约阻塞。
+
+**How to apply:** 检查 `application/commands/business_basis.go` 的 CritiqueCases 是否在 Work 访问检查后使用业务模型工厂；不可通过全局密钥绕开业务隔离。对应回归见 `business_basis_test.go`。用户要求预算宽松且免填，修复分支 `codex/evolve-readiness-ui-20260911` 将新目标默认设为 3h/1 Attempt，编辑入口置于高级设置，PATCH 保留其他已有 limits。发布与已有目标配置必须分别核验；本条记录时修改尚未部署，不能据默认值声称线上旧目标已经更新。UI 长标题布局、Case 同 revision 内容冲突校验也在该分支，线上 Skill 及真实新 Run 仍须后续核验。
