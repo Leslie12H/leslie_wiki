@@ -35,3 +35,9 @@ PRD 入口索引不等于正文知识。加入实际规则必须记录来源、�
 ## 调优资源同步与发布验证
 
 2026-09-11：通过 Studio 更新调优 Preset 实际绑定的 Prompt 与差异 Skill、补充三个 Skill；回读正文与文件哈希核验完成。审计快照位于 Maxwell 根目录对应本地任务的 `/private/tmp/tuning-resources-after.txt`，具体在线内容仍以 Studio 为准。保存 Preset 时 UI 自动补入 backend resource_url 工具，其他原有工具保留；核对不能只看 skillIds。PR #282 合并版本与 DEV 发布结果见 [发布工作流](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34582708564)，范围为 Studio 和 EVOLVE，迁移关闭。运行就绪和配置一致不等于真实评测已重新跑通。
+
+## 新 Skill 实际试用与启动阻塞
+
+**Why:** 2026-09-11 用 revision 802 需求摘要重新准备评测，实际会话 `agent_session_93305091c35e8f3b341296bf5c4a08f0`、运行追踪 `thr_01M27WECB2WGV2W86QF7BSYJES` 记录了 case-design、judge-design、knowledge-ingest、evolve-workspace-view 加载。知识草稿/ingest 操作被工具 inputSchema oneOf 拒绝；未见 critique 或 Judge 校准实际执行。Prompt/Skills 同步不能代替工具契约同步。Agent 曾将报告批注推断成套件 DSL 自动联动，人工审阅后纠正；该推断不能作为需求或评分依据。
+
+**How to apply:** 同时检查 Preset 工具 schema 与后端方法目录；Case 内容发生变化时使用真实 supersedesCaseRef 与新 revision，完全相同的旧题可幂等复用。Studio FreezeDraft 只把 payload.cases 纳入最终 manifest，不能遗漏旧题并声称会自动拼回。核对真实冻结清单而非目录累计数量。此轮 cases v5 八题与 judge v7 已冻结；新 Run 尚未启动：现有目标仍为 2m/maxAttempts2，重复登记同 Preset 会复用旧目标而不应用新 limits，自动审批拦截了不匹配预算的启动。后续从该会话和目标实际 limits 重新核验，勿把旧 Run 结果当作本轮。
