@@ -77,3 +77,5 @@
 - 长任务预算、恢复与多轮编排验收边界：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
 
 - Agent 配置归属与实际绑定核验：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
+
+- 调优资源同步与 PR #282 DEV 验证：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。

@@ -31,3 +31,7 @@ PRD 入口索引不等于正文知识。加入实际规则必须记录来源、�
 ## 配置归属与同步核验
 
 2026-09-11：PR #282 移出新增 QA 配置副本，保留线上 Studio 配置；后续以 Studio 当前资源为准。调优 Agent 的官方 manifest 与业务实例 ID 不同，核验须从 Preset 实际绑定出发，逐项比较正文和 Skill 附属文件，不能只比较名称或版本。审计入口：maxwell-ai 工作树 `.tmp/evolve-result-details-20260911/.tmp/tuning-preset-audit/report.md`。该审计发现内容与绑定漂移，未执行线上覆盖。
+
+## 调优资源同步与发布验证
+
+2026-09-11：通过 Studio 更新调优 Preset 实际绑定的 Prompt 与差异 Skill、补充三个 Skill；回读正文与文件哈希核验完成。审计快照位于 Maxwell 根目录对应本地任务的 `/private/tmp/tuning-resources-after.txt`，具体在线内容仍以 Studio 为准。保存 Preset 时 UI 自动补入 backend resource_url 工具，其他原有工具保留；核对不能只看 skillIds。PR #282 合并版本与 DEV 发布结果见 [发布工作流](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34582708564)，范围为 Studio 和 EVOLVE，迁移关闭。运行就绪和配置一致不等于真实评测已重新跑通。
