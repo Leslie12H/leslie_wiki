@@ -112,19 +112,23 @@ links: [vidmuse-a2a-executor, evolve-maxwell-tuning-receiving]
 
 **How to apply:** 从同一条 Card 请求沿 CDN 条件源站 → ALB/Ingress → 应用请求 origin 核对，并在可信代理边界修正公开地址传递或服务自身的公开 URL 配置。当前待实施方案是在 API 规则范围显式覆盖 `X-Forwarded-Host=agent.sandaii.cn`、`X-Forwarded-Proto=https`；按[阿里云自定义请求头文档](https://help.aliyun.com/zh/cdn/user-guide/configure-custom-request-headers/)使用“增加 + 是否允许重复=不允许”，不要误选用于正则操作的“替换”。保留实际回源 Host `maxwell-agent-dev.sandaii.cn` 以匹配 ALB 路由。该方案需改后取证，不能从控制台配置推断已生效。修复后核验到达 Go 的转发头值，并重新 GET Card 确认所有接口与登记 URL 同源，再做执行器预检；最后才在 Nextplay 业务跑选定基准与用例。此次记录不代表已修改云配置、部署修复或发起 Nextplay 测试。
 
-## 2026-09-12 五文件证据不能仅靠 Prompt 接通
+## 2026-09-12 五文件证据：优先复用 evidence.output
 
-继续对照主干 `4a91b778` 与部署版本 `a158e6c1` 的 `services/evolve-server/internal/modules/evolve/application/execution/contract.go:305-325,389-393` 核对：Envelope 声明 `evidence.files`，返回 TrialResult 的赋值却未传递这一字段。沿 Worker、Runtime 文件接口与 EvidenceSet 冻结路径检查，不能因 schema 有字段就认定已有 contextId+path 下载、sha256 校验和五文件持久化链路。
+本轮继续对照部署版 `a158e6c1` 与主干 `4a91b778`，收窄之前把通用文件下载链路当作接入前提的建议。`evidence.files` 没有传入 TrialResult 的源码事实仍成立，但 `evidence.output` 可以承载任意合法 JSON；业务 Adapter 可读取五个文件的真实内容，组装到 output 的业务对象中，复用已有保存和判卷链路。只返回 name/path/sha256 清单仍不等于提供了真实内容。
 
-**Why:** 调整外层 Prompt 只能改变其输出内容，不能补 EVOLVE 的 A2A DataPart 投影、文件读取和证据保存实现。Runner 的“文件清单已返回”和评测证据“真实字节可复核”是两项不同验收。
+- `services/evolve-server/internal/modules/evolve/application/execution/contract.go:33-35,341-365,389-393,520-549`：检查 JSON output 的解析、实际请求/执行器限制和 EvidenceRecord 编码。绝对上限为 1 MiB；仍须遵守本次请求或执行器配置中更小的限制，不能把 1 MiB 当作统一可用预算。
+- `services/evolve-server/internal/modules/evolve/application/evaluation/live.go:668-689,889-917`：核对 output 随每次执行证据写入 CAS，并以正文或 OutputRef 进入冻结 EvidenceSet。
+- `services/evolve-server/internal/modules/evolve/application/evaluation/evidence_output.go:26-50`：核对归属和哈希校验后读取 output，供 Judge 使用。不要把已有 output 取证误写为缺少全部文件内容保存能力。
 
-**How to apply:** 明确两侧数据转换及文件取回契约后补实现，再验收文件存在、哈希一致、冻结后可读取及评分可追溯。目标基准可从 `targetProfile.targetRef` 或 Case 的明确输入映射，完整 SP/Skill 候选需映射到 Runner 实际要求；`cas://contentRef` 不能自动视为远端可下载资源。Nextplay 业务存在多个 Preset，必须显式选定基准，不能从业务名或候选运行 Agent 的名称推断。此次没有选定 Nextplay 基准或验证这些映射。
+**Why:** 输入、候选、实际应用回执与业务文件读取属于 Adapter 的适配职责；EVOLVE 已有 JSON 输出的持久化、冻结和判卷路径。不能因为旁路字段 evidence.files 未保存，就要求先给 EVOLVE 建通用 Runtime 文件下载管线。需要独立附件、大文件或超出现有限额时，再明确新的需求和扩展边界。
+
+**How to apply:** 先读线上绑定的 Runner Skill 脚本，核对并补齐执行请求到 Runner 字段、候选实际应用、回执及五文件真实内容到 trial-evidence DataPart 的映射；五文件内容放进 evidence.output 的业务对象，避免仅放在顶层 evidence.files。主干 `4a91b778` 搜索 `maxwell-candidate-runner` 无匹配，不能从仓库搜索结果推断线上脚本全部缺失。目标基准、完整 SP/Skill 资源及回执仍须显式映射；`cas://contentRef` 不能自动视为远端可下载资源。Nextplay 有多个 Preset，本次没有选定基准、读取线上 Skill 脚本或验证适配执行。
 
 
 ## 2026-09-12 同源失败后的客户端缓存与重试边界
 
 部署版本 `a158e6c1` 的核验入口：`services/evolve-server/internal/app/integration/a2a/registry.go:745-769` 中 `a2aClient` 仅在 `fetchCard` 与 `NewFromCard` 均成功后赋值客户端缓存；同源检查失败不产生成功客户端，下次调用会重新获取 Card。`registry.go:319-333` 中该失败直接返回，尚未进入 SendMessage。
 
-**Why:** 本次阻断来自失败的 Card 初始化，不需要通过重启 EVOLVE、重新登记或修改同源安全检查来清除一个并不存在的成功缓存。错误提示问题可单独沿 `services/evolve-server/internal/modules/evolve/application/execution/ad_hoc.go:66-76` 的 `AdHocDispatchFailure` 检查：其默认分支把此类 dispatch_failed 也附上 uncertain 文案；细分“尚未发送”和“发送后结果未知”是提示与错误分类改进，不是修复本次同源阻断的前置改动。
+**Why:** 本次阻断来自失败的 Card 初始化，不需要通过重启 EVOLVE、重新登记或修改同源安全检查来清除一个并不存在的成功缓存。错误提示问题可单独沿 `services/evolve-server/internal/modules/evolve/application/execution/ad_hoc.go:66-76` 的 `AdHocDispatchFailure` 检查：其默认分支把此类 dispatch_failed 也附上 uncertain 文案；细分“尚未发送”和“发送后结果未知”是提示与错误分类改进，不是修复本次同源阻断的前置改动。最小代码改进可将已确定发送前的 Card origin 失败复用为 `preflight_failed`，该函数已有豁免；保留同源检查，无需新增错误枚举。此为待评审方案，尚未修改代码。
 
 **How to apply:** 先让实际 Card 所有接口与已登记 URL 同源，读取 Card 验证后再执行预检或获准的调用；现有失败记录不会自行变成功。若下一次仍失败，以当次 Card、错误阶段和新调用证据定位，不因旧 uncertain 文案假定任务已发送，也不把本结论扩展为所有已缓存成功客户端均会自动刷新。配置同源修正和完整 Nextplay 协议/文件证据接通仍须分别验收。
