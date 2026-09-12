@@ -117,3 +117,12 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 - 捕获阶段验证最终 USTAR 路径（包括补充文件前缀）；证明文件通过目录描述符、独占临时文件及原子替换发布，现有或竞态符号链接不能改写目标文件。回归覆盖真实 Redis 容量竞态、远程完成/中断与链接目标不变。
 - GitHub 完整 CI 曾暴露 3 个启动 fixture 失败和 14 个共享 namespace 导入错误；修复测试上下文及 fixture 恢复，不能弱化运行时校验。相关回归 340 项通过、1 项跳过，最终终态 5 项通过；完整套件以当前 CI 为准。
 - 运行中 Actions 日志下载可能只返回冻结前缀。判断失败应优先取完成后的 JUnit artifact/check annotations；看到日志停在某个百分比不等于进程卡死。
+
+## 2026-09-12 入口隔离与第二批审查
+
+**Why:** 第一批修复通过完整 CI 后，自动审查在等待期间又提出新问题；只盯 CI 会漏掉真实的合并阻塞。冻结用户输入也不能阻止工具调用、账号事件或开启 auto-mode 向同一 Thread 注入额外工作。
+
+**How to apply:** 同时轮询 head、必需 checks 与未解决 reviewThreads；审查的新发现应在 CI 运行时就处理。入口/快照修复见 AION [c526d1ac](https://github.com/world-sim-dev/aion/commit/c526d1ac78cfa595f4ddd566b9debf6395c46abf) 及[对应 CI](https://github.com/world-sim-dev/aion/actions/runs/34688339426)，最新合并事实仍读 PR #1754。
+
+- 原生导入拒绝普通工具与账号事件，控制信号只允许取消类；检查必须先于任务写入、Redis 和 Runner 重启。准备中 Thread 的项目/账号列表在 SQL 分页前过滤 marker，context 保持延迟加载；取消/过期不释放 marker。测试是实际 SQLite 查询，不是 MySQL 执行计划或线上负载验证。
+- 必需的结构化路径（包括裸文件名和截断输出指针）必须解析到已捕获目录；DSL 必须为 JSON 对象。捕获为两份 replay 元数据预留文件额度，导出复核最终数量。运行清单与终态均使用既有有界幂等重试，永久 4xx 不重试。相关回归及最终控制入口检查的复现证据放在 PR，不将这些检查当作真实 DEV 调优证明。
