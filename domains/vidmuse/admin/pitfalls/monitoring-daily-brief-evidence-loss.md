@@ -26,3 +26,13 @@ links: [monitoring-problem-title-vs-incident-report]
 **Why:** 2026-09-11 的生产诊断返回 HTTP 400 / `230002`。截图里有抓虫机器人，但实际 token 对应通用后台机器人；专用 App ID 未配置导致客户端回退。仅看显示名称或 HTTP 状态会误判为未入群、卡片过长。
 
 **How to apply:** 对照 Admin `service/feishu_bug_bot/clients.py` 的实际凭据选择，读取所选 App ID 与 `/bot/v3/info/` 返回身份，再核对目标群。专用 App ID 与 Secret 应成对配置。不要打印 Secret/token；先保留业务错误码再决定是否重试。卡片正文长度与整卡字节预算是独立校验，来源折叠只改善展示。当前配置、代码和发布状态到 Admin `docs/monitoring-daily-brief-quality.md` 及生产现场核验，不从历史快照推断。
+
+## 2026-09-12 定时生成失败排查
+
+**Why:** 模型 HTTP 200 不证明 JSON 有效；将格式错误归为不可重试，会阻断当天日报。同窗复现使用当前调查数据，不能冒充历史响应证据。
+
+**How to apply:** 查 SLS 的 synthesis_finished/send_deferred/send_failed，核对 `_try_llm_synthesize`、`_defer_failed_brief` 和 Redis 当日 guard。仅生成复现保存结束原因、解析位置与输入体积，不用真实发送诊断 JSON。
+
+- 历史证据：本机 `/private/tmp/admin-daily-brief-failure-20260912.log`，原始导出 `/Users/leslie/Downloads/32647-076ae317f0bde752a32488c4d59d472e.csv.gz`。10:00 触发、模型 HTTP 200、35 秒后 invalid_output、当天不再重试。历史具体校验码和原始响应没有保留。
+- 仅生成复现证据：生产 Pod 临时文件 `/tmp/brief-diagnostic-20260912.json`（随 Pod 删除失效）。同窗 28 条事故，实际请求 22925 字符，响应正常 stop；JSON 内嵌 Service temporarily unavailable 的英文引号未转义，解析失败。字符级原因仅对复现已证实。
+- `build_report_with_llm` 在综合失败后仍检查无 LLM 预览卡体积，可能追加 card_size_limit；应与首要失败原因区分，不能据此断言模型生成卡太长。
