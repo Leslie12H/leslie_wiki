@@ -57,7 +57,7 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 - recreate 从原输入重新开始；restore-checkpoint 会改原 Thread；export-timeline 排除原生历史且可能初始化文档。本轮路径是固定来源只读导出、冻结 source product/AION Thread ID、checkpoint/full commit、manifest/archive hash，再导入新的 DEV Thread，显式 activate 后发送新消息。私有字节以有界、立即 unlink 的临时文件流转，不进公开静态目录或 LLM 工具输出。
 - 专用源读取凭据、固定源 HTTPS origin、账号校验与固定 GET/HEAD 路径约束由 Adapter 执行；**产品 token 未新增只读 scope**。该凭据在 Adapter 外的权限不能被描述成天然只读。身份以实际账号与产品权限为准，Token 本身不提供分支/执行隔离。
 - `runner_authenticated` 只表示通过 Runner 身份提交的进度。同一 Runner/工具环境仍可能伪造该请求，不能升级成不可伪造的 `model_input_observed` 或最终生成证明。startup-resolved、model-read、tool-executed 三层必须分别验收，缓存存在或 SHA 回显不等于已加载/执行。
-- 本轮草稿由 AION 在新 Thread 导入时读取真实 ArtifactManager 内容，冻结 `inherited_output_sha256`，Zeus 透传；Adapter 已在脱敏前比较原始 artifact 字符串 hash，拒绝将原样继承产物判为新成功，并匹配本次实际 native message ID 与进度。该防护不证明换 URL 后的媒体字节是新生成，也不消除 Runner 自报局限；只有另行完成 catalog/runtime 清单独立核验才报告 `applied=true`。具体落地和回归看 PR 与 `docs/native-checkpoint-adapter.md`。
+- AION 在新 Thread 导入时冻结继承产物身份，Zeus 透传，Adapter 匹配本次实际 native message ID 与进度。最终视频通常覆盖同一路径，因此不能用路径字符串 hash 判断媒体是否更新；内容摘要和原始引用绑定的修正见文末三仓合同。该证据仍不消除 Runner 自报局限；只有另行完成 catalog/runtime 清单独立核验才报告 `applied=true`。具体落地和回归看 PR 与 `docs/native-checkpoint-adapter.md`。
 - 创建/输入响应未知时不能自动重发；已知新 Thread 通过查询恢复观察，不能假设 exactly-once 或在改变账号/配置后复用旧句柄。AION 全量 context JSON 写入须防止并发覆盖输入预留与进度，修复切口在 `native_checkpoint.py` 和通用 Thread 更新的行锁/fresh merge；验收需检查最终版本及回归。
 - AION 消息单页升序、分页从新到旧，多页需恢复全局顺序，旧 timestamp 可能为空。取消不能依赖历史/产物取证；原生路径也不能绕过本次输入边界，把旧完成状态降级当成功。
 
@@ -153,4 +153,12 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 
 **How to apply:** 阅读 [87016fed](https://github.com/world-sim-dev/aion/commit/87016feda8715cdb15fb9af31477f2896a5056cb) 及 [1a109884 部署说明](https://github.com/world-sim-dev/aion/commit/1a10988496e7a668f7872ea90d5e7192403d3689)。首次创建同事务保存完整规范化请求 hash，同项目/请求的控制发布在既有共享 runtime 卷上串行；比较成功后才可返回旧 Thread。普通 artifact/file/document 写入拒绝原生导入，typed read 不创建缺失的 free canvas。导入捕获到异常后回滚并重新查回执，只有确认没有落库才删除本次发布目录；数据库不可查或已提交时保留，进程崩溃遗留仍需人工恢复。相关 520 项通过、1 项条件跳过；完整结论看[对应 CI](https://github.com/world-sim-dev/aion/actions/runs/34691935001)及 PR 当前状态。
 
-同组入口复核还包括普通 `recreate_thread` / `reactive_thread`：它们会重新创建状态或以调用方选择的 auto_mode 启动，不能供原生导入使用。补充围栏见 [e37f82cb](https://github.com/world-sim-dev/aion/commit/e37f82cb1c12847a2cc8ee215140b5b3ac19f4be)，308 项相关检查通过；专用 activate/send_input 继续直接使用受控 claim/start 链路。完整 CI 以[此提交](https://github.com/world-sim-dev/aion/actions/runs/34692145379)和 PR 当前 head 为准。
+同组入口复核还包括普通 `recreate_thread` / `reactive_thread`：它们会重新创建状态或以调用方选择的 auto_mode 启动，不能供原生导入使用。补充围栏见 [e37f82cb](https://github.com/world-sim-dev/aion/commit/e37f82cb1c12847a2cc8ee215140b5b3ac19f4be)，308 项相关检查通过；专用 activate/send_input 继续直接使用受控 claim/start 链路。该提交完整 CI 的唯一失败是已有子进程测试读到刚创建但未写入 PID 的空文件，修复见下节；最终结果读 PR 当前 head。
+
+## 2026-09-12 视频内容身份与流式输入合同
+
+**Why:** `FinalResultArtifact.save` 默认覆盖已有版本，`get_content()` 返回路径字符串。路径 hash 会误拒绝同路径的新视频，也会把换路径的旧视频当作新结果。普通流式消息另有独立入队实现，不能只保护非流式入口。
+
+**How to apply:** 同时读取 [AION #1754](https://github.com/world-sim-dev/aion/pull/1754)、[Zeus #524](https://github.com/world-sim-dev/vidmuse-zeus/pull/524) 和 [Executor #2](https://github.com/world-sim-dev/vidmuse-executor/pull/2) 的当前合并状态。合同实现见 AION [09535528](https://github.com/world-sim-dev/aion/commit/095355288ca0e281c9b817f58b0b6a472641a1b8) 及 `NATIVE_REPLAY.md`、Executor `docs/native-checkpoint-adapter.md`：准备时冻结视频字节和精确脚本文本摘要，完成后返回带版本的当前内容摘要及原始引用摘要；Executor 先绑定实际返回引用，再比较内容。旧版或缺失的完成证据应拒绝，不能回退路径比较。Zeus 接受原生明确入队前容量拒绝的 retryable 状态，不自行重发。
+
+视频摘要由 AION 对目标工作区稳定普通文件流式计算，Executor 不下载媒体或保存任务库。普通流式入口复用冻结输入校验，先于订阅、持久化和 Redis。相关 AION 181 项、Executor 全套 Go、Zeus 21 项测试通过；Zeus 两项外部 fixture 测试条件跳过。已有 PID 测试改为原子发布文件，10 项子进程测试通过。全套 AION 结果看[当前 PR 检查](https://github.com/world-sim-dev/aion/pull/1754/checks)，不能用这些本地结果替代部署或真实 A/B。
