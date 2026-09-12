@@ -11,7 +11,7 @@ links: [vidmuse-executor-p1, vidmuse-executor-candidates, vidmuse-a2a-executor, 
 
 **Why:** 用户明确指出 Zeus/AION 已保存 Thread 与业务数据，Maxwell 已拥有调优调度状态。P1 把独立任务库、租约 Worker 和证据副本放入 Executor 扩大了适配层职责。当前方案复用状态拥有方；去掉独立库仍需处理创建响应未知、身份绑定与版本核验。
 
-**How to apply:** 先读[飞书完整方案](https://j0yswlgboxz.feishu.cn/wiki/FXkdwOqIpiSfrNka96vc07jnnFc)及 Adapter 的 `docs/stateless-adapter.md`，再按下表追到对应 PR 和契约文件。文档可能早于本轮草稿，部署决策必须核对最终提交、实际部署与运行证据。不要把 Executor PostgreSQL 当作部署前提，也不要因移除代码依赖就删除旧库或真实数据。
+**How to apply:** 先读[飞书完整方案](https://j0yswlgboxz.feishu.cn/wiki/FXkdwOqIpiSfrNka96vc07jnnFc)及 Adapter 的 `docs/stateless-adapter.md`，再按下表追到对应 PR 和契约文件。飞书正文已回读至 revision 114；部署决策仍须核对最终提交、实际部署与运行证据。不要把 Executor PostgreSQL 当作部署前提，也不要因移除代码依赖就删除旧库或真实数据。
 
 ## 状态归属
 
@@ -28,11 +28,11 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 
 以下是 **2026-09-12 核验的草稿交付指针**。五个 PR 均为 OPEN Draft，未合并、未部署；新增本地改动是否已经进入远端 PR 需实时读取。
 
-- [Maxwell PR #286](https://github.com/world-sim-dev/maxwell-ai/pull/286)：`docs/evolve-nonreplayable-adapter-contract.md`。复用既有状态承载，冻结原始请求并禁止不安全重发；无新表/列。
-- [Adapter PR #1](https://github.com/world-sim-dev/vidmuse-executor/pull/1)：`internal/modules/execution/application/{handle,service}.go`、`infrastructure/zeus/{client,checkpoint,snapshot}.go`；见 `docs/stateless-adapter.md`、`docs/native-checkpoint-adapter.md`。本轮 publication/原生导入/继承产物防护仍按草稿核对，不能仅用旧 PR HEAD 宣称具备。
+- [Maxwell PR #286](https://github.com/world-sim-dev/maxwell-ai/pull/286)：`docs/evolve-nonreplayable-adapter-contract.md`。复用既有状态承载，冻结原始请求并禁止不安全重发；无新表/列。最新控制面含 `prepare_publication`、`inspect_checkpoint_sample`，已推送 [d737c659](https://github.com/world-sim-dev/maxwell-ai/commit/d737c65981cb982aa76536b23df51f9cad7389d5)。
+- [Adapter PR #1](https://github.com/world-sim-dev/vidmuse-executor/pull/1)：`internal/modules/execution/application/{handle,service}.go`、`infrastructure/zeus/{client,checkpoint,snapshot}.go`；见 `docs/stateless-adapter.md`、`docs/native-checkpoint-adapter.md`。本轮 publication/原生导入/继承产物防护已推送 [b226112](https://github.com/world-sim-dev/vidmuse-executor/commit/b226112f09fcd7f71b57ac9589773aabcea6890d)，全量 Go race、vet、Linux build 通过；仍按草稿核对，不作为已部署能力。
 - [Plugin PR #1832](https://github.com/world-sim-dev/vidmuse-plugins/pull/1832)：已推送提交 [c97f7bb](https://github.com/world-sim-dev/vidmuse-plugins/commit/c97f7bb1b158e17d2d36e385eabb95bded4bdffe)。真实可执行入口为 `.github/workflows/dev-candidate-release.yml` 与 `scripts/dev_release/`，部署合同、外部前置及复现命令见该目录 README。16 项离线 Git/真实 verifier 集成测试与 actionlint 通过；没有触发真实发布。
-- [AION PR #1754](https://github.com/world-sim-dev/aion/pull/1754)：checkpoint 字节清单见 `packages/checkpoint_manager/README.md`；本轮原生续跑草稿切口为 `native_replay.py`、Manager `service/native_checkpoint.py` / `plugin_release.py`、Runner `native_checkpoint_startup.py` 及 DEV overlay。旧 snapshot 的 `ready_to_run=false` 与新增原生运行准入应分开核对；历史缺失资产不会被新捕获能力补齐。
-- [Zeus PR #523](https://github.com/world-sim-dev/vidmuse-zeus/pull/523)：`docs/checkpoint-product-relay.md` 与 `CheckpointTransfer` / `AgentService`。2026-09-12 本地补充提交 `4ffa2003018304e76cd97064d87e701880985406` 含进度等级和继承产物摘要；核验时远端尚为 `a83a9a27`，推送状态需回读 PR。复用产品鉴权、权限/额度、Thread 映射与既有 outbox；没有新表。
+- [AION PR #1754](https://github.com/world-sim-dev/aion/pull/1754)：checkpoint 字节清单见 `packages/checkpoint_manager/README.md`；本轮原生续跑草稿切口为 `native_replay.py`、Manager `service/native_checkpoint.py` / `plugin_release.py`、Runner `native_checkpoint_startup.py` 及 DEV overlay。原生实现见 [a5afa323](https://github.com/world-sim-dev/aion/commit/a5afa323)，Manager/package 405、Runner 140、最终合同/Git/K8s 66 项本地回归通过。旧 snapshot 的 `ready_to_run=false` 与新增原生运行准入应分开核对；历史缺失资产不会被新捕获能力补齐。
+- [Zeus PR #523](https://github.com/world-sim-dev/vidmuse-zeus/pull/523)：`docs/checkpoint-product-relay.md` 与 `CheckpointTransfer` / `AgentService`。已推送并回读 [4ffa2003](https://github.com/world-sim-dev/vidmuse-zeus/commit/4ffa2003018304e76cd97064d87e701880985406)，含进度等级和继承产物摘要。复用产品鉴权、权限/额度、Thread 映射与既有 outbox；没有新表。
 
 候选准备合同见 Adapter `docs/candidate-publication-preparation.md` 与 `docs/dev-candidate-bundle.md`。`prepare-publication` 的完整包和 descriptor 进入独立 Work commit，明确 `prepared=true`、`published=false`、`applied=false`。源 commit、候选 commit、实际 DEV release commit 是三个不同身份；不能拿准备回执代替已发布观测。
 
@@ -57,7 +57,7 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 - recreate 从原输入重新开始；restore-checkpoint 会改原 Thread；export-timeline 排除原生历史且可能初始化文档。本轮路径是固定来源只读导出、冻结 source product/AION Thread ID、checkpoint/full commit、manifest/archive hash，再导入新的 DEV Thread，显式 activate 后发送新消息。私有字节以有界、立即 unlink 的临时文件流转，不进公开静态目录或 LLM 工具输出。
 - 专用源读取凭据、固定源 HTTPS origin、账号校验与固定 GET/HEAD 路径约束由 Adapter 执行；**产品 token 未新增只读 scope**。该凭据在 Adapter 外的权限不能被描述成天然只读。身份以实际账号与产品权限为准，Token 本身不提供分支/执行隔离。
 - `runner_authenticated` 只表示通过 Runner 身份提交的进度。同一 Runner/工具环境仍可能伪造该请求，不能升级成不可伪造的 `model_input_observed` 或最终生成证明。startup-resolved、model-read、tool-executed 三层必须分别验收，缓存存在或 SHA 回显不等于已加载/执行。
-- 本轮草稿由 AION 在新 Thread 导入时读取真实 ArtifactManager 内容，冻结 `inherited_output_sha256`，Zeus 透传；Adapter 的防护目标是在脱敏前比较原始 artifact 字符串 hash，拒绝将原样继承产物判为新成功，并匹配本次实际 native message ID 与进度。具体落地/回归看上述 PR 与 `docs/native-checkpoint-adapter.md`；该防护仍不证明换 URL 后的媒体字节是新生成，也不消除 Runner 自报局限，`applied=false` 不变。
+- 本轮草稿由 AION 在新 Thread 导入时读取真实 ArtifactManager 内容，冻结 `inherited_output_sha256`，Zeus 透传；Adapter 已在脱敏前比较原始 artifact 字符串 hash，拒绝将原样继承产物判为新成功，并匹配本次实际 native message ID 与进度。具体落地/回归看上述 PR 与 `docs/native-checkpoint-adapter.md`；该防护仍不证明换 URL 后的媒体字节是新生成，也不消除 Runner 自报局限，`applied=false` 不变。
 - 创建/输入响应未知时不能自动重发；已知新 Thread 通过查询恢复观察，不能假设 exactly-once 或在改变账号/配置后复用旧句柄。AION 全量 context JSON 写入须防止并发覆盖输入预留与进度，修复切口在 `native_checkpoint.py` 和通用 Thread 更新的行锁/fresh merge；验收需检查最终版本及回归。
 - AION 消息单页升序、分页从新到旧，多页需恢复全局顺序，旧 timestamp 可能为空。取消不能依赖历史/产物取证；原生路径也不能绕过本次输入边界，把旧完成状态降级当成功。
 
