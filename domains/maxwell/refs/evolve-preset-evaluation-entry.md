@@ -9,7 +9,7 @@ links: [vidmuse-a2a-executor, evolve-maxwell-tuning-receiving]
 
 # 业务 Preset 接入 EVOLVE 的评测入口
 
-2026-09-12 按 fetch 后主干 `4a91b77855583e960580bb452f827cb1fe6d986e` 核对。最初目标管理页跳到登录；后续已从 UI 核对业务身份，见本文“评测业务与凭据所属业务纠正”。源码结论不代表线上已部署或真实评测已通过。
+2026-09-12 按 fetch 后主干 `4a91b77855583e960580bb452f827cb1fe6d986e` 核对。最初目标管理页跳到登录；后续已从 UI 核对业务身份，见本文“评测业务与凭据所属业务纠正”。源码结论不代表线上已部署或真实评测已通过。本文保留先前版本的排查过程；接入预检的最新实现语义见末尾“连接检查与真实用例分离”，旧能力探测建议不再作为新版本接入要求。
 
 ## 去哪核对
 
@@ -20,7 +20,7 @@ links: [vidmuse-a2a-executor, evolve-maxwell-tuning-receiving]
 - `services/evolve-server/internal/modules/evolve/application/commands/executors.go`：解析 Preset、构造内部地址、维护业务执行凭据并分配执行器 ID；登记后的 `executorRef` 与 `presetId` 是不同引用。
 - `services/evolve-server/internal/app/toolcaller.go`：`register_executor` 返回待确认登记卡；`start` 使用登记后的 executorRef 及冻结的 Variant、CaseSet、JudgeSpec。
 - `services/evolve-server/internal/app/integration/a2a/registry.go`：`maxwell_preset` 发送 Case 用户文本；`external_a2a` 发送执行请求结构。输出优先取 Task artifacts，再回退状态消息或历史。
-- `services/evolve-server/internal/modules/evolve/application/executorprobe/probe.go`：健康状态与能力等级分开判定；调优级别取决于能力声明、marker 和实际应用回执，不能按接入 kind 写死。
+- `services/evolve-server/internal/modules/evolve/application/executorprobe/probe.go`：新实现仅验证连接，成功保持 capability unknown；真实执行与候选应用由正式用例及回执验证。旧版本曾通过 marker 探测能力，历史失败与迁移说明见文末。
 - `services/evolve-server/docs/executor-kit/README.md` 与同目录 schemas：外部执行器契约、预检、交互和回执要求。
 - `services/agent-server/internal/modules/runtime/extensions/a2aagent/middleware.go`：若 Preset 配置远程 Agent，确认其等待必要的远端最终结果；接单回执不能当成完成结果。
 
@@ -129,12 +129,12 @@ links: [vidmuse-a2a-executor, evolve-maxwell-tuning-receiving]
 
 部署版本 `a158e6c1` 的核验入口：`services/evolve-server/internal/app/integration/a2a/registry.go:745-769` 中 `a2aClient` 仅在 `fetchCard` 与 `NewFromCard` 均成功后赋值客户端缓存；同源检查失败不产生成功客户端，下次调用会重新获取 Card。`registry.go:319-333` 中该失败直接返回，尚未进入 SendMessage。
 
-**Why:** 本次阻断来自失败的 Card 初始化，不需要通过重启 EVOLVE、重新登记或修改同源安全检查来清除一个并不存在的成功缓存。错误提示问题可单独沿 `services/evolve-server/internal/modules/evolve/application/execution/ad_hoc.go:66-76` 的 `AdHocDispatchFailure` 检查：其默认分支把此类 dispatch_failed 也附上 uncertain 文案；细分“尚未发送”和“发送后结果未知”是提示与错误分类改进，不是修复本次同源阻断的前置改动。最小代码改进可将已确定发送前的 Card origin 失败复用为 `preflight_failed`，该函数已有豁免；保留同源检查，无需新增错误枚举。此为待评审方案，尚未修改代码。
+**Why:** 本次阻断来自失败的 Card 初始化，不需要通过重启 EVOLVE、重新登记或修改同源安全检查来清除一个并不存在的成功缓存。错误提示问题可单独沿 `services/evolve-server/internal/modules/evolve/application/execution/ad_hoc.go:66-76` 的 `AdHocDispatchFailure` 检查：其默认分支把此类 dispatch_failed 也附上 uncertain 文案；细分“尚未发送”和“发送后结果未知”是提示与错误分类改进，不是修复本次同源阻断的前置改动。最小代码改进可将已确定发送前的 Card origin 失败复用为 `preflight_failed`，该函数已有豁免；保留同源检查，无需新增错误枚举。此处原为待评审方案；文末连接检查实现已将 Card 初始化阶段的确定性失败分类为 preflight_failed，仍保留同源保护。线上是否采用该实现须核对部署版本。
 
 **How to apply:** 先让实际 Card 所有接口与已登记 URL 同源，读取 Card 验证后再执行预检或获准的调用；现有失败记录不会自行变成功。若下一次仍失败，以当次 Card、错误阶段和新调用证据定位，不因旧 uncertain 文案假定任务已发送，也不把本结论扩展为所有已缓存成功客户端均会自动刷新。配置同源修正和完整 Nextplay 协议/文件证据接通仍须分别验收。
 
 
-## 2026-09-12 预检被当成业务运行，触发 remote_interaction_required
+## 2026-09-12 旧预检被当成业务运行，触发 remote_interaction_required
 
 2026-09-12 北京时间 17:22 的核验入口：[预检 Thread Trace](https://agent.sandaii.cn/threads?businessId=d913480b-bbf3-4c3f-956b-cab3a6854dee&threadId=thr_01M2AES1EKEQDYN0W5WDBZAY1W&tab=trace)，对应 Runtime Run `run-8a1dc02f66825945fb58f2408eed264a`。从这次原始请求检查 `structuredInput.probe=true`、探测用 Case、`targetProfile.content.targetRef=probe` 和 `variant.content.name=probe-baseline`；它不是完整 Nextplay 业务请求。
 
@@ -145,4 +145,19 @@ links: [vidmuse-a2a-executor, evolve-maxwell-tuning-receiving]
 
 **Why:** 预检只验证连通、合同和 Variant 通路，输入有意不提供真实基准及完整业务候选。把它送进普通 Candidate Runner 参数检查会引发追问，而这条预检链路不会自动回答。绿色可达性只是接收并响应的证据，不等于执行目标已兼容或正式评测成功。
 
-**How to apply:** 在业务 Adapter 的正常参数校验、LLM 和工具执行之前识别 probe；连通探测可无业务副作用返回成功，Variant 探测仍按能力合同处理并回显 marker，不虚构 applied 回执。probe=false 才走显式基准、完整候选及真实业务执行映射。改后分别重跑预检与一条真实 Case 验收；本次仅记录已发生的 Trace 和待实施方案，尚未修改 Adapter 或完成 Nextplay 测试。
+**How to apply（历史方案，已被本次平台改法替代）:** 当时建议 Adapter 在业务参数校验前识别 probe、跳过业务运行并回显 marker。2026-09-12 用户随后明确选择平台侧把连接检查与能力验证分开：新版 A2A 预检只读取 Card，不再发起此类占位业务 Task，也不再要求 Nextplay Adapter 为接入实现 synthetic probe shortcut。旧 Trace 保留用于核验问题因果；正式用例仍须显式提供基准、完整候选并验证真实执行，不能以连接成功替代。
+
+
+## 2026-09-12 连接检查与真实用例分离：已实现的接入语义
+
+实现指针：[maxwell-ai 仓库](https://github.com/world-sim-dev/maxwell-ai)的本地业务提交 `9c09993b79885432479b213b0edfa39e43d9d9b7`，分支 `codex/evolve-connection-readiness`，基于主干 `57ca7774`；记录时尚未推送。本段记录用户明确批准的代码行为及验收入口；不代表已合并、部署、修复云配置或完成 Nextplay 真实评测。每次使用须对照实际部署 SHA。
+
+- **A2A：** `services/evolve-server/internal/app/integration/a2a/connection.go` 与 `registry.go` 检查带鉴权的 Agent Card、接口 URL、同源凭据约束及支持的 transport；显式预检会刷新 Card。整个检查不 SendMessage、不新建远端 Task，不证明 runtime_run 权限或候选应用能力。同源安全保护继续保留，配置错误仍须修正。
+- **HTTP simple：** `services/evolve-server/internal/modules/evolve/application/executorprobe/probe.go` 与 `internal/app/integration/httpsimple/httpsimple.go` 沿用一次受限协议 POST；要求 2xx、合法 JSON 且存在 output，鉴权、传输和响应格式错误仍失败。不再要求固定文案、等待业务最终完成或回显候选 marker；如兼容分支返回活动任务则执行受限取消，不能把此路径称为无执行副作用。
+- **接入与试跑：** `application/commands/run.go`、`infrastructure/memory/executors.go`、`infrastructure/postgres/executors.go` 与 Studio `executorRegistration.ts` 核对连接成功后 healthy + unknown 可以绑定并发起真实评测或候选试跑。仍保留 active、healthy、business scope、版本、幂等重放及并发准入保护；没有把 unknown 自动升级为 l1。
+- **比较依据：** `application/queries/evidence.go` 与 `application/execution/contract.go` 继续根据实际 Run 的应用回执、Variant hash 和配置漂移判断可比性，历史 level 仅作信息。无生效回执的普通文本输出可被评分，但候选比较仍应 inconclusive。本次未修改候选接受/DecisionReport 的决策约束，不能声称所有接受命令均已强制检查 VariantProven。
+- **验证入口：** `connection_test.go`、`executorprobe/status_test.go` 覆盖 Card 刷新、失败分支、零派发及 HTTP 兼容路径；commands 与 memory/postgres 的 executors tests 覆盖 unknown/l0/l1 准入及业务/版本/健康保护；`internal/app/e2e_optimization_test.go` 使用未知能力目标，验证有真实 receipt 可比、纯文本不可比。Studio readiness、流程与生成 API 检查随业务提交核验，不以页面标签代替真实运行证据。
+
+**Why:** 占位预检缺少 Nextplay 基准和完整候选，送入业务 Runner 会触发追问；如果又要求预检先得到 l1 才允许真实候选运行，就形成无法用真实用例验证能力的循环。连接、业务执行、候选应用和评分可信度必须各有证据，不能由一次 synthetic echo 一并认证。
+
+**How to apply:** 先确认已部署此提交对应的新预检路径，并保证真实 Card 与登记 URL 同源；在 Nextplay 业务连接目标后看到 unknown 属正常状态。随后选择明确基准及一条真实 Case 发起试跑，核对原始输出、必要文件实际内容、终态与应用 receipt，再开展候选比较。连接检查通过不保证下游权限、业务字段映射、五文件回收或候选生效已完成；这些仍按本文 Runner 适配与 evidence.output 指针逐项验收。
