@@ -132,3 +132,17 @@ links: [vidmuse-a2a-executor, evolve-maxwell-tuning-receiving]
 **Why:** 本次阻断来自失败的 Card 初始化，不需要通过重启 EVOLVE、重新登记或修改同源安全检查来清除一个并不存在的成功缓存。错误提示问题可单独沿 `services/evolve-server/internal/modules/evolve/application/execution/ad_hoc.go:66-76` 的 `AdHocDispatchFailure` 检查：其默认分支把此类 dispatch_failed 也附上 uncertain 文案；细分“尚未发送”和“发送后结果未知”是提示与错误分类改进，不是修复本次同源阻断的前置改动。最小代码改进可将已确定发送前的 Card origin 失败复用为 `preflight_failed`，该函数已有豁免；保留同源检查，无需新增错误枚举。此为待评审方案，尚未修改代码。
 
 **How to apply:** 先让实际 Card 所有接口与已登记 URL 同源，读取 Card 验证后再执行预检或获准的调用；现有失败记录不会自行变成功。若下一次仍失败，以当次 Card、错误阶段和新调用证据定位，不因旧 uncertain 文案假定任务已发送，也不把本结论扩展为所有已缓存成功客户端均会自动刷新。配置同源修正和完整 Nextplay 协议/文件证据接通仍须分别验收。
+
+
+## 2026-09-12 预检被当成业务运行，触发 remote_interaction_required
+
+2026-09-12 北京时间 17:22 的核验入口：[预检 Thread Trace](https://agent.sandaii.cn/threads?businessId=d913480b-bbf3-4c3f-956b-cab3a6854dee&threadId=thr_01M2AES1EKEQDYN0W5WDBZAY1W&tab=trace)，对应 Runtime Run `run-8a1dc02f66825945fb58f2408eed264a`。从这次原始请求检查 `structuredInput.probe=true`、探测用 Case、`targetProfile.content.targetRef=probe` 和 `variant.content.name=probe-baseline`；它不是完整 Nextplay 业务请求。
+
+该次 Trace 显示外层加载 `maxwell-candidate-runner` 后追问基准 Preset/businessId+presetId 与完整 Candidate，随后 ask_user → TASK_STATE_INPUT_REQUIRED → EVOLVE 取消 → TASK_STATE_CANCELED。可见工具只有 skill_load、ask_user，没有内层执行调用。这次失败已经越过鉴权与同源门禁，原因是外层没有在进入业务参数要求前处理 probe 请求；不能继续按旧鉴权错误解释，也不能据此声称 Nextplay 已执行。
+
+- `4a91b778` 的 `services/evolve-server/internal/modules/evolve/application/executorprobe/probe.go:92-107,192-245`：核对预检使用的占位输入、Dispatch/Observe 和失败清理。该路径没有 Responder；remote_interaction_required 会让 reachability 显示绿色“Target responded”，但合同未通过，整体为 incompatible / unknown。
+- `services/evolve-server/docs/executor-kit/README.md:49-55,87-99`：核对 probe 专用分支允许跳过真实业务副作用，以及 variant marker 回显要求；再核对普通 candidate Run 的实际应用回执规则，不能把 marker 回显冒充候选真实应用。
+
+**Why:** 预检只验证连通、合同和 Variant 通路，输入有意不提供真实基准及完整业务候选。把它送进普通 Candidate Runner 参数检查会引发追问，而这条预检链路不会自动回答。绿色可达性只是接收并响应的证据，不等于执行目标已兼容或正式评测成功。
+
+**How to apply:** 在业务 Adapter 的正常参数校验、LLM 和工具执行之前识别 probe；连通探测可无业务副作用返回成功，Variant 探测仍按能力合同处理并回显 marker，不虚构 applied 回执。probe=false 才走显式基准、完整候选及真实业务执行映射。改后分别重跑预检与一条真实 Case 验收；本次仅记录已发生的 Trace 和待实施方案，尚未修改 Adapter 或完成 Nextplay 测试。

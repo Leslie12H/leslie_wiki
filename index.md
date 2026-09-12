@@ -99,3 +99,5 @@
 - [监控 GitHub App 配置与 Secret 读取](domains/vidmuse/refs/monitoring-github-app-config.md) — App/installation 定位、生产凭据指针、指纹校验与 ACK 注解泄露防护（2026-09-12）。
 
 - 五文件内容可由业务 Adapter 放入 evidence.output 复用已有 CAS/冻结/Judge；见 [EVOLVE 接入记录](domains/maxwell/refs/evolve-preset-evaluation-entry.md) 的 2026-09-12 方案收窄。
+
+- 外层将 probe 当成业务请求并 ask_user：见 [EVOLVE 接入记录](domains/maxwell/refs/evolve-preset-evaluation-entry.md) 的 2026-09-12 17:22 Trace 与预检分支核验。
