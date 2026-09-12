@@ -11,7 +11,7 @@ links: [vidmuse-executor-p1, vidmuse-executor-candidates, vidmuse-a2a-executor, 
 
 **Why:** 用户明确指出 Zeus/AION 已保存 Thread 与业务数据，Maxwell 已拥有调优调度状态。P1 把独立任务库、租约 Worker 和证据副本放入 Executor 扩大了适配层职责。当前方案复用状态拥有方；去掉独立库仍需处理创建响应未知、身份绑定与版本核验。
 
-**How to apply:** 先读[飞书完整方案](https://j0yswlgboxz.feishu.cn/wiki/FXkdwOqIpiSfrNka96vc07jnnFc)及 Adapter 的 `docs/stateless-adapter.md`，再按下表追到对应 PR 和契约文件。飞书正文已回读至 revision 132；部署决策仍须核对最终提交、实际部署与运行证据。不要把 Executor PostgreSQL 当作部署前提，也不要因移除代码依赖就删除旧库或真实数据。
+**How to apply:** 先读[飞书完整方案](https://j0yswlgboxz.feishu.cn/wiki/FXkdwOqIpiSfrNka96vc07jnnFc)及 Adapter 的 `docs/stateless-adapter.md`，再按下表追到对应 PR 和契约文件。飞书正文已回读至 revision 135；部署决策仍须核对最终提交、实际部署与运行证据。不要把 Executor PostgreSQL 当作部署前提，也不要因移除代码依赖就删除旧库或真实数据。
 
 ## 状态归属
 
@@ -82,3 +82,16 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 - `runner_authenticated` 是启动包实读和绑定证据。普通及原生任务只有完整清单验证后才可报告 `applied=true`；它不是模型逐文件阅读、工具实际执行或媒体质量证明。
 - Maxwell `inspect_publication` 先调用同一控制目标的 baseline；只读 catalog 副本不能代替这个 MCP 前置。控制写入保持单实例，A2A 副本不需要 Git writer。
 - 飞书画板本地 SVG 正常而云端背景遮图时，检查生成 payload 的顶层 `z_index`。本次按 SVG 顺序显式设置后，云端文字/节点及预览均通过；不要把白色加载占位图当作视觉验收。证据曾保存于 `/private/tmp/vidmuse-node-audit/diagrams/2026-09-12T135331/verification.json`，当前效果以文档第 6 章重读为准。
+
+## 2026-09-12 容器交付与产品准备预留
+
+**Why:** 无库 Adapter 仍需可部署镜像入口；长快照不能在一次 A2A 请求里完成下载和恢复。准备意图应归产品持久状态，不能移到 Executor 的隐藏队列。映射确认与重 IO 是两个不同动作。
+
+**How to apply:** 查看 Adapter [03c26d9](https://github.com/world-sim-dev/vidmuse-executor/commit/03c26d90d18016c88c94e778f5b2b478f72865aa) 的 `docs/container-deployment.md`，以及 AION [e02c7251](https://github.com/world-sim-dev/aion/commit/e02c725144e011edd565ffc1e51997973e7de8ad) 的 `docs/checkpoint-prepare-reservation.md`。这两个提交是后续草稿切片，实际启用需核对最终 PR、默认关闭的配置和缺失阶段。
+
+- 容器分 execution 和单 Git writer control，均为 non-root。Linux 双架构编译、真实上下文过滤与 BuildKit 静态检查已做；Docker daemon 不可用，未 build/run 镜像，不作为部署证明。句柄密钥、只读 catalog 和 Git 版本目录需保留；任务数据仍不在 Adapter。
+- AION 预留在既有 Thread/Task 同事务保存完整 intent 和 `checkpoint_prep` 阶段；同账号/项目/request 重复必须匹配完整 hash。小 JSON reserve/query/confirm/cancel 默认关闭，确认只到 queued，prepared/dispatched 为 false，message ID 未产生。27 项新测试及相关回归的命令/边界见文档；没有新表、字段或外部迁移。
+- Zeus 已有 `AgentThreadPostCreateOutbox` 能覆盖产品映射事务提交后、确认响应丢失的窗口：新增独立确认事件并同事务校验完整 binding，consumer 短调用 AION；无需另造反向 mapping-proof API。该 producer/consumer 尚未实现。先部署可解析新 enum 的消费者，再启用写入，重复 event key 不应掩盖不同 payload。
+- 采样 capture 可为内部 AION 对象，不创建普通 Zeus Thread 或奖励事件；但必须一起实现普通列表/计数/消息/文件/Runner 隔离，不能仅靠“没有 Zeus 行”。当前代码只预留运行目标，capture 与后台 materializer 未实现。
+- Maxwell 既有 `inspect_checkpoint_sample` 是立即返回小冻结引用的只读动作；异步采样需要独立 prepare/query。Adapter 既有同步 handle 要求真实 message hash，异步预留不能用空/假 hash 兼容；应绑定 frozen intent，并只读核验后续真实输入接受与进度。上述异步接入仍待实现，不能把预留测试算成节点 A/B 闭环。
+- 飞书第 8.1 节记录当前准备合同与缺失阶段，第 11 节补充容器交付及镜像未验证边界。源码与正文应按当前提交/局部回读核对，不沿用旧“必须部署 Executor PostgreSQL”的前置。
