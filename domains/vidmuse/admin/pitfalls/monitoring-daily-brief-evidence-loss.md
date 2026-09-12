@@ -41,3 +41,5 @@ links: [monitoring-problem-title-vs-incident-report]
 
 - 2026-09-12 后续修复方向：同一 Admin 分支改用 submit_daily_brief 结构化返回，工具定义经 GenerateTextRequest.extra_params 传递至 Bedrock toolConfig，由适配器序列化参数。该工具不执行发送。用户允许模型整理和改写表达，不要求逐字保留；事实与不确定性仍需保留。验证指针为 test_structured_output_preserves_literal_error_quotes，涵盖真实适配器转义；80 项后端测试通过，尚未生产验证。
 - 同分支 Chat 复制交互：playground/src/components/ChatTab.tsx 与 ChatTab.selectionCopy.test.tsx。取消进入模式步骤，桌面悬停或键盘聚焦显示选择入口，已选保持显示；触屏保留可见入口。工具栏移出消息滚动区。用户否定桌面常驻整排勾选框。60 项 Chat 测试与 TypeScript 检查通过，未部署。
+
+- 2026-09-12 Chat 后续交互验证指针：同一分支的 ChatTab.selectionCopy.test.tsx 新增反向 Shift 连选、筛选排除和 Esc 清空测试；选择入口移至消息边缘不占正文列，范围由当前渲染的消息勾选框确定，复制仍按原始时间线。13 项复制测试、49 项相关 Chat 回归及 TypeScript 通过，未部署。
