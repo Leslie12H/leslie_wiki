@@ -173,3 +173,5 @@
 - 2026-09-12 | AION native restart boundary: ordinary recreate/reactivate cannot change frozen continuation execution; keep dedicated activation/input claim-start paths and link 308 related checks.
 
 - 2026-09-12 | Native output content contract: video paths can be overwritten, so AION hashes file bytes and Zeus/Executor preserve and bind versioned evidence; fence ordinary streaming input and atomically publish the PID fixture exposed by full CI. Linked the three coordinated PRs and validation boundaries.
+
+- 2026-09-12 | Native ownership and script limits: reject ordinary create/delete against checkpoint ownership; stream bounded UTF-8 scripts with stable-file and newline checks. Linked 350 checks, all 23 Zeus cross-contract tests, and the follow-up DEV release.

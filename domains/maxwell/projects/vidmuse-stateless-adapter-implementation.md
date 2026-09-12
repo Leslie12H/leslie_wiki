@@ -161,4 +161,10 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 
 **How to apply:** 同时读取 [AION #1754](https://github.com/world-sim-dev/aion/pull/1754)、[Zeus #524](https://github.com/world-sim-dev/vidmuse-zeus/pull/524) 和 [Executor #2](https://github.com/world-sim-dev/vidmuse-executor/pull/2) 的当前合并状态。合同实现见 AION [09535528](https://github.com/world-sim-dev/aion/commit/095355288ca0e281c9b817f58b0b6a472641a1b8) 及 `NATIVE_REPLAY.md`、Executor `docs/native-checkpoint-adapter.md`：准备时冻结视频字节和精确脚本文本摘要，完成后返回带版本的当前内容摘要及原始引用摘要；Executor 先绑定实际返回引用，再比较内容。旧版或缺失的完成证据应拒绝，不能回退路径比较。Zeus 接受原生明确入队前容量拒绝的 retryable 状态，不自行重发。
 
-视频摘要由 AION 对目标工作区稳定普通文件流式计算，Executor 不下载媒体或保存任务库。普通流式入口复用冻结输入校验，先于订阅、持久化和 Redis。相关 AION 181 项、Executor 全套 Go、Zeus 21 项测试通过；Zeus 两项外部 fixture 测试条件跳过。已有 PID 测试改为原子发布文件，10 项子进程测试通过。全套 AION 结果看[当前 PR 检查](https://github.com/world-sim-dev/aion/pull/1754/checks)，不能用这些本地结果替代部署或真实 A/B。
+视频摘要由 AION 对目标工作区稳定普通文件流式计算，Executor 不下载媒体或保存任务库。普通流式入口复用冻结输入校验，先于订阅、持久化和 Redis。相关 AION 181 项、Executor 全套 Go 通过；Zeus 补入当前 AION 真实 FastAPI/SQLite/Git 回执后，23 项契约测试全部通过。已有 PID 测试改为原子发布文件，10 项子进程测试通过。全套 AION 结果看[当前 PR 检查](https://github.com/world-sim-dev/aion/pull/1754/checks)，不能用这些本地结果替代部署或真实 A/B。
+
+## 2026-09-12 原生请求所有权与脚本读取限额
+
+**Why:** 普通创建只校验 Plugin runtime 会把原生预留/导入当作同 request_id 的旧结果，甚至跨账号返回冻结 Thread。普通删除又会留下确定性工作区却删除回执，使后续恢复永久冲突。视频流式 hash 修复后，脚本也不能再整文件读入 Manager 内存。
+
+**How to apply:** 阅读 AION [57280d3b](https://github.com/world-sim-dev/aion/commit/57280d3bd6f9dbef0f3e070753f96d360c2ca9cc)。普通创建在旧 Thread 返回前拒绝原生所有权；普通删除拒绝原生导入，协调清理应属于独立产品生命周期。脚本使用实际 Artifact 版本文件，限额 1 MiB UTF-8 源字节，以与既有文本读取相同的换行语义流式计算；缺失版本、超限、编码错误、符号链接和读取中变化不能形成完成证据。相关 350 项通过、1 项条件跳过；最新全套 CI 和审查仍以 PR 当前提交为准。Zeus 配套合同的合并与 DEV 自动发布见 [#524](https://github.com/world-sim-dev/vidmuse-zeus/pull/524) 和[发布 run](https://github.com/world-sim-dev/vidmuse-zeus/actions/runs/34694297095)。
