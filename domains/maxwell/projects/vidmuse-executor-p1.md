@@ -23,3 +23,14 @@ links: [vidmuse-a2a-executor]
 - PostgreSQL jsonb 会调整 JSON 对象键序。证据哈希应先规范化嵌套 JSON，避免恢复后产生错误的新版本；不可变历史测试覆盖此路径。
 
 校验入口：go test ./...、go test -race ./...、go vet ./...；原版 Maxwell evolve-executor-check 通过四项检查，测试 fake Zeus 调用为零。命令与当前记录见 docs/acceptance.md；不要将这些离线证据说成生产部署或媒体质量验收。
+
+
+## DEV 部署准备核验入口 — 2026-09-12
+
+**Why:** 可本地运行的 Go 服务不等于已具备部署交付物；部署 Executor 与发布候选 Plugin 需要分开验收。GitHub 没有 deployment 记录也不能单独证明所有集群都没有部署。
+
+**How:** 从 [Executor PR #1](https://github.com/world-sim-dev/vidmuse-executor/pull/1) 的实际提交检查 Dockerfile、DEV 清单和 Actions，再读 cmd/vidmuse-executor/main.go 的监听地址及环境变量、internal/app/http.go 的健康路由和鉴权边界、internal/app/run.go 的 Worker/HTTP 生命周期、postgres/store.go 的显式迁移。构建固定版本镜像，使用独立 PostgreSQL 数据库与账号，先跑 --migrate Job，再启动服务；只给 DEV 目标和凭据权限。
+
+上线前核对：容器监听可达、存活与就绪检查、Maxwell 到 Agent Card/A2A 的网络、Executor 到 DEV Zeus 和 PostgreSQL 的网络、产品账号身份与已部署 Plugin。先协议探针，再做受控真实 Case、Task 查询/取消/恢复和 Maxwell 结果证据验收；不把 probe 通过称为候选生效。
+
+候选闭环还需 CLI 到 A2A 的装配、持久候选存储、DEV 增量发布、运行账号绑定和公共依赖版本支持。部署首版服务时不必先赋予 Plugin 仓库写入或云发布权限。实际部署、登记和真实生成状态以运行证据为准。
