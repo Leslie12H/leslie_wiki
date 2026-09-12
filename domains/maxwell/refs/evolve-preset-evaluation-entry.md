@@ -150,7 +150,7 @@ links: [vidmuse-a2a-executor, evolve-maxwell-tuning-receiving]
 
 ## 2026-09-12 连接检查与真实用例分离：已实现的接入语义
 
-实现指针：[maxwell-ai 仓库](https://github.com/world-sim-dev/maxwell-ai)的本地业务提交 `9c09993b79885432479b213b0edfa39e43d9d9b7`，分支 `codex/evolve-connection-readiness`，基于主干 `57ca7774`；记录时尚未推送。本段记录用户明确批准的代码行为及验收入口；不代表已合并、部署、修复云配置或完成 Nextplay 真实评测。每次使用须对照实际部署 SHA。
+实现指针：[PR #287](https://github.com/world-sim-dev/maxwell-ai/pull/287)，开发提交 `9c09993b79885432479b213b0edfa39e43d9d9b7` 基于主干 `57ca7774`。最初记录时尚未推送；后续已于 2026-09-12 合并并完成 DEV 发布与原执行器连接复验，部署 SHA 和验收入口见下一节。此实现与发布均不代表 Nextplay 真实评测已完成，每次使用须对照实际部署 SHA。
 
 - **A2A：** `services/evolve-server/internal/app/integration/a2a/connection.go` 与 `registry.go` 检查带鉴权的 Agent Card、接口 URL、同源凭据约束及支持的 transport；显式预检会刷新 Card。整个检查不 SendMessage、不新建远端 Task，不证明 runtime_run 权限或候选应用能力。同源安全保护继续保留，配置错误仍须修正。
 - **HTTP simple：** `services/evolve-server/internal/modules/evolve/application/executorprobe/probe.go` 与 `internal/app/integration/httpsimple/httpsimple.go` 沿用一次受限协议 POST；要求 2xx、合法 JSON 且存在 output，鉴权、传输和响应格式错误仍失败。不再要求固定文案、等待业务最终完成或回显候选 marker；如兼容分支返回活动任务则执行受限取消，不能把此路径称为无执行副作用。
@@ -161,3 +161,19 @@ links: [vidmuse-a2a-executor, evolve-maxwell-tuning-receiving]
 **Why:** 占位预检缺少 Nextplay 基准和完整候选，送入业务 Runner 会触发追问；如果又要求预检先得到 l1 才允许真实候选运行，就形成无法用真实用例验证能力的循环。连接、业务执行、候选应用和评分可信度必须各有证据，不能由一次 synthetic echo 一并认证。
 
 **How to apply:** 先确认已部署此提交对应的新预检路径，并保证真实 Card 与登记 URL 同源；在 Nextplay 业务连接目标后看到 unknown 属正常状态。随后选择明确基准及一条真实 Case 发起试跑，核对原始输出、必要文件实际内容、终态与应用 receipt，再开展候选比较。连接检查通过不保证下游权限、业务字段映射、五文件回收或候选生效已完成；这些仍按本文 Runner 适配与 evidence.output 指针逐项验收。
+
+
+## 2026-09-12 PR #287 的 DEV 发布与原执行器连接复验
+
+**发布与复验入口：**
+
+- [PR #287](https://github.com/world-sim-dev/maxwell-ai/pull/287) 于北京时间 2026-09-12 17:51:42 合并，merge commit 为 `72ddcc9f1af95ed1b09e476d38e41ef7b34ac210`。
+- [maxwell-cicd 34686981214](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34686981214) 全部成功；此次只发布 DEV `evolve_server` 和 `studio`，`migrate=false`，其余服务未选择发布。不能据此认为 agent-server 或生产环境同步升级。
+- [Studio 子构建 34686987928](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34686987928) 的构建号为 193；从[公开首页](https://agent.sandaii.cn/)核对加载资源指向 `/build/maxwell/studio/193/assets/index-DJQ4ymyu.js`。复验须读取当次首页资源，不把历史构建号视为永久当前版本。
+- [上海 ACK 工作负载](https://cs.console.aliyun.com/#/k8s/cluster/c9838d6fa878b43c59a6d37586f0c0747/v2/workload/deployment/list?type=deployment&clusterType=ManagedKubernetes&profile=Default&state=running&region=cn-shanghai&ns=maxwell)实时刷新显示 DEV EVOLVE API、Worker 都为 1/1，image 均为该 merge commit；更新时间分别为北京时间 17:55:57、17:55:52。Pod 就绪和镜像一致用于发布核验，不能替代业务用例验收。
+- 北京时间 17:57，在[原影游a2a 业务 EVOLVE](https://agent.sandaii.cn/evolve?businessId=d913480b-bbf3-4c3f-956b-cab3a6854dee)重验 `executor-2842a8969df8d6c3ed4be085`，界面只显示 Agent Card 与接口检查这一项，并显示“已连接，执行能力待验证”。此复验验证新连接路径已生效；没有发起真实评测，不代表 Nextplay 业务已登记或绑定目标，也不证明内层 Nextplay、文件证据或候选效果已验收。
+- 非阻断文案指针：`apps/studio/src/products/evolve/executor/ExecutorsPanel.tsx` 的重新验证按钮 title 仍写“会真实调用目标，可能消耗额度”。对新版 A2A Card-only 路径该提示过时；本次仅记录，未另行修改。
+
+**Why:** CI 成功、公开页面资源版本、实际 API/Worker 镜像和原失败执行器的新预检结果分别覆盖发布链路的不同环节。将它们联合核对，才能说明改动已在当前 DEV 入口生效；“已连接”仍然只说明连接检查通过。
+
+**How to apply:** 后续复验从本节 PR、CI、公开资源、ACK 和原执行器页面逐项读取当前状态。正式 Nextplay 验收仍从 Nextplay 所属业务确认执行目标登记，选择明确基准和真实 Case，再验证终态、原始输出、所需文件内容及候选应用回执。不要把本次影游a2a 业务连接复验写成 Nextplay 评测闭环完成。

@@ -138,3 +138,5 @@
 - 2026-09-12：核对 17:22 外层预检 Trace，确认 skill_load 后 ask_user 导致 input-required 并被取消；未调用内层，补 probe 分支与绿色可达性的验收边界。
 
 - 2026-09-12：记录 EVOLVE 连接预检实现 9c09993b，以 Card-only / HTTP 单次协议 POST 替代合成能力探测；未知能力允许真实试跑，保留运行回执比较保护，旧 Nextplay probe shortcut 建议标记为被平台改法替代。
+
+- 2026-09-12：记录 EVOLVE PR #287 合并与 DEV 发布 34686981214，核验 Studio 构建 193、API/Worker 镜像及原影游a2a 执行器 Card-only 复验通过；未发起 Nextplay 真实评测，另记按钮旧 tooltip 指针。

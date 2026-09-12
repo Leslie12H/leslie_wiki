@@ -103,3 +103,5 @@
 - 外层将 probe 当成业务请求并 ask_user：见 [EVOLVE 接入记录](domains/maxwell/refs/evolve-preset-evaluation-entry.md) 的 2026-09-12 17:22 Trace 与预检分支核验。
 
 - EVOLVE 连接检查与真实用例分离：A2A Card-only、HTTP 单次协议 POST、healthy unknown 可试跑与运行回执比较保护，见 [EVOLVE 接入记录](domains/maxwell/refs/evolve-preset-evaluation-entry.md) 的 2026-09-12 实现指针。
+
+- EVOLVE PR #287 的 DEV 发布与原影游a2a 执行器连接复验：见 [EVOLVE 接入记录](domains/maxwell/refs/evolve-preset-evaluation-entry.md) 的 2026-09-12 发布指针；未进行 Nextplay 真实评测。
