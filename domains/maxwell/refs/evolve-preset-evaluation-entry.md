@@ -114,8 +114,17 @@ links: [vidmuse-a2a-executor, evolve-maxwell-tuning-receiving]
 
 ## 2026-09-12 五文件证据不能仅靠 Prompt 接通
 
-继续从 `4a91b778` 的 `services/evolve-server/internal/modules/evolve/application/execution/contract.go:305-325,389-393` 核对：Envelope 声明 `evidence.files`，返回 TrialResult 的赋值却未传递这一字段。沿 Worker、Runtime 文件接口与 EvidenceSet 冻结路径检查，不能因 schema 有字段就认定已有 contextId+path 下载、sha256 校验和五文件持久化链路。
+继续对照主干 `4a91b778` 与部署版本 `a158e6c1` 的 `services/evolve-server/internal/modules/evolve/application/execution/contract.go:305-325,389-393` 核对：Envelope 声明 `evidence.files`，返回 TrialResult 的赋值却未传递这一字段。沿 Worker、Runtime 文件接口与 EvidenceSet 冻结路径检查，不能因 schema 有字段就认定已有 contextId+path 下载、sha256 校验和五文件持久化链路。
 
 **Why:** 调整外层 Prompt 只能改变其输出内容，不能补 EVOLVE 的 A2A DataPart 投影、文件读取和证据保存实现。Runner 的“文件清单已返回”和评测证据“真实字节可复核”是两项不同验收。
 
 **How to apply:** 明确两侧数据转换及文件取回契约后补实现，再验收文件存在、哈希一致、冻结后可读取及评分可追溯。目标基准可从 `targetProfile.targetRef` 或 Case 的明确输入映射，完整 SP/Skill 候选需映射到 Runner 实际要求；`cas://contentRef` 不能自动视为远端可下载资源。Nextplay 业务存在多个 Preset，必须显式选定基准，不能从业务名或候选运行 Agent 的名称推断。此次没有选定 Nextplay 基准或验证这些映射。
+
+
+## 2026-09-12 同源失败后的客户端缓存与重试边界
+
+部署版本 `a158e6c1` 的核验入口：`services/evolve-server/internal/app/integration/a2a/registry.go:745-769` 中 `a2aClient` 仅在 `fetchCard` 与 `NewFromCard` 均成功后赋值客户端缓存；同源检查失败不产生成功客户端，下次调用会重新获取 Card。`registry.go:319-333` 中该失败直接返回，尚未进入 SendMessage。
+
+**Why:** 本次阻断来自失败的 Card 初始化，不需要通过重启 EVOLVE、重新登记或修改同源安全检查来清除一个并不存在的成功缓存。错误提示问题可单独沿 `services/evolve-server/internal/modules/evolve/application/execution/ad_hoc.go:66-76` 的 `AdHocDispatchFailure` 检查：其默认分支把此类 dispatch_failed 也附上 uncertain 文案；细分“尚未发送”和“发送后结果未知”是提示与错误分类改进，不是修复本次同源阻断的前置改动。
+
+**How to apply:** 先让实际 Card 所有接口与已登记 URL 同源，读取 Card 验证后再执行预检或获准的调用；现有失败记录不会自行变成功。若下一次仍失败，以当次 Card、错误阶段和新调用证据定位，不因旧 uncertain 文案假定任务已发送，也不把本结论扩展为所有已缓存成功客户端均会自动刷新。配置同源修正和完整 Nextplay 协议/文件证据接通仍须分别验收。

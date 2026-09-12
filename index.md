@@ -93,3 +93,5 @@
 - 外层实际 Candidate Runner 的输入与文件证据映射：见 [EVOLVE 接入记录](domains/maxwell/refs/evolve-preset-evaluation-entry.md) 的 2026-09-12 Prompt/Skill 核验指针。
 
 - Nextplay 外层 Card 同源错误已定位 scheme/host 双差异；CDN/ALB 回源核验及五文件证据保存入口见 [EVOLVE 接入记录](domains/maxwell/refs/evolve-preset-evaluation-entry.md)（2026-09-12）。
+
+- 同源失败的客户端缓存与重试边界：见 [EVOLVE 接入记录](domains/maxwell/refs/evolve-preset-evaluation-entry.md) 的部署版本 a158e6c1 核验指针（2026-09-12）。
