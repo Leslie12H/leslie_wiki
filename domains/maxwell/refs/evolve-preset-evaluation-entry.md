@@ -81,3 +81,19 @@ links: [vidmuse-a2a-executor, evolve-maxwell-tuning-receiving]
 **Why:** 正确 Key 不能越过防止凭据被转发至其他 origin 的安全检查。只有先看实际 Card 宣告的 URL，才能区分协议、域名或端口差异；不能未取到 Card 就断言是 http/https、反向代理丢头或 Key 无效。
 
 **How to apply:** 安全读取已登记的 Card URL 和其 supportedInterfaces URL，仅比较 URL，不输出 Token；修正目标 Card 的公开接口地址或登记地址，使其符合真实对外路由与同源约束后再预检。不要关闭凭据同源检查，也不要根据通用 uncertain 文案直接重复下发。此次知识录入尚无实际 Card 接口 URL，具体差异保持待核验。
+
+
+## 2026-09-12 实际外层是 Candidate Runner：接通前的映射核验
+
+已从 UI 读取[外层 Preset](https://agent.sandaii.cn/agents/697f4aa1-0a2f-4ce6-a54f-5c8c70453b71?businessId=d913480b-bbf3-4c3f-956b-cab3a6854dee)的 Prompt 与绑定 Skill 信息。核验入口是 Agent“Candidate 运行 Agent（A2A 测试）”、Prompt“Candidate 运行 Agent（测试）”、Skill `maxwell-candidate-runner`（“Maxwell Candidate Runner（测试）”）；名称和内容会变，使用前从该 Preset 重新读取，不复制完整 Prompt 到 wiki。
+
+这次配置核验说明不能因“包在 Nextplay 外层”就假设该 Agent 已固定指向 Nextplay，也不能把普通 Candidate Runner 自动当作 EVOLVE Executor Kit。沿实际 Prompt 和 Skill 继续检查：
+
+- **执行输入与基准定位：** 核对显式基准 Preset 链接或 businessId+presetId、业务任务 prompt，以及完整替换 SP / 完整 Skill 资源包至少提供一种的输入要求。基准不能从 runtime.env 或历史对话猜测。EVOLVE 的 Case、Variant 是否已有映射代码，应查实际 Skill 脚本，不能根据自然语言能力推断。
+- **候选执行与凭据：** 沿绑定 Skill 的脚本核对临时 Prompt/Preset 创建、单次运行、status 等待、文件独立保存及清理路径；检查调用凭据从 Skill runtime.env 获取的约束，不读取或抄录凭据值。Prompt 描述了这些步骤，不代表脚本、权限或隔离已经验收。
+- **输出与文件字节：** 核对最终原始回复，以及 `manifest.json`、`outline.json`、`assets.json`、`route.json`、`media.json` 的文件清单（name、path、sha256）和 contextId / Runtime 文件接口取字节路径。回给 EVOLVE 的文件清单不是实际内容；文件回收、哈希与证据投影需要明确实现。
+- **职责边界：** 从当前 Prompt 核对 Runner 不承担 Judge、Dataset 批处理、评分和上报；这些仍由 EVOLVE 管理。不要将“运行一次并返回结果”当作整套评测已完成。
+
+**Why:** 这个外层的实际输入面向候选运行，实际输出面向原始回复和 Runtime 文件；EVOLVE external_a2a 的输入和 trial evidence 有自己的合同。A2A 能连通只解决传输，还需证明两侧字段、候选版本和文件证据衔接。已有影游a2a 业务登记也不证明 Nextplay 业务存在执行目标；每次从[Nextplay EVOLVE](https://agent.sandaii.cn/evolve?businessId=ad3d5c4b-c7c9-4ed3-b15d-4f3556520263)刷新任务和登记列表核对。
+
+**How to apply:** 先明确要运行的 Nextplay 基准 Preset 与完整候选，再检查或补齐两处适配：EVOLVE request → Candidate Runner 输入，Candidate Runner 原始回复及文件字节 → EVOLVE trial evidence。接着在 Nextplay 业务完成登记与单条基线/候选试跑，验收真实输出、候选实际生效和文件可读，最后由 EVOLVE 判卷。2026-09-12 这次核验仅到 UI/Prompt，尚未读取绑定 Skill 脚本或实跑；两处映射、执行隔离及成功状态均未验证。
