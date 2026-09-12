@@ -34,7 +34,7 @@
 
 ### maxwell — [业务全景](domains/maxwell/README.md)
 - [VidMuse Git 候选准备](domains/maxwell/projects/vidmuse-executor-candidates.md) — 独立候选 CLI、独立 Plugin 名称部署、账号覆盖与共享部署边界核验指针
-- [VidMuse Executor P1 实现入口](domains/maxwell/projects/vidmuse-executor-p1.md) — 独立仓库、离线验收、持久化恢复与协议偏差核验指针
+- [VidMuse Executor P1 实现入口](domains/maxwell/projects/vidmuse-executor-p1.md) — 独立仓库、DEV 部署准备、持久化恢复与协议核验指针
 - [EVOLVE v2.2 工作台](domains/maxwell/refs/evolve-workbench-v22.md) — 固定框架、行内判卷、设计与真实接口边界及验证入口
 - [EVOLVE 已接收输出与未冻结证据集](domains/maxwell/pitfalls/evolve-received-evidence-before-run-freeze.md) — Attempt 输出与冻结证据的区别；SQL 审计定位 CAS，读写分离下的状态机一致性；修复 PR #276 与租约接管回归
 - [EVOLVE 全流程稳定性审计](domains/maxwell/refs/evolve-evaluation-blockers-20260910.md) — 取消收敛、大证据引用、判卷重试、故障回归与 PR/DEV 发布验证指针
