@@ -43,3 +43,5 @@ links: [monitoring-problem-title-vs-incident-report]
 - 同分支 Chat 复制交互：playground/src/components/ChatTab.tsx 与 ChatTab.selectionCopy.test.tsx。取消进入模式步骤，桌面悬停或键盘聚焦显示选择入口，已选保持显示；触屏保留可见入口。工具栏移出消息滚动区。用户否定桌面常驻整排勾选框。60 项 Chat 测试与 TypeScript 检查通过，未部署。
 
 - 2026-09-12 Chat 后续交互验证指针：同一分支的 ChatTab.selectionCopy.test.tsx 新增反向 Shift 连选、筛选排除和 Esc 清空测试；选择入口移至消息边缘不占正文列，范围由当前渲染的消息勾选框确定，复制仍按原始时间线。13 项复制测试、49 项相关 Chat 回归及 TypeScript 通过，未部署。
+
+- 2026-09-12 统一交付指针：[Admin PR #875](https://github.com/world-sim-dev/vidmuse-admin/pull/875)，包含日报结构化格式与重试诊断、Chat 悬停多选及 Shift 连选。重复 subagent alias 范围按渲染实例定位，复制按消息 ID 去重。80 项后端、64 项 Chat 与 TypeScript 本地通过；CI、合并及部署状态到 PR 查询。

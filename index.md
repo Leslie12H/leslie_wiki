@@ -103,3 +103,5 @@
 - 日报结构化返回与 Chat 复制交互：见 [日报修复指针](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-evidence-loss.md) 的 2026-09-12 后续修复。
 
 - Chat Shift 连选及 Esc 清空验证指针：见 [Chat 与日报修复记录](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-evidence-loss.md)。
+
+- [Admin PR #875](https://github.com/world-sim-dev/vidmuse-admin/pull/875)：日报格式与 Chat 多选复制统一交付，见 [修复记录](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-evidence-loss.md)。
