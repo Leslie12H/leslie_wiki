@@ -35,7 +35,7 @@ links: [vidmuse-a2a-executor, evolve-maxwell-tuning-receiving]
 
 **Why:** 部署载体与业务角色不同。EVOLVE 应围绕 Nextplay 冻结 TargetProfile、Case、baseline/candidate；executorRef 指向外层执行器。若按普通 maxwell_preset 路径派发，外层只收到 Case 用户输入，不能据此获得完整 Nextplay Variant 执行合同。
 
-**How to apply:** 以 external_a2a 协议登记外层执行器的实际 Agent Card，TargetProfile 描述 Nextplay 并关联登记后的 executorRef；在 EVOLVE 生成并确认 a2a_live Run。外层把 Case 输入交给 Nextplay、实际应用 Nextplay 候选并等待完成，回传原始结果和版本证据；EVOLVE 负责判卷和比较。不要将候选应用到外层执行器本身。尚未检查具体 Preset 的配置，也未验证其下游工具或线上运行。
+**How to apply:** 以 external_a2a 协议登记外层执行器的实际 Agent Card，TargetProfile 描述 Nextplay 并关联登记后的 executorRef；在 EVOLVE 生成并确认 a2a_live Run。外层把 Case 输入交给 Nextplay、实际应用 Nextplay 候选并等待完成，回传原始结果和版本证据；EVOLVE 负责判卷和比较。不要将候选应用到外层执行器本身。本段最初未读取具体 Preset；后续 UI/Prompt 核验见“实际外层是 Candidate Runner”，下游工具与线上运行仍未验证。
 
 同一主干 `4a91b778` 的兼容性核对入口：
 
@@ -54,7 +54,7 @@ links: [vidmuse-a2a-executor, evolve-maxwell-tuning-receiving]
 - 密钥入口见 `apps/studio/src/pages/business/BusinessAPIKeys.tsx` 和 `routes.ts`。创建需要 api_key_manage，完整 key 仅创建时展示；后续列表不返回明文。不要在对话或日志中传递 key。
 - `services/evolve-server/internal/app/integration/executorsource/source.go`：共享业务托管凭据仅用于 maxwell_preset；external_a2a 使用登记时保存的 CredentialRef，当前不能因托管在 Maxwell 就自动复用共享凭据。
 - 外层调用 Nextplay 的下游凭据由其连接/工具配置负责；不能把 EVOLVE 到外层的 AppKey 混作 Nextplay 鉴权。
-- 2026-09-12 用户授权尝试绑定及预检，但登记页仍跳登录，未提交登记或触发预检。之前企业登录遭自动审批拒绝，后续未重试该被拒动作，保留登录页供用户完成登录。
+- 2026-09-12 最初绑定尝试停在登录页，未提交登记或触发预检；后续已完成业务身份、Prompt 与只读 Card 核验，见下文。
 
 
 ## 2026-09-12 评测业务与凭据所属业务纠正
@@ -80,7 +80,7 @@ links: [vidmuse-a2a-executor, evolve-maxwell-tuning-receiving]
 
 **Why:** 正确 Key 不能越过防止凭据被转发至其他 origin 的安全检查。只有先看实际 Card 宣告的 URL，才能区分协议、域名或端口差异；不能未取到 Card 就断言是 http/https、反向代理丢头或 Key 无效。
 
-**How to apply:** 安全读取已登记的 Card URL 和其 supportedInterfaces URL，仅比较 URL，不输出 Token；修正目标 Card 的公开接口地址或登记地址，使其符合真实对外路由与同源约束后再预检。不要关闭凭据同源检查，也不要根据通用 uncertain 文案直接重复下发。此次知识录入尚无实际 Card 接口 URL，具体差异保持待核验。
+**How to apply:** 安全读取已登记的 Card URL 和其 supportedInterfaces URL，仅比较 URL，不输出 Token；修正目标 Card 的公开接口地址或登记地址，使其符合真实对外路由与同源约束后再预检。不要关闭凭据同源检查，也不要根据通用 uncertain 文案直接重复下发。后续已读取实际 Card 并确认 scheme、host 两项差异，见“线上 Card 已确认跨 origin”。
 
 
 ## 2026-09-12 实际外层是 Candidate Runner：接通前的映射核验
@@ -97,3 +97,25 @@ links: [vidmuse-a2a-executor, evolve-maxwell-tuning-receiving]
 **Why:** 这个外层的实际输入面向候选运行，实际输出面向原始回复和 Runtime 文件；EVOLVE external_a2a 的输入和 trial evidence 有自己的合同。A2A 能连通只解决传输，还需证明两侧字段、候选版本和文件证据衔接。已有影游a2a 业务登记也不证明 Nextplay 业务存在执行目标；每次从[Nextplay EVOLVE](https://agent.sandaii.cn/evolve?businessId=ad3d5c4b-c7c9-4ed3-b15d-4f3556520263)刷新任务和登记列表核对。
 
 **How to apply:** 先明确要运行的 Nextplay 基准 Preset 与完整候选，再检查或补齐两处适配：EVOLVE request → Candidate Runner 输入，Candidate Runner 原始回复及文件字节 → EVOLVE trial evidence。接着在 Nextplay 业务完成登记与单条基线/候选试跑，验收真实输出、候选实际生效和文件可读，最后由 EVOLVE 判卷。2026-09-12 这次核验仅到 UI/Prompt，尚未读取绑定 Skill 脚本或实跑；两处映射、执行隔离及成功状态均未验证。
+
+
+## 2026-09-12 线上 Card 已确认跨 origin：CDN/ALB 核验入口
+
+2026-09-12 对登记的 Agent Card 进行一次带目标业务凭据的只读 GET，已取得可解析的 200 响应。该次返回的接口宣告与登记地址在 scheme、host 两项不一致；不再把具体差异视为未知。此处保存核验指针和判断方法，URL 与云端配置应在每次排查时重新读取。
+
+- Card 入口为本文的外层 Agent Card；检查 `supportedInterfaces[].url`。本次失败条件是登记 origin `https://agent.sandaii.cn` 与 Card 宣告 origin `http://maxwell-agent-dev.sandaii.cn` 不同，不是 Key 无效，也不是跨 Maxwell 业务被禁止。
+- 云入口在 ACK 上海集群 `c9838d6fa878b43c59a6d37586f0c0747`、namespace `maxwell` 的 `maxwell-agent-dev` Ingress。沿 ALB 监听、host 规则、后端 Service 与 `ssl-redirect` 检查实际到达应用的请求，不能仅看到入口开启 HTTPS 就推断应用生成的 Card 使用公开 HTTPS origin。
+- CDN 核验入口：[基础源站](https://cdn.console.aliyun.com/domain/detail/agent.sandaii.cn/basic)与[回源配置](https://cdn.console.aliyun.com/domain/detail/agent.sandaii.cn/backSrc)。在条件规则 `api|504262688399360` 核对源站、HOST/SNI、回源协议与出站请求头，再核对 EdgeScript 是否另有改写。本次回源协议是“跟随客户端”，不能写成静态 HTTP 回源；也不能用页面静态内容的基础源站推断 API 路线。
+- 已部署 Agent `7aca6b5` 的 `services/agent-server/internal/app/integration/runtime/a2a/transport.go` 与主干 `4a91b778` 对照；`requestOrigin` 使用请求 TLS/Host 及 `X-Forwarded-Proto`、`X-Forwarded-Host` 构造公开地址。已部署 EVOLVE `a158e6c1` 的凭据同源门禁同主干；仅升级主干不能证明本问题会消失。
+
+**Why:** CDN、ALB 和应用看到的地址可能不同。Card 是客户端后续调用地址的来源；只要它宣告回源协议或回源域名，EVOLVE 就会在向该接口转发业务凭据前拒绝。正确凭据已足以读取 Card，也仍然必须满足接口同源检查。
+
+**How to apply:** 从同一条 Card 请求沿 CDN 条件源站 → ALB/Ingress → 应用请求 origin 核对，并在可信代理边界修正公开地址传递或服务自身的公开 URL 配置。当前待实施方案是在 API 规则范围显式覆盖 `X-Forwarded-Host=agent.sandaii.cn`、`X-Forwarded-Proto=https`；按[阿里云自定义请求头文档](https://help.aliyun.com/zh/cdn/user-guide/configure-custom-request-headers/)使用“增加 + 是否允许重复=不允许”，不要误选用于正则操作的“替换”。保留实际回源 Host `maxwell-agent-dev.sandaii.cn` 以匹配 ALB 路由。该方案需改后取证，不能从控制台配置推断已生效。修复后核验到达 Go 的转发头值，并重新 GET Card 确认所有接口与登记 URL 同源，再做执行器预检；最后才在 Nextplay 业务跑选定基准与用例。此次记录不代表已修改云配置、部署修复或发起 Nextplay 测试。
+
+## 2026-09-12 五文件证据不能仅靠 Prompt 接通
+
+继续从 `4a91b778` 的 `services/evolve-server/internal/modules/evolve/application/execution/contract.go:305-325,389-393` 核对：Envelope 声明 `evidence.files`，返回 TrialResult 的赋值却未传递这一字段。沿 Worker、Runtime 文件接口与 EvidenceSet 冻结路径检查，不能因 schema 有字段就认定已有 contextId+path 下载、sha256 校验和五文件持久化链路。
+
+**Why:** 调整外层 Prompt 只能改变其输出内容，不能补 EVOLVE 的 A2A DataPart 投影、文件读取和证据保存实现。Runner 的“文件清单已返回”和评测证据“真实字节可复核”是两项不同验收。
+
+**How to apply:** 明确两侧数据转换及文件取回契约后补实现，再验收文件存在、哈希一致、冻结后可读取及评分可追溯。目标基准可从 `targetProfile.targetRef` 或 Case 的明确输入映射，完整 SP/Skill 候选需映射到 Runner 实际要求；`cas://contentRef` 不能自动视为远端可下载资源。Nextplay 业务存在多个 Preset，必须显式选定基准，不能从业务名或候选运行 Agent 的名称推断。此次没有选定 Nextplay 基准或验证这些映射。
