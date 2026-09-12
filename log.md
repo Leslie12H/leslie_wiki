@@ -140,3 +140,6 @@
 - 2026-09-12：记录 EVOLVE 连接预检实现 9c09993b，以 Card-only / HTTP 单次协议 POST 替代合成能力探测；未知能力允许真实试跑，保留运行回执比较保护，旧 Nextplay probe shortcut 建议标记为被平台改法替代。
 
 - 2026-09-12：记录 EVOLVE PR #287 合并与 DEV 发布 34686981214，核验 Studio 构建 193、API/Worker 镜像及原影游a2a 执行器 Card-only 复验通过；未发起 Nextplay 真实评测，另记按钮旧 tooltip 指针。
+
+
+- 2026-09-12：记录 Nextplay 首轮工作区与执行目标列表刷新核验，补 Creative Production Agent 的协议读取和 Case 场景纠正指针；目标、基准方案、Judge、Case 修订草稿 v2 已保存但未冻结，基准待选定，未发起真实初评或候选运行。

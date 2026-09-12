@@ -177,3 +177,17 @@ links: [vidmuse-a2a-executor, evolve-maxwell-tuning-receiving]
 **Why:** CI 成功、公开页面资源版本、实际 API/Worker 镜像和原失败执行器的新预检结果分别覆盖发布链路的不同环节。将它们联合核对，才能说明改动已在当前 DEV 入口生效；“已连接”仍然只说明连接检查通过。
 
 **How to apply:** 后续复验从本节 PR、CI、公开资源、ACK 和原执行器页面逐项读取当前状态。正式 Nextplay 验收仍从 Nextplay 所属业务确认执行目标登记，选择明确基准和真实 Case，再验证终态、原始输出、所需文件内容及候选应用回执。不要把本次影游a2a 业务连接复验写成 Nextplay 评测闭环完成。
+
+
+## 2026-09-12 Nextplay 首轮任务准备与业务场景核对
+
+**现场核验入口：** 北京时间 2026-09-12 约 19:20–19:23，从 [Nextplay EVOLVE](https://agent.sandaii.cn/evolve?businessId=ad3d5c4b-c7c9-4ed3-b15d-4f3556520263)读取执行目标，并通过对话创建[本轮初评与调优工作区](https://agent.sandaii.cn/evolve/tasks/work_35c276d93336f8552b6a5e55f6a19488?businessId=ad3d5c4b-c7c9-4ed3-b15d-4f3556520263&session=agent_session_b59631888f6157c95996e12bea2fcec9)。执行目标、草稿和运行状态会变化，后续从此工作区读取，不将本次状态当作永久配置。
+
+- 执行目标列表最初显示 0 个；刷新后出现名为 Nextplay 的外部 Agent `executor-e46277f8cdcb7a49d8bd41a3`，Card/接口检查通过，界面显示“已连接，执行能力待验证”。本轮操作没有登记该目标，未核实其创建者；不能把列表刷新前后的差异归因于本轮创建，也不能把已连接当作真实运行完成。
+- 业务协议核验入口为 Nextplay 业务中[人工评测 Preset 的 Prompt 预览](https://agent.sandaii.cn/agents/f707c08b-7140-44e0-a0f2-b1b90bfea5c0?businessId=ad3d5c4b-c7c9-4ed3-b15d-4f3556520263)。此次仅用于理解业务，尚未选它作为基准。检查其中 Creative Production Agent 的职责及产物流程：从创意、大纲与文字资产推进到图片、封面、分支路线和结局，再到剧本、分镜与视频制作；不要仅凭互动影游名称把用户角色理解为进入剧情的玩家。
+- 本轮调优 Agent 最初生成了玩家续写剧情场景的 Case 草稿；经 Prompt 核对后，已在同一会话要求改为创作者提出影游项目需求，并按实际创作产物内容设计判卷。北京时间 19:23，界面确认目标、基准方案、Judge、Case 的 v2 草稿已保存，准备 Agent 已完成；TargetProfile 仍为占位，资产尚未冻结，最终基准选择和 Judge 的实际输出字段仍需核对。草稿保存不能当作评测完成。
+- 本次核验只到工作创建及草稿准备；Nextplay 基准选择待完成，没有真实 baseline 或 candidate Run。后续先在工作区确认任务输入与被测 Preset 的职责一致，再核对选定基准、冻结资产、执行计划和正式运行证据。
+
+**Why:** 名称中的“互动影游”不足以定义被测对象的工作方式。创作生产 Agent 与玩家扮演 Agent 接收的任务、输出结构和成功标准不同；若用玩家续写场景评测创作流水线，即使 Run 和判卷完成，分数也不能回答目标能力问题。连接状态、工作创建、草稿修订与真实评测必须分别验收。
+
+**How to apply:** 开始出题前，先从明确的目标 Preset 读取当前 Prompt/Skill 的职责、用户角色和最终产物要求；将真实创作请求映射为 Case，再用实际产物内容设置 Judge，避免只检查剧情回复是否流畅。用于理解协议的 Preset 不自动成为 baseline；在冻结前显式核对最终选中的 Preset 与完整 SP/Skill。继续本轮工作时打开上述工作区，先确认修订后的 Case 和 Judge，再准备一条代表用例的初评；候选调优沿用相同用例和判断口径，并核实候选实际应用回执。
