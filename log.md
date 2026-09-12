@@ -155,3 +155,5 @@
 - 2026-09-12 | VidMuse Adapter container delivery and AION product-owned preparation reservation: draft code, real SQL lifecycle tests, no new tables; corrected mapping recovery to reuse Zeus outbox, separated internal capture and async handle follow-ups, and updated Feishu deployment/preparation sections. No image run or deployment.
 
 - 2026-09-12 | VidMuse PR merge verification: recorded main DEV automation, deferred Manager/Runner test imports, isolated test databases, opt-in immutable Plugin layout, publisher prerequisites and CI/deployment evidence pointers. Real generation and async preparation completion remain separate.
+
+- 2026-09-12：录入监控 GitHub App 配置定位及定向导出指针，记录 ACK Secret 注解导致模糊行定位泄露的实踩坑；未保存凭据。
