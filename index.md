@@ -99,3 +99,5 @@
 - [日报定时失败诊断](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-evidence-loss.md)：2026-09-12 JSON 输出失败、当天重试门禁及历史与复现证据边界。
 
 - 日报 JSON 格式本地修复与验证：见 [日报失败诊断](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-evidence-loss.md) 的 2026-09-12 修复指针。
+
+- 日报结构化返回与 Chat 复制交互：见 [日报修复指针](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-evidence-loss.md) 的 2026-09-12 后续修复。

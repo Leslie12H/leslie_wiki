@@ -38,3 +38,6 @@ links: [monitoring-problem-title-vs-incident-report]
 - `build_report_with_llm` 在综合失败后仍检查无 LLM 预览卡体积，可能追加 card_size_limit；应与首要失败原因区分，不能据此断言模型生成卡太长。
 
 - 2026-09-12 本地修复指针：Admin 隔离工作树 `/private/tmp/admin-brief-json-20260912`，分支 `codex/brief-json-format-20260912`。JSON 语法修复共用三次调用和总超时预算；invalid_json 可按已有三次调度上限重试；输出诊断仅记录固定错误码、位置与长度。78 个相关测试通过；尚未发布。到该分支确认后续交付状态。
+
+- 2026-09-12 后续修复方向：同一 Admin 分支改用 submit_daily_brief 结构化返回，工具定义经 GenerateTextRequest.extra_params 传递至 Bedrock toolConfig，由适配器序列化参数。该工具不执行发送。用户允许模型整理和改写表达，不要求逐字保留；事实与不确定性仍需保留。验证指针为 test_structured_output_preserves_literal_error_quotes，涵盖真实适配器转义；80 项后端测试通过，尚未生产验证。
+- 同分支 Chat 复制交互：playground/src/components/ChatTab.tsx 与 ChatTab.selectionCopy.test.tsx。取消进入模式步骤，桌面悬停或键盘聚焦显示选择入口，已选保持显示；触屏保留可见入口。工具栏移出消息滚动区。用户否定桌面常驻整排勾选框。60 项 Chat 测试与 TypeScript 检查通过，未部署。
