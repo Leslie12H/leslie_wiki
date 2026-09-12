@@ -49,7 +49,7 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 - 每个候选有完整独立 `eval-*` Plugin ID；公共 Skill/workflow 冻结到候选专属不可变版本并重写候选引用。候选发布不改源分支、普通 Plugin、DEFAULT/latest 或在用候选。普通 main 更新仍可修改其普通资源，但必须完整保留已发布候选。规则与实际重建验证以 Plugin publisher README 和 Adapter `docs/dev-candidate-release-contract.md` 为准。
 - DEV Manager 使用 PVC subPath 挂载，直接替换挂载目录不能保证现有 Pod 看到新 inode。因此保留稳定父目录 `/work/aion-plugin-base-dev`，仅在其内部原子切换 `current` 到保留的完整不可变 release。AION 必须在创建/导入时解析一次，冻结真实 release/root，后续 config、archive、Skill 与 Runner 挂载沿用该绑定；不能重选 HEAD。
 - 正常 main DEV 刷新与候选发布使用同一可信 publisher、目标锁和 CAS。可信程序来自受保护的完整 commit，候选只作为待验证数据。实际文件/完整树验证后的 `devReleaseCommit` 才是发布身份；`inspect` 已接通可信 catalog 导出，Adapter 加载后解析固定运行版本。受控产物交付是信任边界，布尔标记或 SHA 本身不是认证。
-- Plugin PR 将 main 的旧 DEV reset/pull 路径改走新工作流，staging/prod 行为不变；**历史分支仍可能持有旧 Aliyun 权限**。必须在外部撤销旧凭据对 DEV 的 RunCommand 权限，并限制新 DEV 身份/Environment。代码无法替代 IAM 撤权，未完成此项不能宣称消除旧入口绕过。
+- Plugin #1832 曾将 main 的旧 DEV reset/pull 路径改走新工作流；后续 [#1844](https://github.com/world-sim-dev/vidmuse-plugins/pull/1844) 在 publisher 未初始化时恢复普通 DEV 路由，保留候选 workflow 供后续启用。当前普通 DEV 更新不能被当作候选隔离发布已经接管。**历史分支仍可能持有旧 Aliyun 权限**；必须在外部撤销旧凭据对 DEV 的 RunCommand 权限，并限制新 DEV 身份/Environment，代码不能替代 IAM 撤权。
 - 共享文件系统锁/原子操作、只读运行挂载、实际 PV quota、保护分支与版本 pins、首次 bootstrap 和 AION 显式启用固定路径仍为启用前置。发布成功只证明安装字节；不证明 Agent 已加载、读取或执行。
 
 ## 原生节点续跑与证据边界
@@ -102,9 +102,12 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 
 **How to apply:** 读取上方五个 PR 的当前 merged/head/checks 状态，并核对 [Plugin DEV 发布](https://github.com/world-sim-dev/vidmuse-plugins/actions/runs/34684779648)、[Zeus DEV CI/CD](https://github.com/world-sim-dev/vidmuse-zeus/actions/runs/34684802492)、[Maxwell main CI](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34684756801) 和 [AION 当前 PR 检查](https://github.com/world-sim-dev/aion/pull/1754/checks)。不能把“已合并”当作“调优可用”。
 
+2026-09-12 最终合并核验：上述五个原始 PR 与内容证据配套 [Executor #2](https://github.com/world-sim-dev/vidmuse-executor/pull/2)、[Zeus #524](https://github.com/world-sim-dev/vidmuse-zeus/pull/524) 均已合并。AION #1754 在当前 head 的 24 条审查线程全部解决、自动审查完成、[四项必需检查通过](https://github.com/world-sim-dev/aion/actions/runs/34694638228)后合并；后续 [AION DEV 流程](https://github.com/world-sim-dev/aion/actions/runs/34695481128)的发布结果须单独读取。Zeus 最新 DEV 结果见下方 #524 记录。Executor 部署、候选 publisher 初始化、异步 materializer/outbox/接入及真实 A/B 尚未完成，不因源码合并而归档项目。
+
 - AION 测试隔离修复见 [4ce2a49d](https://github.com/world-sim-dev/aion/commit/4ce2a49d58f34f627a2eb8c97519f731ed4a4bb4)：运行时导入进入可恢复的 module fixture，SQLite 路径按模块隔离。Manager/Runner/checkpoint 混合 644 项通过、1 项跳过；最终全套结论看当前 CI。
 - AION [1ab12abf](https://github.com/world-sim-dev/aion/commit/1ab12abfa091736f69b770c27749d9ef1fab7bbc) 将 `current` 和私有 checkpoint 卷改为显式启用的 `patch-native-checkpoint-release.yml`，默认 DEV kustomization 不引用。先完成 publisher/IAM/bootstrap，验证目录与保留版本，再启用补丁；配置缺失时固定候选应拒绝，不能退回 mutable HEAD。默认与启用后 manifests 均已本地渲染，Plugin/runtime 16 项通过、1 项跳过。
-- Plugin 发布器四项必填变量的配置入口在受保护 `vidmuse-plugin-dev-publisher` Environment：`DEV_PLUGIN_PUBLISHER_COMMIT`、`DEV_EXECUTOR_COMMIT`、`DEV_PUBLISHER_INSTANCE_ID`、`DEV_PUBLISHER_REGION`。还须核对 DEV 专用权限、可信凭据及旧入口撤权；不能只补 pins 就宣称完成发布隔离。上述发布 run 在初始化校验退出，后续普通 DEV 刷新也需先完成这些前置。
+- Plugin 发布器四项必填变量的配置入口在受保护 `vidmuse-plugin-dev-publisher` Environment：`DEV_PLUGIN_PUBLISHER_COMMIT`、`DEV_EXECUTOR_COMMIT`、`DEV_PUBLISHER_INSTANCE_ID`、`DEV_PUBLISHER_REGION`。还须核对 DEV 专用权限、可信凭据及旧入口撤权；不能只补 pins 就宣称完成发布隔离。上述发布 run 在初始化校验退出，隔离候选发布需先完成这些前置。
+- 后续普通路由恢复见 [Plugin #1844](https://github.com/world-sim-dev/vidmuse-plugins/pull/1844)；[main 普通 DEV run](https://github.com/world-sim-dev/vidmuse-plugins/actions/runs/34688810320) 已成功。因此上一条失败仅描述 #1832 当次运行，不能继续当作当前普通发布不可用。2026-09-12 再查该 Environment 变量列表仍为空，候选隔离发布必须先初始化，再协调主路由接管及 AION 固定路径启用。
 - Maxwell 的通知工作流与产品 CI 分开核对：[合并通知 run](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34684756800) 曾在连接 `agent.sandaii.cn` 时超时；通知失败不等于 CI 失败，不自动重发可能非幂等的产品请求。
 
 ## 2026-09-12 原生续跑审查与完整 CI
@@ -151,7 +154,7 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 
 **Why:** 仅比较 Plugin commit 无法证明同请求号重试仍是同账号、Prompt、选项和素材。准备预留受保护后，已激活的原生导入仍可能被普通文件编辑污染。工作区发布与数据库提交又不是同一个原子操作，清理必须区分未提交和提交响应丢失。
 
-**How to apply:** 阅读 [87016fed](https://github.com/world-sim-dev/aion/commit/87016feda8715cdb15fb9af31477f2896a5056cb) 及 [1a109884 部署说明](https://github.com/world-sim-dev/aion/commit/1a10988496e7a668f7872ea90d5e7192403d3689)。首次创建同事务保存完整规范化请求 hash，同项目/请求的控制发布在既有共享 runtime 卷上串行；比较成功后才可返回旧 Thread。普通 artifact/file/document 写入拒绝原生导入，typed read 不创建缺失的 free canvas。导入捕获到异常后回滚并重新查回执，只有确认没有落库才删除本次发布目录；数据库不可查或已提交时保留，进程崩溃遗留仍需人工恢复。相关 520 项通过、1 项条件跳过；完整结论看[对应 CI](https://github.com/world-sim-dev/aion/actions/runs/34691935001)及 PR 当前状态。
+**How to apply:** 阅读 [87016fed](https://github.com/world-sim-dev/aion/commit/87016feda8715cdb15fb9af31477f2896a5056cb) 及 [1a109884 部署说明](https://github.com/world-sim-dev/aion/commit/1a10988496e7a668f7872ea90d5e7192403d3689)。首次创建同事务保存完整规范化请求 hash，同项目/请求的控制发布在既有共享 runtime 卷上串行；比较成功后才可返回旧 Thread。普通 artifact/file/document 写入拒绝原生导入，typed read 不创建缺失的 free canvas。导入捕获到异常后回滚并重新查回执，只有确认没有落库才删除本次发布目录；数据库不可查或已提交时保留，进程崩溃遗留仍需人工恢复。相关 520 项通过、1 项条件跳过；完整结论看[最终完整 CI](https://github.com/world-sim-dev/aion/actions/runs/34694638228)及 PR 当前状态。
 
 同组入口复核还包括普通 `recreate_thread` / `reactive_thread`：它们会重新创建状态或以调用方选择的 auto_mode 启动，不能供原生导入使用。补充围栏见 [e37f82cb](https://github.com/world-sim-dev/aion/commit/e37f82cb1c12847a2cc8ee215140b5b3ac19f4be)，308 项相关检查通过；专用 activate/send_input 继续直接使用受控 claim/start 链路。该提交完整 CI 的唯一失败是已有子进程测试读到刚创建但未写入 PID 的空文件，修复见下节；最终结果读 PR 当前 head。
 

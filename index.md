@@ -33,7 +33,7 @@
 - [Kling 漏传分辨率导致 billing/500](domains/vidmuse/pitfalls/kling-billing-missing-resolution-20260909.md) — 2026-09-09 六次请求原始日志：价格 properties={}、未进入 Zeus 预扣费，I2V 输入缺图片/时长/分辨率
 
 ### maxwell — [业务全景](domains/maxwell/README.md)
-- [VidMuse 无库 Adapter 实施](domains/maxwell/projects/vidmuse-stateless-adapter-implementation.md) — 五仓合并/DEV CI 与审查核验、内容身份与脚本限额、普通创建/删除/流式入口隔离、请求幂等/取消/恢复；产品准备预留与大快照剩余边界（2026-09-12）
+- [VidMuse 无库 Adapter 实施](domains/maxwell/projects/vidmuse-stateless-adapter-implementation.md) — 五仓合并/DEV CI 与普通发布恢复、内容身份与脚本限额、普通创建/删除/流式入口隔离、请求幂等/取消/恢复；产品准备预留与大快照剩余边界（2026-09-12）
 - [VidMuse Git 候选准备](domains/maxwell/projects/vidmuse-executor-candidates.md) — 独立候选 CLI、独立 Plugin 名称部署、账号覆盖与共享部署边界核验指针
 - [VidMuse Executor P1 实现入口](domains/maxwell/projects/vidmuse-executor-p1.md) — P1 实现、轻量适配器去数据库方向、创建重试与部署核验指针
 - [EVOLVE v2.2 工作台](domains/maxwell/refs/evolve-workbench-v22.md) — 固定框架、行内判卷、设计与真实接口边界及验证入口

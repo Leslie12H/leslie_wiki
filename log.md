@@ -175,3 +175,7 @@
 - 2026-09-12 | Native output content contract: video paths can be overwritten, so AION hashes file bytes and Zeus/Executor preserve and bind versioned evidence; fence ordinary streaming input and atomically publish the PID fixture exposed by full CI. Linked the three coordinated PRs and validation boundaries.
 
 - 2026-09-12 | Native ownership and script limits: reject ordinary create/delete against checkpoint ownership; stream bounded UTF-8 scripts with stable-file and newline checks. Linked 350 checks, all 23 Zeus cross-contract tests, and the follow-up DEV release.
+
+- 2026-09-12 | Refreshed concurrent Plugin main changes: #1844 restored ordinary DEV routing while publisher provisioning is pending; latest ordinary deployment succeeded, but the protected candidate publisher environment still has no variables. Preserve this distinction in merge readiness.
+
+- 2026-09-12 | Merge completed for the five original PRs and Executor/Zeus content follow-ups. AION current head passed all four required checks with 24 resolved threads and a completed fresh review. Linked automatic DEV workflows and retained deployment, async preparation and real A/B gaps.
