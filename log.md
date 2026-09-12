@@ -167,3 +167,5 @@
 - 2026-09-12 | AION STOP boundary: successful completion waits for remote work, but failure after STOP must finalize even when a running Future cannot be cancelled; include already-consumed fast STOP and real running-Future regression pointers.
 
 - 2026-09-12 | AION preparation filesystem and cancellation: reject ordinary access to empty reserved workspaces and commit native failure with confirmed inbox cancellation before processing; preserve consumed interrupts and link rollback, HTTP and caller regressions.
+
+- 2026-09-12 | AION controlled request identity and import recovery: compare full request fingerprints before returning an existing Thread, serialize cooperative release creates, fence native workspace mutations and preserve committed publications after lost commit responses; linked 520 checks and current CI.

@@ -100,7 +100,7 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 
 **Why:** main 合并可能触发既有 DEV CI/CD；源码合并、发布准备和真实调优是不同完成条件。全套 CI 会共同收集 Manager/Runner 测试，单目录通过不能证明导入隔离。发布器未初始化时直接切换普通创建路径会使 DEV 创建报 503。
 
-**How to apply:** 读取上方五个 PR 的当前 merged/head/checks 状态，并核对 [Plugin DEV 发布](https://github.com/world-sim-dev/vidmuse-plugins/actions/runs/34684779648)、[Zeus DEV CI/CD](https://github.com/world-sim-dev/vidmuse-zeus/actions/runs/34684802492)、[Maxwell main CI](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34684756801) 和 [AION 合并前 CI](https://github.com/world-sim-dev/aion/actions/runs/34690984868)。不能把“已合并”当作“调优可用”。
+**How to apply:** 读取上方五个 PR 的当前 merged/head/checks 状态，并核对 [Plugin DEV 发布](https://github.com/world-sim-dev/vidmuse-plugins/actions/runs/34684779648)、[Zeus DEV CI/CD](https://github.com/world-sim-dev/vidmuse-zeus/actions/runs/34684802492)、[Maxwell main CI](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34684756801) 和 [AION 当前 PR 检查](https://github.com/world-sim-dev/aion/pull/1754/checks)。不能把“已合并”当作“调优可用”。
 
 - AION 测试隔离修复见 [4ce2a49d](https://github.com/world-sim-dev/aion/commit/4ce2a49d58f34f627a2eb8c97519f731ed4a4bb4)：运行时导入进入可恢复的 module fixture，SQLite 路径按模块隔离。Manager/Runner/checkpoint 混合 644 项通过、1 项跳过；最终全套结论看当前 CI。
 - AION [1ab12abf](https://github.com/world-sim-dev/aion/commit/1ab12abfa091736f69b770c27749d9ef1fab7bbc) 将 `current` 和私有 checkpoint 卷改为显式启用的 `patch-native-checkpoint-release.yml`，默认 DEV kustomization 不引用。先完成 publisher/IAM/bootstrap，验证目录与保留版本，再启用补丁；配置缺失时固定候选应拒绝，不能退回 mutable HEAD。默认与启用后 manifests 均已本地渲染，Plugin/runtime 16 项通过、1 项跳过。
@@ -146,3 +146,9 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 **Why:** 准备预留的空 working_dir 经文件系统工厂拼接后会指向共享根目录，仅限制启动/消息不足以隔离文件接口。STOP 又可能取消尚未生成 USER/DONE 的原生输入；此时不能用“缺少已处理消息”拒绝真实取消，也不能伪造处理记录。
 
 **How to apply:** 阅读 [11c9ce09](https://github.com/world-sim-dev/aion/commit/11c9ce09f42b3f231d903be3aed9e7fa11a17a4a)：公共权限路径先拦截准备预留，文件系统工厂拒绝空目录；原生失败终态接在 Manager 已确认的消息取消事务中，Thread 在消息行之前加锁，回滚及保留的 inbox 快照重试同时覆盖两者。Runner 保留已消费的中断标记，后续失败报告可幂等确认，不能改成成功。相关 555 项和公共调用方 300 项回归的完整验证入口为[该 head CI](https://github.com/world-sim-dev/aion/actions/runs/34690984868)；不新增 Adapter 数据库或伪造 USER/DONE。
+
+## 2026-09-12 完整请求身份与导入工作区边界
+
+**Why:** 仅比较 Plugin commit 无法证明同请求号重试仍是同账号、Prompt、选项和素材。准备预留受保护后，已激活的原生导入仍可能被普通文件编辑污染。工作区发布与数据库提交又不是同一个原子操作，清理必须区分未提交和提交响应丢失。
+
+**How to apply:** 阅读 [87016fed](https://github.com/world-sim-dev/aion/commit/87016feda8715cdb15fb9af31477f2896a5056cb) 及 [1a109884 部署说明](https://github.com/world-sim-dev/aion/commit/1a10988496e7a668f7872ea90d5e7192403d3689)。首次创建同事务保存完整规范化请求 hash，同项目/请求的控制发布在既有共享 runtime 卷上串行；比较成功后才可返回旧 Thread。普通 artifact/file/document 写入拒绝原生导入，typed read 不创建缺失的 free canvas。导入捕获到异常后回滚并重新查回执，只有确认没有落库才删除本次发布目录；数据库不可查或已提交时保留，进程崩溃遗留仍需人工恢复。相关 520 项通过、1 项条件跳过；完整结论看[对应 CI](https://github.com/world-sim-dev/aion/actions/runs/34691935001)及 PR 当前状态。
