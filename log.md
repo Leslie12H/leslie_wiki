@@ -161,3 +161,5 @@
 - 2026-09-12：录入监控 GitHub App 配置定位及定向导出指针，记录 ACK Secret 注解导致模糊行定位泄露的实踩坑；未保存凭据。
 
 - 2026-09-12 | AION second merge review: documented work/event/control admission, SQL pagination exclusion, snapshot path/shape/metadata limits and idempotent runtime reports; track new review threads during CI rather than only at the final merge gate.
+
+- 2026-09-12 | AION final preparation/transport fixes: allow failure after persisted reserved input without claiming model processing, reserve metadata/tar overhead in capture, and repair the queue timestamp test fixture; linked latest complete CI and actual reduced-budget transport tests.

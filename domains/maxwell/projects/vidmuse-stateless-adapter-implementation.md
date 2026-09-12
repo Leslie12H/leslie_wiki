@@ -126,3 +126,11 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 
 - 原生导入拒绝普通工具与账号事件，控制信号只允许取消类；检查必须先于任务写入、Redis 和 Runner 重启。准备中 Thread 的项目/账号列表在 SQL 分页前过滤 marker，context 保持延迟加载；取消/过期不释放 marker。测试是实际 SQLite 查询，不是 MySQL 执行计划或线上负载验证。
 - 必需的结构化路径（包括裸文件名和截断输出指针）必须解析到已捕获目录；DSL 必须为 JSON 对象。捕获为两份 replay 元数据预留文件额度，导出复核最终数量。运行清单与终态均使用既有有界幂等重试，永久 4xx 不重试。相关回归及最终控制入口检查的复现证据放在 PR，不将这些检查当作真实 DEV 调优证明。
+
+## 2026-09-12 准备失败与完整传输预算
+
+**Why:** 进入模型步骤前也可能失败，不能为了满足状态机而伪称模型已处理输入；原始文件字节上限也不是 tar 归档上限，元数据、header、padding 和结束块都占上传额度。
+
+**How to apply:** 阅读 [466d95d0](https://github.com/world-sim-dev/aion/commit/466d95d0e2d103a7bb9a3c149137dffadd6e4dc0) 的 `record_progress`、`native_capture_limits` 与真实缩小预算的导出/导入测试。准备失败仅在冻结目标 USER/DONE 已持久化后可直接 failed；completed 仍需匹配 processing。捕获提前扣除传输开销并限制每份元数据，导出再核对完整归档，不能靠扩大上传上限掩盖预算差异。
+
+完整 CI 的队列时间戳测试还暴露了缺少 context 的 Mock，修复仅补真实 Thread 形状，见 [de732d27](https://github.com/world-sim-dev/aion/commit/de732d2765fbe9cb37f88848d14a1708523e75d6)；该文件 33 项通过，不能弱化业务入口检查。最终合并仍须读取[该 head 的 CI](https://github.com/world-sim-dev/aion/actions/runs/34689338691)与 PR 当前审查状态。
