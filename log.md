@@ -156,4 +156,6 @@
 
 - 2026-09-12 | VidMuse PR merge verification: recorded main DEV automation, deferred Manager/Runner test imports, isolated test databases, opt-in immutable Plugin layout, publisher prerequisites and CI/deployment evidence pointers. Real generation and async preparation completion remain separate.
 
+- 2026-09-12 | AION merge review fixes: frozen-input admission retry boundary, ordinary-message fence, remote-tool terminal progress, USTAR admission and symlink-safe proof publication. Linked targeted regressions and complete CI; in-progress log prefixes are not stall evidence.
+
 - 2026-09-12：录入监控 GitHub App 配置定位及定向导出指针，记录 ACK Secret 注解导致模糊行定位泄露的实踩坑；未保存凭据。

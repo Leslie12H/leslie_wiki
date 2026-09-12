@@ -106,3 +106,14 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 - AION [1ab12abf](https://github.com/world-sim-dev/aion/commit/1ab12abfa091736f69b770c27749d9ef1fab7bbc) 将 `current` 和私有 checkpoint 卷改为显式启用的 `patch-native-checkpoint-release.yml`，默认 DEV kustomization 不引用。先完成 publisher/IAM/bootstrap，验证目录与保留版本，再启用补丁；配置缺失时固定候选应拒绝，不能退回 mutable HEAD。默认与启用后 manifests 均已本地渲染，Plugin/runtime 16 项通过、1 项跳过。
 - Plugin 发布器四项必填变量的配置入口在受保护 `vidmuse-plugin-dev-publisher` Environment：`DEV_PLUGIN_PUBLISHER_COMMIT`、`DEV_EXECUTOR_COMMIT`、`DEV_PUBLISHER_INSTANCE_ID`、`DEV_PUBLISHER_REGION`。还须核对 DEV 专用权限、可信凭据及旧入口撤权；不能只补 pins 就宣称完成发布隔离。上述发布 run 在初始化校验退出，后续普通 DEV 刷新也需先完成这些前置。
 - Maxwell 的通知工作流与产品 CI 分开核对：[合并通知 run](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34684756800) 曾在连接 `agent.sandaii.cn` 时超时；通知失败不等于 CI 失败，不自动重发可能非幂等的产品请求。
+
+## 2026-09-12 原生续跑审查与完整 CI
+
+**Why:** 输入预留、Redis 入队和异步工具完成不是同一时刻；把所有异常视为已投递会永久卡住尚未入队的输入，普通消息入口又可能绕过冻结输入。快照中安全的相对路径也未必可由 USTAR 编码，直接写证明文件则可能跟随源工作区里的链接。
+
+**How to apply:** 读取 AION [b8bea025](https://github.com/world-sim-dev/aion/commit/b8bea025091fa4b97ddb2fdbd7576ed65efd6e70) 和 [该提交完整 CI](https://github.com/world-sim-dev/aion/actions/runs/34686758563)，并在 PR #1754 重读实际审查线程状态；不要用旧 review 当作新 head 已通过审查的证据。
+
+- 只有明确发生在入队前的容量拒绝可重试原预留；改变输入冲突，未知投递不重发。普通入口须经过专用预留校验。原生终态在远程工具结束后上报，保留中断/失败，等待期间不持 Runner 锁。
+- 捕获阶段验证最终 USTAR 路径（包括补充文件前缀）；证明文件通过目录描述符、独占临时文件及原子替换发布，现有或竞态符号链接不能改写目标文件。回归覆盖真实 Redis 容量竞态、远程完成/中断与链接目标不变。
+- GitHub 完整 CI 曾暴露 3 个启动 fixture 失败和 14 个共享 namespace 导入错误；修复测试上下文及 fixture 恢复，不能弱化运行时校验。相关回归 340 项通过、1 项跳过，最终终态 5 项通过；完整套件以当前 CI 为准。
+- 运行中 Actions 日志下载可能只返回冻结前缀。判断失败应优先取完成后的 JUnit artifact/check annotations；看到日志停在某个百分比不等于进程卡死。
