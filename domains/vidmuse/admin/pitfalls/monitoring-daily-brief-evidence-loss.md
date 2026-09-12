@@ -36,3 +36,5 @@ links: [monitoring-problem-title-vs-incident-report]
 - 历史证据：本机 `/private/tmp/admin-daily-brief-failure-20260912.log`，原始导出 `/Users/leslie/Downloads/32647-076ae317f0bde752a32488c4d59d472e.csv.gz`。10:00 触发、模型 HTTP 200、35 秒后 invalid_output、当天不再重试。历史具体校验码和原始响应没有保留。
 - 仅生成复现证据：生产 Pod 临时文件 `/tmp/brief-diagnostic-20260912.json`（随 Pod 删除失效）。同窗 28 条事故，实际请求 22925 字符，响应正常 stop；JSON 内嵌 Service temporarily unavailable 的英文引号未转义，解析失败。字符级原因仅对复现已证实。
 - `build_report_with_llm` 在综合失败后仍检查无 LLM 预览卡体积，可能追加 card_size_limit；应与首要失败原因区分，不能据此断言模型生成卡太长。
+
+- 2026-09-12 本地修复指针：Admin 隔离工作树 `/private/tmp/admin-brief-json-20260912`，分支 `codex/brief-json-format-20260912`。JSON 语法修复共用三次调用和总超时预算；invalid_json 可按已有三次调度上限重试；输出诊断仅记录固定错误码、位置与长度。78 个相关测试通过；尚未发布。到该分支确认后续交付状态。

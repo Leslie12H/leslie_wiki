@@ -97,3 +97,5 @@
 - [监控代码源范围阻断认领](domains/vidmuse/admin/pitfalls/monitoring-code-scope-blocks-claim.md) — 安装权限扩展、节点网络、结果引用契约，PR 63/872 与恢复核验指针（2026-09-12）。
 
 - [日报定时失败诊断](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-evidence-loss.md)：2026-09-12 JSON 输出失败、当天重试门禁及历史与复现证据边界。
+
+- 日报 JSON 格式本地修复与验证：见 [日报失败诊断](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-evidence-loss.md) 的 2026-09-12 修复指针。
