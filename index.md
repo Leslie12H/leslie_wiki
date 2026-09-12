@@ -83,3 +83,5 @@
 - 监控认领门禁修正：见 [代码源范围](domains/vidmuse/admin/pitfalls/monitoring-code-scope-blocks-claim.md) 的子集检查实现指针（2026-09-11）。
 
 - [业务 Preset 接入 EVOLVE 评测](domains/maxwell/refs/evolve-preset-evaluation-entry.md) — Agent 管理页与执行器登记的区别、输入协议选择和最终结果验收指针（2026-09-12）。
+
+- Nextplay 外层执行器角色和 JSON 文本 / A2A DataPart 边界：见 [业务 Preset 接入 EVOLVE](domains/maxwell/refs/evolve-preset-evaluation-entry.md) 的 2026-09-12 纠正记录。
