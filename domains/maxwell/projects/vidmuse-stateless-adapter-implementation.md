@@ -152,3 +152,5 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 **Why:** 仅比较 Plugin commit 无法证明同请求号重试仍是同账号、Prompt、选项和素材。准备预留受保护后，已激活的原生导入仍可能被普通文件编辑污染。工作区发布与数据库提交又不是同一个原子操作，清理必须区分未提交和提交响应丢失。
 
 **How to apply:** 阅读 [87016fed](https://github.com/world-sim-dev/aion/commit/87016feda8715cdb15fb9af31477f2896a5056cb) 及 [1a109884 部署说明](https://github.com/world-sim-dev/aion/commit/1a10988496e7a668f7872ea90d5e7192403d3689)。首次创建同事务保存完整规范化请求 hash，同项目/请求的控制发布在既有共享 runtime 卷上串行；比较成功后才可返回旧 Thread。普通 artifact/file/document 写入拒绝原生导入，typed read 不创建缺失的 free canvas。导入捕获到异常后回滚并重新查回执，只有确认没有落库才删除本次发布目录；数据库不可查或已提交时保留，进程崩溃遗留仍需人工恢复。相关 520 项通过、1 项条件跳过；完整结论看[对应 CI](https://github.com/world-sim-dev/aion/actions/runs/34691935001)及 PR 当前状态。
+
+同组入口复核还包括普通 `recreate_thread` / `reactive_thread`：它们会重新创建状态或以调用方选择的 auto_mode 启动，不能供原生导入使用。补充围栏见 [e37f82cb](https://github.com/world-sim-dev/aion/commit/e37f82cb1c12847a2cc8ee215140b5b3ac19f4be)，308 项相关检查通过；专用 activate/send_input 继续直接使用受控 claim/start 链路。完整 CI 以[此提交](https://github.com/world-sim-dev/aion/actions/runs/34692145379)和 PR 当前 head 为准。

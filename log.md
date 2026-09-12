@@ -169,3 +169,5 @@
 - 2026-09-12 | AION preparation filesystem and cancellation: reject ordinary access to empty reserved workspaces and commit native failure with confirmed inbox cancellation before processing; preserve consumed interrupts and link rollback, HTTP and caller regressions.
 
 - 2026-09-12 | AION controlled request identity and import recovery: compare full request fingerprints before returning an existing Thread, serialize cooperative release creates, fence native workspace mutations and preserve committed publications after lost commit responses; linked 520 checks and current CI.
+
+- 2026-09-12 | AION native restart boundary: ordinary recreate/reactivate cannot change frozen continuation execution; keep dedicated activation/input claim-start paths and link 308 related checks.
