@@ -11,7 +11,7 @@ links: [vidmuse-executor-p1, vidmuse-executor-candidates, vidmuse-a2a-executor, 
 
 **Why:** 用户明确指出 Zeus/AION 已保存 Thread 与业务数据，Maxwell 已拥有调优调度状态。P1 把独立任务库、租约 Worker 和证据副本放入 Executor 扩大了适配层职责。当前方案复用状态拥有方；去掉独立库仍需处理创建响应未知、身份绑定与版本核验。
 
-**How to apply:** 先读[飞书完整方案](https://j0yswlgboxz.feishu.cn/wiki/FXkdwOqIpiSfrNka96vc07jnnFc)及 Adapter 的 `docs/stateless-adapter.md`，再按下表追到对应 PR 和契约文件。飞书正文已回读至 revision 135；部署决策仍须核对最终提交、实际部署与运行证据。不要把 Executor PostgreSQL 当作部署前提，也不要因移除代码依赖就删除旧库或真实数据。
+**How to apply:** 先读[飞书完整方案](https://j0yswlgboxz.feishu.cn/wiki/FXkdwOqIpiSfrNka96vc07jnnFc)及 Adapter 的 `docs/stateless-adapter.md`，再按下表追到对应 PR 和契约文件。飞书正文已按章节更新并回读；合并与部署决策仍须核对当前 PR、工作流和运行证据。不要把 Executor PostgreSQL 当作部署前提，也不要因移除代码依赖就删除旧库或真实数据。
 
 ## 状态归属
 
@@ -26,7 +26,7 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 
 ## 实现与验证入口
 
-以下是 **2026-09-12 前序草稿切片的交付指针**；最新 runtime 交付见文末。五个 PR 未合并、未部署，当前提交和外部状态仍需实时读取。
+以下是 **2026-09-12 前序草稿切片的交付指针**；最新 runtime 交付见文末。这部分记录当时的交付，不代表当前 PR/部署状态；当前状态以文末合并核验入口实时读取为准。
 
 - [Maxwell PR #286](https://github.com/world-sim-dev/maxwell-ai/pull/286)：`docs/evolve-nonreplayable-adapter-contract.md`。复用既有状态承载，冻结原始请求并禁止不安全重发；无新表/列。最新控制面含 `prepare_publication`、`inspect_checkpoint_sample`，已推送 [d737c659](https://github.com/world-sim-dev/maxwell-ai/commit/d737c65981cb982aa76536b23df51f9cad7389d5)。
 - [Adapter PR #1](https://github.com/world-sim-dev/vidmuse-executor/pull/1)：`internal/modules/execution/application/{handle,service}.go`、`infrastructure/zeus/{client,checkpoint,snapshot}.go`；见 `docs/stateless-adapter.md`、`docs/native-checkpoint-adapter.md`。本轮 publication/原生导入/继承产物防护已推送 [b226112](https://github.com/world-sim-dev/vidmuse-executor/commit/b226112f09fcd7f71b57ac9589773aabcea6890d)，全量 Go race、vet、Linux build 通过；仍按草稿核对，不作为已部署能力。
@@ -49,8 +49,8 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 - 每个候选有完整独立 `eval-*` Plugin ID；公共 Skill/workflow 冻结到候选专属不可变版本并重写候选引用。候选发布不改源分支、普通 Plugin、DEFAULT/latest 或在用候选。普通 main 更新仍可修改其普通资源，但必须完整保留已发布候选。规则与实际重建验证以 Plugin publisher README 和 Adapter `docs/dev-candidate-release-contract.md` 为准。
 - DEV Manager 使用 PVC subPath 挂载，直接替换挂载目录不能保证现有 Pod 看到新 inode。因此保留稳定父目录 `/work/aion-plugin-base-dev`，仅在其内部原子切换 `current` 到保留的完整不可变 release。AION 必须在创建/导入时解析一次，冻结真实 release/root，后续 config、archive、Skill 与 Runner 挂载沿用该绑定；不能重选 HEAD。
 - 正常 main DEV 刷新与候选发布使用同一可信 publisher、目标锁和 CAS。可信程序来自受保护的完整 commit，候选只作为待验证数据。实际文件/完整树验证后的 `devReleaseCommit` 才是发布身份；`inspect` 已接通可信 catalog 导出，Adapter 加载后解析固定运行版本。受控产物交付是信任边界，布尔标记或 SHA 本身不是认证。
-- Plugin 草稿将 main 的旧 DEV reset/pull 路径改走新工作流，staging/prod 行为不变；**历史分支仍可能持有旧 Aliyun 权限**。必须在外部撤销旧凭据对 DEV 的 RunCommand 权限，并限制新 DEV 身份/Environment。代码无法替代 IAM 撤权，未完成此项不能宣称消除旧入口绕过。
-- 共享文件系统锁/原子操作、只读运行挂载、实际 PV quota、保护分支与版本 pins、首次 bootstrap 和 AION 联动部署均为尚未执行的启用前置。发布成功只证明安装字节；不证明 Agent 已加载、读取或执行。
+- Plugin PR 将 main 的旧 DEV reset/pull 路径改走新工作流，staging/prod 行为不变；**历史分支仍可能持有旧 Aliyun 权限**。必须在外部撤销旧凭据对 DEV 的 RunCommand 权限，并限制新 DEV 身份/Environment。代码无法替代 IAM 撤权，未完成此项不能宣称消除旧入口绕过。
+- 共享文件系统锁/原子操作、只读运行挂载、实际 PV quota、保护分支与版本 pins、首次 bootstrap 和 AION 显式启用固定路径仍为启用前置。发布成功只证明安装字节；不证明 Agent 已加载、读取或执行。
 
 ## 原生节点续跑与证据边界
 
@@ -63,7 +63,7 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 
 ## 尚未完成的验收
 
-截至 2026-09-12，本轮只进行了源码核对、本地集成/契约测试和草稿推送；没有 DEV 发布、业务空间登记、真实生成或节点 A/B 闭环。无库 binary 通过 Maxwell checker、marker probe 通过均不证明候选应用。
+合并与自动 DEV 发布的核验入口见文末；业务空间登记、真实生成或节点 A/B 闭环仍未完成。无库 binary 通过 Maxwell checker、marker probe 通过均不证明候选应用。
 
 可信 catalog、固定 DEV candidate、实际启动清单与 Maxwell 比较入口已完成本地跨实现核验，见下节最新指针。仍缺真实部署及完整任务/节点 A/B 媒体质量验收。启动包证据不等于 model-read/tool-executed。大 snapshot 可恢复准备仍未实现：当前短 A2A 预算包含全量下载、导入和启动，HEAD 也读验全包；不能只放宽大小/超时或加隐藏 Adapter 库。下一步应核对产品拥有的准备阶段、映射落库屏障与只读 GetTask；源凭据迁移和 capture 对象语义以最终方案/代码为准。
 
@@ -73,7 +73,7 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 
 **How to apply:** 先阅读 Adapter `docs/approved-release-execution.md` 和 `releasecatalog/testdata/README.md`，运行 `scripts/contract-fixtures/finish`，再按 Maxwell `docs/external-candidate-control.md` 核验实际解析/比较入口。fixture 的 Git/cache 字节来自真实本地实现，产品与媒体元数据为测试数据；不要当成上游提交或部署证明。
 
-本次实际推送并回读的 runtime slice：Adapter [9b971d0](https://github.com/world-sim-dev/vidmuse-executor/commit/9b971d0847a7d93bf51fabec1d790cf3bd6f857e)、Maxwell [5a22b7bc](https://github.com/world-sim-dev/maxwell-ai/commit/5a22b7bcf036b0b875d419070623e2242426b3f0)、AION [c5e045b5](https://github.com/world-sim-dev/aion/commit/c5e045b5fc4c3a0d29d663ef77a9f283960edc77)、Zeus [27f0e9c2](https://github.com/world-sim-dev/vidmuse-zeus/commit/27f0e9c21868b7f743883b05202d5dbffa662563)、Plugin [e910f6d](https://github.com/world-sim-dev/vidmuse-plugins/commit/e910f6dfcee251df91c26cf6802b9c1c35303afd)。五个 PR 仍为 OPEN Draft；更早提交是历史切片。飞书正文已精确回读至 revision 132，第 6 章原画板已更新并检查云端实际显示；两张主架构图保留。
+本次实际推送并回读的 runtime slice：Adapter [9b971d0](https://github.com/world-sim-dev/vidmuse-executor/commit/9b971d0847a7d93bf51fabec1d790cf3bd6f857e)、Maxwell [5a22b7bc](https://github.com/world-sim-dev/maxwell-ai/commit/5a22b7bcf036b0b875d419070623e2242426b3f0)、AION [c5e045b5](https://github.com/world-sim-dev/aion/commit/c5e045b5fc4c3a0d29d663ef77a9f283960edc77)、Zeus [27f0e9c2](https://github.com/world-sim-dev/vidmuse-zeus/commit/27f0e9c21868b7f743883b05202d5dbffa662563)、Plugin [e910f6d](https://github.com/world-sim-dev/vidmuse-plugins/commit/e910f6dfcee251df91c26cf6802b9c1c35303afd)。这些提交记录合并前的历史切片；当前状态以 PR 和文末核验入口为准。飞书正文已精确回读至 revision 132，第 6 章原画板已更新并检查云端实际显示；两张主架构图保留。
 
 - Publisher 的 `inspect` 已输出可信只读 catalog，Adapter 启动时验证并按 Work/Variant 选择固定 release；无执行请求自动发布，无热更新。保留原发布绑定，不随 current 改变或重启切换。
 - AION 缓存有 local Skill 副本、common 覆盖和 `.resolution.json`，必须比较完整缓存。缺少真实 `@workflow` 声明的包可能通过发布测试但被 AION 拒绝。
@@ -95,3 +95,14 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 - 采样 capture 可为内部 AION 对象，不创建普通 Zeus Thread 或奖励事件；但必须一起实现普通列表/计数/消息/文件/Runner 隔离，不能仅靠“没有 Zeus 行”。当前代码只预留运行目标，capture 与后台 materializer 未实现。
 - Maxwell 既有 `inspect_checkpoint_sample` 是立即返回小冻结引用的只读动作；异步采样需要独立 prepare/query。Adapter 既有同步 handle 要求真实 message hash，异步预留不能用空/假 hash 兼容；应绑定 frozen intent，并只读核验后续真实输入接受与进度。上述异步接入仍待实现，不能把预留测试算成节点 A/B 闭环。
 - 飞书第 8.1 节记录当前准备合同与缺失阶段，第 11 节补充容器交付及镜像未验证边界。源码与正文应按当前提交/局部回读核对，不沿用旧“必须部署 Executor PostgreSQL”的前置。
+
+## 2026-09-12 合并与自动 DEV 发布核验
+
+**Why:** main 合并可能触发既有 DEV CI/CD；源码合并、发布准备和真实调优是不同完成条件。全套 CI 会共同收集 Manager/Runner 测试，单目录通过不能证明导入隔离。发布器未初始化时直接切换普通创建路径会使 DEV 创建报 503。
+
+**How to apply:** 读取上方五个 PR 的当前 merged/head/checks 状态，并核对 [Plugin DEV 发布](https://github.com/world-sim-dev/vidmuse-plugins/actions/runs/34684779648)、[Zeus DEV CI/CD](https://github.com/world-sim-dev/vidmuse-zeus/actions/runs/34684802492)、[Maxwell main CI](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34684756801) 和 [AION 合并前 CI](https://github.com/world-sim-dev/aion/actions/runs/34685096216)。不能把“已合并”当作“调优可用”。
+
+- AION 测试隔离修复见 [4ce2a49d](https://github.com/world-sim-dev/aion/commit/4ce2a49d58f34f627a2eb8c97519f731ed4a4bb4)：运行时导入进入可恢复的 module fixture，SQLite 路径按模块隔离。Manager/Runner/checkpoint 混合 644 项通过、1 项跳过；最终全套结论看当前 CI。
+- AION [1ab12abf](https://github.com/world-sim-dev/aion/commit/1ab12abfa091736f69b770c27749d9ef1fab7bbc) 将 `current` 和私有 checkpoint 卷改为显式启用的 `patch-native-checkpoint-release.yml`，默认 DEV kustomization 不引用。先完成 publisher/IAM/bootstrap，验证目录与保留版本，再启用补丁；配置缺失时固定候选应拒绝，不能退回 mutable HEAD。默认与启用后 manifests 均已本地渲染，Plugin/runtime 16 项通过、1 项跳过。
+- Plugin 发布器四项必填变量的配置入口在受保护 `vidmuse-plugin-dev-publisher` Environment：`DEV_PLUGIN_PUBLISHER_COMMIT`、`DEV_EXECUTOR_COMMIT`、`DEV_PUBLISHER_INSTANCE_ID`、`DEV_PUBLISHER_REGION`。还须核对 DEV 专用权限、可信凭据及旧入口撤权；不能只补 pins 就宣称完成发布隔离。上述发布 run 在初始化校验退出，后续普通 DEV 刷新也需先完成这些前置。
+- Maxwell 的通知工作流与产品 CI 分开核对：[合并通知 run](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34684756800) 曾在连接 `agent.sandaii.cn` 时超时；通知失败不等于 CI 失败，不自动重发可能非幂等的产品请求。
