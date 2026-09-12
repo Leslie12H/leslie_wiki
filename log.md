@@ -142,3 +142,5 @@
 - 2026-09-12：补充 Chat 消息边缘选择、可见范围连选、Esc 清空的本地验证指针。
 
 - 2026-09-12：登记 Admin PR #875，将日报格式修复和 Chat 多选复制优化合入同一 PR，含 alias 范围回归。
+
+- 2026-09-12 | VidMuse stateless Adapter: state ownership correction, verified source/API pitfalls and local implementation/test pointers; live tuning remains incomplete. See domains/maxwell/projects/vidmuse-stateless-adapter-implementation.md.
