@@ -87,3 +87,5 @@
 - Nextplay 外层执行器角色和 JSON 文本 / A2A DataPart 边界：见 [业务 Preset 接入 EVOLVE](domains/maxwell/refs/evolve-preset-evaluation-entry.md) 的 2026-09-12 纠正记录。
 
 - 外层执行器 Business AppKey 的获取、权限及托管凭据边界：见 [EVOLVE 接入记录](domains/maxwell/refs/evolve-preset-evaluation-entry.md)（2026-09-12）。
+
+- Nextplay 评测业务与影游a2a 凭据归属、different origin 排查：见 [EVOLVE 接入记录](domains/maxwell/refs/evolve-preset-evaluation-entry.md) 的 2026-09-12 业务边界纠正。
