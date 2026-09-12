@@ -100,7 +100,7 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 
 **Why:** main 合并可能触发既有 DEV CI/CD；源码合并、发布准备和真实调优是不同完成条件。全套 CI 会共同收集 Manager/Runner 测试，单目录通过不能证明导入隔离。发布器未初始化时直接切换普通创建路径会使 DEV 创建报 503。
 
-**How to apply:** 读取上方五个 PR 的当前 merged/head/checks 状态，并核对 [Plugin DEV 发布](https://github.com/world-sim-dev/vidmuse-plugins/actions/runs/34684779648)、[Zeus DEV CI/CD](https://github.com/world-sim-dev/vidmuse-zeus/actions/runs/34684802492)、[Maxwell main CI](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34684756801) 和 [AION 合并前 CI](https://github.com/world-sim-dev/aion/actions/runs/34685096216)。不能把“已合并”当作“调优可用”。
+**How to apply:** 读取上方五个 PR 的当前 merged/head/checks 状态，并核对 [Plugin DEV 发布](https://github.com/world-sim-dev/vidmuse-plugins/actions/runs/34684779648)、[Zeus DEV CI/CD](https://github.com/world-sim-dev/vidmuse-zeus/actions/runs/34684802492)、[Maxwell main CI](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34684756801) 和 [AION 合并前 CI](https://github.com/world-sim-dev/aion/actions/runs/34690984868)。不能把“已合并”当作“调优可用”。
 
 - AION 测试隔离修复见 [4ce2a49d](https://github.com/world-sim-dev/aion/commit/4ce2a49d58f34f627a2eb8c97519f731ed4a4bb4)：运行时导入进入可恢复的 module fixture，SQLite 路径按模块隔离。Manager/Runner/checkpoint 混合 644 项通过、1 项跳过；最终全套结论看当前 CI。
 - AION [1ab12abf](https://github.com/world-sim-dev/aion/commit/1ab12abfa091736f69b770c27749d9ef1fab7bbc) 将 `current` 和私有 checkpoint 卷改为显式启用的 `patch-native-checkpoint-release.yml`，默认 DEV kustomization 不引用。先完成 publisher/IAM/bootstrap，验证目录与保留版本，再启用补丁；配置缺失时固定候选应拒绝，不能退回 mutable HEAD。默认与启用后 manifests 均已本地渲染，Plugin/runtime 16 项通过、1 项跳过。
@@ -113,7 +113,7 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 
 **How to apply:** 读取 AION [b8bea025](https://github.com/world-sim-dev/aion/commit/b8bea025091fa4b97ddb2fdbd7576ed65efd6e70) 和 [该提交完整 CI](https://github.com/world-sim-dev/aion/actions/runs/34686758563)，并在 PR #1754 重读实际审查线程状态；不要用旧 review 当作新 head 已通过审查的证据。
 
-- 只有明确发生在入队前的容量拒绝可重试原预留；改变输入冲突，未知投递不重发。普通入口须经过专用预留校验。原生终态在远程工具结束后上报，保留中断/失败，等待期间不持 Runner 锁。
+- 只有明确发生在入队前的容量拒绝可重试原预留；改变输入冲突，未知投递不重发。普通入口须经过专用预留校验。原生成功终态在远程工具结束后上报，等待期间不持 Runner 锁；STOP 的失败终态见下方停止边界，不能被无法取消的工具阻塞。
 - 捕获阶段验证最终 USTAR 路径（包括补充文件前缀）；证明文件通过目录描述符、独占临时文件及原子替换发布，现有或竞态符号链接不能改写目标文件。回归覆盖真实 Redis 容量竞态、远程完成/中断与链接目标不变。
 - GitHub 完整 CI 曾暴露 3 个启动 fixture 失败和 14 个共享 namespace 导入错误；修复测试上下文及 fixture 恢复，不能弱化运行时校验。相关回归 340 项通过、1 项跳过，最终终态 5 项通过；完整套件以当前 CI 为准。
 - 运行中 Actions 日志下载可能只返回冻结前缀。判断失败应优先取完成后的 JUnit artifact/check annotations；看到日志停在某个百分比不等于进程卡死。
@@ -133,4 +133,16 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 
 **How to apply:** 阅读 [466d95d0](https://github.com/world-sim-dev/aion/commit/466d95d0e2d103a7bb9a3c149137dffadd6e4dc0) 的 `record_progress`、`native_capture_limits` 与真实缩小预算的导出/导入测试。准备失败仅在冻结目标 USER/DONE 已持久化后可直接 failed；completed 仍需匹配 processing。捕获提前扣除传输开销并限制每份元数据，导出再核对完整归档，不能靠扩大上传上限掩盖预算差异。
 
-完整 CI 的队列时间戳测试还暴露了缺少 context 的 Mock，修复仅补真实 Thread 形状，见 [de732d27](https://github.com/world-sim-dev/aion/commit/de732d2765fbe9cb37f88848d14a1708523e75d6)；该文件 33 项通过，不能弱化业务入口检查。最终合并仍须读取[该 head 的 CI](https://github.com/world-sim-dev/aion/actions/runs/34689338691)与 PR 当前审查状态。
+完整 CI 的队列时间戳测试还暴露了缺少 context 的 Mock，修复仅补真实 Thread 形状，见 [de732d27](https://github.com/world-sim-dev/aion/commit/de732d2765fbe9cb37f88848d14a1708523e75d6)；该文件 33 项通过，不能弱化业务入口检查。最终合并须读取 PR 当前 head 的 CI 与审查状态。
+
+## 2026-09-12 STOP 与不可取消的远程工具
+
+**Why:** 已运行的 Future 无法由取消排队任务的方法停止。成功终态需要等待结果，但把同一等待条件用于 STOP，会让已停止的续跑一直停留在 processing。步骤内部也可能先消费并清除 STOP 信号，不能只在 finally 检查 Event。
+
+**How to apply:** 阅读 [8a0fa24a](https://github.com/world-sim-dev/aion/commit/8a0fa24a7c275b918c28904ebb7c4d19c653885d) 的运行循环与真实 Future 回归；STOP 在终态等待前或期间到达，或已在 step 内消费，都应及时报告失败并执行停止收尾。失败报告不代表外部媒体任务已物理取消；普通成功仍需等待远程工具。119 项相关测试通过，完整结论看[该 head 的 CI](https://github.com/world-sim-dev/aion/actions/runs/34690070894)及 PR 当前状态。
+
+## 2026-09-12 准备工作区与处理前取消
+
+**Why:** 准备预留的空 working_dir 经文件系统工厂拼接后会指向共享根目录，仅限制启动/消息不足以隔离文件接口。STOP 又可能取消尚未生成 USER/DONE 的原生输入；此时不能用“缺少已处理消息”拒绝真实取消，也不能伪造处理记录。
+
+**How to apply:** 阅读 [11c9ce09](https://github.com/world-sim-dev/aion/commit/11c9ce09f42b3f231d903be3aed9e7fa11a17a4a)：公共权限路径先拦截准备预留，文件系统工厂拒绝空目录；原生失败终态接在 Manager 已确认的消息取消事务中，Thread 在消息行之前加锁，回滚及保留的 inbox 快照重试同时覆盖两者。Runner 保留已消费的中断标记，后续失败报告可幂等确认，不能改成成功。相关 555 项和公共调用方 300 项回归的完整验证入口为[该 head CI](https://github.com/world-sim-dev/aion/actions/runs/34690984868)；不新增 Adapter 数据库或伪造 USER/DONE。

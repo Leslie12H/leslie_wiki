@@ -163,3 +163,7 @@
 - 2026-09-12 | AION second merge review: documented work/event/control admission, SQL pagination exclusion, snapshot path/shape/metadata limits and idempotent runtime reports; track new review threads during CI rather than only at the final merge gate.
 
 - 2026-09-12 | AION final preparation/transport fixes: allow failure after persisted reserved input without claiming model processing, reserve metadata/tar overhead in capture, and repair the queue timestamp test fixture; linked latest complete CI and actual reduced-budget transport tests.
+
+- 2026-09-12 | AION STOP boundary: successful completion waits for remote work, but failure after STOP must finalize even when a running Future cannot be cancelled; include already-consumed fast STOP and real running-Future regression pointers.
+
+- 2026-09-12 | AION preparation filesystem and cancellation: reject ordinary access to empty reserved workspaces and commit native failure with confirmed inbox cancellation before processing; preserve consumed interrupts and link rollback, HTTP and caller regressions.
