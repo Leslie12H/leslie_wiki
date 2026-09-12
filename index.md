@@ -10,6 +10,7 @@
 - [aion](domains/vidmuse/systems/aion.md) — agent/runtime/media generation 后端平台
 - [vidmuse-zeus](domains/vidmuse/systems/zeus.md) — Vidmuse 产品 REST API + AION relay
 - [vidmuse.ai](domains/vidmuse/systems/vidmuse-ai.md) — 面向用户的 Web 前端
+- [前端 QuickTracking 指标](domains/vidmuse/refs/quicktracking-frontend-metrics.md) — RUM 采集现状、OpenAPI 拉报表而非明细、数据会变需 upsert、首字节三种口径
 - [2026-07-02 Vidmuse 三仓库代码扫描](domains/vidmuse/refs/2026-07-02-repo-scan-aion-vidmuse-zeus-vidmuse-ai.md) — aion/vidmuse-zeus/vidmuse.ai 角色、入口和 V2 relay 链路
 - [admin](domains/vidmuse/systems/admin.md) — 管理后台(多 release 工作树)
 - [testing](domains/vidmuse/systems/testing.md) — 测试仓库群
