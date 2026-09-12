@@ -46,3 +46,12 @@ links: [vidmuse-a2a-executor, evolve-maxwell-tuning-receiving]
 - `services/agent-server/internal/modules/runtime/extensions/structuredoutput/middleware.go`：仅规范化模型 Text 为 JSON 文本，不能由开启此开关推断已产出 A2A DataPart。
 
 验收时必须区分：协议可调用、Nextplay 真实执行、结构化证据可被识别、Nextplay 候选实际生效。若该外层沿用普通 LLM 文本输出链，需要补执行器输出的协议投影或严格解析，单改 Prompt 要求输出 JSON 不足以证明调优回执通路已接通。上述是源码边界，不是该线上 Agent 已复现的缺陷。
+
+
+## 2026-09-12 外层执行器鉴权核验指针
+
+- Maxwell A2A 使用目标所属业务的 Business AppKey；核对 `services/agent-server/internal/app/api/http/a2a_api.go` 与 `runtime/a2a/card.go` 的鉴权和权限映射。Card/Task 读取需要 runtime_read，发起/继续/取消需要 runtime_run。
+- 密钥入口见 `apps/studio/src/pages/business/BusinessAPIKeys.tsx` 和 `routes.ts`。创建需要 api_key_manage，完整 key 仅创建时展示；后续列表不返回明文。不要在对话或日志中传递 key。
+- `services/evolve-server/internal/app/integration/executorsource/source.go`：共享业务托管凭据仅用于 maxwell_preset；external_a2a 使用登记时保存的 CredentialRef，当前不能因托管在 Maxwell 就自动复用共享凭据。
+- 外层调用 Nextplay 的下游凭据由其连接/工具配置负责；不能把 EVOLVE 到外层的 AppKey 混作 Nextplay 鉴权。
+- 2026-09-12 用户授权尝试绑定及预检，但登记页仍跳登录，未提交登记或触发预检。之前企业登录遭自动审批拒绝，后续未重试该被拒动作，保留登录页供用户完成登录。
