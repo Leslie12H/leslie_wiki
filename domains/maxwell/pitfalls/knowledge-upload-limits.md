@@ -15,7 +15,7 @@ links: [maxwell]
 
 ## 当前代码和验收指针
 
-仓库：`~/Downloads/sandai-code/maxwell-ai`。2026-09-14 修复工作树：`/private/tmp/maxwell-knowledge-upload-20260914`，分支 `codex/knowledge-upload-limits-20260914`。本次为本地修复，未合并或部署；线上状态需重新核验。
+仓库：`~/Downloads/sandai-code/maxwell-ai`。2026-09-14 修复工作树：`/private/tmp/maxwell-knowledge-upload-20260914`，分支 `codex/knowledge-upload-limits-20260914`。修复交付见 [PR #295](https://github.com/world-sim-dev/maxwell-ai/pull/295)；评审、CI、合并状态以该 PR 为准。用户明确要求仅合并、不部署，线上状态需单独核验。
 
 - HTTP 导入与预览容量：`services/agent-server/internal/modules/studio/knowledge/transport/http/routes.go` 的 `knowledgeContentOperation`；权限预读：`internal/app/api/http/business_access.go` 的 `requestScopeValue`。
 - 原文件字节上限：`knowledge/application/content_limits.go`；切分数量和有界生成：`knowledge/application/service.go` 的 `chunkContent` 及策略函数；原文件/Asset 生命周期：`knowledge/application/source_service.go`。
