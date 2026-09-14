@@ -153,3 +153,5 @@
 - 2026-09-14：记录 Nextplay Trial remote_interaction_required 追溯、交互配置检查入口和已判卷误标；远端实际问题待核实。
 
 - 2026-09-14：从远端会话确认 Candidate Runner 索要替换包，尚未启动 Nextplay；补充初评与候选输入契约不匹配的根因。
+
+- 2026-09-14：下载并静态审查 Runner 包，确认底层支持无 patch 基准物化及三项后续能力边界。

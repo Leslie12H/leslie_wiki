@@ -43,3 +43,11 @@ links: [evolve-preset-evaluation-entry]
 **Why:** 该次已加载 Skill 明确面向 Candidate 试运行，输入要求基准、任务和完整替换内容；EVOLVE 首轮初评接入了这个候选执行器。包装 Agent 把 variant 描述/artifactRef 判为不足，主动提出 CANDIDATE_INPUT 问题，继而在 EVOLVE 形成 remote_interaction_required。A2A 传输已成功，问题发生在包装 Agent 的输入契约，不能以增加自动应答器掩盖 baseline/candidate 模式不匹配。
 
 **How to apply:** 从上方会话展开唯一工具及完整结果复核当时 Skill；基准初评应支持无替换的固定基准运行，候选试跑才要求完整候选内容，并验证 artifact 引用能被执行端解析。需检查包装 Agent Prompt、Skill 与底层 runner 的一致性；本次只诊断，未修改运行配置、提交回答或启动目标。
+
+## 2026-09-14 运行包静态核验
+
+评估报告：`/private/tmp/runner-package-review/assessment.md`，含包哈希及提取源码指针。下载线上导出包后仅提取代码，没有读取 runtime.env 或运行目标。
+
+**Why:** request.py 强制要求候选，runner.py 无条件打包候选，但底层 materialize(snapshot, None) 已有完整基准物化能力。增加基准模式可复用现有隔离与清理。另有每次重新获取当前基准、目标等待输入即停止清理、固定 Nextplay 五文件判据等独立边界。
+
+**How to apply:** 先核对报告包哈希和当前线上版本，再修改请求校验、Runner 分支及 Prompt/Skill，重建 runtime.zip；基准模式不可作为缺失候选的隐式降级。多轮交互和跨轮基准固定必须分别验收。
