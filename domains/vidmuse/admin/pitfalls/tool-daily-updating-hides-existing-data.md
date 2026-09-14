@@ -61,6 +61,8 @@ PR https://github.com/world-sim-dev/vidmuse-admin/pull/871 的 review 记录见�
 - 区分请求异常与等待更新，展示具体原因；“重新查询”仅发起 GET，不应暗中回填。未收到可用命中率响应时，不给“没有记录”或修复指令。
 - 部分日回归必须保留非空返回值断言，覆盖纯部分日、左右边界和中间完整日；完整日真的待更新时仍不得冒充当前完整数据。
 
-当前修复与验收指针：Admin `docs/operations/tool-metrics-publication.md` 的 2026-09-14 小节，`apps/admin/service/thread_analytics_tool_daily_read.py`、`test_thread_analytics_tool_daily_read.py`、`test_thread_tool_publication.py`、`playground/src/pages/ThreadAnalyticsPage.tsx` 和 `threadAnalyticsHelpers.ts`。本次在 `codex/brief-scheduler-handoff-20260914` 实现，部分日读路径的 46 项后端回归已通过；前端调整仍在验证，不能当作生产已恢复。未启用生产 publication、未回填、未增加重建并发。
+修复与验收指针：[Admin PR #878](https://github.com/world-sim-dev/vidmuse-admin/pull/878) 分支 `codex/brief-scheduler-handoff-20260914` 的 Analytics 提交 `ac8dcb93a`。实现和验证入口为 `docs/operations/tool-metrics-publication.md` 的 2026-09-14 小节、`apps/admin/service/thread_analytics_tool_daily_read.py`、`test_thread_analytics_tool_daily_read.py`、`test_thread_tool_publication.py`、`playground/src/pages/ThreadAnalyticsPage.tsx`、`ThreadAnalyticsPage.toolStatus.test.tsx` 和 `threadAnalyticsHelpers.ts`。46 项后端、31 项前端（页面 10 项、helper 21 项）、TypeScript、Ruff 与项目 Pylint 门禁通过；独立 review 未发现 P1/P2。
+
+截至此核验，旧日报提交的 CI 已通过，新增 Analytics 提交的 CI 应独立核对，不能沿用上一提交的绿灯。当前推送、CI、合并与部署状态到 PR 重新核验。未启用生产 publication、未回填、未增加重建并发或部署；本地状态回归通过不证明生产整窗已经恢复展示。
 
 原始核验指针：SLS 项目 `k8s-log-c7c0ede6c71484f8da34a829954c50cd9`，Logstore `vidmuse-admin`，上述绝对时间窗；本机定向摘录 `/private/tmp/analytics-tool-events-20260914.json`，临时文件可能失效。涉及日志未索引字段时应完整分页读取 raw 后匹配，单次全文搜索为零不足以判定事件不存在。

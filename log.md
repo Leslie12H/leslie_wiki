@@ -183,3 +183,5 @@
 - 2026-09-14 | Audited AION #1754 against its parent: distinguish existing Plugin ID/cache support from checkpoint replay expansion, document shared SQL/lock and capture/current scope, and keep incomplete async preparation separate from full-task evaluation. No business code rollback or deployment performed.
 
 - 2026-09-14：录入日报滚动部署后全局 owner 无接管导致循环缺失的生产证据与 PR #878 验收指针；补充 Tool/命中率 HTTP 成功后拒收、部分日 dirty 误挡、独立 Worker 有进展及历史标脏逻辑变更边界。未部署、未回填、未补发。
+
+- 2026-09-14：补充 Analytics ac8dcb93a / PR #878 实现与 46 后端、31 前端及静态检查验证指针；区分旧日报提交 CI 通过与新提交待独立核验，保留未部署、未回填的验收边界。
