@@ -116,3 +116,5 @@
 - EVOLVE 判卷授权修复 PR #288 与 DEV 发布、Studio 196 入口核验见 [判卷授权解耦](domains/maxwell/projects/evolve-judge-authorization-decoupling.md)（2026-09-14）；未执行真实初评。
 
 - 2026-09-14：首轮 Trial 远端交互阻断与评分状态误标的追溯入口见 [判卷授权后续核验](domains/maxwell/projects/evolve-judge-authorization-decoupling.md)。
+
+- 2026-09-14：Nextplay 初评被 Candidate-only 包装规则阻断，现场证据见 [授权修复后续诊断](domains/maxwell/projects/evolve-judge-authorization-decoupling.md)。

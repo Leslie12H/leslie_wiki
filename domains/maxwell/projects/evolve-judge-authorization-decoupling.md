@@ -35,3 +35,11 @@ links: [evolve-preset-evaluation-entry]
 **Why:** 部署版本的 `evaluation/live_interaction.go` 会在远端要求交互而 Case 缺少或无法解析 `input.interaction` 时终止；A2A turns 路径也可能返回同一错误分类。因此仅凭 `remote_interaction_required` 不能断言具体问题或唯一分支。Studio `workbenchResults.ts` 的 `trialScoreState` 仅凭 verdict 存在就显示已判卷，会把执行错误结果误标为已判卷。
 
 **How to apply:** 核对冻结 Case 原文、Attempt 错误详情和远端问题后，再选择有边界的 scripted 或 agent-context responder；后者还需核对 Worker responder 配置。普通提示词中的少追问要求不等于协议交互配置。检查 `execution/interaction.go`、`evaluation/live_interaction.go` 和 `app/integration/a2a/registry.go` 当前实现；历史交互方案页可能落后于实现。未到 Judge 阶段的 Run 不能证明真实判卷已通过。
+
+## 2026-09-14 远端会话确认具体根因
+
+现场证据：[包装 Agent 会话](https://agent.sandaii.cn/chat/thread?businessId=d913480b-bbf3-4c3f-956b-cab3a6854dee&threadId=thr_01M2F3MJ4CBZE61MS4VGAPFJZG&presetId=697f4aa1-0a2f-4ce6-a54f-5c8c70453b71)。12:43:35 收到评测任务，12:43:42 唯一已运行工具为 SKILL_LOAD maxwell-candidate-runner，12:43:55 要求完整 Candidate Skill 包或替换 SP。页面没有运行脚本调用；包装 Agent 尚未进入目标试跑。该现场补足上一节的未知远端问题。
+
+**Why:** 该次已加载 Skill 明确面向 Candidate 试运行，输入要求基准、任务和完整替换内容；EVOLVE 首轮初评接入了这个候选执行器。包装 Agent 把 variant 描述/artifactRef 判为不足，主动提出 CANDIDATE_INPUT 问题，继而在 EVOLVE 形成 remote_interaction_required。A2A 传输已成功，问题发生在包装 Agent 的输入契约，不能以增加自动应答器掩盖 baseline/candidate 模式不匹配。
+
+**How to apply:** 从上方会话展开唯一工具及完整结果复核当时 Skill；基准初评应支持无替换的固定基准运行，候选试跑才要求完整候选内容，并验证 artifact 引用能被执行端解析。需检查包装 Agent Prompt、Skill 与底层 runner 的一致性；本次只诊断，未修改运行配置、提交回答或启动目标。
