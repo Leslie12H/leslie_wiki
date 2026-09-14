@@ -181,3 +181,5 @@
 - 2026-09-12 | Merge completed for the five original PRs and Executor/Zeus content follow-ups. AION current head passed all four required checks with 24 resolved threads and a completed fresh review. Linked automatic DEV workflows and retained deployment, async preparation and real A/B gaps.
 
 - 2026-09-14 | Audited AION #1754 against its parent: distinguish existing Plugin ID/cache support from checkpoint replay expansion, document shared SQL/lock and capture/current scope, and keep incomplete async preparation separate from full-task evaluation. No business code rollback or deployment performed.
+
+- 2026-09-14：录入日报滚动部署后全局 owner 无接管导致循环缺失的生产证据与 PR #878 验收指针；补充 Tool/命中率 HTTP 成功后拒收、部分日 dirty 误挡、独立 Worker 有进展及历史标脏逻辑变更边界。未部署、未回填、未补发。
