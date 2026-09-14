@@ -126,3 +126,5 @@
 - 2026-09-14：nextplay-eval 正式构建及线上 Skill/Prompt 更新见 [部署核验记录](domains/maxwell/projects/evolve-judge-authorization-decoupling.md)。
 
 - [NextPlay 基准接入最终计划](domains/maxwell/projects/nextplay-benchmark-final-plan-20260914.md) — 复用现有 A2A Preset、共享执行能力、证据回读及 A/B/C 比较边界（2026-09-14）。
+
+- [NextPlay 基准接入实施指针](domains/maxwell/projects/nextplay-benchmark-implementation-20260914.md) — 两仓草稿 PR、受控证据回读、复用 Maxwell 续答通道与实际验收边界。
