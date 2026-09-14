@@ -114,3 +114,5 @@
 - [Nextplay 真实 Case 演示讲稿](domains/maxwell/refs/evolve-demo-runbook-20260914.md) — 25 分钟操作路线、真实预演与同口径候选比较的验收边界（2026-09-14）。
 
 - [Nextplay 真实评测契约复核](domains/maxwell/pitfalls/nextplay-real-run-contract-review-20260914.md) — 执行声明、固定文件根目录、回执配置、轨迹大小、首个真实基准通过与候选验收指针（2026-09-14）。
+
+- [Maxwell 知识库大文件上传限制](domains/maxwell/pitfalls/knowledge-upload-limits.md) — 请求体与 Base64 膨胀、原文件回读、分块容量保护及本地验证入口（2026-09-14）。
