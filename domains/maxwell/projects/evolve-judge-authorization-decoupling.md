@@ -51,3 +51,13 @@ links: [evolve-preset-evaluation-entry]
 **Why:** request.py 强制要求候选，runner.py 无条件打包候选，但底层 materialize(snapshot, None) 已有完整基准物化能力。增加基准模式可复用现有隔离与清理。另有每次重新获取当前基准、目标等待输入即停止清理、固定 Nextplay 五文件判据等独立边界。
 
 **How to apply:** 先核对报告包哈希和当前线上版本，再修改请求校验、Runner 分支及 Prompt/Skill，重建 runtime.zip；基准模式不可作为缺失候选的隐式降级。多轮交互和跨轮基准固定必须分别验收。
+
+## 2026-09-14 正式仓库修复落点
+
+Runner 正式源码为 world-sim-dev/nextplay-eval，基于 main fcea6b1，隔离目录 `/private/tmp/nextplay-eval-main-20260914`，本地提交 b849bf1。说明见 maxwell-runtime/README.md，源码在 src/nextplay_runtime，操作包装 Skill/Prompt 在 standalone，构建入口 scripts/build_skill.py。26 项离线测试通过，生成包不含 runtime.env，未上传或真实运行。
+
+Maxwell 基于 main 42422737，隔离分支 codex/evolve-baseline-runner，最终本地提交 884c24b3；复核 docs/evolve-baseline-runner-20260914.md。移除了临时 Runner 副本，保留接入说明、冻结/传递回归和字体样式/评分状态修复。Studio check、两个 Go 定向测试及本地真实组件排版预览通过。
+
+**Why:** 同一执行器可以评测不同任务的 A/B/C Preset，目标不能写死。EVOLVE 已传递 Run 冻结的完整 content，需明确每任务的运行声明，不能误称会自动取最新草稿。Runtime 本已支持无 patch 物化，本次接通显式 baseline 路径并核对候选的预期基准快照。
+
+**How to apply:** 从两个仓库上述源码和说明复验，不在 maxwell-ai 维护 Runner 副本。发布后新建并确认匹配执行器契约的 Manifest；保留部署凭据。现有五文件及输入等待即停止的边界未变，不把离线通过视为真实调优完成。
