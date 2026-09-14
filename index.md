@@ -115,4 +115,4 @@
 
 - [Nextplay 真实评测契约复核](domains/maxwell/pitfalls/nextplay-real-run-contract-review-20260914.md) — 执行声明、固定文件根目录、回执配置、轨迹大小、首个真实基准通过与候选验收指针（2026-09-14）。
 
-- [Maxwell 知识库大文件上传限制](domains/maxwell/pitfalls/knowledge-upload-limits.md) — 请求体与 Base64 膨胀、解压解析预算、按需分块及 PR #295 交付入口（2026-09-14）。
+- [Maxwell 知识库大文件上传限制](domains/maxwell/pitfalls/knowledge-upload-limits.md) — 请求体与 Base64 膨胀、解压解析预算、按需分块、PR #295 及 CI 浅克隆基线排查（2026-09-14）。

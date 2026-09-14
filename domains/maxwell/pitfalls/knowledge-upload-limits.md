@@ -28,3 +28,7 @@ links: [maxwell]
 - 前端回归：`apps/studio/src/middlewares/knowledge/importFile.test.ts`，在 Studio 目录用 `pnpm exec node --experimental-strip-types src/middlewares/knowledge/importFile.test.ts` 直接运行；`check-*.mjs` 只放静态工程检查。客户端必须从后端 OpenAPI 按现有 `pnpm --filter @maxwell/studio api:generate` 流程生成。
 
 2026-09-14 本地核验通过：后端 HTTP/knowledge/humagin 全套、后端架构检查、Studio `check`（含 typecheck）。临时恢复旧路由配置时，文本、Base64、DOCX 的大文件回归均返回 413。线上代理限制和实际用户文件仍需部署后验收；本地通过不等于线上恢复。
+
+## PR 检查中的基线漂移
+
+2026-09-14 的 PR #295 在 main 并发推进后遇到 `Detect changed areas` 的 `fatal: bad object`。排查入口为 `.github/workflows/pr-checks.yml`：比较事件中的 base SHA、checkout 的 merge ref 父提交和浅克隆深度；业务检查尚未执行时，不应把它认定为上传回归失败。本次同步最新 main 到 PR 分支后，范围检测恢复通过。后续遇到同类错误先核对这些提交指针，不直接跳过 CI 或扩大部署范围。
