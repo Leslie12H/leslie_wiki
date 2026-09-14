@@ -179,3 +179,5 @@
 - 2026-09-12 | Refreshed concurrent Plugin main changes: #1844 restored ordinary DEV routing while publisher provisioning is pending; latest ordinary deployment succeeded, but the protected candidate publisher environment still has no variables. Preserve this distinction in merge readiness.
 
 - 2026-09-12 | Merge completed for the five original PRs and Executor/Zeus content follow-ups. AION current head passed all four required checks with 24 resolved threads and a completed fresh review. Linked automatic DEV workflows and retained deployment, async preparation and real A/B gaps.
+
+- 2026-09-14 | Audited AION #1754 against its parent: distinguish existing Plugin ID/cache support from checkpoint replay expansion, document shared SQL/lock and capture/current scope, and keep incomplete async preparation separate from full-task evaluation. No business code rollback or deployment performed.

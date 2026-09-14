@@ -2,7 +2,7 @@
 name: vidmuse-stateless-adapter-implementation
 type: project
 created: 2026-09-12
-updated: 2026-09-12
+updated: 2026-09-14
 tags: [maxwell, vidmuse, a2a, adapter, checkpoint, dev-release]
 links: [vidmuse-executor-p1, vidmuse-executor-candidates, vidmuse-a2a-executor, workflow-catalog-thread-plugin]
 ---
@@ -23,6 +23,20 @@ links: [vidmuse-executor-p1, vidmuse-executor-candidates, vidmuse-a2a-executor, 
 | 无库 Executor | A2A 协议适配、身份/冻结验证、产品 API 调用、受认证加密句柄及取证转换 | Adapter PR #1；没有独立任务数据库、持久队列或租约 Worker |
 
 Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产物身份。它们不能扩展成隐藏 KV 任务系统。候选控制面需持久 Git root、单写入实例；进程内锁不代表多副本互斥。部署边界见 `docs/candidate-control-api.md`。
+
+## 2026-09-14 AION 改动必要性与业务影响复核
+
+**Why:** 用户质疑已有 Plugin ID 选择为何需要扩大 AION 改动，以及普通入口限制和异步预留的实际业务影响。“没有新表”和“入口默认关闭”不能推导出业务存储、公共 SQL 或生命周期没有变化。完整任务评测与历史节点续跑应分别判断必要性。
+
+**How to apply:** 本次按已合并 [AION #1754 的 d3495db4](https://github.com/world-sim-dev/aion/commit/d3495db48f48d1ca4892244da452f750dc87c87e) 与其父提交比较；这不是当前部署配置或 MySQL 性能验证。下一轮设计先检查已有 `AgentThreadCreateRequest.plugin_id`、`runner_wrapper/kubernets.py::_prepare_shared_skills_request` 和 `shared_skills_startup.py`，再决定最小增量。以下收敛方向为建议，未执行业务代码回退。
+
+- 原有并行 Runner 启动路径已按 Plugin ID 与当时仓库 commit 建 Skills 缓存。独立且不可覆盖的候选 ID、冻结公共依赖、DEV 发布保留候选内容，可以支持从头发起完整任务；调用方指定固定 release 和可查询实读证明是进一步需求，不等于必须引入 checkpoint 导入与专用生命周期。
+- 普通入口限制的 marker 判断看 `checkpoint_prepare_state.py`；已导入 Thread 的普通消息、文件编辑、工具、recreate/reactive/delete 不再具备普通产品 Thread 的交互语义。无 marker 的 Thread 不被这些 409 直接拦截，但 `agent_thread.py` 的列表 JSON 过滤、更新/条件状态更新行锁，以及 `message_operations.py` 取消前的 Thread 行锁是公共路径改动，不能声称默认关闭便没有影响。
+- 启用范围必须读代码分支：`native_checkpoint.py::configure_dispatch` 的 capture 分支按开关、Adventurer 类型及已有 runtime 判断，未在该分支按评测项目/账号隔离；普通派发也可能进入捕获。`plugin_release.py::freeze_dev_create` 在 DEV 基目录切为 `current` 后也作用于普通 Plugin 创建，后续启动不再刷新被绑定的 Plugin 配置。不能把这两个配置视作仅影响专用评测接口。
+- 存储影响分别核对 `plugin_runtime.py`、`native_checkpoint.py`：既有 Thread context 增加版本/输入/进度/文件清单，目标导入新增 Thread 和独立工作区，捕获增加私有文件；运行清单上报在持有 Thread 行锁时校验缓存，完成态输出查询会再次读取视频字节计算摘要。无需新表不代表无额外行、JSON 写入或文件 IO。
+- 第六项的实现边界看 `docs/checkpoint-prepare-reservation.md` 和 `checkpoint_prepare.py`：在既有 Thread/Task 保存准备预留，Thread 暂无工作目录；confirm 只到 queued，后台 materializer 及 Zeus/Adapter/Maxwell 异步接入未在该交付完成。大历史快照可能需要异步准备，但它不是 Plugin ID 完整任务评测的前置，不能用预留接口代表可运行能力。
+
+建议将完整任务 Plugin 评测收敛到现有产品 API、独立 DEV 候选发布与按需补充的版本证明；历史节点续跑及大快照异步准备单独形成可验收范围。若决定精简已合并实现，需先核对 Zeus/Executor 合同与公共修复依赖，再提交明确的回退或拆分 PR，不能只删除保护而留下受控对象。
 
 ## 实现与验证入口
 
