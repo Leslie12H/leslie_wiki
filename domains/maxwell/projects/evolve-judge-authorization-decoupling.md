@@ -61,3 +61,11 @@ Maxwell 基于 main 42422737，隔离分支 codex/evolve-baseline-runner，最�
 **Why:** 同一执行器可以评测不同任务的 A/B/C Preset，目标不能写死。EVOLVE 已传递 Run 冻结的完整 content，需明确每任务的运行声明，不能误称会自动取最新草稿。Runtime 本已支持无 patch 物化，本次接通显式 baseline 路径并核对候选的预期基准快照。
 
 **How to apply:** 从两个仓库上述源码和说明复验，不在 maxwell-ai 维护 Runner 副本。发布后新建并确认匹配执行器契约的 Manifest；保留部署凭据。现有五文件及输入等待即停止的边界未变，不把离线通过视为真实调优完成。
+
+## 2026-09-14 正式打包与线上资源更新
+
+基于 nextplay-eval main 1182275，修复提交 08cd798（codex/package-runner-latest），正式入口 nextplay-a2a/build.py；此前 standalone 构建为过渡版本。源码与部署核验记录见 nextplay-a2a/README.md。原测试 Skill 和外层 Prompt 已在 Studio 更新，回下载五个部署输入文件逐字节一致，原 runtime.env 保留；平台导出另附版本元数据。运行测试 25 项、构建测试 1 项通过，未启动真实初评。
+
+**Why:** 仅改 Skill 文本会留下旧 Python 候选必填逻辑；仅更新运行包会被外层 Prompt 的候选必填规则拦住。
+
+**How to apply:** 从正式源码打包并同步 Prompt，导入时保持原 slug/ID/绑定及执行配置。既有冻结资产不会自动新增 execution 声明，真实运行前需用新资产明确 mode、目标及候选预期快照。
