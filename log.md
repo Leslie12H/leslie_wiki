@@ -143,3 +143,5 @@
 
 
 - 2026-09-12：记录 Nextplay 首轮工作区与执行目标列表刷新核验，补 Creative Production Agent 的协议读取和 Case 场景纠正指针；目标、基准方案、Judge、Case 修订草稿 v2 已保存但未冻结，基准待选定，未发起真实初评或候选运行。
+
+- 2026-09-14：核对 Nextplay 判卷失败的 UI 与主干，定位 Maxwell Judge 依赖仅由 Maxwell Agent 登记初始化的业务凭据；纠正 endpoint 表单及 A2A Token 混淆，未改配置或发起 Run。

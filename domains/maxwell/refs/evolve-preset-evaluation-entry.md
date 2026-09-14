@@ -2,7 +2,7 @@
 name: evolve-preset-evaluation-entry
 type: reference
 created: 2026-09-12
-updated: 2026-09-12
+updated: 2026-09-14
 tags: [maxwell, evolve, a2a, preset, evaluation]
 links: [vidmuse-a2a-executor, evolve-maxwell-tuning-receiving]
 ---
@@ -191,3 +191,17 @@ links: [vidmuse-a2a-executor, evolve-maxwell-tuning-receiving]
 **Why:** 名称中的“互动影游”不足以定义被测对象的工作方式。创作生产 Agent 与玩家扮演 Agent 接收的任务、输出结构和成功标准不同；若用玩家续写场景评测创作流水线，即使 Run 和判卷完成，分数也不能回答目标能力问题。连接状态、工作创建、草稿修订与真实评测必须分别验收。
 
 **How to apply:** 开始出题前，先从明确的目标 Preset 读取当前 Prompt/Skill 的职责、用户角色和最终产物要求；将真实创作请求映射为 Case，再用实际产物内容设置 Judge，避免只检查剧情回复是否流畅。用于理解协议的 Preset 不自动成为 baseline；在冻结前显式核对最终选中的 Preset 与完整 SP/Skill。继续本轮工作时打开上述工作区，先确认修订后的 Case 和 Judge，再准备一条代表用例的初评；候选调优沿用相同用例和判断口径，并核实候选实际应用回执。
+
+
+## 2026-09-14 判卷 endpoint 与业务凭据错误的区分
+
+核验入口仍为上文 Nextplay 工作区及业务执行目标页。此次 UI 显示五项资产已冻结，运行对话框“高级设置 → 本次判卷模型”已选择 gpt-5.6-sol，执行目标页仍显示“业务执行凭据：未配置，登记 Maxwell Agent 时自动创建”。未提交运行、创建凭据或修改模型配置；后续应重新读取现场状态。
+
+- 对照已 fetch 的主干 `56dca229e598196c0db09cbf5340b8313ec79eb4`：`services/evolve-server/internal/modules/evolve/application/commands/run.go:135-157,226` 先按请求或业务默认模型构建判卷 Registry；构建失败后仍检查默认 Registry，并把 modelAdmissionErr 与 judgeAdmissionErr 合并。因此两条错误不等于两份都要填写的业务配置。
+- `internal/app/integration/llmjudge/maxwell.go:25-54` 从当前评测 businessId 读取 BusinessCredential，用于 Maxwell `/api/runtime/model-completions`，不是外部 A2A 的 CredentialRef。`application/commands/executors.go:109-159,401-456` 只有登记 maxwell_preset 时初始化托管业务 Key；external_a2a 的 Token 单独加密保存。
+- UI 核验位置：工作区“启动 Run → 高级设置 → 本次判卷模型”，并有“设为业务默认”；业务主页“执行目标”显示托管凭据状态。现有初始化入口为“登记执行目标 → Maxwell Agent”，不提供手填业务托管 Key 的独立表单。仅用外部执行器但使用 Maxwell Judge 时，这是凭据初始化与执行器种类耦合的流程缺口；不应因初始化凭据而替换本轮外部执行器或复用另一业务的 A2A Token。
+- 服务器直连 Judge 的配置指针为 `services/evolve-server/README.md:75-91` 和 `deploy/secret.example.yml` 中 `EVOLVE_JUDGE_LLM_BASE_URL/MODEL/API_KEY`。这不是 Studio 的 endpoint 表单；不要把设置环境变量当作必然解决 MaxwellFactory 的业务凭据错误。
+
+**Why:** 模型选择、EVOLVE 到 Maxwell 的业务凭据、EVOLVE 到外部执行器的 Token 分属不同合同；错误聚合会把主因和缺省 Method 的连带错误并列显示。把它们混为“专用表单 Token 未落库”会误导用户重复配置已接通的外部执行器。
+
+**How to apply:** 先从运行对话框读模型，从执行目标页读 businessCredential，再沿 run.go 与 MaxwellFactory 定位哪一步失败。需要平台侧独立初始化/修复判卷业务凭据时，明确权限和所属业务；保留实际 external_a2a 执行目标。不要编造业务设置菜单，也不在对话传递凭据。
