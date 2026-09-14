@@ -27,3 +27,11 @@ links: [evolve-preset-evaluation-entry]
 **Why:** 构建成功、部署成功、入口更新和真实业务闭环分别证明不同环节。固定合并提交避免并发主干更新改变本次发布范围。
 
 **How to apply:** 从 PR、CI、发布和 Studio 子构建链接读取当前状态；版本、凭据与 Run 都会变化，复验以现场为准。模型配置核验在启动对话框高级设置中执行，不需要额外登记 Maxwell Agent。
+
+## 2026-09-14 首轮 Trial 的后续交互阻断
+
+现场追溯指针：Work `work_35c276d93336f8552b6a5e55f6a19488`，Run `run_2e649a2a517c6dbb351ce1057a736f39`，Trial `trial_70c5f82e2a9852e138febfa8e73f4d54`，远端任务 `run-0221e9a9c8479ccd29999b21d2b6c19a`。查看 Studio Trial 详情及远端运行追踪；不要将执行中断写成质量不通过或凭据错误复发。具体远端问题尚未取得。
+
+**Why:** 部署版本的 `evaluation/live_interaction.go` 会在远端要求交互而 Case 缺少或无法解析 `input.interaction` 时终止；A2A turns 路径也可能返回同一错误分类。因此仅凭 `remote_interaction_required` 不能断言具体问题或唯一分支。Studio `workbenchResults.ts` 的 `trialScoreState` 仅凭 verdict 存在就显示已判卷，会把执行错误结果误标为已判卷。
+
+**How to apply:** 核对冻结 Case 原文、Attempt 错误详情和远端问题后，再选择有边界的 scripted 或 agent-context responder；后者还需核对 Worker responder 配置。普通提示词中的少追问要求不等于协议交互配置。检查 `execution/interaction.go`、`evaluation/live_interaction.go` 和 `app/integration/a2a/registry.go` 当前实现；历史交互方案页可能落后于实现。未到 Judge 阶段的 Run 不能证明真实判卷已通过。

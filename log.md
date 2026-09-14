@@ -149,3 +149,5 @@
 - 2026-09-14：记录 EVOLVE 判卷授权独立初始化修复及回归入口，保留 A2A 执行器与业务模型权限边界；本地修复未部署。
 
 - 2026-09-14：记录 EVOLVE PR #288 合并与固定提交 DEV 发布核验；API/Worker 滚动更新和 Studio 196 入口已确认，未创建判卷凭据或真实 Run。
+
+- 2026-09-14：记录 Nextplay Trial remote_interaction_required 追溯、交互配置检查入口和已判卷误标；远端实际问题待核实。
