@@ -48,6 +48,8 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 
 AION #1760 已通过全部四项必需 CI，并在核验 DEV 存量后回复/解决 5 条条件性审查意见，再合并到 main；69 个原 PR 路径与合并前一致，后续 #1757 保留。[CI](https://github.com/world-sim-dev/aion/actions/runs/34802851550) 与[自动 DEV 发布](https://github.com/world-sim-dev/aion/actions/runs/34804575127)分开核对。审查处置的证据与适用范围见 PR 回退前核验说明；不能在其他环境直接沿用“没有存量”的结论。
 
+2026-09-14 补核 AION DEV：上述自动工作流已成功，Manager Pod 已使用回退提交且 Ready。**Why:** 自动流水线成功不意味着所有组件切换到同一 SHA；Runner 在该工作流中只构建，Manager 可以继续使用独立固定版本。**How to apply:** 同时检查 `.github/workflows/dev-services-cicd.yml`、`config.py::get_default_runner_image_tag`、实际 ConfigMap 与 Manager 进程的 `RUNNER_IMAGE_TAG`，再核对在用 Runner 镜像及 Git 祖先关系。本次 DEV 在用 Runner 均为 #1754 引入前的版本；无需为撤回该功能额外切换它们。只读核验快照见本地审核目录 `evidence/aion-dev-rollback-deployment.json`，未执行真实生成验收。
+
 用户随后明确 Zeus 同样回退 #523 与 #524；其审核工作区为上述目录下 `vidmuse-zeus/`，同名本地保留分支指向 `39fee3b3d1db46ebb550cd7df65246dcc3e92c69`，另有两笔 PR 的合计 patch 与校验过的增量 bundle。[回退 #525](https://github.com/world-sim-dev/vidmuse-zeus/pull/525) 已合并，远端 main 树已核对与 #523 合并前一致；349 项回归通过，全仓格式检查存在该基线已有问题。2026-09-14 另行核验[自动 DEV 工作流](https://github.com/world-sim-dev/vidmuse-zeus/actions/runs/34803478570)构建与部署成功；未以此代替真实业务请求验收。
 
 - 文件迁移支持范围看 `native_replay.py::validate_local_closure/remap_native`：现有实现复制已捕获的 Thread 本地文件，重写部分路径及原生消息/Thread ID；结构化用户资产 ID、外部 URL/任务及子 Agent 状态会被拒绝，没有用户素材库所有权/ACL 的通用迁移。合格快照样本不能代表全部真实用户场景。
