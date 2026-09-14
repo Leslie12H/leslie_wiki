@@ -112,3 +112,5 @@
 - [监控 GitHub App 配置与 Secret 读取](domains/vidmuse/refs/monitoring-github-app-config.md) — App/installation 定位、生产凭据指针、指纹校验与 ACK 注解泄露防护（2026-09-12）。
 
 - [Nextplay 真实 Case 演示讲稿](domains/maxwell/refs/evolve-demo-runbook-20260914.md) — 25 分钟操作路线、真实预演与同口径候选比较的验收边界（2026-09-14）。
+
+- [Nextplay 真实评测契约复核](domains/maxwell/pitfalls/nextplay-real-run-contract-review-20260914.md) — 执行声明、固定文件根目录、回执配置持久化、Judge 输入与 Runtime 计划封装的实际验收指针（2026-09-14）。
