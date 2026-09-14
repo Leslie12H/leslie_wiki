@@ -189,3 +189,5 @@
 - 2026-09-14：补充 11:36 旧镜像定时循环重启后自动补跑的生产日志与卡片核验；记录 PR #878 合并和部署运行指针，区分两条入库记录、一个模型分组、一张卡片及全局问题处置计数，未把旧版本成功当作新修复验收。
 
 - 2026-09-14：生产 DMS 按完整日报条件核对三个窗口 28/22/2 条记录，定位当日启动补跑不会覆盖历史漏发日期；未补发。
+
+- 2026-09-14 | Completed AION #1760 and Zeus #525 full reverts on main, preserving original worktrees/patches/bundles for local review. AION passed four required checks and resolved five conditional legacy-state findings using live DEV preflight; Zeus passed 349 tests and DEV rollout, with existing baseline formatting failures disclosed. Ordinary product Thread semantics are mandatory; Maxwell, Executor and Plugin remain unchanged. Linked audit, CI and deployment evidence; no production rollout or stored-data deletion.

@@ -15,6 +15,8 @@ links: [vidmuse-executor-p1, vidmuse-executor-candidates, vidmuse-a2a-executor, 
 
 ## 状态归属
 
+> 2026-09-14 范围修正：用户要求评测运行与普通产品 Thread 同等行为，拒绝专用评测生命周期，并要求保留原实现、撤回 AION 与 Zeus 已合并内容后先本地审核。AION 回退入口为 [#1760](https://github.com/world-sim-dev/aion/pull/1760)，当前合并/CI 状态读该 PR；下文 2026-09-12 交付记录仅为历史，不再代表继续启用原实现的授权。Maxwell、Executor、Plugin 未在本轮回退范围内。
+
 | 归属 | 负责内容 | 查证入口 |
 | --- | --- | --- |
 | Maxwell EVOLVE | Case、冻结 baseline/Variant、Attempt 调度与请求、远端句柄、预算、判分及比较 | Maxwell PR #286；既有 limits_json、Attempt.request_hash 与 ObjectStore |
@@ -37,6 +39,23 @@ Git 持久目录保存源码、版本和准备 ref；发布回执保存安装产
 - 第六项的实现边界看 `docs/checkpoint-prepare-reservation.md` 和 `checkpoint_prepare.py`：在既有 Thread/Task 保存准备预留，Thread 暂无工作目录；confirm 只到 queued，后台 materializer 及 Zeus/Adapter/Maxwell 异步接入未在该交付完成。大历史快照可能需要异步准备，但它不是 Plugin ID 完整任务评测的前置，不能用预留接口代表可运行能力。
 
 建议将完整任务 Plugin 评测收敛到现有产品 API、独立 DEV 候选发布与按需补充的版本证明；历史节点续跑及大快照异步准备单独形成可验收范围。若决定精简已合并实现，需先核对 Zeus/Executor 合同与公共修复依赖，再提交明确的回退或拆分 PR，不能只删除保护而留下受控对象。
+
+## 2026-09-14 普通 Thread 等价性与本地保留
+
+**Why:** `type=adventurer` 不代表行为相同。用户明确要求评测使用普通产品 Thread 的运行、消息、工具、权限、计费和恢复流程，不能通过 context 标记形成隐藏的评测类型。checkpoint 导入还涉及文件字节、用户素材库记录与权限、外部任务及目标账号，不能将复制工作区等同于完整业务迁移。
+
+**How to apply:** 原实现保留在 `/Users/leslie/Downloads/sandai-code/vidmuse-a2a-local-review-20260914/`，入口 `README.md`。AION 审核分支 `review/vidmuse-a2a-20260914` 指向原 PR head `57280d3bd6f9dbef0f3e070753f96d360c2ca9cc`，另有原始 patch 与经过 `git bundle verify` 的增量 bundle；恢复 bundle 需其列明的基线 Git 对象。回退实现及验证见 [AION #1760](https://github.com/world-sim-dev/aion/pull/1760)，未获后续授权不得重新合入原功能。
+
+AION #1760 已通过全部四项必需 CI，并在核验 DEV 存量后回复/解决 5 条条件性审查意见，再合并到 main；69 个原 PR 路径与合并前一致，后续 #1757 保留。[CI](https://github.com/world-sim-dev/aion/actions/runs/34802851550) 与[自动 DEV 发布](https://github.com/world-sim-dev/aion/actions/runs/34804575127)分开核对。审查处置的证据与适用范围见 PR 回退前核验说明；不能在其他环境直接沿用“没有存量”的结论。
+
+用户随后明确 Zeus 同样回退 #523 与 #524；其审核工作区为上述目录下 `vidmuse-zeus/`，同名本地保留分支指向 `39fee3b3d1db46ebb550cd7df65246dcc3e92c69`，另有两笔 PR 的合计 patch 与校验过的增量 bundle。[回退 #525](https://github.com/world-sim-dev/vidmuse-zeus/pull/525) 已合并，远端 main 树已核对与 #523 合并前一致；349 项回归通过，全仓格式检查存在该基线已有问题。2026-09-14 另行核验[自动 DEV 工作流](https://github.com/world-sim-dev/vidmuse-zeus/actions/runs/34803478570)构建与部署成功；未以此代替真实业务请求验收。
+
+- 文件迁移支持范围看 `native_replay.py::validate_local_closure/remap_native`：现有实现复制已捕获的 Thread 本地文件，重写部分路径及原生消息/Thread ID；结构化用户资产 ID、外部 URL/任务及子 Agent 状态会被拒绝，没有用户素材库所有权/ACL 的通用迁移。合格快照样本不能代表全部真实用户场景。
+- 源端影响须区分导出与事前捕获：`export_native` 读取历史 Git/私有字节并写临时归档，不修改源 Thread；`NativeCheckpointCapture.commit` 会在源工作区写捕获清单、复制私有字节并增加校验。Runner 在用户消息执行前调用捕获，异常会传播到该消息处理流程，不能描述为仅后台观测。
+- 目标用户影响看 Zeus `AgentService.prepareCheckpointImport`、`AgentThreadCreationPersistenceService` 与 `AgentThreadPostCreateOutboxService`：目标属于当前执行账号，进入正常列表/创建计数及 THREAD_CREATED 事件；运行权限、计费按目标账号。是否影响原用户要分别核对源/目标环境、账号和计费/通知/素材服务路由，不能只凭源文件未改宣称无感。
+- DEV Runner 仍会读取环境中的外部记忆等配置；更换环境或账号并不自动重建历史时刻的全部业务条件。审核应先用相同 Plugin、相同普通入口验证控制变量，再评估候选差异。
+
+回退前核验方法：不能只凭功能默认关闭推断没有遗留记录/Runner/文件。检查实际 Pod/Job 的绑定变量、挂载配置与字段变更时间，再以数据库只读事务核对功能引入后创建/更新的对象和关联工作区。全表 context 检索超时属于未知；本次改用已有 `(type,status,update_time,id)` 索引，覆盖功能引入前起全部更新记录，并单独检查准备任务索引。具体查询、时点和结果保存在本地审核目录，PR 中提供摘要；未执行清理、迁移或生产发布。
 
 ## 实现与验证入口
 
