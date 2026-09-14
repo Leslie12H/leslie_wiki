@@ -197,3 +197,4 @@
 - 2026-09-14：核验 AION DEV 回退工作流成功及 Manager 实际回退镜像 Ready；补充 Runner 仅构建、独立固定版本须核验的发布边界。在用 DEV Runner 版本均早于 #1754；保存只读证据，未发起生成或生产操作。
 
 - 2026-09-14：录入 Nextplay 真实执行契约复核与 PR 292/293/294、nextplay-eval PR 2 指针；明确部署和本地目标完成不能代替 EVOLVE 初评/候选验收。
+- 2026-09-14：补充真实 Run 的外层模型预算耗尽证据、Nextplay PR 3 有界等待修复及同 Skill/Prompt 回读核验。
