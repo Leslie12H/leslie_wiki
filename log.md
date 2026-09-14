@@ -200,3 +200,5 @@
 - 2026-09-14：补充真实 Run 的外层模型预算耗尽证据、Nextplay PR 3 有界等待修复及同 Skill/Prompt 回读核验。
 
 - 2026-09-14：补充 Nextplay 第二轮真实运行的 toolEvents 上限拒收及 PR 4 全事件审计索引修复；区分 Judge 投影与执行回执边界。
+
+- 2026-09-14：补充 PR 4 在真实混合 Runtime 流上的不足，以及 PR 5 按语义分离 toolEvents 的修正与回归证据。
