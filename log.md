@@ -198,3 +198,5 @@
 
 - 2026-09-14：录入 Nextplay 真实执行契约复核与 PR 292/293/294、nextplay-eval PR 2 指针；明确部署和本地目标完成不能代替 EVOLVE 初评/候选验收。
 - 2026-09-14：补充真实 Run 的外层模型预算耗尽证据、Nextplay PR 3 有界等待修复及同 Skill/Prompt 回读核验。
+
+- 2026-09-14：补充 Nextplay 第二轮真实运行的 toolEvents 上限拒收及 PR 4 全事件审计索引修复；区分 Judge 投影与执行回执边界。
