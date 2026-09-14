@@ -147,3 +147,5 @@
 - 2026-09-14：核对 Nextplay 判卷失败的 UI 与主干，定位 Maxwell Judge 依赖仅由 Maxwell Agent 登记初始化的业务凭据；纠正 endpoint 表单及 A2A Token 混淆，未改配置或发起 Run。
 
 - 2026-09-14：记录 EVOLVE 判卷授权独立初始化修复及回归入口，保留 A2A 执行器与业务模型权限边界；本地修复未部署。
+
+- 2026-09-14：记录 EVOLVE PR #288 合并与固定提交 DEV 发布核验；API/Worker 滚动更新和 Studio 196 入口已确认，未创建判卷凭据或真实 Run。

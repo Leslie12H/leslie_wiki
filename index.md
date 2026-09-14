@@ -112,3 +112,5 @@
 - 判卷 endpoint 连带错误与托管业务凭据缺口：见 [EVOLVE 接入记录](domains/maxwell/refs/evolve-preset-evaluation-entry.md) 的 2026-09-14 核验，区分模型选择、Maxwell 业务 Key 与外部 A2A Token。
 
 - [EVOLVE 判卷授权解耦修复](domains/maxwell/projects/evolve-judge-authorization-decoupling.md) — 2026-09-14：基于最新 main 的独立判卷准备入口、权限与回归指针；未部署。
+
+- EVOLVE 判卷授权修复 PR #288 与 DEV 发布、Studio 196 入口核验见 [判卷授权解耦](domains/maxwell/projects/evolve-judge-authorization-decoupling.md)（2026-09-14）；未执行真实初评。
