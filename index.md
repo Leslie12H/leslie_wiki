@@ -110,3 +110,5 @@
 - [Admin PR #875](https://github.com/world-sim-dev/vidmuse-admin/pull/875)：日报格式与 Chat 多选复制统一交付，见 [修复记录](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-evidence-loss.md)。
 
 - [监控 GitHub App 配置与 Secret 读取](domains/vidmuse/refs/monitoring-github-app-config.md) — App/installation 定位、生产凭据指针、指纹校验与 ACK 注解泄露防护（2026-09-12）。
+
+- [Nextplay 真实 Case 演示讲稿](domains/maxwell/refs/evolve-demo-runbook-20260914.md) — 25 分钟操作路线、真实预演与同口径候选比较的验收边界（2026-09-14）。

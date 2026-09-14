@@ -191,3 +191,5 @@
 - 2026-09-14：生产 DMS 按完整日报条件核对三个窗口 28/22/2 条记录，定位当日启动补跑不会覆盖历史漏发日期；未补发。
 
 - 2026-09-14 | Completed AION #1760 and Zeus #525 full reverts on main, preserving original worktrees/patches/bundles for local review. AION passed four required checks and resolved five conditional legacy-state findings using live DEV preflight; Zeus passed 349 tests and DEV rollout, with existing baseline formatting failures disclosed. Ordinary product Thread semantics are mandatory; Maxwell, Executor and Plugin remain unchanged. Linked audit, CI and deployment evidence; no production rollout or stored-data deletion.
+
+- 2026-09-14：收录 Nextplay 真实 Case 25 分钟演示讲稿指针；明确目标产物、执行回执、有效评分与候选比较的分别验收。
