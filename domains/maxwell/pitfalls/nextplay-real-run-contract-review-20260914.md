@@ -9,6 +9,12 @@ links: []
 
 # Nextplay 真实评测契约复核
 
+## 首个真实基准通过（2026-09-14）
+
+[Run run_f535f4e058e9e9d2293526c75e37e627](https://agent.sandaii.cn/evolve/tasks/work_35c276d93336f8552b6a5e55f6a19488?businessId=ad3d5c4b-c7c9-4ed3-b15d-4f3556520263&run=run_f535f4e058e9e9d2293526c75e37e627) 完成实际 A2A、隔离 Nextplay 执行、五文件回收、回执校验和 Judge，1 Trial 通过，0 执行/判卷错误。评分为 artifact_completeness 4/5、reference_consistency 5/5、branch_causality 5/5；单样本不代表整体质量。
+
+外层 Thread `thr_01M2FTYC02CB239XJQC78VQ9TC` 的 `evolve-results/c6b9c8fb8bb9a8afc2d46c508d8c8f617ecc05bf3b41dc97ebd604d31b3e4c6b/trial-evidence.json` 保留执行绑定。界面回读 status=succeeded、mode=baseline、五文件齐全、cleanup=cleaned、appliedComponents=[]，snapshot 和 inputDigest 与冻结输入一致。369 条混合事件投影为 188 条工具事件，原始日志保留。候选须与该成功基准比较，不能使用此前错误 Run 作为质量基准。
+
 **Why:** 单元测试、A2A Card 健康和外层 Agent 完成都不能证明内层目标执行、文件回收和判卷成功。2026-09-14 的真实验收逐层暴露冻结资产缺执行声明、回执配置未持久化、文件根目录不一致、判卷输入上限和计划卡片封装不兼容。
 
 **How to apply:** 从失败 Trial 的原始请求核对 execution，而非把旧冻结资产问题归因于 A2A 丢字段。分开记录外层包装业务、内层目标业务/Preset、prepared snapshot、冻结 Case inputDigest；候选仅在同一快照上完整替换。UI 保存后必须刷新回读；实际目标完成后还须检查五文件内容、执行身份/快照/输入哈希、清理回执、Judge assessment 和候选比较。
