@@ -213,3 +213,5 @@
 - 2026-09-14：补充 PR #295 并发 main 更新导致 CI 浅克隆缺失基线的排查指针；同步 main 后恢复范围检测，未修改部署流程。
 
 - 2026-09-14：补充知识库高重叠率需要累计分块字节预算、失败导入必须先校验再创建知识库的评审结论与回归指针。
+
+- 2026-09-15：录入 [Nextplay Runner Thread Preset 绑定缺失](domains/maxwell/pitfalls/nextplay-runner-thread-preset-binding.md) 的真实 baseline 400、双仓库因果与本地修复/恢复验收指针；未声明共享 Runner 已发布、真实恢复或候选比较完成。
