@@ -136,3 +136,5 @@
 - [Nextplay Benchmark 导入与评分核验](domains/maxwell/refs/nextplay-benchmark-import-audit-20260915.md) — 转换契约、双层尺寸准入、评分证据、页面与跨 Work 复用检查入口（2026-09-15）。
 
 - Nextplay 目标卡 unknown/回执不可用与真实 Trial 不一致：见 [导入与评分核验](domains/maxwell/refs/nextplay-benchmark-import-audit-20260915.md) 的能力卡诊断，区分 Card-only probe、能力声明和实际回执（2026-09-15）。
+
+- [EVOLVE 迁移与 Agent 资源发布边界](domains/maxwell/refs/evolve-pr300-deployment-boundaries.md) — PR #300 同事务锁、程序回滚、独立资源同步与 DEV 只读预检入口（2026-09-15）。
