@@ -217,3 +217,5 @@
 - 2026-09-15：录入 [Nextplay Runner Thread Preset 绑定缺失](domains/maxwell/pitfalls/nextplay-runner-thread-preset-binding.md) 的真实 baseline 400、双仓库因果与本地修复/恢复验收指针；未声明共享 Runner 已发布、真实恢复或候选比较完成。
 
 - 2026-09-15：录入 Executor 声明、连接检查与真实执行证据分离及配置绑定的核验方法；记录 Memory JSON 克隆内部字段和 PostgreSQL/CAS 保留验证指针。
+
+- 2026-09-15：录入 [Problem 认领触发历史告警回复](domains/vidmuse/admin/pitfalls/monitoring-problem-claim-replies-to-historical-alerts.md) 的人工动作、弱聚类、全关联通知与飞书回执追溯方法；源码审查和生产运行版本分别表述，未声明修复。

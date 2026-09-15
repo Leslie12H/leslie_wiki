@@ -22,6 +22,7 @@
 - [VidMCP auth/runtime context](domains/vidmuse/admin/pitfalls/vidmcp-auth-runtime-context.md) — MCP_URL/token 与 X-Auth-* 不要混淆
 - [CDN user-generated images](domains/vidmuse/admin/pitfalls/cdn-user-generated-images-video-cdn.md) — aion-user-base/assets/images 走 video CDN
 - [报警 Problem 标题与当次报告](domains/vidmuse/admin/pitfalls/monitoring-problem-title-vs-incident-report.md) — 历史聚类标题不能代替当次结论，发送摘要前核对证据等级
+- [Problem 认领触发历史告警回复](domains/vidmuse/admin/pitfalls/monitoring-problem-claim-replies-to-historical-alerts.md) — 弱聚类、全关联通知及外部告警话题新卡片的根因链与只读核验方法（2026-09-15）
 - [报警日报证据丢失链路](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-evidence-loss.md) — 输入裁剪、静默降级、引用完整性与发送身份回退的排查指针
 - [日报滚动部署启动交接](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-startup-handoff.md) — 循环缺失、旧镜像自动补跑、周末窗口对账与历史补偿缺口、PR #878 发布验收及卡片统计口径（2026-09-14）
 - [Tool 日汇总状态与已有数据展示](domains/vidmuse/admin/pitfalls/tool-daily-updating-hides-existing-data.md) — HTTP 成功后的数据门禁、部分日误挡、独立 Worker 核验及 PR #878 本地回归/CI 边界（2026-09-14）
