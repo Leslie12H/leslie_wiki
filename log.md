@@ -169,3 +169,5 @@
 - 2026-09-15：录入 PR #299 通用平台审查指针，保留审查提交与 Benchmark、CAS 引用闭包、外部 Method、Studio 参数传递的复验方法。
 
 - 2026-09-15：补充 [EVOLVE 通用平台审查指针](domains/maxwell/refs/evolve-generic-platform-review.md) 的外部 Method 完整闭环和 Benchmark 旧版资产回归入口；修复和 CI 状态仍以 PR #299 为准。
+
+- 2026-09-15：补充 [EVOLVE 通用平台审查指针](domains/maxwell/refs/evolve-generic-platform-review.md) 的 PR #299 DEV 发布、0008–0010 迁移与 Studio 207 核验入口，以及按组件判断发布和固定 ref 的复用方法。

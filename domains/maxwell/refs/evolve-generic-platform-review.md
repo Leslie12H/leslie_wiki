@@ -25,3 +25,19 @@ links: [maxwell, evolve-usage-accounting, evolve-error-policy-fail-breach]
 - Studio 旧版 Benchmark 的回归见 `apps/studio/src/products/evolve/benchmarks/benchmarkRunSelection.test.mjs`：用只有新版资产的索引作为输入，检查按旧引用读取 id/hash/kind 与内容后，实际提交仍保持所选版本。
 
 这些位置是排查和复验入口，不代表任何环境已经修复或发布。
+
+
+## 2026-09-15 DEV 发布复验入口
+
+发布源为 PR #299 合并提交 `15340e7bc6c9bc8cfb868f26619e3872c0d0e4f9`。版本与运行状态会变化，复用时读取以下证据，不将本页当作当前在线版本声明。
+
+- [EVOLVE 发布 34939248547](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34939248547)：逐版本迁移日志、API/Worker rollout、实际镜像相等检查、NAS/healthz/鉴权 MCP 的核验入口。本次日志在 2026-09-15 明确记录 0001–0007 already applied、0008–0010 applied。
+- [Studio 构建 207](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34938526645) 与 [发布 34939494276](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34939494276) 关联同一源 SHA。发布后默认 agent.sandaii.cn 索引引用 `/build/maxwell/studio/207/`；后续仍须回读线上索引。这里验证的是发布，不代表真实评测或历史数据修复。
+
+**Why:** 手动发布的 ref 形式、组件各自的发布结果和数据库迁移是不同证据。raw SHA 直接传 workflow_dispatch 本次被 HTTP 422 拒绝；多组件 workflow 整体取消也可能已有组件发布成功；前端发布不等待后端迁移会产生版本不一致窗口。
+
+**How to apply:**
+
+- 用固定到已验收提交的分支或标签触发工作流，再核对 run.headSha。本次定位分支为 `codex/deploy-pr299-15340e7b`，不可将分支名自身当作不可变版本证明。
+- 按组件读取 Job 及 rollout 日志，不只筛选 workflow 总状态。例如 [旧 DEV EVOLVE Job](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34843466688/job/103974420844) 成功，而父 workflow 为 canceled；[旧迁移 Job](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34558733197/job/103136863807) 是迁移到 0007 的独立证据。数据库现状以后仍以台账/checksum 为准。
+- 带数据库变更时先完成已获授权的 EVOLVE 迁移与运行核验，再发布同源 Studio。顺序来源见 `.github/workflows/maxwell-cicd.yml` 的独立 deploy_evolve/deploy_studio 依赖；按文件事务提交的迁移不会被后续 Job 失败自动撤销。
