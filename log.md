@@ -171,3 +171,5 @@
 - 2026-09-15：补充 [EVOLVE 通用平台审查指针](domains/maxwell/refs/evolve-generic-platform-review.md) 的外部 Method 完整闭环和 Benchmark 旧版资产回归入口；修复和 CI 状态仍以 PR #299 为准。
 
 - 2026-09-15：补充 [EVOLVE 通用平台审查指针](domains/maxwell/refs/evolve-generic-platform-review.md) 的 PR #299 DEV 发布、0008–0010 迁移与 Studio 207 核验入口，以及按组件判断发布和固定 ref 的复用方法。
+
+- 2026-09-15：录入 Nextplay Benchmark 导入与评分核验指针；真实源导出、Go 准入、UI 和跨 Work 边界，未声明线上导入或真实评测完成。

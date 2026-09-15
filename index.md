@@ -132,3 +132,5 @@
 - 发布核验：Nextplay benchmark 的 main 部署、Runner 和 Prompt 更新见 [实施指针](domains/maxwell/projects/nextplay-benchmark-implementation-20260914.md)。
 
 - [EVOLVE 通用平台审查指针](domains/maxwell/refs/evolve-generic-platform-review.md) — PR #299 的证据/评分回归与 DEV 发布复验入口，含固定提交、版本化迁移和前后端发布顺序（2026-09-15）。
+
+- [Nextplay Benchmark 导入与评分核验](domains/maxwell/refs/nextplay-benchmark-import-audit-20260915.md) — 转换契约、双层尺寸准入、评分证据、页面与跨 Work 复用检查入口（2026-09-15）。
