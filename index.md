@@ -35,6 +35,7 @@
 - [Kling 漏传分辨率导致 billing/500](domains/vidmuse/pitfalls/kling-billing-missing-resolution-20260909.md) — 2026-09-09 六次请求原始日志：价格 properties={}、未进入 Zeus 预扣费，I2V 输入缺图片/时长/分辨率
 
 ### maxwell — [业务全景](domains/maxwell/README.md)
+- [Executor 声明与执行实证](domains/maxwell/pitfalls/executor-declaration-vs-execution-evidence.md) — 声明/连接/真实回执分开，历史配置绑定、内存克隆与 CAS 保留核验指针
 - [Nextplay Runner 创建 Thread 遗漏 Preset 绑定](domains/maxwell/pitfalls/nextplay-runner-thread-preset-binding.md) — 2026-09-15 基准在临时资源物化后、Thread 持久化前 400；调用方与 Runtime 契约因果、失败证据和恢复验收指针
 - [VidMuse 无库 Adapter 实施](domains/maxwell/projects/vidmuse-stateless-adapter-implementation.md) — 普通 Thread 等价性硬要求、AION #1760 / Zeus #525 回退与本地保留、DEV Manager/固定 Runner 分别核验；文件/账号迁移、捕获影响及公共 SQL 审核指针（2026-09-14）
 - [VidMuse Git 候选准备](domains/maxwell/projects/vidmuse-executor-candidates.md) — 独立候选 CLI、独立 Plugin 名称部署、账号覆盖与共享部署边界核验指针
