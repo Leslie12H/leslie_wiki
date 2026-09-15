@@ -167,3 +167,5 @@
 - 2026-09-14：核验 Maxwell main 部署 34824272805 成功、Studio 200 和原 Runner Skill/Prompt 更新；真实 Trial 验收仍待执行。
 
 - 2026-09-15：录入 PR #299 通用平台审查指针，保留审查提交与 Benchmark、CAS 引用闭包、外部 Method、Studio 参数传递的复验方法。
+
+- 2026-09-15：补充 [EVOLVE 通用平台审查指针](domains/maxwell/refs/evolve-generic-platform-review.md) 的外部 Method 完整闭环和 Benchmark 旧版资产回归入口；修复和 CI 状态仍以 PR #299 为准。

@@ -21,5 +21,7 @@ links: [maxwell, evolve-usage-accounting, evolve-error-policy-fail-breach]
 - 外部注册 Method 从 `commands` 的业务 registry 追到 `application/evaluation/processor.go` 的 Worker registry，验证同一个 provider 在两处均绑定；评分转换还要验证 0.6/1 和超出 maxScore 的非整数值不被静默取整。
 - Studio 的 Benchmark 预检应追踪到真正 StartRun 请求中的目标、基准版本、CaseSet、Judge 和策略；仅跳转页面不能证明配置被带入。
 - OpenAPI 验收同时运行客户端生成差异检查和类型检查；PR 中的验证描述不能替代该 head 的 CI 日志。
+- 外部 Method 的真实闭环回归见 `application/evaluation/processor_registered_provider_test.go` 与 `judge_registered_contract_test.go`：结构解码允许外部绑定，并不替代冻结、准入和 Worker 的业务注册校验；测试须走 Confirm → Freeze → StartRun → Worker，而不只单测注册表。
+- Studio 旧版 Benchmark 的回归见 `apps/studio/src/products/evolve/benchmarks/benchmarkRunSelection.test.mjs`：用只有新版资产的索引作为输入，检查按旧引用读取 id/hash/kind 与内容后，实际提交仍保持所选版本。
 
 这些位置是排查和复验入口，不代表任何环境已经修复或发布。
