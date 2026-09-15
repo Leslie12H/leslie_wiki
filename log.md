@@ -165,3 +165,5 @@
 - 2026-09-14：录入 NextPlay Benchmark 实施指针；记录模型目录校验与实际生成的区别、温度兼容修复及未完成项的代码位置。
 
 - 2026-09-14：核验 Maxwell main 部署 34824272805 成功、Studio 200 和原 Runner Skill/Prompt 更新；真实 Trial 验收仍待执行。
+
+- 2026-09-15：录入 PR #299 通用平台审查指针，保留审查提交与 Benchmark、CAS 引用闭包、外部 Method、Studio 参数传递的复验方法。

@@ -130,3 +130,5 @@
 - [NextPlay 基准接入实施指针](domains/maxwell/projects/nextplay-benchmark-implementation-20260914.md) — 两仓草稿 PR、受控证据回读、复用 Maxwell 续答通道与实际验收边界。
 
 - 发布核验：Nextplay benchmark 的 main 部署、Runner 和 Prompt 更新见 [实施指针](domains/maxwell/projects/nextplay-benchmark-implementation-20260914.md)。
+
+- [EVOLVE 通用平台审查指针](domains/maxwell/refs/evolve-generic-platform-review.md) — PR #299 的 Benchmark 成绩来源、冻结证据保留、外部 Method 绑定与前端运行参数复验入口（2026-09-15）。
