@@ -173,3 +173,5 @@
 - 2026-09-15：补充 [EVOLVE 通用平台审查指针](domains/maxwell/refs/evolve-generic-platform-review.md) 的 PR #299 DEV 发布、0008–0010 迁移与 Studio 207 核验入口，以及按组件判断发布和固定 ref 的复用方法。
 
 - 2026-09-15：录入 Nextplay Benchmark 导入与评分核验指针；真实源导出、Go 准入、UI 和跨 Work 边界，未声明线上导入或真实评测完成。
+
+- 2026-09-15：追加 Nextplay 能力卡诊断指针：旧 probe none 被误判不可用，真实结构化 Trial 与声明更新链分别核验。
