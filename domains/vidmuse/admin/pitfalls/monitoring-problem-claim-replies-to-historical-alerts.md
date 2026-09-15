@@ -4,7 +4,7 @@ type: pitfall
 created: 2026-09-15
 updated: 2026-09-15
 tags: [vidmuse, admin, monitoring, feishu, clustering]
-links: [monitoring-problem-title-vs-incident-report]
+links: [monitoring-problem-title-vs-incident-report, tool-errors-bootstrap-and-analytics-memory]
 ---
 
 # 认领 Problem 可能在已恢复的历史告警话题中新发卡片
@@ -37,7 +37,7 @@ links: [monitoring-problem-title-vs-incident-report]
 
 ## 源码核验入口
 
-本次审查基于本地 `origin/main` 缓存提交 `412e4be3f9c3ddd7aaf065bd165bfca8398c25bb`，未实测生产 SHA，未实施修复。以下固定版本链接用于定位；后续行为需重新核验：
+首次诊断基于本地 `origin/main` 缓存提交 `412e4be3f9c3ddd7aaf065bd165bfca8398c25bb`，当时未实测生产 SHA、未实施修复。以下固定版本链接用于定位原行为；后续修复见下方 PR 入口：
 
 - [卡片动作入口](https://github.com/world-sim-dev/vidmuse-admin/blob/412e4be3f9c3ddd7aaf065bd165bfca8398c25bb/apps/admin/service/monitoring_problem_card_action.py)：Problem claim 与 Incident claim 的范围差异。
 - [Problem 动作服务](https://github.com/world-sim-dev/vidmuse-admin/blob/412e4be3f9c3ddd7aaf065bd165bfca8398c25bb/apps/admin/service/monitoring_problem.py)：`claim` → `_record_action` → `enqueue_problem_status_activity`。
@@ -49,3 +49,14 @@ links: [monitoring-problem-title-vs-incident-report]
 ## 修正时的验收边界
 
 若后续调整产品规则，需要同时决定弱聚类 Problem 的操作范围、历史已恢复话题是否允许新回复，以及卡片如何明确呈现本次状态变化。分别验证单 Incident 操作和全 Problem 操作，避免仅隐藏卡片日期而保留跨机制广播。建议规则不代表已经实施或部署。
+
+## 2026-09-15 修复与评审入口
+
+[PR #881](https://github.com/world-sim-dev/vidmuse-admin/pull/881)，提交 `28b0995e8312b6dc4e3d55f90d8d89f00c45f069`，分支 `codex/fix-monitoring-claim-tool-errors`。2026-09-15 已完成本地实现与回归，未合并、未部署；PR 后续状态以链接为准。
+
+- `validate_card_binding` 从精确消息回执识别唯一来源 Incident，将该来源沿卡片回调、认领/释放/转交动作及幂等动作写入审计。界面传入的 Incident 与已验证来源不一致时拒绝执行。
+- 卡片归属变化只通知已验证的来源话题；无来源话题的管理页归属动作保留审计，不向历史关联广播。Bug/验证状态变化的既有广播策略单独保留，避免把两种操作范围混为一谈。
+- 成功回调从同一来源 Incident 读取告警上下文，不再从 Problem 的第一个关联推断来源。卡片明确展示“本次变更”，并提示弱聚类认领不代表已确认共同根因。
+- 旧版本卡片先验证唯一消息来源，再读取当前 Problem 版本。旧卡只刷新该来源话题的当前状态并提示重试，不执行旧命令或生成新通知；来源不匹配、无法绑定或未来版本均拒绝执行。查看 `MonitoringProblemCardActionService.handle` 及卡片回调回归，不能用“版本过期”跳过来源验证。
+- 验证入口：`apps/admin/tests/test_monitoring_problem_card_action.py` 和 `test_monitoring_problem_service.py`；联合 11 个后端测试文件通过 461 项。后续异步 LLM 调整的影响测试另行通过，完整边界见下方关联页；以上不代表生产旧卡和消息发送已经复验。
+- 相关页面启动与内存风险的独立核验方法见 [Tool Errors 启动与 Analytics 内存](tool-errors-bootstrap-and-analytics-memory.md)。

@@ -219,3 +219,5 @@
 - 2026-09-15：录入 Executor 声明、连接检查与真实执行证据分离及配置绑定的核验方法；记录 Memory JSON 克隆内部字段和 PostgreSQL/CAS 保留验证指针。
 
 - 2026-09-15：录入 [Problem 认领触发历史告警回复](domains/vidmuse/admin/pitfalls/monitoring-problem-claim-replies-to-historical-alerts.md) 的人工动作、弱聚类、全关联通知与飞书回执追溯方法；源码审查和生产运行版本分别表述，未声明修复。
+
+- 2026-09-15：补充来源话题绑定与旧卡刷新，录入 [Tool Errors 启动与 Analytics 内存](domains/vidmuse/admin/pitfalls/tool-errors-bootstrap-and-analytics-memory.md) 的 MIME、Web/Worker 分层证据及共享异步客户端原循环边界；记录 PR #881、461 项联合/16 项末次影响回归及本地合成内存对照，未声明合并部署或精确 OOM 因果。
