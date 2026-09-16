@@ -54,3 +54,13 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 
 - 本次只读验证发现 Worker 在 rollout 后 OOMKilled；主 Admin 两副本健康。历史报告的两个 Run 回放均未通过当前必需证据检查，尚未获得新协议或真实认领端到端通过证据。
 - 具体时间窗口、Pod / Run 标识、配置回读与 109 项回归结果见本地记录 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/monitoring-prod-verification-20260916.md`。健康状态会变化，后续须重新查询 ACK / Runtime，不从本页推断已修复。
+
+## 2026-09-16 隔离验收与首次报告参数
+
+**Why:** 真实隔离 Run 的 Markdown 完成不能证明 Admin 接收。首次准备时空替代哈希被工具拒绝，Agent 后续编造全零前驱，最终被 Admin 当前 Run 的替代链门禁拒绝；属于切换前必须暴露的交付失败。
+
+**How to apply:** 工具可将空字符串与省略字段统一为首次报告，但不得接受不存在的替代关系；真实更正仍由 Admin 校验前驱。复测必须重新生成真实报告，不能修改历史事件或绕过来源校验。修复及回归入口见 [MCP PR #65](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/pull/65)，生产状态从对应 workflow 查询。
+
+- 隔离卡片测试还需隔离持久化：`mark_analysis_terminal` 会调用 `materialize_clear_agent_problem`，直接插入复制真实证据的测试 Incident 可能关联既有 Problem 或创建 Bug；不要仅改 Incident ID 就认为完全隔离。独立 SQLite 的接受/渲染测试不等于真实飞书回调验收。
+- Analytics Worker 不执行这条报告派发、回收和通知循环；从 `apps/admin/app.py` 核对任务归属，Worker OOM 独立跟进，不应成为报告协议切换的笼统前置条件。
+- 本次 Run、调用标识、失败规则和当前未完成项：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/monitoring-prod-verification-20260916.md`。不要从本页推断新协议已启用。

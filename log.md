@@ -246,3 +246,5 @@
 ## [2026-09-16] ingest | 记录 Nextplay 候选运行的可编辑 baseline 读取缺口、快照核验及 live/evidence-only 对照边界；保留 Run #5 入口，不将启动声明为评测或优化成功。
 
 - 2026-09-16：录入 Analytics Worker 超大历史聊天 OOM 根因与 PR #884；区分输入隔离、完整分析和生产恢复验收。
+
+- 2026-09-16：补充报告 canary 首次前驱哈希失败、Admin 替代链拒绝、隔离持久化及 Worker 任务归属边界；关联 MCP PR #65。
