@@ -72,3 +72,13 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 **How to apply:** 联合核对 canonical 调用、`_complete_sls_page_chain_groups` 的完整链及 `_check_result` 的 `derived_trace_ids` 全集。保持每条分页链的查询、窗口和 limit 一致，再检查所有必查 trace 均有完整链。用 `monitoring_incident_evidence_retry.py:schedule_evidence_reanalysis` 生成补查指令，不能用手工放宽门禁代替补查。generation 补查可能由 Runtime 建立隔离的新 Thread，应以实际投递回执为准，不假定 `thread_id_hint` 必然复用原 Thread。
 
 - 具体 Run、调用和重试回执仍查本地生产验证记录及 Runtime；本页不代表验收通过或协议已开启。
+
+## 2026-09-16 报告结构预检与记录定位
+
+**Why:** 真实 canary 在 MCP 准备成功后仍可能被 Admin 拒绝。`reportedSymptoms` 是有限白名单的标量摘要，不接受任意环境、窗口或 trace 字段；仅检查对象类型不足。报告把另一条日志的短语与当前 recordRef 组合，也会导致 observation_assertion_failed。
+
+**How to apply:** 在报告准备阶段镜像消费者的纯结构约束，让模型能在同一 Run 修正；证据真实性和接受仍由 Admin 决定。核对 `IncidentDiagnosisV2.validate_reported_symptoms` 与 MCP `validateReportStructure`，修复及回归见 [MCP PR #66](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/pull/66)。观察值必须从同一个 recordRef/path 解析并程序化断言，不能从不同记录借用短语。临时修改报告副本用于诊断剩余错误，只能算诊断，绝不替代 canonical 报告的真实验收。
+
+- Schema 校验通常先于证据校验，错误从证据问题变为 Schema 问题不能证明证据已通过。发布与真实复验状态从 workflow 和本地验证记录查。
+- 飞书 user 缺建群 scope 不代表现有 bot 也无权限。任务允许机器人创建时，可按 lark-im 技能使用已有 bot 权限创建私有群并加入请求者与 Monitoring bot，再完整读回成员；不要重复要求用户扩权。本次实际建群与成员证据见验证记录。
+- Workbench 下载可能被客户端拦截；其文件编辑器可只读打开状态文件并复制完整文本。复制后核验 JSON 和 Run ID，发布后不要依赖旧 Pod 的 /tmp 文件继续存在。

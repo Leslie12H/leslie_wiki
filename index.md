@@ -133,4 +133,4 @@
 
 - [Analytics Worker 超大聊天 OOM](domains/vidmuse/admin/pitfalls/analytics-worker-oversized-history-oom.md) — 完整响应内存放大、崩溃重试循环、流式体积准入、生产发布与 RSS/cgroup 恢复验收指针（2026-09-16）。
 
-- 2026-09-16 报告协议首次真实 canary 的空替代哈希与隔离 Problem 风险：见 [报告与聊天分离边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)，修复 PR #65、下游 trace 全集与分页错误码诊断、验证入口。
+- 2026-09-16 报告协议首次真实 canary 的空替代哈希与隔离 Problem 风险：见 [报告与聊天分离边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)，修复 PR #65、下游 trace 全集、结构预检 PR #66、记录定位与验证入口。

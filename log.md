@@ -255,3 +255,5 @@
 - 2026-09-16：记录 PR #305 合并部署后原 DecisionReport 冻结成功的验证入口；保留无改善、Judge 未校准与不采用候选的边界。
 
 - 2026-09-16：补充 monitoring-report-vs-chat-output：分页错误码与必查 trace 全集的区别，以及实际 generation 补查回执边界。
+
+- 2026-09-16：补充监控报告结构预检与精确记录定位，区分诊断副本和真实验收，并记录 bot 建群及 Workbench 文件保存边界。
