@@ -154,3 +154,5 @@
 - EVOLVE 共享 Agent 资源归属、10 Skills 与 Prompt 同步回读、Runner 修复包保留配置见 [Runner 与资源发布核验](domains/maxwell/pitfalls/nextplay-runner-thread-preset-binding.md)（2026-09-16）。
 
 - Runner 绑定修复的真实 Thread/Run 证据与目标违反文字限定后停止的边界见 [线上回归记录](domains/maxwell/pitfalls/nextplay-runner-thread-preset-binding.md)（2026-09-16）。
+
+- [Nextplay 评测与调优验收入口](domains/maxwell/refs/nextplay-evaluation-gates-20260916.md) — 真实运行、证据分类、D1–D5、方法产物与候选对比的核验指针
