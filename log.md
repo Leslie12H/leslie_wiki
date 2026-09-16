@@ -239,3 +239,5 @@
 - 2026-09-16：收紧 [监控报告与聊天输出分离](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md) 的脱敏边界：保留合法原文不等于允许 marker 任意后缀；独立扫描凭据前缀并检验明确分隔，修复及回归证据见 MCP PR #64。
 
 - 2026-09-16：录入 Runtime 托管业务 Judge 飞书评审方案指针；明确逐题规则、比较内版本固定、平台与业务改动及未实施边界。
+
+- 2026-09-16：补充 [监控报告与聊天输出分离](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md) 的生产发布、先同步 MCP 再绑定 Preset、等待 Admin 飞书恢复后发布 Worker 的追溯入口；工具同步不等于开启新报告协议。

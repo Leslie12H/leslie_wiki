@@ -38,3 +38,10 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 - [MCP 证据分发](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/blob/2a3389fe11e448bface2aaea7d0063c34cc8e98b/internal/server/server.go#L719)
 - 本地可评审方案：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/monitoring-preset-readable-output-plan-20260916.md`。
 - 2026-09-16 独立复审记录与复现指针：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/monitoring-readable-output-review-20260916.md`。该次确认两项 P2 与一项窄容量 P3；用户随后授权在原 PR 修复，记录包含真实 Runtime 封装及 Admin 报告/卡片对照测试入口。后续修复和审查状态仍从 PR 查询，不能用 CI 通过代替这些新增场景。
+
+## 2026-09-16 发布与工具同步追溯
+
+- 发布应依次完成 MCP、Provider tools/list 同步、目标 Preset 绑定，再执行 Admin。工具目录同步不等于 Preset 已启用；保存后重新加载确认绑定计数与原有模块。
+- 本次工具差异为新增 `monitoring_prepare_incident_report`，原 11 个工具没有删除或变更。目标 Preset 保存后回读为 12/12，Structured Output 保持启用；此步骤不代表新报告协议已开启。
+- MCP 生产发布与证据检查见 [run 35081811226](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35081811226)；Admin 生产发布、飞书暂停/恢复和最终 rollout 见 [run 35082545724](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35082545724)。配套 Worker 须等主 Admin 发布完全成功后执行，避免与飞书恢复重叠；见 [run 35083269378](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35083269378)。实时状态仍应从 workflow 查询。
+- 本次未修改报告协议环境开关、Prompt、Skills 或 Structured Output。启用新协议仍按 Admin `REPORT_DELIVERY_ROLLOUT.md` 核对资源与 canary，不把生产就绪或证据工具检查当作报告回填、报警认领端到端验收。
