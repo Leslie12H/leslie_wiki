@@ -183,3 +183,5 @@
 - 2026-09-16：追加 [PR #302 修复回归入口](domains/maxwell/refs/evolve-pr302-review.md)，记录 amend 提交与真实 Axios、Store、SSR、HTTP/MCP 授权测试位置；未合并或部署。
 
 - 2026-09-16：追加 [PR #302 main 发布核验入口](domains/maxwell/refs/evolve-pr302-review.md)，记录 main bd69eefe、DEV 工作流与 Studio 212 来源，区分服务部署和真实评测验收。
+
+- 2026-09-16：录入 [Nextplay Runner Thread 绑定失败](domains/maxwell/pitfalls/nextplay-runner-thread-preset-binding.md)，保留实际失败与冻结 Judge 核验指针，区分外层完成、内层执行和判卷。
