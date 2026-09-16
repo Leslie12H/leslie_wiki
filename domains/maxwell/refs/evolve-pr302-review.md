@@ -22,3 +22,16 @@ links: [evolve-generic-platform-review, evolve-pr300-deployment-boundaries]
 - 执行器配置状态从 `targets/executionEvidence.ts` 追到 `queries/executor_verification.go`、`executorsource.Source` 和执行 Registry；用“先成功执行再禁用”的场景区分当前配置无法解析与历史快照真正缺失。`unverified` 本身不是快照丢失原因。
 
 本页提供排查与回归入口，不表示 PR 已修复、合并或部署。与 [通用平台审查](evolve-generic-platform-review.md) 和 [配置快照及部署边界](evolve-pr300-deployment-boundaries.md) 结合使用。
+
+
+## 2026-09-16 修复回归入口
+
+PR amend 修复锚点：[041f5135](https://github.com/world-sim-dev/maxwell-ai/commit/041f5135a7d90c70a77435c117f2f04c6ea87939)。后续是否通过 CI、合并或发布仍以 [PR #302](https://github.com/world-sim-dev/maxwell-ai/pull/302) 和 [该提交 CI](https://github.com/world-sim-dev/maxwell-ai/actions/runs/35050925318) 为准。
+
+- `reports/caseTroubleRequest.test.mjs` 验证真实 Axios 参数编码；`internal/app/transport/http/case_trouble_test.go` 验证同一参数契约经过 HTTP 和工具 schema 后仍保留全部 Run。
+- `platform/EvolvePlatformStore.test.mjs` 验证活动 Run 同版本重读、终态版本缓存、状态变化、旧响应竞争和失败重试。
+- `panels/ObjectiveVerdictCard.test.mjs` 与 `panels/objectiveVerdict.test.ts` 验证运行中、失败、取消以及终态覆盖缺口的结论边界；未评分守护维度不能改判为调优目标未达标。
+- `targets/TargetExecutionVerification.test.mjs` 验证配置核验保留未知原因；不将禁用造成的当前不可解析写成历史快照丢失。
+- `internal/app/case_trouble_test.go` 通过完整 ToolGateway 验证绑定 Work、跨 Work/业务和隐藏 lineage；查询聚合前必须完成整组 Run 的授权。
+
+前端测试由现有 `check-evolve-platform-ia.mjs` 接入通用 check，Go 测试由包测试发现；不能以测试文件存在代替实际执行结果。

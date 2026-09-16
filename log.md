@@ -179,3 +179,5 @@
 - 2026-09-15：录入 PR #300 发布边界：同事务 ALTER/INDEX 持锁、保留增量结构回滚、完整 GitHub 资源预览和 DEV 只读预检证据。
 
 - 2026-09-16：录入 [EVOLVE 报告与结果语义审查](domains/maxwell/refs/evolve-pr302-review.md)，保留 PR #302 五类可复现问题的代码与验证指针；未修改业务代码、合并或部署。
+
+- 2026-09-16：追加 [PR #302 修复回归入口](domains/maxwell/refs/evolve-pr302-review.md)，记录 amend 提交与真实 Axios、Store、SSR、HTTP/MCP 授权测试位置；未合并或部署。

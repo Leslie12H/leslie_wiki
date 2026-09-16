@@ -140,3 +140,5 @@
 - [EVOLVE 迁移与 Agent 资源发布边界](domains/maxwell/refs/evolve-pr300-deployment-boundaries.md) — PR #300 同事务锁、程序回滚、独立资源同步与 DEV 只读预检入口（2026-09-15）。
 
 - [EVOLVE 报告与结果语义审查](domains/maxwell/refs/evolve-pr302-review.md) — PR #302 的数组请求、共享 Agent 授权、阶段达标、统计缓存和配置诊断回归入口（2026-09-16）。
+
+- PR #302 修复后的可执行回归入口见 [报告与结果语义审查](domains/maxwell/refs/evolve-pr302-review.md)，涵盖真实请求、运行状态与共享 Agent 授权（2026-09-16）。
