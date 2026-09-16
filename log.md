@@ -229,3 +229,5 @@
 - 2026-09-16：录入 [Runner 日志范围与错误计数](domains/vidmuse/pitfalls/runner-log-scope-and-error-count.md)，保留全量加载确认、当前文件/历史轮转边界、错误事件归并和精确帧异常的代码解释；不把历史错误或取证超时直接判为当前故障。
 
 - 2026-09-16：录入 [监控报告与聊天输出分离](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)，记录线上 Preset 与最新源码的 JSON 依赖、纯函数报告工具设计、结果原文和容量边界；仅形成方案，未修改线上配置或验证生产卡片。
+
+- 2026-09-16：更新 [监控报告与聊天输出分离](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md) 的配套 Draft PR 883/64 与审查边界；新增 [修复尝试独立于告警认领](domains/vidmuse/admin/pitfalls/monitoring-repair-is-separate-from-claim.md)，区分已实施的报告通道与仅评估的修复功能，未修改线上 Preset 或宣称生产验收。

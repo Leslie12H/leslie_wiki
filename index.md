@@ -125,4 +125,5 @@
 
 - [Runner 日志范围与错误计数](domains/vidmuse/pitfalls/runner-log-scope-and-error-count.md) — tail/full 与轮转边界、重复异常归并、精确帧输出校验及恢复核验方法（2026-09-16）。
 
-- [监控报告与聊天输出分离](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md) — Structured Output 开关、Admin 最终文本依赖、工具报告方案和卡片回填兼容验收指针（2026-09-16）。
+- [监控报告与聊天输出分离](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md) — Structured Output、双协议报告交付、配套 PR 883/64、完整结果与卡片回填验收指针（2026-09-16）。
+- [修复尝试独立于告警认领](domains/vidmuse/admin/pitfalls/monitoring-repair-is-separate-from-claim.md) — 修复按钮、独立任务与写入身份、来源话题和 Draft PR 完成边界（2026-09-16）。
