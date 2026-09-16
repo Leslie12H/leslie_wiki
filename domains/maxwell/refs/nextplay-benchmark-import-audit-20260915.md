@@ -42,9 +42,9 @@ links: [nextplay-benchmark-final-plan-20260914, nextplay-benchmark-implementatio
 
 ## 2026-09-16 导入闭环、隐藏题与准入复验
 
-源码核验锚点：Maxwell `041f5135a7d90c70a77435c117f2f04c6ea87939`、Nextplay `a6c52f63febc2c64fec4b1e97fb2ad20e4266a46`。可复核包入口 `/private/tmp/nextplay-import-20260916/`：`convert.py`、`summary.json`、`go-preflight.json`、`go-admission.json`、`draft-batches/index.json`。数量、阻塞项和尺寸以后重跑正式 Go 准入报告，不从数据集目录名推算，也不以 Python 字符长度代替 Go 规范化字节数。本节只记录转换和源码查证入口，不声明线上写入、Benchmark 或真实 Run 已完成。
+源码核验锚点：Maxwell `041f5135a7d90c70a77435c117f2f04c6ea87939`、Nextplay `a6c52f63febc2c64fec4b1e97fb2ad20e4266a46`。可复核包入口：[导入包 README](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/nextplay-benchmark-import-20260916/README.md)；同目录保留 `convert.py`、`summary.json`、`go-preflight.json`、`go-admission.json`、`draft-batches/index.json` 与 `online-verification.json`。数量、阻塞项和尺寸以后重跑正式 Go 准入报告，不从数据集目录名推算，也不以 Python 字符长度代替 Go 规范化字节数。本节只记录转换和源码查证入口，不声明线上写入、Benchmark 或真实 Run 已完成。
 
-线上复验入口：[独立导入任务](https://agent.sandaii.cn/evolve/tasks/work_b38ece7e02e9367b74a8d34ad418699d?businessId=ad3d5c4b-c7c9-4ed3-b15d-4f3556520263)。2026-09-16 观察到原 sourceTags 的最小 Case 预检提示不支持 storyline coverage prefix；修正标签后，该 Case 在 Nextplay 执行器预检中可新增，但点击写入时页面只显示 HTTP 400。此次未取得响应正文；当时任务未有草稿、Case 或 Run。下述草稿及阶段门槛是源码检查所得，不能冒充该 HTTP 400 的服务器返回原因。当前状态须从此入口重新核实。
+线上复验入口：[独立导入任务](https://agent.sandaii.cn/evolve/tasks/work_b38ece7e02e9367b74a8d34ad418699d?businessId=ad3d5c4b-c7c9-4ed3-b15d-4f3556520263)。2026-09-16 观察到原 sourceTags 的最小 Case 预检提示不支持 storyline coverage prefix；修正标签后，该 Case 在 Nextplay 执行器预检中可新增，但点击写入时页面只显示 HTTP 400。此次未取得响应正文；当时任务未有草稿、Case 或 Run。随后对 20 条按 Nextplay 执行器完成两批线上预检，分别为 16 条与 4 条新增，均为 0 条阻塞且全部标记 manualOnly；只尝试过最小 1 条写入。最终刷新任务仍为 0 Case、0 Run、0 草稿、0 冻结产物，核验记录见导入包的 `online-verification.json`。下述草稿及阶段门槛是源码检查所得，不能冒充该 HTTP 400 的服务器返回原因。当前状态须从此入口重新核实。
 
 **Why:** 导入向导的“写入并冻结”、Case 写入、用户确认、CaseSet 冻结与 Judge 准入是不同路径。只看到预检可新增，仍可能被草稿、任务阶段或尺寸门槛拦住；用可见 Agent 对话补隐藏题草稿会破坏原有可见性边界。
 
