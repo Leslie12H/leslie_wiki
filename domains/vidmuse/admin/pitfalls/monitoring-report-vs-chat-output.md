@@ -26,6 +26,8 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 - 验收必须包含聊天流式/重载、完整报告、证据拒绝、旧 Run、幂等、容量和实际测试卡片。不要将“方案兼容”表述为“线上卡片已验证”。历史 JSON 不会因关闭开关自动改变。
 - 脱敏检查要与真实传输规则一致，并保留已经脱敏的多行原文。对 canonical JSON 整串套用非幂等正则，可能吞掉 `[REDACTED]` 后的换行转义；Admin 精确引用要求使模型不能靠改写观察值修复。
 - 手工指定 Run 补建投递回执也是传输协议入口；必须从目标 Run 的 canonical context 核对协议和 binding。未知协议不能默认 legacy，也不能套用当前世代 payload。
+- 手工恢复要把只读预检已经验证的完整 receipt 传到写入步骤，并按指定 Run 固定后续选取；历史 receipt ledger 可以属于旧线程，不能仅用当前 Incident 线程比较代替可信历史匹配。严格恢复与显式历史降级投影保持独立边界。
+- 已脱敏 marker 后有 JSON 转义时要保留整个匹配，同时检查解码后的字段，避免 marker 后换行藏住另一段真实凭据。
 - 两端容量上限必须计算同一层：裸 MCP envelope 与 Runtime status/content 包装后的字符串字节数不同，边界回归要走完整封装。
 
 ## 追溯入口
@@ -35,4 +37,4 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 - [Maxwell Structured Output](https://github.com/world-sim-dev/maxwell-ai/blob/8141d9fbafafd5b5e9345d43eeead5072d60d218/services/agent-server/internal/modules/runtime/extensions/structuredoutput/middleware.go#L16)
 - [MCP 证据分发](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/blob/2a3389fe11e448bface2aaea7d0063c34cc8e98b/internal/server/server.go#L719)
 - 本地可评审方案：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/monitoring-preset-readable-output-plan-20260916.md`。
-- 2026-09-16 独立复审记录与复现指针：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/monitoring-readable-output-review-20260916.md`。该次确认两项 P2 与一项窄容量 P3，业务代码尚未据此修改；后续修复状态仍从 PR 查询，不能用 CI 通过代替这些新增场景。
+- 2026-09-16 独立复审记录与复现指针：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/monitoring-readable-output-review-20260916.md`。该次确认两项 P2 与一项窄容量 P3；用户随后授权在原 PR 修复，记录包含真实 Runtime 封装及 Admin 报告/卡片对照测试入口。后续修复和审查状态仍从 PR 查询，不能用 CI 通过代替这些新增场景。
