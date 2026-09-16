@@ -243,3 +243,4 @@
 - 2026-09-16：补充 [监控报告与聊天输出分离](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md) 的生产发布、先同步 MCP 再绑定 Preset、等待 Admin 飞书恢复后发布 Worker 的追溯入口；工具同步不等于开启新报告协议。
 
 - 2026-09-16：补充监控发布后验证指针：rollout 后 Worker OOM、主服务职责核对，以及历史报告无法通过当前证据规则的验收边界；未宣称真实卡片认领链路通过。
+## [2026-09-16] ingest | 记录 Nextplay 候选运行的可编辑 baseline 读取缺口、快照核验及 live/evidence-only 对照边界；保留 Run #5 入口，不将启动声明为评测或优化成功。
