@@ -148,3 +148,5 @@
 - [Nextplay Runner Thread 绑定与外层完成误读](domains/maxwell/pitfalls/nextplay-runner-thread-preset-binding.md)：HTTP 400 的跨仓库契约核验、D1–D5 资产与方法调用审计入口（2026-09-16）。
 
 - 2026-09-16：Nextplay 导入向导与确认草稿/任务前置条件、隐藏题隔离、来源持久化和 Go 尺寸准入复验见 [导入与评分核验](domains/maxwell/refs/nextplay-benchmark-import-audit-20260915.md)。
+
+- EVOLVE 截图能力误判的精确旧 Skill 哈希与业务 scope 证据见 [Runner 与目标判断排查](domains/maxwell/pitfalls/nextplay-runner-thread-preset-binding.md)（2026-09-16）。

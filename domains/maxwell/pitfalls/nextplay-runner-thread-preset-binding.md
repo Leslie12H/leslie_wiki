@@ -19,3 +19,12 @@ links: [nextplay-benchmark-import-audit-20260915]
 - 从外层 result.json、内层 Thread/Run、证据完整性到 Trial 判卷逐级核验；保留原错误记录和未完成采集的资源。离线修复测试通过还需更新外层实际使用的运行包并重新运行，不能用服务部署替代 Runner 包生效证明。
 - 从上述 Work 冻结的 `artifact_c0eef3b78bacd2213b04d72783624962` 读取 JudgeSpec，并对照 nextplay-eval `datasets/storyline-6x6-v1/evaluation-catalog.yaml` 的 `manual-eval-d1-d5-v1`。维度、尺度、权重、critical、证据与聚合必须一起对齐；仅 finalState 评分不能代表轨迹检查。
 - 方法库能力存在不等于该 Work 调用了它：从业务知识、discovery_report、coverage_plan、critique 与 judge_calibration_report 的产物/调用记录审计。schema-fingerprint 是结构校验，不能替代语义出题和人工判卷校准。
+
+
+## 2026-09-16 旧业务 Skill 导致能力误判
+
+核验入口：[截图对应会话](https://agent.sandaii.cn/evolve/agent/agent_session_9848b06564887cb64011b9f8b954bcf4?businessId=ad3d5c4b-c7c9-4ed3-b15d-4f3556520263)，展开 11:43:30 的 SKILL_LOAD `call_67dccecbdd184975a706d64f`。该次激活 target-recon 的 scope=business、owner=当前业务、stage=main、updatedAt=2026-09-09T11:24:05Z。instructionHash 与 Maxwell 提交 f3dea511 的 `agent-resources/skills/target-recon/SKILL.md` 完全一致，6137 bytes；此为历史调用证据，后续生效版本需重新核对。
+
+**Why:** 旧 Skill 明确教 Agent 按预检第 4 步判断 level、把 receiptKind=none 推成仅 /text，并断言 external_a2a 没有 resolve_baseline；服务代码和 main 资源已演进，在线业务 Skill 未同步会把正确的连接检查结果解释错。服务发布成功不等于数据库或业务命名空间中的 Agent 资源更新成功。
+
+**How to apply:** 对照当前 `executorprobe/probe.go`、`commands/baseline.go`、`runner_baseline.go`、`business_basis.go` 与 target-recon/optimization-strategy/evolve-tuning-agent 资源。区分外部受信控制端点的源码发现、Runner prepare-baseline 的快照捕获与 runner 参数的绑定生成；不能从 kind 或 unknown 推断不能调优，也不能从代码支持推断当前配置和真实候选已经验证。更新时核对实际 scope 和解析优先级，并在会话中重新激活后读取 instructionHash；仅更新共享同名资源不证明这个业务调用生效。截图中的错误选项不应由用户替平台判断技术能力来补救。

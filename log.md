@@ -187,3 +187,5 @@
 - 2026-09-16：录入 [Nextplay Runner Thread 绑定失败](domains/maxwell/pitfalls/nextplay-runner-thread-preset-binding.md)，保留实际失败与冻结 Judge 核验指针，区分外层完成、内层执行和判卷。
 
 - 2026-09-16：补充 [Nextplay 导入闭环核验](domains/maxwell/refs/nextplay-benchmark-import-audit-20260915.md)，记录正式 Go 准入产物入口、来源标签转换、Case 草稿与阶段门槛、Studio/共享 Agent 隐藏题边界；不声明线上导入或评测完成。
+
+- 2026-09-16：追加 EVOLVE 会话加载 9 月 9 日业务 target-recon 的哈希匹配证据，说明服务发布与业务 Skill 同步边界。
