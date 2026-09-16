@@ -158,3 +158,5 @@
 - [Nextplay 评测与调优验收入口](domains/maxwell/refs/nextplay-evaluation-gates-20260916.md) — 真实运行、证据分类、D1–D5、方法产物与候选对比的核验指针
 
 - [Judge 参数拒绝与恢复重判](domains/maxwell/pitfalls/evolve-judge-model-parameter-rejection.md) — 参数兼容性预检、错误透传和保存证据重判的验收方法
+
+- [自由画布抽卡数据导出](domains/vidmuse/refs/free-canvas-generation-export.md) — 项目覆盖、初始与实际 prompt、DMS 长字段完整性和三用户飞书模板导出入口（2026-09-16）。
