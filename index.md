@@ -124,3 +124,5 @@
 - [分镜标签同步与视觉核验](domains/vidmuse/pitfalls/storyboard-label-sync-without-visual-verification.md) — 文本批量一致不等于素材语义一致；封面、播放、时长与导出版本的复验边界（2026-09-16）。
 
 - [Runner 日志范围与错误计数](domains/vidmuse/pitfalls/runner-log-scope-and-error-count.md) — tail/full 与轮转边界、重复异常归并、精确帧输出校验及恢复核验方法（2026-09-16）。
+
+- [监控报告与聊天输出分离](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md) — Structured Output 开关、Admin 最终文本依赖、工具报告方案和卡片回填兼容验收指针（2026-09-16）。
