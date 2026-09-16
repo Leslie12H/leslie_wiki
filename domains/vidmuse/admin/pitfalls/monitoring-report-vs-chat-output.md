@@ -64,3 +64,11 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 - 隔离卡片测试还需隔离持久化：`mark_analysis_terminal` 会调用 `materialize_clear_agent_problem`，直接插入复制真实证据的测试 Incident 可能关联既有 Problem 或创建 Bug；不要仅改 Incident ID 就认为完全隔离。独立 SQLite 的接受/渲染测试不等于真实飞书回调验收。
 - Analytics Worker 不执行这条报告派发、回收和通知循环；从 `apps/admin/app.py` 核对任务归属，Worker OOM 独立跟进，不应成为报告协议切换的笼统前置条件。
 - 本次 Run、调用标识、失败规则和当前未完成项：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/monitoring-prod-verification-20260916.md`。不要从本页推断新协议已启用。
+
+## 2026-09-16 下游 trace 完整性诊断
+
+**Why:** `pagination_incomplete` 不一定表示 Agent 没有翻完任何一条查询。真实隔离 Run 已完成一条 trace 的完整分页，但从主查询导出的必查 trace 有三条，只覆盖一条；同时更早的大 page-size 尝试留下分页失败原因，不能仅根据错误码猜根因。
+
+**How to apply:** 联合核对 canonical 调用、`_complete_sls_page_chain_groups` 的完整链及 `_check_result` 的 `derived_trace_ids` 全集。保持每条分页链的查询、窗口和 limit 一致，再检查所有必查 trace 均有完整链。用 `monitoring_incident_evidence_retry.py:schedule_evidence_reanalysis` 生成补查指令，不能用手工放宽门禁代替补查。generation 补查可能由 Runtime 建立隔离的新 Thread，应以实际投递回执为准，不假定 `thread_id_hint` 必然复用原 Thread。
+
+- 具体 Run、调用和重试回执仍查本地生产验证记录及 Runtime；本页不代表验收通过或协议已开启。
