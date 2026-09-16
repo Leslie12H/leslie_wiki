@@ -2,7 +2,7 @@
 name: monitoring-problem-claim-replies-to-historical-alerts
 type: pitfall
 created: 2026-09-15
-updated: 2026-09-15
+updated: 2026-09-16
 tags: [vidmuse, admin, monitoring, feishu, clustering]
 links: [monitoring-problem-title-vs-incident-report, tool-errors-bootstrap-and-analytics-memory]
 ---
@@ -60,3 +60,14 @@ links: [monitoring-problem-title-vs-incident-report, tool-errors-bootstrap-and-a
 - 旧版本卡片先验证唯一消息来源，再读取当前 Problem 版本。旧卡只刷新该来源话题的当前状态并提示重试，不执行旧命令或生成新通知；来源不匹配、无法绑定或未来版本均拒绝执行。查看 `MonitoringProblemCardActionService.handle` 及卡片回调回归，不能用“版本过期”跳过来源验证。
 - 验证入口：`apps/admin/tests/test_monitoring_problem_card_action.py` 和 `test_monitoring_problem_service.py`；联合 11 个后端测试文件通过 461 项。后续异步 LLM 调整的影响测试另行通过，完整边界见下方关联页；以上不代表生产旧卡和消息发送已经复验。
 - 相关页面启动与内存风险的独立核验方法见 [Tool Errors 启动与 Analytics 内存](tool-errors-bootstrap-and-analytics-memory.md)。
+
+## 2026-09-16 部署复查：新入队规则不等于清理旧队列
+
+**Why:** PR #881 的通知范围限制发生在新 Action 生成活动时。[入队规则](https://github.com/world-sim-dev/vidmuse-admin/blob/28b0995e8312b6dc4e3d55f90d8d89f00c45f069/apps/admin/service/monitoring_problem_activity.py#L59) 会约束新归属动作，并按来源 Incident 收窄关联；已经持久化的 pending / retry_scheduled 活动不会因此被撤销。[发送器候选查询](https://github.com/world-sim-dev/vidmuse-admin/blob/28b0995e8312b6dc4e3d55f90d8d89f00c45f069/apps/admin/service/monitoring_incident_thread_notification.py#L721) 检查队列状态、可发送时间、话题根回执和前序阻塞，没有重新按归属 action、来源范围或历史恢复状态过滤。旧活动仍可能在新版本上线后发送；这是源码允许的路径，不是本次已证实的重发原因。Bug/验证生命周期仍保留原有广播范围，查看 [卡片验证入口](https://github.com/world-sim-dev/vidmuse-admin/blob/28b0995e8312b6dc4e3d55f90d8d89f00c45f069/apps/admin/service/monitoring_problem_card_action.py#L166)，不要将归属限制解释为禁止所有历史话题通知。
+
+**How to apply:** 部署后再次收到类似卡片时，先取得具体消息 ID 或话题链接；通用 `issue/create` 入口不能定位一次发送。用消息回执找到 outbox，再比较 Action 创建、活动创建、首次发送/重试时间与实际部署时间，并核对 action 类型和来源 Incident。由此区分“旧活动部署后才发送”“新归属动作错误广播”“保留的 Bug/验证通知”和“只是看到原消息”。仅有部署成功记录不能证明队列已清理；没有定位新消息时不能判为复发，也不要推断必须清队列。
+
+2026-09-16 的只读复查定位：
+
+- [PR #881](https://github.com/world-sim-dev/vidmuse-admin/pull/881) 于北京时间 10:49 合并，合并提交 `d5f8fe4b`；[生产部署 run 35051481896](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35051481896) 于北京时间 11:27:15 成功。后续版本与发布状态以 PR/run 为准。
+- 原 2026-08-21 告警话题 `omt_19e22681f88f9b83` 完整回读得到 14 条、`has_more=false`；当次回读最新仍为 2026-09-15 19:42 的 `om_x100b65a6bdb56ca8c32bdfcd48b4a66`，未见 2026-09-16 新增。用户提供的是通用创建入口，尚未定位新的发送记录。此结论只覆盖当次读取的该话题，不代表所有话题或未来消息均无异常。
