@@ -27,7 +27,7 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 - 脱敏检查要与真实传输规则一致，并保留已经脱敏的多行原文。对 canonical JSON 整串套用非幂等正则，可能吞掉 `[REDACTED]` 后的换行转义；Admin 精确引用要求使模型不能靠改写观察值修复。
 - 手工指定 Run 补建投递回执也是传输协议入口；必须从目标 Run 的 canonical context 核对协议和 binding。未知协议不能默认 legacy，也不能套用当前世代 payload。
 - 手工恢复要把只读预检已经验证的完整 receipt 传到写入步骤，并按指定 Run 固定后续选取；历史 receipt ledger 可以属于旧线程，不能仅用当前 Incident 线程比较代替可信历史匹配。严格恢复与显式历史降级投影保持独立边界。
-- 已脱敏 marker 后有 JSON 转义时要保留整个匹配，同时检查解码后的字段，避免 marker 后换行藏住另一段真实凭据。
+- 已脱敏 marker 后允许合法分隔或 JSON 分隔转义时，应保留原文；不能无条件按 HasPrefix 豁免整段。每个凭据前缀均独立扫描，并检查 marker 后的边界，防止直接后缀或 literal 转义藏住另一段真实凭据。PR #64 的 review thread 与正式拒绝回归是此边界的追溯入口。
 - 两端容量上限必须计算同一层：裸 MCP envelope 与 Runtime status/content 包装后的字符串字节数不同，边界回归要走完整封装。
 
 ## 追溯入口

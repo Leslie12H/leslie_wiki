@@ -235,3 +235,5 @@
 - 2026-09-16：补充 [监控报告与聊天输出分离](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md) 的独立复审：已脱敏多行值误拒绝、operator 恢复丢协议和 Runtime 封装容量边界均有临时复现；两 PR CI 通过但本轮未改业务代码或部署。
 
 - 2026-09-16：更新 [监控报告与聊天输出分离](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md) 的授权修复追溯入口，补充完整 canonical receipt 传递、历史线程匹配、幂等脱敏与完整 Runtime 容量预算；本地验证不代表生产回填验收，状态从原 PR 883/64 查询。
+
+- 2026-09-16：收紧 [监控报告与聊天输出分离](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md) 的脱敏边界：保留合法原文不等于允许 marker 任意后缀；独立扫描凭据前缀并检验明确分隔，修复及回归证据见 MCP PR #64。
