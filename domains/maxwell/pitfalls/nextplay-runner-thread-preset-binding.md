@@ -28,3 +28,12 @@ links: [nextplay-benchmark-import-audit-20260915]
 **Why:** 旧 Skill 明确教 Agent 按预检第 4 步判断 level、把 receiptKind=none 推成仅 /text，并断言 external_a2a 没有 resolve_baseline；服务代码和 main 资源已演进，在线业务 Skill 未同步会把正确的连接检查结果解释错。服务发布成功不等于数据库或业务命名空间中的 Agent 资源更新成功。
 
 **How to apply:** 对照当前 `executorprobe/probe.go`、`commands/baseline.go`、`runner_baseline.go`、`business_basis.go` 与 target-recon/optimization-strategy/evolve-tuning-agent 资源。区分外部受信控制端点的源码发现、Runner prepare-baseline 的快照捕获与 runner 参数的绑定生成；不能从 kind 或 unknown 推断不能调优，也不能从代码支持推断当前配置和真实候选已经验证。更新时核对实际 scope 和解析优先级，并在会话中重新激活后读取 instructionHash；仅更新共享同名资源不证明这个业务调用生效。截图中的错误选项不应由用户替平台判断技术能力来补救。
+
+
+## 2026-09-16 修复与资源同步核验
+
+源码入口：[nextplay-eval PR #6](https://github.com/world-sim-dev/nextplay-eval/pull/6)，修复提交 `b76b2fd96727dddf79523b4d4142c08c88138053`。创建内层 Thread 时绑定本次物化 Preset；11 个基准单测和打包测试通过。在线 Runner Skill 位于影游 a2a 业务，资源 ID `a306e625-b822-408c-a1ee-9190d11088eb`；当次导入只改变 assets/runtime.zip，导出回读的五个文件与部署输入一致，runtime.env 原样保留。此为资源部署证据，不是新一次业务执行成功证据。
+
+**Why:** EVOLVE 会话中的“当前业务”可能是调优 Agent 的共享资源业务，不能从用户当前打开的 Nextplay 页面推断资源归属。此次确认实际调优资源归属“Agent 调优”业务 `74d72fe4-e4f0-46ad-958a-da68d9fdd651`，Preset `746f0d19-f019-4b04-b09e-78305744e603`。其 10 个 Skills 与核心 Prompt 已按当次 main 的 agent-resources 同步，37 个 Skill 源文件通过导出逐字节核验，Prompt 经重新加载比对通过；名称、Slug、资源身份与 Preset 引用保持。
+
+**How to apply:** 优先从真实执行 Preset 的资源引用定位命名空间，再按同 Slug 覆盖并导出核验；不要只更新业务目标页面下的同名资源。线上 Runner 带部署配置时先私下备份，并只向同一 Skill 原样保留配置，不写入 Git 或交付包。已加载旧指令的会话需重新激活 Skill，完整 Prompt 以新会话复测为准；不能用资源保存证明历史模型上下文已被改写。后续须用新 Run 核验内层执行、正式证据及判卷，旧失败 Run 和冻结 Judge 不会因资源更新自动补跑或切成 D1–D5。

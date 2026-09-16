@@ -189,3 +189,5 @@
 - 2026-09-16：补充 [Nextplay 导入闭环核验](domains/maxwell/refs/nextplay-benchmark-import-audit-20260915.md)，记录正式 Go 准入产物入口、来源标签转换、Case 草稿与阶段门槛、Studio/共享 Agent 隐藏题边界；不声明线上导入或评测完成。
 
 - 2026-09-16：追加 EVOLVE 会话加载 9 月 9 日业务 target-recon 的哈希匹配证据，说明服务发布与业务 Skill 同步边界。
+
+- 2026-09-16：核验并记录 EVOLVE 实际共享资源业务、10 Skills/核心 Prompt 同步及 Runner Preset 绑定修复包回读；保留原运行配置，业务端到端复跑另行核验。
