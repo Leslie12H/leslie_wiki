@@ -129,7 +129,7 @@
 - [修复尝试独立于告警认领](domains/vidmuse/admin/pitfalls/monitoring-repair-is-separate-from-claim.md) — 修复按钮、独立任务与写入身份、来源话题和 Draft PR 完成边界（2026-09-16）。
 
 - [Runtime 托管业务 Judge 评审方案](domains/maxwell/projects/evolve-runtime-judge-review-20260916.md) — Nextplay 业务判卷包、逐题配置、冻结证据、版本更新与通用平台改造的飞书评审入口（2026-09-16）。
-- [候选需可编辑基线，证据重判需同口径比较](domains/maxwell/pitfalls/evolve-candidate-editable-baseline-and-regrade-comparison.md) — Nextplay 候选启动、完整 Prompt 快照核验、live 与 evidence-only 对照及调优状态门槛（2026-09-16）。
+- [候选需可编辑基线，证据重判需同口径比较](domains/maxwell/pitfalls/evolve-candidate-editable-baseline-and-regrade-comparison.md) — Nextplay 候选真实应用、同证据判卷波动、live/evidence-only 对照、Scorecard usage 阻断决策报告及修复指针（2026-09-16）。
 
 - [Analytics Worker 超大聊天 OOM](domains/vidmuse/admin/pitfalls/analytics-worker-oversized-history-oom.md) — 完整响应内存放大、崩溃重试循环、流式体积准入与生产恢复验收指针（2026-09-16）。
 

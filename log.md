@@ -248,3 +248,5 @@
 - 2026-09-16：录入 Analytics Worker 超大历史聊天 OOM 根因与 PR #884；区分输入隔离、完整分析和生产恢复验收。
 
 - 2026-09-16：补充报告 canary 首次前驱哈希失败、Admin 替代链拒绝、隔离持久化及 Worker 任务归属边界；关联 MCP PR #65。
+
+- 2026-09-16：补充 Nextplay 候选后半程的实际应用核验、同证据 Judge 波动、业务事务回执与调优 Agent 归因边界；新增 DecisionReport 顶层 usage 契约修复 PR #305 指针。
