@@ -45,3 +45,12 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 - 本次工具差异为新增 `monitoring_prepare_incident_report`，原 11 个工具没有删除或变更。目标 Preset 保存后回读为 12/12，Structured Output 保持启用；此步骤不代表新报告协议已开启。
 - MCP 生产发布与证据检查见 [run 35081811226](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35081811226)；Admin 生产发布、飞书暂停/恢复和最终 rollout 见 [run 35082545724](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35082545724)。配套 Worker 须等主 Admin 发布完全成功后执行，避免与飞书恢复重叠；见 [run 35083269378](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35083269378)。实时状态仍应从 workflow 查询。
 - 本次未修改报告协议环境开关、Prompt、Skills 或 Structured Output。启用新协议仍按 Admin `REPORT_DELIVERY_ROLLOUT.md` 核对资源与 canary，不把生产就绪或证据工具检查当作报告回填、报警认领端到端验收。
+
+## 2026-09-16 发布后验证边界
+
+**Why:** rollout 成功只证明发布时的就绪条件，不能保证后续工作负载稳定；历史标记完成的报告也未必满足当前严格证据规则。
+
+**How to apply:** 发布后复查各 Deployment 的实际 Pod 镜像、ready、restart 和 lastState；出现 Worker OOM 时先从 `apps/admin/app.py` 与 `workers/analytics_worker.py` 核对任务归属，不能把 Worker 故障直接等同于主服务报警认领停止。报告验收需记录样本日期和失败规则，不把历史样本拒绝归因于新发布。
+
+- 本次只读验证发现 Worker 在 rollout 后 OOMKilled；主 Admin 两副本健康。历史报告的两个 Run 回放均未通过当前必需证据检查，尚未获得新协议或真实认领端到端通过证据。
+- 具体时间窗口、Pod / Run 标识、配置回读与 109 项回归结果见本地记录 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/monitoring-prod-verification-20260916.md`。健康状态会变化，后续须重新查询 ACK / Runtime，不从本页推断已修复。
