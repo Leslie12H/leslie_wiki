@@ -37,3 +37,14 @@ links: [nextplay-benchmark-import-audit-20260915]
 **Why:** EVOLVE 会话中的“当前业务”可能是调优 Agent 的共享资源业务，不能从用户当前打开的 Nextplay 页面推断资源归属。此次确认实际调优资源归属“Agent 调优”业务 `74d72fe4-e4f0-46ad-958a-da68d9fdd651`，Preset `746f0d19-f019-4b04-b09e-78305744e603`。其 10 个 Skills 与核心 Prompt 已按当次 main 的 agent-resources 同步，37 个 Skill 源文件通过导出逐字节核验，Prompt 经重新加载比对通过；名称、Slug、资源身份与 Preset 引用保持。
 
 **How to apply:** 优先从真实执行 Preset 的资源引用定位命名空间，再按同 Slug 覆盖并导出核验；不要只更新业务目标页面下的同名资源。线上 Runner 带部署配置时先私下备份，并只向同一 Skill 原样保留配置，不写入 Git 或交付包。已加载旧指令的会话需重新激活 Skill，完整 Prompt 以新会话复测为准；不能用资源保存证明历史模型上下文已被改写。后续须用新 Run 核验内层执行、正式证据及判卷，旧失败 Run 和冻结 Judge 不会因资源更新自动补跑或切成 D1–D5。
+
+
+## 2026-09-16 线上单条回归：绑定恢复，目标行为另有问题
+
+核验入口：[Run #2](https://agent.sandaii.cn/evolve/tasks/work_f3bc66b38eb27fc777d927aaa1aeef67?businessId=ad3d5c4b-c7c9-4ed3-b15d-4f3556520263&run=run_78442622b7187d29a30ce175fa6aac4d)。本次沿用原冻结用例、基准 Variant 和三维 Judge；外层任务 `run-5144b89ac560fb2f38ad0587a7d31193`，Thread `thr_01M2MAE789G04YGGNH0KJGDTYF`。
+
+**Why:** 线上导出包通过 11 个契约/生命周期测试后，仍需真实执行验证创建链路。本轮内层 Thread `thr_01M2MAH514VDYSQKBD0HJK1TT0` 成功创建并绑定临时 Preset `77b5c09f-3548-410a-97ae-167af74d0ca9`；基准 snapshot 与首次失败 Run 相同，内层 Run `run-7a2510bbccf3f365f7d1af12ae31c1db` 真实执行，原 HTTP 400 未复现。
+
+目标随后违反题目明确的文字限定，于 13:23:55–56 提交三个 media 图像生成调用。Codex 在发现后停止内层运行，终态为 TASK_STATE_CANCELED，三调用均记录 user_stopped_run；这不能证明供应商侧已提交任务未产生费用或产物。Runner 最终 ok=false、captureComplete=false、terminationReason=run_canceled，正式五文件均未捕获，按既有失败保留策略留下本轮临时资源。EVOLVE Trial `trial_e556be9dd15408a56b43409d35b59b28` 记录 remote_failed、未判卷，不能声称整轮评测成功。
+
+**How to apply:** 判断“修复是否生效”和“业务评测是否成功”必须分层：本次绑定故障已用真实内层 Thread/Run 证明恢复；后续文字范围违反应根据目标输入、工具参数和回执处理，不能归咎于已修复的创建契约，也不要静默修改固定基准或原 Case 让结果看起来通过。先确认运行已停止，再处理保留资源；不在检查中删除原现场。

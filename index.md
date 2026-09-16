@@ -152,3 +152,5 @@
 - EVOLVE 截图能力误判的精确旧 Skill 哈希与业务 scope 证据见 [Runner 与目标判断排查](domains/maxwell/pitfalls/nextplay-runner-thread-preset-binding.md)（2026-09-16）。
 
 - EVOLVE 共享 Agent 资源归属、10 Skills 与 Prompt 同步回读、Runner 修复包保留配置见 [Runner 与资源发布核验](domains/maxwell/pitfalls/nextplay-runner-thread-preset-binding.md)（2026-09-16）。
+
+- Runner 绑定修复的真实 Thread/Run 证据与目标违反文字限定后停止的边界见 [线上回归记录](domains/maxwell/pitfalls/nextplay-runner-thread-preset-binding.md)（2026-09-16）。
