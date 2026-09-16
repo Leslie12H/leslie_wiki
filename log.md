@@ -223,3 +223,5 @@
 - 2026-09-15：补充来源话题绑定与旧卡刷新，录入 [Tool Errors 启动与 Analytics 内存](domains/vidmuse/admin/pitfalls/tool-errors-bootstrap-and-analytics-memory.md) 的 MIME、Web/Worker 分层证据及共享异步客户端原循环边界；记录 PR #881、461 项联合/16 项末次影响回归及本地合成内存对照，未声明合并部署或精确 OOM 因果。
 
 - 2026-09-16：补充 [历史告警回复](domains/vidmuse/admin/pitfalls/monitoring-problem-claim-replies-to-historical-alerts.md) 的 PR #881 合并/部署指针及“新入队约束不清理旧活动”边界；原话题当次完整回读未见新消息，未将尚未定位的发送判为复发。
+
+- 2026-09-16：录入 [分镜标签同步与视觉核验](domains/vidmuse/pitfalls/storyboard-label-sync-without-visual-verification.md)，保留 Thread 调查入口、实际视频核验方法与首次错配起因未知的边界；区分封面、播放、时长字段和导出版本，未修改线上项目。
