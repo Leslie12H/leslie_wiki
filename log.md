@@ -181,3 +181,5 @@
 - 2026-09-16：录入 [EVOLVE 报告与结果语义审查](domains/maxwell/refs/evolve-pr302-review.md)，保留 PR #302 五类可复现问题的代码与验证指针；未修改业务代码、合并或部署。
 
 - 2026-09-16：追加 [PR #302 修复回归入口](domains/maxwell/refs/evolve-pr302-review.md)，记录 amend 提交与真实 Axios、Store、SSR、HTTP/MCP 授权测试位置；未合并或部署。
+
+- 2026-09-16：追加 [PR #302 main 发布核验入口](domains/maxwell/refs/evolve-pr302-review.md)，记录 main bd69eefe、DEV 工作流与 Studio 212 来源，区分服务部署和真实评测验收。

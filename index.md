@@ -142,3 +142,5 @@
 - [EVOLVE 报告与结果语义审查](domains/maxwell/refs/evolve-pr302-review.md) — PR #302 的数组请求、共享 Agent 授权、阶段达标、统计缓存和配置诊断回归入口（2026-09-16）。
 
 - PR #302 修复后的可执行回归入口见 [报告与结果语义审查](domains/maxwell/refs/evolve-pr302-review.md)，涵盖真实请求、运行状态与共享 Agent 授权（2026-09-16）。
+
+- PR #302 合并后 main 的 DEV 发布与 Studio 子构建证据见 [报告与结果语义审查](domains/maxwell/refs/evolve-pr302-review.md)，强调发布 ref、SHA 与在线资源编号一致（2026-09-16）。

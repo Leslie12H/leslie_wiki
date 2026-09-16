@@ -35,3 +35,11 @@ PR amend 修复锚点：[041f5135](https://github.com/world-sim-dev/maxwell-ai/c
 - `internal/app/case_trouble_test.go` 通过完整 ToolGateway 验证绑定 Work、跨 Work/业务和隐藏 lineage；查询聚合前必须完成整组 Run 的授权。
 
 前端测试由现有 `check-evolve-platform-ia.mjs` 接入通用 check，Go 测试由包测试发现；不能以测试文件存在代替实际执行结果。
+
+
+## 2026-09-16 合并后 main 发布核验入口
+
+- [main 合并提交 bd69eefe](https://github.com/world-sim-dev/maxwell-ai/commit/bd69eefe7ac4b5069b6a4bbcbd31d20b3cc4f8d2) 与已测试 amend 提交的 Git tree 一致；复用时仍要重新核对目标 main，不把旧提交当作当前版本。
+- [DEV 发布工作流](https://github.com/world-sim-dev/maxwell-ai/actions/runs/35051417361) 直接由 main ref 触发，选择 Studio 与 EVOLVE，数据库迁移关闭。读取工作流 headBranch/headSha、API/Worker rollout、实际镜像相等以及 NAS、健康检查、认证 MCP 和公网路由检查，不能只看 dispatch 被接受。
+- [Studio 212 子构建](https://github.com/world-sim-dev/maxwell-ai/actions/runs/35051426916) 以该 main SHA 为 source；核对线上默认入口 https://agent.sandaii.cn/ 的静态资源构建编号。本次发布后入口引用 `/build/maxwell/studio/212/`，此数值只作为发布记录锚点。
+- 本 PR 没有新增迁移、环境变量或 Agent 资源变更，因此沿用已有数据库结构且只部署 Studio 与 EVOLVE API/Worker。服务发布和只读页面验收不代表新真实评测、历史数据修复或 Prompt/Skill 同步。
