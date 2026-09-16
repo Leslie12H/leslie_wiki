@@ -122,3 +122,5 @@
 - [Maxwell 知识库大文件上传限制](domains/maxwell/pitfalls/knowledge-upload-limits.md) — 上传解压预算、分块总量、导入前置校验、PR #295 及 CI 浅克隆基线排查（2026-09-14）。
 
 - [分镜标签同步与视觉核验](domains/vidmuse/pitfalls/storyboard-label-sync-without-visual-verification.md) — 文本批量一致不等于素材语义一致；封面、播放、时长与导出版本的复验边界（2026-09-16）。
+
+- [Runner 日志范围与错误计数](domains/vidmuse/pitfalls/runner-log-scope-and-error-count.md) — tail/full 与轮转边界、重复异常归并、精确帧输出校验及恢复核验方法（2026-09-16）。
