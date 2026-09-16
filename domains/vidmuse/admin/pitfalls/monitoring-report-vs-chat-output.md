@@ -24,6 +24,9 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 - Maxwell 原生模型虽使用 parts，Admin 所用 Runtime HTTP events 接口仍经 `legacyEventPage` 投影为 content。遇到契约差异先追到 Controller 的真实序列化路径，不仅凭领域模型加 fallback；当前实现见 `services/agent-server/internal/modules/runtime/transport/http/legacy_message.go`。
 - Maxwell `structuredoutput/middleware.go` 负责 JSON 提示、规范化和修复，不校验 Incident 业务 Schema；当前 `8141d9fbafafd5b5e9345d43eeead5072d60d218` 的 A2A JSON MIME 也不会把 Markdown 转为诊断对象。
 - 验收必须包含聊天流式/重载、完整报告、证据拒绝、旧 Run、幂等、容量和实际测试卡片。不要将“方案兼容”表述为“线上卡片已验证”。历史 JSON 不会因关闭开关自动改变。
+- 脱敏检查要与真实传输规则一致，并保留已经脱敏的多行原文。对 canonical JSON 整串套用非幂等正则，可能吞掉 `[REDACTED]` 后的换行转义；Admin 精确引用要求使模型不能靠改写观察值修复。
+- 手工指定 Run 补建投递回执也是传输协议入口；必须从目标 Run 的 canonical context 核对协议和 binding。未知协议不能默认 legacy，也不能套用当前世代 payload。
+- 两端容量上限必须计算同一层：裸 MCP envelope 与 Runtime status/content 包装后的字符串字节数不同，边界回归要走完整封装。
 
 ## 追溯入口
 
@@ -32,3 +35,4 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 - [Maxwell Structured Output](https://github.com/world-sim-dev/maxwell-ai/blob/8141d9fbafafd5b5e9345d43eeead5072d60d218/services/agent-server/internal/modules/runtime/extensions/structuredoutput/middleware.go#L16)
 - [MCP 证据分发](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/blob/2a3389fe11e448bface2aaea7d0063c34cc8e98b/internal/server/server.go#L719)
 - 本地可评审方案：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/monitoring-preset-readable-output-plan-20260916.md`。
+- 2026-09-16 独立复审记录与复现指针：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/monitoring-readable-output-review-20260916.md`。该次确认两项 P2 与一项窄容量 P3，业务代码尚未据此修改；后续修复状态仍从 PR 查询，不能用 CI 通过代替这些新增场景。

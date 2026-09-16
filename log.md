@@ -231,3 +231,5 @@
 - 2026-09-16：录入 [监控报告与聊天输出分离](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)，记录线上 Preset 与最新源码的 JSON 依赖、纯函数报告工具设计、结果原文和容量边界；仅形成方案，未修改线上配置或验证生产卡片。
 
 - 2026-09-16：更新 [监控报告与聊天输出分离](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md) 的配套 Draft PR 883/64 与审查边界；新增 [修复尝试独立于告警认领](domains/vidmuse/admin/pitfalls/monitoring-repair-is-separate-from-claim.md)，区分已实施的报告通道与仅评估的修复功能，未修改线上 Preset 或宣称生产验收。
+
+- 2026-09-16：补充 [监控报告与聊天输出分离](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md) 的独立复审：已脱敏多行值误拒绝、operator 恢复丢协议和 Runtime 封装容量边界均有临时复现；两 PR CI 通过但本轮未改业务代码或部署。
