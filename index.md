@@ -146,3 +146,5 @@
 - PR #302 合并后 main 的 DEV 发布与 Studio 子构建证据见 [报告与结果语义审查](domains/maxwell/refs/evolve-pr302-review.md)，强调发布 ref、SHA 与在线资源编号一致（2026-09-16）。
 
 - [Nextplay Runner Thread 绑定与外层完成误读](domains/maxwell/pitfalls/nextplay-runner-thread-preset-binding.md)：HTTP 400 的跨仓库契约核验、D1–D5 资产与方法调用审计入口（2026-09-16）。
+
+- 2026-09-16：Nextplay 导入向导与确认草稿/任务前置条件、隐藏题隔离、来源持久化和 Go 尺寸准入复验见 [导入与评分核验](domains/maxwell/refs/nextplay-benchmark-import-audit-20260915.md)。
