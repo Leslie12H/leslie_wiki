@@ -177,3 +177,5 @@
 - 2026-09-15：追加 Nextplay 能力卡诊断指针：旧 probe none 被误判不可用，真实结构化 Trial 与声明更新链分别核验。
 
 - 2026-09-15：录入 PR #300 发布边界：同事务 ALTER/INDEX 持锁、保留增量结构回滚、完整 GitHub 资源预览和 DEV 只读预检证据。
+
+- 2026-09-16：录入 [EVOLVE 报告与结果语义审查](domains/maxwell/refs/evolve-pr302-review.md)，保留 PR #302 五类可复现问题的代码与验证指针；未修改业务代码、合并或部署。
