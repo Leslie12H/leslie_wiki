@@ -19,3 +19,7 @@ links: [analytics-maintenance-historical-rebuild-pressure]
 - 代码入口：`service/analytics_source_limits.py`、`thread_analytics._fetch_static_text`、`_load_chat_history_objects`、`_load_static_subagent_objects`。按解压后字节设单源上限、按主聊天和子 Agent 总量设合计上限；超限应明确失败，禁止截断后发布成功或回落到不完整 DB 快照。
 - Worker 的 `_record_batch_results` 负责版本级失败重试/隔离；保护修复后仍需验证失败被持久化、后续 Thread 能完成、检查点推进及重启不再增加。大源被隔离不等于大源已完成准确分析。
 - 验证入口：`test_analytics_worker_memory.py`（chunked、压缩、Unicode、合计预算和失败日志）、`test_thread_analytics_precompute_regressions.py`（超限禁止 DB fallback）、`test_thread_analytics_backfill_paging.py`（版本级重试/检查点）。
+
+2026-09-16 上线验收入口：[生产 Worker 发布 35093606060](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35093606060)，对应合并提交 `92be6e2f`。真实异常源的拒绝耗时、后续成功 Thread、失败计数、检查点与内存采样见 PR #884 的生产验证记录。
+
+复验时分别读取 `/proc/<worker-pid>/status` 的 VmRSS/VmHWM 与 cgroup 的 memory.current/memory.events；进程 RSS 不等于容器总内存，Pod Running 也不证明失败已被隔离。保留对同一源重复处理的完整结果，并等待有限重试结束后确认检查点越过失败版本。

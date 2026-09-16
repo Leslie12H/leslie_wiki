@@ -131,6 +131,6 @@
 - [Runtime 托管业务 Judge 评审方案](domains/maxwell/projects/evolve-runtime-judge-review-20260916.md) — Nextplay 业务判卷包、逐题配置、冻结证据、版本更新与通用平台改造的飞书评审入口（2026-09-16）。
 - [候选需可编辑基线，证据重判需同口径比较](domains/maxwell/pitfalls/evolve-candidate-editable-baseline-and-regrade-comparison.md) — Nextplay 候选真实应用、同证据判卷波动、live/evidence-only 对照、Scorecard usage 阻断决策报告及修复指针（2026-09-16）。
 
-- [Analytics Worker 超大聊天 OOM](domains/vidmuse/admin/pitfalls/analytics-worker-oversized-history-oom.md) — 完整响应内存放大、崩溃重试循环、流式体积准入与生产恢复验收指针（2026-09-16）。
+- [Analytics Worker 超大聊天 OOM](domains/vidmuse/admin/pitfalls/analytics-worker-oversized-history-oom.md) — 完整响应内存放大、崩溃重试循环、流式体积准入、生产发布与 RSS/cgroup 恢复验收指针（2026-09-16）。
 
 - 2026-09-16 报告协议首次真实 canary 的空替代哈希与隔离 Problem 风险：见 [报告与聊天分离边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)，修复 PR #65 与验证入口。
