@@ -26,3 +26,10 @@ links: [vidmuse-zeus, vidmuse-aion, vidmuse-admin]
 - 飞书写入后按用户分片回读，检查读取结果的 truncated / has_more；总字数上限会导致后续子表未读，不能把退出码 0 当完整性证明。
 - 模板列不增加时，G 列保存初始 prompt，K 列保存逐次调用参数和结果；实际参数中的 prompt 只有逐字相同时才可明确引用 G 列，不同则保留实际全文。生成模型变体仍在逐次记录中保留。
 - 作者是否选用、剪辑起止秒数、选择理由缺少证据时标记待作者确认。项目成片字段为空不能据此宣布没有生成视频。
+
+## 当前展示版本核验（2026-09-16）
+
+- Why：当前展示版本可用于标记抽卡结果，但不能证明用户主动选片或成片采用。
+- How：读取项目 `workspace/free-dsl.json`，按 `content.media.activeVersionId` 找到版本素材，再以同项目输出路径精确关联任务；同组多个节点展示不同输出时全部列出。保留读取时间与文档 revision，未匹配要区分失败、节点已移除和节点展示其他版本。
+- 自动激活语义：Aion `packages/dsl_manager/src/dsl_manager/free_canvas_dsl_manager.py::complete_generation_result`；生产静态文件地址解析：Admin `apps/admin/service/thread_analytics.py::static_base_url`。不要使用 benchmark 路由的通用域名推测生产域名。
+- 写回前读在线表，用户可能已经重命名子表；用稳定 sheet ID 定位并核对任务内容，仅修改授权列。写后完整回读确认其余值未变。
