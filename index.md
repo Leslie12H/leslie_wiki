@@ -127,3 +127,5 @@
 
 - [监控报告与聊天输出分离](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md) — 双协议报告、PR 883/64、脱敏原文与marker后缀/恢复回执/完整封装修复及跨服务卡片对照验证指针（2026-09-16）。
 - [修复尝试独立于告警认领](domains/vidmuse/admin/pitfalls/monitoring-repair-is-separate-from-claim.md) — 修复按钮、独立任务与写入身份、来源话题和 Draft PR 完成边界（2026-09-16）。
+
+- [Runtime 托管业务 Judge 评审方案](domains/maxwell/projects/evolve-runtime-judge-review-20260916.md) — Nextplay 业务判卷包、逐题配置、冻结证据、版本更新与通用平台改造的飞书评审入口（2026-09-16）。
