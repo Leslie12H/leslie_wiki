@@ -252,3 +252,4 @@
 - 2026-09-16：补充 Nextplay 候选后半程的实际应用核验、同证据 Judge 波动、业务事务回执与调优 Agent 归因边界；新增 DecisionReport 顶层 usage 契约修复 PR #305 指针。
 
 - 2026-09-16：补充 Analytics Worker OOM 修复的生产发布入口与进程 RSS、cgroup、失败持久化、检查点联合验收方法。
+- 2026-09-16：记录 PR #305 合并部署后原 DecisionReport 冻结成功的验证入口；保留无改善、Judge 未校准与不采用候选的边界。

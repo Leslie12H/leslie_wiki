@@ -34,3 +34,5 @@ links: [evolve-runtime-judge-review-20260916, nextplay-runner-thread-preset-bind
 - 过程结果不能只读 Runtime 工具 success/进程 exitCode=0：Nextplay 写入脚本曾返回业务 status=rejected；需读 committed/errors、官方校验及正式产物。初始化 schema 错误和事务拒绝虽由目标自行恢复，仍应计入过程质量观察。
 - 通用 Agent 若只能读取 Trial assessment 投影，不能对其重复查询不存在的 EvidenceSet execution 字段。用 compare_runs 的源 live variantApplication 摘要验证 appliedAttempts/attemptCount/proven/drift；原始 receipt 使用授权外层文件读取。应补通用 Artifact/Attempt 内容入口，避免假称已读 CAS。
 - 决策报告实际冻结错误与修复入口：[maxwell-ai PR #305](https://github.com/world-sim-dev/maxwell-ai/pull/305)。根因在 `application/evaluation/processor.go` 给 Scorecard 写顶层 usage，而 `application/commands/optimization_methods.go` 的严格 frozenScorecard 结构未接收；不是 Judge strictJudgeOutput 嵌套内容坏了。保留原冻结产物，修复读取契约后重试报告，无需修改分数或重跑目标。
+
+2026-09-16 闭环验证入口：PR #305 合并后的 [DEV EVOLVE 部署 35094142742](https://github.com/world-sim-dev/maxwell-ai/actions/runs/35094142742)，随后同一 Work 正式冻结 DecisionReport `artifact_8c15e3a327c1fbe3615ed6a3259a07d9`。查看其服务器固化的 optimization 与 reason，区分报告成功、不推荐采用和 Judge 仍未校准；报告冻结不等于 candidate decide 或发布。详细本地核验记录：`/Users/leslie/Downloads/nextplay-evaluation-20260916/loop-verification.md`。
