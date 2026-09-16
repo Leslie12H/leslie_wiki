@@ -162,3 +162,5 @@
 - [自由画布抽卡数据导出](domains/vidmuse/refs/free-canvas-generation-export.md) — 项目覆盖、初始与实际 prompt、DMS 长字段完整性和三用户飞书模板导出入口（2026-09-16）。
 
 - 自由画布当前展示版本与最终选片的区别、精确输出匹配及保留用户改名，见 [抽卡导出入口](domains/vidmuse/refs/free-canvas-generation-export.md)（2026-09-16）。
+
+- [Analytics Worker 超大聊天 OOM](domains/vidmuse/admin/pitfalls/analytics-worker-oversized-history-oom.md) — 完整响应内存放大、崩溃重试循环、流式体积准入与生产恢复验收指针（2026-09-16）。
