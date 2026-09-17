@@ -193,3 +193,5 @@
 - [Sand Eval 部署期间页面不可用](domains/sandai-data-smith/refs/sandeval-deployment-availability.md) — 测试 Web 策略、发布二次重启与生产边界的核验指针（2026-09-17）。
 
 - Sand Eval 测试站 ALB 503 的现场请求、空 Endpoints 与调度等待时间线，见 [部署可用性诊断](domains/sandai-data-smith/refs/sandeval-deployment-availability.md)（2026-09-17）。
+
+- Sand Eval 调度日志已定位入队/排队延迟及同窗离线任务大量调度失败，见 [部署可用性诊断](domains/sandai-data-smith/refs/sandeval-deployment-availability.md)（2026-09-17）。
