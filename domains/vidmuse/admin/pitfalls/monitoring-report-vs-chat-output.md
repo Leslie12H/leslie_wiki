@@ -90,3 +90,11 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 **How to apply:** 对照 `monitoring_incident_report_validation_v2.py` 的 `_incident_deployment_bindings`、`_bound_incident_deployment_evidence` 与真实 deployment_get 参数，先读取主窗口证实的原 workload 部署和应用调用代码，再补查下游。不得通过放宽绑定或拼入不同 Run 的证据验收。指令修正见 [Admin PR #885](https://github.com/world-sim-dev/vidmuse-admin/pull/885)；发布和真实补查结果重新查 PR/workflow 与本地验证记录。
 
 - 当前任务证据入口仍为 `output/monitoring-prod-verification-20260916.md`；本页不表示新协议已启用或卡片已验收。浏览器连接超时与 Runtime 连接超时分别处理；预检阶段失败应重试同一幂等事件，不另建随机事件冒充成功。
+
+## 2026-09-17 重试包与 Runtime 单消息容量
+
+**Why:** 调查规则、证据策略、重试反馈和 JSON 证据拼成一条文本后，可超过 Runtime 的单消息 UTF-8 字节上限。字符数不等于字节数；泛化 HTTP 400 不能说明是账号、Worker 或报告 Schema 故障。
+
+**How to apply:** 对照 Maxwell `internal/modules/runtime/inputformat/validation.go` 与 Admin `_message_content` 的实际字节数。此次同一隔离事件的单条 35,696 字节请求被拒绝，规则和完整 JSON 按原顺序无损分段后返回 202；第一消息保留稳定 ID/报告绑定，附加证据消息不复制绑定。修复见 [Admin PR #885](https://github.com/world-sim-dev/vidmuse-admin/pull/885) 的 `_message_parts` 与历史恢复回归：新输入容量不能阻断已接收 Run 的历史回填，不得截断证据或放宽 Runtime 上限。单个语义块仍超限时明确失败，不能宣称支持任意大小输入。
+
+- 完整对照、字节一致断言、真实 Thread/Run 与未完成验收项见本机 `output/monitoring-prod-verification-20260916.md` 的 Runtime 400 isolated root-cause verification。202 接单不等于报告已被 Admin 接受，更不等于认领、卡片回填或新协议切换成功。
