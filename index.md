@@ -187,3 +187,5 @@
 
 - Sand Eval 生产 E06/E07 复测与 CLI/页面入口差异：见 [验收指针](domains/sandai-data-smith/refs/sandeval-e2e-acceptance.md)。
 - 2026-09-17：Nextplay 导入 400 的空任务 HTTP 复现、管理确认边界、原子写入与预检快照验收入口见 [导入与评分核验](domains/maxwell/refs/nextplay-benchmark-import-audit-20260915.md)。
+
+- [云效多需求分支生成 release](disciplines/dev/yunxiao-release-branch-research.md) — Flow 分支管理器、AppStack 准入、GitHub 接入与现有 cherry-pick 流程的评估边界（2026-09-17）。
