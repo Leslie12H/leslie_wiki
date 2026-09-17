@@ -50,7 +50,7 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-daily-brief-star
 
 **Why:** 本次 10:00 日报调度已经执行，模型也返回了可解析的 JSON；失败发生在 `validate_output` 的结构校验，终态为 `invalid_output / invalid_schema`。当前综合修复白名单只包含来源覆盖缺口、单项超长和整卡容量，JSON 语法错误另有修复分支，`invalid_schema` 不在其中，因此第 1 次模型返回就终止。调度层又将此错误归为确定性失败，把当日 Redis guard 延至当天结束，后续 tick 不会继续尝试；发送阶段未调用飞书。不能将此案写成 JSON 语法错误、Provider HTTP 400、调度未启动或飞书投递失败。
 
-**How to apply:** 按日期串起 `synthesis_finished`、`send_deferred`、`send_failed` 和 Redis guard / attempts，再核对目标群消息。区分“JSON 解码成功”“业务 schema 合格”“证据来源完整”“卡片可发送”四道门；`model_calls=1` 不代表三次修复预算耗尽，先检查错误是否进入修复白名单。存在 guard 或 `already_sent` 日志也不必然已送达，可能只是失败冷却。具体字段错误只有在保留字段级校验诊断时才能下结论，不要从输出长度或模型名称猜测。此轮仅只读定位，没有补发、修改生产或修改业务代码。
+**How to apply:** 按日期串起 `synthesis_finished`、`send_deferred`、`send_failed` 和 Redis guard / attempts，再核对目标群消息。区分“JSON 解码成功”“业务 schema 合格”“证据来源完整”“卡片可发送”四道门；`model_calls=1` 不代表三次修复预算耗尽，先检查错误是否进入修复白名单。存在 guard 或 `already_sent` 日志也不必然已送达，可能只是失败冷却。具体字段错误只有在保留字段级校验诊断时才能下结论，不要从输出长度或模型名称猜测。10:00 失败的初查阶段仅只读定位，没有补发、修改生产或修改业务代码；后续同窗生成见下文。
 
 ### 当次证据与固定版本指针
 
@@ -65,6 +65,18 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-daily-brief-star
 
 **Why:** `invalid_schema` 表示当次输出未通过既有规则，不能据此推断结构定义刚发生变更。对比 Admin #881、#882、#883，日报生成、输入提取、输出校验及直接文本调用链没有差异；#881 前后的共享 JSON 解析和内容提取函数也一致。#883 修改单条 Incident 的机器报告交付，日报仍从已落库报告提取结论，以自己的 Prompt 和 `submit_daily_brief` 格式调用文本模型，不执行 Maxwell 调查 Preset，也不解析其聊天 Markdown。
 
-**How to apply:** 分开检查调查的 `INCIDENT_DIAGNOSIS_V2` 与日报的 `main_issues/noise/recommendations`。Preset 可以通过调查结论文本间接影响日报输入，但证明因果关系需要当次输入、原始输出及字段级错误；本次未保存完整输出，不能认定具体输入导致失败。昨天的生产与隔离 Preset 调整记录见[报告与聊天输出](monitoring-report-vs-chat-output.md)，历史记录不代表未来线上设置。
+**How to apply:** 分开检查调查的 `INCIDENT_DIAGNOSIS_V2` 与日报的 `main_issues/noise/recommendations`。Preset 可以通过调查结论文本间接影响日报输入，但证明因果关系需要当次输入、原始输出及字段级错误；10:00 失败的原始输出未保存，不能认定具体输入导致失败。2026-09-16 的生产与隔离 Preset 调整记录见[报告与聊天输出](monitoring-report-vs-chat-output.md)，历史记录不代表未来线上设置。
 
 - 固定代码：[日报自己的模型请求](https://github.com/world-sim-dev/vidmuse-admin/blob/cb3a69c392e29eb7c5abff573aab5210d0bedc84/apps/admin/service/monitoring_daily_brief_report.py#L292)、[结论输入提取](https://github.com/world-sim-dev/vidmuse-admin/blob/cb3a69c392e29eb7c5abff573aab5210d0bedc84/apps/admin/service/monitoring_brief_evidence.py#L652)、[上游报告交付 PR #883](https://github.com/world-sim-dev/vidmuse-admin/pull/883)。
+
+### 2026-09-17：同窗真实生成成功，不等于重现历史失败
+
+**Why:** 用户要求直接重新请求以获取具体信息。北京时间 2026-09-17 11:12:42，沿当时生产模型链路对固定窗口 2026-09-16 10:00 至 2026-09-17 10:00 发起一次应用级生成请求，51,535 ms 后成功；39 个来源被汇总为 11 项主要问题，noise 与 recommendations 均为空，输出 4,984 字符。工具名为 `submit_daily_brief`，结束原因为 `tool_calls`，声明 schema 的字段检查与原装 `resolve_conclusion_synthesis` 校验均通过。本次证明该版本与当次配置能完成同窗生成，没有复现 10:00 的 `invalid_schema`；它不能找回早先 4,623 字符的失败输出，也不能证明上游输入自 10:00 起没有变化。
+
+**How to apply:** 排查可先真实生成一次，并在任何解析、校验之前保存请求和完整响应，再对同一份原始输出补充诊断，避免为排查脚本报错重复调用模型。固定窗口只固定事故选择范围，调查结论与恢复状态仍取查询时的当前落库值，不是窗口结束时的历史快照。生成成功与飞书送达分别验收；需要发送时复用已保存且通过校验的结果，不为发送重新生成。
+
+- 证据指针：生产 Pod 临时目录 `/tmp/daily-brief-diagnostic-20260917-031242` 的 `evidence-report.json`、`request.json`、`response.json`、`parsed-output.json`、`resolved-output.json` 与 `diagnostic.json`。目录权限 0700、文件 0600，随 Pod 删除可能失效。`response.json` 为 9,824 字节，SHA-256 `d43eb42b3a808027ee4367b4a5d15d5ba10a7187436165720f7e01d5df8ec316`；不把原始调查内容或凭据复制进 wiki。
+- 执行指针：本机 `/tmp/daily_brief_diagnostic_20260917.py`，生产工作目录 `/app/apps/admin`，解释器 `/app/.venv/bin/python`。只读收集证据后，原样构造日报请求，调用一次 `service.replay.llm_transport.chat_completion`；沿生产 ProviderRouter 路由至 aws-09 Bedrock Sonnet 4.6。该诊断没有发送卡片或改发送 guard。
+- 独立诊断进程应只初始化必需的模型路由。`service.model_config._refresh_cache` 读取数据库和 Redis 版本并初始化进程内路由；不要使用 `initialize_cache`，后者会尝试创建 Redis 版本键并启动后台监控线程。应用级一次请求仍可能按既有 ProviderRouter 策略发生底层重试，应与主动追加模型生成区分。
+- 用户明确要求“直接发送”后，于北京时间 2026-09-17 11:16:44 复用上述已保存结果，经原装校验与卡片构建、`save_preview`、`send_preview` 投递成功，未追加模型生成。卡片 20,455 字节，包含 39 个来源、11 项主要问题；服务端回执 `code=0`，同目录保存 `send-receipt.json`。随后按目标群 11:16 至 11:19 窗口回读到唯一 interactive 卡片，发送者为“Vidmuse抓虫小助手”，标题“线上告警汇总 · 2026-09-16”，正文窗口、记录数与问题数一致，`deleted=false`。
+- 已送达消息：[飞书卡片](https://applink.feishu.cn/client/chat/open?openChatId=oc_4b594cb95b70386cc97e12eae9d4192c&position=5209)，回读确认的 `message_id=om_x100b6581f776d8a8c3493e87daf8a3f`，目标群 `oc_4b594cb95b70386cc97e12eae9d4192c`。`send_preview` 同时记录 `scheduled_send_suppressed send_day=2026-09-17 report_day=2026-09-16`，说明手工补发已覆盖当日调度窗口；这是一次恢复投递，不代表结构错误的修复与调度容错已经上线。
