@@ -80,3 +80,8 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-daily-brief-star
 - 独立诊断进程应只初始化必需的模型路由。`service.model_config._refresh_cache` 读取数据库和 Redis 版本并初始化进程内路由；不要使用 `initialize_cache`，后者会尝试创建 Redis 版本键并启动后台监控线程。应用级一次请求仍可能按既有 ProviderRouter 策略发生底层重试，应与主动追加模型生成区分。
 - 用户明确要求“直接发送”后，于北京时间 2026-09-17 11:16:44 复用上述已保存结果，经原装校验与卡片构建、`save_preview`、`send_preview` 投递成功，未追加模型生成。卡片 20,455 字节，包含 39 个来源、11 项主要问题；服务端回执 `code=0`，同目录保存 `send-receipt.json`。随后按目标群 11:16 至 11:19 窗口回读到唯一 interactive 卡片，发送者为“Vidmuse抓虫小助手”，标题“线上告警汇总 · 2026-09-16”，正文窗口、记录数与问题数一致，`deleted=false`。
 - 已送达消息：[飞书卡片](https://applink.feishu.cn/client/chat/open?openChatId=oc_4b594cb95b70386cc97e12eae9d4192c&position=5209)，回读确认的 `message_id=om_x100b6581f776d8a8c3493e87daf8a3f`，目标群 `oc_4b594cb95b70386cc97e12eae9d4192c`。`send_preview` 同时记录 `scheduled_send_suppressed send_day=2026-09-17 report_day=2026-09-16`，说明手工补发已覆盖当日调度窗口；这是一次恢复投递，不代表结构错误的修复与调度容错已经上线。
+### 2026-09-17：有界结构修复与同窗回放
+
+**Why:** 同窗重新综合可通过，说明单次模型字段错误不能一概当成当天不可恢复；但回放成功不能反推出历史失败的具体字段，也不证明已补发。
+
+**How to apply:** [Admin PR #885](https://github.com/world-sim-dev/vidmuse-admin/pull/885) 的 `364f2f4b2` 增加 invalid_schema 的结构反馈与既有预算内最多两次纠正、字段路径/规则诊断及有界调度重试；保持来源、内容和容量校验。上线状态以 PR/部署回读为准。固定窗口生产只读复验与接单/卡片/大盘回归证据见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/monitoring-prod-verification-20260916.md` 的 expanded preservation audit：39 个来源完整覆盖、生成卡片合格，本任务回放未发送；另一任务已补发的回执见上一节，避免重复发送。

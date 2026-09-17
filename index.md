@@ -138,3 +138,4 @@
 - 原报警 workload 与下游部署证据不能互相替代，见 [报告协议验收边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)（2026-09-17）。
 
 - [Studio 发布变量与候选展示](domains/maxwell/pitfalls/studio-release-env-and-candidate-results.md) — composite action 同层 env 空值导致白屏、版本 CDN 准入和单候选结果证据边界（2026-09-17）。
+- 2026-09-17 日报结构错误的有界修复与同窗只读回放入口见[日报证据链](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-evidence-loss.md)；生成通过不等于补发。
