@@ -199,3 +199,10 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 
 - 已部署严格预检的历史负例入口：[Admin endpoint verification](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35212086232)。它证明错误草稿被正确拒绝，不代表历史记录已重生成。
 - 独立日报完整性与字段修正入口：[daily brief verification](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35212875025)：2026-09-17 首次模型输出 main_issues 类型错误后，原有有界修正生成合法卡片，来源完整；没有发送消息。后续定时投递和协议状态仍须查看实际运行，不从该只读预览推断。
+
+
+## 2026-09-17 Same-Run deployed-source correction and layered acceptance
+
+**Why:** One get_file call does not prove the original alert workload source was acquired: a different deployed revision still fails adaptive_code_file. The formal canary's first two rejections were acquisition failures, not schema failures.
+
+**How to apply:** Follow server preflight feedback to read the original workload's full commit in the SAME Run, then prepare again and independently run final strict acceptance. Keep Runtime success, isolated SQLite acceptance and real isolated Feishu delivery as separate proof layers; none implies a production business-row rewrite or a new claim callback. See [formal acceptance and card receipt](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35214582164). Gate protocol changes on active legacy deliveries and use an optimistic one-field JSON Patch plus whole-template comparison to preserve optional Secrets. Current rollout/UI state belongs in output/monitoring-prod-verification-20260916.md.

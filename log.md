@@ -302,3 +302,5 @@
 - 2026-09-17 ingest: Monitoring current-Run preflight implementation pointers, MCP extension negotiation and native/legacy call-argument compatibility; retain deployment and acceptance boundaries.
 
 - 2026-09-17 ingest: 补充监控线上技能同 Run 补证例外、完整回读，以及独立日报探针初始化与字段修正验收边界。
+
+- 2026-09-17 ingest: Add same-Run original-workload source correction and formal/card acceptance pointers; preserve legacy-drain and callback evidence boundaries.
