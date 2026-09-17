@@ -306,3 +306,5 @@
 - 2026-09-17 ingest: Add same-Run original-workload source correction and formal/card acceptance pointers; preserve legacy-drain and callback evidence boundaries.
 
 - 2026-09-17 ingest: Correct pending-versus-active legacy gate; add missing SLS Admin action diagnosis, exact restoration and WAF-versus-acceptance boundaries.
+
+- 2026-09-17：补充 Sand Eval 测试发布 ALB 503 与调度排队证据，记录 PR #1312 的滚动发布、非抢占优先级及失败恢复入口。
