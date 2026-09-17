@@ -137,4 +137,11 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 
 **Why:** Connector 验证过的 Git blob 与模型最终收到的内容处在不同边界。通用凭据脱敏可能把源码中的配置读取表达式当作赋值值替换；因此行范围完整不代表传输内容逐字节等于未脱敏 Git 原文。
 
-**How to apply:** 同一不可变 commit/path 分段读取后，从完整 tool-result owner 取回内容，检查行号连续性，再分别比对原文件与按现有脱敏规则处理后的字节。核对 server.go 的 redactTransportText、记录 ID 计算顺序和源 blob 校验，不能为了哈希一致关闭脱敏或伪称原文完整。2026-09-17 真实 provider_router.py 的唯一差异落在 301–400 行配置赋值表达式；其余片段一致，脱敏后整体哈希一致。生产发布、工具同步、日报预览、隔离卡片回执与尚未切换的状态入口见本机 output/monitoring-prod-verification-20260916.md 的 production release 小节，以及 [MCP 部署](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35188435006)、[Admin 部署](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35188707690)。发布成功不能替代真实认领回调或新协议消费验收。
+**How to apply:** 同一不可变 commit/path 分段读取后，从完整 tool-result owner 取回内容，检查行号连续性，再分别比对原文件与按现有脱敏规则处理后的字节。核对 server.go 的 redactTransportText、记录 ID 计算顺序和源 blob 校验，不能为了哈希一致关闭脱敏或伪称原文完整。2026-09-17 真实 provider_router.py 的唯一差异落在 301–400 行配置赋值表达式；其余片段一致，脱敏后整体哈希一致。生产发布、工具同步、日报预览、隔离卡片回执与协议切换的后续状态入口见本机 output/monitoring-prod-verification-20260916.md 的 production release 小节，以及 [MCP 部署](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35188435006)、[Admin 部署](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35188707690)。发布成功不能替代真实认领回调或新协议消费验收。
+
+
+## 2026-09-17 正式 preset 与新增数字占位字段
+
+**Why:** 分段读取新增 start_line/end_line 后，正式模型可能把 flat union schema 的所有字段都输出，在 describe 中补两个 0。既有归一化只删除无关空字符串/null 和 limit，因此新增数字占位会让原本可用的仓库发现操作失败。只跑合法 get_file 范围测试不能覆盖这个生产回归。
+
+**How to apply:** 覆盖真实模型完整参数包；仅在不读取文件的 operation 上忽略已知 line-bound 字段的数字零，保留非零/错误类型拒绝及 get_file 的完整范围校验。修复、CI 与发布指针见 [MCP #68](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/pull/68)。正式 preset 的协议化 prompt/skills、Structured Output、Admin 有效 env 应分别保存回读；资源更新前备份精确旧值，Pod 间需要继续验收的回执放到已有 PVC 的受限目录，不能只放会随滚动消失的 /tmp。当前开关、探针终态和实际发布版本只查本机 output/monitoring-prod-verification-20260916.md 的 authorized production protocol cutover 及后续条目；不能从此 page 推断探针已通过。
