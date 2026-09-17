@@ -159,3 +159,9 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 **Why:** A retry-specific instruction can reintroduce final JSON after the tool-report protocol requests Markdown. Completing canonical trace pagination also does not authorize citing a separate trace query with an extra error-text filter.
 
 **How to apply:** Build correction delivery instructions from the persisted protocol, covering both omitted/explicit legacy and tool delivery ([Admin #887](https://github.com/world-sim-dev/vidmuse-admin/pull/887)). Preserve rejection of downstream_trace_record_acquisition_overclaim; add that selection error to the existing bounded correction category with guidance to reacquire and cite the complete exact trace query, without extra filters, hash rewrites or budget increases ([Admin #888](https://github.com/world-sim-dev/vidmuse-admin/pull/888)). Check current deployment and acceptance in output/monitoring-prod-verification-20260916.md, not from this page.
+
+## 2026-09-17 原卡更新回执与正式 preset 验收门禁
+
+**Why:** 认领更新可能直接修改原告警卡片。发送端已验证原消息与群范围，但大盘若将所有非 alert_opened 活动都按话题回复校验，会把成功回填误判为缺少 thread/root/parent。另一边，正式 preset 可生成外观正确的 Markdown，却在新 evidenceId 下沿用旧 Run 的 recordRef；prepared 不能证明引用可被 Admin 接收。
+
+**How to apply:** 大盘与发送端对同一原卡更新采用相同的 exact root receipt 条件；保留错群、错消息、缺回执和普通话题回复的负向用例，不能补造生产回执。见 [Admin #889](https://github.com/world-sim-dev/vidmuse-admin/pull/889)。跨 Run 引用继续拒绝，不因验收样本失败而扩大自动重试白名单或重置预算。正式 preset 未通过时按发布门禁回退配置；配置回退只控制承接协议，不能声称它修复了模型引用错误。当前执行状态与正式拒绝证据见本机 output/monitoring-prod-verification-20260916.md，不从 PR 合并或工具 prepared 推断生产验收成功。

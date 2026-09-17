@@ -150,3 +150,5 @@
 - 2026-09-17 exact alert trace aliases and independent cross-trace rejection: [report protocol boundaries](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md), Admin #887.
 
 - 2026-09-17 correction transport and filtered downstream-query proof boundaries: [monitoring report protocol](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md), Admin #887/#888.
+
+- 2026-09-17 原卡更新回执与话题回复的验收差异、正式 preset 跨 Run 引用失败后的切换门禁见[监控报告边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)，Admin #889。
