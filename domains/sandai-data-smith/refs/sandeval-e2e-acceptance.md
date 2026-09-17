@@ -17,3 +17,6 @@ links: [sandeval-local-startup, sandeval-roles-and-workflow]
 - 派题冻结、写卡、回读及 wave 创建：`sand-eval/platform/backend/app/repositories/assignment_persistence.py`。
 - 官方只读核对与原计划恢复：`sand-eval/platform/backend/app/cli/assignment_recovery.py`；先 inspect，按实际恢复前置条件处理。
 - 质量入口及批次查询：`sand-eval/platform/frontend/src/pages/quality/QualityManagementPage.tsx`、`sand-eval/platform/backend/quality/api/management/management_handlers.py`。
+
+- 自动化入口（PR #1287，合并状态需现查）：`sand-eval/platform/acceptance/README.md`、`scenarios.json`、`run.py`；真实测试资源只读核验使用同目录 `live.py`、`storage_probe.py`。隔离测试与真实端到端证据必须分开解释。
+- 2026-09-17 自动化执行记录：`/Users/leslie/Documents/Playground/output/sandeval-automation-20260917/report.md`；失败回归不应改成 xfail 来掩盖产品缺陷。
