@@ -16,3 +16,5 @@ links: [evolve-candidate-editable-baseline-and-regrade-comparison]
 候选面板修复入口：[PR #307](https://github.com/world-sim-dev/maxwell-ai/pull/307)。单候选不能依赖手动多候选 comparison 才加载得分；候选生命周期 evaluating 与 Run 执行状态应区分；冻结 DecisionReport 不一定已经绑定 candidate.decide。展示原始分数时保留重判/真实执行来源与 Judge 质量提示，不据未校准分数宣称优化有效。
 
 业务生成端与评测端分开验收。对 Nextplay 输出引用错误，先保留冻结 baseline 和错误证据，用独立业务规则检测，再将生成端改动作为候选验证后决定采用。不能因修复平台展示，直接修改业务默认 Agent。相关边界讨论入口：[nextplay-fe #33](https://github.com/world-sim-dev/nextplay-fe/pull/33) 与 [回滚 PR #34](https://github.com/world-sim-dev/nextplay-fe/pull/34)；当前合并与资源状态需现场核对。
+
+2026-09-17 验收入口：[main Web 重新发布 35178109146](https://github.com/world-sim-dev/maxwell-ai/actions/runs/35178109146)（headSha 71486d35716976ffc655f5ac25575b8b3014e9ce）。该次发布后浏览器候选页能读取最近评分、重判与基准 Run、建议拒绝报告及 Judge 质量不足提示；入口脚本来自版本 CDN 且返回 application/javascript。线上后续状态仍从 Work/Run 与发布记录查询。
