@@ -24,12 +24,12 @@
 - [报警 Problem 标题与当次报告](domains/vidmuse/admin/pitfalls/monitoring-problem-title-vs-incident-report.md) — 历史聚类标题不能代替当次结论，发送摘要前核对证据等级
 - [Problem 认领触发历史告警回复](domains/vidmuse/admin/pitfalls/monitoring-problem-claim-replies-to-historical-alerts.md) — 弱聚类、来源话题绑定与旧卡刷新、PR #881 及生产回读边界（2026-09-15）
 - [Tool Errors 启动与 Analytics 内存](domains/vidmuse/admin/pitfalls/tool-errors-bootstrap-and-analytics-memory.md) — JS MIME、Web/Worker 内存证据、异步客户端原循环与 PR #881 回归入口（2026-09-15）
-- [报警日报证据丢失链路](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-evidence-loss.md) — 输入裁剪、静默降级、引用完整性与发送身份回退的排查指针
+- [报警日报证据丢失链路](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-evidence-loss.md) — 输入与引用完整性、发送身份及 JSON 可解析但 schema 失败停当天的诊断指针（2026-09-17）
 - [日报滚动部署启动交接](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-startup-handoff.md) — 循环缺失、旧镜像自动补跑、周末窗口对账与历史补偿缺口、PR #878 发布验收及卡片统计口径（2026-09-14）
 - [Tool 日汇总状态与已有数据展示](domains/vidmuse/admin/pitfalls/tool-daily-updating-hides-existing-data.md) — HTTP 成功后的数据门禁、部分日误挡、独立 Worker 核验及 PR #878 本地回归/CI 边界（2026-09-14）
 - [监控大盘窗口与「天」的口径](domains/vidmuse/admin/pitfalls/monitoring-dashboard-window-and-day-semantics.md) — 三套时间基准 + 全量/窗口计数混用导致数字自相矛盾
 - [Analytics 维护调度器历史重建压垮 PolarDB](domains/vidmuse/admin/pitfalls/analytics-maintenance-historical-rebuild-pressure.md) — 2026-09-07 三个放大器(30s 排水/审计也重写/replay 并发 16)+ 退役 5 阶段 + 冻结线 + 为何单独建库无用
-- [admin 定时报表机制与死配置](domains/vidmuse/admin/pitfalls/admin-scheduled-report-mechanisms.md) — 外部 /cron vs 进程内循环、BugBotConfig.schedules 没人读、app.py 启动总闸
+- [admin 定时报表机制与死配置](domains/vidmuse/admin/pitfalls/admin-scheduled-report-mechanisms.md) — 外部 /cron、全局 owner 与独立日报调度、日级 guard 及失败重试边界（2026-09-17）
 - [vidmuse-admin harness](domains/vidmuse/admin/refs/vidmuse-admin-harness.md) — Test Center V2 / VidMCP harness 指针
 
 - [时间线预览时长与导出版本](domains/vidmuse/refs/timeline-preview-duration-and-export-version.md) — 轨道时长、分秒帧显示及历史混流版本核验指针

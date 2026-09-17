@@ -2,9 +2,9 @@
 name: monitoring-daily-brief-evidence-loss
 type: pitfall
 created: 2026-09-10
-updated: 2026-09-11
+updated: 2026-09-17
 tags: [vidmuse, admin, monitoring, daily-brief]
-links: [monitoring-problem-title-vs-incident-report]
+links: [monitoring-problem-title-vs-incident-report, monitoring-daily-brief-startup-handoff, admin-scheduled-report-mechanisms]
 ---
 
 # 日报质量要沿证据输入、综合、渲染与发送链路排查
@@ -45,3 +45,18 @@ links: [monitoring-problem-title-vs-incident-report]
 - 2026-09-12 Chat 后续交互验证指针：同一分支的 ChatTab.selectionCopy.test.tsx 新增反向 Shift 连选、筛选排除和 Esc 清空测试；选择入口移至消息边缘不占正文列，范围由当前渲染的消息勾选框确定，复制仍按原始时间线。13 项复制测试、49 项相关 Chat 回归及 TypeScript 通过，未部署。
 
 - 2026-09-12 统一交付指针：[Admin PR #875](https://github.com/world-sim-dev/vidmuse-admin/pull/875)，包含日报结构化格式与重试诊断、Chat 悬停多选及 Shift 连选。重复 subagent alias 范围按渲染实例定位，复制按消息 ID 去重。80 项后端、64 项 Chat 与 TypeScript 本地通过；CI、合并及部署状态到 PR 查询。
+
+## 2026-09-17：JSON 可解析，schema 校验失败后当天停止
+
+**Why:** 本次 10:00 日报调度已经执行，模型也返回了可解析的 JSON；失败发生在 `validate_output` 的结构校验，终态为 `invalid_output / invalid_schema`。当前综合修复白名单只包含来源覆盖缺口、单项超长和整卡容量，JSON 语法错误另有修复分支，`invalid_schema` 不在其中，因此第 1 次模型返回就终止。调度层又将此错误归为确定性失败，把当日 Redis guard 延至当天结束，后续 tick 不会继续尝试；发送阶段未调用飞书。不能将此案写成 JSON 语法错误、Provider HTTP 400、调度未启动或飞书投递失败。
+
+**How to apply:** 按日期串起 `synthesis_finished`、`send_deferred`、`send_failed` 和 Redis guard / attempts，再核对目标群消息。区分“JSON 解码成功”“业务 schema 合格”“证据来源完整”“卡片可发送”四道门；`model_calls=1` 不代表三次修复预算耗尽，先检查错误是否进入修复白名单。存在 guard 或 `already_sent` 日志也不必然已送达，可能只是失败冷却。具体字段错误只有在保留字段级校验诊断时才能下结论，不要从输出长度或模型名称猜测。此轮仅只读定位，没有补发、修改生产或修改业务代码。
+
+### 当次证据与固定版本指针
+
+- 2026-09-17 生产两个 Web Pod 的源码标识为 `cb3a69c392e29eb7c5abff573aab5210d0bedc84`，分别自 2026-09-16 21:09 / 21:10 运行，复查时均无重启；实际日报启用、发送时间 10:00、LLM 启用，模型 `anthropic/claude-sonnet-4.6`、总超时 300 秒。这是当次配置核验，不作为未来配置快照。
+- 北京时间 2026-09-17 10:00:51.313：`synthesis_finished` 记录 `invalid_output`、`reason=invalid_schema`、`stage=validate_output`、耗时 47,922 ms、`model_calls=1`、输出 4,623 字符及 `oversized_items=[]`；随后 `send_deferred` 为 `attempts=1`、`retry_after_seconds=50408`，`send_failed` 的 `send_day=2026-09-17`。没有字段级错误或原始输出证据，无法判定具体哪个字段不合格；空 oversized 列表也不能证明 schema 合格。
+- 日级键 `monitoring:daily-brief:sent:2026-09-17` 当次存在，`:attempts` 为 1，TTL 延续到约次日零点。目标群 `oc_4b594cb95b70386cc97e12eae9d4192c` 在当次读取的 09:30 以后窗口没有消息，最新根消息为当天 00:52；该回读与发送前阻断的代码/日志一致，不代表其他群或其他日期的发送状态。
+- 日志源：SLS 项目 `k8s-log-c7c0ede6c71484f8da34a829954c50cd9`、Logstore `vidmuse-admin`，按上述绝对时间回读并以事件名关联。不要将同群半夜其他 Sonnet 故障讨论当成本次模型请求证据。
+- [综合修复范围](https://github.com/world-sim-dev/vidmuse-admin/blob/cb3a69c392e29eb7c5abff573aab5210d0bedc84/apps/admin/service/monitoring_daily_brief_report.py#L386)：`_try_llm_synthesize` 的结构校验与修复白名单；[结构校验入口](https://github.com/world-sim-dev/vidmuse-admin/blob/cb3a69c392e29eb7c5abff573aab5210d0bedc84/apps/admin/service/monitoring_brief_evidence.py#L702) 定位 schema 边界，当前统一错误码不足以指出字段。
+- [失败重试与日级 guard](https://github.com/world-sim-dev/vidmuse-admin/blob/cb3a69c392e29eb7c5abff573aab5210d0bedc84/apps/admin/service/monitoring_daily_brief_report.py#L646)：`_defer_failed_brief` 仅将指定瞬态错误及 `invalid_json` 纳入有界重试；[独立启动入口](https://github.com/world-sim-dev/vidmuse-admin/blob/cb3a69c392e29eb7c5abff573aab5210d0bedc84/apps/admin/app.py#L421) 在全局后台 owner 门禁之前按进程启动日报。旧版仅由全局 owner 启动的排查规则见[历史启动交接](monitoring-daily-brief-startup-handoff.md)，不能套用到本次已有综合日志的执行。
