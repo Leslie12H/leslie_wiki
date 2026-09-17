@@ -98,3 +98,12 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 **How to apply:** 对照 Maxwell `internal/modules/runtime/inputformat/validation.go` 与 Admin `_message_content` 的实际字节数。此次同一隔离事件的单条 35,696 字节请求被拒绝，规则和完整 JSON 按原顺序无损分段后返回 202；第一消息保留稳定 ID/报告绑定，附加证据消息不复制绑定。修复见 [Admin PR #885](https://github.com/world-sim-dev/vidmuse-admin/pull/885) 的 `_message_parts` 与历史恢复回归：新输入容量不能阻断已接收 Run 的历史回填，不得截断证据或放宽 Runtime 上限。单个语义块仍超限时明确失败，不能宣称支持任意大小输入。
 
 - 完整对照、字节一致断言、真实 Thread/Run 与未完成验收项见本机 `output/monitoring-prod-verification-20260916.md` 的 Runtime 400 isolated root-cause verification。202 接单不等于报告已被 Admin 接受，更不等于认领、卡片回填或新协议切换成功。
+
+## 2026-09-17 分段接收与证据关联的消费者对齐
+
+**Why:** Runtime 接受两条完整语义消息，并不代表 Admin 能还原其报告上下文。真实 canary 暴露 `_incident_context_from_user_action` 仍只解析第一条消息的尾部 JSON；修复后又暴露部署采集认可的事故日志 Pod→workload→部署链，没有被报告证明阶段用于不可变代码版本关联。
+
+**How to apply:** 在同一 canonical user action 中，只恢复稳定消息 ID 对应、紧邻、唯一且不携带另一个绑定的证据 companion；仍核对 Incident、event、generation 和 report binding。证明阶段复用 `_bound_incident_deployment_evidence`，保留原始命名空间、主查询、事故窗口及 current-Run 约束。代码和正反例见 [Admin PR #885](https://github.com/world-sim-dev/vidmuse-admin/pull/885)。不能用当前 Deployment 快照证明历史事故部署；关联正确之后，时间和实际字段值校验仍可能合理拒绝报告。
+
+- MCP 的 prepared 仅是准备成功，不是 Admin 接受。`eq` 数组值、过短 contains 等消费者格式限制应提前给出字段级纠错，见 [MCP PR #67](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/pull/67)；证据和时间语义仍归 Admin 验证。
+- 本次 canonical 回放、878 项 Admin 回归、MCP 全量测试和后续隔离纠错 Run 的证据查本机 `output/monitoring-prod-verification-20260916.md`；不要从 PR 或单测推断生产开关已变更、真实认领已验收。
