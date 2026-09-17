@@ -168,3 +168,5 @@
 - [Sand Eval SQL 与锁诊断入口](domains/sandai-data-smith/refs/sandeval-sql-lock-diagnosis.md) — 日志库边界、transaction_trace 慢 SQL、Cannot acquire lock in time 与连接池耗尽的核验指针（2026-09-17）。
 
 - [Sand Eval 本机启动入口](domains/sandai-data-smith/refs/sandeval-local-startup.md) — macOS 本机配置来源、Python/pnpm 依赖解析与页面验收指针（2026-09-17）。
+
+- [Sand Eval 角色与两侧工作流](domains/sandai-data-smith/refs/sandeval-roles-and-workflow.md) — 角色节点、Sand 视角、成员权限与新旧质检链路的核验入口（2026-09-17）。
