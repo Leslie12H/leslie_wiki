@@ -286,3 +286,5 @@
 - 2026-09-17 ingest：补充正式 preset 切换的资源回读/PVC 回执边界及新增代码行号数字占位回归，指向 MCP #68 与实时验收记录。
 
 - 2026-09-17 ingest: scoped alert trace aliases, immutable evidence hashes and independent root-cause cluster rejection; Admin #887.
+
+- 2026-09-17 ingest: persisted retry delivery protocol and bounded recovery for downstream filtered-query proof selection; Admin #887/#888.

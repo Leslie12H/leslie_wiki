@@ -152,3 +152,10 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 **Why:** The original alert API stores an exact trace in context.annotations.latest_trace. Generic aliases miss it and reject a valid correlation. Resolving that compatibility gap can reveal an independent report error that combines direct errors from different traces.
 
 **How to apply:** Recognize only that exact path from monitoring_alert_get_context / monitoring_alert_list, preserving observation IDs, record hashes, exact values, eq operators, producer checks and root-cause clustering. Cover wrong source/path/type/redaction/operator in negative tests. A process-local prospective patch identifies the next rejection; acceptance must rerun on deployed code. See [Admin #887](https://github.com/world-sim-dev/vidmuse-admin/pull/887); current release and formal-preset acceptance evidence lives in output/monitoring-prod-verification-20260916.md. Passing tests does not imply an accepted report.
+
+
+## 2026-09-17 Correction transport and downstream proof selection
+
+**Why:** A retry-specific instruction can reintroduce final JSON after the tool-report protocol requests Markdown. Completing canonical trace pagination also does not authorize citing a separate trace query with an extra error-text filter.
+
+**How to apply:** Build correction delivery instructions from the persisted protocol, covering both omitted/explicit legacy and tool delivery ([Admin #887](https://github.com/world-sim-dev/vidmuse-admin/pull/887)). Preserve rejection of downstream_trace_record_acquisition_overclaim; add that selection error to the existing bounded correction category with guidance to reacquire and cite the complete exact trace query, without extra filters, hash rewrites or budget increases ([Admin #888](https://github.com/world-sim-dev/vidmuse-admin/pull/888)). Check current deployment and acceptance in output/monitoring-prod-verification-20260916.md, not from this page.
