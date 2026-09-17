@@ -189,3 +189,5 @@
 - 2026-09-17：Nextplay 导入 400 的空任务 HTTP 复现、管理确认边界、原子写入与预检快照验收入口见 [导入与评分核验](domains/maxwell/refs/nextplay-benchmark-import-audit-20260915.md)。
 
 - [云效多需求分支生成 release](disciplines/dev/yunxiao-release-branch-research.md) — Flow 分支管理器、AppStack 准入、GitHub 接入与现有 cherry-pick 流程的评估边界（2026-09-17）。
+
+- [Sand Eval 部署期间页面不可用](domains/sandai-data-smith/refs/sandeval-deployment-availability.md) — 测试 Web 策略、发布二次重启与生产边界的核验指针（2026-09-17）。
