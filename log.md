@@ -304,3 +304,5 @@
 - 2026-09-17 ingest: 补充监控线上技能同 Run 补证例外、完整回读，以及独立日报探针初始化与字段修正验收边界。
 
 - 2026-09-17 ingest: Add same-Run original-workload source correction and formal/card acceptance pointers; preserve legacy-drain and callback evidence boundaries.
+
+- 2026-09-17 ingest: Correct pending-versus-active legacy gate; add missing SLS Admin action diagnosis, exact restoration and WAF-versus-acceptance boundaries.

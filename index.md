@@ -163,3 +163,5 @@
 - Monitoring 当前 Run 草稿预检、MCP 执行上下文协商及真实证据绑定入口，见 [报告与聊天输出边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)（2026-09-17）；PR 合并和 CI 不代表正式 preset 验收通过；补线上技能禁止补读冲突与独立日报探针的模型路由初始化边界。
 
 - 2026-09-17 Same-Run original-workload SHA correction, layered formal/card acceptance and legacy-drain cutover gate: [monitoring report boundaries](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md).
+
+- 2026-09-17 First-claim protocol cutover gate and SLS Admin action lost from both DSL/graph: [monitoring output and routing boundaries](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md).
