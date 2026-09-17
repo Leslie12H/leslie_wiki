@@ -4,12 +4,12 @@ type: discipline
 created: 2026-09-17
 updated: 2026-09-17
 tags: [git, release, testing, hotfix]
-links: []
+links: [team-test-main-cherry-pick-workflow]
 ---
 
 # Test / Prod 与短期验收候选
 
-2026-09-17 提出的流程建议，尚未确认为团队规范；未检查或修改业务仓库。
+2026-09-17 提出的备选建议，未采用。用户随后确定保留长期 test 分支，验收后 cherry-pick 进入 main，所有 main 改动回合 test；团队规范见 [Test 验收、Cherry-pick 上线、Main 回合](team-test-main-cherry-pick-workflow.md)。以下仅保留为方案背景，不作为当前执行规则；未检查或修改业务仓库。
 
 **Why:** 在新需求必须验收后才能合入 main、紧急修复可先进入 main 的约束下，长期 test 分支持续积累未上线需求，容易形成第二条产品线。环境是部署目标，不必对应长期代码分支。
 

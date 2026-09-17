@@ -177,6 +177,8 @@
 
 - [Sand Eval 质量中心测试数据](domains/sand-eval/pitfalls/quality-center-test-data.md) — 任务内质检与质量中心的边界、完整份数和批次契约、送审与验收入口（2026-09-17）。
 
-- [Test / Prod 与短期验收候选](disciplines/dev/test-prod-short-lived-candidates.md) — 单一长期 main、短期候选、hotfix 同步及共享 test 排队建议（2026-09-17，未实施）。
+- [Test / Prod 与短期验收候选](disciplines/dev/test-prod-short-lived-candidates.md) — 未采用的备选方案；当前规则见 Test/Main Cherry-pick 团队规范。
 
 - Sand Eval 真实 HTTP E2E 与 UI 回归：见 [验收指针](domains/sandai-data-smith/refs/sandeval-e2e-acceptance.md)，区分用例定义、脚本缺口与真实运行回执。
+
+- [Test/Main Cherry-pick 团队规范](disciplines/dev/team-test-main-cherry-pick-workflow.md) — 用户确定的 test 验收、cherry-pick 上线、main 普通 merge 回合及部署回归责任（2026-09-17）。
