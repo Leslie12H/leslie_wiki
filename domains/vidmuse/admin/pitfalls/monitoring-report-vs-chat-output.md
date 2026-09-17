@@ -2,7 +2,7 @@
 name: monitoring-report-vs-chat-output
 type: pitfall
 created: 2026-09-16
-updated: 2026-09-16
+updated: 2026-09-17
 tags: [vidmuse, admin, monitoring, maxwell, structured-output]
 links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-blocks-claim]
 ---
@@ -82,3 +82,11 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 - Schema 校验通常先于证据校验，错误从证据问题变为 Schema 问题不能证明证据已通过。发布与真实复验状态从 workflow 和本地验证记录查。
 - 飞书 user 缺建群 scope 不代表现有 bot 也无权限。任务允许机器人创建时，可按 lark-im 技能使用已有 bot 权限创建私有群并加入请求者与 Monitoring bot，再完整读回成员；不要重复要求用户扩权。本次实际建群与成员证据见验证记录。
 - Workbench 下载可能被客户端拦截；其文件编辑器可只读打开状态文件并复制完整文本。复制后核验 JSON 和 Run ID，发布后不要依赖旧 Pod 的 /tmp 文件继续存在。
+
+## 2026-09-17 原报警 workload 与下游部署证据
+
+**Why:** 隔离 Run 读取了下游 Manager 部署和 Gemini 代码，聊天仍可生成完整 Markdown，但 Admin 的 adaptive_deployed_revision 与 adaptive_code_file 拒绝该报告。原事故绑定来自主窗口日志验证的报警源 Pod，下游版本不能替代源服务版本。
+
+**How to apply:** 对照 `monitoring_incident_report_validation_v2.py` 的 `_incident_deployment_bindings`、`_bound_incident_deployment_evidence` 与真实 deployment_get 参数，先读取主窗口证实的原 workload 部署和应用调用代码，再补查下游。不得通过放宽绑定或拼入不同 Run 的证据验收。指令修正见 [Admin PR #885](https://github.com/world-sim-dev/vidmuse-admin/pull/885)；发布和真实补查结果重新查 PR/workflow 与本地验证记录。
+
+- 当前任务证据入口仍为 `output/monitoring-prod-verification-20260916.md`；本页不表示新协议已启用或卡片已验收。浏览器连接超时与 Runtime 连接超时分别处理；预检阶段失败应重试同一幂等事件，不另建随机事件冒充成功。
