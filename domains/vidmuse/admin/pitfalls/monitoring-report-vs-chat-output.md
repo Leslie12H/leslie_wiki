@@ -132,3 +132,9 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 - [Admin #885](https://github.com/world-sim-dev/vidmuse-admin/pull/885) 同时为格式错误的 observation ID 走原有有界 fresh-evidence Run；不得拼接、修补旧 ID，不改变其他完整性拒绝和各类重试预算。`reportedSymptoms`、错误 evi_ ID 与非标准 correlation key 的原始失败可能重叠。
 - [MCP #67](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/pull/67) 给 get_file 增加同一完整 commit/path 的 start_line/end_line，核对完整 blob 后返回行号、blob SHA、nextStartLine；完整片段不等于完整文件。源扫描与响应分别有界；超限缩小范围，不能截断代码假装已读。真实 provider_router.py GitHub 响应在两个目标 commit 的 connector 回放中逐字节重建，文件内容不写入知识库或代码仓库。
 - 部署后必须先同步 preset 的工具定义，再使用新增参数；PR/本地回放不代表历史报告已重新生成或生产开关已切换。
+
+## 2026-09-17 发布后源码字节与传输脱敏边界
+
+**Why:** Connector 验证过的 Git blob 与模型最终收到的内容处在不同边界。通用凭据脱敏可能把源码中的配置读取表达式当作赋值值替换；因此行范围完整不代表传输内容逐字节等于未脱敏 Git 原文。
+
+**How to apply:** 同一不可变 commit/path 分段读取后，从完整 tool-result owner 取回内容，检查行号连续性，再分别比对原文件与按现有脱敏规则处理后的字节。核对 server.go 的 redactTransportText、记录 ID 计算顺序和源 blob 校验，不能为了哈希一致关闭脱敏或伪称原文完整。2026-09-17 真实 provider_router.py 的唯一差异落在 301–400 行配置赋值表达式；其余片段一致，脱敏后整体哈希一致。生产发布、工具同步、日报预览、隔离卡片回执与尚未切换的状态入口见本机 output/monitoring-prod-verification-20260916.md 的 production release 小节，以及 [MCP 部署](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35188435006)、[Admin 部署](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35188707690)。发布成功不能替代真实认领回调或新协议消费验收。
