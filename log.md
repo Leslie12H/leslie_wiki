@@ -284,3 +284,5 @@
 - 2026-09-17：补充监控报告生产发布验证指针与源码分段传输脱敏边界；保留卡片回调、新协议切换未完成的证据区别。
 
 - 2026-09-17 ingest：补充正式 preset 切换的资源回读/PVC 回执边界及新增代码行号数字占位回归，指向 MCP #68 与实时验收记录。
+
+- 2026-09-17 ingest: scoped alert trace aliases, immutable evidence hashes and independent root-cause cluster rejection; Admin #887.

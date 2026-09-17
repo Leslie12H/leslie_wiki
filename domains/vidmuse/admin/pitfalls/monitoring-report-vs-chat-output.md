@@ -145,3 +145,10 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 **Why:** 分段读取新增 start_line/end_line 后，正式模型可能把 flat union schema 的所有字段都输出，在 describe 中补两个 0。既有归一化只删除无关空字符串/null 和 limit，因此新增数字占位会让原本可用的仓库发现操作失败。只跑合法 get_file 范围测试不能覆盖这个生产回归。
 
 **How to apply:** 覆盖真实模型完整参数包；仅在不读取文件的 operation 上忽略已知 line-bound 字段的数字零，保留非零/错误类型拒绝及 get_file 的完整范围校验。修复、CI 与发布指针见 [MCP #68](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/pull/68)。正式 preset 的协议化 prompt/skills、Structured Output、Admin 有效 env 应分别保存回读；资源更新前备份精确旧值，Pod 间需要继续验收的回执放到已有 PVC 的受限目录，不能只放会随滚动消失的 /tmp。当前开关、探针终态和实际发布版本只查本机 output/monitoring-prod-verification-20260916.md 的 authorized production protocol cutover 及后续条目；不能从此 page 推断探针已通过。
+
+
+## 2026-09-17 Alert trace aliases and root-cause integrity
+
+**Why:** The original alert API stores an exact trace in context.annotations.latest_trace. Generic aliases miss it and reject a valid correlation. Resolving that compatibility gap can reveal an independent report error that combines direct errors from different traces.
+
+**How to apply:** Recognize only that exact path from monitoring_alert_get_context / monitoring_alert_list, preserving observation IDs, record hashes, exact values, eq operators, producer checks and root-cause clustering. Cover wrong source/path/type/redaction/operator in negative tests. A process-local prospective patch identifies the next rejection; acceptance must rerun on deployed code. See [Admin #887](https://github.com/world-sim-dev/vidmuse-admin/pull/887); current release and formal-preset acceptance evidence lives in output/monitoring-prod-verification-20260916.md. Passing tests does not imply an accepted report.
