@@ -308,3 +308,5 @@
 - 2026-09-17 ingest: Correct pending-versus-active legacy gate; add missing SLS Admin action diagnosis, exact restoration and WAF-versus-acceptance boundaries.
 
 - 2026-09-17：补充 Sand Eval 测试发布 ALB 503 与调度排队证据，记录 PR #1312 的滚动发布、非抢占优先级及失败恢复入口。
+
+- 2026-09-17：记录 PriorityClass 集群权限阻塞测试发布的前置检查问题，关联 PR #1316 的显式启用修复。

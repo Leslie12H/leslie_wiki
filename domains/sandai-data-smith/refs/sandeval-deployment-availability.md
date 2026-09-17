@@ -47,3 +47,10 @@ links: []
 - [PR #1312](https://github.com/world-sim-dev/sandai-data-smith/pull/1312) 持有测试 Web 滚动发布、非抢占 PriorityClass 与第一阶段失败恢复的变更。合并、Gate 和部署状态以 PR / workflow 为准，不把代码提交等同于运行态修复。
 - **Why:** 只改滚动策略仍可能被发布失败分支的 scale-to-zero 抵消。
 - **How to apply:** 检查正常发布和失败恢复两条路径；恢复应绑定本次预检通过的旧配置，并用 API 返回的默认化模板做并发前置条件。QC Worker 替换前仍需确认所有 Web 停止受理。
+
+## PriorityClass 权限与发布隔离
+
+- [测试发布 Run 35228629545](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/35228629545) 在 Web 修改前停止；2026-09-17 只读授权检查确认当前操作者不能读取或创建集群级 PriorityClass，不能把该资源权限当作 namespace 发布权限的一部分。
+- [PR #1316](https://github.com/world-sim-dev/sandai-data-smith/pull/1316) 持有优先级显式启用及默认滚动发布路径。权限和部署状态以当前 RBAC、工作流和 Deployment 为准。
+- **Why:** 增加可选调度优化不能阻塞解决停机的滚动更新；初始修复把两者绑定成了同一个前置条件。
+- **How to apply:** 上线前分别核验 namespaced Deployment 与 cluster-scoped PriorityClass 的权限。默认不访问 PriorityClass；显式启用时仍校验其值、非全局默认和 Never 抢占策略，不因权限错误悄悄跳过检查。
