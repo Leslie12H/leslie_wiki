@@ -189,3 +189,13 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 **Why:** A pure JSON preparation tool cannot detect absent deployed-source calls or a recordRef copied from another Run. Post-terminal rejection gives the Agent no same-Run opportunity to correct the draft. Merely forwarding a Runtime context map also fails if the MCP server does not negotiate the execution-context extension: Maxwell removes unsupported extension metadata.
 
 **How to apply:** Reuse Admin acquisition and V2 validators in a read-only preflight called before MCP emits prepared/hash. Bind the requested draft to the exact canonical current-Run tool call and trusted Admin user-action context, hydrate full immutable evidence owners, return bounded correction paths/source checks, and retain independent final acceptance. Support both native object and legacy JSON-string tool arguments. Advertise ai.maxwell/execution-context version1 in initialize, bound the total Runtime read and HTTP response, refuse redirects, and do not convert failed drafts into child Runs or forged success. See [Admin #890](https://github.com/world-sim-dev/vidmuse-admin/pull/890) and [MCP #69](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/pull/69). These links are implementation/review pointers, not proof of production acceptance; current test, CI, release, browser-access and formal-preset verification boundaries remain in output/monitoring-prod-verification-20260916.md. Deploy the Admin endpoint before activating MCP preflight, refresh bound tools, then prove formal-preset acceptance before switching protocol.
+
+
+## 2026-09-17 线上技能补证冲突与独立日报探针初始化
+
+**Why:** 在线 Reporting V2 的“不要重新查询”会阻止新预检要求的同 Run 补证；仓库中的技能副本与线上内容也可能不同。独立 Python 探针不会执行 FastAPI lifespan，直接调用日报服务会因进程内 ProviderRouter 尚未加载配置而报 ProviderNotFoundError，不能据此推断正式服务的模型路由丢失。
+
+**How to apply:** 先回读线上技能，只为新协议预检反馈增加同 Run 补证例外，保留全部既有 schema、证据和 legacy 规则；保存后重新读取全文比对。不要用仓库整份文件覆盖已定制的线上技能。独立日报预览先执行与 app.py 启动相同的 model_config 缓存加载步骤，数据库保持只读，不启动发送循环、不清除 sent guard。验证必须检查模型输出校验与来源覆盖，不能只看 HTTP 或工作流完成。
+
+- 已部署严格预检的历史负例入口：[Admin endpoint verification](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35212086232)。它证明错误草稿被正确拒绝，不代表历史记录已重生成。
+- 独立日报完整性与字段修正入口：[daily brief verification](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35212875025)：2026-09-17 首次模型输出 main_issues 类型错误后，原有有界修正生成合法卡片，来源完整；没有发送消息。后续定时投递和协议状态仍须查看实际运行，不从该只读预览推断。

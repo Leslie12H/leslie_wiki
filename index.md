@@ -160,4 +160,4 @@
 
 - 2026-09-17 生产 invalid_report 处理器未调用证据续查辅助函数，隔离调度器测试不能替代生产恢复验收，见[报告协议边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)。
 
-- Monitoring 当前 Run 草稿预检、MCP 执行上下文协商及真实证据绑定入口，见 [报告与聊天输出边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)（2026-09-17）；PR 合并和 CI 不代表正式 preset 验收通过。
+- Monitoring 当前 Run 草稿预检、MCP 执行上下文协商及真实证据绑定入口，见 [报告与聊天输出边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)（2026-09-17）；PR 合并和 CI 不代表正式 preset 验收通过；补线上技能禁止补读冲突与独立日报探针的模型路由初始化边界。
