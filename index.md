@@ -6,6 +6,7 @@
 ## Domains(业务系统)
 
 ### vidmuse — [业务全景](domains/vidmuse/README.md)
+- [自由画布下载与生成版本关联](domains/vidmuse/refs/free-canvas-download-attribution.md) — 下载者、版本、任务、实际入参的精确关联及开始下载/最终采用边界
 - [Workflow Catalog、Thread 与 Plugin](domains/vidmuse/refs/workflow-catalog-thread-plugin.md) — 返回体限额、Git revision 发布、缓存/Job 重建验收、路径执行和字符串 null 过滤排查指针
 - [aion](domains/vidmuse/systems/aion.md) — agent/runtime/media generation 后端平台
 - [vidmuse-zeus](domains/vidmuse/systems/zeus.md) — Vidmuse 产品 REST API + AION relay

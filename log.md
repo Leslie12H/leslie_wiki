@@ -296,3 +296,5 @@
 - 2026-09-17 ingest: 模型 literal records map 只证明内部一致，服务端 canonical Run 引用预检才构成来源验证。
 
 - 2026-09-17 ingest: 核对真实 dispatch 调用链，纠正隔离 evidence scheduler 与生产 single-Run 错误处理之间的验收边界。
+
+- 2026-09-17 ingest: 自由画布下载事件按用户账号与版本交叉校验；记录多版本下载、任务 JSON 截断与实际入参证据边界。
