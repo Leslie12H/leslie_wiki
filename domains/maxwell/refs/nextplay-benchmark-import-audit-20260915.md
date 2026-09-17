@@ -2,7 +2,7 @@
 name: nextplay-benchmark-import-audit-20260915
 type: reference
 created: 2026-09-15
-updated: 2026-09-16
+updated: 2026-09-17
 tags: [maxwell, evolve, nextplay, benchmark, case-import, judge]
 links: [nextplay-benchmark-final-plan-20260914, nextplay-benchmark-implementation-20260914, evolve-generic-platform-review]
 ---
@@ -57,3 +57,19 @@ links: [nextplay-benchmark-final-plan-20260914, nextplay-benchmark-implementatio
 - 来源版本是否持久化要追 `case_import.go` 的 `caseInputsFor` 和 `caseimport/content.go`，不能只相信 Source 注释或预检报告。核验锚点下 identity/version/locator/importKey 未进入 Case 写入字段；Case 只保留来源枚举，复用依据仍是 Work、CaseKey 与 ContentHash。使用显式 provenance 后重新计算内容 hash，并保留原始导出包和报告。
 - 隐藏题权限查 `integration/maxwellauth/resolver.go`、`transport/http/handler.go` 与 `transport/mcp/handler.go`：Studio 管理身份和共享 Agent session 的 AccessClass 分开核对。Case list/get 在 `application/queries/service.go`、`infrastructure/postgres/cases.go` 过滤隐藏题；不要把“Agent 看不到”解释成写入失败，也不要改成 visible 来解决导入。
 - 特别审计 draft put/get/list 与 import 分支的隐藏题检查是否和 create_revisions 一致；核验锚点存在检查缺口。缺少受保护的 hidden draft 创建入口时，应报告产品阻塞并修复正式管理流程，不利用可见 Agent 或直接改库绕过确认及隔离。
+
+
+## 2026-09-17 HTTP 400 复现与管理导入修复
+
+核验锚点：Maxwell main `20f2446c3217c9b517a8923a64aa2ab4ff37af04`。本轮证据、修复补丁与测试日志入口：[400 诊断记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/nextplay-case-import-400-20260917/diagnosis.md)。它区分线上可见的通用 400 与本地正式 HTTP 调用链的精确响应；不要把本地测试称为线上部署或导入完成。
+
+**Why:** 资产目录收集与 Agent 设计流程不能共用一个隐含的确认来源。只补 cases 草稿仍会遇到设计产物门槛；把隐藏题写入共享草稿还可能扩大可见范围。预检期间可编辑内容也可能使用户看到的差异与真正提交的输入不一致。
+
+**How to apply:**
+
+- 对照 `internal/app/studio_case_import.go`、`transport/http/handler.go` 与 `commands/case_import_studio.go`，确认管理资源接口的确认来源仅来自认证用户提交；MCP / 通用 tools 不应因参数或请求头变成用户确认。重新核对 Case 写入、用户确认与 hidden 权限三层边界。
+- 空任务导入的技术验收需从无 Objective/Profile/草稿的 Work 开始，读回 Case 内容、Work 阶段与 Artifact；同时保留普通工具门槛的反向回归。具体测试入口见 `internal/app/studio_case_import_test.go` 与 `case_import_http_test.go`。
+- 管理导入全量验证后使用一次 `CreateCaseRevisions` 仓储事务；检查 PostgreSQL 锁、冲突和超时，不能把内存 2000 条通过解释为线上最大批量吞吐证明。
+- Studio `CaseImportWizard.tsx` 应消费后端错误正文，并绑定预检请求快照。导入写入与 CaseSet/Benchmark 定版是不同结果，按钮和成功说明不能混称冻结。
+- 纠正入口认知：本轮锚点存在通用 HTTP `/tools/evolve_draft` 的管理 put 能力，但专用 OpenAPI 客户端未覆盖；它不解决空 Work 阶段门槛，也不能因此把 hidden 题移入共享 Agent 草稿。
+- 成功请求指纹日志用于追溯，不等于数据库事务内永久确认记录。导入来源上下文保持原样；不要将提交者或提交时间塞入参与内容哈希、会交给执行器的 context。
