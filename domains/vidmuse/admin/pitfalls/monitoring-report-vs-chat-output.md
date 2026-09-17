@@ -122,3 +122,13 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 **Why:** 真实模型调用准备工具和输出 Markdown 后，仍需证明原始 canonical 报告通过 Admin 严格校验，再由状态机落库并构建卡片。单独验证过认领回调，不等于同一新报告已走完生产链路。
 
 **How to apply:** 2026-09-17 第三次标准纠错 Run 在保留真实字段值、事故窗口、版本与来源绑定校验的情况下通过；使用 PR #885 的进程内修复回收，原装 Admin 状态机在显式 SQLite session 中得到 delivered / analysis_completed / agent.tool.result，并成功构建卡片。真实飞书认领测试另有独立回执。两个结果应分别记录，不能合并宣称生产新协议已全面验收。精确 Thread/Run、报告 hash、字段数与未发布边界查 `output/monitoring-prod-verification-20260916.md` 的 strict report acceptance completed。发布仍先核对准确 HEAD 的 CI、部署版本与 preset 工具同步，之后再验证正式消费链路。
+
+## 2026-09-17 缺少 Pod 注解与超大源码的真实缺口
+
+**Why:** 13 份历史 Run 的规范工具调用包含部署查询，但告警没有 latest_pod，Admin 绑定函数提前返回后把它们标为 not_attempted。只加强“必须读原服务”的提示词无法修复消费者丢掉证据的问题。解开这一层后仍可能暴露报告字段错误或源码读取容量问题，错误类别并非互斥。
+
+**How to apply:** 对照 `_incident_deployment_bindings`：缺少注解且没有完整显式 workload 标签时，只允许从规范主查询、精确事故窗口的同一记录推导 Pod/namespace→Deployment；保留显式标签限制，不能拿无绑定的当前 Pod 列表、下游或扩窗记录代替。13 份完整 owner 回放均恢复部署和 commit 绑定，但不是完整报告验收；细节见本机 `output/monitoring-prod-verification-20260916.md` mandatory preservation fixes。
+
+- [Admin #885](https://github.com/world-sim-dev/vidmuse-admin/pull/885) 同时为格式错误的 observation ID 走原有有界 fresh-evidence Run；不得拼接、修补旧 ID，不改变其他完整性拒绝和各类重试预算。`reportedSymptoms`、错误 evi_ ID 与非标准 correlation key 的原始失败可能重叠。
+- [MCP #67](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/pull/67) 给 get_file 增加同一完整 commit/path 的 start_line/end_line，核对完整 blob 后返回行号、blob SHA、nextStartLine；完整片段不等于完整文件。源扫描与响应分别有界；超限缩小范围，不能截断代码假装已读。真实 provider_router.py GitHub 响应在两个目标 commit 的 connector 回放中逐字节重建，文件内容不写入知识库或代码仓库。
+- 部署后必须先同步 preset 的工具定义，再使用新增参数；PR/本地回放不代表历史报告已重新生成或生产开关已切换。
