@@ -164,3 +164,5 @@
 - 自由画布当前展示版本与最终选片的区别、精确输出匹配及保留用户改名，见 [抽卡导出入口](domains/vidmuse/refs/free-canvas-generation-export.md)（2026-09-16）。
 
 - [Analytics Worker 超大聊天 OOM](domains/vidmuse/admin/pitfalls/analytics-worker-oversized-history-oom.md) — 完整响应内存放大、崩溃重试循环、流式体积准入与生产恢复验收指针（2026-09-16）。
+
+- [Sand Eval SQL 与锁诊断入口](domains/sandai-data-smith/refs/sandeval-sql-lock-diagnosis.md) — 日志库边界、transaction_trace 慢 SQL、Cannot acquire lock in time 与连接池耗尽的核验指针（2026-09-17）。
