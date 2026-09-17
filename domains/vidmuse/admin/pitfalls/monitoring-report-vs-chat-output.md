@@ -171,3 +171,9 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 **Why:** 通过 ACK Deployment 容器表单只改一个环境变量，也可能重新序列化已有 Secret 引用并丢失 optional=true。缺省为必需引用后，新 Pod 因不存在的可选 Secret 进入 CreateContainerConfigError；应用镜像本身没有变化。
 
 **How to apply:** 先保留已知健康的完整模板与可用副本，发现异常先整体回退该次表单变更。用 YAML 编辑器只替换目标值，再通过复制回读验证文档除目标字符串外逐字相同；保留 optional、envFrom、资源限制、initContainers 与挂载等原字段。提交后检查新 Pod 的有效配置和2/2可用，不能以更新请求成功替代验证。具体恢复记录见 output/monitoring-prod-verification-20260916.md 的 revision609–611 条目。
+
+## 2026-09-17 模型构造的证据表不能充当来源自检
+
+**Why:** 真实正式 preset 的 run_code 自检把模型手写的 recordRef 和日志片段放入 literal records map，再验证同一份字符串 contains，输出 matched；这只证明自制数据内部一致，不能证明引用存在于当前 Runtime Run。
+
+**How to apply:** 将这类自检归为模型推导，不提升为来源证明。可靠预检应由可信服务读取当前 Run 的 canonical tool-call/result，核对 evidenceId/recordRef/path/value；现有严格 Admin 拒绝保持不变。未实现服务端预检时不能声称提示词中的“用代码校验”已解决引用问题。具体调用证据和未完成边界见本机 output/monitoring-prod-verification-20260916.md 的 generation4 self-check 条目。

@@ -292,3 +292,5 @@
 - 2026-09-17 ingest: 原卡认领更新回执的大盘误判及正式 preset 跨 Run 引用拒绝；保留 strict gate 与回退边界，Admin #889。
 
 - 2026-09-17 ingest: ACK 表单重新序列化丢失 optional Secret，保留健康模板并验证单字段 YAML 差异。
+
+- 2026-09-17 ingest: 模型 literal records map 只证明内部一致，服务端 canonical Run 引用预检才构成来源验证。
