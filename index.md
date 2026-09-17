@@ -182,3 +182,5 @@
 - Sand Eval 真实 HTTP E2E 与 UI 回归：见 [验收指针](domains/sandai-data-smith/refs/sandeval-e2e-acceptance.md)，区分用例定义、脚本缺口与真实运行回执。
 
 - [Test/Main Cherry-pick 团队规范](disciplines/dev/team-test-main-cherry-pick-workflow.md) — 用户确定的 test 验收、cherry-pick 上线、main 普通 merge 回合及部署回归责任（2026-09-17）。
+
+- Test/Main Cherry-pick 团队规范的飞书协作入口见 [规范页](disciplines/dev/team-test-main-cherry-pick-workflow.md)（2026-09-17 创建并回读）。
