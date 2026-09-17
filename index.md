@@ -136,3 +136,5 @@
 - 2026-09-16 报告协议首次真实 canary 的空替代哈希与隔离 Problem 风险：见 [报告与聊天分离边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)，修复 PR #65、下游 trace 全集、结构预检 PR #66、记录定位与验证入口。
 
 - 原报警 workload 与下游部署证据不能互相替代，见 [报告协议验收边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)（2026-09-17）。
+
+- [Studio 发布变量与候选展示](domains/maxwell/pitfalls/studio-release-env-and-candidate-results.md) — composite action 同层 env 空值导致白屏、版本 CDN 准入和单候选结果证据边界（2026-09-17）。
