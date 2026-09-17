@@ -116,3 +116,9 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 
 - 新报告的精确字段断言仍可能失败，例如把相邻记录的标准化 error code 当作当前 `/log` 字段中的原文；不能通过改写 canonical 报告或放宽 contains 断言解决。
 - 私有 helper 也可能被专项策略测试直接使用。接口新增参数后，除了相关模块测试，还应运行完整 Monitoring 测试及准确 PR HEAD 的 CI；此次兼容修复仍指向 Admin #885，不从旧 HEAD 的 CI 推断发布准入。
+
+## 2026-09-17 严格接收与分层验收边界
+
+**Why:** 真实模型调用准备工具和输出 Markdown 后，仍需证明原始 canonical 报告通过 Admin 严格校验，再由状态机落库并构建卡片。单独验证过认领回调，不等于同一新报告已走完生产链路。
+
+**How to apply:** 2026-09-17 第三次标准纠错 Run 在保留真实字段值、事故窗口、版本与来源绑定校验的情况下通过；使用 PR #885 的进程内修复回收，原装 Admin 状态机在显式 SQLite session 中得到 delivered / analysis_completed / agent.tool.result，并成功构建卡片。真实飞书认领测试另有独立回执。两个结果应分别记录，不能合并宣称生产新协议已全面验收。精确 Thread/Run、报告 hash、字段数与未发布边界查 `output/monitoring-prod-verification-20260916.md` 的 strict report acceptance completed。发布仍先核对准确 HEAD 的 CI、部署版本与 preset 工具同步，之后再验证正式消费链路。
