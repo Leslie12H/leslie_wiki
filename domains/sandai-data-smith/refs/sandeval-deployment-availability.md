@@ -65,3 +65,5 @@ links: []
 - 当次模板没有 affinity/nodeSelector；替代节点标签实测为 SpotAsPriceGo，说明在线测试 Web 仍可落到可回收计算节点。代码入口是 `prepare_test_resources.py` 删除 affinity，及 `deploy_test.py` 沿用无约束模板。
 - `ack-operator-system` 的 cleaner 日志显示 22:02:25 提交 38 节点释放批次、22:03:26 完成；尚未取得该批次精确节点清单，当前身份读取 SpotNodePoolCleaner CR 被 Forbidden。因此不能仅凭同窗时间断言该 cleaner 删除了故障节点。
 - [PR #1322](https://github.com/world-sim-dev/sandai-data-smith/pull/1322) 持有 Eval Web/QC 常驻非 Spot 节点约束和发布回读检查；当前运行态以 PR/Gate/集群为准。保留单副本意味着仍不能容忍任意常驻节点故障，跨节点多副本需要单独验收。
+
+- 部署验收入口：[Run 35232992685](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/35232992685)，绑定测试分支提交 `8c099307ef0845324823f2b37ad1e543958d557b`；2026-09-17 的现场复验覆盖两次 Web 滚动、实际 NoSpot 节点标签、容器 imageID 与构建 digest 一致性及 Web/QC 就绪。此结果不替代后续故障窗口的重新核验。
