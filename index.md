@@ -176,3 +176,5 @@
 - Sand Eval 多角色自动化入口：见 [验收指针](domains/sandai-data-smith/refs/sandeval-e2e-acceptance.md)，包含分层运行和真实存储核验。
 
 - [Sand Eval 质量中心测试数据](domains/sand-eval/pitfalls/quality-center-test-data.md) — 任务内质检与质量中心的边界、完整份数和批次契约、送审与验收入口（2026-09-17）。
+
+- [Test / Prod 与短期验收候选](disciplines/dev/test-prod-short-lived-candidates.md) — 单一长期 main、短期候选、hotfix 同步及共享 test 排队建议（2026-09-17，未实施）。
