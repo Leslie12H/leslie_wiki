@@ -20,3 +20,6 @@ links: [sandeval-local-startup, sandeval-roles-and-workflow]
 
 - 自动化入口（PR #1287，合并状态需现查）：`sand-eval/platform/acceptance/README.md`、`scenarios.json`、`run.py`；真实测试资源只读核验使用同目录 `live.py`、`storage_probe.py`。隔离测试与真实端到端证据必须分开解释。
 - 2026-09-17 自动化执行记录：`/Users/leslie/Documents/Playground/output/sandeval-automation-20260917/report.md`；失败回归不应改成 xfail 来掩盖产品缺陷。
+
+- 真实 HTTP 多角色 E2E：`sand-eval/platform/acceptance/e2e/README.md`、`cases.json` 与 `run.py`。入口数不是完整性证据，先读 README 的未实现变体，再读具体运行结果；故障注入必须有专用进程所有权。
+- 2026-09-17 真实运行与 UI 断言：`/Users/leslie/Documents/Playground/output/sandeval-complete-e2e-20260917/report.md`；含完整用例目标、52 项运行回执、时间精度两侧原始值、失败页面按钮状态。修复后必须重跑，不沿用历史 PASS。
