@@ -156,3 +156,5 @@
 - 2026-09-17 ACK 容器表单丢失 optional Secret、单字段 YAML 变更回读与安全模板回退见[监控发布边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)。
 
 - 2026-09-17 模型手写 records map 的自检不能证明 canonical Runtime 引用，见[报告证据边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)。
+
+- 2026-09-17 生产 invalid_report 处理器未调用证据续查辅助函数，隔离调度器测试不能替代生产恢复验收，见[报告协议边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)。

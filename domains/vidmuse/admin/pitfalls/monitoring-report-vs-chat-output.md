@@ -177,3 +177,9 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 **Why:** 真实正式 preset 的 run_code 自检把模型手写的 recordRef 和日志片段放入 literal records map，再验证同一份字符串 contains，输出 matched；这只证明自制数据内部一致，不能证明引用存在于当前 Runtime Run。
 
 **How to apply:** 将这类自检归为模型推导，不提升为来源证明。可靠预检应由可信服务读取当前 Run 的 canonical tool-call/result，核对 evidenceId/recordRef/path/value；现有严格 Admin 拒绝保持不变。未实现服务端预检时不能声称提示词中的“用代码校验”已解决引用问题。具体调用证据和未完成边界见本机 output/monitoring-prod-verification-20260916.md 的 generation4 self-check 条目。
+
+## 2026-09-17 隔离调度器验证不等于生产错误恢复
+
+**Why:** 生产 monitoring_incident_dispatch.py 的 IncidentReportValidationError 分支自 c1d86b6194（2026-08-21）起直接记录 invalid_report，要求在同一 Run 完成可执行证据采集；它没有调用 schedule_evidence_reanalysis。因此在 SQLite 中调用调度器并验证新 Run，只证明调度器自身可用，新增恢复白名单也不会自动让真实生产报告错误进入该路径。
+
+**How to apply:** 同时检查实际调用方、生产行状态和真实运行，而不是只测辅助函数。保留原 single-Run 策略；如果目标是防止漏查或错误引用，应在完成前提供可信服务端校验反馈，而不是把隔离续查测试描述成生产自动恢复。生产路径、真实 Outbox2501 缺少 adaptive_code_file 调用、当前发布和安全回退证据见 output/monitoring-prod-verification-20260916.md。严格门禁未通过时，不宣称所有调查能力已恢复。
