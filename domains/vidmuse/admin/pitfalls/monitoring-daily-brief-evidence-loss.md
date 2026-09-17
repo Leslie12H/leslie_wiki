@@ -60,3 +60,11 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-daily-brief-star
 - 日志源：SLS 项目 `k8s-log-c7c0ede6c71484f8da34a829954c50cd9`、Logstore `vidmuse-admin`，按上述绝对时间回读并以事件名关联。不要将同群半夜其他 Sonnet 故障讨论当成本次模型请求证据。
 - [综合修复范围](https://github.com/world-sim-dev/vidmuse-admin/blob/cb3a69c392e29eb7c5abff573aab5210d0bedc84/apps/admin/service/monitoring_daily_brief_report.py#L386)：`_try_llm_synthesize` 的结构校验与修复白名单；[结构校验入口](https://github.com/world-sim-dev/vidmuse-admin/blob/cb3a69c392e29eb7c5abff573aab5210d0bedc84/apps/admin/service/monitoring_brief_evidence.py#L702) 定位 schema 边界，当前统一错误码不足以指出字段。
 - [失败重试与日级 guard](https://github.com/world-sim-dev/vidmuse-admin/blob/cb3a69c392e29eb7c5abff573aab5210d0bedc84/apps/admin/service/monitoring_daily_brief_report.py#L646)：`_defer_failed_brief` 仅将指定瞬态错误及 `invalid_json` 纳入有界重试；[独立启动入口](https://github.com/world-sim-dev/vidmuse-admin/blob/cb3a69c392e29eb7c5abff573aab5210d0bedc84/apps/admin/app.py#L421) 在全局后台 owner 门禁之前按进程启动日报。旧版仅由全局 owner 启动的排查规则见[历史启动交接](monitoring-daily-brief-startup-handoff.md)，不能套用到本次已有综合日志的执行。
+
+### 2026-09-17：调查 Preset 与日报是不同输出协议
+
+**Why:** `invalid_schema` 表示当次输出未通过既有规则，不能据此推断结构定义刚发生变更。对比 Admin #881、#882、#883，日报生成、输入提取、输出校验及直接文本调用链没有差异；#881 前后的共享 JSON 解析和内容提取函数也一致。#883 修改单条 Incident 的机器报告交付，日报仍从已落库报告提取结论，以自己的 Prompt 和 `submit_daily_brief` 格式调用文本模型，不执行 Maxwell 调查 Preset，也不解析其聊天 Markdown。
+
+**How to apply:** 分开检查调查的 `INCIDENT_DIAGNOSIS_V2` 与日报的 `main_issues/noise/recommendations`。Preset 可以通过调查结论文本间接影响日报输入，但证明因果关系需要当次输入、原始输出及字段级错误；本次未保存完整输出，不能认定具体输入导致失败。昨天的生产与隔离 Preset 调整记录见[报告与聊天输出](monitoring-report-vs-chat-output.md)，历史记录不代表未来线上设置。
+
+- 固定代码：[日报自己的模型请求](https://github.com/world-sim-dev/vidmuse-admin/blob/cb3a69c392e29eb7c5abff573aab5210d0bedc84/apps/admin/service/monitoring_daily_brief_report.py#L292)、[结论输入提取](https://github.com/world-sim-dev/vidmuse-admin/blob/cb3a69c392e29eb7c5abff573aab5210d0bedc84/apps/admin/service/monitoring_brief_evidence.py#L652)、[上游报告交付 PR #883](https://github.com/world-sim-dev/vidmuse-admin/pull/883)。
