@@ -290,3 +290,5 @@
 - 2026-09-17 ingest: persisted retry delivery protocol and bounded recovery for downstream filtered-query proof selection; Admin #887/#888.
 
 - 2026-09-17 ingest: 原卡认领更新回执的大盘误判及正式 preset 跨 Run 引用拒绝；保留 strict gate 与回退边界，Admin #889。
+
+- 2026-09-17 ingest: ACK 表单重新序列化丢失 optional Secret，保留健康模板并验证单字段 YAML 差异。

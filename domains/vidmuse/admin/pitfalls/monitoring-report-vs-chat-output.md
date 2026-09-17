@@ -165,3 +165,9 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 **Why:** 认领更新可能直接修改原告警卡片。发送端已验证原消息与群范围，但大盘若将所有非 alert_opened 活动都按话题回复校验，会把成功回填误判为缺少 thread/root/parent。另一边，正式 preset 可生成外观正确的 Markdown，却在新 evidenceId 下沿用旧 Run 的 recordRef；prepared 不能证明引用可被 Admin 接收。
 
 **How to apply:** 大盘与发送端对同一原卡更新采用相同的 exact root receipt 条件；保留错群、错消息、缺回执和普通话题回复的负向用例，不能补造生产回执。见 [Admin #889](https://github.com/world-sim-dev/vidmuse-admin/pull/889)。跨 Run 引用继续拒绝，不因验收样本失败而扩大自动重试白名单或重置预算。正式 preset 未通过时按发布门禁回退配置；配置回退只控制承接协议，不能声称它修复了模型引用错误。当前执行状态与正式拒绝证据见本机 output/monitoring-prod-verification-20260916.md，不从 PR 合并或工具 prepared 推断生产验收成功。
+
+## 2026-09-17 ACK 表单编辑的可选 Secret 丢失
+
+**Why:** 通过 ACK Deployment 容器表单只改一个环境变量，也可能重新序列化已有 Secret 引用并丢失 optional=true。缺省为必需引用后，新 Pod 因不存在的可选 Secret 进入 CreateContainerConfigError；应用镜像本身没有变化。
+
+**How to apply:** 先保留已知健康的完整模板与可用副本，发现异常先整体回退该次表单变更。用 YAML 编辑器只替换目标值，再通过复制回读验证文档除目标字符串外逐字相同；保留 optional、envFrom、资源限制、initContainers 与挂载等原字段。提交后检查新 Pod 的有效配置和2/2可用，不能以更新请求成功替代验证。具体恢复记录见 output/monitoring-prod-verification-20260916.md 的 revision609–611 条目。
