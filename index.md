@@ -167,3 +167,5 @@
 - 2026-09-17 First-claim protocol cutover gate and SLS Admin action lost from both DSL/graph: [monitoring output and routing boundaries](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md).
 
 - [Sand Eval 部署可用性](domains/sandai-data-smith/refs/sandeval-deployment-availability.md) — 测试站 ALB 503、调度队列证据、滚动发布/失败恢复修复入口及 PriorityClass 权限边界（2026-09-17）。
+
+- Sand Eval 发布后节点移除、单副本与 Spot 调度边界：见 [部署可用性诊断](domains/sandai-data-smith/refs/sandeval-deployment-availability.md)（2026-09-17）。

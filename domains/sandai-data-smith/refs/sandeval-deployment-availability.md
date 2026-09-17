@@ -54,3 +54,14 @@ links: []
 - [PR #1316](https://github.com/world-sim-dev/sandai-data-smith/pull/1316) 持有优先级显式启用及默认滚动发布路径。权限和部署状态以当前 RBAC、工作流和 Deployment 为准。
 - **Why:** 增加可选调度优化不能阻塞解决停机的滚动更新；初始修复把两者绑定成了同一个前置条件。
 - **How to apply:** 上线前分别核验 namespaced Deployment 与 cluster-scoped PriorityClass 的权限。默认不访问 PriorityClass；显式启用时仍校验其值、非全局默认和 Never 抢占策略，不因权限错误悄悄跳过检查。
+
+## 发布成功后的节点移除与调度边界
+
+**Why:** 滚动发布的可用性保证不覆盖单副本所在节点被移除；提高调度优先级也不能让已删除的节点继续服务。
+
+**How to apply:** 用户再次报错时重新绑定故障窗口，比较 Deployment generation、ReplicaSet、Pod UID 和 nodeName。先读节点事件，再核对节点标签及资源生成、发布脚本里的硬性亲和性；不要把上一轮 HTTP 200 采样延伸成长期健康结论。
+
+- 2026-09-17 北京时间 22:02:24 节点 `cn-shanghai.192.168.103.95` 变为不可调度，22:02:44 记录 RemovingNode；随后 API 返回 NotFound。原 Web Pod 消失，22:03:34 同一 ReplicaSet 创建替代 Pod，22:03:59 Ready；Deployment generation 仍为 180、镜像未变。这轮发生在 [成功发布 Run 35230023499](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/35230023499) 后。
+- 当次模板没有 affinity/nodeSelector；替代节点标签实测为 SpotAsPriceGo，说明在线测试 Web 仍可落到可回收计算节点。代码入口是 `prepare_test_resources.py` 删除 affinity，及 `deploy_test.py` 沿用无约束模板。
+- `ack-operator-system` 的 cleaner 日志显示 22:02:25 提交 38 节点释放批次、22:03:26 完成；尚未取得该批次精确节点清单，当前身份读取 SpotNodePoolCleaner CR 被 Forbidden。因此不能仅凭同窗时间断言该 cleaner 删除了故障节点。
+- [PR #1322](https://github.com/world-sim-dev/sandai-data-smith/pull/1322) 持有 Eval Web/QC 常驻非 Spot 节点约束和发布回读检查；当前运行态以 PR/Gate/集群为准。保留单副本意味着仍不能容忍任意常驻节点故障，跨节点多副本需要单独验收。
