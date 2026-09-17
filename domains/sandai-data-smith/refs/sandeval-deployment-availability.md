@@ -67,3 +67,12 @@ links: []
 - [PR #1322](https://github.com/world-sim-dev/sandai-data-smith/pull/1322) 持有 Eval Web/QC 常驻非 Spot 节点约束和发布回读检查；当前运行态以 PR/Gate/集群为准。保留单副本意味着仍不能容忍任意常驻节点故障，跨节点多副本需要单独验收。
 
 - 部署验收入口：[Run 35232992685](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/35232992685)，绑定测试分支提交 `8c099307ef0845324823f2b37ad1e543958d557b`；2026-09-17 的现场复验覆盖两次 Web 滚动、实际 NoSpot 节点标签、容器 imageID 与构建 digest 一致性及 Web/QC 就绪。此结果不替代后续故障窗口的重新核验。
+
+## 生产常驻节点约束与发布覆盖
+
+**Why:** 当前 Pod 恰好在 NoSpot 节点，不等于下一次重建仍受该约束；生产 Web 的节点池筛选与 Worker 的节点策略需要分别核验。生成 Worker 按设计不随常规 Web CI 更新，不能把 Web 发布成功当作所有 Worker 已发布。
+
+**How to apply:** 同时检查 `platform/k8s/deployment.yaml`、`generation-worker.yaml`、`qc-release-worker.yaml` 的硬性节点约束；发布后回读 Pod node labels 和 imageID。生成 Worker 使用 `docs/operations/video-generation-workspace-rollout.md` 的独立发布入口，先读活跃任务，复用已验证 main 的 digest/receipt，并完成稳定性检查。
+
+- [PR #1325](https://github.com/world-sim-dev/sandai-data-smith/pull/1325) 持有三类生产工作负载的常驻非 Spot 约束。
+- [PR #1309](https://github.com/world-sim-dev/sandai-data-smith/pull/1309) 将 test 合入 main；[生产 Run 35240105965](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/35240105965) 绑定 main 提交 `9d704ad5c4fcff802a9c682889cdce00815cfbb2`。2026-09-17 验收覆盖 Web/QC 的 CI 更新、生成 Worker 独立补发、实际节点与全部容器 digest 回读。部署状态仍以当前集群和该 run 为准。
