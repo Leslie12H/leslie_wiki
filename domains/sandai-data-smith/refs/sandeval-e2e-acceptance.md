@@ -23,3 +23,5 @@ links: [sandeval-local-startup, sandeval-roles-and-workflow]
 
 - 真实 HTTP 多角色 E2E：`sand-eval/platform/acceptance/e2e/README.md`、`cases.json` 与 `run.py`。入口数不是完整性证据，先读 README 的未实现变体，再读具体运行结果；故障注入必须有专用进程所有权。
 - 2026-09-17 真实运行与 UI 断言：`/Users/leslie/Documents/Playground/output/sandeval-complete-e2e-20260917/report.md`；含完整用例目标、52 项运行回执、时间精度两侧原始值、失败页面按钮状态。修复后必须重跑，不沿用历史 PASS。
+
+- 2026-09-17 生产定向复测：`/Users/leslie/Documents/Playground/output/sandeval-prod-retest-20260917/report.md`，含生产页面截图、冻结计划与 Hologres 同一卡时间比对。解释 wave 数量前先核对入口：`app/repositories/ev3_write.py::persist_assignment_operation` 的 `create_batch` 与页面分派服务不同；CLI 成功不能替代页面 E06 验收。原页面复测状态以报告为准。

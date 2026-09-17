@@ -184,3 +184,5 @@
 - [Test/Main Cherry-pick 团队规范](disciplines/dev/team-test-main-cherry-pick-workflow.md) — 用户确定的 test 验收、cherry-pick 上线、main 普通 merge 回合及部署回归责任（2026-09-17）。
 
 - Test/Main Cherry-pick 团队规范的飞书协作入口见 [规范页](disciplines/dev/team-test-main-cherry-pick-workflow.md)（2026-09-17 创建并回读）。
+
+- Sand Eval 生产 E06/E07 复测与 CLI/页面入口差异：见 [验收指针](domains/sandai-data-smith/refs/sandeval-e2e-acceptance.md)。
