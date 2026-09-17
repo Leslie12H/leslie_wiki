@@ -144,3 +144,5 @@
 
 - 候选正文、空 Benchmark 与多 Case 并发的区分见 [Studio 与候选验收](domains/maxwell/pitfalls/studio-release-env-and-candidate-results.md)，PR #309 提供入口与调度回归（2026-09-17）。
 - 2026-09-17 分段报告上下文恢复、采集与证明部署关联对齐、历史快照和标量 observation 边界见[监控报告验收](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)，修复指针 Admin #885 / MCP #67。
+
+- 2026-09-17 真实飞书认领/原卡片回填、临时样本清理与专项策略 CI 兼容门禁见[报告协议验收边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)。

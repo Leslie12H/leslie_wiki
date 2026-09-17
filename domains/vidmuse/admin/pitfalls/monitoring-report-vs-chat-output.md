@@ -106,4 +106,13 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-code-scope-block
 **How to apply:** 在同一 canonical user action 中，只恢复稳定消息 ID 对应、紧邻、唯一且不携带另一个绑定的证据 companion；仍核对 Incident、event、generation 和 report binding。证明阶段复用 `_bound_incident_deployment_evidence`，保留原始命名空间、主查询、事故窗口及 current-Run 约束。代码和正反例见 [Admin PR #885](https://github.com/world-sim-dev/vidmuse-admin/pull/885)。不能用当前 Deployment 快照证明历史事故部署；关联正确之后，时间和实际字段值校验仍可能合理拒绝报告。
 
 - MCP 的 prepared 仅是准备成功，不是 Admin 接受。`eq` 数组值、过短 contains 等消费者格式限制应提前给出字段级纠错，见 [MCP PR #67](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/pull/67)；证据和时间语义仍归 Admin 验证。
-- 本次 canonical 回放、878 项 Admin 回归、MCP 全量测试和后续隔离纠错 Run 的证据查本机 `output/monitoring-prod-verification-20260916.md`；不要从 PR 或单测推断生产开关已变更、真实认领已验收。
+- 本次 canonical 回放、完整 Monitoring 回归、MCP 全量测试和后续隔离纠错 Run 的证据查本机 `output/monitoring-prod-verification-20260916.md`；不要从 PR 或单测推断生产开关已变更、真实认领已验收。
+
+## 2026-09-17 真实卡片回调与隔离清理
+
+**Why:** 报告已准备、SQLite 验收和真实飞书认领属于不同证明层。认领前的 Incident 卡片依赖准确 chat/root receipt；仅标记 attention_excluded 也不能保证测试数据永远不进入日报或 Problem 聚合。
+
+**How to apply:** 先用内存库和实际服务验证专用样本不进入日报窗口、待调度队列和 Problem 物化，再只向明确的隔离群发送原装卡片。验证真实按钮回调、Assignment 版本、后台状态活动回执及原卡片 UI，不能只看 toast。2026-09-17 已完成该真实回调链；与当时仍未通过的新报告证据回填分开表述。关闭测试按钮后，核对无活动发送、无真实调查和 Problem/Evidence 关联，备份并仅清理本次明确创建的专用记录，不能调用全局 claim/reconciliation 来清理。具体 ID、七条记录清理回执与本地可复现测试见 `output/monitoring-prod-verification-20260916.md`。
+
+- 新报告的精确字段断言仍可能失败，例如把相邻记录的标准化 error code 当作当前 `/log` 字段中的原文；不能通过改写 canonical 报告或放宽 contains 断言解决。
+- 私有 helper 也可能被专项策略测试直接使用。接口新增参数后，除了相关模块测试，还应运行完整 Monitoring 测试及准确 PR HEAD 的 CI；此次兼容修复仍指向 Admin #885，不从旧 HEAD 的 CI 推断发布准入。
