@@ -201,3 +201,5 @@
 - [Sand Eval 接口观测设计入口](domains/sandai-data-smith/refs/sandeval-api-observability.md) — 请求耗时、异常分类、Nginx 日志覆盖与低开销采集的代码核验指针（2026-09-18，方案未实施）。
 
 - 2026-09-18：质检分配首次异常与自动恢复的区别、测试过早断言的纠正见 [Sand Eval 验收指针](domains/sandai-data-smith/refs/sandeval-e2e-acceptance.md)。
+
+- [高光题型素材备注验收](domains/sandai-data-smith/refs/sandeval-highlight-note-test.md) — 三条对照素材、任务下发与派题回读，以及预览和正式提交的证据边界（2026-09-18）。
