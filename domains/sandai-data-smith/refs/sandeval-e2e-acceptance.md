@@ -2,7 +2,7 @@
 name: sandeval-e2e-acceptance
 type: reference
 created: 2026-09-17
-updated: 2026-09-17
+updated: 2026-09-18
 tags: [sandeval, acceptance, assignment, quality]
 links: [sandeval-local-startup, sandeval-roles-and-workflow]
 ---
@@ -25,3 +25,7 @@ links: [sandeval-local-startup, sandeval-roles-and-workflow]
 - 2026-09-17 真实运行与 UI 断言：`/Users/leslie/Documents/Playground/output/sandeval-complete-e2e-20260917/report.md`；含完整用例目标、52 项运行回执、时间精度两侧原始值、失败页面按钮状态。修复后必须重跑，不沿用历史 PASS。
 
 - 2026-09-17 生产定向复测：`/Users/leslie/Documents/Playground/output/sandeval-prod-retest-20260917/report.md`，含生产页面截图、冻结计划与 Hologres 同一卡时间比对。解释 wave 数量前先核对入口：`app/repositories/ev3_write.py::persist_assignment_operation` 的 `create_batch` 与页面分派服务不同；CLI 成功不能替代页面 E06 验收。原页面复测状态以报告为准。
+
+- 2026-09-18 普通题 HTTP + Playwright 自动化入口：分支 `codex/sandeval-real-e2e-36`，`sand-eval/platform/acceptance/e2e/README.md`、`campaign.py`、`browser/workflow.spec.js`。按角色准备真实前置，逐题提交、封存、负责人验收、整包交接、连续整改及最终导出分别断言。脚本清单与通过证明必须分开，最新结果从运行目录的 `results.json` 回读。
+- 浏览器验收分层：接口可准备前置，但 UI 操作必须真实点击。前置分配失败时，将结果归为前置阻塞，不可把空白截图当作 UI 缺陷；不以减少业务断言换取 PASS。截图中的“判定次数”与“已交卷待下发”需分别建立已下发/未下发两轮，再验证第二次下发后的增量和刷新保持。
+- 隔离异步下发：本地 Web 与 worker 必须使用本轮专属的队列 namespace；读取真实业务终态，不能只断言 POST 返回 202。实现及运行条件以该分支 README 和 `app/qc_release_worker.py` 为准。

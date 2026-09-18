@@ -195,3 +195,5 @@
 - Sand Eval 测试站 ALB 503 的现场请求、空 Endpoints 与调度等待时间线，见 [部署可用性诊断](domains/sandai-data-smith/refs/sandeval-deployment-availability.md)（2026-09-17）。
 
 - Sand Eval 调度日志已定位入队/排队延迟及同窗离线任务大量调度失败，见 [部署可用性诊断](domains/sandai-data-smith/refs/sandeval-deployment-availability.md)（2026-09-17）。
+
+- 2026-09-18：Sand Eval 的真实 HTTP / Playwright 分层验收、封存与下发统计及专属异步队列方法见 [验收指针](domains/sandai-data-smith/refs/sandeval-e2e-acceptance.md)。
