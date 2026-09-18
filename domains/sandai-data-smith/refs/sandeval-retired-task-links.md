@@ -23,3 +23,9 @@ links: []
 2026-09-18 追加排查：`frontend/src/pages/questionBankItems/taskWizard.ts` 的请求构造必须使用后端 `app/api/question_bank_items.py::question_sets_router` 的前缀，不可使用 React 页面地址。`api/client.ts` 会自动添加 `/api`。用真实 fetch 边界测试覆盖创建和 preview，避免弹层测试 mock 掉整个 client 后漏检。
 
 修复与 Gate 的可变状态见 [PR #1350](https://github.com/world-sim-dev/sandai-data-smith/pull/1350)，目标为 `sandeval-test-only`。是否部署须另查 Test Build and Deploy 工作流，分支合并不等于测试站生效。
+
+## 发布与剩余入口核验指针
+
+2026-09-18 发布回执见 [Test Build and Deploy 35329189415](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/35329189415)，含 PR #1350。实际下发请求返回 201，测试任务 `7217d3d5-15f2-590f-b209-3a2ee2ff6072` 可从 Sand 空间任务列表回读；未派题。重新验收须查当前镜像及运行状态。
+
+同次发现另一入口仍需修复：`QuestionSetListPage.tsx` 的建任务链接使用 `new_task`，而 `routes/questionBank.tsx` 仅有 `new-task` 重定向。该项未纳入 PR #1350，不要把原两类 404 修复扩展为全站无死链。已有 `deadLinks.test.ts` 动态旧前缀检查不覆盖这类后缀拼写错误。
