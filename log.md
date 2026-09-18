@@ -329,3 +329,5 @@
 - 2026-09-18：补充 Monitoring 大日志分页顺序链验收与 MCP #72 生产验收指针（monitoring-report-preflight-budget）。
 
 - 2026-09-18：记录 Admin #893 实际部署与同草稿 preflight HTTP 503→明确校验反馈的对照证据。
+
+- 2026-09-18：日报未发送定位为 supported proof 合法状态被读取 schema 拒绝，补充 PR #894、同窗生成与结构化 SLS 原始扫描方法。

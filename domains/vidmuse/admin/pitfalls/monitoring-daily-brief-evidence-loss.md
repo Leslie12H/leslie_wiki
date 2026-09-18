@@ -2,7 +2,7 @@
 name: monitoring-daily-brief-evidence-loss
 type: pitfall
 created: 2026-09-10
-updated: 2026-09-17
+updated: 2026-09-18
 tags: [vidmuse, admin, monitoring, daily-brief]
 links: [monitoring-problem-title-vs-incident-report, monitoring-daily-brief-startup-handoff, admin-scheduled-report-mechanisms]
 ---
@@ -85,3 +85,14 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-daily-brief-star
 **Why:** 同窗重新综合可通过，说明单次模型字段错误不能一概当成当天不可恢复；但回放成功不能反推出历史失败的具体字段，也不证明已补发。
 
 **How to apply:** [Admin PR #885](https://github.com/world-sim-dev/vidmuse-admin/pull/885) 的 `364f2f4b2` 增加 invalid_schema 的结构反馈与既有预算内最多两次纠正、字段路径/规则诊断及有界调度重试；保持来源、内容和容量校验。上线状态以 PR/部署回读为准。固定窗口生产只读复验与接单/卡片/大盘回归证据见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/monitoring-prod-verification-20260916.md` 的 expanded preservation audit：39 个来源完整覆盖、生成卡片合格，本任务回放未发送；另一任务已补发的回执见上一节，避免重复发送。
+
+
+## 2026-09-18：合法 proof 状态被读取模型拒绝
+
+**Why:** 今日定时日报在数据收集阶段失败，尚未调用综合模型或飞书发送。`monitoring_incident_proof.project_root_cause_proof` 已会产生 `supported`（有记录支持、未满足独立关联的 verified 标准），查询过滤和统计也接受它；`schema.monitoring_alert.MonitoringRootCauseProofProjection.status` 却漏掉该枚举。一个合法快照就能让 `get_brief_evidence` 的全窗口列表构造抛出 ValidationError。当天 10:00、10:05、10:15 三次失败后，调度按上限暂停到次日；Redis guard 存在不是送达证明。
+
+**How to apply:** 先按固定日报窗口定位失败阶段，再回读具体 Pydantic 路径和事故 ID，核对生产者/存储/读模型的契约，不要把合法状态当作脏数据，也不能映射成 verified。修复消费者枚举，保留原状态及来源。回归必须从持久化快照经真实日报输入查询穿过 schema，并断言 supported 不等于 root_cause_verified。生成、schema/来源/容量校验、发送和群内回读分别验收，发送前复用已审阅预览。
+
+- [实际失败字段及同窗只读复现](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35302115470)：`failure_mechanism.rootCauseProof.status=supported`；[候选读取模型同窗完整生成](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35302411846)进一步定位 Incident 2493。候选只在独立诊断进程内生效，不代表线上版本已改，也没有发送卡片。
+- [修复 PR #894](https://github.com/world-sim-dev/vidmuse-admin/pull/894)：最小枚举修复和真实窗口回归；发布状态与完整 CI 以 PR/部署为准。
+- SLS `vidmuse-admin` 同时有 `content` 原始行和 `log` 结构化正文；当次 `log` 没有可用于 SQL 的索引。仅查询 `content LIKE` 或全文关键词得到空结果，不能证明日报没执行。必要时对固定小窗口分页读原始记录、检查 progress/完整性，再在本地匹配字段，并只输出错误码/字段路径/时间等必要证据。[完整扫描证据](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35302030396)。

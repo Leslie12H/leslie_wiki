@@ -25,7 +25,7 @@
 - [报警 Problem 标题与当次报告](domains/vidmuse/admin/pitfalls/monitoring-problem-title-vs-incident-report.md) — 历史聚类标题不能代替当次结论，发送摘要前核对证据等级
 - [Problem 认领触发历史告警回复](domains/vidmuse/admin/pitfalls/monitoring-problem-claim-replies-to-historical-alerts.md) — 弱聚类、来源话题绑定与旧卡刷新、PR #881 及生产回读边界（2026-09-15）
 - [Tool Errors 启动与 Analytics 内存](domains/vidmuse/admin/pitfalls/tool-errors-bootstrap-and-analytics-memory.md) — JS MIME、Web/Worker 内存证据、异步客户端原循环与 PR #881 回归入口（2026-09-15）
-- [报警日报证据丢失链路](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-evidence-loss.md) — 输入与引用完整性、结构失败停当天、调查 Preset 协议边界，以及同窗生成与补发回读验收（2026-09-17）
+- [报警日报证据丢失链路](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-evidence-loss.md) — 输入与引用完整性、合法 supported 状态与读取枚举不一致、定时重试和补发验收（2026-09-18）
 - [日报滚动部署启动交接](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-startup-handoff.md) — 循环缺失、旧镜像自动补跑、周末窗口对账与历史补偿缺口、PR #878 发布验收及卡片统计口径（2026-09-14）
 - [Tool 日汇总状态与已有数据展示](domains/vidmuse/admin/pitfalls/tool-daily-updating-hides-existing-data.md) — HTTP 成功后的数据门禁、部分日误挡、独立 Worker 核验及 PR #878 本地回归/CI 边界（2026-09-14）
 - [监控大盘窗口与「天」的口径](domains/vidmuse/admin/pitfalls/monitoring-dashboard-window-and-day-semantics.md) — 三套时间基准 + 全量/窗口计数混用导致数字自相矛盾
