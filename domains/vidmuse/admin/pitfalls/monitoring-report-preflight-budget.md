@@ -25,3 +25,5 @@ links: [monitoring-deploy-revokes-readonly-credentials, monitoring-expanded-lead
 - [MCP #72 生产发布](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35298252323)包含 code/database canary 和全部 Admin 副本调查 readiness 验收；Admin 同草稿真实 HTTP 回放仍须在对应版本部署后单独执行。
 
 - 2026-09-18 [Admin #893 生产发布](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35299386849)后，[同草稿真实 HTTP 回放](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35301477628)从约 10 秒的 503 改为约 18.8 秒 HTTP 200，返回具体 `downstream_trace_record_acquisition_overclaim`。草稿仍然被正确拒绝；这证明预算修复和严格门禁同时生效，不代表 Incident 已完成。完整 main CI 指针：[35299104130](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35299104130)。
+
+- [最后一条正式新 Run 回填](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35301588310)与[逐事故最终持久化验收](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35302672230)完成闭环。先读同 Run canonical acquisition 判断分页/源码是否齐备，再按 prepare 的具体路径反馈修正引用；不能将离线可读草稿或 acquisition complete 冒充 prepared。

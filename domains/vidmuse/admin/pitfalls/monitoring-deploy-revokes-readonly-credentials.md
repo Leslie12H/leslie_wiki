@@ -57,4 +57,7 @@ Admin #891 的 [生产 main 发布](https://github.com/world-sim-dev/vidmuse-adm
 补分析期间的另一个独立问题见 [[monitoring-expanded-lead-escalation]]。
 
 
-最终版本的[生产发布记录](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35294064128)与[实际镜像、配置身份、双副本连续 readiness、新增报警自动分析回读](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35294470353)用于核验 Admin #892 的落地状态。历史回填完成情况必须另查逐事故验收，不从发布成功推断。
+Admin #892 的[生产发布记录](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35294064128)与[实际镜像、配置身份、双副本连续 readiness、新增报警自动分析回读](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35294470353)用于核验 Admin #892 的落地状态。历史回填完成情况必须另查逐事故验收，不从发布成功推断。
+
+
+2026-09-18 原始积压的最终持久化验收入口：[逐条严格验收、实际 Run、双副本 readiness 与新增自动分析](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35302672230)。最后一条的[正式 dashboard-only 回填](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35301588310)保留历史失败 Run，不重发旧飞书告警。生成 completed 和页面读取仍须分开检查；随后发现的 supported 读取枚举缺项见 [[monitoring-daily-brief-evidence-loss]]。
