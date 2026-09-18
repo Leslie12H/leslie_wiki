@@ -31,3 +31,5 @@ links: [sandeval-local-startup, sandeval-roles-and-workflow]
 - 隔离异步下发：本地 Web 与 worker 必须使用本轮专属的队列 namespace；读取真实业务终态，不能只断言 POST 返回 202。实现及运行条件以该分支 README 和 `app/qc_release_worker.py` 为准。
 
 - 2026-09-18 质检分配重新验证与结论纠正：`/Users/leslie/Documents/Playground/output/sandeval-clean-diagnosis-20260918/report.md`。Why：首次 needs_attention 不等于永久阻塞，后台可在客户端报错后补齐；独立任务和旧 QC 下发 namespace 不代表隔离质量中心恢复扫描。How：保留首次回执，限时回读终态并执行后续质检，分别报告恢复时延、最终可用性和仍未定位的执行者；不得将共享测试库称为独占空库。
+
+- 2026-09-18 完整 24 条 API 重跑与逐项归因：`/Users/leslie/Documents/Playground/output/sandeval-full-api-20260918-recovery-aware/summary.md`、`diagnosis.md`、各用例 `events.jsonl`。Why：HTTP 冲突、最终恢复、脚本漏角色、环境校验和外部修改必须分别判断。How：保留首轮结果并将补查单独记录；作者整改只选当前可操作处置，Sand 退回需先经过供应商质检员；导出检查 HTTPS 配置；shared test 不宣称独占。动态状态及通过数量查报告，不以历史结论替代重跑。

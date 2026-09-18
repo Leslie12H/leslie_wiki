@@ -211,3 +211,5 @@
 - Sand Eval 404 修复部署与总列表剩余入口见 [路由排查](domains/sandai-data-smith/refs/sandeval-retired-task-links.md)（2026-09-18）。
 
 - [Sand Eval 新题型集成检查](domains/sandai-data-smith/refs/sandeval-question-type-integration.md) — seed、能力预期、声明预算及同步 Gate 证据入口（2026-09-18）。
+
+- 2026-09-18：完整 24 条 API 串行重跑、脚本/环境/外部修改的归因边界，见 [Sand Eval 验收指针](domains/sandai-data-smith/refs/sandeval-e2e-acceptance.md)。
