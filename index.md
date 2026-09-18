@@ -215,3 +215,5 @@
 - 2026-09-18：完整 24 条 API 串行重跑、脚本/环境/外部修改的归因边界，见 [Sand Eval 验收指针](domains/sandai-data-smith/refs/sandeval-e2e-acceptance.md)。
 
 - [Sand Eval 返修与反馈场景](domains/sandai-data-smith/refs/sandeval-correction-fixtures.md) — 部分抽样、逐题判定字段及标注员页面验收指针（2026-09-18）。
+
+- [Sand Eval 分支自动化核验入口](domains/sandai-data-smith/refs/sandeval-branch-automation.md) — 测试部署触发器、main 回合 PR 和 Actions 权限的核验指针（2026-09-18）。
