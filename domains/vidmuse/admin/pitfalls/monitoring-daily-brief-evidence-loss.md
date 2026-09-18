@@ -98,3 +98,5 @@ links: [monitoring-problem-title-vs-incident-report, monitoring-daily-brief-star
 - SLS `vidmuse-admin` 同时有 `content` 原始行和 `log` 结构化正文；当次 `log` 没有可用于 SQL 的索引。仅查询 `content LIKE` 或全文关键词得到空结果，不能证明日报没执行。必要时对固定小窗口分页读原始记录、检查 progress/完整性，再在本地匹配字段，并只输出错误码/字段路径/时间等必要证据。[完整扫描证据](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35302030396)。
 
 - 2026-09-18 发布验收：[生产部署](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35303133656)、[main 全量测试](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35302430254)、[已部署代码同窗只读验收](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35303565823)。生产 UI 同时验证 supported 报告完整加载并保留“记录支持·待关联验证”，没有升级为 verified；日报恢复读取和已经送达必须分别取证。
+
+- 2026-09-18 用户审阅并明确确认后，由原监控机器人发送最终阅读版富文本日报；[发送与消息内容回读证据](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35303882698)。保留稳定幂等标识，成功后调用既有定时抑制方法；原有 11:14 缓存卡片未重复发送。
