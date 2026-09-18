@@ -327,3 +327,5 @@
 - 2026-09-18：记录长 Run 报告准备的固定总读取预算、MCP 外层预算与三个不同终止条件，关联 Admin #893 / MCP #72 和生产 HTTP 复现。
 
 - 2026-09-18：补充 Monitoring 大日志分页顺序链验收与 MCP #72 生产验收指针（monitoring-report-preflight-budget）。
+
+- 2026-09-18：记录 Admin #893 实际部署与同草稿 preflight HTTP 503→明确校验反馈的对照证据。

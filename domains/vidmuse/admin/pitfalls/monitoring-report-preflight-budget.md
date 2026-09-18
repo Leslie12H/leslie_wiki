@@ -23,3 +23,5 @@ links: [monitoring-deploy-revokes-readonly-credentials, monitoring-expanded-lead
 - 大日志分页恢复时，不仅核对 offset 是否都出现过，还要核对同 query/window/limit 的每个下一页 call 是否发生在上一页 result 之后。2026-09-18 [canonical 页链审计](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35298890535)显示，多轮大页失败与乱序重读会出现末页已查到但 completeChains=0；应按已验收前缀补顺序链尾，或者新 Run 从已证实可用的小页开始。不同页大小不能拼接同一链，旧不完整链的记录不能当作当前完整采集证明。相关实现指针：`_complete_sls_page_chain_groups`、`_complete_sls_page_chains`，位于 Admin `monitoring_incident_report_validation_v2.py`。
 
 - [MCP #72 生产发布](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35298252323)包含 code/database canary 和全部 Admin 副本调查 readiness 验收；Admin 同草稿真实 HTTP 回放仍须在对应版本部署后单独执行。
+
+- 2026-09-18 [Admin #893 生产发布](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35299386849)后，[同草稿真实 HTTP 回放](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35301477628)从约 10 秒的 503 改为约 18.8 秒 HTTP 200，返回具体 `downstream_trace_record_acquisition_overclaim`。草稿仍然被正确拒绝；这证明预算修复和严格门禁同时生效，不代表 Incident 已完成。完整 main CI 指针：[35299104130](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35299104130)。
