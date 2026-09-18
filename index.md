@@ -197,3 +197,5 @@
 - Sand Eval 调度日志已定位入队/排队延迟及同窗离线任务大量调度失败，见 [部署可用性诊断](domains/sandai-data-smith/refs/sandeval-deployment-availability.md)（2026-09-17）。
 
 - 2026-09-18：Sand Eval 的真实 HTTP / Playwright 分层验收、封存与下发统计及专属异步队列方法见 [验收指针](domains/sandai-data-smith/refs/sandeval-e2e-acceptance.md)。
+
+- [Sand Eval 接口观测设计入口](domains/sandai-data-smith/refs/sandeval-api-observability.md) — 请求耗时、异常分类、Nginx 日志覆盖与低开销采集的代码核验指针（2026-09-18，方案未实施）。
