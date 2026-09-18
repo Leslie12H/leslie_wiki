@@ -318,3 +318,4 @@
 - 2026-09-17：记录 Monitoring MCP 普通发布撤掉只读调查凭据的证据链与核验入口；生产仅只读排查。
 
 - 2026-09-17：记录 test→main 生产发布及 Web/QC/生成 Worker 常驻非 Spot 约束的分项验收入口。
+- 2026-09-18：录入 Monitoring MCP 发布默认参数撤销 code/database 凭据、Admin 配置身份漂移的排查与防复发指针，关联 MCP PR #70/#71、Admin PR #891、Runtime 建连容错与生产取证。

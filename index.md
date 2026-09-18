@@ -172,6 +172,6 @@
 
 - Eval 常驻节点修复的测试发布与实际落点验收入口，见 [部署可用性诊断](domains/sandai-data-smith/refs/sandeval-deployment-availability.md)（2026-09-17）。
 
-- [监控发布撤掉只读凭据](domains/vidmuse/admin/pitfalls/monitoring-deploy-revokes-readonly-credentials.md) — 默认 false 发布输入、Secret 覆盖、degraded 放行与零尝试队列的排查指针（2026-09-17）。
+- [监控发布撤掉只读凭据](domains/vidmuse/admin/pitfalls/monitoring-deploy-revokes-readonly-credentials.md) — 发布参数撤权、配置身份漂移、全副本验收及 Runtime 建连容错的排查与修复指针（2026-09-18）。
 
 - Eval 生产常驻非 Spot 约束与生成 Worker 独立补发：见 [部署可用性诊断](domains/sandai-data-smith/refs/sandeval-deployment-availability.md)（2026-09-17）。
