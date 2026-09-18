@@ -55,3 +55,6 @@ Admin #891 的 [生产 main 发布](https://github.com/world-sim-dev/vidmuse-adm
 [Admin PR #892](https://github.com/world-sim-dev/vidmuse-admin/pull/892)增加可选 `MAXWELL_AGENT_API_BASE_URL`；空值仍走原地址，`MAXWELL_AGENT_BASE_URL` 继续用于用户可点击的会话链接。生产 origin 从 GitHub prod environment variable 获取，具体值和当前发布状态以 live 配置为准。客户端连接重试仍保留，但不是修复公网 CDN 路由的证据。
 
 补分析期间的另一个独立问题见 [[monitoring-expanded-lead-escalation]]。
+
+
+最终版本的[生产发布记录](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35294064128)与[实际镜像、配置身份、双副本连续 readiness、新增报警自动分析回读](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35294470353)用于核验 Admin #892 的落地状态。历史回填完成情况必须另查逐事故验收，不从发布成功推断。

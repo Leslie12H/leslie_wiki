@@ -19,3 +19,12 @@ links: [monitoring-deploy-revokes-readonly-credentials]
 - 回归同时检查主窗口仍强制升级、扩窗不能得到事故 membership/deployment binding、主窗与扩窗混合不能隐藏主窗要求，以及错误 query/project/Logstore/window 不获得豁免。
 - [真实窗口与来源记录](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35291404264)及[同报告只读候选逻辑回放](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35291763719)：旧规则拒绝，候选逻辑验证同一 canonical draft。诊断进程验证通过不是部署或数据写入证明；最终必须回读实际部署版本和持久化报告。
 - 认领恢复、Runtime completed、报告 prepared、Admin 验收与结论展示是不同阶段。不可伪造成功准备记录，也不可用无效草稿覆盖正式报告。
+
+
+## 已取证却耗尽预算的另一种边界
+
+**Why:** 必需 acquisition 完成不等于报告准备成功。反复 `report_preflight_unavailable` 会让 Agent 继续查询和重试；报告也可能因引用不属于完整 exact-trace 采集集合而被拒绝。不能仅凭预算耗尽就增加预算，也不能跳过失败的 prepare 直接保存草稿。
+
+**How to apply:** 先按同一 Run 的 canonical events 分别统计采集完成情况、prepare 返回码和 Runtime 终态，再区分网络/总读取预算与报告证据引用错误。恢复访问路径后重新走正式 prepare 与最终验收。[2026-09-18 acquisition 回读](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35292749936)和[prepare 失败分类](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35293058822)保留了这一案例的证据入口。
+
+修复的 live 闭环证据：[2494 正式新 Run 回填工作流](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35294619310)成功，[实际同 Run prepare 成功及逐事故验收](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35295040863)通过。对主窗查空的历史报警，正确结果可以是完成取证后的 inconclusive，不能为了提高完成率把扩窗线索升级成事故根因。

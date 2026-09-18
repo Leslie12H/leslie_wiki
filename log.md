@@ -321,3 +321,5 @@
 - 2026-09-18：录入 Monitoring MCP 发布默认参数撤销 code/database 凭据、Admin 配置身份漂移的排查与防复发指针，关联 MCP PR #70/#71、Admin PR #891、Runtime 建连容错与生产取证。
 
 - 2026-09-18：补充扩窗诊断线索触发不可满足的部署取证、同 Run 候选逻辑回放，以及 Runtime API 源站与页面链接分离的核验方法；关联 Admin PR #892。
+
+- 2026-09-18：补充 Admin #892 生产镜像与双副本就绪回读、2494 正式回填验收，以及 acquisition 完成但 prepare 反复失败导致预算耗尽的判别方法。
