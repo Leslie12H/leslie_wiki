@@ -4,7 +4,7 @@ type: pitfall
 created: 2026-09-17
 updated: 2026-09-18
 tags: [vidmuse, monitoring, deployment, readiness, secrets]
-links: [monitoring-code-scope-blocks-claim, monitoring-github-app-config]
+links: [monitoring-code-scope-blocks-claim, monitoring-github-app-config, monitoring-expanded-lead-escalation]
 ---
 
 # 普通发布可能撤掉已经启用的监控调查凭据
@@ -47,3 +47,11 @@ links: [monitoring-code-scope-blocks-claim, monitoring-github-app-config]
 **Why:** 认领前 readiness 与后续结果回收都会访问 Runtime；一次不可达解析可能拖慢恢复。**How to apply:** [Admin PR #891](https://github.com/world-sim-dev/vidmuse-admin/pull/891)限制单次建连时间并仅重试请求发送前的 ConnectError/ConnectTimeout，保留提交后读取超时的“不确定投递”保护。用实际 HTTP transport 测试连接重试与 POST 不重复发送，再在全部生产副本重复验收完整 readiness。这是客户端容错，不能当作公网 CDN 路由已修好。
 
 Admin #891 的 [生产 main 发布](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/35289256236) 和 [双副本连续验收](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35289724712) 是后续核验入口；对照 [发布前样本](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35289188062)。任何历史通过率都不代表当前就绪，必须按事故重新回读。
+
+## API 源站与页面链接分离
+
+[2026-09-18 路由取证](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35291896335)和[源站能力/同一 Run 验证](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/35291992380)用于确认候选 API origin 的真实归属。不能仅凭域名带 dev/prod 或一次 HTTP 200 判断环境。先核验 live ingress、同一 business/Preset 和不可变 Run，再切后台请求路径。
+
+[Admin PR #892](https://github.com/world-sim-dev/vidmuse-admin/pull/892)增加可选 `MAXWELL_AGENT_API_BASE_URL`；空值仍走原地址，`MAXWELL_AGENT_BASE_URL` 继续用于用户可点击的会话链接。生产 origin 从 GitHub prod environment variable 获取，具体值和当前发布状态以 live 配置为准。客户端连接重试仍保留，但不是修复公网 CDN 路由的证据。
+
+补分析期间的另一个独立问题见 [[monitoring-expanded-lead-escalation]]。
