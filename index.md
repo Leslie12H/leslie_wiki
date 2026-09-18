@@ -209,3 +209,5 @@
 - Sand Eval 下发请求把页面前缀当 API 前缀的排查与 PR 指针，见 [旧链接与接口路由](domains/sandai-data-smith/refs/sandeval-retired-task-links.md)（2026-09-18）。
 
 - Sand Eval 404 修复部署与总列表剩余入口见 [路由排查](domains/sandai-data-smith/refs/sandeval-retired-task-links.md)（2026-09-18）。
+
+- [Sand Eval 新题型集成检查](domains/sandai-data-smith/refs/sandeval-question-type-integration.md) — seed、能力预期、声明预算及同步 Gate 证据入口（2026-09-18）。
