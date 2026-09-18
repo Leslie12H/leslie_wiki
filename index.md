@@ -199,3 +199,5 @@
 - 2026-09-18：Sand Eval 的真实 HTTP / Playwright 分层验收、封存与下发统计及专属异步队列方法见 [验收指针](domains/sandai-data-smith/refs/sandeval-e2e-acceptance.md)。
 
 - [Sand Eval 接口观测设计入口](domains/sandai-data-smith/refs/sandeval-api-observability.md) — 请求耗时、异常分类、Nginx 日志覆盖与低开销采集的代码核验指针（2026-09-18，方案未实施）。
+
+- 2026-09-18：质检分配首次异常与自动恢复的区别、测试过早断言的纠正见 [Sand Eval 验收指针](domains/sandai-data-smith/refs/sandeval-e2e-acceptance.md)。
