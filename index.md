@@ -179,3 +179,5 @@
 - [扩窗诊断线索与事故取证](domains/vidmuse/admin/pitfalls/monitoring-expanded-lead-escalation.md) — 主窗查空后的合法扩窗不等于事故归属，防止强制部署/源码检查形成无法完成的报告门禁，并区分取证完成、报告准备失败与预算耗尽。
 
 - [报告准备的跨层预算](domains/vidmuse/admin/pitfalls/monitoring-report-preflight-budget.md) — 长 Run 分页读取、真实 HTTP 对照、分层超时与按历史 receipt 恢复的核验方法（2026-09-18）。
+
+- [Sand Eval 接口观测入口](domains/sandai-data-smith/refs/sandeval-api-observability.md) — 既有SLS日志的离线看板生成器、业务隔离、覆盖口径及回退入口（2026-09-18）。
