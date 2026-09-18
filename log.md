@@ -325,3 +325,5 @@
 - 2026-09-18：补充 Admin #892 生产镜像与双副本就绪回读、2494 正式回填验收，以及 acquisition 完成但 prepare 反复失败导致预算耗尽的判别方法。
 
 - 2026-09-18：记录长 Run 报告准备的固定总读取预算、MCP 外层预算与三个不同终止条件，关联 Admin #893 / MCP #72 和生产 HTTP 复现。
+
+- 2026-09-18：补充 Monitoring 大日志分页顺序链验收与 MCP #72 生产验收指针（monitoring-report-preflight-budget）。
