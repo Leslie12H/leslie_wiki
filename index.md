@@ -203,3 +203,5 @@
 - 2026-09-18：质检分配首次异常与自动恢复的区别、测试过早断言的纠正见 [Sand Eval 验收指针](domains/sandai-data-smith/refs/sandeval-e2e-acceptance.md)。
 
 - [高光题型素材备注验收](domains/sandai-data-smith/refs/sandeval-highlight-note-test.md) — 三条对照素材、任务下发与派题回读，以及预览和正式提交的证据边界（2026-09-18）。
+
+- [Sand Eval 旧任务链接排查](domains/sandai-data-smith/refs/sandeval-retired-task-links.md) — HTTP 200 与前端 404 的区分、旧链接生成器和现行路由核验指针（2026-09-18）。
