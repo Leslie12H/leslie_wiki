@@ -205,3 +205,5 @@
 - [高光题型素材备注验收](domains/sandai-data-smith/refs/sandeval-highlight-note-test.md) — 三条对照素材、任务下发与派题回读，以及预览和正式提交的证据边界（2026-09-18）。
 
 - [Sand Eval 旧任务链接排查](domains/sandai-data-smith/refs/sandeval-retired-task-links.md) — HTTP 200 与前端 404 的区分、旧链接生成器和现行路由核验指针（2026-09-18）。
+
+- Sand Eval 下发请求把页面前缀当 API 前缀的排查与 PR 指针，见 [旧链接与接口路由](domains/sandai-data-smith/refs/sandeval-retired-task-links.md)（2026-09-18）。
