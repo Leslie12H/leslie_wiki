@@ -228,3 +228,5 @@
 - [MP4 附加轨道时长异常](domains/sandai-data-smith/pitfalls/mp4-extra-track-duration.md) — 12 秒画面夹带 35 分钟 SubtitleHandler 数据轨的定位与无重编码验证（2026-09-19）。
 
 - [Sand Eval 质检布局与切号核验](domains/sandai-data-smith/refs/sandeval-review-layout-and-account-picker.md) — 深层容器宽度、账号分页及隐藏预览定位冲突入口（2026-09-19）。
+
+- [Sand Eval 发题历史验收场景](domains/sandai-data-smith/refs/sandeval-dispatch-history-fixture.md) — 双供应商双题型、历史漏记回读与素材导入契约指针（2026-09-19）。
