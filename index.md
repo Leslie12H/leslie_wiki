@@ -219,3 +219,5 @@
 - [Sand Eval 分支自动化核验入口](domains/sandai-data-smith/refs/sandeval-branch-automation.md) — 测试部署触发器、main 回合 PR 和 Actions 权限的核验指针（2026-09-18）。
 
 - [主任务题面预览与下发范围](domains/sandai-data-smith/refs/sandeval-dispatch-preview-scope.md) — 真实来源预览、本次配额及跨历史去重的代码核验入口（2026-09-19）。
+
+- [日报模型通道失败与重试耗尽](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-provider-timeout.md) — AWS 模型访问拒绝、PIP EOF/503、300 秒超时及未索引 log 字段的只读排查指针（2026-09-19）。
