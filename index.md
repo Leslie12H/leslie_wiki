@@ -183,3 +183,5 @@
 - [Sand Eval 接口观测入口](domains/sandai-data-smith/refs/sandeval-api-observability.md) — 既有SLS日志的离线看板生成器、业务隔离、覆盖口径及回退入口（2026-09-18）。
 
 - [Eval慢接口与事务SQL观测指针](domains/sandai-data-smith/refs/sandeval-slow-panels.md) — 现有日志面板、trace覆盖边界与2026-09-19排查入口。
+
+- [Sand Eval 可返回代登录入口](domains/sandai-data-smith/refs/sandeval-returnable-impersonation.md) — 受控返回、外部身份隔离、并发退出与服务端防串号的源码及验收指针（2026-09-19）。
