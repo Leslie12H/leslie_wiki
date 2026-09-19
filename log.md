@@ -262,3 +262,5 @@
 - 2026-09-19：核验告警日报三次模型请求超时，记录 AWS 访问拒绝、PIP EOF/503、重试耗尽及 SLS log 未索引的排查指针；未补发或修改生产。
 
 - 2026-09-19：EVOLVE v3 前端可用性整改后记坑：任务→执行器要读 TargetProfile.executorRef 而非 targetRef；会话列表慢在前端 N+1 补读标题；sessions executorRef 实按 target_ref 匹配；视觉对齐 Studio tokens。
+
+- 2026-09-19：补充 Sand Eval 新版退回场景的角色资格与标注员页面核验指针。

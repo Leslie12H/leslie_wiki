@@ -222,3 +222,5 @@
 - [主任务题面预览与下发范围](domains/sandai-data-smith/refs/sandeval-dispatch-preview-scope.md) — 真实来源预览、本次配额及跨历史去重的代码核验入口（2026-09-19）。
 
 - [日报模型通道失败与重试耗尽](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-provider-timeout.md) — AWS 模型访问拒绝、PIP EOF/503、300 秒超时及未索引 log 字段的只读排查指针（2026-09-19）。
+
+- 2026-09-19：新版质检登记、检查员权限与标注员退回页面的验收边界，见 [返修场景指针](domains/sandai-data-smith/refs/sandeval-correction-fixtures.md)。
