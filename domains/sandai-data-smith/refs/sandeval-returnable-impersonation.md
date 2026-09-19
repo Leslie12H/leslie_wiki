@@ -15,4 +15,4 @@ links: []
 
 验收时查看 `platform/backend/tests/test_impersonation.py` 与 Redis CAS 回归，重点区分同一目标账号的独立登录和内部人员发起的会话。首次切号、返回后再次切号，都必须覆盖退出先完成与后完成两种顺序；另检查审计故障时能否撤销、返回本人后的额外数据库查询数。空间停用验证应沿 `platform/backend/tests/test_space_scope.py` 核对真实仓储查询语义，不能只依赖行为不同的测试替身。广播刷新不能替代服务端旧页面写入检查；认证准入审计也不能证明业务事务提交成功。
 
-本次实现位于本地分支 `codex/returnable-impersonation`、修复提交 `e620152a2`（2026-09-19）。隔离账号的浏览器/HTTP 验收与临时真实 Redis 并发验证只证明本地交互及撤销边界；PR Gate、真实 Feishu OAuth、生产部署状态须另行核实。
+实现与 review 修复见 [PR #1401](https://github.com/world-sim-dev/sandai-data-smith/pull/1401)，2026-09-19 合入 `sandeval-test-only`。测试发布证据见 [Test Build and Deploy](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/35432407011)，PR 检查从 PR 页面进入；当前环境版本仍须读实时部署回执。隔离账号及真实 Redis 验证不替代真实飞书登录验收，测试发布不代表生产发布。
