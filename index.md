@@ -230,3 +230,5 @@
 - [Sand Eval 质检布局与切号核验](domains/sandai-data-smith/refs/sandeval-review-layout-and-account-picker.md) — 深层容器宽度、账号分页及隐藏预览定位冲突入口（2026-09-19）。
 
 - [Sand Eval 发题历史验收场景](domains/sandai-data-smith/refs/sandeval-dispatch-history-fixture.md) — 双供应商双题型、历史漏记回读与素材导入契约指针（2026-09-19）。
+
+- 2026-09-19：Sand Eval 同名测试分支重建、自动回合与显式部署触发入口见 [分支自动化](domains/sandai-data-smith/refs/sandeval-branch-automation.md)。
