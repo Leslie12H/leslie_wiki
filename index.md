@@ -184,4 +184,4 @@
 
 - [Eval慢接口与事务SQL观测指针](domains/sandai-data-smith/refs/sandeval-slow-panels.md) — 现有日志面板、trace覆盖边界与2026-09-19排查入口。
 
-- [Sand Eval 可返回代登录入口](domains/sandai-data-smith/refs/sandeval-returnable-impersonation.md) — 受控返回、外部身份隔离、并发退出与服务端防串号的源码及验收指针（2026-09-19）。
+- [Sand Eval 可返回代登录入口](domains/sandai-data-smith/refs/sandeval-returnable-impersonation.md) — 受控返回、首次及再次切号的并发撤销、故障注入与真实仓储校验指针（2026-09-19）。
