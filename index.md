@@ -224,3 +224,5 @@
 - [日报模型通道失败与重试耗尽](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-provider-timeout.md) — AWS 模型访问拒绝、PIP EOF/503、300 秒超时及未索引 log 字段的只读排查指针（2026-09-19）。
 
 - 2026-09-19：新版质检登记、检查员权限与标注员退回页面的验收边界，见 [返修场景指针](domains/sandai-data-smith/refs/sandeval-correction-fixtures.md)。
+
+- [MP4 附加轨道时长异常](domains/sandai-data-smith/pitfalls/mp4-extra-track-duration.md) — 12 秒画面夹带 35 分钟 SubtitleHandler 数据轨的定位与无重编码验证（2026-09-19）。

@@ -264,3 +264,5 @@
 - 2026-09-19：EVOLVE v3 前端可用性整改后记坑：任务→执行器要读 TargetProfile.executorRef 而非 targetRef；会话列表慢在前端 N+1 补读标题；sessions executorRef 实按 target_ref 匹配；视觉对齐 Studio tokens。
 
 - 2026-09-19：补充 Sand Eval 新版退回场景的角色资格与标注员页面核验指针。
+
+- 2026-09-19：记录 Sand Eval MP4 附加数据轨导致时长歧义的证据、浏览器未复现边界及本地重新封装验证。
