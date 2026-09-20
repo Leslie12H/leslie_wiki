@@ -234,3 +234,5 @@
 - 2026-09-19：Sand Eval 同名测试分支重建、自动回合与显式部署触发入口见 [分支自动化](domains/sandai-data-smith/refs/sandeval-branch-automation.md)。
 
 - 2026-09-20：发题历史场景前次漏记结论已纠正；空间分类过滤与跨批次素材去重的核验见 [验收场景](domains/sandai-data-smith/refs/sandeval-dispatch-history-fixture.md)。
+
+- [Caption 质检视频与正文滚动](domains/sandai-data-smith/refs/sandeval-caption-review-scroll.md) — 新题型样式覆盖、两种布局吸顶与顶部裁剪、PR #1447 验收入口（2026-09-20）。
