@@ -310,3 +310,5 @@
 - 2026-09-20 | ingest | 更新 Sand Eval 两条自动复验修复候选代码与回归指针；保留 Gate、部署及存量恢复边界。
 
 - 2026-09-20：补充 Sand Eval 固定整改提交意图、自动回交请求版本与逐条提交中断回归入口，见 `domains/sandai-data-smith/refs/sandeval-auto-reinspection-verification.md`。
+
+- 2026-09-20：补充正式环境 Sand 直接验收回交自动派回原质检员的独立场景、部署和浏览器验收证据指针。
