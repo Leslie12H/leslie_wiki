@@ -248,3 +248,5 @@
 - 2026-09-20：Caption v6 modules 依赖的引入提交与 PR #1446 合入时间，见 [上下文契约排查](domains/sandai-data-smith/refs/sandeval-caption-workflow-context.md)。
 
 - 2026-09-20：Caption v6 整题修复候选、真实服务上下文回归及验证边界见 [上下文契约排查](domains/sandai-data-smith/refs/sandeval-caption-workflow-context.md)。
+
+- 2026-09-20：Caption v6 新派发约束确认存在生产存量不兼容，证据和发布边界见 [上下文契约排查](domains/sandai-data-smith/refs/sandeval-caption-workflow-context.md)。

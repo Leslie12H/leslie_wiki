@@ -37,3 +37,11 @@ links: [sandeval-sql-lock-diagnosis]
 回归易漏点：题型单元测试若手工补齐 modules，会掩盖通用执行服务没有该字段的事实。验证应通过 AnswerExecutionService 的真实上下文，至少覆盖打开、保存、重开和提交；同时检查编辑器没有因缺少 modules 把整题置为只读。题型保存数据的源封套与稳定目标不可为了移除运行时分工而重写。
 
 本地证据位置：`/tmp/caption-v6-targeted.log`（105 项直接后端回归与 42 项投影检查）、`/tmp/caption-v6-frontend.log` 和 `/tmp/caption-v6-frontend-recheck.log`（类型检查、43 个相关前端文件通过与 v6 文件 36 项复测通过）、`/tmp/caption-v6-gates.log`（9 项结构门）。临时文件仅作当次证据；完整验证仍由 PR Gate 承担。
+
+## 生产兼容性核验入口
+
+2026-09-20 对候选 c02848017 的派发策略补查发现真实存量不兼容，之前“无阻断代码问题”不代表可以直接发布。证据：`/Users/leslie/Documents/Playground/output/caption-v6-production-dispatch-audit-20260920.md`。该文件记录两次生产独立读取与新代码实际校验结果；实时数量、配置和迁移状态应重新查询。
+
+**Why:** 给现有题型增加 dispatch_policy 会追溯校验旧草稿和冻结发布配置，而旧任务创建时可能合法地保留 unlocked 默认值。
+
+**How to apply:** 发布前读 eval_dispatch_master 的 draft_config/frozen_config，并对 ev2_task 的 assignment_count_locked/locked_annotators_per_question 做交叉核对。通过候选 MasterConfig 与真实策略校验定位受影响入口；不要把派发校验失败误说成已有单题作答被阻断。500 修复应与新限制隔离，或先完成受控的历史兼容方案；未授权不迁移生产。
