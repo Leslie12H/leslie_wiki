@@ -241,4 +241,4 @@
 
 - [Caption 质检视频与正文滚动](domains/sandai-data-smith/refs/sandeval-caption-review-scroll.md) — 新题型样式覆盖、两种布局吸顶与顶部裁剪、PR #1447 验收入口（2026-09-20）。
 
-- [Sand Eval 自动复验派回验收](domains/sandai-data-smith/refs/sandeval-auto-reinspection-verification.md) — 手动退回与正式报告的取人边界、生产独立场景及后台失败证据入口（2026-09-20）。
+- [Sand Eval 自动复验派回验收](domains/sandai-data-smith/refs/sandeval-auto-reinspection-verification.md) — 手动退回与正式报告的取人边界、复验必检题和补抽集合、生产独立场景证据入口（2026-09-20）。

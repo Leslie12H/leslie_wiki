@@ -18,3 +18,13 @@ links: [sandeval-correction-fixtures, sandeval-e2e-acceptance]
 - 正式报告与合法手动退回的读取边界：`sand-eval/platform/backend/quality/application/inspection/report_service.py::group_result`、`returned_inspection`。
 - 后台接线与周期：`sand-eval/platform/backend/quality/infrastructure/runtime.py`。周期和开关需查当前部署，不把固定等待两分钟作为成功保证。
 - 修复验证须分别覆盖正式报告驳回和“退回标注员”停止原检查两条路径，保留完整组、资格、授权和幂等校验。是否已修复以当前代码及新运行证据为准。
+
+## 整改后的抽题验收入口
+
+**Why:** 只确认复验总数和接收人，无法证明上轮不合格题被纳入；整改后答案版本变化，直接对比旧新样本 ID 也会误判。
+
+**How to apply:** 按稳定的 work_unit_id 或答题卡身份比对两轮集合；记录不合格题是否全部命中、补抽数、与上轮合格题的交集。先明确补抽允许旧合格题再次入选，还是要求全部未见题，再核查当前算法。
+
+- 必检题提取及新答案映射：`sand-eval/platform/backend/quality/application/management/reinspection_service.py::_rejected_members`。正式报告路径应以生效结论为准；手动退回路径核对已保存判断。
+- 必检集合与补抽候选集合：`sand-eval/platform/backend/quality/domain/management/sampling.py::assign_samples`。以当前代码和现场冻结计划为准。
+- 2026-09-20 的 50 题 / 抽检 10 题 / 3 题不合格生产独立场景与两轮逐题对照：`/Users/leslie/Documents/Playground/output/prod-reinspection-sampling-20260920/report.md`；状态与回执在同目录。
