@@ -252,3 +252,5 @@
 - 2026-09-20：Caption v6 新派发约束确认存在生产存量不兼容，证据和发布边界见 [上下文契约排查](domains/sandai-data-smith/refs/sandeval-caption-workflow-context.md)。
 
 - 2026-09-20：按用户要求移除 v6 新增派发限制并验证历史配置兼容，见 [上下文契约排查](domains/sandai-data-smith/refs/sandeval-caption-workflow-context.md)。
+
+- 2026-09-20：Caption 退回后回交的自动执行缺口与手工复验入口区别，见 [复验核验](domains/sandai-data-smith/refs/sandeval-auto-reinspection-verification.md)。
