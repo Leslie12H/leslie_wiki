@@ -246,3 +246,5 @@
 - [Caption 工作流上下文契约](domains/sandai-data-smith/refs/sandeval-caption-workflow-context.md) — 题目详情 500、modules 缺失与运行版本核验入口（2026-09-20）。
 
 - 2026-09-20：Caption v6 modules 依赖的引入提交与 PR #1446 合入时间，见 [上下文契约排查](domains/sandai-data-smith/refs/sandeval-caption-workflow-context.md)。
+
+- 2026-09-20：Caption v6 整题修复候选、真实服务上下文回归及验证边界见 [上下文契约排查](domains/sandai-data-smith/refs/sandeval-caption-workflow-context.md)。
