@@ -36,3 +36,5 @@ links: [sandeval-correction-fixtures, sandeval-e2e-acceptance]
 - 2026-09-20 Caption 直接验收回交核验：`/Users/leslie/Documents/Playground/output/caption-resubmit-20260920/report.md`。缺失自动复验执行不等于手工入口不可用；结合 `LeaderQueryService.detail` 的 remediations、`BatchReviewTable` 的 `BatchRemediationActions` 和包详情旧状态投影一起核查。当前是否可操作须按实际 Sand 身份回读。
 
 - 2026-09-20 两条修复候选的代码入口：分支 `codex/reinspection-return-routing`，提交 `1c3f66687`；`ResolutionService.resubmit` 区分自动收集的共同责任与已验证祖先，并提前完成责任校验；`LeaderResolutionService.recover_supplier_handoffs` 从直接验收和新交接事实接回原 Sand 检查员。验证入口为 `test_resolution_workflow.py::test_interrupted_recheck_inherits_old_return_without_joint_resubmission` 和 `test_cross_space_remediation.py::test_handoff_recovers_same_sand_inspector_without_leader_click`。候选是否合入、Gate 是否通过以及实际部署状态必须查 PR/CI，不把代码存在当作已上线。已有部分写入的生产送审仍须单独按恢复流程处理。
+
+- 2026-09-20 逐条提交恢复的代码与验证入口：[PR #1484](https://github.com/world-sim-dev/sandai-data-smith/pull/1484)；`quality/application/resolution/resubmission_intent.py` 保存固定提交意图，先补齐授权再发布执行记录；`test_correction_resumes_autocommit_writes_after_restart` 使用不回滚的测试存储，在快照、处置、授权、执行落库后注入中断。自动回交入口必须复用首次请求版本与原操作者，不能用当前处置版本重算固定请求。合并、Gate 和部署状态以 PR/CI 现场结果为准。

@@ -308,3 +308,5 @@
 - 2026-09-20：记录 Caption 回交成功、未生成自动执行，以及 Sand 手工复验动作仍可用的运行服务证据。
 
 - 2026-09-20 | ingest | 更新 Sand Eval 两条自动复验修复候选代码与回归指针；保留 Gate、部署及存量恢复边界。
+
+- 2026-09-20：补充 Sand Eval 固定整改提交意图、自动回交请求版本与逐条提交中断回归入口，见 `domains/sandai-data-smith/refs/sandeval-auto-reinspection-verification.md`。
