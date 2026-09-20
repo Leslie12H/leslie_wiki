@@ -28,3 +28,5 @@ links: [sandeval-correction-fixtures, sandeval-e2e-acceptance]
 - 必检题提取及新答案映射：`sand-eval/platform/backend/quality/application/management/reinspection_service.py::_rejected_members`。正式报告路径应以生效结论为准；手动退回路径核对已保存判断。
 - 必检集合与补抽候选集合：`sand-eval/platform/backend/quality/domain/management/sampling.py::assign_samples`。以当前代码和现场冻结计划为准。
 - 2026-09-20 的 50 题 / 抽检 10 题 / 3 题不合格生产独立场景与两轮逐题对照：`/Users/leslie/Documents/Playground/output/prod-reinspection-sampling-20260920/report.md`；状态与回执在同目录。
+
+- 2026-09-20 测试环境“Sand 手动退回 → 供应商直接验收 → 重新交接”断点证据：`/Users/leslie/Documents/Playground/output/test-yundu-reinspection/report.md`。核对 `AggregationService.submit_package` 与 `ResolutionService.auto_assign_reinspections` 的执行登记接线；支持 sand_qc 枚举不足以证明每个回交入口都会生成复验执行。
