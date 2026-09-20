@@ -10,7 +10,6 @@
 - [aion](domains/vidmuse/systems/aion.md) — agent/runtime/media generation 后端平台
 - [vidmuse-zeus](domains/vidmuse/systems/zeus.md) — Vidmuse 产品 REST API + AION relay
 - [vidmuse.ai](domains/vidmuse/systems/vidmuse-ai.md) — 面向用户的 Web 前端
-- [前端 QuickTracking 指标](domains/vidmuse/refs/quicktracking-frontend-metrics.md) — RUM 采集现状、OpenAPI 拉报表而非明细、数据会变需 upsert、首字节三种口径
 - [2026-07-02 Vidmuse 三仓库代码扫描](domains/vidmuse/refs/2026-07-02-repo-scan-aion-vidmuse-zeus-vidmuse-ai.md) — aion/vidmuse-zeus/vidmuse.ai 角色、入口和 V2 relay 链路
 - [admin](domains/vidmuse/systems/admin.md) — 管理后台(多 release 工作树)
 - [testing](domains/vidmuse/systems/testing.md) — 测试仓库群
@@ -42,14 +41,19 @@
 - [EVOLVE 重试状态转换](domains/maxwell/pitfalls/evolve-retry-state-transition.md) — 已接受任务后的重试、Worker 恢复与未评分展示口径
 - [EVOLVE 抽屉完整展示](domains/maxwell/pitfalls/evolve-drawer-overflow.md) — 长编号/正文滚动/窄屏与真实组件验收指针
 - [EVOLVE 判卷解释与优化方法](domains/maxwell/refs/evolve-explainability-and-optimization.md) — PR、DEV 发布、统计口径与 review 回归、Prompt/Skill 同步核验入口
-- [VidMuse A2A 执行器契约](domains/maxwell/refs/vidmuse-a2a-executor.md) — 独立仓库方案、现有 API 复用边界、Git 分支隔离与运行版本承载；评审阶段
+- [VidMuse A2A 执行器契约](domains/maxwell/refs/vidmuse-a2a-executor.md) — 独立仓库方案、现有 API 复用边界、Git 分支隔离与运行版本承载；2026-09-10 评估发现与 EVOLVE VariantManifest/receipt 合同冲突及对齐方式
+- [EVOLVE 长程任务确认环节自动应答方案](domains/maxwell/refs/evolve-interactive-responder.md) — 2026-09-10 草案：input-required 现判失败、turns 是剧本、推荐 Responder Method + persona；分期与拍板点
 - [Quality 域 eval/自迭代指针](domains/maxwell/refs/quality-eval.md) — eval schema/judge/optimizer/harness 代码位置 + 2026-07 机制要点
 - [旧 Quality 退役核验](domains/maxwell/refs/quality-retirement-audit.md) — 主动入口退出与源码/建表残留、混合业务库删除边界
 - [EVOLVE 原方案对象→当前实现映射](domains/maxwell/refs/evolve-original-design-vs-current.md) — 2026-09-07 index.html 的 workspace/ 目录 vs artifacts/表/Studio 页面;Base 缺失、Diagnosis/Metrics 有壳无方法、探索期右栏空白
 - [EVOLVE 调优 Agent Preset 业务私有坑](domains/maxwell/pitfalls/evolve-agent-preset-business-scoped.md) — 2026-09-04 单 Preset 写死导致跨业务不可用;根因链 + 共享调优 Agent 方案指针
 - [EVOLVE 调优 Agent 运行逻辑审计](domains/maxwell/pitfalls/evolve-tuning-agent-loop-audit-20260909.md) — 2026-09-09 main 审计：双冻结路径无通知、确认不校验 payload、产物形状对 Agent 不可见、context 混入被测输入等 8 点
 - [EVOLVE 对 Maxwell 目标的调优接应](domains/maxwell/projects/evolve-maxwell-tuning-receiving.md) — 2026-09-09 进行中：分支/拍板点（基准由 EVOLVE 获取、level 由预检决定、不用累计 patch）/第二轮待追加项
+- [EVOLVE 能力升级 P1–P4 实施](domains/maxwell/projects/evolve-capability-upgrade-20260910.md) — 2026-09-11 PR #281：5 项拍板、四阶段落地、评审三阻塞与 squash 基线前移的坑
+- [EVOLVE errorPolicy=fail 把执行错误变成质量结论](domains/maxwell/pitfalls/evolve-error-policy-fail-breach.md) — 2026-09-15 破口：外部可设的聚合开关绕过协议/质量分层；不删枚举、只在 Run 准入拒绝、历史回放逐字节不变
+- [EVOLVE 模型用量记账口径与落点](domains/maxwell/refs/evolve-usage-accounting.md) — 未知≠0/只记录不决策/不折算金额；判卷与非判卷两族指标；context 带外 Recorder 与冻结产物兼容锚点做法
 - [EVOLVE v3 前端：任务→执行器映射与会话 N+1](domains/maxwell/pitfalls/evolve-v3-work-executor-mapping.md) — 2026-09-19 targetRef≠执行器 id（要读 TargetProfile.executorRef）；会话列表慢在前端逐条补读；sessions executorRef 参数实按 target_ref；v3 视觉须对齐 Studio tokens
+- [影游 Agent Benchmark 综合评测报告 9.19 对照入口](domains/maxwell/refs/nextplay-benchmark-report-20260919.md) — 2026-09-19 报告结论（D4/D5 集中失败、四模型互补、补分敏感）与下一轮协议清单；EVOLVE 三层对照（协议/评分/执行）
 
 ### sisyphus — [质量平台](domains/sisyphus/README.md)
 - [Sisyphus 质量平台](domains/sisyphus/README.md) — quality_dashboard 日投影/发版门禁、automation_triggers、Agent Token 与 project 边界；调度模型与 admin 不同
