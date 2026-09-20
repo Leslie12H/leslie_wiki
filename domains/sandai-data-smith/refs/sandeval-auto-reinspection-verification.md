@@ -34,3 +34,5 @@ links: [sandeval-correction-fixtures, sandeval-e2e-acceptance]
 - 2026-09-20 生产 1000 题未改答案复验的 SUBMISSION_SCOPE_EXISTS 证据：`/Users/leslie/Documents/Playground/output/prod-scope-conflict/report.md`。先区分已冻结快照与已登记复验执行，再核对当前 `UnitOfWork` 是否真正提供回滚；首次中断异常仍须查历史日志。
 
 - 2026-09-20 Caption 直接验收回交核验：`/Users/leslie/Documents/Playground/output/caption-resubmit-20260920/report.md`。缺失自动复验执行不等于手工入口不可用；结合 `LeaderQueryService.detail` 的 remediations、`BatchReviewTable` 的 `BatchRemediationActions` 和包详情旧状态投影一起核查。当前是否可操作须按实际 Sand 身份回读。
+
+- 2026-09-20 两条修复候选的代码入口：分支 `codex/reinspection-return-routing`，提交 `1c3f66687`；`ResolutionService.resubmit` 区分自动收集的共同责任与已验证祖先，并提前完成责任校验；`LeaderResolutionService.recover_supplier_handoffs` 从直接验收和新交接事实接回原 Sand 检查员。验证入口为 `test_resolution_workflow.py::test_interrupted_recheck_inherits_old_return_without_joint_resubmission` 和 `test_cross_space_remediation.py::test_handoff_recovers_same_sand_inspector_without_leader_click`。候选是否合入、Gate 是否通过以及实际部署状态必须查 PR/CI，不把代码存在当作已上线。已有部分写入的生产送审仍须单独按恢复流程处理。
