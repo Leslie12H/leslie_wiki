@@ -30,3 +30,5 @@ links: [sandeval-correction-fixtures, sandeval-e2e-acceptance]
 - 2026-09-20 的 50 题 / 抽检 10 题 / 3 题不合格生产独立场景与两轮逐题对照：`/Users/leslie/Documents/Playground/output/prod-reinspection-sampling-20260920/report.md`；状态与回执在同目录。
 
 - 2026-09-20 测试环境“Sand 手动退回 → 供应商直接验收 → 重新交接”断点证据：`/Users/leslie/Documents/Playground/output/test-yundu-reinspection/report.md`。核对 `AggregationService.submit_package` 与 `ResolutionService.auto_assign_reinspections` 的执行登记接线；支持 sand_qc 枚举不足以证明每个回交入口都会生成复验执行。
+
+- 2026-09-20 生产 1000 题未改答案复验的 SUBMISSION_SCOPE_EXISTS 证据：`/Users/leslie/Documents/Playground/output/prod-scope-conflict/report.md`。先区分已冻结快照与已登记复验执行，再核对当前 `UnitOfWork` 是否真正提供回滚；首次中断异常仍须查历史日志。
