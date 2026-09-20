@@ -45,3 +45,5 @@ links: [sandeval-sql-lock-diagnosis]
 **Why:** 给现有题型增加 dispatch_policy 会追溯校验旧草稿和冻结发布配置，而旧任务创建时可能合法地保留 unlocked 默认值。
 
 **How to apply:** 发布前读 eval_dispatch_master 的 draft_config/frozen_config，并对 ev2_task 的 assignment_count_locked/locked_annotators_per_question 做交叉核对。通过候选 MasterConfig 与真实策略校验定位受影响入口；不要把派发校验失败误说成已有单题作答被阻断。500 修复应与新限制隔离，或先完成受控的历史兼容方案；未授权不迁移生产。
+
+2026-09-20 用户明确要求“移除，不能影响已经派出去的任务”。候选 c3ced3f20 已移除本次新增派发策略，保留 500 修复。对前述生产快照执行 require_publishable，配置全部通过且未被改写；详细结果见同一核验报告。未迁移生产，上线状态须另查。
