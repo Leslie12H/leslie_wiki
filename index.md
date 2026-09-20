@@ -244,3 +244,5 @@
 - [Sand Eval 自动复验派回验收](domains/sandai-data-smith/refs/sandeval-auto-reinspection-verification.md) — 手动退回与正式报告的取人边界、复验必检题和补抽集合、生产独立场景证据入口（2026-09-20）。
 
 - [Caption 工作流上下文契约](domains/sandai-data-smith/refs/sandeval-caption-workflow-context.md) — 题目详情 500、modules 缺失与运行版本核验入口（2026-09-20）。
+
+- 2026-09-20：Caption v6 modules 依赖的引入提交与 PR #1446 合入时间，见 [上下文契约排查](domains/sandai-data-smith/refs/sandeval-caption-workflow-context.md)。
