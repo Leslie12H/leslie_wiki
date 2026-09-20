@@ -185,3 +185,5 @@
 - [Eval慢接口与事务SQL观测指针](domains/sandai-data-smith/refs/sandeval-slow-panels.md) — 现有日志面板、trace覆盖边界与2026-09-19排查入口。
 
 - [Sand Eval 可返回代登录入口](domains/sandai-data-smith/refs/sandeval-returnable-impersonation.md) — PR #1401、测试发布及首次/再次切号并发撤销的验收指针（2026-09-19）。
+
+- [Sand Eval 历史整改快照恢复](domains/sandai-data-smith/refs/sandeval-legacy-correction-recovery.md) — 2026-09-20：旧快照与失败意图区分、最新答案保留、PR #1504 和只读计划 / apply 操作入口。
