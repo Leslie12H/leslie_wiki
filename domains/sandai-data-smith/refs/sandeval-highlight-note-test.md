@@ -2,7 +2,7 @@
 name: sandeval-highlight-note-test
 type: reference
 created: 2026-09-18
-updated: 2026-09-18
+updated: 2026-09-21
 tags: [sandeval, material-import, acceptance]
 links: [sandeval-e2e-acceptance]
 ---
@@ -16,3 +16,9 @@ links: [sandeval-e2e-acceptance]
 - 本次场景、真实对象链接、浏览器观察与待验证项：`/Users/leslie/Documents/Playground/output/sandeval-highlight-notes-20260918/report.md`。
 - 可复用输入：同目录 `highlight-notes.jsonl`。
 - 题面预览组件调查入口：`sand-eval/platform/frontend/src/pages/dispatchMasters/MaterialPreview.tsx`；运行环境行为与部署版本须现查。
+
+## 2026-09-21 高光待标注场景
+
+**Why:** 复用历史素材时，部署版本的范围校验可能已变化；旧脚本同时选择未发与已发不能直接复用。
+
+**How to apply:** 先检查当前 `dispatch_masters.py` 的 `prepare_material_selection` 和 `require_selected_source`，再更新原草稿，避免重建。真实任务、未作答卡、页面验证和回执见 `/Users/leslie/Documents/Playground/output/sandeval-highlight-20260921/report.md`；运行态需重新验证。

@@ -262,3 +262,5 @@
 - 2026-09-21：新旧质检兼容方案及“新版改答案让旧详情非空”的逐条证据，见 [取数差异](domains/sandai-data-smith/refs/sandeval-inspection-detail-source-mismatch.md)。
 
 - 2026-09-21：概览与答题卡分析的真实质检数据、全量读取瓶颈及分页方案，见 [质检详情取数兼容](domains/sandai-data-smith/refs/sandeval-inspection-detail-source-mismatch.md)。
+
+- 2026-09-21：高光片段待标注场景和发题范围校验入口见 [高光验收](domains/sandai-data-smith/refs/sandeval-highlight-note-test.md)。
