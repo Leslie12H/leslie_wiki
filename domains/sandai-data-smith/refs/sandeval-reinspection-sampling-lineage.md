@@ -18,3 +18,5 @@ links: [sandeval-legacy-correction-recovery]
 
 - Sand 分支也必须覆盖两种入口：负责人退回原质检员，以及质检员退回供应商后重新验收、交接。检查有效判断而非只读原始 verdict，避免漏掉仲裁终局；用最新明确判断决定旧不合格是否仍待验证。
 - 统一规则与完整退回重提回归的开发指针：SandAI Data Smith 提交 `4e13aac42`（任务分支 `codex/reinspection-required-lineage`），`quality/application/management/reinspection_sampling.py` 与 `tests/quality/application/management/test_reinspection_sampling.py`。是否已进入测试或生产应查看 PR、Gate 和部署事实。
+
+- 历史展示补充规则及验收入口：[PR #1569](https://github.com/world-sim-dev/sandai-data-smith/pull/1569)，`ReviewQueryService.add_latest_judgments`、`PreviousRoundPanel.tsx`、`test_latest_judgment.py`。直接上一轮的状态与最近明确结论应分别显示，避免把更早合格误认为上一轮或本轮已合格。

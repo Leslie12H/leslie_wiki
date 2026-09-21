@@ -190,4 +190,4 @@
 
 - [供应商批量验收与送审测试数据](domains/sandai-data-smith/refs/sandeval-bulk-quality-fixtures.md) — 独立题包、待办状态、并行消费与页面证据核对入口
 
-- [复验抽样与停止轮次继承](domains/sandai-data-smith/refs/sandeval-reinspection-sampling-lineage.md) — 供应商与 Sand 退回重提的跨轮不合格必检、有效改判及实际抽样核对入口。
+- [复验抽样与停止轮次继承](domains/sandai-data-smith/refs/sandeval-reinspection-sampling-lineage.md) — 供应商与 Sand 退回重提的跨轮不合格必检、有效改判、最近有效结论展示及实际抽样核对入口。
