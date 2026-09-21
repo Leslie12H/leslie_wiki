@@ -17,3 +17,6 @@ links: [sandeval-auto-reinspection-verification]
 - 列表通过判据：`quality/application/management/task_stage.py::TaskStageReader`。
 - 详情入口：`frontend/src/pages/allSpaceTasks/InspectionPage.tsx`、`backend/app/api/all_space_tasks.py::inspection_progress`。
 - 修复应统一新版读模型，兼容历史任务；不靠补写旧卡或重复质检消除空展示。
+
+- 2026-09-21 兼容方案与固定 main 审查基线：`/Users/leslie/Documents/Playground/output/inspection-compatibility-plan-20260921/plan.md`。先验证规范质量配置，再区分当前归属与旧执行历史；配置存在但无报告不能回退旧页。方案未实施。
+- 2026-09-21 第二个生产案例：`/Users/leslie/Documents/Playground/output/task-inspection-mismatch-20260921/second-report.md`。新版 amendment 与旧 amended 行的答案ID、质检员、时间已逐条对应；旧结论非空不代表走过旧流程，分类审计要排除这种来源写入。
