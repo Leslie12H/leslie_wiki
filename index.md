@@ -187,3 +187,5 @@
 - [Sand Eval 可返回代登录入口](domains/sandai-data-smith/refs/sandeval-returnable-impersonation.md) — PR #1401、测试发布及首次/再次切号并发撤销的验收指针（2026-09-19）。
 
 - [Sand Eval 历史整改快照恢复](domains/sandai-data-smith/refs/sandeval-legacy-correction-recovery.md) — 2026-09-20：旧快照与失败意图区分、最新答案保留、PR #1504 和只读计划 / apply 操作入口。
+
+- [供应商批量验收与送审测试数据](domains/sandai-data-smith/refs/sandeval-bulk-quality-fixtures.md) — 独立题包、待办状态与页面证据核对入口
