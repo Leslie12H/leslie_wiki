@@ -188,4 +188,4 @@
 
 - [Sand Eval 历史整改快照恢复](domains/sandai-data-smith/refs/sandeval-legacy-correction-recovery.md) — 2026-09-20：旧快照与失败意图区分、最新答案保留、PR #1504 和只读计划 / apply 操作入口。
 
-- [供应商批量验收与送审测试数据](domains/sandai-data-smith/refs/sandeval-bulk-quality-fixtures.md) — 独立题包、待办状态与页面证据核对入口
+- [供应商批量验收与送审测试数据](domains/sandai-data-smith/refs/sandeval-bulk-quality-fixtures.md) — 独立题包、待办状态、并行消费与页面证据核对入口

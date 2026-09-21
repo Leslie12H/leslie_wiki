@@ -17,3 +17,5 @@ links: [sandeval-auto-reinspection-verification]
 - 正常链路复用入口：`sand-eval/platform/acceptance/e2e/client.py` 和 `flow.py`。普通 API 会话凭据需私密保存，不写入报告或知识库。
 - UI 粒度核对入口：`BatchReviewTable.tsx`、`PackageHandoffDialog.tsx`，及实际部署的 `/quality/management` 页面；列表的“批量分配”不代表“批量验收/送审”。
 - 2026-09-21 测试环境构造规格、执行回执和最终状态清单：`/Users/leslie/Documents/Playground/output/qt-bulk-acceptance-cases-20260921/`；用例见 `cases.md`，以最终报告和回读为准，规格不是执行成功证据。
+
+- 并行使用边界：构造账本的“已就绪”不是永久状态；交付前回读实际状态。若包被其他验收操作消费，保留其记录与回执，补建新的隔离前置数据，更新筛选范围和总数；不要回滚他人的已完成操作。
