@@ -260,3 +260,5 @@
 - [质检详情与质量中心取数不一致](domains/sandai-data-smith/refs/sandeval-inspection-detail-source-mismatch.md) — 新版报告通过与旧详情空批次的核查入口（2026-09-21）。
 
 - 2026-09-21：新旧质检兼容方案及“新版改答案让旧详情非空”的逐条证据，见 [取数差异](domains/sandai-data-smith/refs/sandeval-inspection-detail-source-mismatch.md)。
+
+- 2026-09-21：概览与答题卡分析的真实质检数据、全量读取瓶颈及分页方案，见 [质检详情取数兼容](domains/sandai-data-smith/refs/sandeval-inspection-detail-source-mismatch.md)。
