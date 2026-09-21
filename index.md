@@ -266,3 +266,5 @@
 - 2026-09-21：高光片段待标注场景和发题范围校验入口见 [高光验收](domains/sandai-data-smith/refs/sandeval-highlight-note-test.md)。
 
 - [切片标注验收入口](domains/sandai-data-smith/refs/sandeval-slice-fixtures.md) — 题面字段、逐片段媒体映射与真实播放核验（2026-09-21）。
+
+- [公共岗位与私人进度隔离](global/pitfalls/public-jobs-private-applications.md) — 平台角色、自由文本隐私与直接接口回归入口（2026-09-21）。
