@@ -312,3 +312,5 @@
 - 2026-09-20：补充 Sand Eval 固定整改提交意图、自动回交请求版本与逐条提交中断回归入口，见 `domains/sandai-data-smith/refs/sandeval-auto-reinspection-verification.md`。
 
 - 2026-09-20：补充正式环境 Sand 直接验收回交自动派回原质检员的独立场景、部署和浏览器验收证据指针。
+
+- 2026-09-21：记录生产任务新版质检完成、旧详情读取QcCard/QcRound导致空批次的证据与修复边界。

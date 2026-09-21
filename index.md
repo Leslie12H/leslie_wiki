@@ -256,3 +256,5 @@
 - 2026-09-20：Caption 退回后回交的自动执行缺口与手工复验入口区别，见 [复验核验](domains/sandai-data-smith/refs/sandeval-auto-reinspection-verification.md)。
 
 - 2026-09-20：整改责任重叠和供应商直接验收后自动派回复验的修复候选与回归入口，见 [自动复验核验](domains/sandai-data-smith/refs/sandeval-auto-reinspection-verification.md)。
+
+- [质检详情与质量中心取数不一致](domains/sandai-data-smith/refs/sandeval-inspection-detail-source-mismatch.md) — 新版报告通过与旧详情空批次的核查入口（2026-09-21）。
