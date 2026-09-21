@@ -268,3 +268,5 @@
 - [切片标注验收入口](domains/sandai-data-smith/refs/sandeval-slice-fixtures.md) — 题面字段、逐片段媒体映射与真实播放核验（2026-09-21）。
 
 - [公共岗位与私人进度隔离](global/pitfalls/public-jobs-private-applications.md) — 平台角色、自由文本隐私与直接接口回归入口（2026-09-21）。
+
+- 2026-09-21：构图待质检场景与标注批次主动交接门禁，见 [质量中心验收](domains/sand-eval/pitfalls/quality-center-test-data.md)。
