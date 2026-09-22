@@ -16,3 +16,5 @@ links: [sandeval-inspection-detail-source-mismatch]
 - 2026-09-22 生产案例和只读核验记录：`/Users/leslie/Documents/Playground/output/quality-handoff-20260922/report.md`。状态会变，使用前重查。
 - 代码入口：`app/services/facts/task_assignments.py::_quality_projected_waves`、`quality/application/management/submission_service.py::_current_batches`、`aggregation_service.py::_vendor_package`、`quality/domain/management/submission.py::completeness`。
 - 本轮仅诊断；未实施修复。
+
+- 2026-09-22 后续审计已核实同一工作项转出再转回、形成新 wave，且两次送审引用不同答案版本；时间线与 audit 证据见报告后续章节。转派历史保留与当前汇总范围应区分；同一工作项不等于相同答案版本。
