@@ -273,3 +273,5 @@
 - 2026-09-21：构图待质检场景与标注批次主动交接门禁，见 [质量中心验收](domains/sand-eval/pitfalls/quality-center-test-data.md)。
 
 - 2026-09-22：多进程质检恢复、共享连接与 pool_wait 计时边界见 [SQL 与锁诊断入口](domains/sandai-data-smith/refs/sandeval-sql-lock-diagnosis.md)。
+
+- [整包提交与重新分批重复范围](domains/sandai-data-smith/refs/sandeval-handoff-duplicate-scope.md) — 页面当前批次与正式送审范围不一致、重复项完整性失败的核验指针（2026-09-22）。
