@@ -2,7 +2,7 @@
 name: sandeval-sql-lock-diagnosis
 type: reference
 created: 2026-09-17
-updated: 2026-09-17
+updated: 2026-09-22
 tags: [sandai-data-smith, sandeval, hologres, sls, sql, locks]
 links: []
 ---
@@ -27,3 +27,14 @@ links: []
 - 解析content中的transaction_trace JSON。`phase=sql`的`elapsed_ms`是应用观测的SQL调用耗时；`business_phase`可进一步区分submission_task_lock、submission_assignment_lock等路径。名称只用于定位，数据库锁异常原文和阻塞信息才证明锁行为。
 - statement timeout、用户请求取消、锁获取超时需要分别统计，不能仅凭QueryCanceledError混为一种错误。
 - 把长事务、加锁耗时、连接池耗尽串成因果链前，必须关联持锁owner、等待者、SQL及时间窗；Ready和重启次数只说明容器状态。
+
+## 多进程恢复与取连接计时（2026-09-22）
+
+**Why:** 后台恢复在每个 Web worker 启动，若仅在完成后用 CAS 合并结果，不能阻止执行阶段重复消耗资源。日志里的取连接阶段也可能覆盖 asyncpg setup，不等于纯队列等待。
+
+**How to apply:** 关联同一 allocation_id、不同 trace_id、Pod 和重叠时间，检查恢复前是否有跨进程认领与续租；再用 server_pid、连接池路由和来源读取路径核验是否与在线请求共用连接。不要把分配全程耗时当作单条连接持有时长，也不要把有界日志样本比例当全站负载比例。
+
+- 代码入口（须核对部署版本）：`sand-eval/platform/backend/quality/infrastructure/runtime.py` 的 start/_recover，`quality/application/management/batch_allocation_service.py` 的 recover/_resume，以及 `quality/infrastructure/persistence/batch_allocation_repository.py` 的 pending。
+- 来源取数与批量粒度：`quality/application/management/submission_content_service.py`、`app/services/facts/qc_verdict.py` 的 read_response_versions。
+- 计时边界：`app/infra/holo.py` 的 _pool_connection、_setup_connection 和主池/控制池路由。需要单独分解 queue/setup 才能量化纯排队占比。
+- 2026-09-22 本次诊断确认同一分配多路恢复及共享连接；停止重复工作后的恢复幅度尚未验证，不能视为全站慢请求的唯一原因。

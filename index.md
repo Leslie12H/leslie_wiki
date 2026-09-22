@@ -270,3 +270,5 @@
 - [公共岗位与私人进度隔离](global/pitfalls/public-jobs-private-applications.md) — 平台角色、自由文本隐私与直接接口回归入口（2026-09-21）。
 
 - 2026-09-21：构图待质检场景与标注批次主动交接门禁，见 [质量中心验收](domains/sand-eval/pitfalls/quality-center-test-data.md)。
+
+- 2026-09-22：多进程质检恢复、共享连接与 pool_wait 计时边界见 [SQL 与锁诊断入口](domains/sandai-data-smith/refs/sandeval-sql-lock-diagnosis.md)。
