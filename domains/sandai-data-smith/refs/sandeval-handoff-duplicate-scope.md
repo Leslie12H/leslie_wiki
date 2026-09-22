@@ -15,6 +15,7 @@ links: [sandeval-inspection-detail-source-mismatch]
 
 - 2026-09-22 生产案例和只读核验记录：`/Users/leslie/Documents/Playground/output/quality-handoff-20260922/report.md`。状态会变，使用前重查。
 - 代码入口：`app/services/facts/task_assignments.py::_quality_projected_waves`、`quality/application/management/submission_service.py::_current_batches`、`aggregation_service.py::_vendor_package`、`quality/domain/management/submission.py::completeness`。
-- 本轮仅诊断；未实施修复。
+- 修复入口：PR `world-sim-dev/sandai-data-smith#1673` 引入 `AggregationService.live_annotator_batches`，供整包冻结、负责人可提交判定和提交校验剔除已被替代的旧 scope。
+- 2026-09-22 21:07（Asia/Shanghai）复核固定 `main@cf550b68`：`aggregation_service.py::_persist` 的 vendor package 持久化前校验仍直接调用 `current_annotator_batches`，与已过滤的冻结依据比较后会返回 `SOURCE_SCOPE_CHANGED`。排查同类问题时要核对整包生成、持久化前校验、页面判定和提交校验四个检查点是否共用同一集合；页面状态会变，使用前重查。
 
 - 2026-09-22 后续审计已核实同一工作项转出再转回、形成新 wave，且两次送审引用不同答案版本；时间线与 audit 证据见报告后续章节。转派历史保留与当前汇总范围应区分；同一工作项不等于相同答案版本。
