@@ -59,6 +59,7 @@
 - [Sisyphus 质量平台](domains/sisyphus/README.md) — quality_dashboard 日投影/发版门禁、automation_triggers、Agent Token 与 project 边界；调度模型与 admin 不同
 
 ## Disciplines(职业知识)
+- [CI 范围与间接门禁](disciplines/testing/ci-scope-and-indirect-gates.md) — 路径分类、步骤条件、检查依赖图及失败聚合的收窄核验方法
 - [testing](disciplines/testing/README.md) — 测试方法论 *(暂空)*
 - [dev](disciplines/dev/README.md) — 开发实践 *(暂空)*
 
