@@ -2,7 +2,7 @@
 name: sand-eval-quality-center-test-data
 type: pitfall
 created: 2026-09-17
-updated: 2026-09-21
+updated: 2026-09-23
 tags: [sand-eval, testing, quality-center]
 links: []
 ---
@@ -18,3 +18,5 @@ links: []
 验收指针：`quality/application/management/leader_query_service.py` 的管理列表；`quality/application/inspection/review_query_service.py` 的本人待办、详情与冻结题目。核对待质检数量、检查人、可执行动作、无阻断以及题目内容可读。管理与质检链接在 `platform/frontend/src/routes/quality.tsx`，root 用户的管理页默认 Sand 阶段，供应商批次需显式选择 `space_qc`。
 
 2026-09-21 构图待质检验收：当前批次门禁、标注员主动提交质检及实际工作台证据见 `/Users/leslie/Documents/Playground/output/sandeval-composition-qc-20260921/report.md`。完成数量不等于已交接；复用脚本时检查当前 `can_allocate` 和阻断原因，再走 `my_tasks.py` 的批次交接接口。
+
+2026-09-23 生产排查：负责人工作台的“代交接”请求若返回 500，先按质量任务号和 `/leader/batches/<scope>/handoff` 查 SLS 的同秒 stderr。`management_handlers.hand_off_annotation_batch` 曾调用不存在的 `runtime.allocations`，而组合根实际只暴露 `runtime.batch_allocations`，请求会在进入 `hand_off_batch` 和来源门禁前抛 `AttributeError`，因此服务端不会产生 `QualityError code`。修复运行时属性名后仍须按生产者状态解释结果：在职标注员缺少显式交接时应返回 `HANDOFF_PRODUCER_ACTIVE`，不能把答题完成直接当作可分配。
