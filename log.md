@@ -338,3 +338,5 @@
 - 2026-09-22：新增 VidMuse 访问日志核验入口，区分内部 Nginx sidecar 与网站 ALB 入口，保留生产未核验边界。
 
 - 2026-09-22：补充 Sand Eval PR #1673 漏掉整包持久化前批次过滤、导致 `SOURCE_SCOPE_CHANGED` 的代码复核指针。
+
+- 2026-09-23：补充 Sand Eval 最新主线仍漏正式交接执行、Sand 批次续跑与成果资格三处 live batch 口径，并记录本地修复提交与未部署边界。

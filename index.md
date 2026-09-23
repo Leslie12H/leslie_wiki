@@ -280,4 +280,6 @@
 
 - 2026-09-22：PR #1673 后续复核发现整包持久化前仍使用未过滤批次集合；四个检查点与 `SOURCE_SCOPE_CHANGED` 入口见 [整包提交排查](domains/sandai-data-smith/refs/sandeval-handoff-duplicate-scope.md)。
 
+- 2026-09-23：最新主线的正式交接执行校验仍使用未过滤批次，导致 `SOURCE_SCOPE_CHANGED`；统一 live batch owner、后续 Sand 批次与成果资格的修复指针见 [整包提交排查](domains/sandai-data-smith/refs/sandeval-handoff-duplicate-scope.md)。
+
 - [VidMuse 访问日志入口](domains/vidmuse/refs/access-log-entrypoints.md) — runtime sidecar 与网站网关的覆盖边界、ALB/SLS 和生产环境核验指针（2026-09-22）。
