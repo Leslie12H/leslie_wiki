@@ -192,4 +192,4 @@
 
 - [复验抽样与停止轮次继承](domains/sandai-data-smith/refs/sandeval-reinspection-sampling-lineage.md) — 供应商与 Sand 退回重提的跨轮不合格必检、有效改判、最近有效结论展示及实际抽样核对入口。
 
-- [整包提交与重新分批重复范围](domains/sandai-data-smith/refs/sandeval-handoff-duplicate-scope.md) — 重新分批旧 scope、正式交接 `SOURCE_SCOPE_CHANGED` 与统一 live batch 口径的核验指针（2026-09-23）。
+- [整包提交与重新分批重复范围](domains/sandai-data-smith/refs/sandeval-handoff-duplicate-scope.md) — 当前正式批次的 key、version、交接状态口径与 PR #1706 修复指针（2026-09-23）。
