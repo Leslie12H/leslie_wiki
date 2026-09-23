@@ -360,3 +360,4 @@
 
 - 2026-09-23：记录 Sand Eval 重新分批后正式交接仍误用未过滤批次的根因，以及统一 live batch owner 的本地修复入口。
 - 2026-09-23：补充 Sand Eval 当前批次需同时核对 scope key 与 version；负责人直接分配完成批次时不以标注交接状态为门禁。
+- 2026-09-23：更新 Sand Eval PR #1706 已通过 Gate 并合并到 main；生产部署仍未由该 Gate 执行。
