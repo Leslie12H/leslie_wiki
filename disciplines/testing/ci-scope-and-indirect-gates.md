@@ -2,7 +2,7 @@
 name: ci-scope-and-indirect-gates
 type: discipline
 created: 2026-09-22
-updated: 2026-09-22
+updated: 2026-09-23
 tags: [ci, testing, dependency, sand-eval]
 links: []
 ---
@@ -13,11 +13,16 @@ links: []
 
 **How to apply:** 从路径分类默认值、job 条件、步骤条件和检查器依赖图四层核对。运行时生成物与文档生成物分开选择；工具自检由工具输入变化触发。为纯文档、普通业务、规则包、工具自身和未知路径保留样例，并验证选中的检查失败、取消或意外跳过仍导致聚合失败。并行 job 时长不可直接相加作为墙钟收益。
 
+纯测试文件可以比生产源码窄，但判据必须由路径形状明确定义：叶子 `test_*.py` 或前端测试文件只跑自身/related 测试；`conftest.py`、共享 helper、fixture 与无法分类的路径回退全量。前端测试改动仍需全量 typecheck，因为类型关系跨文件；生产前端源码则跑分片测试、typecheck 与 Vite build。
+
+旧提交被新提交取代不是测试失败。验证和镜像构建可以按 job + matrix shard 取消旧运行；部署必须保持串行且不可被取消。轮到部署时再次比较分支 tip：若已过期，记录摘要并成功跳过，不能用 `setFailed` 把正常淘汰制造成环境红灯。Collect 这类有负向依赖边界的套件，合并 workflow 时要先在未安装上游依赖的环境运行 shared boundary，再安装完整依赖跑其余用例，否则“合并成一个 job”会静默删除原保护。
+
 实现与当前状态只查源：
 
 - [Sand Eval CI 收窄 PR #1621](https://github.com/world-sim-dev/sandai-data-smith/pull/1621)。合并、检查结果与部署状态以 PR 和对应 run 为准。
 - 仓库 `sand-eval/platform/scripts/select_tests.py`：路径、输入与检查选择。
 - 仓库 `.github/workflows/sand-eval-platform-gate.yml`：步骤条件与最终结果聚合。
 - 仓库 `sand-eval/scripts/ai_native/run_gates.py`：检查之间的依赖。
+- 仓库 `sand-eval/platform/scripts/change-scope-contract.json`：文档、生产源码、叶子测试、共享测试 helper、规则、Collect、工具、未知路径与 Draft 的闭合样例。
 
 本地 macOS 的 `/var` 与 `/private/var` 临时路径别名也可能让依赖 lexical 路径的结构夹具失败；先用规范化 TMPDIR 复核，再判断是否改坏业务代码。
