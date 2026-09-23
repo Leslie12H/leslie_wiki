@@ -18,4 +18,4 @@ links: []
 - PR `world-sim-dev/sandai-data-smith#1673` 与 `#1678` 已统一整包生成、负责人可提交判定、提交事务校验和落库前校验，但未覆盖正式交接前的执行证据校验。
 - 2026-09-23 复核 `main@1b8a4be7`：生产已运行该主线对应构建；`InspectionContextService._aggregate_execution` 仍用未过滤的 `current_annotator_batches` 比较整包子批次，返回 `SOURCE_SCOPE_CHANGED`「供应商包未包含当前全部正式标注批次」。`_sand_batch_predecessors` 与 `ResultEligibilityService.qualify` 也保留相同口径。
 - 修复应把 live batch 集合放在单一 owner，让整包生成、落库、交接执行、Sand 批次续跑和成果资格共同复用。
-- 2026-09-23 进一步代码复核确认：live batch 不能只按 `scope_key` 匹配。同一个 wave/owner 的成员变化会保留 key、更新 `scope_version`；批次交接撤回也会令 `submitted_for_qc=false`。当前正式批次须同时满足 annotator 类型、`scope_key + scope_version` 相等且 `submitted_for_qc=true`，否则旧答案可能被误认成当前答案并写入整包交接回执。修复已追加到 PR `world-sim-dev/sandai-data-smith#1706`，提交 `81ba588cf`；是否合并、部署及线上恢复仍须分别核验。
+- 2026-09-23 进一步代码复核确认：live batch 不能只按 `scope_key` 匹配。同一个 wave/owner 的成员变化会保留 key、更新 `scope_version`；当前批次须同时满足 annotator 类型及 `scope_key + scope_version` 相等，否则旧答案可能被误认成当前答案并写入整包交接回执。PR #1706 已明确完成批次可由负责人直接分配，因此 `submitted_for_qc` 不是该集合的门禁。修复已追加到 PR `world-sim-dev/sandai-data-smith#1706`，最新提交 `2409c1f8b`；是否合并、部署及线上恢复仍须分别核验。
