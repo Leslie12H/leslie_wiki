@@ -272,7 +272,7 @@
 
 - 2026-09-21：构图待质检场景与标注批次主动交接门禁，见 [质量中心验收](domains/sand-eval/pitfalls/quality-center-test-data.md)。
 
-- 2026-09-23：负责人“代交接”500、运行时服务名装配遗漏与 `QualityError code` 未产生的排查顺序，见 [质量中心验收](domains/sand-eval/pitfalls/quality-center-test-data.md)。
+- 2026-09-23：负责人“代交接”500、运行时服务名装配遗漏、`QualityError code` 未产生及恢复已完成批次直接分配的口径，见 [质量中心验收](domains/sand-eval/pitfalls/quality-center-test-data.md)。
 
 - 2026-09-22：多进程质检恢复、共享连接与 pool_wait 计时边界见 [SQL 与锁诊断入口](domains/sandai-data-smith/refs/sandeval-sql-lock-diagnosis.md)。
 

@@ -19,4 +19,6 @@ links: []
 
 2026-09-21 构图待质检验收：当前批次门禁、标注员主动提交质检及实际工作台证据见 `/Users/leslie/Documents/Playground/output/sandeval-composition-qc-20260921/report.md`。完成数量不等于已交接；复用脚本时检查当前 `can_allocate` 和阻断原因，再走 `my_tasks.py` 的批次交接接口。
 
-2026-09-23 生产排查：负责人工作台的“代交接”请求若返回 500，先按质量任务号和 `/leader/batches/<scope>/handoff` 查 SLS 的同秒 stderr。`management_handlers.hand_off_annotation_batch` 曾调用不存在的 `runtime.allocations`，而组合根实际只暴露 `runtime.batch_allocations`，请求会在进入 `hand_off_batch` 和来源门禁前抛 `AttributeError`，因此服务端不会产生 `QualityError code`。修复运行时属性名后仍须按生产者状态解释结果：在职标注员缺少显式交接时应返回 `HANDOFF_PRODUCER_ACTIVE`，不能把答题完成直接当作可分配。
+2026-09-23 生产排查：负责人工作台的“代交接”请求若返回 500，先按质量任务号和 `/leader/batches/<scope>/handoff` 查 SLS 的同秒 stderr。`management_handlers.hand_off_annotation_batch` 曾调用不存在的 `runtime.allocations`，而组合根实际只暴露 `runtime.batch_allocations`，请求会在进入 `hand_off_batch` 和来源门禁前抛 `AttributeError`，因此服务端不会产生 `QualityError code`。
+
+同日产品口径恢复为：负责人可直接分配题目已全部完成且尚未分配的批次，标注员主动交接保留为本人确认和锁定事实，不再作为 `can_allocate` 前置条件。负责人页面不显示“代交接”；确认分配时由质量中心冻结实际送检答案版本和责任范围。修复分支 `codex/fix-quality-handoff-allocation`，本地提交 `2bff1030a`，尚未发 PR 或部署。
