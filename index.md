@@ -181,7 +181,7 @@
 
 - Sand Eval 多角色自动化入口：见 [验收指针](domains/sandai-data-smith/refs/sandeval-e2e-acceptance.md)，包含分层运行和真实存储核验。
 
-- [Sand Eval 质量中心测试数据](domains/sand-eval/pitfalls/quality-center-test-data.md) — 任务内质检与质量中心的边界、完整份数和批次契约、送审与验收入口；分配计划与真实质检待办需分层核对（更新至 2026-09-24）。
+- [Sand Eval 质量中心测试数据](domains/sand-eval/pitfalls/quality-center-test-data.md) — 任务内质检与质量中心的边界、完整份数和批次契约、送审与验收入口；分配计划与真实质检待办需分层核对，整包禁用要回读推进阻断码及唯一负责人配置（更新至 2026-09-24）。
 
 - [Test / Prod 与短期验收候选](disciplines/dev/test-prod-short-lived-candidates.md) — 未采用的备选方案；当前规则见 Test/Main Cherry-pick 团队规范。
 
@@ -275,6 +275,8 @@
 - 2026-09-23：负责人“代交接”500、运行时服务名装配遗漏、`QualityError code` 未产生及恢复已完成批次直接分配的口径，见 [质量中心验收](domains/sand-eval/pitfalls/quality-center-test-data.md)。
 
 - 2026-09-24：分配计划、真实检查任务、当前提交链和本人工作台的数量必须分层核对，见 [质量中心验收](domains/sand-eval/pitfalls/quality-center-test-data.md)。
+
+- 2026-09-24：整包“待提交”但按钮禁用时，回读 `inspection_advancement` 的真实阻断码，并核对多负责人验收与 `return_recipient_id`，见 [质量中心验收](domains/sand-eval/pitfalls/quality-center-test-data.md)。
 
 - 2026-09-22：多进程质检恢复、共享连接与 pool_wait 计时边界见 [SQL 与锁诊断入口](domains/sandai-data-smith/refs/sandeval-sql-lock-diagnosis.md)。
 
