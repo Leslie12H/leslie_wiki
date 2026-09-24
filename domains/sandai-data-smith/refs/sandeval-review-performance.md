@@ -31,3 +31,11 @@ links: [sandeval-api-observability, sandeval-sql-lock-diagnosis]
 2026-09-24 本次仅核验源码与现有测试定义；没有复核用户案例的原始 ARMS trace、生产部署、107/105 条规模或约 220 次查询，也没有性能改动、压测或部署。SLS CLI 在本次 shell 不可用。
 
 实现时优先约束机制：增加无关批次不能增加重型组校验次数；缺报告、跨任务、证据 hash 不符仍拒绝；同批前置新轮次/撤权/阻断必须立即生效；历史读取不能改用最新报告。冷缓存、热缓存分别采样，并将普通保存、修订和单题读取分开统计。
+
+
+## 批量定位方案的复核边界（2026-09-24）
+
+- 接口计数：若 `aggregate_evidence_many` 自己批量读取送审，再由调用方预读一遍会产生重复查询。要得到三次定位查询，应让它接收已读送审，或直接返回送审及证据；核对 `submission_repository.py::get_many` 的 500 条分块，不能承诺任意规模恒定三次。
+- PR-C 的行为差异：`inspection_context_service.py::_sand_batch_predecessors` 先定位后调用 `group_result` 时，不再因无关批次的 OSS/计划/明细校验异常阻塞本批次。旧路径并非因为兄弟批次“未通过”就必然拒绝；它先执行组校验，但通过/最新轮次判断在批次筛选之后。方案评审应准确区分这两者。
+- 定位完整性：核对 `review_task_repository.py::groups_for_ids` 返回空组、组内送审身份不一致以及 `unit_of_work.py::CommandReceipts.get_many` 缺项/指纹冲突；无法可靠定位的组不能静默当作无关组。不要在全包定位阶段套用 `reports_many` 的正式报告状态门槛，否则可能引入新的兄弟批次阻断。
+- 语义依据与验证：`inspection_context_service.py::_sand_batch_predecessors` 的批次依赖说明，以及 `tests/quality/application/resolution/test_sand_supplier_return.py` 中 sibling/current/full-package 三类用例。新增性能测试同时检查 SQL 次数与重型 `group_result` 调用范围；另补无关组快照损坏不阻断、本组损坏/过期仍拒绝、定位缺失不放行。

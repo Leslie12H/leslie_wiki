@@ -291,3 +291,5 @@
 - [VidMuse 访问日志入口](domains/vidmuse/refs/access-log-entrypoints.md) — runtime sidecar 与网站网关的覆盖边界、ALB/SLS 和生产环境核验指针（2026-09-22）。
 
 - [Sand Eval 检查读取与保存性能](domains/sandai-data-smith/refs/sandeval-review-performance.md) — 整包报告批量定位、保存范围校验、临时索引与缓存边界、ARMS 阶段及 60 秒取消的核验指针（2026-09-24；源码分析，未做线上耗时复核）。
+
+- 2026-09-24：Sand 质检批量定位的三次查询边界、无关组损坏隔离及缺失映射拒绝条件，见 [检查读取与保存性能](domains/sandai-data-smith/refs/sandeval-review-performance.md)。
