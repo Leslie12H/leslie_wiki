@@ -40,3 +40,14 @@ links: [sandeval-api-observability, sandeval-sql-lock-diagnosis]
 - 定位完整性：核对 `review_task_repository.py::groups_for_ids` 返回空组、组内送审身份不一致以及 `unit_of_work.py::CommandReceipts.get_many` 缺项/指纹冲突；无法可靠定位的组不能静默当作无关组。不要在全包定位阶段套用 `reports_many` 的正式报告状态门槛，否则可能引入新的兄弟批次阻断。
 - 错误顺序：批量加载依赖前先核对报告身份、关卡与循环引用；否则一个指向标注批次的错误报告可能先触发“缺汇总依据”，掩盖原来的 `SNAPSHOT_CORRUPT`。核对上述 Note 指向的循环引用回归用例。
 - 语义依据与验证：`inspection_context_service.py::_sand_batch_predecessors` 的批次依赖说明，以及 `tests/quality/application/resolution/test_sand_supplier_return.py` 中 sibling/current/full-package 三类用例。新增性能测试同时检查 SQL 次数与重型 `group_result` 调用范围；另补无关组快照损坏不阻断、本组损坏/过期仍拒绝、定位缺失不放行。
+
+## 发布后回归核验入口（2026-09-24）
+
+**Why:** 整体接口分位数同时受代码、请求参数和共享资源竞争影响。优化自身减少读取，不保证不同负载下的总体延迟下降；上线后变慢也不能单凭时间先后认定优化回退。
+
+**How to apply:** 对齐部署 digest 与排除 rollout 的固定窗口，按 stage、任务及 include_page_index 等参数分组；同时核对同一检查任务的完整 trace 工作量和其他同进程长请求。SLS 仅解析 Nginx access log，避免重复计入 Uvicorn；完成请求数不能直接当入站负载。
+
+- 负责人列表全量页码入口：`quality/application/management/live_leader_package_query.py::page` 的 include_page_index 分支，以及 `leader_package_query.py::_contexts/_metadata`、`batch_allocation_service.py::authorize_list`。核对 page_size 是否仅用于生成页码、候选是否遍历完才返回；检查员 count 删除并不等于这个负责人统计入口消失。
+- 对比发布 diff 时检查上述路径及前端 `quality/management/PackageList.tsx`，而非把同属 quality 的变更视为同一调用链。请求内 semaphore 不是全进程共享预算。
+- ARMS GetTrace 要分页取全，并核验 complete；查询 32 位 trace ID 时核对时间范围。SQL span 包含 SET setup，计数须区分 SELECT 与初始化；并发子 span 耗时不可直接相加作为请求耗时。已写自定义 span 但样本缺失时，只报告采集缺口。
+- 2026-09-24 核验指针：[PR #1839](https://github.com/world-sim-dev/sandai-data-smith/pull/1839)、[本机固定窗口报告](/Users/leslie/Documents/Playground/sandeval-pr1839-performance-review-20260924.md)。报告分别记录已确认现象、共享连接竞争推断及未执行回滚 A/B 的因果边界；不要将当次负载和指标当作当前状态。
