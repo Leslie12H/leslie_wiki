@@ -194,3 +194,5 @@
 
 - [整包提交与重新分批重复范围](domains/sandai-data-smith/refs/sandeval-handoff-duplicate-scope.md) — 当前批次的 key/version 口径、负责人直接分配边界，以及整包交接范围、重复报告读取超时和多人验收接收人阻断的修复与生产核验指针（2026-09-24）。
 - [质检批量分配延迟](domains/sandai-data-smith/refs/sandeval-bulk-allocation-latency.md) — 供应商与 Sand 批量分配的完整范围核查、串行批次、Sand 整包重复校验及一分钟客户端超时边界（2026-09-23）。
+
+- [Caption 旧模块数量与整题迁移](domains/sandai-data-smith/pitfalls/caption-module-count-and-migration.md) — 模块义务与答题卡数量差异、已验收迁移门禁及祖先退回闭环核验入口（2026-09-24）。
