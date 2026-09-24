@@ -292,4 +292,4 @@
 
 - [Sand Eval 检查读取与保存性能](domains/sandai-data-smith/refs/sandeval-review-performance.md) — 整包报告批量定位、保存范围校验、临时索引与缓存边界、ARMS 阶段及 60 秒取消的核验指针（2026-09-24；源码分析，未做线上耗时复核）。
 
-- 2026-09-24：Sand 质检批量定位的三次查询边界、无关组损坏隔离及缺失映射拒绝条件，见 [检查读取与保存性能](domains/sandai-data-smith/refs/sandeval-review-performance.md)。
+- 2026-09-24：Sand 质检批量定位的查询边界、无关组损坏隔离、循环引用错误顺序及仓内实现 Note，见 [检查读取与保存性能](domains/sandai-data-smith/refs/sandeval-review-performance.md)。
