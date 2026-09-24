@@ -2,7 +2,7 @@
 name: sandeval-handoff-duplicate-scope
 type: reference
 created: 2026-09-22
-updated: 2026-09-23
+updated: 2026-09-24
 tags: [sandeval, quality, handoff, reassignment]
 links: []
 ---
@@ -21,3 +21,4 @@ links: []
 - 2026-09-23 进一步代码复核确认：live batch 不能只按 `scope_key` 匹配。同一个 wave/owner 的成员变化会保留 key、更新 `scope_version`；当前批次须同时满足 annotator 类型及 `scope_key + scope_version` 相等，否则旧答案可能被误认成当前答案并写入整包交接回执。PR #1706 已明确完成批次可由负责人直接分配，因此 `submitted_for_qc` 不是该集合的门禁。修复已通过 Gate 并合并到 `main@c85f11886`；该 PR 的生产部署步骤为 skipped，部署及线上恢复仍须单独核验。
 - 2026-09-23 生产复核发现整包交接还有独立的延迟故障：34 个子批次会串行重复展开同一批不可变报告，30 秒来源观察凭证会在交接回执落库前过期，浏览器约 60 秒超时且不会留下回执。排查此类故障时要先只读确认 `request_id` 无回执，再分别测来源范围读取与完整 `validate_execution`，不能把超时归因于范围变化。
 - PR #1711 在单次提交命令内复用相同报告读取，并把彼此独立的报告组、前置包及子批读取限制为最多 8 路并发；保留原范围、完整性、报告与凭证门禁。`main@fddde5d6` 的生产 Gate/发布 run `35826743529` 成功，镜像 digest 为 `sha256:03c21b3790d39d4c714fee712d046444d8e6c74961818bdc8d35d8d9bbe62eae`；同一生产包的只读校验从超过 60 秒并报凭证过期，降至 14.154 秒并通过（34 子批、38 成员、68 报告）。这些运行值会变，复用时应重新测量。
+- 2026-09-24 生产案例：列表按验收数显示“待提交 Sand”，但当前完整范围由两名供应商负责人验收，任务又没有显式 `task_reviewer_config.return_recipient_id`，`aggregation_service._vendor_package` 因 `RECIPIENT_UNRESOLVED` 无法生成 `vendor_package`，详情只能退化为 `PACKAGE_NOT_READY`。紧急恢复通过显式配置接收人完成，PR #1792 的长期规则保持单一验收负责人原归属，仅在多人验收仍无法定责时使用最近一次状态为 `ready` 的供应商质检下发人；失败/中断分配不参与，既有整包的冻结接收人不改写。排查时以持久化推进记录里的 QualityError code 为准，不用按钮状态反推服务端根因。
