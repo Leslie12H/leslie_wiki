@@ -51,3 +51,13 @@ links: [sandeval-api-observability, sandeval-sql-lock-diagnosis]
 - 对比发布 diff 时检查上述路径及前端 `quality/management/PackageList.tsx`，而非把同属 quality 的变更视为同一调用链。请求内 semaphore 不是全进程共享预算。
 - ARMS GetTrace 要分页取全，并核验 complete；查询 32 位 trace ID 时核对时间范围。SQL span 包含 SET setup，计数须区分 SELECT 与初始化；并发子 span 耗时不可直接相加作为请求耗时。已写自定义 span 但样本缺失时，只报告采集缺口。
 - 2026-09-24 核验指针：[PR #1839](https://github.com/world-sim-dev/sandai-data-smith/pull/1839)、[本机固定窗口报告](/Users/leslie/Documents/Playground/sandeval-pr1839-performance-review-20260924.md)。报告分别记录已确认现象、共享连接竞争推断及未执行回滚 A/B 的因果边界；不要将当次负载和指标当作当前状态。
+
+## Leader 详情与逐包进度的区分（2026-09-24）
+
+**Why:** `/{id}/leader`、`/{id}/leader/progress` 与 `/leader/tasks` 不是同一个统计入口。live 模式下，逐包进度会实时计算；“每个请求只有一个包”不代表整页并发成本有界。
+
+**How to apply:** 沿 `leader_query_service.py::_package` 核对详情的完整授权与交接资格；沿 `live_leader_package_query.py::_live_rows` 核对 `authorize_summary(summary=False)` 后再次调用 `list_submission_scopes` 的完整来源读取。对照 `app/services/facts/task_assignments.py::_submission_scopes` 及已有上下文和 scopes 联合读取机制，避免复用时删除动态授权。
+
+- 前端 `quality/management/PackageList.tsx` 的 progress effect：检查当前页未缓存行是否同时发请求、是否使用统一 AbortController；后端请求内 semaphore 不限制不同 HTTP 请求。同步 499 可来自整页取消，不能一律归为服务器超时。
+- 相同请求的数据库子 span 区间并集与根 span 差值只能称未覆盖时间。若大空档位于 setup SET 前，再结合 pool_wait 信号收窄连接获取/调度等待；没有请求级 acquire span 时不要精确摊成池等待百分比。
+- 当日证据入口：[Leader 两接口报告](/Users/leslie/Documents/Playground/sandeval-leader-current-20260924/report.md)。报告对齐最后一个发布前稳定窗口，并用全量目标 access 记录计算精确分位数；新 rollout 的性能需要另取稳定窗口。
