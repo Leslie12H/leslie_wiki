@@ -2,9 +2,9 @@
 name: sandeval-api-observability
 type: reference
 created: 2026-09-18
-updated: 2026-09-18
+updated: 2026-09-24
 tags: [sand-eval, observability, latency, sls]
-links: [sandeval-sql-lock-diagnosis]
+links: [sandeval-sql-lock-diagnosis, sandeval-review-performance]
 ---
 
 # Sand Eval 接口观测设计入口
@@ -27,3 +27,7 @@ links: [sandeval-sql-lock-diagnosis]
 ## 方案边界
 
 建议先复用 SLS，使用网关请求记录统计流量与耗时，应用完成事件补充异常分类与关联诊断；ALB 故障另列，不能与应用请求重复计数。此为待实施建议，不代表已采纳的工程决定或现网能力。
+
+## 检查保存的后续核验入口（2026-09-24）
+
+上文是 2026-09-18 的方案背景，不能据此判断当前保存路径没有子 span。检查 `quality/application/inspection/trace_timing.py`、`review_service.py` 和 `quality/api/inspection/inspection_handlers.py` 的 ARMS 接线与计时边界，详见 [检查读取与保存性能](sandeval-review-performance.md)。源码存在不证明目标部署及 exporter 已采集；普通保存与修订 handler 的覆盖也须分别核对。
