@@ -2,7 +2,7 @@
 name: sandeval-auto-reinspection-verification
 type: reference
 created: 2026-09-20
-updated: 2026-09-20
+updated: 2026-09-24
 tags: [sandeval, quality, reinspection, production, acceptance]
 links: [sandeval-correction-fixtures, sandeval-e2e-acceptance]
 ---
@@ -18,6 +18,7 @@ links: [sandeval-correction-fixtures, sandeval-e2e-acceptance]
 - 正式报告与合法手动退回的读取边界：`sand-eval/platform/backend/quality/application/inspection/report_service.py::group_result`、`returned_inspection`。
 - 后台接线与周期：`sand-eval/platform/backend/quality/infrastructure/runtime.py`。周期和开关需查当前部署，不把固定等待两分钟作为成功保证。
 - 修复验证须分别覆盖正式报告驳回和“退回标注员”停止原检查两条路径，保留完整组、资格、授权和幂等校验。是否已修复以当前代码及新运行证据为准。
+- 2026-09-24 生产排查补充：手动退回后，旧检查任务按历史事实保持 `stopped`，服务端不会给它返回 `save_items`，因此旧链接中的判断及答案增删改都只读。整改提交后应在新 attempt 的后继检查任务操作。若旧链接仍显示“待标注员整改”且不提示或跳转后继任务，应判为历史任务入口/状态投影缺口，不应解锁旧任务或改库恢复其状态；现场须核对旧新 review task、submission、assignee、group 和 execution 的关联。
 
 ## 整改后的抽题验收入口
 
