@@ -182,7 +182,7 @@
 - Sand Eval 多角色自动化入口：见 [验收指针](domains/sandai-data-smith/refs/sandeval-e2e-acceptance.md)，包含分层运行和真实存储核验。
 
 - [Sand Eval 质量中心测试数据](domains/sand-eval/pitfalls/quality-center-test-data.md) — 任务内质检与质量中心的边界、完整份数和批次契约、送审与验收入口；分配计划与真实质检待办需分层核对，整包禁用要回读推进阻断码及唯一负责人配置（更新至 2026-09-24）。
-- [Sand Eval 质检分配进度冲突](domains/sand-eval/pitfalls/quality-allocation-progress-cas.md) — 2026-09-25 生产分配 1/37、36 个“准备中”的并行写回 CAS 归因与安全续跑核验指针。
+- [Sand Eval 质检分配进度冲突](domains/sand-eval/pitfalls/quality-allocation-progress-cas.md) — 2026-09-25 生产分配 1/37 的并行写回归因，以及原分配续跑至 37 批有样本的核验边界。
 
 - [Test / Prod 与短期验收候选](disciplines/dev/test-prod-short-lived-candidates.md) — 未采用的备选方案；当前规则见 Test/Main Cherry-pick 团队规范。
 
