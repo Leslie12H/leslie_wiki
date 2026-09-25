@@ -2,7 +2,7 @@
 name: sandeval-sql-lock-diagnosis
 type: reference
 created: 2026-09-17
-updated: 2026-09-22
+updated: 2026-09-25
 tags: [sandai-data-smith, sandeval, hologres, sls, sql, locks]
 links: []
 ---
@@ -11,13 +11,14 @@ links: []
 
 **Why:** 2026-09-17 排查确认，单搜 slow SQL、deadlock、lock wait 会漏掉真正的慢 SQL 与锁获取失败；应用事务阶段计时和数据库异常原文需要共同核验。
 
-**How to apply:** 固定北京时间窗口，区分 Sandworm 与 Eval 日志库、生产与开发 Pod 前缀；只统计 transaction_trace 的 finish 事件，并区分 SQL、加锁、连接池和写入准入阶段。日志行、trace、独立请求不能混算。
+**How to apply:** 固定北京时间窗口，先从当前 ACK 生产 Deployment 和 SLS 项目核对集群及日志库，再区分 Sandworm 与 Eval、生产与开发 Pod 前缀；只统计 transaction_trace 的 finish 事件，并区分 SQL、加锁、连接池和写入准入阶段。日志行、trace、独立请求不能混算。
 
 ## 指针
 
 - 全局访问技能：`~/.codex/skills/sdh-infra-access/SKILL.md`。用操作者自己的授权配置；技能中的历史部署和采集映射须现查。
-- Eval日志：[data-operator-log](https://sls.console.aliyun.com/lognext/project/k8s-log-c7a4a4cf4049c494ca6dea4aaf1e7f9b9/logsearch/data-operator-log?slsRegion=cn-shanghai)，过滤 namespace=sandworm、pod=sandeval*；sandeval-dev-前缀单列。
-- Sandworm日志：[sandworm](https://sls.console.aliyun.com/lognext/project/k8s-log-c7a4a4cf4049c494ca6dea4aaf1e7f9b9/logsearch/sandworm?slsRegion=cn-shanghai)。状态updated_at冲突不能当数据库锁证据。
+- Eval 日志（2026-09-25 核验）：[sandeval-prod](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/sandeval-prod?slsRegion=cn-shanghai)，过滤 namespace=sandworm、pod=sandeval*、container=app；开发环境单列。集群或采集规则再迁移时重新发现项目与 Logstore。
+- Eval API 看板（2026-09-25 重建）：[上海新集群](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/dashboard/dashboard-1790304848380-487363?slsRegion=cn-shanghai)。旧看板仍指向旧项目，历史数据不能证明当前采集正常。
+- Sandworm 日志：先在当前集群对应 SLS 项目核对 Logstore，不能沿用迁移前的 [旧 sandworm 库](https://sls.console.aliyun.com/lognext/project/k8s-log-c7a4a4cf4049c494ca6dea4aaf1e7f9b9/logsearch/sandworm?slsRegion=cn-shanghai)。状态 updated_at 冲突不能当数据库锁证据。
 - 数据库：[Hologres实例控制台](https://hologram.console.aliyun.com/cn-shanghai/instance/hgprecn-cn-y1i3x6u00004/info)，进入HoloWeb核对历史慢Query及阻塞会话。控制台可见不等于数据库可登录。
 - 2026-09-17固定窗口证据、SQL指纹、代表性trace及复查查询：`/Users/leslie/Documents/Playground/output/sdh-log-audit-20260917.md`。该文件是历史核验，不代表当前健康状态。
 
