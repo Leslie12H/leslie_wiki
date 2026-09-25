@@ -13,6 +13,8 @@ links: [sandeval-reinspection-sampling-lineage]
 
 **How to apply:** 排查多级退回时分别核对 Sand 质检原报告的逐题 `note`、Sand 退回 `Disposition.note`、负责人后续处理说明、空间质检的新轮次，以及标注员整改预览。不要把“本轮整改依据”显示了负责人说明视为 Sand 原意见已送达。需要新增受限的跨关卡、按批次和题目精确映射的只读投影；不能直接放开上级整份报告或全局 `Disposition` 读取权。
 
+2026-09-25 候选代码复查补充：跨标注转派时，原报告与新批次的 `producer_account_id` 可能不同；先用委派、被中断执行和本人整改批次证明范围，再按稳定 `work_unit_id` 对题，不能把原作者 ID 当作跨轮次唯一匹配条件。再次退回标注后，后续复验也应沿真实父处置链找 Sand 原意见；没有链路证据时不向当前用户投影。以上仍待 PR Gate 与页面验收。
+
 代码核验入口：`sand-eval/platform/backend/quality/application/inspection/review_query_service.py` 的 `detail` 只从直接上一轮与匹配的执行记录组成 `correction_notes`；`add_upstream_verdicts` 仅为 Sand 阶段展示前驱结论，且刻意只带 verdict。`sand-eval/platform/backend/quality/application/resolution/disposition_query_service.py` 的 `visible` 限制处置读取范围。`disposition_issue_service.py` 对 `manual_annotation_return` 的问题页使用该次退回自己的 `note`；`answer_correction_service.py` 按该整改对应检查组投影逐题判断。前端分别见 `ReviewWorkspace.tsx`、`AnswerCorrectionPanel.tsx`。
 
 候选修复入口：业务仓分支 `codex/inspection-note-autosave` 中，`delegated_feedback.py` 沿复验执行找到委派子处置和 Sand 原退回；`disposition_issue_service.py` 沿质检员再次退回标注的父处置链，按本人整改批次的工作项映射 Sand 原逐题意见；页面明确标注原退回意见与历史上游判断。该分支截至 2026-09-25 尚未通过 PR Gate、合并、发布或由标注员现场验收，不能视为生产已修复。
