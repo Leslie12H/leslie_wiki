@@ -2,7 +2,7 @@
 name: sandeval-api-observability
 type: reference
 created: 2026-09-18
-updated: 2026-09-18
+updated: 2026-09-25
 tags: [sand-eval, observability, latency, sls]
 links: [sandeval-sql-lock-diagnosis]
 ---
@@ -24,7 +24,9 @@ links: [sandeval-sql-lock-diagnosis]
 - 口径、生成、导入与回退：`sand-eval/docs/operations/api-observability.md`。
 - 验证样例：同目录 `test_dashboard.py`；线上SQL需从控制台现场核实。
 - 日志来源：`sand-eval/platform/k8s/nginx.conf.template`；特别检查 location 级 access_log 覆盖。
-- [生产 SLS 看板](https://sls.console.aliyun.com/lognext/project/k8s-log-c7a4a4cf4049c494ca6dea4aaf1e7f9b9/dashboard/dashboard-1789715001140-510770?slsRegion=cn-shanghai)。
+- [生产 SLS 看板（2026-09-25 新集群）](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/dashboard/dashboard-1790304848380-487363?slsRegion=cn-shanghai)。[当前 Eval 日志库](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/sandeval-prod?slsRegion=cn-shanghai)；如再次迁移，先核对当前 ACK 生产 Deployment 和 SLS 采集映射。
+
+2026-09-25 复核：生产已迁至上海 ACK `sandai-sh`，原集群 Eval Deployment 缩为 0。旧看板仍查询旧 SLS Project `k8s-log-c7a4a4cf4049c494ca6dea4aaf1e7f9b9` 的 `data-operator-log`，因此无实时数据。新项目 `k8s-log-c9838d6fa878b43c59a6d37586f0c0747` 的 `sandeval-prod` 已有 Web 访问日志与 transaction_trace；从旧看板跨项目导入并替换 Logstore 后，新看板的 QPS、耗时趋势、事务阶段、接口排名及异常分布均显示最近 15 分钟数据。项目和库名是这次的时间点证据，不是永久配置。
 
 2026-09-18 在控制台保存并回读生成配置，四面板有真实数据；这是看板验收，
 不代表业务代码部署或全接口覆盖证明。仅 SLS 查询侧新增开销，未修改业务运行配置。

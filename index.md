@@ -180,7 +180,7 @@
 
 - [报告准备的跨层预算](domains/vidmuse/admin/pitfalls/monitoring-report-preflight-budget.md) — 长 Run 分页读取、真实 HTTP 对照、分层超时与按历史 receipt 恢复的核验方法（2026-09-18）。
 
-- [Sand Eval 接口观测入口](domains/sandai-data-smith/refs/sandeval-api-observability.md) — 既有SLS日志的离线看板生成器、业务隔离、覆盖口径及回退入口（2026-09-18）。
+- [Sand Eval 接口观测入口](domains/sandai-data-smith/refs/sandeval-api-observability.md) — 当前 SLS 日志库和生产 API 看板、离线生成器、覆盖口径及回退入口（2026-09-25）。
 
 - [Eval慢接口与事务SQL观测指针](domains/sandai-data-smith/refs/sandeval-slow-panels.md) — 现有日志面板、trace覆盖边界与2026-09-19排查入口。
 
