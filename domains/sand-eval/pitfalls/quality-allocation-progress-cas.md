@@ -15,4 +15,8 @@ links: [sand-eval-quality-center-test-data, sandeval-sql-lock-diagnosis]
 
 2026-09-25 后续经用户授权，原分配在生产执行“继续完成分配”。浏览器身份切换中断了首轮页面流程；重新登录回读为 34/37。再次续跑同一 allocation 后，负责人详情显示 35 批质检中、2 批待验收、0 批准备中，37 行均有 100 条质检样本；SLS 在 17:49:02 记录最后一批 `batch_index=36` 的 `allocation_progress` 成功。17:46:43 曾有一条 `allocation_assignment` 的 `QualityError`，但最终页面无待处理批次；不能把这次临时错误等同于最终失败。操作并未发布代码修复，后续重新分配时仍须核验运行版本。最终独立页面刷新被另一次账号切换打断，未形成质检员本人待办的跨身份回读。
 
+同日再次只读打开负责人详情，37 批显示 35 批质检中、2 批待验收，无“准备中”或“待处理”。`待处理` 的投影条件是单批没有检查任务且分配记录留有 `error_message`；批次 `QualityError` 被保存为 `error_code/error_message`，原分配续跑成功时清除。17:46:43 的日志仅记录 `QualityError` 类型和 `allocation_assignment` 阶段，没有错误码或消息，且成功重试后记录被覆盖，不能据此断言具体是哪条派单门禁失败。最初 12:31 的整次中断则发生在 `allocation_progress`，与这次单批错误不同。
+
+2026-09-25 对镜头叶子浩核对：负责人详情的原分配共有 10 批、每批 100 道质检题，合计 1000 道；镜头梁晶晶和镜头李心雨两批均已完成 100/100，处于待负责人验收，其余 8 批合计 800 道仍在质检中。因此看到“待处理 800”时，须先把已提交的 200 道计入已分配总量，不能直接补发 200。质检员列表的 `todo` 只包括待质检、质检中和待质检员整改；`awaiting_lead` 归入“已提交”，两者均可在“全部”查看。现场尚未以叶子浩本人身份回读列表；上述归因由负责人页面与列表投影代码共同支持。同一分配里杨金明仅有 7 批、700 道；若业务目标也是 1000，道数差异需单独核对原计划和可分配批次。
+
 日志入口见 [Sand Eval SQL 与锁诊断入口](../../sandai-data-smith/refs/sandeval-sql-lock-diagnosis.md)。业务代码入口：`sand-eval/platform/backend/quality/application/management/batch_allocation_service.py`、`quality/infrastructure/persistence/batch_allocation_repository.py`、`quality/infrastructure/runtime.py`；现行行为以部署 SHA 为准。
