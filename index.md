@@ -209,3 +209,5 @@
 - Sand Eval 双峰与多计算组归因：见 [运行取证](domains/sandai-data-smith/refs/sandeval-runtime-profile-evidence.md) 的 2026-09-25 db.name、控制池和服务端查询对应方法。
 
 - [Sand Eval 派题性能证据](domains/sandai-data-smith/refs/sandeval-assignment-performance-evidence.md) — 2026-09-25：loop_stall 与同 worker 排队、五类分块及 Redis 检查、快照复核和测试库内存实验的核验入口。
+
+- [Sand Eval 质检备注草稿恢复](domains/sandai-data-smith/refs/sandeval-inspection-note-draft.md) — 新质检备注刷新丢失的代码根因、本机草稿与服务端判断的边界及修复候选入口（2026-09-25）。
