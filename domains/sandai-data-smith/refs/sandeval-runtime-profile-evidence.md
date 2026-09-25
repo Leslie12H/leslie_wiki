@@ -31,3 +31,6 @@ links: [sandeval-api-observability, sandeval-sql-lock-diagnosis]
 
 - 发布效果对比入口：[2026-09-25 四接口前后全量调用与同包 trace](/Users/leslie/Documents/Playground/sandeval-four-after-release-20260925-1515/report.md)。先以发布流程最后一次 rollout/health 校验和实际配置确定完成边界；同一 digest 仍可能因功能开关再滚动，不能把首个新 Pod 的请求时间当全量发布完成。
 - 后台化的测量边界：核查 `ReviewService._detach_advancement` 的 Context 隔离；HTTP 延迟和前台 db_calls 下降不证明整包总工作量同比下降。读取对应持久化 advancement 的状态、attempts 与时间，区分正式报告成功、待派单完成和前置条件未齐的 blocked。前后比较同时保留成功分位数、499、样本量和同包/同 allocation 对照；历史最慢时段不能代替紧邻发布的基线。
+
+- 新版热点与中断取证入口：[2026-09-25 发布后慢接口、完整 trace、阶段及运行栈](/Users/leslie/Documents/Playground/sandeval-current-slow-20260925-1545/report.md)。对批量分配区分响应头到达、流结束和单包业务结果；HTTP 200 后仍要检查 `allocation_progress` / `step` 的 outcome 及持久化批次完成引用。并行批次最后写同一 allocation 时，检查 CAS 合并/重试边界，不能用整批重放掩盖进度写回失败。
+- loop_stall 深查：读取未截断的原始日志，保留叶函数和业务调用栈，用 Pod、时间区间和路由链缩小归属；构图/最大流阻塞 Web 事件循环与 SQL 客户端耗时是不同证据。候选页展开多个来源的查询次数也不等于不同包数量，须分清按包一次的昂贵统计与同包重复扫描。
