@@ -201,4 +201,4 @@
 - [质检待处理与质检中状态判读](domains/sandai-data-smith/pitfalls/quality-allocation-blocked-status.md) — 分配姓名、送审与真实任务的区别，凭证过期及继续完成分配核验入口（2026-09-25）。
 
 - [质检分配与半完成送审冻结](domains/sandai-data-smith/refs/sandeval-partial-submission-freeze.md) — 写入中断根因、保留原快照的单批受控修复、备份及独立验收指针（2026-09-25）。
-- [修订索引缺失与质检版本冲突](domains/sandai-data-smith/refs/sandeval-amendment-lookup-recovery.md) — 正式修订的事实/索引/报告继承链、草稿读取拦截及精确补齐索引的核验指针（2026-09-25）。
+- [修订索引缺失与质检版本冲突](domains/sandai-data-smith/refs/sandeval-amendment-lookup-recovery.md) — 修订继承链、授权补齐索引、已有判断保护及独立验收指针（2026-09-25）。
