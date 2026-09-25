@@ -2,7 +2,7 @@
 name: sandeval-review-performance
 type: reference
 created: 2026-09-24
-updated: 2026-09-24
+updated: 2026-09-25
 tags: [sand-eval, quality, performance, inspection, arms]
 links: [sandeval-api-observability, sandeval-sql-lock-diagnosis]
 ---
@@ -61,3 +61,17 @@ links: [sandeval-api-observability, sandeval-sql-lock-diagnosis]
 - 前端 `quality/management/PackageList.tsx` 的 progress effect：检查当前页未缓存行是否同时发请求、是否使用统一 AbortController；后端请求内 semaphore 不限制不同 HTTP 请求。同步 499 可来自整页取消，不能一律归为服务器超时。
 - 相同请求的数据库子 span 区间并集与根 span 差值只能称未覆盖时间。若大空档位于 setup SET 前，再结合 pool_wait 信号收窄连接获取/调度等待；没有请求级 acquire span 时不要精确摊成池等待百分比。
 - 当日证据入口：[Leader 两接口报告](/Users/leslie/Documents/Playground/sandeval-leader-current-20260924/report.md)。报告对齐最后一个发布前稳定窗口，并用全量目标 access 记录计算精确分位数；新 rollout 的性能需要另取稳定窗口。
+
+
+## 提交链证据与恢复重试核验（2026-09-25）
+
+**Why:** 提交报告、提交后处置归并、后续推进属于不同阶段；HTTP 499 不证明服务端停止。pending 记录总量只能证明积压，不能单凭快照认定重试周期或每条记录的执行频率。
+
+**How to apply:** 对齐 Nginx 完成时间窗口和 ARMS 根 span，用完整分页取 trace；分开记录 PostgreSQL 读取、写入与 SET。从 `quality/application/inspection/review_service.py::submit` 定位 `_change → resolution.after_report → advancement.after_submit`，没有独立 span 时只能用 SQL 序列给出近似边界，并注明路由鉴权可能计入首段。
+
+- 包规模核验：`eval_quality_extension` 中 `task_quality_config.payload.source_task_ref` 映射源任务；再按 task_id 聚合 `ev3_assignment` 的题数与槽位数。不要猜测存在 `eval_quality_task` 表。运行后的规模查询不等于历史 trace 逐条返回行数。
+- 四类整包语句指针：`app/repositories/task_assignments.py::{quality_requirement_questions,quality_assignment_slots,quality_submission_owners}` 及 `app/repositories/assignment_wave.py::members_by_wave`。最后一个方法包含 wave IDs 和成员两条查询，分别统计；`quality_submission_owners` 若带 assignment_ids 参数，不能仅凭方法名叫它无条件整包扫描。
+- 恢复核验：检查 `quality/infrastructure/runtime.py::_recover` 的循环末尾等待、`review_advancement_repository.py::pending` 的筛选/排序/claim，以及 `advancement_service.py::recover/after_submit` 的 attempts 写入。循环末尾等待 30 秒不表示每条记录恰好每 30 秒执行。用两次按 extension_id 对齐的快照记录 attempts 差值，同时标明它们不是历史请求窗口的状态。
+- SLS 检索覆盖：2026-09-25 回查时发现 `_pod_name_: sandeval*` 前置检索遗漏历史 Pod 记录，即使响应 Complete。应以 namespace/container 精确筛选、SQL 中严格 Pod regex 为对照验证；Complete 只证明所选输入查询完成，不证明通配覆盖完整。此次重新核对前次三个接口原始样本集合一致。
+- 409 错误码：Nginx 状态码和响应长度、ARMS HTTP 状态不能单独证明业务 code。即使长度与 `ANNOTATION_WRITE_BUSY` 响应吻合，也应标为推断，或补 `error.code` 后确证。
+- 本次只读证据：[2026-09-25 提交接口证据包](/Users/leslie/Documents/Playground/sandeval-submit-evidence-20260925/report.md)。窗口、规模、积压和 trace ID 均在报告中，不作为当前运行状态缓存。
