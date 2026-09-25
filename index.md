@@ -176,6 +176,7 @@
 - [Sand Eval 本机启动入口](domains/sandai-data-smith/refs/sandeval-local-startup.md) — macOS 本机配置来源、Python/pnpm 依赖解析与页面验收指针（2026-09-17）。
 
 - [Sand Eval 角色与两侧工作流](domains/sandai-data-smith/refs/sandeval-roles-and-workflow.md) — 角色节点、Sand 视角、成员权限与新旧质检链路的核验入口（2026-09-17）。
+- [Sand Eval 多轮退回的上游意见链](domains/sandai-data-smith/pitfalls/sandeval-repeated-return-feedback-lineage.md) — 第二次手动退回可无直接父 ID，按复验执行和检查任务追溯原 Sand 意见（2026-09-25）。
 
 - [Sand Eval 多角色验收与派题回读入口](domains/sandai-data-smith/refs/sandeval-e2e-acceptance.md) — 操作回执、卡、wave 与质检交接必须一起核验。
 
