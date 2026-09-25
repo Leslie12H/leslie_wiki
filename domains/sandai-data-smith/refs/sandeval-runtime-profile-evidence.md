@@ -38,3 +38,6 @@ links: [sandeval-api-observability, sandeval-sql-lock-diagnosis]
 - 整改工作台、发布与派题入口：[2026-09-25 三接口逐请求诊断](/Users/leslie/Documents/Playground/output/three-api-latency-20260925/report.md)。具体请求、版本、分段耗时、完整 ARMS 分页和原始阻塞栈放在报告，复用时重新固定窗口。旧版本工作台与新版发布/派题样本不能混作同版性能基线；不同整改任务或没有 preview 的请求也不能充当同场景优化证明。
 - 发布受理：从 `app/services/facts/dispatch_publish_confirmation.py::confirm_publish` 追踪 `guard_publish` 与 `context` 的同步查询，再区分返回 202 前的范围核查和 worker 后台执行。定位昂贵 SQL 后还需实际执行计划，不能仅凭查询文字推断缺索引。
 - 派题规模：用 assignment_insert 的 rows 与 chunk 数确认实际答题卡数，再分别统计身份保护、波次和回读；按 `app/services/facts/assignment_planning.py::plan_split` 的具体调用栈关联构图/最大流。保留精确份额与去重约束，不能把取消保护校验当作性能优化。
+
+- 双峰排查入口：[2026-09-25 15:56 与 16:09 的同窗 SLS、ARMS、Hologres 服务端查询及 Prometheus](/Users/leslie/Documents/Playground/sandeval-spikes-20260925-1556-1609/report.md)。每条 PostgreSQL span 必须先按 `db.name` 分组，再查对应 warehouse 的指标和 query log；应用默认 compute group 不能代表控制池或强一致读实际使用的计算组。
+- 服务端与客户端核对：同模板、开始时间和耗时的紧密对应可加强归因，但缺少 query_id 贯通时保留候选匹配的边界；calls>1 的聚合记录不能强行对到一次请求。数据库 start_query_cost / get_next_cost 增长表明内部执行阶段变慢，不能直接解释成 CPU 打满或 admission 队列。迁移控制池读取前保留 leader 一致性契约。
