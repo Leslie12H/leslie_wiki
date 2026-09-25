@@ -294,3 +294,5 @@
 
 - 2026-09-24：Sand 质检批量定位的查询边界、无关组损坏隔离、循环引用错误顺序及仓内实现 Note，见 [检查读取与保存性能](domains/sandai-data-smith/refs/sandeval-review-performance.md)。；含提交阶段、恢复 attempts 与 SLS 通配覆盖核验
 - 2026-09-24：Leader 详情与 live 逐包进度、重复来源范围读取、当前页并发及连接等待的核验入口，见 [检查读取与保存性能](domains/sandai-data-smith/refs/sandeval-review-performance.md)。；含提交阶段、恢复 attempts 与 SLS 通配覆盖核验
+
+- [Sand Eval 派题性能证据](domains/sandai-data-smith/refs/sandeval-assignment-performance-evidence.md) — 2026-09-25：loop_stall 与同 worker 排队、五类分块及 Redis 检查、快照复核和测试库内存实验的核验入口。
