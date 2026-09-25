@@ -34,3 +34,7 @@ links: [sandeval-api-observability, sandeval-sql-lock-diagnosis]
 
 - 新版热点与中断取证入口：[2026-09-25 发布后慢接口、完整 trace、阶段及运行栈](/Users/leslie/Documents/Playground/sandeval-current-slow-20260925-1545/report.md)。对批量分配区分响应头到达、流结束和单包业务结果；HTTP 200 后仍要检查 `allocation_progress` / `step` 的 outcome 及持久化批次完成引用。并行批次最后写同一 allocation 时，检查 CAS 合并/重试边界，不能用整批重放掩盖进度写回失败。
 - loop_stall 深查：读取未截断的原始日志，保留叶函数和业务调用栈，用 Pod、时间区间和路由链缩小归属；构图/最大流阻塞 Web 事件循环与 SQL 客户端耗时是不同证据。候选页展开多个来源的查询次数也不等于不同包数量，须分清按包一次的昂贵统计与同包重复扫描。
+
+- 整改工作台、发布与派题入口：[2026-09-25 三接口逐请求诊断](/Users/leslie/Documents/Playground/output/three-api-latency-20260925/report.md)。具体请求、版本、分段耗时、完整 ARMS 分页和原始阻塞栈放在报告，复用时重新固定窗口。旧版本工作台与新版发布/派题样本不能混作同版性能基线；不同整改任务或没有 preview 的请求也不能充当同场景优化证明。
+- 发布受理：从 `app/services/facts/dispatch_publish_confirmation.py::confirm_publish` 追踪 `guard_publish` 与 `context` 的同步查询，再区分返回 202 前的范围核查和 worker 后台执行。定位昂贵 SQL 后还需实际执行计划，不能仅凭查询文字推断缺索引。
+- 派题规模：用 assignment_insert 的 rows 与 chunk 数确认实际答题卡数，再分别统计身份保护、波次和回读；按 `app/services/facts/assignment_planning.py::plan_split` 的具体调用栈关联构图/最大流。保留精确份额与去重约束，不能把取消保护校验当作性能优化。
