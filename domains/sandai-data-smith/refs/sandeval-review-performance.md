@@ -75,3 +75,9 @@ links: [sandeval-api-observability, sandeval-sql-lock-diagnosis]
 - SLS 检索覆盖：2026-09-25 回查时发现 `_pod_name_: sandeval*` 前置检索遗漏历史 Pod 记录，即使响应 Complete。应以 namespace/container 精确筛选、SQL 中严格 Pod regex 为对照验证；Complete 只证明所选输入查询完成，不证明通配覆盖完整。此次重新核对前次三个接口原始样本集合一致。
 - 409 错误码：Nginx 状态码和响应长度、ARMS HTTP 状态不能单独证明业务 code。即使长度与 `ANNOTATION_WRITE_BUSY` 响应吻合，也应标为推断，或补 `error.code` 后确证。
 - 本次只读证据：[2026-09-25 提交接口证据包](/Users/leslie/Documents/Playground/sandeval-submit-evidence-20260925/report.md)。窗口、规模、积压和 trace ID 均在报告中，不作为当前运行状态缓存。
+
+## 质检员任务列表实时计数（2026-09-25）
+
+**Why:** 上海生产部署 `a27019c1ae5a5ff5261a392ab748db3d121c497f` 的 `GET /api/quality/inspector-tasks` 在 18:48 左右仍有 6–8 秒请求。SLS 同窗口的应用记录显示 88–111 次数据库调用、连接池等待通常仅数毫秒。ARMS trace `dddd440163a09cfb70fc4c5252cdf5d3` 中，8.49 秒根 span 先有一次约 1.6 秒的候选任务 SELECT，再有约 20 条同形的 `quality_inspector_batch_metadata` 成员计数 SQL 并发执行，每条约 4.2–5.0 秒。这证明该请求走了 `live` 计数路径；并发 SQL 的耗时不可相加成请求耗时。未取得 Hologres 执行计划，不能把单条查询变慢的数据库内部原因定论为锁或缺索引。
+
+**How to apply:** 在对应部署 SHA 的 `review_query_service.py::_inspector_labels` 核对 `summary_mode` 向来源服务传入 `include_counts=False` 的分支；在 `app/repositories/quality_inspector_batch_metadata.py` 核对实时成员计数与摘要时的名称查询。该部署的 `QUALITY_INSPECTOR_TASK_LIST_QUERY_MODE` 默认 `live`，实际生效值仍应从生产配置和进程回读；trace 已证明这个请求没有走摘要分支。优化或切换前按 `quality-package-summaries.md` 先核对摘要补建、后台 worker、筛选与权限正确性，再对齐发布版本、角色和批次规模验收前后数据。不要通过调大连接池或把并发子 span 耗时相加来解释此例。
