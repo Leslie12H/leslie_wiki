@@ -211,3 +211,5 @@
 - [Sand Eval 派题性能证据](domains/sandai-data-smith/refs/sandeval-assignment-performance-evidence.md) — 2026-09-25：loop_stall 与同 worker 排队、五类分块及 Redis 检查、快照复核和测试库内存实验的核验入口。
 
 - [Sand Eval 质检备注草稿恢复](domains/sandai-data-smith/refs/sandeval-inspection-note-draft.md) — 新质检备注刷新丢失的代码根因、本机草稿与服务端判断的边界及修复候选入口（2026-09-25）。
+
+- [Sand Eval 跨关卡退回意见可见性](domains/sandai-data-smith/refs/sandeval-cross-stage-feedback.md) — Sand 质检意见经过负责人退回后未到空间质检页的现场原因，以及标注整改页的代码断点（2026-09-25）。
