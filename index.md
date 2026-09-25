@@ -203,3 +203,5 @@
 - [质检分配与半完成送审冻结](domains/sandai-data-smith/refs/sandeval-partial-submission-freeze.md) — 写入中断根因、保留原快照的单批受控修复、备份及独立验收指针（2026-09-25）。
 - [修订索引缺失与质检版本冲突](domains/sandai-data-smith/refs/sandeval-amendment-lookup-recovery.md) — 修订继承链、授权补齐索引、已有判断保护及独立验收指针（2026-09-25）。
 - [Sand Eval 测试分支删除重建](domains/sandai-data-smith/pitfalls/sandeval-test-branch-recreation.md) — 分支保护、目标 PR 自动关闭、main 并发前进及流水线证据边界（2026-09-25）。
+
+- [Sand Eval 派题部分完成核验与原计划恢复](domains/sandai-data-smith/refs/sandeval-partial-assignment-recovery.md) — 冻结计划、卡、wave、回执、已有答案保护及滚动发布中断后的复核入口（2026-09-25）。
