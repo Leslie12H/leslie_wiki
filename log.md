@@ -369,3 +369,4 @@
 - 2026-09-25：核验 Sand Eval 生产迁移导致旧 SLS 看板无实时数据，记录新集群日志库和重建后的 API 看板入口。
 
 - 2026-09-25 ingest：新增 Sand Eval runtime profiling 证据入口，记录历史/当前 CFS 区分、低频 loop lag、SET 状态复位和恢复并发计数方法。
+- 2026-09-25：录入质检待处理/质检中分层判读、来源凭证过期和保留成功批次的恢复核验指针；只读证据见 quality-allocation-blocked-status。
