@@ -19,3 +19,8 @@ links: [sandeval-api-observability, sandeval-sql-lock-diagnosis]
 - Python profiler：先检查目标 worker 的 PID、容器 capability 与 ptrace_scope；权限拒绝不能写成成功采样。单独 exec 新 Python 的 sleep 不是 Web worker 的事件循环指标。已有 runtime 采样可补充证据，但低频最大值不是整个窗口的最大延迟。
 - 会话往返：核对 `app/infra/holo.py::_create_pool/_setup_connection` 中 startup GUC 与每次借连接的重复 SET。移除重复 OFF 前必须检查 `quality/infrastructure/persistence/unit_of_work.py` 及 `app/repositories/material_metadata.py` 中 ON 的生命周期、异常和取消后恢复/弃连接；不是机械地移到 init。
 - 后台进程：将 `/proc` 的 uvicorn 子进程、SLS process_id 与部署 `quality/api/router.py::lifespan`、`quality/infrastructure/runtime.py::_recover` 对齐。注册恢复循环数不等于瞬时忙执行数。检查 `review_advancement_repository.py::pending` 的 claim/租约与 `advancement_service.py::after_submit` 的 CAS 时机，区分重复读取和重复写回。
+
+- 当前接口优先级的证据入口：[2026-09-25 API 排名与 trace](/Users/leslie/Documents/Playground/sandeval-api-priorities-20260925-1135/report.md)。易变的请求量、耗时、错误数和版本只存于报告，复用时固定新窗口重新查询。
+- 排名方法：成功分位数之外同时看取消请求、应用 DB 调用量和客户端离开后的继续执行；以 request_id 对齐 Nginx 与应用结束日志。上游未提供 route header 时，结构化 Nginx 可能为 unmatched，单筛 `/api/` route 会漏掉 499，需要原始 request path 补齐。客户端 499 不等同服务器 60 秒超时。
+- 恢复接口诊断：用 allocation_submission / allocation_assignment / allocation_progress 的单批阶段定位成本，检查是否跳过已完成批次，以及预算是在每批前还是每批后检查；不要因为 resume 慢就断言所有批次重做。批内 QualityError 可能被记录成业务状态而外层 HTTP 200，须读取阶段 outcome。
+- acquire 的 setup 也在 pool_wait 计时内；将 SET 子 span 与 acquire 关联，避免重复相加或误判为纯连接排队。并发子分支的客户端耗时累计大于根请求时长是可能的，不能直接换算成耗时占比。
