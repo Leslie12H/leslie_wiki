@@ -81,3 +81,9 @@ links: [sandeval-api-observability, sandeval-sql-lock-diagnosis]
 **Why:** 上海生产部署 `a27019c1ae5a5ff5261a392ab748db3d121c497f` 的 `GET /api/quality/inspector-tasks` 在 18:48 左右仍有 6–8 秒请求。SLS 同窗口的应用记录显示 88–111 次数据库调用、连接池等待通常仅数毫秒。ARMS trace `dddd440163a09cfb70fc4c5252cdf5d3` 中，8.49 秒根 span 先有一次约 1.6 秒的候选任务 SELECT，再有约 20 条同形的 `quality_inspector_batch_metadata` 成员计数 SQL 并发执行，每条约 4.2–5.0 秒。这证明该请求走了 `live` 计数路径；并发 SQL 的耗时不可相加成请求耗时。未取得 Hologres 执行计划，不能把单条查询变慢的数据库内部原因定论为锁或缺索引。
 
 **How to apply:** 在对应部署 SHA 的 `review_query_service.py::_inspector_labels` 核对 `summary_mode` 向来源服务传入 `include_counts=False` 的分支；在 `app/repositories/quality_inspector_batch_metadata.py` 核对实时成员计数与摘要时的名称查询。该部署的 `QUALITY_INSPECTOR_TASK_LIST_QUERY_MODE` 默认 `live`，实际生效值仍应从生产配置和进程回读；trace 已证明这个请求没有走摘要分支。优化或切换前按 `quality-package-summaries.md` 先核对摘要补建、后台 worker、筛选与权限正确性，再对齐发布版本、角色和批次规模验收前后数据。不要通过调大连接池或把并发子 span 耗时相加来解释此例。
+
+### 新版部署后仍慢的复核（2026-09-25）
+
+**Why:** 新版 `e90f010e0dd408103ae3fb2106d16cde8d9aeda4` 已服务请求，但部署摘要代码不等于质检员列表生效摘要读取。生产 ARMS trace `9e6f854a2ce4aed4ede0417de441c328` 的无状态筛选 Sand 质检请求耗时 5.09 秒、15 次数据库调用，其中实时批次成员计数 SQL 单条耗时 3.38 秒。`status=todo` 请求 trace `45ffe470ad521f9293b77af1203d1cb7` 耗时 37.11 秒、996 次数据库调用，出现 142 个 `WITH` span；代码按 21 条候选一批循环，并在状态过滤前完成实时标签、计数与进度读取。两条 trace 证明对应请求有效路径仍是 `live`；未从生产进程直接读回开关值，不能区分全局关闭、类型关闭与类型 `live`。这不是旧版 Pod 残留，也不能把并发 `db_client_ms` 求和当墙钟时间。
+
+**How to apply:** 固定新部署 SHA，先从 Nginx 原始路径区分 `stage`、`status`、`query`，再把同一 request ID 与 SLS 应用耗时、ARMS SQL span 关联。普通页检查 `quality_inspector_batch_metadata.py` 的实时成员计数；稀疏状态筛选检查 `review_query_service.py::inspector_tasks_page` 的候选分页、过滤位置和每批成本。切 `summary` 前按 `sand-eval/docs/operations/quality-package-summaries.md` 完成补建、compare、worker 和 Pod 有效配置验收；切换后再次确认调用链不再执行实时成员计数。此处 trace 数字只适用于 2026-09-25 当次样本，后续需刷新窗口。
