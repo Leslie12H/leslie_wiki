@@ -372,3 +372,5 @@
 - 2026-09-25：录入质检待处理/质检中分层判读、来源凭证过期和保留成功批次的恢复核验指针；只读证据见 quality-allocation-blocked-status。
 
 - 2026-09-25 ingest：补充当前 API 优先级证据指针、499 unmatched 漏计、取消后继续执行、acquire/setup 重叠与恢复单批阶段诊断方法。
+
+- 2026-09-25 ingest：补充三接口完整 trace 入口、状态筛选覆盖 include_progress、清单分页重扫整包和 SLS 索引截断的核验方法。

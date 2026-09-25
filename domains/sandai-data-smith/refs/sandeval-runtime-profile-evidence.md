@@ -24,3 +24,7 @@ links: [sandeval-api-observability, sandeval-sql-lock-diagnosis]
 - 排名方法：成功分位数之外同时看取消请求、应用 DB 调用量和客户端离开后的继续执行；以 request_id 对齐 Nginx 与应用结束日志。上游未提供 route header 时，结构化 Nginx 可能为 unmatched，单筛 `/api/` route 会漏掉 499，需要原始 request path 补齐。客户端 499 不等同服务器 60 秒超时。
 - 恢复接口诊断：用 allocation_submission / allocation_assignment / allocation_progress 的单批阶段定位成本，检查是否跳过已完成批次，以及预算是在每批前还是每批后检查；不要因为 resume 慢就断言所有批次重做。批内 QualityError 可能被记录成业务状态而外层 HTTP 200，须读取阶段 outcome。
 - acquire 的 setup 也在 pool_wait 计时内；将 SET 子 span 与 acquire 关联，避免重复相加或误判为纯连接排队。并发子分支的客户端耗时累计大于根请求时长是可能的，不能直接换算成耗时占比。
+
+- 三接口深查入口：[2026-09-25 leader/tasks、resume、leader/progress 的完整 trace 与源码对照](/Users/leslie/Documents/Playground/sandeval-three-api-evidence-20260925/report.md)。检查 live 列表中 `include_progress or has_status` 的触发条件；有状态筛选时不展示进度也可能展开候选来源。明确记录 query 参数，不能仅按 route 混算。
+- 来源清单分页：核查 `SubmissionService.check_completeness` → `AnnotationSourceClient.list_required_work_items` → `TaskAssignmentService.list_work_item_manifest` 是否先重建完整成员再切页。分页 API 不保证数据库分页；同一请求的两次完整校验可能将整包读取乘以页数。改为复用固定版本成员时仍需保持来源版本、权限及最新报告校验。
+- SLS 索引与原始日志：本次 SQL 查询 content 仅返回 2,048 字符而原始检索有完整 summary。长 JSON 缺少尾部阶段时，先检查原始日志，不把索引截断当成埋点缺失；数据库/Redis span 分开统计，ARMS 分页取尽后才标 complete。
