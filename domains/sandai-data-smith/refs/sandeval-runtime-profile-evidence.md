@@ -28,3 +28,6 @@ links: [sandeval-api-observability, sandeval-sql-lock-diagnosis]
 - 三接口深查入口：[2026-09-25 leader/tasks、resume、leader/progress 的完整 trace 与源码对照](/Users/leslie/Documents/Playground/sandeval-three-api-evidence-20260925/report.md)。检查 live 列表中 `include_progress or has_status` 的触发条件；有状态筛选时不展示进度也可能展开候选来源。明确记录 query 参数，不能仅按 route 混算。
 - 来源清单分页：核查 `SubmissionService.check_completeness` → `AnnotationSourceClient.list_required_work_items` → `TaskAssignmentService.list_work_item_manifest` 是否先重建完整成员再切页。分页 API 不保证数据库分页；同一请求的两次完整校验可能将整包读取乘以页数。改为复用固定版本成员时仍需保持来源版本、权限及最新报告校验。
 - SLS 索引与原始日志：本次 SQL 查询 content 仅返回 2,048 字符而原始检索有完整 summary。长 JSON 缺少尾部阶段时，先检查原始日志，不把索引截断当成埋点缺失；数据库/Redis span 分开统计，ARMS 分页取尽后才标 complete。
+
+- 发布效果对比入口：[2026-09-25 四接口前后全量调用与同包 trace](/Users/leslie/Documents/Playground/sandeval-four-after-release-20260925-1515/report.md)。先以发布流程最后一次 rollout/health 校验和实际配置确定完成边界；同一 digest 仍可能因功能开关再滚动，不能把首个新 Pod 的请求时间当全量发布完成。
+- 后台化的测量边界：核查 `ReviewService._detach_advancement` 的 Context 隔离；HTTP 延迟和前台 db_calls 下降不证明整包总工作量同比下降。读取对应持久化 advancement 的状态、attempts 与时间，区分正式报告成功、待派单完成和前置条件未齐的 blocked。前后比较同时保留成功分位数、499、样本量和同包/同 allocation 对照；历史最慢时段不能代替紧邻发布的基线。

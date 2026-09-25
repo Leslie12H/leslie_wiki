@@ -197,7 +197,7 @@
 
 - [Caption 旧模块数量与整题迁移](domains/sandai-data-smith/pitfalls/caption-module-count-and-migration.md) — 模块义务与答题卡数量差异、已验收迁移门禁及祖先退回闭环核验入口（2026-09-24）。
 
-- [Sand Eval CPU 与恢复取证入口](domains/sandai-data-smith/refs/sandeval-runtime-profile-evidence.md) — CFS、事件循环、SET/acquire、状态筛选及整包分页放大的 trace 核验入口（2026-09-25）。
+- [Sand Eval CPU 与恢复取证入口](domains/sandai-data-smith/refs/sandeval-runtime-profile-evidence.md) — CFS、事件循环、SET/acquire、状态筛选、整包分页及后台化发布前后对比的证据边界（2026-09-25）。
 - [质检待处理与质检中状态判读](domains/sandai-data-smith/pitfalls/quality-allocation-blocked-status.md) — 分配姓名、送审与真实任务的区别，凭证过期及继续完成分配核验入口（2026-09-25）。
 
 - [质检分配与半完成送审冻结](domains/sandai-data-smith/refs/sandeval-partial-submission-freeze.md) — 写入中断根因、保留原快照的单批受控修复、备份及独立验收指针（2026-09-25）。
