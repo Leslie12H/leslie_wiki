@@ -207,3 +207,5 @@
 - [Sand Eval 派题部分完成核验与原计划恢复](domains/sandai-data-smith/refs/sandeval-partial-assignment-recovery.md) — 冻结计划、卡、wave、回执、已有答案保护及滚动发布中断后的复核入口（2026-09-25）。
 
 - Sand Eval 双峰与多计算组归因：见 [运行取证](domains/sandai-data-smith/refs/sandeval-runtime-profile-evidence.md) 的 2026-09-25 db.name、控制池和服务端查询对应方法。
+
+- [Sand Eval 派题性能证据](domains/sandai-data-smith/refs/sandeval-assignment-performance-evidence.md) — 2026-09-25：loop_stall 与同 worker 排队、五类分块及 Redis 检查、快照复核和测试库内存实验的核验入口。
