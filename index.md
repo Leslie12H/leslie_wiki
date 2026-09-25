@@ -196,3 +196,5 @@
 - [质检批量分配延迟](domains/sandai-data-smith/refs/sandeval-bulk-allocation-latency.md) — 供应商与 Sand 批量分配的完整范围核查、串行批次、Sand 整包重复校验及一分钟客户端超时边界（2026-09-23）。
 
 - [Caption 旧模块数量与整题迁移](domains/sandai-data-smith/pitfalls/caption-module-count-and-migration.md) — 模块义务与答题卡数量差异、已验收迁移门禁及祖先退回闭环核验入口（2026-09-24）。
+
+- [Sand Eval CPU 与恢复取证入口](domains/sandai-data-smith/refs/sandeval-runtime-profile-evidence.md) — CFS 口径、实际 worker 事件循环采样、SET 状态保护与后台进程计数边界（2026-09-25）。
