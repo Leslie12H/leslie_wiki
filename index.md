@@ -224,7 +224,7 @@
 
 - [Sand Eval 返修与反馈场景](domains/sandai-data-smith/refs/sandeval-correction-fixtures.md) — 部分抽样、逐题判定字段及标注员页面验收指针（2026-09-18）。
 
-- [Sand Eval 分支自动化核验入口](domains/sandai-data-smith/refs/sandeval-branch-automation.md) — 测试部署触发器、main 回合 PR 和 Actions 权限的核验指针（2026-09-18）。
+- [Sand Eval 分支自动化核验入口](domains/sandai-data-smith/refs/sandeval-branch-automation.md) — 测试部署触发器、干净开发分支向 main 提 PR、草稿 Gate 分类失败及 Actions 权限的核验指针（更新至 2026-09-25）。
 
 - [主任务题面预览与下发范围](domains/sandai-data-smith/refs/sandeval-dispatch-preview-scope.md) — 真实来源预览、本次配额及跨历史去重的代码核验入口（2026-09-19）。
 

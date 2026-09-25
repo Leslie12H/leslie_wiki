@@ -2,7 +2,7 @@
 name: sandeval-branch-automation
 type: reference
 created: 2026-09-18
-updated: 2026-09-19
+updated: 2026-09-25
 tags: [sand-eval, github-actions, deployment, git]
 links: [team-test-main-cherry-pick-workflow]
 ---
@@ -23,3 +23,11 @@ GitHub Actions 创建 PR 需要仓库设置允许；使用 GITHUB_TOKEN 创建�
 用户要求测试分支以最新 main 重建，并将后续回合从人工合并改为无冲突时自动普通 merge 后部署；冲突仍保留 PR 待处理。变更与最终状态查 [PR #1418](https://github.com/world-sim-dev/sandai-data-smith/pull/1418)，不要沿用上文旧实现的人工合并结论。
 
 测试分支重建后的部署证据查 [test run 35437291719](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/35437291719)。本地备份 ref 为 `backup/sandeval-test-only-before-rebuild-20260919`。核验自动回合时同时检查 PR 合并结果、显式 workflow_dispatch、expected_sha 校验及部署前分支版本检查；GITHUB_TOKEN 合并本身不会触发 push 部署，单有合并成功不代表已启动部署。
+
+## 2026-09-25 主线 PR 与草稿 Gate
+
+当前 main 发布边界以仓库 `sand-eval/.agents/skills/sand-eval-test-release/SKILL.md` 为准：从最新 main 建干净开发分支，开发分支直接向 main 提 PR，不能把测试集成分支历史带入 main。上文 2026-09-19 自动回合仅是当日流程记录。
+
+**Why:** [PR #1921 的草稿 Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/36131883370) 在改动分类阶段报 `draft classification must disable every surface and job`，业务测试没有运行。仓库 `sand-eval/platform/scripts/select_tests.py` 中，草稿分支清空了 surfaces，但前端关联测试和前端类型检查仍可从改动文件重新选中，造成校验矛盾。该现象是 CI 草稿分类问题，不是质检业务代码失败；截至本次核验，分类器尚未修复。
+
+**How to apply:** 草稿 PR 若出现上述秒级失败，先看 Detect platform changes 的具体日志和 `IS_DRAFT`，不要把它当成业务测试失败。需要正常 Gate 证据时，将 PR 设为 Ready；本次 [Ready Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/36132026089) 已通过。PR 合并和 main 发布仍分别核对；#1921 的 main 提交与发布状态从 [PR](https://github.com/world-sim-dev/sandai-data-smith/pull/1921) 和该提交的 Actions 记录实时读取。
