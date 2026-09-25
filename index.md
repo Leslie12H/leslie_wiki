@@ -200,4 +200,4 @@
 - [Sand Eval CPU 与恢复取证入口](domains/sandai-data-smith/refs/sandeval-runtime-profile-evidence.md) — CFS、事件循环、SET/acquire、状态筛选及整包分页放大的 trace 核验入口（2026-09-25）。
 - [质检待处理与质检中状态判读](domains/sandai-data-smith/pitfalls/quality-allocation-blocked-status.md) — 分配姓名、送审与真实任务的区别，凭证过期及继续完成分配核验入口（2026-09-25）。
 
-- [质检分配与半完成送审冻结](domains/sandai-data-smith/refs/sandeval-partial-submission-freeze.md) — 父状态先发布、明细被终止打断、重试跳过与受控恢复的核验指针（2026-09-25）。
+- [质检分配与半完成送审冻结](domains/sandai-data-smith/refs/sandeval-partial-submission-freeze.md) — 写入中断根因、保留原快照的单批受控修复、备份及独立验收指针（2026-09-25）。
