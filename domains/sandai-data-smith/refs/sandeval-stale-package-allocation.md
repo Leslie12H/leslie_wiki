@@ -24,3 +24,5 @@ links: [sand-eval-quality-center-test-data]
 2026-09-26 页面核查补充：`tab=allocation&task=...` 实际是数据包详情抽屉，默认批次进度。按页面请求一并核查 package、batch_options、dispatches；尤其检查包级 blocking_reasons 是否为空、分配记录的 dispatched_at 是否仅来自计划创建时间，以及同名标注员的不同批次是否被混淆。详细字段和本次状态见上述事故报告的 tab 补充节。
 
 2026-09-26 恢复核查补充：首个 PREREQUISITE_STALE 不是全部恢复前置；还需执行 `require_supplier_acceptance` 并枚举未结范围。检查 `BatchAllocation.package_submission_id` 是否固定旧版本，以及 resume 是否确有重校验/重绑定路径；不能承诺做完已定位的几批复验就会自动恢复。动态计数与当前缺口见事故报告“恢复前置的进一步校正”。
+
+2026-09-26 选择范围校正：给恢复建议前，必须将 selected allocation 的 scope_key 与失效报告/未结整改范围求交，不能只按同一质量任务或同名标注员推断业务依赖。若没有交集，应明确区分“当前实现按整包拦截”和“所选批次业务前置未完成”；先评估有版本保护的按批次隔离修复，而不是要求用户处理无关批次。整包重新交接是另一路径，不应自动成为所有局部派发事故的恢复要求。证据与性能设计约束见事故报告末节。
