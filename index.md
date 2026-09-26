@@ -305,3 +305,5 @@
 - [Ant Design 两字中文按钮的测试选择器](disciplines/testing/antd-button-accessible-name.md) — 可访问名称插空格、存在性假阴性与 PR #1976 分页测试核验指针（2026-09-26）。
 
 - 2026-09-26：质检员 page-index 无搜索词的 SQL 参数缺口与 SQLite 测试覆盖差异，见 [检查读取与保存性能](domains/sandai-data-smith/refs/sandeval-review-performance.md)。
+
+- [质检核对方案旧页面 404](domains/sand-eval/pitfalls/bulk-allocation-stale-client-404.md) — 删除 preview API 与已打开旧页面的兼容断裂、生产日志及整页刷新边界（2026-09-26）。
