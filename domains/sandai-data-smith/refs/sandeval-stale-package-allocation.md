@@ -20,3 +20,5 @@ links: [sand-eval-quality-center-test-data]
 恢复边界：新复验尚未正式完成时，不得替人判通过或删除版本保护。取得当前有效验收依据后，还需检查原分配固定引用的包版本和 scope 占用，再决定受控恢复方式。单纯重复创建或继续执行旧计划不能修正旧报告链。
 
 2026-09-26 证据与当时状态见 `/Users/leslie/Documents/Playground/output/kemeng-sand-qc-20260926/report.md`；其中保留三条前后继检查链、正式工作台和管理查询结果、部署身份及限定 SLS 查询。动态状态留在事故证据，后续处理须重新读取。本次只读调查没有执行恢复或部署。
+
+2026-09-26 页面核查补充：`tab=allocation&task=...` 实际是数据包详情抽屉，默认批次进度。按页面请求一并核查 package、batch_options、dispatches；尤其检查包级 blocking_reasons 是否为空、分配记录的 dispatched_at 是否仅来自计划创建时间，以及同名标注员的不同批次是否被混淆。详细字段和本次状态见上述事故报告的 tab 补充节。
