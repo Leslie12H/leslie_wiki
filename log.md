@@ -376,3 +376,5 @@
 - 2026-09-25：记录 Sand Eval #1921 草稿 PR 分类器错误、Ready Gate 通过及干净开发分支直接向 main 提 PR 的当前发布指针。
 
 - 2026-09-26：录入 browser-impersonation-concurrent-tests：Sand Eval 时长验收中共享浏览器代登录冲突、独立会话与实际后台状态核验边界。
+
+- 2026-09-26：录入 Sand Eval 供应商任务与批次分类的代码、配置与帮助文档指针；不保存发布状态。
