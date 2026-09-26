@@ -301,3 +301,5 @@
 - [Sand Eval 派题性能证据](domains/sandai-data-smith/refs/sandeval-assignment-performance-evidence.md) — 2026-09-25：loop_stall 与同 worker 排队、五类分块及 Redis 检查、快照复核和测试库内存实验的核验入口。
 
 - [并行浏览器测试的代登录会话冲突](global/pitfalls/browser-impersonation-concurrent-tests.md) — 共享 profile 切号影响其他标签页；后台计时必须验证实际 visibility 状态（2026-09-26）。
+
+- [Ant Design 两字中文按钮的测试选择器](disciplines/testing/antd-button-accessible-name.md) — 可访问名称插空格、存在性假阴性与 PR #1976 分页测试核验指针（2026-09-26）。
