@@ -298,3 +298,5 @@
 - 2026-09-24：Leader 详情与 live 逐包进度、重复来源范围读取、当前页并发及连接等待的核验入口，见 [检查读取与保存性能](domains/sandai-data-smith/refs/sandeval-review-performance.md)。；含提交阶段、恢复 attempts 与 SLS 通配覆盖核验
 
 - [Sand Eval 派题性能证据](domains/sandai-data-smith/refs/sandeval-assignment-performance-evidence.md) — 2026-09-25：loop_stall 与同 worker 排队、五类分块及 Redis 检查、快照复核和测试库内存实验的核验入口。
+
+- [并行浏览器测试的代登录会话冲突](global/pitfalls/browser-impersonation-concurrent-tests.md) — 共享 profile 切号影响其他标签页；后台计时必须验证实际 visibility 状态（2026-09-26）。

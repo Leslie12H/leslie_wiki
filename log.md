@@ -374,3 +374,5 @@
 - 2026-09-25 ingest：记录 Sand Eval 多轮退回时直接父处置 ID 缺失导致上游意见丢失的排查与验收指针，关联 PR #1913。
 - 2026-09-25：Sand Eval 质检员列表新版部署后慢请求；区分实时批次计数和状态筛选逐批扫描，记录生产 trace 与摘要开关的证据边界，见 [检查读取与保存性能](domains/sandai-data-smith/refs/sandeval-review-performance.md)。
 - 2026-09-25：记录 Sand Eval #1921 草稿 PR 分类器错误、Ready Gate 通过及干净开发分支直接向 main 提 PR 的当前发布指针。
+
+- 2026-09-26：录入 browser-impersonation-concurrent-tests：Sand Eval 时长验收中共享浏览器代登录冲突、独立会话与实际后台状态核验边界。
