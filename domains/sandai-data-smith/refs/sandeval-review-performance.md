@@ -2,7 +2,7 @@
 name: sandeval-review-performance
 type: reference
 created: 2026-09-24
-updated: 2026-09-25
+updated: 2026-09-26
 tags: [sand-eval, quality, performance, inspection, arms]
 links: [sandeval-api-observability, sandeval-sql-lock-diagnosis]
 ---
@@ -87,3 +87,12 @@ links: [sandeval-api-observability, sandeval-sql-lock-diagnosis]
 **Why:** 新版 `e90f010e0dd408103ae3fb2106d16cde8d9aeda4` 已服务请求，但部署摘要代码不等于质检员列表生效摘要读取。生产 ARMS trace `9e6f854a2ce4aed4ede0417de441c328` 的无状态筛选 Sand 质检请求耗时 5.09 秒、15 次数据库调用，其中实时批次成员计数 SQL 单条耗时 3.38 秒。`status=todo` 请求 trace `45ffe470ad521f9293b77af1203d1cb7` 耗时 37.11 秒、996 次数据库调用，出现 142 个 `WITH` span；代码按 21 条候选一批循环，并在状态过滤前完成实时标签、计数与进度读取。两条 trace 证明对应请求有效路径仍是 `live`；未从生产进程直接读回开关值，不能区分全局关闭、类型关闭与类型 `live`。这不是旧版 Pod 残留，也不能把并发 `db_client_ms` 求和当墙钟时间。
 
 **How to apply:** 固定新部署 SHA，先从 Nginx 原始路径区分 `stage`、`status`、`query`，再把同一 request ID 与 SLS 应用耗时、ARMS SQL span 关联。普通页检查 `quality_inspector_batch_metadata.py` 的实时成员计数；稀疏状态筛选检查 `review_query_service.py::inspector_tasks_page` 的候选分页、过滤位置和每批成本。切 `summary` 前按 `sand-eval/docs/operations/quality-package-summaries.md` 完成补建、compare、worker 和 Pod 有效配置验收；切换后再次确认调用链不再执行实时成员计数。此处 trace 数字只适用于 2026-09-25 当次样本，后续需刷新窗口。
+
+## 质检员分页统计参数缺口（2026-09-26）
+
+**Why:** `page-index` 无搜索词分支省略搜索条件，却仍传搜索参数并使用后续页大小槽，导致未引用的 PostgreSQL 参数无法推断类型。生产日志已关联 HTTP 500 与 `index_inspector_summaries` 栈及 `IndeterminateDatatypeError`；这不是连接池超时。SQLite 测试适配器仅绑定 SQL 实际引用的槽，原先会隐藏这个差异。
+
+**How to apply:** 核对 `app/repositories/quality_inspector_summaries.py::index_inspector_summaries` 的有搜索与无搜索两条分支，保证传入参数与 SQL 引用槽一致且连续。核对 `backend/tests/test_quality_inspector_summaries.py::InspectorDatabase.statement` 的参数完整性检查，再运行原有分页、搜索、权限及游标回归。发布后用同一无搜索词 GET 与 SLS request ID 验证，不能将单元测试或 Gate 通过称为生产恢复。
+
+- [来源 PR #1976](https://github.com/world-sim-dev/sandai-data-smith/pull/1976)；后续修复状态需从最新代码与 CI 查询。
+- [当前生产 SLS 查询入口](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/sandeval-prod?slsRegion=cn-shanghai)。使用目标路由及参数类型异常关键词关联，不保存会话凭据。

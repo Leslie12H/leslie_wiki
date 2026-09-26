@@ -303,3 +303,5 @@
 - [并行浏览器测试的代登录会话冲突](global/pitfalls/browser-impersonation-concurrent-tests.md) — 共享 profile 切号影响其他标签页；后台计时必须验证实际 visibility 状态（2026-09-26）。
 
 - [Ant Design 两字中文按钮的测试选择器](disciplines/testing/antd-button-accessible-name.md) — 可访问名称插空格、存在性假阴性与 PR #1976 分页测试核验指针（2026-09-26）。
+
+- 2026-09-26：质检员 page-index 无搜索词的 SQL 参数缺口与 SQLite 测试覆盖差异，见 [检查读取与保存性能](domains/sandai-data-smith/refs/sandeval-review-performance.md)。
