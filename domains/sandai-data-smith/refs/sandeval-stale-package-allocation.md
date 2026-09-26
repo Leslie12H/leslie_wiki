@@ -22,3 +22,5 @@ links: [sand-eval-quality-center-test-data]
 2026-09-26 证据与当时状态见 `/Users/leslie/Documents/Playground/output/kemeng-sand-qc-20260926/report.md`；其中保留三条前后继检查链、正式工作台和管理查询结果、部署身份及限定 SLS 查询。动态状态留在事故证据，后续处理须重新读取。本次只读调查没有执行恢复或部署。
 
 2026-09-26 页面核查补充：`tab=allocation&task=...` 实际是数据包详情抽屉，默认批次进度。按页面请求一并核查 package、batch_options、dispatches；尤其检查包级 blocking_reasons 是否为空、分配记录的 dispatched_at 是否仅来自计划创建时间，以及同名标注员的不同批次是否被混淆。详细字段和本次状态见上述事故报告的 tab 补充节。
+
+2026-09-26 恢复核查补充：首个 PREREQUISITE_STALE 不是全部恢复前置；还需执行 `require_supplier_acceptance` 并枚举未结范围。检查 `BatchAllocation.package_submission_id` 是否固定旧版本，以及 resume 是否确有重校验/重绑定路径；不能承诺做完已定位的几批复验就会自动恢复。动态计数与当前缺口见事故报告“恢复前置的进一步校正”。

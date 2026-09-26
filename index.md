@@ -201,7 +201,7 @@
 - [质检待处理与质检中状态判读](domains/sandai-data-smith/pitfalls/quality-allocation-blocked-status.md) — 分配姓名、送审与真实任务的区别，凭证过期及继续完成分配核验入口（2026-09-25）。
 
 - [质检分配与半完成送审冻结](domains/sandai-data-smith/refs/sandeval-partial-submission-freeze.md) — 写入中断根因、保留原快照的单批受控修复、备份及独立验收指针（2026-09-25）。
-- [Sand 分配与过期整包报告](domains/sandai-data-smith/refs/sandeval-stale-package-allocation.md) — 新复验使旧交接报告失效、数据包 tab 状态映射与分配记录判读及恢复边界（2026-09-26）。
+- [Sand 分配与过期整包报告](domains/sandai-data-smith/refs/sandeval-stale-package-allocation.md) — 新复验使旧交接报告失效、数据包 tab 判读、全部整改前置与旧包绑定的恢复边界（2026-09-26）。
 - [修订索引缺失与质检版本冲突](domains/sandai-data-smith/refs/sandeval-amendment-lookup-recovery.md) — 修订继承链、授权补齐索引、已有判断保护及独立验收指针（2026-09-25）。
 - [Sand Eval 测试分支删除重建](domains/sandai-data-smith/pitfalls/sandeval-test-branch-recreation.md) — 分支保护、目标 PR 自动关闭、main 并发前进及流水线证据边界（2026-09-25）。
 
