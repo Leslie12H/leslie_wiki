@@ -309,3 +309,5 @@
 - [质检核对方案旧页面 404](domains/sand-eval/pitfalls/bulk-allocation-stale-client-404.md) — 删除 preview API 与已打开旧页面的兼容断裂、生产日志及整页刷新边界（2026-09-26）。
 
 - [Sand Eval 流程消息验收](domains/sand-eval/refs/workflow-notification-acceptance.md) — 正向单接收人、逆向全链路及Sand排除、兼任角色消息跳转、未读状态的实际验收入口（2026-09-27）。
+
+- [Sand Eval 压测与认证请求归因](domains/sandai-data-smith/refs/sandeval-api-load-and-auth-diagnosis.md) — load_run/deploy 分层、app→edge 499 对账、focus 触发与任务矩阵/发布/整改/流式分配的诊断指针（2026-09-27）。
