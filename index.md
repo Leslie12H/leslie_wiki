@@ -219,3 +219,5 @@
 - [Sand 直达整改与按批交接核验入口](domains/sandai-data-smith/refs/sandeval-direct-remediation-and-batch-handoff.md) — 退回路由、负责人验证、整包交接与 QC passed 语义的代码和生产核验指针（2026-09-27）。
 
 - 2026-09-27：首次继续整包送审、仅整改批次独立回交的范围与混合状态核验见 [直达整改与按批交接](domains/sandai-data-smith/refs/sandeval-direct-remediation-and-batch-handoff.md)。
+
+- [Sand Eval 结算明细性能](domains/sandai-data-smith/refs/sandeval-settlement-performance.md) — 全量生成与读取放大、统一权限门禁、快照缓存及结算优化方案的核验指针（2026-09-27）。
