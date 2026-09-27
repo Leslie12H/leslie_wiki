@@ -22,3 +22,16 @@ links: [sandeval-sql-lock-diagnosis, sandeval-api-load-and-auth-diagnosis]
 - 质检：`app/services/interpretation/settlement_quality.py` 与 `app/repositories/settlement_export.py` 的 source_members；核对任务/批次/成员范围、日期过滤所在层和重复详情读取。通用详情入口为 `quality/application/management/task_detail_reader.py`。
 - 优化边界：CT 的完整批次有效性及通过率、QT 的同答案版本两级判断须保留；只收窄无关任务/批次，不能截掉月外成员再重算整包通过。历史月份可能因整改和质检变化而改变，缓存与投影需定义失效来源。
 - 观测：先查当前 Performance Profile 是否已收录结算接口；未声明规模/预算时报告缺口，不用相邻人效接口预算代替。
+
+## 优化方案复核入口（2026-09-27）
+
+**Why:** 只读 handler 容易漏掉应用注册时的统一权限门禁；只读 OSS 调用容易漏掉读取上下文内的复用。删除版本校验或通用详情中的所有包版本逻辑，会把性能优化变成结算口径变化。
+
+**How to apply:** 方案见 `/Users/leslie/Documents/Playground/output/settlement-design-20260927/plan.md`，其中保存当前主线冻结源码。该方案尚未实施，数值配置属于建议，不能当作现行能力或已批准 SLO。
+
+- 权限沿 `app/main.py::include_router` → `require_area` → `RoleService.can_access_area` → `access.py::root_only/clamp_nodes` 核验，不能凭 handler 没有 is_root 分支判定越权。
+- 快照沿 `OssSnapshotStore.read` 的 `reuse_report_read` 和 `report_read_scope` 核验；跨请求缓存还需引用范围校验、hash 校验、返回对象隔离及按字节限容。范围快照只在 active_inspection_scope 存在时读取。
+- 批次复用入口为 `SubmissionService.current_batches_many`，保留当前版本链检查；Sand 历史结果沿用仍需 `AggregationService.sand_batch_sources` 的上游变化判断。
+- 共享结果应拆分条件到最新 report_id 的指针和不可变报表，入口每次鉴权；历史月份可能因后续整改变化，不能仅按月份结束就长期缓存。
+- 版本改为前后分块批量比较，不能末尾只查一次或删除。普通 cutoff 不保证所有读取来自同一数据库时点。
+- `bulk allocation` 的进度流不是持久作业队列；`DispatchWorker` 有固定 kind 路由，新结算作业需验证领取隔离、租约、恢复和发布边界。

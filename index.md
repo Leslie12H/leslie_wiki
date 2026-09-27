@@ -319,6 +319,6 @@
 
 - 2026-09-27：PR #1792 负责人兜底的实际选人、当前提交权限与“整包生成中”误报的复核路径，见 [质量中心验收](domains/sand-eval/pitfalls/quality-center-test-data.md)。
 
-- [Sand Eval 结算明细性能](domains/sandai-data-smith/refs/sandeval-settlement-performance.md) — 全量生成与前端分页、质检读取放大、客户端断开后继续计算及导出快照的核验指针（2026-09-27）。
+- [Sand Eval 结算明细性能](domains/sandai-data-smith/refs/sandeval-settlement-performance.md) — 全量生成与读取放大、统一权限门禁、快照缓存及结算优化方案的核验指针（2026-09-27）。
 
 - [Sand Eval 单题质检判断修正](domains/sandai-data-smith/refs/sandeval-single-judgment-correction.md) — 原备注保全、单题正式保存及独立有效判定回读入口（2026-09-27）。
