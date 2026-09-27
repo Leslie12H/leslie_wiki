@@ -2,7 +2,7 @@
 name: sand-eval-quality-center-test-data
 type: pitfall
 created: 2026-09-17
-updated: 2026-09-23
+updated: 2026-09-27
 tags: [sand-eval, testing, quality-center]
 links: []
 ---
@@ -26,3 +26,5 @@ links: []
 2026-09-24 生产排查：管理页的分配扩展记录只是计划/执行进度，不能单独证明质检员账号里已有同数目的真实待办。一次分配若中途停止，管理页仍可能保留已选检查人和全部计划批次，但本人列表只读取已经创建、属于当前提交链的 `eval_quality_review_task`。数字不一致时，按质量任务分别核对分配记录中的 `submission_id` / `group_id`、真实检查任务、当前提交版本和本人工作台；恢复未完成分配后再同时复验管理页与检查人页面，不把跨数据包总数或仅有计划行的数量当作已下发任务数。
 
 2026-09-24 生产排查：整包列表显示“待提交 Sand”、详情按钮仍禁用时，不要只看 `43/43` 验收数。服务端真正的判据是每个负责人复核报告的 `inspection_advancement.blocking_reasons`。当当前批次由多名供应商负责人验收，且任务没有显式 `task_reviewer_config.return_recipient_id` 时，整包生成持续阻断为 `RECIPIENT_UNRESOLVED`（供应商完整包需要明确承接及唯一质检负责人）。此时核对当前 43 批的最新 `vendor_review` 报告执行人，再通过人员配置明确整包退回接收人；后台恢复会重试待推进记录。列表“待提交”只按验收数归类，详情又因尚未生成 `vendor_package` 退化为 `PACKAGE_NOT_READY`，会隐藏上述真实阻断码；页面排查必须回读持久化推进记录。
+
+2026-09-27 骆沙展账号复核：区分“某次质检任务已通过”与“整个数据包可交接”，并复核多名负责人验收时的唯一整包接收人门禁。当前数据、部署 SHA、正式复核报告和页面证据见 `/Users/leslie/Documents/Playground/output/quality-handoff-luoshazhan-20260927/report.md`；历史快照不作为后续当前状态，重新排查仍读最新报告与推进阻断码。
