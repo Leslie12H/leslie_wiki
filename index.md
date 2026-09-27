@@ -318,3 +318,5 @@
 - 2026-09-27：整包负责人配置受控恢复、报告摘要保全及指定负责人本人提交权限核验指针，见 [质量中心验收](domains/sand-eval/pitfalls/quality-center-test-data.md)。
 
 - 2026-09-27：PR #1792 负责人兜底的实际选人、当前提交权限与“整包生成中”误报的复核路径，见 [质量中心验收](domains/sand-eval/pitfalls/quality-center-test-data.md)。
+
+- [Sand Eval 结算明细性能](domains/sandai-data-smith/refs/sandeval-settlement-performance.md) — 全量生成与前端分页、质检读取放大、客户端断开后继续计算及导出快照的核验指针（2026-09-27）。
