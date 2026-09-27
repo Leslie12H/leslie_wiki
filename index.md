@@ -313,7 +313,7 @@
 - [Sand Eval 压测与认证请求归因](domains/sandai-data-smith/refs/sandeval-api-load-and-auth-diagnosis.md) — load_run/deploy 分层、app→edge 499 对账、focus 触发与任务矩阵/发布/整改/流式分配的诊断指针（2026-09-27）。
 - 2026-09-27：单卡 page 的派生 UUID 全表反查、应用 CPU 阻塞与 SQL span 间隙证据，见 [压测与认证请求归因入口](domains/sandai-data-smith/refs/sandeval-api-load-and-auth-diagnosis.md)。
 
-- [Sand 待复验提前展示](domains/sand-eval/pitfalls/sand-reinspection-premature-status.md) — 上级 processing、嵌套整改验收接续与原方法复现、回交及真实后继轮次的核验边界（2026-09-27）。
+- [Sand 待复验提前展示](domains/sand-eval/pitfalls/sand-reinspection-premature-status.md) — 上级 processing、嵌套整改验收接续、连续退回与部分写入恢复、回交及真实后继轮次的核验边界（2026-09-27）。
 
 - 2026-09-27：整包负责人配置受控恢复、报告摘要保全及指定负责人本人提交权限核验指针，见 [质量中心验收](domains/sand-eval/pitfalls/quality-center-test-data.md)。
 

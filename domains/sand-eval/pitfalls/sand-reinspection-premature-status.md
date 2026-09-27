@@ -30,3 +30,5 @@ links: [sandeval-auto-reinspection-verification]
 - 修复与验证指针：`/Users/leslie/Documents/Playground/output/sand-reinspection-order-20260927/acceptance-change.md`，原方法复现证据见同目录 `acceptance-baseline-reproduction.log`。
 - 接续跨越新答案版本时，应从已闭环子整改的直接执行组建立新的负责人验证执行；不可修改旧执行的固定上下文，也不可放宽通用报告继承校验。验收关闭已完成的委派责任后，不再重复安排同一质检。
 - 交接边界仍由现有路径决定：直接供应商验收回执与委派子整改关闭是不同事实。检查自动恢复候选 SQL，不要假定所有手动提交后的退回都会自动派单。
+
+- Review 边界（2026-09-27）：需覆盖连续两次退回标注员的祖先链，以及 autocommit 下验收资料已写入、复验授权尚未写入的重试。具体复现与修复建议指针：`/Users/leslie/Documents/Playground/output/sand-reinspection-order-20260927/review-findings.md`。
