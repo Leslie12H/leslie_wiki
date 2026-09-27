@@ -311,3 +311,4 @@
 - [Sand Eval 流程消息验收](domains/sand-eval/refs/workflow-notification-acceptance.md) — 正向单接收人、逆向全链路及Sand排除、兼任角色消息跳转、未读状态的实际验收入口（2026-09-27）。
 
 - [Sand Eval 压测与认证请求归因](domains/sandai-data-smith/refs/sandeval-api-load-and-auth-diagnosis.md) — load_run/deploy 分层、app→edge 499 对账、focus 触发与任务矩阵/发布/整改/流式分配的诊断指针（2026-09-27）。
+- 2026-09-27：单卡 page 的派生 UUID 全表反查、应用 CPU 阻塞与 SQL span 间隙证据，见 [压测与认证请求归因入口](domains/sandai-data-smith/refs/sandeval-api-load-and-auth-diagnosis.md)。
