@@ -307,3 +307,5 @@
 - 2026-09-26：质检员 page-index 无搜索词的 SQL 参数缺口与 SQLite 测试覆盖差异，见 [检查读取与保存性能](domains/sandai-data-smith/refs/sandeval-review-performance.md)。
 
 - [质检核对方案旧页面 404](domains/sand-eval/pitfalls/bulk-allocation-stale-client-404.md) — 删除 preview API 与已打开旧页面的兼容断裂、生产日志及整页刷新边界（2026-09-26）。
+
+- [Sand Eval 流程消息验收](domains/sand-eval/refs/workflow-notification-acceptance.md) — 正向单接收人、逆向全链路及Sand排除、兼任角色消息跳转、未读状态的实际验收入口（2026-09-27）。
