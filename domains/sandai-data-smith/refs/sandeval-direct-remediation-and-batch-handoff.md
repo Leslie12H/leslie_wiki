@@ -20,3 +20,5 @@ links: [sandeval-roles-and-workflow, sandeval-auto-reinspection-verification, sa
 - 报告结果语义：`quality/domain/inspection/review_rules.py::calculate_result` 与 `tests/quality/domain/inspection/test_review_rules.py`。是否使用不合格率、passed 能否含 rejected 题必须查当前代码，不能按标签名称设计自动回交。
 - 回流目标和恢复条件：`leader_resolution_service.py::_target`、`recover_supplier_handoffs` 与 `disposition_repository.py::handed_off_supplier_returns`。未受影响批次沿用规则查 `AggregationService.sand_batch_sources`。
 - 验收应包含两批同时退回但只完成一批、同批多报告、旧轮次只读、新轮次原人待办、重复请求和中断恢复。区分已完整交接包的单批整改回交与首次未齐包的逐批送审；两者改动范围不同。本次仅分析，未实施业务代码。
+
+- 2026-09-27 用户收敛范围及整包状态方案：同一证据目录的 `confirmed-scope-and-package-state.md`。**Why:** 首次交接是历史事实，部分批次整改和部分批次 Sand 复验会同时发生；未结父责任不能直接等同于供应商还在整改。**How to apply:** 按该方案核对首次整包门禁、整改批次回交条件、当前处理方及 Sand 验收分子，重点查看 `package_progress.py`、`package_progress_query.py` 和包列表契约。首次按批送审已排除；状态设计尚未实现。

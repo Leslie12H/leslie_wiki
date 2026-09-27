@@ -217,3 +217,5 @@
 - [Sand Eval 跨关卡退回意见可见性](domains/sandai-data-smith/refs/sandeval-cross-stage-feedback.md) — Sand 原意见跨负责人、空间质检与标注整改的责任链；含转派后的工作项映射、后续复验及历史结论文案（2026-09-25）。
 
 - [Sand 直达整改与按批交接核验入口](domains/sandai-data-smith/refs/sandeval-direct-remediation-and-batch-handoff.md) — 退回路由、负责人验证、整包交接与 QC passed 语义的代码和生产核验指针（2026-09-27）。
+
+- 2026-09-27：首次继续整包送审、仅整改批次独立回交的范围与混合状态核验见 [直达整改与按批交接](domains/sandai-data-smith/refs/sandeval-direct-remediation-and-batch-handoff.md)。
