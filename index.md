@@ -395,7 +395,7 @@
 - [质检分配与半完成送审冻结](domains/sandai-data-smith/refs/sandeval-partial-submission-freeze.md) — 写入中断根因、保留原快照的单批受控修复、备份及独立验收指针（2026-09-25）。
 - [Sand 分配与过期整包报告](domains/sandai-data-smith/refs/sandeval-stale-package-allocation.md) — 新复验使旧交接报告失效、数据包 tab 判读、选中范围求交、历史证据与实时依赖边界、恢复脚本及题目正文验收（2026-09-26）。
 - [修订索引缺失与质检版本冲突](domains/sandai-data-smith/refs/sandeval-amendment-lookup-recovery.md) — 修订继承链、授权补齐索引、已有判断保护及独立验收指针（2026-09-25）。
-- [Sand Eval 测试分支删除重建](domains/sandai-data-smith/pitfalls/sandeval-test-branch-recreation.md) — 分支保护、目标 PR 自动关闭、main 并发前进及流水线证据边界（2026-09-25）。
+- [Sand Eval 测试分支删除重建](domains/sandai-data-smith/pitfalls/sandeval-test-branch-recreation.md) — 分支创建的 Gate 准入、目标 PR 恢复、main 并发前进及测试部署证据边界（2026-09-28）。
 - [Sand Eval 派题部分完成核验与原计划恢复](domains/sandai-data-smith/refs/sandeval-partial-assignment-recovery.md) — 冻结计划、卡、wave、回执、已有答案保护及滚动发布中断后的复核入口（2026-09-25）。
 - [质检分配实例关闭与恢复](domains/sandai-data-smith/refs/sandeval-allocation-shutdown-recovery.md) — shutdown 与分配日志对齐、已激活但未登记的计划、受控续跑与实样本验收指针
 - Sand Eval 双峰与多计算组归因：见 [运行取证](domains/sandai-data-smith/refs/sandeval-runtime-profile-evidence.md) 的 2026-09-25 db.name、控制池和服务端查询对应方法。
