@@ -16,3 +16,7 @@ links: [sandeval-inspector-rework-round-list-and-editability, sandeval-amendment
 **How to apply:** 对同类提示按精确检查项核对：`eval_quality_review_item` 的送审成员与 `eval_quality_submission_item.object_ref`；同一 `assignment_id` 的原版和最新 `ev3_response`；`eval_quality_review_amendment_lookup` 对应的修订事实；前序与当前 `eval_quality_review_task` 的 `previous_task_id`、状态、计划和提交结果；以及 `eval_quality_disposition` 的退回方向与时间。不要把“已有后续版本”一概当成标注员重新提交，也不要直接把未封存修订当成合格继承版本。修复需要为“代改后整批退回”的修订确定受控去向：明确允许同成员直系新轮继承的处置凭据与资格，或在退回前完成其他受控版本处理；保留原答案、修订和审计记录，继续执行最新版本写入保护。
 
 代码入口：`sand-eval/platform/backend/app/services/facts/answer_amendment.py::verify_current`；`quality/application/inspection/answer_amendment_service.py::visible_amendment` / `candidate`；`quality/domain/inspection/amendment_lineage.py::sealed_by`；`quality/application/resolution/manual_return_service.py` 的退回停止与重启。实际部署版本与流程须现场核验。
+
+## 2026-09-28 main 修复入口
+
+[PR #2144](https://github.com/world-sim-dev/sandai-data-smith/pull/2144) 已合入 `main`：`quality/domain/inspection/amendment_lineage.py` 新增“停止前写入、同送审同关卡连续直系轮次”带入判据；`quality/application/inspection/answer_amendment_service.py` 让新轮答案基线、版本历史和后续交付资格读取同一修订链。测试覆盖连续停止、计划不符、非直系/不同送审、经过拒绝轮次、以及由后续通过报告封存。既有生产记录符合该判据的初步只读核对，但代码合入不等于生产部署或质检员页面验收；按 `/health.deploy_sha` 和原质检员身份的真实检查项重新确认。
