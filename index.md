@@ -404,7 +404,7 @@
 - [Sand Eval 跨工作台题目顺序](domains/sandai-data-smith/pitfalls/sandeval-cross-workbench-question-order.md) — 2026-09-28 真实整改中题号不一致的测试定位陷阱，按题目/素材及答案版本关联。
 - [Sand Eval 整包交接后复验等待](domains/sandai-data-smith/pitfalls/sandeval-whole-package-reinspection-wait.md) — 2026-09-28 测试环境整包已提交、Sand 待复验但原质检员未按用例时限收到新轮次，须分开核对交接和自动派回。
 - [Sand Eval 退回路线与整包交接提示](domains/sandai-data-smith/pitfalls/sandeval-return-route-and-handoff-hints.md) — 2026-09-28 测试环境路线文案、整包状态提示与取消弹窗选择的判读和修正入口。
-- [Sand Eval 转派后整改任务可见性](domains/sandai-data-smith/pitfalls/sandeval-transferred-correction-task-visibility.md) — 原作者、当前持卡人和历史批次键分离时，核对个人入口、答案写入门禁与复验准备度的不同判据（2026-09-28）。
+- [Sand Eval 转派后整改任务可见性](domains/sandai-data-smith/pitfalls/sandeval-transferred-correction-task-visibility.md) — 核对历史批次、当前持卡工作项、写入门禁与来源可用性；同任务多条整改需区分入口（2026-09-28）。
 - 2026-09-27：首次继续整包送审、仅整改批次独立回交的范围与混合状态核验见 [直达整改与按批交接](domains/sandai-data-smith/refs/sandeval-direct-remediation-and-batch-handoff.md)。
 
 - [Test Center V2 run detail 性能记录](domains/vidmuse/admin/projects/2026-07-02-test-center-v2-run-detail-perf.md) — 2026-07-02 的接口实测、假设与分阶段优化计划；使用时重新核验。
