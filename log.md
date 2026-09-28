@@ -414,3 +414,353 @@
 - 2026-09-28 更新质检分配撤销指针：明确授权生产操作后的审计归档、CAS冻结、批次释放、真实身份和页面验收；证据保存在任务报告。
 
 - 2026-09-28 ingest：记录 Claude 工作树迁回本机后的旧路径修复、未提交内容保全及 rebase 范围核验方法；实例指向 Sand Eval PR #2105。
+
+## 2026-09-28 补入远端分支的历史记录
+
+- 2026-09-11：录入 EVOLVE PR #281 DEV 发布证据，包含显式迁移授权、工作流和运行时验收边界。
+
+- 2026-09-11：核验 PR 281 DEV 六题真实评测 Run #2，记录评分产物、重试成功、全文超时、声明代替用例输出与未覆盖能力。
+
+- 2026-09-11：追查 PRD 六题模型事件和 Worker 日志，区分空交付、模型流失败、总预算和取消确认，记录结果 UI 修复验收入口。
+
+- 2026-09-11：补充 EVOLVE 同任务历史 Run 对照实现与验收入口，说明可比性、缺失评分及有效评分分母边界。
+
+- 2026-09-11：记录评测体系复盘指针，明确历史 Run 对照尚不能替代服务端候选决策验证。
+
+- 2026-09-11：补录 Run 服务端可比性和完整任务页验收，记录 pending 重复计数修复与业务校准待办。
+
+- 2026-09-11：记录 QA Case Agent 使用资源分工、知识样例隔离、配置回读与冒烟验收边界。
+
+- 2026-09-11：补充 QA Case Agent 长任务预算、远端任务恢复与多轮编排验收边界及代码测试指针。
+
+- 2026-09-11：记录 QA 配置副本移出 PR，以及调优 Agent 实际绑定与官方资源的只读审计入口。
+
+- 2026-09-11：记录调优 Agent 资源同步回读及 PR #282 DEV 发布验证入口。
+
+- 2026-09-11：补充报警日报发送身份回退坑：截图群成员不能代替实际 token 身份核验；保留飞书业务错误码。
+
+- 2026-09-11：记录 PRD 摘要复验的实际 Skill 调用、知识工具契约错误、Case 修订/幂等语义及预算不匹配导致新 Run 未启动。
+
+- 2026-09-11：补充 QA Case Agent 工具同步验证、critique 业务模型接入根因及默认免填预算修复指针，区分本地修改与线上生效。
+
+- 2026-09-11：记录真实评测路径审查、确认准备合并、最新 Run 分页错误和尚未完成的端到端验收边界。
+
+- 2026-09-11：记录启动确认卡片层级、结果详情加载语义及 584px 组件交互验证边界。
+
+- 2026-09-11：记录启动卡片与现有组件视觉一致性修订。
+
+- 2026-09-11：记录结果工作区视觉细化、共用统计描述及宽窄屏验收指针。
+
+- 2026-09-11：记录 PR #284 合并后的 Studio + EVOLVE DEV 发布及运行时验证成功。
+
+- 2026-09-11：监控 Agent 不认领根因与 PR 63 修正；记录权限子集检查、限定临时令牌及搜索响应仓库验证。
+
+- 2026-09-12：补充监控恢复中的 Admin resultRef 消费契约、权威正文校验及候选报告与严格验收边界；指向 PR 872 和只读回放证据。
+
+- 2026-09-12：补充日报 invalid_output 日志与仅生成复现指针、重试分类问题。
+
+- 2026-09-12：补充日报 JSON 格式修复本地分支和 78 项测试指针，未部署。
+
+- 2026-09-12：记录结构化返回的 extra_params 边界、用户允许正常改写、悬停多选与独立复制栏的本地验证。
+
+- 2026-09-12：补充 Executor 服务部署交付物、监听/健康检查与候选发布分层的源码核验入口。
+
+- 2026-09-12：按用户职责界定修正 Executor 独立数据库必需的假设；记录轻量适配方向及 Maxwell 外部任务重发、创建幂等和查询上下文的改造边界。
+
+- 2026-09-12：补充 Chat 消息边缘选择、可见范围连选、Esc 清空的本地验证指针。
+
+- 2026-09-12：登记 Admin PR #875，将日报格式修复和 Chat 多选复制优化合入同一 PR，含 alias 范围回归。
+
+- 2026-09-12 | VidMuse stateless Adapter: state ownership correction, verified source/API pitfalls and local implementation/test pointers; live tuning remains incomplete. See domains/maxwell/projects/vidmuse-stateless-adapter-implementation.md.
+
+- 2026-09-12 | Added three draft PR pointers, exact frozen JSON boundary, DEV full-tree preservation and private checkpoint byte storage constraints; keep preparation distinct from live application.
+
+- 2026-09-12 | 更新 VidMuse 无库 Adapter 实施页：五仓草稿 PR、Plugin #1832、Zeus #523 补充提交指针，记录 stable PVC/current 与旧 IAM 撤权门禁、Runner 自报和继承产物原始摘要边界；动态候选、运行实读与长快照仍未完成，无部署/生成。见 domains/maxwell/projects/vidmuse-stateless-adapter-implementation.md。
+
+- 2026-09-12 — 回读 VidMuse 无库 Adapter、Maxwell 控制面、Zeus 与 AION 原生续跑草稿提交；同步飞书 revision 114 和本地回归入口，保留未部署/未闭环边界。
+
+- 2026-09-12 | VidMuse runtime slice: pushed five draft PRs; documented approved release catalogs, actual startup/Maxwell comparison contracts, input/receipt bounds and remaining large-snapshot preparation. Feishu revision 132 and existing version board verified; no deployment or external DDL.
+
+- 2026-09-12 | VidMuse Adapter container delivery and AION product-owned preparation reservation: draft code, real SQL lifecycle tests, no new tables; corrected mapping recovery to reuse Zeus outbox, separated internal capture and async handle follow-ups, and updated Feishu deployment/preparation sections. No image run or deployment.
+
+- 2026-09-12 | VidMuse PR merge verification: recorded main DEV automation, deferred Manager/Runner test imports, isolated test databases, opt-in immutable Plugin layout, publisher prerequisites and CI/deployment evidence pointers. Real generation and async preparation completion remain separate.
+
+- 2026-09-12 | AION merge review fixes: frozen-input admission retry boundary, ordinary-message fence, remote-tool terminal progress, USTAR admission and symlink-safe proof publication. Linked targeted regressions and complete CI; in-progress log prefixes are not stall evidence.
+
+- 2026-09-12 | AION second merge review: documented work/event/control admission, SQL pagination exclusion, snapshot path/shape/metadata limits and idempotent runtime reports; track new review threads during CI rather than only at the final merge gate.
+
+- 2026-09-12 | AION final preparation/transport fixes: allow failure after persisted reserved input without claiming model processing, reserve metadata/tar overhead in capture, and repair the queue timestamp test fixture; linked latest complete CI and actual reduced-budget transport tests.
+
+- 2026-09-12 | AION STOP boundary: successful completion waits for remote work, but failure after STOP must finalize even when a running Future cannot be cancelled; include already-consumed fast STOP and real running-Future regression pointers.
+
+- 2026-09-12 | AION preparation filesystem and cancellation: reject ordinary access to empty reserved workspaces and commit native failure with confirmed inbox cancellation before processing; preserve consumed interrupts and link rollback, HTTP and caller regressions.
+
+- 2026-09-12 | AION controlled request identity and import recovery: compare full request fingerprints before returning an existing Thread, serialize cooperative release creates, fence native workspace mutations and preserve committed publications after lost commit responses; linked 520 checks and current CI.
+
+- 2026-09-12 | AION native restart boundary: ordinary recreate/reactivate cannot change frozen continuation execution; keep dedicated activation/input claim-start paths and link 308 related checks.
+
+- 2026-09-12 | Native output content contract: video paths can be overwritten, so AION hashes file bytes and Zeus/Executor preserve and bind versioned evidence; fence ordinary streaming input and atomically publish the PID fixture exposed by full CI. Linked the three coordinated PRs and validation boundaries.
+
+- 2026-09-12 | Native ownership and script limits: reject ordinary create/delete against checkpoint ownership; stream bounded UTF-8 scripts with stable-file and newline checks. Linked 350 checks, all 23 Zeus cross-contract tests, and the follow-up DEV release.
+
+- 2026-09-12 | Refreshed concurrent Plugin main changes: #1844 restored ordinary DEV routing while publisher provisioning is pending; latest ordinary deployment succeeded, but the protected candidate publisher environment still has no variables. Preserve this distinction in merge readiness.
+
+- 2026-09-12 | Merge completed for the five original PRs and Executor/Zeus content follow-ups. AION current head passed all four required checks with 24 resolved threads and a completed fresh review. Linked automatic DEV workflows and retained deployment, async preparation and real A/B gaps.
+
+- 2026-09-14 | Audited AION #1754 against its parent: distinguish existing Plugin ID/cache support from checkpoint replay expansion, document shared SQL/lock and capture/current scope, and keep incomplete async preparation separate from full-task evaluation. No business code rollback or deployment performed.
+
+- 2026-09-14：录入日报滚动部署后全局 owner 无接管导致循环缺失的生产证据与 PR #878 验收指针；补充 Tool/命中率 HTTP 成功后拒收、部分日 dirty 误挡、独立 Worker 有进展及历史标脏逻辑变更边界。未部署、未回填、未补发。
+
+- 2026-09-14：补充 Analytics ac8dcb93a / PR #878 实现与 46 后端、31 前端及静态检查验证指针；区分旧日报提交 CI 通过与新提交待独立核验，保留未部署、未回填的验收边界。
+
+- 2026-09-14：补充 11:36 旧镜像定时循环重启后自动补跑的生产日志与卡片核验；记录 PR #878 合并和部署运行指针，区分两条入库记录、一个模型分组、一张卡片及全局问题处置计数，未把旧版本成功当作新修复验收。
+
+- 2026-09-14：生产 DMS 按完整日报条件核对三个窗口 28/22/2 条记录，定位当日启动补跑不会覆盖历史漏发日期；未补发。
+
+- 2026-09-14 | Completed AION #1760 and Zeus #525 full reverts on main, preserving original worktrees/patches/bundles for local review. AION passed four required checks and resolved five conditional legacy-state findings using live DEV preflight; Zeus passed 349 tests and DEV rollout, with existing baseline formatting failures disclosed. Ordinary product Thread semantics are mandatory; Maxwell, Executor and Plugin remain unchanged. Linked audit, CI and deployment evidence; no production rollout or stored-data deletion.
+
+- 2026-09-14：收录 Nextplay 真实 Case 25 分钟演示讲稿指针；明确目标产物、执行回执、有效评分与候选比较的分别验收。
+
+- 2026-09-14：核验 AION DEV 回退工作流成功及 Manager 实际回退镜像 Ready；补充 Runner 仅构建、独立固定版本须核验的发布边界。在用 DEV Runner 版本均早于 #1754；保存只读证据，未发起生成或生产操作。
+
+- 2026-09-14：录入 Nextplay 真实执行契约复核与 PR 292/293/294、nextplay-eval PR 2 指针；明确部署和本地目标完成不能代替 EVOLVE 初评/候选验收。
+
+- 2026-09-14：补充真实 Run 的外层模型预算耗尽证据、Nextplay PR 3 有界等待修复及同 Skill/Prompt 回读核验。
+
+- 2026-09-14：补充 Nextplay 第二轮真实运行的 toolEvents 上限拒收及 PR 4 全事件审计索引修复；区分 Judge 投影与执行回执边界。
+
+- 2026-09-14：补充 PR 4 在真实混合 Runtime 流上的不足，以及 PR 5 按语义分离 toolEvents 的修正与回归证据。
+
+- 2026-09-14：记录 Nextplay 首个完整真实基准通过及 4/5、5/5、5/5 评分，回读五文件、清理和同快照绑定。
+
+- 2026-09-14：录入知识库大文件上传根因与本地修复指针；记录 HTTP、分块容量、原文件完整性及前后端回归入口，未部署。
+
+- 2026-09-14：补充知识库上传修复 PR #295 交付指针与仅合并、不部署的边界；CI 和评审以 PR 当前状态为准。
+
+- 2026-09-14：补充知识库 PR #295 评审发现的解压解析膨胀、提前分配全部行问题及修复指针；领域测试改为直接运行，保留不部署边界。
+
+- 2026-09-14：补充 PR #295 并发 main 更新导致 CI 浅克隆缺失基线的排查指针；同步 main 后恢复范围检测，未修改部署流程。
+
+- 2026-09-14：补充知识库高重叠率需要累计分块字节预算、失败导入必须先校验再创建知识库的评审结论与回归指针。
+
+- 2026-09-15：录入 [Nextplay Runner Thread Preset 绑定缺失](domains/maxwell/pitfalls/nextplay-runner-thread-preset-binding.md) 的真实 baseline 400、双仓库因果与本地修复/恢复验收指针；未声明共享 Runner 已发布、真实恢复或候选比较完成。
+
+- 2026-09-15：录入 Executor 声明、连接检查与真实执行证据分离及配置绑定的核验方法；记录 Memory JSON 克隆内部字段和 PostgreSQL/CAS 保留验证指针。
+
+- 2026-09-15：录入 [Problem 认领触发历史告警回复](domains/vidmuse/admin/pitfalls/monitoring-problem-claim-replies-to-historical-alerts.md) 的人工动作、弱聚类、全关联通知与飞书回执追溯方法；源码审查和生产运行版本分别表述，未声明修复。
+
+- 2026-09-15：补充来源话题绑定与旧卡刷新，录入 [Tool Errors 启动与 Analytics 内存](domains/vidmuse/admin/pitfalls/tool-errors-bootstrap-and-analytics-memory.md) 的 MIME、Web/Worker 分层证据及共享异步客户端原循环边界；记录 PR #881、461 项联合/16 项末次影响回归及本地合成内存对照，未声明合并部署或精确 OOM 因果。
+
+- 2026-09-16：补充 [历史告警回复](domains/vidmuse/admin/pitfalls/monitoring-problem-claim-replies-to-historical-alerts.md) 的 PR #881 合并/部署指针及“新入队约束不清理旧活动”边界；原话题当次完整回读未见新消息，未将尚未定位的发送判为复发。
+
+- 2026-09-16：录入 [分镜标签同步与视觉核验](domains/vidmuse/pitfalls/storyboard-label-sync-without-visual-verification.md)，保留 Thread 调查入口、实际视频核验方法与首次错配起因未知的边界；区分封面、播放、时长字段和导出版本，未修改线上项目。
+
+- 2026-09-16：录入 [Runner 日志范围与错误计数](domains/vidmuse/pitfalls/runner-log-scope-and-error-count.md)，保留全量加载确认、当前文件/历史轮转边界、错误事件归并和精确帧异常的代码解释；不把历史错误或取证超时直接判为当前故障。
+
+- 2026-09-16：录入 [监控报告与聊天输出分离](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)，记录线上 Preset 与最新源码的 JSON 依赖、纯函数报告工具设计、结果原文和容量边界；仅形成方案，未修改线上配置或验证生产卡片。
+
+- 2026-09-16：更新 [监控报告与聊天输出分离](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md) 的配套 Draft PR 883/64 与审查边界；新增 [修复尝试独立于告警认领](domains/vidmuse/admin/pitfalls/monitoring-repair-is-separate-from-claim.md)，区分已实施的报告通道与仅评估的修复功能，未修改线上 Preset 或宣称生产验收。
+
+- 2026-09-16：补充 [监控报告与聊天输出分离](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md) 的独立复审：已脱敏多行值误拒绝、operator 恢复丢协议和 Runtime 封装容量边界均有临时复现；两 PR CI 通过但本轮未改业务代码或部署。
+
+- 2026-09-16：更新 [监控报告与聊天输出分离](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md) 的授权修复追溯入口，补充完整 canonical receipt 传递、历史线程匹配、幂等脱敏与完整 Runtime 容量预算；本地验证不代表生产回填验收，状态从原 PR 883/64 查询。
+
+- 2026-09-16：收紧 [监控报告与聊天输出分离](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md) 的脱敏边界：保留合法原文不等于允许 marker 任意后缀；独立扫描凭据前缀并检验明确分隔，修复及回归证据见 MCP PR #64。
+
+- 2026-09-16：录入 Runtime 托管业务 Judge 飞书评审方案指针；明确逐题规则、比较内版本固定、平台与业务改动及未实施边界。
+
+- 2026-09-16：补充 [监控报告与聊天输出分离](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md) 的生产发布、先同步 MCP 再绑定 Preset、等待 Admin 飞书恢复后发布 Worker 的追溯入口；工具同步不等于开启新报告协议。
+
+- 2026-09-16：补充监控发布后验证指针：rollout 后 Worker OOM、主服务职责核对，以及历史报告无法通过当前证据规则的验收边界；未宣称真实卡片认领链路通过。
+
+## [2026-09-16] ingest | 记录 Nextplay 候选运行的可编辑 baseline 读取缺口、快照核验及 live/evidence-only 对照边界；保留 Run #5 入口，不将启动声明为评测或优化成功。
+
+- 2026-09-16：补充报告 canary 首次前驱哈希失败、Admin 替代链拒绝、隔离持久化及 Worker 任务归属边界；关联 MCP PR #65。
+
+- 2026-09-16：补充 Nextplay 候选后半程的实际应用核验、同证据 Judge 波动、业务事务回执与调优 Agent 归因边界；新增 DecisionReport 顶层 usage 契约修复 PR #305 指针。
+
+- 2026-09-16：补充 Analytics Worker OOM 修复的生产发布入口与进程 RSS、cgroup、失败持久化、检查点联合验收方法。
+
+- 2026-09-16：记录 PR #305 合并部署后原 DecisionReport 冻结成功的验证入口；保留无改善、Judge 未校准与不采用候选的边界。
+
+- 2026-09-16：补充 monitoring-report-vs-chat-output：分页错误码与必查 trace 全集的区别，以及实际 generation 补查回执边界。
+
+- 2026-09-16：补充监控报告结构预检与精确记录定位，区分诊断副本和真实验收，并记录 bot 建群及 Workbench 文件保存边界。
+
+- 2026-09-17 ingest: monitoring 原 workload 部署绑定与下游证据区别，补 PR #885 和实际验收追溯指针。
+
+- 2026-09-17 ingest: 日报 JSON 可解析但结构校验失败，首次失败停止当天重试；补生产日志指针与字段诊断边界，修正独立调度说明。
+
+- 2026-09-17 ingest: 对比 #881–#883，区分调查 Preset/报告交付变化与日报既有结构校验失败，保留间接输入影响尚未证实的边界。
+
+- 2026-09-17 ingest: 日报同窗一次真实生成通过 schema 与来源校验，复用结果补发并回读确认；补原始请求响应、飞书消息指针及不能还原 10:00 历史失败的边界。
+
+- 2026-09-17 ingest：Studio composite env 发布白屏、候选展示修复与业务候选采用边界；证据指向 PR #307/#308。
+
+- 2026-09-17 ingest：补充日报 invalid_schema 有界结构纠正、内容安全诊断及同窗生产回放指针，区分历史失败和实际发送验收。
+
+- 2026-09-17 verify：#308 main Web 发布后白屏恢复，候选评分、运行来源、决策报告及 Judge 质量提示已浏览器核验。
+
+- 2026-09-17 ingest：隔离调查同事件验证 32 KiB 单消息容量冲突与无损分段接单，记录既有 Run 恢复保护及真实报告/卡片验收边界。
+
+- 2026-09-17 ingest：候选 Variant 正文入口、Benchmark 定版与历史成绩边界、Nextplay 异步执行并发及串行判卷的代码核验。
+
+- 2026-09-17 ingest：记录 canonical 分段接收与部署证明关联缺口，补历史快照拒绝和观察值结构预检边界，指向 Admin #885 / MCP #67 及真实隔离回放。
+
+- 2026-09-17 ingest：真实隔离卡片认领、落库和更新回执已验证，关闭卡片并清理本次七条临时记录；区分报告接受未完成与独立回调验收，补完整 Monitoring CI 门禁。
+
+- 2026-09-17：补充 Monitoring 第三次 canonical 报告严格接收与 SQLite 状态机/卡片验收，明确独立真实回调不等于生产新协议切换。
+
+- 2026-09-17 ingest：13 份历史报告的缺少 Pod 注解绑定根因与逐份回放；补报告 ID/关联键预检、有界重新采证、不可变源码分段读取及上线同步边界。
+
+- 2026-09-17：补充监控报告生产发布验证指针与源码分段传输脱敏边界；保留卡片回调、新协议切换未完成的证据区别。
+
+- 2026-09-17 ingest：补充正式 preset 切换的资源回读/PVC 回执边界及新增代码行号数字占位回归，指向 MCP #68 与实时验收记录。
+
+- 2026-09-17 ingest: scoped alert trace aliases, immutable evidence hashes and independent root-cause cluster rejection; Admin #887.
+
+- 2026-09-17 ingest: persisted retry delivery protocol and bounded recovery for downstream filtered-query proof selection; Admin #887/#888.
+
+- 2026-09-17 ingest: 原卡认领更新回执的大盘误判及正式 preset 跨 Run 引用拒绝；保留 strict gate 与回退边界，Admin #889。
+
+- 2026-09-17 ingest: ACK 表单重新序列化丢失 optional Secret，保留健康模板并验证单字段 YAML 差异。
+
+- 2026-09-17 ingest: 模型 literal records map 只证明内部一致，服务端 canonical Run 引用预检才构成来源验证。
+
+- 2026-09-17 ingest: 核对真实 dispatch 调用链，纠正隔离 evidence scheduler 与生产 single-Run 错误处理之间的验收边界。
+
+- 2026-09-17 ingest: 自由画布下载事件按用户账号与版本交叉校验；记录多版本下载、任务 JSON 截断与实际入参证据边界。
+
+- 2026-09-17 ingest: Monitoring current-Run preflight implementation pointers, MCP extension negotiation and native/legacy call-argument compatibility; retain deployment and acceptance boundaries.
+
+- 2026-09-17 ingest: 补充监控线上技能同 Run 补证例外、完整回读，以及独立日报探针初始化与字段修正验收边界。
+
+- 2026-09-17 ingest: Add same-Run original-workload source correction and formal/card acceptance pointers; preserve legacy-drain and callback evidence boundaries.
+
+- 2026-09-17 ingest: Correct pending-versus-active legacy gate; add missing SLS Admin action diagnosis, exact restoration and WAF-versus-acceptance boundaries.
+
+- 2026-09-17：补充 Sand Eval 测试发布 ALB 503 与调度排队证据，记录 PR #1312 的滚动发布、非抢占优先级及失败恢复入口。
+
+- 2026-09-17：记录 PriorityClass 集群权限阻塞测试发布的前置检查问题，关联 PR #1316 的显式启用修复。
+
+- 2026-09-17：记录 Sand Eval 发布后节点移除与无节点亲和性缺口，区分已证实节点生命周期和未证实 cleaner 批次归因，添加 PR #1322 指针。
+
+- 2026-09-17：补充 Eval 常驻节点修复 Run 35232992685 的实际节点与镜像核验指针。
+
+- 2026-09-17：记录 Monitoring MCP 普通发布撤掉只读调查凭据的证据链与核验入口；生产仅只读排查。
+
+- 2026-09-17：记录 test→main 生产发布及 Web/QC/生成 Worker 常驻非 Spot 约束的分项验收入口。
+
+- 2026-09-18：录入 Monitoring MCP 发布默认参数撤销 code/database 凭据、Admin 配置身份漂移的排查与防复发指针，关联 MCP PR #70/#71、Admin PR #891、Runtime 建连容错与生产取证。
+
+- 2026-09-18：补充扩窗诊断线索触发不可满足的部署取证、同 Run 候选逻辑回放，以及 Runtime API 源站与页面链接分离的核验方法；关联 Admin PR #892。
+
+- 2026-09-18：补充 Admin #892 生产镜像与双副本就绪回读、2494 正式回填验收，以及 acquisition 完成但 prepare 反复失败导致预算耗尽的判别方法。
+
+- 2026-09-18：记录长 Run 报告准备的固定总读取预算、MCP 外层预算与三个不同终止条件，关联 Admin #893 / MCP #72 和生产 HTTP 复现。
+
+- 2026-09-18：补充 Monitoring 大日志分页顺序链验收与 MCP #72 生产验收指针（monitoring-report-preflight-budget）。
+
+- 2026-09-18：记录 Admin #893 实际部署与同草稿 preflight HTTP 503→明确校验反馈的对照证据。
+
+- 2026-09-18：日报未发送定位为 supported proof 合法状态被读取 schema 拒绝，补充 PR #894、同窗生成与结构化 SLS 原始扫描方法。
+
+- 2026-09-18：补充原始报警积压全部严格验收与最后一条正式回填证据，区分持久化完成和 supported 状态页面读取问题。
+
+- 2026-09-18：补充监控日报合法 supported 枚举修复的生产部署、全量 CI、同窗读取及真实详情页验收指针；区分读取恢复与发送回执。
+
+- 2026-09-18：补充用户确认后的日报机器人发送、内容回读及去重验收指针。
+
+- 2026-09-18：记录 Sand Eval 日志看板代码与运行验收指针，明确不增加业务采集/请求依赖、解析率不等于采集率。
+
+- 2026-09-19：记录Eval慢接口与事务SQL面板指针；区分端到端耗时与选择性trace。
+
+- 2026-09-19：记录 Sand Eval 可返回代登录的契约、撤销边界和本地验收指针；明确 PR Gate 与生产状态尚待核实。
+
+- 2026-09-19：补充 Sand Eval 代登录 review 修复验收指针：首次及再次切号撤销竞态、审计故障、真实空间查询语义与返回后的重复查询。
+
+- 2026-09-19：更新可返回代登录指针至 PR #1401 与测试发布回执；区分测试上线和生产上线。
+
+- 2026-09-20：录入 Sand Eval 历史整改快照冲突恢复指针；区分新命令防中断与旧半成品恢复，链接 PR #1504、operator runbook 与生产回读证据。
+
+- 2026-09-21：记录 Sand Eval 供应商批量验收/整包送审的数据构造与粒度校验入口，执行状态保留在本地证据目录。
+
+- 2026-09-21：补充测试数据准备期间被并行消费的回读、保留与补建边界。
+
+- 2026-09-21：记录生产复验跨停止轮次的抽样与历史标签排查指针；保留只读证据和生产修复边界。
+
+- 2026-09-21：补充复验抽样继承的 Sand 退回/重交接入口、有效判断规则及修复回归代码指针。
+
+- 2026-09-21：补充复验最近有效结论展示与 PR #1569 的代码、回归入口。
+
+- 2026-09-23：记录 Sand Eval 重新分批后正式交接仍误用未过滤批次的根因，以及统一 live batch owner 的本地修复入口。
+
+- 2026-09-23：补充 Sand Eval 当前批次需同时核对 scope key 与 version；负责人直接分配完成批次时不以标注交接状态为门禁。
+
+- 2026-09-23：更新 Sand Eval PR #1706 已通过 Gate 并合并到 main；生产部署仍未由该 Gate 执行。
+
+- 2026-09-23：补充 Sand Eval 整包交接因重复串行报告读取导致凭证过期/一分钟超时的根因、PR #1711 修复及生产 14.154 秒只读回归证据。
+
+- 2026-09-23：记录 Sand Eval 供应商与 Sand 质检批量分配延迟根因、生产只读时序、部分完成与重试边界。
+
+- 2026-09-24：记录 Sand Eval 多负责人验收导致整包接收人无法确定的根因、紧急恢复及保持单负责人旧行为的最小修复边界。
+
+- 2026-09-24：记录 Caption 旧模块计数、已验收范围迁移限制和祖先退回责任核验指针；生产只读，未迁移。
+
+- 2026-09-25：核验 Sand Eval 生产迁移导致旧 SLS 看板无实时数据，记录新集群日志库和重建后的 API 看板入口。
+
+- 2026-09-25 ingest：新增 Sand Eval runtime profiling 证据入口，记录历史/当前 CFS 区分、低频 loop lag、SET 状态复位和恢复并发计数方法。
+
+- 2026-09-25：录入质检待处理/质检中分层判读、来源凭证过期和保留成功批次的恢复核验指针；只读证据见 quality-allocation-blocked-status。
+
+- 2026-09-25 ingest：补充当前 API 优先级证据指针、499 unmatched 漏计、取消后继续执行、acquire/setup 重叠与恢复单批阶段诊断方法。
+
+- 2026-09-25 ingest：补充三接口完整 trace 入口、状态筛选覆盖 include_progress、清单分页重扫整包和 SLS 索引截断的核验方法。
+
+- 2026-09-25：记录 Sand Eval 质检分配冻结中断的只读证据入口、非原子写入及恢复分支核查方法；未执行生产修复。
+
+- 2026-09-25：补充用户授权后的单批手动修复指针：备份与计划摘要、补齐缺失快照、父摘要最后发布、原分配续跑，以及生产数据和正式工作台查询服务的独立验收边界。
+
+- 2026-09-25：补充 Sand Eval 四接口发布前后证据入口，记录二次配置滚动的发布边界、前台后台指标分离及同包对照口径。
+
+- 2026-09-25：记录 Raymond 质检版本冲突的事实/窄索引/前置报告核查方法、只读恢复模拟、旧新版本差异与真实故障范围的区别，以及受控索引恢复入口。
+
+- 2026-09-25：补充 Raymond 索引修复的用户授权、应用回执和独立验收指针，以及索引创建时间和业务继续写入时的精确身份保护口径。
+
+- 2026-09-25：收录发布后慢接口与完整调用链证据，补充流式 HTTP 200 与分配进度写回失败的区分，以及 loop_stall 构图/最大流栈的归属方法。
+
+- 2026-09-25：记录 Sand Eval 测试分支删除重建中的 GitHub 保护规则、目标 PR 自动关闭、main 并发前进与测试流水线验证边界。
+
+- 2026-09-25：记录可梦派题部分写入的分层核验、原计划恢复、已有答案保护，以及恢复执行器被滚动替换后的再核对指针。
+
+- 2026-09-25：补充整改工作台、发布和派题逐请求诊断入口，记录旧新版本样本分离、发布 202 前置范围查询及大批派题分块和最大流栈的归因边界。
+
+- 2026-09-25：补充 Sand Eval 两次延迟尖峰证据指针，记录按实际 db.name 拆分控制/读取计算组、客户端与服务端耗时对应及内部等待归因边界。
+
+- 2026-09-25：记录新质检备注刷新丢失的组件状态根因，以及本机草稿恢复与正式保存判断的边界；候选修复未过 PR Gate 或部署。
+
+- 2026-09-25：记录 Sand 质检整批及逐题意见经过供应商负责人退回后未投影到空间质检新轮次的现场与代码原因；标注员链路仅有源码推断，修复未实施。
+
+- 2026-09-25：补充 Sand 退回意见沿委派及标注退回责任链的候选修复入口，并记录上游空间质检旧“合格”标签易被误读为本轮结论；候选尚未过 PR Gate 或发布。
+
+- 2026-09-25：复查跨关卡意见候选修复，补充标注转派后须按授权批次和稳定工作项对题、后续复验须沿父处置链追溯原意见；仍待 PR Gate 和页面验收。
+
+- 2026-09-26：录入 Sand 分配引用过期整包报告的核查指针；区分人员计划与实际任务，记录未完成复验的恢复边界及只读事故证据。
+
+- 2026-09-26：补充数据包管理 tab 的接口/页面映射指针；记录包级空阻断提示、计划创建时间被称为下发时间，以及同名不同批次的核查边界。
+
+- 2026-09-26：校正过期整包分配恢复前置：直接报错的复验链不代表全部未结事项；补充真实供应商验收检查与 allocation 旧包绑定恢复缺口。
+
+- 2026-09-26：补充派发事故恢复的范围求交原则，区分整包实现门禁与所选批次业务前置；记录同名不同批次及无关整改阻断的校正。
+
+- 2026-09-26：更新 Sand 旧包派发故障指针；补充单批历史数组一致性与实时依赖分离、受控恢复/正文验证/零写重放证据。
+
+- 2026-09-26：记录质检分配被实例关闭打断的诊断与恢复入口，区分 allocation 与 review-plan recovery，并补充引用式 Sand 送审的结构边界。
+
+- 2026-09-27：记录 Sand 跳过供应商负责人和按批交接的只读分析入口；区分整改回交与首次送审，核对报告通过语义及截图任务真实时间线。
+
+- 2026-09-27：补充用户确认的整改专用单批回交范围与包状态方案入口，区分首次交接事实、当前处理方和最终 Sand 验收。
+
+- 2026-09-27：同步结算明细诊断与优化方案指针，包含统一权限门禁、快照复用、不可变结果、前后版本校验与后台作业边界；方案尚未实施。
+
+- 2026-09-28 ingest：按用户要求完整同步知识库；备份双方历史与未跟踪文件，纳入四篇 Maxwell 历史正文，保留双方专题与日志，处理分叉冲突，补齐目录入口并记录同步核验方法。最终推送状态以 Git refs 为准。

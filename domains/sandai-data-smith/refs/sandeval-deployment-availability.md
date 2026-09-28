@@ -41,3 +41,38 @@ links: []
 - 实时配置核验的关联工作负载：data-operator 下 `yxp-raw-video-sp-detect-normal` 与 `...-normal-two`；副本数、资源和优先级需实时读取，不把快照用作今后扩缩容依据。此次两者均无 priorityClassName，Eval 故障 Pod priority=0。
 - 结论分级：Web Recreate 导致发布空窗为确定根因；本次长空窗发生于调度队列等待为日志确定事实；同优先级离线任务的大量不可调度重试造成共享调度拥塞，是这些证据支持的高置信解释。未获得调度器 CPU/锁剖析，不能把入队延迟进一步断言为某个内部锁或 CPU 瓶颈。
 - 应先修 Web 可用性，再评估在线业务非抢占调度优先级和离线并发容量治理。仅隔离节点池未必隔离共享调度器队列；仅加副本而保留 Recreate 仍会先删除旧一代。
+
+## 修复入口
+
+- [PR #1312](https://github.com/world-sim-dev/sandai-data-smith/pull/1312) 持有测试 Web 滚动发布、非抢占 PriorityClass 与第一阶段失败恢复的变更。合并、Gate 和部署状态以 PR / workflow 为准，不把代码提交等同于运行态修复。
+- **Why:** 只改滚动策略仍可能被发布失败分支的 scale-to-zero 抵消。
+- **How to apply:** 检查正常发布和失败恢复两条路径；恢复应绑定本次预检通过的旧配置，并用 API 返回的默认化模板做并发前置条件。QC Worker 替换前仍需确认所有 Web 停止受理。
+
+## PriorityClass 权限与发布隔离
+
+- [测试发布 Run 35228629545](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/35228629545) 在 Web 修改前停止；2026-09-17 只读授权检查确认当前操作者不能读取或创建集群级 PriorityClass，不能把该资源权限当作 namespace 发布权限的一部分。
+- [PR #1316](https://github.com/world-sim-dev/sandai-data-smith/pull/1316) 持有优先级显式启用及默认滚动发布路径。权限和部署状态以当前 RBAC、工作流和 Deployment 为准。
+- **Why:** 增加可选调度优化不能阻塞解决停机的滚动更新；初始修复把两者绑定成了同一个前置条件。
+- **How to apply:** 上线前分别核验 namespaced Deployment 与 cluster-scoped PriorityClass 的权限。默认不访问 PriorityClass；显式启用时仍校验其值、非全局默认和 Never 抢占策略，不因权限错误悄悄跳过检查。
+
+## 发布成功后的节点移除与调度边界
+
+**Why:** 滚动发布的可用性保证不覆盖单副本所在节点被移除；提高调度优先级也不能让已删除的节点继续服务。
+
+**How to apply:** 用户再次报错时重新绑定故障窗口，比较 Deployment generation、ReplicaSet、Pod UID 和 nodeName。先读节点事件，再核对节点标签及资源生成、发布脚本里的硬性亲和性；不要把上一轮 HTTP 200 采样延伸成长期健康结论。
+
+- 2026-09-17 北京时间 22:02:24 节点 `cn-shanghai.192.168.103.95` 变为不可调度，22:02:44 记录 RemovingNode；随后 API 返回 NotFound。原 Web Pod 消失，22:03:34 同一 ReplicaSet 创建替代 Pod，22:03:59 Ready；Deployment generation 仍为 180、镜像未变。这轮发生在 [成功发布 Run 35230023499](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/35230023499) 后。
+- 当次模板没有 affinity/nodeSelector；替代节点标签实测为 SpotAsPriceGo，说明在线测试 Web 仍可落到可回收计算节点。代码入口是 `prepare_test_resources.py` 删除 affinity，及 `deploy_test.py` 沿用无约束模板。
+- `ack-operator-system` 的 cleaner 日志显示 22:02:25 提交 38 节点释放批次、22:03:26 完成；尚未取得该批次精确节点清单，当前身份读取 SpotNodePoolCleaner CR 被 Forbidden。因此不能仅凭同窗时间断言该 cleaner 删除了故障节点。
+- [PR #1322](https://github.com/world-sim-dev/sandai-data-smith/pull/1322) 持有 Eval Web/QC 常驻非 Spot 节点约束和发布回读检查；当前运行态以 PR/Gate/集群为准。保留单副本意味着仍不能容忍任意常驻节点故障，跨节点多副本需要单独验收。
+
+- 部署验收入口：[Run 35232992685](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/35232992685)，绑定测试分支提交 `8c099307ef0845324823f2b37ad1e543958d557b`；2026-09-17 的现场复验覆盖两次 Web 滚动、实际 NoSpot 节点标签、容器 imageID 与构建 digest 一致性及 Web/QC 就绪。此结果不替代后续故障窗口的重新核验。
+
+## 生产常驻节点约束与发布覆盖
+
+**Why:** 当前 Pod 恰好在 NoSpot 节点，不等于下一次重建仍受该约束；生产 Web 的节点池筛选与 Worker 的节点策略需要分别核验。生成 Worker 按设计不随常规 Web CI 更新，不能把 Web 发布成功当作所有 Worker 已发布。
+
+**How to apply:** 同时检查 `platform/k8s/deployment.yaml`、`generation-worker.yaml`、`qc-release-worker.yaml` 的硬性节点约束；发布后回读 Pod node labels 和 imageID。生成 Worker 使用 `docs/operations/video-generation-workspace-rollout.md` 的独立发布入口，先读活跃任务，复用已验证 main 的 digest/receipt，并完成稳定性检查。
+
+- [PR #1325](https://github.com/world-sim-dev/sandai-data-smith/pull/1325) 持有三类生产工作负载的常驻非 Spot 约束。
+- [PR #1309](https://github.com/world-sim-dev/sandai-data-smith/pull/1309) 将 test 合入 main；[生产 Run 35240105965](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/35240105965) 绑定 main 提交 `9d704ad5c4fcff802a9c682889cdce00815cfbb2`。2026-09-17 验收覆盖 Web/QC 的 CI 更新、生成 Worker 独立补发、实际节点与全部容器 digest 回读。部署状态仍以当前集群和该 run 为准。

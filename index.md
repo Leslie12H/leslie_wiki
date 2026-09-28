@@ -22,10 +22,10 @@
 - [VidMCP auth/runtime context](domains/vidmuse/admin/pitfalls/vidmcp-auth-runtime-context.md) — MCP_URL/token 与 X-Auth-* 不要混淆
 - [CDN user-generated images](domains/vidmuse/admin/pitfalls/cdn-user-generated-images-video-cdn.md) — aion-user-base/assets/images 走 video CDN
 - [报警 Problem 标题与当次报告](domains/vidmuse/admin/pitfalls/monitoring-problem-title-vs-incident-report.md) — 历史聚类标题不能代替当次结论，发送摘要前核对证据等级
-- [报警日报证据丢失链路](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-evidence-loss.md) — 输入裁剪、静默降级与引用完整性的排查和验收指针
+- [日报定时失败诊断](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-evidence-loss.md)：2026-09-12 JSON 输出失败、当天重试门禁及历史与复现证据边界。
 - [监控大盘窗口与「天」的口径](domains/vidmuse/admin/pitfalls/monitoring-dashboard-window-and-day-semantics.md) — 三套时间基准 + 全量/窗口计数混用导致数字自相矛盾
 - [Analytics 维护调度器历史重建压垮 PolarDB](domains/vidmuse/admin/pitfalls/analytics-maintenance-historical-rebuild-pressure.md) — 2026-09-07 三个放大器(30s 排水/审计也重写/replay 并发 16)+ 退役 5 阶段 + 冻结线 + 为何单独建库无用
-- [admin 定时报表机制与死配置](domains/vidmuse/admin/pitfalls/admin-scheduled-report-mechanisms.md) — 外部 /cron vs 进程内循环、BugBotConfig.schedules 没人读、app.py 启动总闸
+- [admin 定时报表机制与死配置](domains/vidmuse/admin/pitfalls/admin-scheduled-report-mechanisms.md) — 外部 /cron、全局 owner 与独立日报调度、日级 guard 及失败重试边界（2026-09-17）
 - [vidmuse-admin harness](domains/vidmuse/admin/refs/vidmuse-admin-harness.md) — Test Center V2 / VidMCP harness 指针
 
 - [时间线预览时长与导出版本](domains/vidmuse/refs/timeline-preview-duration-and-export-version.md) — 轨道时长、分秒帧显示及历史混流版本核验指针
@@ -34,7 +34,7 @@
 
 ### maxwell — [业务全景](domains/maxwell/README.md)
 - [VidMuse Git 候选准备](domains/maxwell/projects/vidmuse-executor-candidates.md) — 独立候选 CLI、仅 DEV 发布隔离、执行账号与公共依赖版本核验指针
-- [VidMuse Executor P1 实现入口](domains/maxwell/projects/vidmuse-executor-p1.md) — 独立仓库、DEV 部署准备、持久化恢复与协议核验指针
+- [VidMuse Executor P1 实现入口](domains/maxwell/projects/vidmuse-executor-p1.md) — P1 实现、轻量适配器去数据库方向、创建重试与部署核验指针
 - [EVOLVE v2.2 工作台](domains/maxwell/refs/evolve-workbench-v22.md) — 固定框架、行内判卷、设计与真实接口边界及验证入口
 - [EVOLVE 已接收输出与未冻结证据集](domains/maxwell/pitfalls/evolve-received-evidence-before-run-freeze.md) — Attempt 输出与冻结证据的区别；SQL 审计定位 CAS，读写分离下的状态机一致性；修复 PR #276 与租约接管回归
 - [EVOLVE 全流程稳定性审计](domains/maxwell/refs/evolve-evaluation-blockers-20260910.md) — 取消收敛、大证据引用、判卷重试、故障回归与 PR/DEV 发布验证指针
@@ -72,19 +72,17 @@
 
 - [Admin 服务 JWT 权限与有效期](domains/vidmuse/admin/pitfalls/service-jwt-permissions-and-expiry.md) — 部署鉴权、type 字段映射、权限范围与 WAF 假 200 的验证指针
 
-- [Tool 日汇总更新状态隐藏已有数据](domains/vidmuse/admin/pitfalls/tool-daily-updating-hides-existing-data.md) — 2026-09-11 DMS 验证反复 thread_upsert 标脏 + 前端拒收 updating，不能把暂无数据直接当作未回填
+- [Tool 日汇总状态与已有数据展示](domains/vidmuse/admin/pitfalls/tool-daily-updating-hides-existing-data.md) — HTTP 成功后的数据门禁、部分日误挡、独立 Worker 核验及 PR #878 本地回归/CI 边界（2026-09-14）
 
-- [Tool 重建日志样本](domains/vidmuse/admin/pitfalls/tool-daily-updating-hides-existing-data.md) — 2026-09-11：30 分钟 332 次分析、145 个 Thread、6 次成功日重建；日志不支持推算 DB 负载
 
 - Tool 指标发布实现与迁移检查：见 [tool daily 更新门禁](domains/vidmuse/admin/pitfalls/tool-daily-updating-hides-existing-data.md) 的本地实现指针（2026-09-11）。
 
-- [Tool 发布 PR review](domains/vidmuse/admin/pitfalls/tool-daily-updating-hides-existing-data.md)：数据库工作量、人口完整性与 FLOAT 比较边界（2026-09-11）。
 
 - Tool 增量维护目标设计：见 tool-daily-updating-hides-existing-data 的 2026-09-11 设计指针；尚未实现。
 
 - [生产 Admin 表退役审计](domains/vidmuse/admin/refs/prod-table-retirement-audit.md)：三张注册表候选、旧日汇总退役边界与生产只读核验入口（2026-09-11）。
 
-- [监控代码源范围阻断认领](domains/vidmuse/admin/pitfalls/monitoring-code-scope-blocks-claim.md) — GitHub App 仓库集合与白名单不一致、readyz 与认领前门禁排查（2026-09-11）。
+- [监控代码源范围阻断认领](domains/vidmuse/admin/pitfalls/monitoring-code-scope-blocks-claim.md) — 安装权限扩展、节点网络、结果引用契约，PR 63/872 与恢复核验指针（2026-09-12）。
 
 - 监控认领门禁修正：见 [代码源范围](domains/vidmuse/admin/pitfalls/monitoring-code-scope-blocks-claim.md) 的子集检查实现指针（2026-09-11）。
 
@@ -169,7 +167,7 @@
 
 - 自由画布当前展示版本与最终选片的区别、精确输出匹配及保留用户改名，见 [抽卡导出入口](domains/vidmuse/refs/free-canvas-generation-export.md)（2026-09-16）。
 
-- [Analytics Worker 超大聊天 OOM](domains/vidmuse/admin/pitfalls/analytics-worker-oversized-history-oom.md) — 完整响应内存放大、崩溃重试循环、流式体积准入与生产恢复验收指针（2026-09-16）。
+- [Analytics Worker 超大聊天 OOM](domains/vidmuse/admin/pitfalls/analytics-worker-oversized-history-oom.md) — 完整响应内存放大、崩溃重试循环、流式体积准入、生产发布与 RSS/cgroup 恢复验收指针（2026-09-16）。
 
 - [Sand Eval SQL 与锁诊断入口](domains/sandai-data-smith/refs/sandeval-sql-lock-diagnosis.md) — 当前 SLS 日志库与 API 看板、transaction_trace 慢 SQL、锁和连接池的核验指针（2026-09-25）。
 
@@ -199,7 +197,7 @@
 
 - [云效多需求分支生成 release](disciplines/dev/yunxiao-release-branch-research.md) — Flow 分支管理器、AppStack 准入、GitHub 接入与现有 cherry-pick 流程的评估边界（2026-09-17）。
 
-- [Sand Eval 部署期间页面不可用](domains/sandai-data-smith/refs/sandeval-deployment-availability.md) — 测试 Web 策略、发布二次重启与生产边界的核验指针（2026-09-17）。
+- [Sand Eval 部署可用性](domains/sandai-data-smith/refs/sandeval-deployment-availability.md) — 测试站 ALB 503、调度队列证据、滚动发布/失败恢复修复入口及 PriorityClass 权限边界（2026-09-17）。
 
 - Sand Eval 测试站 ALB 503 的现场请求、空 Endpoints 与调度等待时间线，见 [部署可用性诊断](domains/sandai-data-smith/refs/sandeval-deployment-availability.md)（2026-09-17）。
 
@@ -207,7 +205,7 @@
 
 - 2026-09-18：Sand Eval 的真实 HTTP / Playwright 分层验收、封存与下发统计及专属异步队列方法见 [验收指针](domains/sandai-data-smith/refs/sandeval-e2e-acceptance.md)。
 
-- [Sand Eval 接口观测设计入口](domains/sandai-data-smith/refs/sandeval-api-observability.md) — 请求耗时、异常分类、Nginx 日志覆盖与低开销采集的代码核验指针（2026-09-18，方案未实施）。
+- [Sand Eval 接口观测入口](domains/sandai-data-smith/refs/sandeval-api-observability.md) — 当前 SLS 日志库和生产 API 看板、离线生成器、覆盖口径及回退入口（2026-09-25）。
 
 - 2026-09-18：质检分配首次异常与自动恢复的区别、测试过早断言的纠正见 [Sand Eval 验收指针](domains/sandai-data-smith/refs/sandeval-e2e-acceptance.md)。
 
@@ -283,7 +281,7 @@
 
 - 2026-09-22：多进程质检恢复、共享连接与 pool_wait 计时边界见 [SQL 与锁诊断入口](domains/sandai-data-smith/refs/sandeval-sql-lock-diagnosis.md)。
 
-- [整包提交与重新分批重复范围](domains/sandai-data-smith/refs/sandeval-handoff-duplicate-scope.md) — 页面当前批次与正式送审范围不一致、重复项完整性失败的核验指针（2026-09-22）。
+- [整包提交与重新分批重复范围](domains/sandai-data-smith/refs/sandeval-handoff-duplicate-scope.md) — 当前批次的 key/version 口径、负责人直接分配边界，以及整包交接范围、重复报告读取超时和多人验收接收人阻断的修复与生产核验指针（2026-09-24）。
 
 - 整包重复范围案例的转出再转回审计、历史与当前范围边界，见 [整包提交排查](domains/sandai-data-smith/refs/sandeval-handoff-duplicate-scope.md)（2026-09-22）。
 
@@ -326,3 +324,84 @@
 - [质检分配撤销与退回](domains/sand-eval/refs/quality-allocation-withdrawal.md) — 原责任人退回、分配占用、生产撤销审计及真实身份验收指针（2026-09-28）。
 
 - [搬迁后的 Git worktree 指针修复](disciplines/dev/relocated-git-worktree-repair.md) — Claude 会话旧路径、双向 Git 指针修复及 rebase 前后保全核验入口（2026-09-28）。
+
+## 2026-09-28 同步补入的专题入口
+
+- [自由画布下载与生成版本关联](domains/vidmuse/refs/free-canvas-download-attribution.md) — 下载者、版本、任务、实际入参的精确关联及开始下载/最终采用边界
+- [Problem 认领触发历史告警回复](domains/vidmuse/admin/pitfalls/monitoring-problem-claim-replies-to-historical-alerts.md) — 弱聚类、来源话题绑定与旧卡刷新、PR #881 及生产回读边界（2026-09-15）
+- [Tool Errors 启动与 Analytics 内存](domains/vidmuse/admin/pitfalls/tool-errors-bootstrap-and-analytics-memory.md) — JS MIME、Web/Worker 内存证据、异步客户端原循环与 PR #881 回归入口（2026-09-15）
+- [日报滚动部署启动交接](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-startup-handoff.md) — 循环缺失、旧镜像自动补跑、周末窗口对账与历史补偿缺口、PR #878 发布验收及卡片统计口径（2026-09-14）
+- [Executor 声明与执行实证](domains/maxwell/pitfalls/executor-declaration-vs-execution-evidence.md) — 声明/连接/真实回执分开，历史配置绑定、内存克隆与 CAS 保留核验指针
+- [VidMuse 无库 Adapter 实施](domains/maxwell/projects/vidmuse-stateless-adapter-implementation.md) — 普通 Thread 等价性硬要求、AION #1760 / Zeus #525 回退与本地保留、DEV Manager/固定 Runner 分别核验；文件/账号迁移、捕获影响及公共 SQL 审核指针（2026-09-14）
+- [EVOLVE PR 281 DEV 发布证据](domains/maxwell/refs/evolve-pr281-dev-deployment-20260911.md) — 2026-09-11，0007 迁移、API/Worker 与 Studio 188 发布和验收指针。
+- [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md) — Prompt/Skills/知识分工、测试样例隔离与实际交付验证入口。
+- 长任务预算、恢复与多轮编排验收边界：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
+- Agent 配置归属与实际绑定核验：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
+- 调优资源同步与 PR #282 DEV 验证：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
+- 新 Skill 试用、知识工具契约与 Case 版本/预算启动阻塞：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
+- 默认免填预算、业务审查模型接入与工具契约分层排障：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
+- 真实用户评测路径、一次确认准备与首页旧 Run 状态坑：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
+- 启动摘要层级、结果加载语义与交互验收：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
+- 启动摘要统一现有 Tag、Collapse 与设计 tokens：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
+- 结果摘要、维度布局和侧栏一致性：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
+- PR #284 DEV 发布与真实评测边界：见 [QA Case Agent 正式使用资源](domains/maxwell/projects/qa-case-agent-usage-resources.md)。
+- 日报 JSON 格式本地修复与验证：见 [日报失败诊断](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-evidence-loss.md) 的 2026-09-12 修复指针。
+- 日报结构化返回与 Chat 复制交互：见 [日报修复指针](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-evidence-loss.md) 的 2026-09-12 后续修复。
+- Chat Shift 连选及 Esc 清空验证指针：见 [Chat 与日报修复记录](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-evidence-loss.md)。
+- [Admin PR #875](https://github.com/world-sim-dev/vidmuse-admin/pull/875)：日报格式与 Chat 多选复制统一交付，见 [修复记录](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-evidence-loss.md)。
+- [Nextplay 真实 Case 演示讲稿](domains/maxwell/refs/evolve-demo-runbook-20260914.md) — 25 分钟操作路线、真实预演与同口径候选比较的验收边界（2026-09-14）。
+- [Nextplay 真实评测契约复核](domains/maxwell/pitfalls/nextplay-real-run-contract-review-20260914.md) — 执行声明、固定文件根目录、回执配置、轨迹大小、首个真实基准通过与候选验收指针（2026-09-14）。
+- [Maxwell 知识库大文件上传限制](domains/maxwell/pitfalls/knowledge-upload-limits.md) — 上传解压预算、分块总量、导入前置校验、PR #295 及 CI 浅克隆基线排查（2026-09-14）。
+- [分镜标签同步与视觉核验](domains/vidmuse/pitfalls/storyboard-label-sync-without-visual-verification.md) — 文本批量一致不等于素材语义一致；封面、播放、时长与导出版本的复验边界（2026-09-16）。
+- [Runner 日志范围与错误计数](domains/vidmuse/pitfalls/runner-log-scope-and-error-count.md) — tail/full 与轮转边界、重复异常归并、精确帧输出校验及恢复核验方法（2026-09-16）。
+- [监控报告与聊天输出分离](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md) — 双协议报告、PR 883/64、脱敏与恢复边界、生产发布与工具同步、发布后 OOM 和严格回放验收指针（2026-09-16）；2026-09-17 补充严格报告接收与真实卡片回调分层验收边界；补缺少 Pod 注解绑定、fresh-evidence 恢复、大文件分段读取与发布后源码脱敏字节边界；补正式 preset 切换和数字占位兼容。
+- [修复尝试独立于告警认领](domains/vidmuse/admin/pitfalls/monitoring-repair-is-separate-from-claim.md) — 修复按钮、独立任务与写入身份、来源话题和 Draft PR 完成边界（2026-09-16）。
+- [Runtime 托管业务 Judge 评审方案](domains/maxwell/projects/evolve-runtime-judge-review-20260916.md) — Nextplay 业务判卷包、逐题配置、冻结证据、版本更新与通用平台改造的飞书评审入口（2026-09-16）。
+- [候选需可编辑基线，证据重判需同口径比较](domains/maxwell/pitfalls/evolve-candidate-editable-baseline-and-regrade-comparison.md) — Nextplay 候选真实应用、同证据判卷波动、live/evidence-only 对照、Scorecard usage 修复部署与正式决策报告验收指针（2026-09-16）。
+- 2026-09-16 报告协议首次真实 canary 的空替代哈希与隔离 Problem 风险：见 [报告与聊天分离边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)，修复 PR #65、下游 trace 全集、结构预检 PR #66、记录定位与验证入口。
+- 原报警 workload 与下游部署证据不能互相替代，见 [报告协议验收边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)（2026-09-17）。
+- [Studio 发布变量与候选展示](domains/maxwell/pitfalls/studio-release-env-and-candidate-results.md) — composite action 同层 env 空值导致白屏、版本 CDN 准入和单候选结果证据边界（2026-09-17）。
+- 2026-09-17 日报结构错误的有界修复与同窗只读回放入口见[日报证据链](domains/vidmuse/admin/pitfalls/monitoring-daily-brief-evidence-loss.md)；生成通过不等于补发。
+- 2026-09-17 调查重试文本超出 Runtime 单消息容量的无损分段与幂等回执验收见[报告协议边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)。
+- 候选正文、空 Benchmark 与多 Case 并发的区分见 [Studio 与候选验收](domains/maxwell/pitfalls/studio-release-env-and-candidate-results.md)，PR #309 提供入口与调度回归（2026-09-17）。
+- 2026-09-17 分段报告上下文恢复、采集与证明部署关联对齐、历史快照和标量 observation 边界见[监控报告验收](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)，修复指针 Admin #885 / MCP #67。
+- 2026-09-17 真实飞书认领/原卡片回填、临时样本清理与专项策略 CI 兼容门禁见[报告协议验收边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)。
+- 2026-09-17 exact alert trace aliases and independent cross-trace rejection: [report protocol boundaries](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md), Admin #887.
+- 2026-09-17 correction transport and filtered downstream-query proof boundaries: [monitoring report protocol](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md), Admin #887/#888.
+- 2026-09-17 原卡更新回执与话题回复的验收差异、正式 preset 跨 Run 引用失败后的切换门禁见[监控报告边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)，Admin #889。
+- 2026-09-17 ACK 容器表单丢失 optional Secret、单字段 YAML 变更回读与安全模板回退见[监控发布边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)。
+- 2026-09-17 模型手写 records map 的自检不能证明 canonical Runtime 引用，见[报告证据边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)。
+- 2026-09-17 生产 invalid_report 处理器未调用证据续查辅助函数，隔离调度器测试不能替代生产恢复验收，见[报告协议边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)。
+- Monitoring 当前 Run 草稿预检、MCP 执行上下文协商及真实证据绑定入口，见 [报告与聊天输出边界](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md)（2026-09-17）；PR 合并和 CI 不代表正式 preset 验收通过；补线上技能禁止补读冲突与独立日报探针的模型路由初始化边界。
+- 2026-09-17 Same-Run original-workload SHA correction, layered formal/card acceptance and legacy-drain cutover gate: [monitoring report boundaries](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md).
+- 2026-09-17 First-claim protocol cutover gate and SLS Admin action lost from both DSL/graph: [monitoring output and routing boundaries](domains/vidmuse/admin/pitfalls/monitoring-report-vs-chat-output.md).
+- Sand Eval 发布后节点移除、单副本与 Spot 调度边界：见 [部署可用性诊断](domains/sandai-data-smith/refs/sandeval-deployment-availability.md)（2026-09-17）。
+- Eval 常驻节点修复的测试发布与实际落点验收入口，见 [部署可用性诊断](domains/sandai-data-smith/refs/sandeval-deployment-availability.md)（2026-09-17）。
+- [监控发布撤掉只读凭据](domains/vidmuse/admin/pitfalls/monitoring-deploy-revokes-readonly-credentials.md) — 发布参数撤权、配置身份漂移、全副本验收及 Runtime 建连容错的排查与修复指针（2026-09-18）。
+- Eval 生产常驻非 Spot 约束与生成 Worker 独立补发：见 [部署可用性诊断](domains/sandai-data-smith/refs/sandeval-deployment-availability.md)（2026-09-17）。
+- [扩窗诊断线索与事故取证](domains/vidmuse/admin/pitfalls/monitoring-expanded-lead-escalation.md) — 主窗查空后的合法扩窗不等于事故归属，防止强制部署/源码检查形成无法完成的报告门禁，并区分取证完成、报告准备失败与预算耗尽。
+- [报告准备的跨层预算](domains/vidmuse/admin/pitfalls/monitoring-report-preflight-budget.md) — 长 Run 分页读取、真实 HTTP 对照、分层超时与按历史 receipt 恢复的核验方法（2026-09-18）。
+- [Eval慢接口与事务SQL观测指针](domains/sandai-data-smith/refs/sandeval-slow-panels.md) — 现有日志面板、trace覆盖边界与2026-09-19排查入口。
+- [Sand Eval 可返回代登录入口](domains/sandai-data-smith/refs/sandeval-returnable-impersonation.md) — PR #1401、测试发布及首次/再次切号并发撤销的验收指针（2026-09-19）。
+- [Sand Eval 历史整改快照恢复](domains/sandai-data-smith/refs/sandeval-legacy-correction-recovery.md) — 2026-09-20：旧快照与失败意图区分、最新答案保留、PR #1504 和只读计划 / apply 操作入口。
+- [供应商批量验收与送审测试数据](domains/sandai-data-smith/refs/sandeval-bulk-quality-fixtures.md) — 独立题包、待办状态、并行消费与页面证据核对入口
+- [复验抽样与停止轮次继承](domains/sandai-data-smith/refs/sandeval-reinspection-sampling-lineage.md) — 供应商与 Sand 退回重提的跨轮不合格必检、有效改判、最近有效结论展示及实际抽样核对入口。
+- [质检批量分配延迟](domains/sandai-data-smith/refs/sandeval-bulk-allocation-latency.md) — 供应商与 Sand 批量分配的完整范围核查、串行批次、Sand 整包重复校验及一分钟客户端超时边界（2026-09-23）。
+- [Caption 旧模块数量与整题迁移](domains/sandai-data-smith/pitfalls/caption-module-count-and-migration.md) — 模块义务与答题卡数量差异、已验收迁移门禁及祖先退回闭环核验入口（2026-09-24）。
+- [Sand Eval CPU 与恢复取证入口](domains/sandai-data-smith/refs/sandeval-runtime-profile-evidence.md) — CFS、事件循环、SET/acquire、状态筛选、整包分页、后台化前后对比、流式分配中断，以及整改工作台、发布前置查询和批量派题运行栈的证据边界（2026-09-25）。
+- [质检待处理与质检中状态判读](domains/sandai-data-smith/pitfalls/quality-allocation-blocked-status.md) — 分配姓名、送审与真实任务的区别，凭证过期及继续完成分配核验入口（2026-09-25）。
+- [质检分配与半完成送审冻结](domains/sandai-data-smith/refs/sandeval-partial-submission-freeze.md) — 写入中断根因、保留原快照的单批受控修复、备份及独立验收指针（2026-09-25）。
+- [Sand 分配与过期整包报告](domains/sandai-data-smith/refs/sandeval-stale-package-allocation.md) — 新复验使旧交接报告失效、数据包 tab 判读、选中范围求交、历史证据与实时依赖边界、恢复脚本及题目正文验收（2026-09-26）。
+- [修订索引缺失与质检版本冲突](domains/sandai-data-smith/refs/sandeval-amendment-lookup-recovery.md) — 修订继承链、授权补齐索引、已有判断保护及独立验收指针（2026-09-25）。
+- [Sand Eval 测试分支删除重建](domains/sandai-data-smith/pitfalls/sandeval-test-branch-recreation.md) — 分支保护、目标 PR 自动关闭、main 并发前进及流水线证据边界（2026-09-25）。
+- [Sand Eval 派题部分完成核验与原计划恢复](domains/sandai-data-smith/refs/sandeval-partial-assignment-recovery.md) — 冻结计划、卡、wave、回执、已有答案保护及滚动发布中断后的复核入口（2026-09-25）。
+- [质检分配实例关闭与恢复](domains/sandai-data-smith/refs/sandeval-allocation-shutdown-recovery.md) — shutdown 与分配日志对齐、已激活但未登记的计划、受控续跑与实样本验收指针
+- Sand Eval 双峰与多计算组归因：见 [运行取证](domains/sandai-data-smith/refs/sandeval-runtime-profile-evidence.md) 的 2026-09-25 db.name、控制池和服务端查询对应方法。
+- [Sand Eval 质检备注草稿恢复](domains/sandai-data-smith/refs/sandeval-inspection-note-draft.md) — 新质检备注刷新丢失的代码根因、本机草稿与服务端判断的边界及修复候选入口（2026-09-25）。
+- [Sand Eval 跨关卡退回意见可见性](domains/sandai-data-smith/refs/sandeval-cross-stage-feedback.md) — Sand 原意见跨负责人、空间质检与标注整改的责任链；含转派后的工作项映射、后续复验及历史结论文案（2026-09-25）。
+- [Sand 直达整改与按批交接核验入口](domains/sandai-data-smith/refs/sandeval-direct-remediation-and-batch-handoff.md) — 退回路由、负责人验证、整包交接与 QC passed 语义的代码和生产核验指针（2026-09-27）。
+- 2026-09-27：首次继续整包送审、仅整改批次独立回交的范围与混合状态核验见 [直达整改与按批交接](domains/sandai-data-smith/refs/sandeval-direct-remediation-and-batch-handoff.md)。
+
+- [Test Center V2 run detail 性能记录](domains/vidmuse/admin/projects/2026-07-02-test-center-v2-run-detail-perf.md) — 2026-07-02 的接口实测、假设与分阶段优化计划；使用时重新核验。
+- [VidMuse QuickTracking 前端指标](domains/vidmuse/refs/quicktracking-frontend-metrics.md) — 报表取数入口、时间桶校准和前后端统计口径边界。
+- [知识库多分支历史分叉的同步](disciplines/dev/wiki-history-sync.md) — 双方历史保全、未跟踪文档、目录与日志合并及远端回读方法（2026-09-28）。

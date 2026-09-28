@@ -2,16 +2,16 @@
 name: tool-daily-updating-hides-existing-data
 type: pitfall
 created: 2026-09-11
-updated: 2026-09-11
+updated: 2026-09-14
 tags: [vidmuse, admin, analytics, tool-usage]
 links: [analytics-maintenance-historical-rebuild-pressure, thread-analytics-read-path-3s]
 ---
 
-# Tool 日汇总反复标脏，前端隐藏已有数据
+# Tool 日汇总状态与已有数据展示的边界
 
 2026-09-11 通过生产 Thread Analytics 页面、DMS 只读查询及 origin/main a8670450c 核验：查询窗口 2026-09-03 至 2026-09-10（右端不含，北京时间）显示正在重建；七天均已有 tool_usage 日汇总。查询期间 09-05 汇总更新时间前进且 dirty 行消失，证明消费者确有进展；09-07 汇总完成约 46 秒后又被 thread_upsert 标脏。此为当次观测，不代表未来队列状态。
 
-**Why:** analytics_runner._mark_tool_daily_dirty_for_upsert 按 Thread 创建日标脏，不比较工具指标是否实际变化。thread_analytics_tool_daily_read._any_dirty_day_in_window 只检查窗口内任一历史日有无 dirty 行，不检查正在执行的任务；try_hot_metrics_from_tool_daily 已构造数据后仍可返回 updating。前端 threadAnalyticsHelpers.isUsableSecondaryAnalyticsResponse 仅接受 active/无状态，ThreadAnalyticsPage.loadHotMetrics 与 loadToolBreakdown 对 updating 直接 return，不合并已有数据。因此任务更新造成整日反复入队，而跨多日窗口要求全部同时干净才展示；暂无记录文案不证明底层无数据。
+**Why（2026-09-11 当次版本）:** analytics_runner._mark_tool_daily_dirty_for_upsert 按 Thread 创建日标脏，不比较工具指标是否实际变化。thread_analytics_tool_daily_read._any_dirty_day_in_window 只检查窗口内任一历史日有无 dirty 行，不检查正在执行的任务；try_hot_metrics_from_tool_daily 已构造数据后仍可返回 updating。前端 threadAnalyticsHelpers.isUsableSecondaryAnalyticsResponse 仅接受 active/无状态，ThreadAnalyticsPage.loadHotMetrics 与 loadToolBreakdown 对 updating 直接 return，不合并已有数据。因此任务更新造成整日反复入队，而跨多日窗口要求全部同时干净才展示；暂无记录文案不证明底层无数据。
 
 **How to apply:**
 - 先按用户窗口查询 agent_thread_analytics_daily_dirty 的 local_date/reason/marked_at，再查 agent_thread_tool_daily_agg（scope_kind=0）的分类、call_count、updated_at；观察更新时间前进与队列消失，区分停跑、失败、再次入队。
@@ -42,3 +42,27 @@ PR https://github.com/world-sim-dev/vidmuse-admin/pull/871 的 review 记录见�
 ## 2026-09-11 目标设计修订
 
 原 #871 已整合到 #870。重新设计文档位于 #870 的 `docs/operations/tool-metrics-incremental-design.md`：普通更新使用 Thread 新旧贡献及项目引用计数；整日计算仅用于受控初始化/修复。该文档是尚未实现的目标，不能当作上线证明。整日删除的现有原因是全量替换要清除已消失的汇总键，简单改成 upsert 会残留旧键；项目 OR 位图没有可直接撤销的旧贡献。
+
+
+## 2026-09-14：接口成功但 Top Tool 与命中率仍被拒收
+
+**Why:** 在 Admin API 当次部署版本 `432ac7228` 中，`ThreadAnalyticsPage.loadHotMetrics` 和 `loadToolBreakdown` 收到 HTTP 成功响应后仍检查 `isUsableToolPublication`。`updating` 被拒收且不合并响应数据，Top Tool 又把数据状态和请求异常显示成同一条“加载失败”。命中率红条的“正在重建”来自 dirty 日期判断，只证明存在待更新记录，不证明任务正在运行；Skill 空态还可能进一步误导为没有记录、需要回填。
+
+2026-09-14 10:40–11:00（北京时间）完整读取 SLS 原始日志 2,908 条，筛出 13 条相关事件：API 多次记录 `tool_breakdown_read_hit items=20`，hot 记录 `rows=51557`。独立 Analytics Worker 当次镜像 `5ddbc019` 在 10:50、10:57 分别完成 2026-08-31、2026-09-01 日汇总，并记录 `processed=1, failed=0`，remaining 从 14 到 13。因此观察窗口内消费者有进展；这不证明用户整窗已完整发布，也不代表队列没有后续新增或失败。
+
+另有独立读路径问题：混合时间窗口的部分日直接读明细，但原 dirty 检查覆盖整个查询日期，部分日的待更新汇总也会把刚读出的明细数据标成 updating。只有实际使用的完整日汇总才应参与此判断。
+
+上面的“每次 Thread upsert 都标脏”是 2026-09-11 历史判断，不能直接用于当前版本。2026-09-14 核对 `apps/admin/workers/analytics_runner.py`，普通路径已比较人口维度和工具指标，仅发生相关变化时标脏；真实更新仍采用整日重建，不能据此宣称已完成 Thread 增量聚合。
+
+**How to apply:**
+- 分别核对 HTTP 状态、`filter_state`、返回统计值、`published_at` 及待更新日期；不要把 HTTP 200 当作统计可展示证明，也不要把 dirty 当作执行中的任务。
+- 先确认 API 与独立 Analytics Worker 各自的镜像及日志。Web 日报循环缺失不能推出独立 Analytics Worker 停跑。
+- 展示有效 stale 快照前仍需配套同版人口分母、发布完成标记和规则版本；不能通过一律接受 updating 修复展示。
+- 区分请求异常与等待更新，展示具体原因；“重新查询”仅发起 GET，不应暗中回填。未收到可用命中率响应时，不给“没有记录”或修复指令。
+- 部分日回归必须保留非空返回值断言，覆盖纯部分日、左右边界和中间完整日；完整日真的待更新时仍不得冒充当前完整数据。
+
+修复与验收指针：[Admin PR #878](https://github.com/world-sim-dev/vidmuse-admin/pull/878) 分支 `codex/brief-scheduler-handoff-20260914` 的 Analytics 提交 `ac8dcb93a`。实现和验证入口为 `docs/operations/tool-metrics-publication.md` 的 2026-09-14 小节、`apps/admin/service/thread_analytics_tool_daily_read.py`、`test_thread_analytics_tool_daily_read.py`、`test_thread_tool_publication.py`、`playground/src/pages/ThreadAnalyticsPage.tsx`、`ThreadAnalyticsPage.toolStatus.test.tsx` 和 `threadAnalyticsHelpers.ts`。46 项后端、31 项前端（页面 10 项、helper 21 项）、TypeScript、Ruff 与项目 Pylint 门禁通过；独立 review 未发现 P1/P2。
+
+截至此核验，旧日报提交的 CI 已通过，新增 Analytics 提交的 CI 应独立核对，不能沿用上一提交的绿灯。当前推送、CI、合并与部署状态到 PR 重新核验。未启用生产 publication、未回填、未增加重建并发或部署；本地状态回归通过不证明生产整窗已经恢复展示。
+
+原始核验指针：SLS 项目 `k8s-log-c7c0ede6c71484f8da34a829954c50cd9`，Logstore `vidmuse-admin`，上述绝对时间窗；本机定向摘录 `/private/tmp/analytics-tool-events-20260914.json`，临时文件可能失效。涉及日志未索引字段时应完整分页读取 raw 后匹配，单次全文搜索为零不足以判定事件不存在。
