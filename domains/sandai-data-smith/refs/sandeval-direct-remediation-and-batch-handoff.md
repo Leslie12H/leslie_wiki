@@ -2,9 +2,9 @@
 name: sandeval-direct-remediation-and-batch-handoff
 type: reference
 created: 2026-09-27
-updated: 2026-09-27
+updated: 2026-09-28
 tags: [sandeval, quality, remediation, handoff]
-links: [sandeval-roles-and-workflow, sandeval-auto-reinspection-verification, sandeval-cross-stage-feedback]
+links: [sandeval-roles-and-workflow, sandeval-auto-reinspection-verification, sandeval-cross-stage-feedback, sandeval-cross-workbench-question-order]
 ---
 
 # Sand 直达整改与按批交接核验入口
@@ -22,3 +22,5 @@ links: [sandeval-roles-and-workflow, sandeval-auto-reinspection-verification, sa
 - 验收应包含两批同时退回但只完成一批、同批多报告、旧轮次只读、新轮次原人待办、重复请求和中断恢复。区分已完整交接包的单批整改回交与首次未齐包的逐批送审；两者改动范围不同。本次仅分析，未实施业务代码。
 
 - 2026-09-27 用户收敛范围及整包状态方案：同一证据目录的 `confirmed-scope-and-package-state.md`。**Why:** 首次交接是历史事实，部分批次整改和部分批次 Sand 复验会同时发生；未结父责任不能直接等同于供应商还在整改。**How to apply:** 按该方案核对首次整包门禁、整改批次回交条件、当前处理方及 Sand 验收分子，重点查看 `package_progress.py`、`package_progress_query.py` 和包列表契约。首次按批送审已排除；状态设计尚未实现。
+
+- 2026-09-28 测试环境真实构造、逐条用例副本、最终 ZIP 与整包混合路线复核入口：`/Users/leslie/Documents/Playground/sandeval-direct-remediation-20260928/测试环境实测报告.md`。这是测试环境在当天的行为证据，不能覆盖上面 2026-09-27 只读分析的历史含义，也不能代表生产。核对同包中直接整改与默认负责人路线时，先看单批回交的 Sand 新轮次，再看整包提交门禁及最终 3/3；跨工作台题号陷阱见 [同批题目顺序](../pitfalls/sandeval-cross-workbench-question-order.md)。
