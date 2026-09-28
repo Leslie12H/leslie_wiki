@@ -2,7 +2,7 @@
 name: sandeval-settlement-performance
 type: reference
 created: 2026-09-27
-updated: 2026-09-27
+updated: 2026-09-28
 tags: [sandai-data-smith, sandeval, settlement, performance, sls, arms]
 links: [sandeval-sql-lock-diagnosis, sandeval-api-load-and-auth-diagnosis]
 ---
@@ -35,3 +35,15 @@ links: [sandeval-sql-lock-diagnosis, sandeval-api-load-and-auth-diagnosis]
 - 共享结果应拆分条件到最新 report_id 的指针和不可变报表，入口每次鉴权；历史月份可能因后续整改变化，不能仅按月份结束就长期缓存。
 - 版本改为前后分块批量比较，不能末尾只查一次或删除。普通 cutoff 不保证所有读取来自同一数据库时点。
 - `bulk allocation` 的进度流不是持久作业队列；`DispatchWorker` 有固定 kind 路由，新结算作业需验证领取隔离、租约、恢复和发布边界。
+
+## P0 提交评审核验入口（2026-09-28）
+
+**Why:** 同条件合并不能单凭存在 Redis 锁判断成立；失去租约后的发布、其他计算入口和完成时间判断都会影响最终效果。缓存 key 与查询条件的规范化若不同，还会造成范围错配。
+
+**How to apply:** 指定提交的评审、四个隔离 Fake Redis 复现及定向检查日志见 `/Users/leslie/Documents/Playground/output/settlement-p0-review-20260928/review.md`。评审结论只绑定报告中的提交；后续是否修复或发布，应重新查 Git 和运行证据。
+
+- 沿 `_build_once` → `_build` → `RedisStore.lock/LockLease` 检查续期丢失是否取消工作、发布是否原子验证 owner，以及退出异常是否被吞掉；锁的自动续期不等于发布被保护。
+- 分开计算起点 cutoff 与完成时间；防连点若承诺完成后冷却，就用完成时间，复现必须覆盖耗时长于冷却窗口的构建。
+- 检查 preview 和不带 report_id 的 csv 是否经过同一计算入口；同时检查所有进程的总预算，而非只看某个 worker 的 Semaphore。
+- 查询参数、缓存 key、快照元数据和导出匹配必须使用同一个规范化 scope；覆盖 None、空字符串、非法全局标记及真实供应商。
+- 页面修改时间与任务数展示时，除组件测试外还要核对 DataDashboardPage 的关联断言；后端通过不代表前端 Gate 已通过。
