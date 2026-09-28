@@ -48,6 +48,7 @@ links: []
 
 - 固定窗口证据：[2026-09-28 QPS 与数据库压力报告](/Users/leslie/Documents/Playground/output/qps-pressure-20260928/report.md)。小时趋势、部署 SHA、原始 SQL、完整 trace、代表性只读 EXPLAIN 与统计脚本在同目录；复用前重新采集，不把历史数值当作当前状态。
 - 单题查询入口：`app/repositories/my_tasks.py::personal_batch_member_for_card`、`ev3_single_card.py::single_card_sql`。检查限制是否贯穿后续 wave/verdict 关联；入口 LIMIT 1、CTE 复用或少量返回行并不保证整个计划是点查。EXPLAIN 的估计 rows 与历史日志 read_rows 要分开陈述，未取得历史计划时不要混称同一次执行。
-- 后台计数入口：`quality/application/task_list_summary.py::_facts` → `app/repositories/quality_inspector_batch_metadata.py::inspector_batch_metadata`。核对 include_counts、scope 粒度和后台 application_name；优化批量/复用时保留实际人数与一致性语义，不直接关闭统计或迁移强一致读取。
+- 后台计数入口：`quality/application/task_list_summary.py::_facts` → `app/repositories/quality_inspector_batch_metadata.py::inspector_batch_metadata`。这里 required_count / 检查任务 batch_count 表示整批答题卡数，不是人员数。核对 include_counts、scope 粒度和后台 application_name；优化批量/复用时保留题数与一致性语义，不直接关闭统计或迁移强一致读取。
+- 后台路径的历史来源：[PR #1779](https://github.com/world-sim-dev/sandai-data-smith/pull/1779) 把该计数接入质检员任务摘要计算；底层函数先由 [#1674](https://github.com/world-sim-dev/sandai-data-smith/pull/1674) 引入，[#1912](https://github.com/world-sim-dev/sandai-data-smith/pull/1912) 后改摘要存储和刷新机制。细节、Git blame 与前端字段用途见 [2026-09-28 来源核验](/Users/leslie/Documents/Playground/output/qps-pressure-20260928/summary-task-origin.md)。区分函数引入、后台接入和调度重构，不能只凭最新修改 PR 归因；SQL 执行次数也不等于不同业务任务数。
 - 慢写入口：按 `ev3_response`、`ev3_response_field` INSERT 指纹核验 start_query_cost 与 extended_cost。记录到 lock_trx 长等待能定位阶段，不能单凭字段名判定行锁、死锁、具体持锁者或后台查询造成阻塞；继续需要 owner/waiter 和同窗事务证据。
 - 高频通知入口：`frontend/src/components/NotificationBell.tsx`。同时核验刷新间隔和 refreshCount 内的可见性判断；只看 setInterval 会漏掉已有后台跳过逻辑。按请求数和 SQL CPU 分别排序，再决定降频收益。
