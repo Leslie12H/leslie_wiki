@@ -47,3 +47,12 @@ links: [sandeval-sql-lock-diagnosis, sandeval-api-load-and-auth-diagnosis]
 - 检查 preview 和不带 report_id 的 csv 是否经过同一计算入口；同时检查所有进程的总预算，而非只看某个 worker 的 Semaphore。
 - 查询参数、缓存 key、快照元数据和导出匹配必须使用同一个规范化 scope；覆盖 None、空字符串、非法全局标记及真实供应商。
 - 页面修改时间与任务数展示时，除组件测试外还要核对 DataDashboardPage 的关联断言；后端通过不代表前端 Gate 已通过。
+
+## P0 修复验证入口（2026-09-28）
+
+**Why:** 共享缓存需要所有在线计算入口受同一预算约束；局部测试通过后还应分清业务回归、生成物与整仓结构门的证据。
+
+**How to apply:** 修复提交、定向测试日志及未完成的 CI/运行态验证见 `/Users/leslie/Documents/Playground/output/settlement-p0-review-20260928/fix-summary.md`；是否推送、创建 PR 或部署以当前 Git 和运行态为准。
+
+- 原子发布 owner 位于 `platform/backend/app/infra/settlement_report_store.py`，构建入口、完成时间及全局名额位于 `services/interpretation/settlement_export.py`；回归覆盖接管 token、续期失败、跨 worker 构建和完整导出。
+- 题型树扫描报退役目录缺 pack/README 时，先核对 Git tree 和目录内容；目录可能只剩忽略的 __pycache__，不能据此补造旧题型。清理前验证无源码，并保留可恢复备份。
