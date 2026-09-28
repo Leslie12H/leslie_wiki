@@ -15,4 +15,6 @@ links: [sandeval-correction-fixtures, sandeval-auto-reinspection-verification]
 
 2026-09-28 的测试数据复现再次暴露此依赖：只复制当前质检任务、上一轮退回处置和委派子处置，遗漏 Sand 原始父处置时，详情的 `upstream_return_note` 为空，页面的“Sand 质检退回意见”随之隐藏。补齐父处置并以当前质检员身份回读后，原始意见恢复。构造同类测试场景时要闭合父处置及复验执行链，并核对详情的 `upstream_disposition_id`、`upstream_return_note`；前端还要求登录账号是该轮检查任务的 `assignee_id` 才显示意见。页面入口见 `review_query_service.py::detail` 与 `ReviewWorkspace.tsx`，实际部署行为仍需现场核对。
 
+同一场景的“Sand 质检本题意见”还依赖原 Sand 检查任务、检查项、送审包层级和冻结检查计划。仅补父处置会让详情返回整批意见，但逐题接口在校验原始手动退回依据时返回 `MANUAL_RETURN_REQUIRED`。补齐上述固定事实后，需以该质检员调用 `disposition_issues.page` 回读，确认问题与当前题目的 `work_unit_id` 一致，且 `scope_only=false`；再核对工作台实际显示。排查入口见 `report_service.py::returned_inspection`、`disposition_issue_service.py::page`、`ReviewWorkspace.tsx::useUpstreamDispositionIssues`。
+
 - 实现与回归指针：[PR #1913](https://github.com/world-sim-dev/sandai-data-smith/pull/1913)；`sand-eval/platform/backend/quality/application/resolution/disposition_issue_service.py::upstream_for_annotation`、`delegated_feedback.py::delegated_sand_return`、`backend/tests/quality/application/resolution/test_sand_supplier_return.py::test_delegated_inspector_and_annotator_see_the_same_sand_return_feedback`。PR 合并、Gate 与部署状态须现场核对。
