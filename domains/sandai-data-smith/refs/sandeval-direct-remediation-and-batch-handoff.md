@@ -4,7 +4,7 @@ type: reference
 created: 2026-09-27
 updated: 2026-09-28
 tags: [sandeval, quality, remediation, handoff]
-links: [sandeval-roles-and-workflow, sandeval-auto-reinspection-verification, sandeval-cross-stage-feedback, sandeval-cross-workbench-question-order, sandeval-whole-package-reinspection-wait, sandeval-return-route-and-handoff-hints]
+links: [sandeval-roles-and-workflow, sandeval-auto-reinspection-verification, sandeval-cross-stage-feedback, sandeval-cross-workbench-question-order, sandeval-whole-package-reinspection-wait, sandeval-return-route-and-handoff-hints, sandeval-qc-reject-threshold-not-enforced]
 ---
 
 # Sand 直达整改与按批交接核验入口

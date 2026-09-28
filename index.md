@@ -403,6 +403,7 @@
 - [Sand Eval 质检备注草稿恢复](domains/sandai-data-smith/refs/sandeval-inspection-note-draft.md) — 新质检备注刷新丢失的代码根因、本机草稿与服务端判断的边界及修复候选入口（2026-09-25）。
 - [Sand Eval 跨关卡退回意见可见性](domains/sandai-data-smith/refs/sandeval-cross-stage-feedback.md) — Sand 原意见跨负责人、空间质检与标注整改的责任链；含转派后的工作项映射、后续复验及历史结论文案（2026-09-25）。
 - [Sand 直达整改与按批交接核验入口](domains/sandai-data-smith/refs/sandeval-direct-remediation-and-batch-handoff.md) — 退回路由、负责人验证、整包交接与 QC passed 语义的代码和生产核验指针（2026-09-27）。
+- [Sand Eval 质检不合格阈值与实际判定脱节](domains/sandai-data-smith/pitfalls/sandeval-qc-reject-threshold-not-enforced.md) — 建任务阈值、抽样比例、逐题合格率和整包结果的语义边界及代码核查入口（2026-09-28）。
 - [Sand Eval 跨工作台题目顺序](domains/sandai-data-smith/pitfalls/sandeval-cross-workbench-question-order.md) — 2026-09-28 真实整改中题号不一致的测试定位陷阱，按题目/素材及答案版本关联。
 - [Sand Eval 整包交接后复验等待](domains/sandai-data-smith/pitfalls/sandeval-whole-package-reinspection-wait.md) — 2026-09-28 测试环境整包已提交、Sand 待复验但原质检员未按用例时限收到新轮次，须分开核对交接和自动派回。
 - [Sand Eval 退回路线与整包交接提示](domains/sandai-data-smith/pitfalls/sandeval-return-route-and-handoff-hints.md) — 2026-09-28 测试环境路线文案、整包状态提示与取消弹窗选择的判读和修正入口。
