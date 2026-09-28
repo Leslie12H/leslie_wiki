@@ -176,7 +176,7 @@
 
 - [Sand Eval 角色与两侧工作流](domains/sandai-data-smith/refs/sandeval-roles-and-workflow.md) — 角色节点、Sand 视角、成员权限与新旧质检链路的核验入口（2026-09-17）。
 - [Sand Eval 多轮退回的上游意见链](domains/sandai-data-smith/pitfalls/sandeval-repeated-return-feedback-lineage.md) — 整批意见须有父处置，逐题意见还须原报告、送审包与冻结计划（2026-09-28）。
-- [Caption Refine 跳过与待定阻断交卷](domains/sandai-data-smith/pitfalls/sandeval-caption-refine-skip-defer-handoff.md) — 定位限制历史与修复分支；待定排除须覆盖整包，跳过须保留固定作答上下文，交付状态另行核验；含全待定兄弟批次恢复后的整包资格审查指针（2026-09-28）。
+- [Caption Refine 跳过与待定阻断交卷](domains/sandai-data-smith/pitfalls/sandeval-caption-refine-skip-defer-handoff.md) — 定位限制历史与修复分支；待定排除须覆盖整包，跳过须保留固定作答上下文，交付状态另行核验；含全待定兄弟批次恢复后的整包资格修复与回归指针（2026-09-28）。
 - [Sand Eval 质检员整改轮次与可编辑性核验](domains/sandai-data-smith/pitfalls/sandeval-inspector-rework-round-list-and-editability.md) — 源任务、标注员范围、当前/历史质检轮次与编辑权限的区分（2026-09-28）。
 - [Sand Eval 整批退回后的代改版本冲突](domains/sandai-data-smith/pitfalls/sandeval-stopped-review-amendment-conflict.md) — 上轮停止后代改继承的原因、main 修复 PR #2144 与生产验收边界（2026-09-28）。
 

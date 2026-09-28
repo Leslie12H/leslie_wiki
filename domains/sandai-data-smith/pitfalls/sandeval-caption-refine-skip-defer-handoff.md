@@ -30,3 +30,5 @@ links: [sandeval-roles-and-workflow]
 **Why:** PR #2147 的 `9f7ddf6e` 保持登记范围版本稳定，却让有效成员随待定变化。代码审查发现需补核对的场景：一个批次全部待定，其他批次按 Sand 单批链路通过；待定批次恢复作答但尚未正式交接时，`live_annotator_batches` 仍只包含旧正式批次。`ResultEligibilityService.qualify` 比较的仍是旧批次集合，单批 `InspectionContextService._sand_batch_predecessors` 不重验整包当前应交清单。历史整包路径的 `_aggregate_execution` 有 `check_completeness`，不能将其覆盖范围推广到单批路径。本次是源码调用链审查，未做该场景的运行时复现，非生产故障认定。
 
 **How to apply:** 合并前给最终整包资格核验补充当前应交清单与冻结叶子的精确比较，保留单个未变化批次独立质检的能力；回归应覆盖全待定兄弟批次恢复、未正式交接、之后补齐质检的状态变化。现有 `test_annotation_exception_handoff.py` 使用 `pass_quality` 整包路径，不能替代按批次路径的证据。修复状态以 PR 最新差异及测试为准。
+
+2026-09-28 修复指针：[追加提交 `086ed1559`](https://github.com/world-sim-dev/sandai-data-smith/commit/086ed1559275b7ea8562ab2082b81c4f0a7f2078) 在 `ResultEligibilityService.qualify` 复用 `SubmissionService.check_completeness`，比较当前应交清单与全部冻结批次叶子，旧凭证复验沿用该检查。`tests/quality/application/management/test_result_eligibility.py` 的恢复待定回归覆盖首次资格、旧凭证、未变化批次独立检查，以及恢复批次完成质检后新包可用；[Platform Gate #36412820402](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/36412820402) 验证该提交成功。CI 使用来源投影夹具与真实质量服务，非浏览器或生产验收；是否合并上线须另查 PR 与部署状态。
