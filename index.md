@@ -176,7 +176,7 @@
 
 - [Sand Eval 角色与两侧工作流](domains/sandai-data-smith/refs/sandeval-roles-and-workflow.md) — 角色节点、Sand 视角、成员权限与新旧质检链路的核验入口（2026-09-17）。
 - [Sand Eval 多轮退回的上游意见链](domains/sandai-data-smith/pitfalls/sandeval-repeated-return-feedback-lineage.md) — 第二次手动退回可无直接父 ID，按复验执行和检查任务追溯原 Sand 意见（2026-09-25）。
-- [Sand Eval 质检员整改轮次与可编辑性核验](domains/sandai-data-smith/pitfalls/sandeval-inspector-rework-round-list-and-editability.md) — 重复轮次、摘要待确认、当前编辑器与历史/观察模式只读的区分（2026-09-28）。
+- [Sand Eval 质检员整改轮次与可编辑性核验](domains/sandai-data-smith/pitfalls/sandeval-inspector-rework-round-list-and-editability.md) — 源任务、标注员范围、当前/历史质检轮次与编辑权限的区分（2026-09-28）。
 
 - [Sand Eval 多角色验收与派题回读入口](domains/sandai-data-smith/refs/sandeval-e2e-acceptance.md) — 操作回执、卡、wave 与质检交接必须一起核验。
 
