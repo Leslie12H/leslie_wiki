@@ -56,3 +56,9 @@ links: [sandeval-sql-lock-diagnosis, sandeval-api-load-and-auth-diagnosis]
 
 - 原子发布 owner 位于 `platform/backend/app/infra/settlement_report_store.py`，构建入口、完成时间及全局名额位于 `services/interpretation/settlement_export.py`；回归覆盖接管 token、续期失败、跨 worker 构建和完整导出。
 - 题型树扫描报退役目录缺 pack/README 时，先核对 Git tree 和目录内容；目录可能只剩忽略的 __pycache__，不能据此补造旧题型。清理前验证无源码，并保留可恢复备份。
+
+## 双目标 PR 交付入口（2026-09-28）
+
+**Why:** main 与测试分支可能有不同的历史，测试 PR 展示的差异不一定等于本任务相对主线的改动；多个 merge base 时，三点 diff 也不能直接当作实际合并结果。
+
+**How to apply:** [主线 PR #2129](https://github.com/world-sim-dev/sandai-data-smith/pull/2129) 与 [测试 PR #2128](https://github.com/world-sim-dev/sandai-data-smith/pull/2128) 均来自同一个开发分支。审查时分别核对相对 main 的任务提交、测试目标的缺失主线提交及 merge-tree 结果；不能将 test 合回任务分支来缩小 diff。交付提交映射和 CI 链接见上述 `fix-summary.md`，当前 Gate、合并及部署状态以 GitHub 和环境证据为准。
