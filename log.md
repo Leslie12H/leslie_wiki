@@ -800,3 +800,4 @@
 - 2026-09-28：记录 Sand Eval 质检不合格阈值与实际报告判定脱节的核查入口；区分抽样、逐题合格率和整包结果。见 domains/sandai-data-smith/pitfalls/sandeval-qc-reject-threshold-not-enforced.md。
 - 2026-09-28：记录转派后标注整改提交复验 403 的生产路径：固定整改意图恢复时漏传整改范围校验标记，普通批次授权误拒当前持有人；见 domains/sandai-data-smith/pitfalls/sandeval-transferred-correction-task-visibility.md。
 - 2026-09-28：补充转派后整改提交 403 的引入时间线、main 合并点，以及二次冻结沿用整改授权的本地修复和验证边界；见 domains/sandai-data-smith/pitfalls/sandeval-transferred-correction-task-visibility.md。
+- 2026-09-28：记录转派后整改提交 403 修复的 main PR #2153、Platform Gate 成功、合并提交及合并后生产 SHA 仍旧的边界；见 domains/sandai-data-smith/pitfalls/sandeval-transferred-correction-task-visibility.md。
