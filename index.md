@@ -322,3 +322,5 @@
 - [Sand Eval 结算明细性能](domains/sandai-data-smith/refs/sandeval-settlement-performance.md) — 全量生成与读取放大、统一权限门禁、快照缓存及结算优化方案的核验指针（2026-09-27）。
 
 - [Sand Eval 单题质检判断修正](domains/sandai-data-smith/refs/sandeval-single-judgment-correction.md) — 原备注保全、单题正式保存及独立有效判定回读入口（2026-09-27）。
+
+- [质检分配撤销与退回](domains/sand-eval/refs/quality-allocation-withdrawal.md) — 原责任人退回、分配占用和受控撤销入口核验指针（2026-09-28）。
