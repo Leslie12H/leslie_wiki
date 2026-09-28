@@ -14,3 +14,11 @@ links: [sandeval-roles-and-workflow]
 **How to apply:** 先用生产 `/health` 固定部署 SHA，再按任务、`assignment_id` 和批次键读 `ev2_task.rule_version`、`ev3_assignment`、`ev3_response`、`eval_answer_execution_receipt` 的 `annotation_defer`、`ev2_assignment_wave_item` 与 `eval_annotation_batch_handoff`。区分按钮可见、请求被拒、待定回执写入和正式答案写入；不要把待定当作已交，也不要为凑交卷虚构答案。代码入口：`sand-eval/platform/frontend/src/pages/myTasks/QuestionWorkPage.tsx`、`backend/app/services/facts/my_tasks.py::submit_answer`、`backend/app/services/facts/task_assignments.py::_quality_result_available` 与 `submit_annotation_batch_for_qc`。修复前要明确业务选择：让工作流跳过成为可质检的正式版本，或让经授权排除的待定卡不占交卷分母，并同步页面提示、交接清单及后续质检口径；此页不代表该选择已确定或已上线。
 
 2026-09-28 修复范围核查：不能仅删除跳过拒绝条件后套用普通答案写路。工作流题的质检修订在 `backend/app/services/facts/answer_amendment.py::prepare` 读取对应固定作答上下文；缺回执会在后续质检报错。`backend/app/repositories/result_delivery.py::candidates` 只取非跳过答案，`backend/app/services/facts/result_delivery.py::_answers` 又要求主任务全题有完整固定答案。放开跳过送审时应同时核对修订恢复、正式结果交付和异常清单口径；批准跳过不应直接等同于产出有效 Caption。上述路径随代码变化，复用前重新读取。
+
+## 历史定位（2026-09-28 核查）
+
+- 工作流跳过拒绝来自 [2026-09-14 的 Caption Refine 工作流提交](https://github.com/world-sim-dev/sandai-data-smith/commit/579df401d426f64ffb1eebb3f94a3c8b32fd0dbf)：在原通用提交路径之前增加工作流分支，并直接拒绝跳过。2026-09-17 整题化提交 `7a7272e31388432e7e3e76569f308fd14deffccb` 延续该限制，仅调整拒绝文案。通用跳过能力与新题型工作流没有对齐。
+- 待定首次实现 [2026-09-21 的提交](https://github.com/world-sim-dev/sandai-data-smith/commit/8c977cbedaa2e0fce92c45e9c89c7567cef455e5) 就将待定排除出完成数和送审候选，同时保留应交分母、让前端批次保持标注中。[测试环境 PR #1548](https://github.com/world-sim-dev/sandai-data-smith/pull/1548) 也明确列出不允许整批送审的验收项；后续确认弹窗却表达为不进入后续标注、质检，形成使用预期冲突。
+- 上述是提交历史日期，不代表生产部署日期。此次未找到同一链路早期允许待定后整批送审的代码证据，也未复现用户记忆中的旧版本；不能据此否认用户曾观察到可流转，更不能把已有实现或测试当成已获确认的业务规则。
+
+**How to apply:** 回答“为什么以前能用”时分别追溯通用路径、新题型特判和批次门禁；修复应使待定处置、实际交接范围及质检清单一致，并保留异常记录。不要仅删除后端拒绝条件、放开前端按钮或把待定伪记为有效答案。
