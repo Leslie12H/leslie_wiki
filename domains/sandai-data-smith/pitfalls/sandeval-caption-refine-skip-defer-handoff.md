@@ -23,4 +23,10 @@ links: [sandeval-roles-and-workflow]
 
 **How to apply:** 回答“为什么以前能用”时分别追溯通用路径、新题型特判和批次门禁；修复应使待定处置、实际交接范围及质检清单一致，并保留异常记录。不要仅删除后端拒绝条件、放开前端按钮或把待定伪记为有效答案。
 
-2026-09-28 开始修复后形成的工程边界：工作流跳过复用 `local_answer_commit` 的幂等、基线和发布协议，答案表只存问题理由，固定作答上下文保留质检修订所需的服务端基线。待定排除同时落在批次及整包来源清单，普通未答和未派份次仍需覆盖；原登记义务身份保持稳定，精确生效成员由批次版本、答案清单摘要与来源证明绑定。已交接批次仍整体禁止自行编辑。实现指针为任务分支 `codex/annotation-exception-handoff` 的工程决定 `sand-eval/.agents/notes/implemented/bug-fix/2026-09-28-annotation-exception-handoff.md`；当日只有本地结构检查证据，业务回归待 Platform Gate，不能视为上线或生产修复完成。
+2026-09-28 开始修复后形成的工程边界：工作流跳过复用 `local_answer_commit` 的幂等、基线和发布协议，答案表只存问题理由，固定作答上下文保留质检修订所需的服务端基线。待定排除同时落在批次及整包来源清单，普通未答和未派份次仍需覆盖；原登记义务身份保持稳定，精确生效成员由批次版本、答案清单摘要与来源证明绑定。已交接批次仍整体禁止自行编辑。实现指针为任务分支 `codex/annotation-exception-handoff` 的工程决定 `sand-eval/.agents/notes/implemented/bug-fix/2026-09-28-annotation-exception-handoff.md`；交付及后续修订看 [PR #2147](https://github.com/world-sim-dev/sandai-data-smith/pull/2147)，CI 证据看该 PR 的最新 head 与 Platform Gate，不能视为上线或生产修复完成。
+
+## 待定恢复后的整包资格审查（2026-09-28）
+
+**Why:** PR #2147 的 `9f7ddf6e` 保持登记范围版本稳定，却让有效成员随待定变化。代码审查发现需补核对的场景：一个批次全部待定，其他批次按 Sand 单批链路通过；待定批次恢复作答但尚未正式交接时，`live_annotator_batches` 仍只包含旧正式批次。`ResultEligibilityService.qualify` 比较的仍是旧批次集合，单批 `InspectionContextService._sand_batch_predecessors` 不重验整包当前应交清单。历史整包路径的 `_aggregate_execution` 有 `check_completeness`，不能将其覆盖范围推广到单批路径。本次是源码调用链审查，未做该场景的运行时复现，非生产故障认定。
+
+**How to apply:** 合并前给最终整包资格核验补充当前应交清单与冻结叶子的精确比较，保留单个未变化批次独立质检的能力；回归应覆盖全待定兄弟批次恢复、未正式交接、之后补齐质检的状态变化。现有 `test_annotation_exception_handoff.py` 使用 `pass_quality` 整包路径，不能替代按批次路径的证据。修复状态以 PR 最新差异及测试为准。
