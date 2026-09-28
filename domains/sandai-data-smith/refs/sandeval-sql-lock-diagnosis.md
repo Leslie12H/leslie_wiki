@@ -2,7 +2,7 @@
 name: sandeval-sql-lock-diagnosis
 type: reference
 created: 2026-09-17
-updated: 2026-09-25
+updated: 2026-09-28
 tags: [sandai-data-smith, sandeval, hologres, sls, sql, locks]
 links: []
 ---
@@ -39,3 +39,15 @@ links: []
 - 来源取数与批量粒度：`quality/application/management/submission_content_service.py`、`app/services/facts/qc_verdict.py` 的 read_response_versions。
 - 计时边界：`app/infra/holo.py` 的 _pool_connection、_setup_connection 和主池/控制池路由。需要单独分解 queue/setup 才能量化纯排队占比。
 - 2026-09-22 本次诊断确认同一分配多路恢复及共享连接；停止重复工作后的恢复幅度尚未验证，不能视为全站慢请求的唯一原因。
+
+## QPS、重扫描与写入等待分开归因（2026-09-28）
+
+**Why:** 请求最多、累计 SQL CPU 最高、用户等待最长可能来自三条不同链路；后台汇总还可能在业务流量上涨前就维持高成本。只看慢查询耗时或 HTTP QPS 会错排优化优先级。
+
+**How to apply:** 固定北京时间窗口，以 SLS 按 route 统计请求和每请求 DB 调用，以 ARMS 的 db.name 分计算组，再对 Hologres query log 按 digest/application_name 排 calls、CPU、读取量和分段耗时。使用 sum(calls) 及 sum(cpu_time_ms * calls)，识别聚合记录、NULL 指标和当前账号的可见性；查询日志 CPU 份额不等于整个计算组物理 CPU 份额。
+
+- 固定窗口证据：[2026-09-28 QPS 与数据库压力报告](/Users/leslie/Documents/Playground/output/qps-pressure-20260928/report.md)。小时趋势、部署 SHA、原始 SQL、完整 trace、代表性只读 EXPLAIN 与统计脚本在同目录；复用前重新采集，不把历史数值当作当前状态。
+- 单题查询入口：`app/repositories/my_tasks.py::personal_batch_member_for_card`、`ev3_single_card.py::single_card_sql`。检查限制是否贯穿后续 wave/verdict 关联；入口 LIMIT 1、CTE 复用或少量返回行并不保证整个计划是点查。EXPLAIN 的估计 rows 与历史日志 read_rows 要分开陈述，未取得历史计划时不要混称同一次执行。
+- 后台计数入口：`quality/application/task_list_summary.py::_facts` → `app/repositories/quality_inspector_batch_metadata.py::inspector_batch_metadata`。核对 include_counts、scope 粒度和后台 application_name；优化批量/复用时保留实际人数与一致性语义，不直接关闭统计或迁移强一致读取。
+- 慢写入口：按 `ev3_response`、`ev3_response_field` INSERT 指纹核验 start_query_cost 与 extended_cost。记录到 lock_trx 长等待能定位阶段，不能单凭字段名判定行锁、死锁、具体持锁者或后台查询造成阻塞；继续需要 owner/waiter 和同窗事务证据。
+- 高频通知入口：`frontend/src/components/NotificationBell.tsx`。同时核验刷新间隔和 refreshCount 内的可见性判断；只看 setInterval 会漏掉已有后台跳过逻辑。按请求数和 SQL CPU 分别排序，再决定降频收益。
