@@ -20,3 +20,5 @@ links: [sandeval-inspector-rework-round-list-and-editability, sandeval-amendment
 ## 2026-09-28 main 修复入口
 
 [PR #2144](https://github.com/world-sim-dev/sandai-data-smith/pull/2144) 已合入 `main`：`quality/domain/inspection/amendment_lineage.py` 新增“停止前写入、同送审同关卡连续直系轮次”带入判据；`quality/application/inspection/answer_amendment_service.py` 让新轮答案基线、版本历史和后续交付资格读取同一修订链。测试覆盖连续停止、计划不符、非直系/不同送审、经过拒绝轮次、以及由后续通过报告封存。既有生产记录符合该判据的初步只读核对，但代码合入不等于生产部署或质检员页面验收；按 `/health.deploy_sha` 和原质检员身份的真实检查项重新确认。
+
+2026-09-28 随后核验：[main 发布运行](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/36409823447) `success`，生产 `/health.deploy_sha` 为 `69e159d80b4b0ca44684bd97f32634f1e98be022`。同次只读回读原实例仍为第 1 轮 `stopped`、第 2 轮 `active`，修订版本 5 早于停止版本 11、计划摘要一致，来源最新 response 仍为 `5be046de...`；符合新代码带入条件。尚未以原质检员身份在页面验证草稿可编辑和正式保存。
