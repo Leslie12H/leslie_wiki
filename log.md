@@ -804,3 +804,4 @@
 - 2026-09-29：记录 Sand Eval 五个慢接口的固定窗口证据入口；确认质检员列表 summary SQL 仍慢、发布受理同步范围查询、整改和报告提交的多次 DB 往返及质量详情默认样本展开；数据库物理原因待执行计划核验。见 domains/sandai-data-smith/refs/sandeval-review-performance.md。
 - 2026-09-29：生产只读复现 Sand Eval 同批质检队列与标注整改单的视频次序不一致，补充独立排序路径及按素材核对的入口；见 domains/sandai-data-smith/pitfalls/sandeval-cross-workbench-question-order.md。
 - 2026-09-29：补充 Sand Eval 五个慢接口的实际任务/样本规模、只读 Hologres 计划与 query log 用户可见性边界；见 domains/sandai-data-smith/refs/sandeval-review-performance.md 及其固定窗口报告。
+- 2026-09-29：补充单人整改 8.32s 请求的完整分页 trace、11 次整任务派题清单读取与 18 次整改执行历史查找，以及 72 槽位/590 历史答案和 3 条共同处置的规模边界；见 domains/sandai-data-smith/refs/sandeval-review-performance.md。

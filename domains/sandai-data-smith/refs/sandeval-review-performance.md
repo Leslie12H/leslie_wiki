@@ -108,3 +108,9 @@ links: [sandeval-api-observability, sandeval-sql-lock-diagnosis]
 **Why:** 同一 Hologres 实例的公网和 VPC 域名不同，不能按完整主机名误判为不同实例；同实例的另一数据库用户能读业务表，不代表能看应用用户的 `hg_query_log`。一次只读 `EXPLAIN` 是核验时的计划，不是历史请求的 `EXPLAIN ANALYZE`、实际耗时或等待原因。
 
 **How to apply:** 先按实例 ID、`db.name` 和计算组对齐 ARMS SQL span 与只读连接；读 `hg_query_log` 时核对 `current_user` 与应用 `db.user`，出现 0 条不能推出没有执行或 Fixed Plan。发布接口用 `eval_dispatch_master.frozen_config` 核对素材集合/冻结成员规模，再从 `material_dispatch.py` 的 COUNT、范围 JOIN、排序分页 SQL 与当前计划区分 shard 裁剪和大集合内的工作量。质检员无搜索词普通页仍在 `LIMIT` 前处理标签和分配 JSON，不能把 `page-index` 的空搜索优化套用到普通页。整改提交用送审成员数和 `annotation_correction_prepare` SLS 阶段日志排除“人数多”的猜测；质检提交先查生产 trace 是否实际有 `trace_phase`，缺失就不要编函数耗时；质量详情用来源 task 的稳定 `quality_task_id` 和报告/判断时间戳重建当时范围，不能把后来增加的检查项算进历史请求。五条逐请求数据及证据缺口见上方固定窗口报告。
+
+### 单人整改仍反复构建整任务来源范围（2026-09-29）
+
+**Why:** 固定请求 `5f9c696ff3f22fe8655af36780116ee7` 的完整 ARMS trace（399 span，353 PostgreSQL）显示：336 条读取 span 的时间区间并集为 7.282s，占 8.318s 根 span 的 87.5%。任务级派题槽位＋答案最新版本 SQL 出现 11 次，每次 204–240ms，合计 2.387s；整改执行历史的 JSON 处置关联查找出现 18 次，合计 1.217s。两组区间互不重叠，合计覆盖 3.604s。请求前来源任务有 72 个派题槽位、按答案时间有 590 条历史答案，原始和新整改送审各只有 1 个成员；新执行持久上下文涉及 3 条共同处置。不能用“这批人数多”或当前 149 条处置来解释这 8.32s，也不能把 11 个相同 SQL 模板自动认定参数完全相同。
+
+**How to apply:** 复查部署 SHA `39854228d42ae0d5d67134fdbbf162f778bc6d37` 的 `app/repositories/task_assignments.py::QUALITY_V3_SLOTS_SQL`、`app/services/facts/task_assignments.py::_quality_context_from_facts/_annotation_correction_context`：`_quality_context` 验证完整任务范围，后者又按固定整改成员核对持有人，容易在同一命令链多次执行任务级查询。再沿 `quality/infrastructure/persistence/resolution_execution_repository.py::for_disposition`、`disposition_query_service.py::resubmission_context` 和 `resolution_service.py::resubmit` 核对执行轮次与共同责任读取。`annotation_correction_prepare` SLS 日志仅给出整体 4.583s、当前答案读取 0.938s；缺函数子阶段 span 时，只能归因到 SQL 模板和代码入口，不能把每次读取精确分摊到 `prepare`、`resume_resubmission` 或交接函数。原始分页 trace、SQL 模板分组与业务规模查询口径见 [2026-09-29 固定窗口报告](/Users/leslie/Documents/Playground/sandeval-five-slow-apis-20260929/report.md)。
