@@ -179,6 +179,7 @@
 - [Caption Refine 跳过与待定阻断交卷](domains/sandai-data-smith/pitfalls/sandeval-caption-refine-skip-defer-handoff.md) — 定位限制历史与修复分支；待定排除须覆盖整包，跳过须保留固定作答上下文，交付状态另行核验；含全待定兄弟批次恢复后的整包资格修复与回归指针（2026-09-28）。
 - [Sand Eval 质检员整改轮次与可编辑性核验](domains/sandai-data-smith/pitfalls/sandeval-inspector-rework-round-list-and-editability.md) — 源任务、标注员范围、当前/历史质检轮次与编辑权限的区分（2026-09-28）。
 - [Sand Eval 整批退回后的代改版本冲突](domains/sandai-data-smith/pitfalls/sandeval-stopped-review-amendment-conflict.md) — 上轮停止后代改继承的原因、main 修复 PR #2144 与生产验收边界（2026-09-28）。
+- [Sand Eval 跨关卡后续修订与旧轮冻结答案](domains/sandai-data-smith/pitfalls/sandeval-cross-stage-frozen-answer-superseded.md) — 空间质检冻结版本与 Sand 质检后续修订冲突的判读、历史版本范围及重新送审入口（2026-09-29）。
 
 - [Sand Eval 多角色验收与派题回读入口](domains/sandai-data-smith/refs/sandeval-e2e-acceptance.md) — 操作回执、卡、wave 与质检交接必须一起核验。
 
