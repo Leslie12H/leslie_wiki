@@ -815,3 +815,4 @@
 - 2026-09-29：记录 Sand Eval 全局 API p95 多次尖峰的接口与 SQL 指纹分层定位，以及 transaction_trace 前缀解析和 Hologres 服务端日志权限边界；见 domains/sandai-data-smith/refs/sandeval-sql-lock-diagnosis.md。
 - 2026-09-29：补充 Sand Eval 整批退回的持有人分裂 409：历史送审作者与当前持有人分离，按逐题素材核对 1+3 持有人，批次汇总不能代替逐卡转派审计；见 domains/sandai-data-smith/pitfalls/sandeval-transferred-correction-task-visibility.md。
 - 2026-09-29：复核同一实例的操作方案：目标持有人两张均已答，派题页「未答 0」无法转移，默认转两张还会影响无关卡；记录当前运营 CLI 按实体卡排序取前 N 的精确核验与受控执行边界，未做生产写；见 domains/sandai-data-smith/pitfalls/sandeval-transferred-correction-task-visibility.md。
+- 2026-09-29：Sand Eval 同一质检实例经生产 CLI 预览并只转李阳目标卡一张至郭士琦，主库核对四张冻结卡统一持有人、李阳非目标卡未动及审计；整批退回仍待 3093 操作。见 domains/sandai-data-smith/pitfalls/sandeval-transferred-correction-task-visibility.md。
