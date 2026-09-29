@@ -120,3 +120,9 @@ links: [sandeval-api-observability, sandeval-sql-lock-diagnosis]
 **Why:** 事后在同一 Hologres 实例的不同用户下只读 `EXPLAIN`，按处置查 `resolution_execution` 的 SQL 当前计划为扫描 `eval_quality_extension` 后过滤 JSON 并排序；`pg_indexes` 只有 `extension_id` 的索引，`pg_class` 估计全表约 82 万行。该计划不等于 10:42 的实际服务端计划，但结合请求内 18 次相同 SQL 模板、合计 1.217s 客户端时长，说明重复执行这类查找值得优先减少。11 次任务级槽位 SQL 合计 2.387s，是另一个更大的、直接可定位的重复读取组。
 
 **How to apply:** 第一阶段在单次整改命令内复用已验证的来源任务范围，并把 `_annotation_correction_context` 的持有人复核改为按本次工作项窄查；写入前保留权限、当前持有人、范围/答案版本和处置 CAS 的实时重检。第二阶段收集关联处置 ID，批量读取执行历史并建立请求内映射，保持 `latest_only` 和历史轮次语义；先看同规模 SQL 次数、返回量和墙钟收益。只有批量后仍慢且取得数据库 owner 的实际计划/索引可用性证据，才考虑关联表或索引。第三阶段复用 handler、`prepare`、`resubmit` 的同次详情依据，并补函数阶段 span，避免把精确收益归给未经埋点的子函数。部署源码和回归边界见 [固定窗口报告的优化章节](/Users/leslie/Documents/Playground/sandeval-five-slow-apis-20260929/report.md)；当前工作区旧分支不是这次生产请求的实现基线。
+
+### 批量历史读取与最终校验的边界（2026-09-29）
+
+**Why:** `quality/infrastructure/persistence/unit_of_work.py::UnitOfWork.__call__` 的常规服务路径是自动提交，不提供跨整条整改命令的数据库快照。把多处置执行历史提前批量读取，可以减少只读候选和关联范围判断的往返；不能因此把写入阶段的版本、子处置与待执行轮次复核一起前移。
+
+**How to apply:** 在 `disposition_query_service.py::resubmission_context` 和 `resolution_service.py::resubmit` 的写入前只读阶段按处置 ID 有界批量查历史，保留每个 ID 的 `latest_only` 或完整历史语义；在 `resubmit` 和 `resubmission_intent.py::resume_resubmission` 的最终写入阶段继续逐项读取当前处置、子处置及 pending 执行轮次，并依赖持久层 CAS/回执处理并发。代码位置只是设计指针；以 PR/Gate 和部署后的同规模 trace 核验实际效果，不用旧请求的 1.217s 直接宣称节省值。

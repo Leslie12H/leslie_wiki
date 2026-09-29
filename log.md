@@ -808,3 +808,4 @@
 - 2026-09-29：补充单人整改优化顺序：单命令来源范围复用与持有人窄查、执行历史有界批量、详情复用及阶段埋点；记录事后执行计划扫描扩展表和索引边界，见 domains/sandai-data-smith/refs/sandeval-review-performance.md。
 - 2026-09-29：记录空间质检第 3 轮冻结答案与后续 Sand 质检修订的版本冲突；历史抽屉“最新”仅在冻结范围内，核对答题卡操作历史和修订关卡后再决定重新送审。见 domains/sandai-data-smith/pitfalls/sandeval-cross-stage-frozen-answer-superseded.md。
 - 2026-09-29：补正同一实例的流转顺序：石羽宁第 2 轮先通过、负责人验收并交 Sand；Sand 质检代改后退回，石羽宁第 3 轮才被安排且仍冻结旧答案。不能以再次派单或泛称重新送审作为现成解法；见 domains/sandai-data-smith/pitfalls/sandeval-cross-stage-frozen-answer-superseded.md。
+- 2026-09-29：记录 Sand Eval 整改提交执行历史批量读取的自动提交边界：写入前可合并只读历史，最终写入仍逐项复核处置、子处置、待执行轮次与 CAS；见 domains/sandai-data-smith/refs/sandeval-review-performance.md。

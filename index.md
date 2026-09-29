@@ -295,7 +295,7 @@
 
 - [VidMuse 访问日志入口](domains/vidmuse/refs/access-log-entrypoints.md) — runtime sidecar 与网站网关的覆盖边界、ALB/SLS 和生产环境核验指针（2026-09-22）。
 
-- [Sand Eval 检查读取与保存性能](domains/sandai-data-smith/refs/sandeval-review-performance.md) — 整包报告、提交链、质检员列表 live 与 summary 路径、单人整改重复读取和优化顺序、默认样本展开及 Hologres 查询日志/计划证据边界（更新至 2026-09-29）。
+- [Sand Eval 检查读取与保存性能](domains/sandai-data-smith/refs/sandeval-review-performance.md) — 整包报告、提交链、质检员列表 live 与 summary 路径、单人整改重复读取与批量读取的自动提交校验边界、默认样本展开及 Hologres 查询日志/计划证据边界（更新至 2026-09-29）。
 
 - 2026-09-24：Sand 质检批量定位的查询边界、无关组损坏隔离、循环引用错误顺序及仓内实现 Note，见 [检查读取与保存性能](domains/sandai-data-smith/refs/sandeval-review-performance.md)。；含提交阶段、恢复 attempts 与 SLS 通配覆盖核验
 - 2026-09-24：Leader 详情与 live 逐包进度、重复来源范围读取、当前页并发及连接等待的核验入口，见 [检查读取与保存性能](domains/sandai-data-smith/refs/sandeval-review-performance.md)。；含提交阶段、恢复 attempts 与 SLS 通配覆盖核验
