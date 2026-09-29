@@ -2,7 +2,7 @@
 name: admin-service-jwt-permissions-and-expiry
 type: pitfall
 created: 2026-09-10
-updated: 2026-09-10
+updated: 2026-09-29
 tags: [admin, auth, service-token, account-pool]
 links: [vidmuse-admin]
 ---
@@ -16,7 +16,7 @@ links: [vidmuse-admin]
 - `apps/admin/service/jwt_service.py::verify_token`：检查 JWT 原始 claim 到 TokenData 的映射，尤其原始 `type` 与解析后 `token_type` 的区别。
 - `apps/admin/service/auth.py::RequireTokenPermission`：检查服务身份、到期时间和显式权限要求，不假定 `is_admin` 可替代服务权限；人工会话走另一授权路径。
 - `apps/admin/controller/admin/account_pool.py`：核对完整路由前缀与每个方法的权限。
-- `apps/admin/common/permissions.py`：核对权限实际覆盖范围。账号池所用注册权限也可能覆盖白名单/IP 风控，签发前说明真实范围并取得授权。
+- `apps/admin/common/permissions.py`：核对权限实际覆盖范围。2026-09-10 账号池曾复用较宽的注册权限；2026-09-29 核对当时生产容器，账号池读、管理已分别使用 `registration.account_pool.read` 与 `registration.account_pool.manage`。以后仍以部署版本为准。
 - `apps/admin/service/account_pool.py`：检查服务身份用于创建与领用审计的字段。
 
 仅保存代码和验收方法指针；不保存 JWT、签名密钥、kubeconfig 或具体凭证内容。部署逻辑会变化，下次必须重新核对。

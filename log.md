@@ -819,3 +819,4 @@
 - 2026-09-29：核实 3093 随后已整批退回，处置单实际接收郭士琦；弹窗「接收人：袁宁彤」取历史批次 producer_name，标签与真实接收人不一致。见 domains/sandai-data-smith/pitfalls/sandeval-transferred-correction-task-visibility.md。
 - 2026-09-29：记录 AI 秋招雷达固定公开入口嵌入全栈工作台的发布边界，避免每日岗位日报发布覆盖入口页；见 global/refs/ai-job-radar-stable-entry.md。
 - 2026-09-29：确认 Sisyphus `event-tracking` 的 `new_user_join` setup 401 与生产 Admin 会话 JWT 过期对应，记录 Runner 凭据映射和重试验证方法；见 domains/sisyphus/pitfalls/scheduled-admin-jwt-expiry.md。
+- 2026-09-29：Sisyphus `RUN-20260929-0030` Attempt 2 在替换账号池专用服务凭据后 2/2 通过；补记生产账号池权限和空 JSON POST 会实际建号的探测陷阱。见 domains/sisyphus/pitfalls/scheduled-admin-jwt-expiry.md 与 domains/vidmuse/admin/pitfalls/service-jwt-permissions-and-expiry.md。

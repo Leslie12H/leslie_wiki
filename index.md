@@ -58,7 +58,7 @@
 
 ### sisyphus — [质量平台](domains/sisyphus/README.md)
 - [Sisyphus 质量平台](domains/sisyphus/README.md) — quality_dashboard 日投影/发版门禁、automation_triggers、Agent Token 与 project 边界；调度模型与 admin 不同
-- [定时用例的 Admin 会话凭据过期](domains/sisyphus/pitfalls/scheduled-admin-jwt-expiry.md) — `event-tracking` setup 401 的时间线、Runner 凭据映射与新 Attempt 验证入口（2026-09-29）
+- [定时用例的 Admin 会话凭据过期](domains/sisyphus/pitfalls/scheduled-admin-jwt-expiry.md) — `event-tracking` setup 401 的时间线、Runner 凭据映射、Attempt 2 验证与账号池探测陷阱（2026-09-29）
 
 ## Disciplines(职业知识)
 - [CI 范围与间接门禁](disciplines/testing/ci-scope-and-indirect-gates.md) — 路径分类、步骤条件、检查依赖图及失败聚合的收窄核验方法
