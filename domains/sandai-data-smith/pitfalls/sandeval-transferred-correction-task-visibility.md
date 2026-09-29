@@ -2,7 +2,7 @@
 name: sandeval-transferred-correction-task-visibility
 type: pitfall
 created: 2026-09-28
-updated: 2026-09-28
+updated: 2026-09-29
 tags: [sand-eval, quality-center, reassignment, remediation, my-tasks]
 links: [sandeval-cross-stage-feedback, sandeval-roles-and-workflow]
 ---
@@ -21,3 +21,5 @@ links: [sandeval-cross-stage-feedback, sandeval-roles-and-workflow]
 - 2026-09-28 另一生产实例在答案更新后点击“提交复验”返回 `SOURCE_FORBIDDEN / 无权访问此标注员的批次`。部署 `/health` 的 SHA 为 `11538fb3a164766bc20331a980de6635d6e6009c`；本人任务页显示整改仍在历史批次行，原批次键的作者与当前持卡整改人不同。源码路径：`quality/application/resolution/answer_correction_service.py::prepare` 经 `SubmissionService.prepare_correction` 首次冻结时传 `correction=True`；`quality/application/resolution/resubmission_intent.py::resume_resubmission` 恢复固定意图时再次调用 `SubmissionService.freeze`，却只传 `preserve_snapshots=True`，默认走普通送审 `validate_submission_scope`，最终在 `TaskAssignmentService._quality_manifest_with_owners` 以历史批次作者与当前整改人不同返回 403。排查此报错需同时核对原批次键、当前持有人、部署 SHA 和恢复路径；修复应让整改意图的二次校验沿用整改范围授权，并覆盖转派后提交及同一请求重试。该实例页面回读为“待整改、1/1 已更新”，本次未执行提交或生产写入；后续状态需重新核验。
 - 2026-09-28 追溯：`0ec3925dd864f53a0f4465bc2e9016e175b52545` 于 2026-09-20 21:40:51 +08:00 引入 `resume_resubmission` 的二次冻结，未传整改标记，形成潜在缺陷；`e1a8cd78a2c166bfd02ccc48f0dd5257939a475d` 于 2026-09-25 12:21:56 +08:00 给首次冻结增加当前持有人整改授权，随 PR #1895 于 2026-09-25 14:40:04 +08:00 合入 main，但遗漏二次冻结，使转派后“准备成功、提交 403”路径可触发。以上是源码和 main 合并时间，非首次生产部署时间。修复候选在从 `origin/main` 创建的 `codex/correction-submit-permission`：二次冻结传 `correction=True`，覆盖旧批次无权限的当前持有人首次提交、保留意图后同请求重试；本地 `make targeted-direct` 127 通过，专项测试 1 通过，文档同步检查通过。业务分支尚未推送、提 PR 或部署；需在发布后重新做实际页面与持久化验收。
 - 2026-09-28 交付指针：[main PR #2153](https://github.com/world-sim-dev/sandai-data-smith/pull/2153) 以提交 `c1947f9799f2b84ee22e18fd6a4fd5c0fa0e255e` 发起，[Platform Gate #36418982770](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/36418982770) 成功；PR 于 2026-09-28 20:04:25 +08:00 由 `Leslie12H` 合入 main，合并提交 `f48de39857a839041822a7a1b321e073a1a492b8`。合并后读生产 `/health` 仍为旧 SHA `b98c151a371e2fd48db8354ca0b93c6dff311836`；合并和 Gate 不能证明生产已部署或该整改已提交成功，需随后核对部署 SHA、同一整改的真实提交与页面状态。
+
+- 2026-09-29 新实例：同一历史送审批次的四张卡经转派后，当前持有人分为两人，质检员点「整批退回标注员」遇到 `CORRECTION_HOLDER_SPLIT`。这不是质检抽样进度或原作者权限导致的错误：`manual_return_service.py::_return` 用完整冻结批次调用 `TaskAssignmentService._annotation_correction_context`，后者读取当前 `quality_assignment_slots`，要求全部工作项恰有一个当前持有人，否则在写入退回前报 409。质检页显示的原标注员是历史责任人，不等于实际整改接收人；弹窗沿用原标注员名称时尤其容易误读。排查时从质检题目逐一对照素材到当前持有人答题卡，再核对原派题批次的「已转出」与新批次接收数量；批次汇总不能替代逐卡 `ev2_change_log` 审计，未拿到审计时不要断言每张卡的转派时刻或动机。现有数量式改派只选当前持卡集合的前 N 张，不能仅凭「转 1 张」保证选中目标卡；统一持有人前须核对精确工作项与影响范围，预览若不提供精确 ID 则不能据此执行。生产实例入口：[质检任务](https://eval.sandaii.cn/quality/inspection?task=QT-2a37e2d62d45581eb09f9acb7530e9ed&review=RT-e4f58396156051faa6c7309723c70054&item=RI-1eeb31389e315bc58608a2ae0a79fb19)，状态会变化，复用时现场核验。

@@ -813,3 +813,4 @@
 - 2026-09-29：补充 Sand 退回前代改跨关卡继承的修复候选 PR #2163：按真实退回、委派和复验链承接新版，保持无关后续版本拦截；Gate、测试和生产状态须分别验证。见 domains/sandai-data-smith/pitfalls/sandeval-cross-stage-frozen-answer-superseded.md。
 - 2026-09-29：将同一 Sand 修复补丁纳入整改提交性能 main PR #2164，沿用原始开发提交内容，不引入测试分支历史；组合 Gate 与部署状态另验。见 domains/sandai-data-smith/pitfalls/sandeval-cross-stage-frozen-answer-superseded.md。
 - 2026-09-29：记录 Sand Eval 全局 API p95 多次尖峰的接口与 SQL 指纹分层定位，以及 transaction_trace 前缀解析和 Hologres 服务端日志权限边界；见 domains/sandai-data-smith/refs/sandeval-sql-lock-diagnosis.md。
+- 2026-09-29：补充 Sand Eval 整批退回的持有人分裂 409：历史送审作者与当前持有人分离，按逐题素材核对 1+3 持有人，批次汇总不能代替逐卡转派审计；见 domains/sandai-data-smith/pitfalls/sandeval-transferred-correction-task-visibility.md。
