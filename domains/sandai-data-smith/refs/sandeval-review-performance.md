@@ -2,7 +2,7 @@
 name: sandeval-review-performance
 type: reference
 created: 2026-09-24
-updated: 2026-09-26
+updated: 2026-09-29
 tags: [sand-eval, quality, performance, inspection, arms]
 links: [sandeval-api-observability, sandeval-sql-lock-diagnosis]
 ---
@@ -96,3 +96,9 @@ links: [sandeval-api-observability, sandeval-sql-lock-diagnosis]
 
 - [来源 PR #1976](https://github.com/world-sim-dev/sandai-data-smith/pull/1976)；后续修复状态需从最新代码与 CI 查询。
 - [当前生产 SLS 查询入口](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/sandeval-prod?slsRegion=cn-shanghai)。使用目标路由及参数类型异常关键词关联，不保存会话凭据。
+
+## 五个慢接口的请求级复查入口（2026-09-29）
+
+**Why:** 新部署的质检员列表已走 summary 查询，但一条汇总 CTE 仍能主导请求耗时；旧版 live 逐批计数案例不能用于解释新版慢样本。发布、整改提交、质检提交和质量详情又分别呈现范围 SQL、累积往返与默认样本展开的不同形状。
+
+**How to apply:** 从 [固定窗口证据记录](/Users/leslie/Documents/Playground/sandeval-five-slow-apis-20260929/report.md) 取 request ID、trace ID 和当时部署 SHA，再在 SLS/ARMS 刷新所需时窗核验。列表先用 SQL 形状确认有效模式，发布区分 202 前的同步范围校验与后台执行，质量详情检查 `include_samples` 及 500 条成员分块。两个写接口先量化单请求 DB 调用次数，再取逐阶段耗时；不能把客户端 SQL span 直接叫作服务端执行时间。欲判断索引、锁或计算组原因，须到实际 `db.name` 对应的数据库取 query ID、执行计划和等待证据。该记录只描述 2026-09-29 的样本，后续性能状态重新采集。
