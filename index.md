@@ -29,6 +29,7 @@
 - [vidmuse-admin harness](domains/vidmuse/admin/refs/vidmuse-admin-harness.md) — Test Center V2 / VidMCP harness 指针
 
 - [时间线预览时长与导出版本](domains/vidmuse/refs/timeline-preview-duration-and-export-version.md) — 轨道时长、分秒帧显示及历史混流版本核验指针
+- [VidMuse 生成扣费与导出证据链](domains/vidmuse/pitfalls/thread-output-billing-and-export-evidence.md) — 模型产物、Zeus 实扣、DSL 成片、渲染任务和浏览器下载分开核验；99% 是时间估算上限
 
 - [Kling 漏传分辨率导致 billing/500](domains/vidmuse/pitfalls/kling-billing-missing-resolution-20260909.md) — 2026-09-09 六次请求原始日志：价格 properties={}、未进入 Zeus 预扣费，I2V 输入缺图片/时长/分辨率
 
