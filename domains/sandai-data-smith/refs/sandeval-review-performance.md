@@ -102,3 +102,9 @@ links: [sandeval-api-observability, sandeval-sql-lock-diagnosis]
 **Why:** 新部署的质检员列表已走 summary 查询，但一条汇总 CTE 仍能主导请求耗时；旧版 live 逐批计数案例不能用于解释新版慢样本。发布、整改提交、质检提交和质量详情又分别呈现范围 SQL、累积往返与默认样本展开的不同形状。
 
 **How to apply:** 从 [固定窗口证据记录](/Users/leslie/Documents/Playground/sandeval-five-slow-apis-20260929/report.md) 取 request ID、trace ID 和当时部署 SHA，再在 SLS/ARMS 刷新所需时窗核验。列表先用 SQL 形状确认有效模式，发布区分 202 前的同步范围校验与后台执行，质量详情检查 `include_samples` 及 500 条成员分块。两个写接口先量化单请求 DB 调用次数，再取逐阶段耗时；不能把客户端 SQL span 直接叫作服务端执行时间。欲判断索引、锁或计算组原因，须到实际 `db.name` 对应的数据库取 query ID、执行计划和等待证据。该记录只描述 2026-09-29 的样本，后续性能状态重新采集。
+
+### 深入查证的证据边界（2026-09-29）
+
+**Why:** 同一 Hologres 实例的公网和 VPC 域名不同，不能按完整主机名误判为不同实例；同实例的另一数据库用户能读业务表，不代表能看应用用户的 `hg_query_log`。一次只读 `EXPLAIN` 是核验时的计划，不是历史请求的 `EXPLAIN ANALYZE`、实际耗时或等待原因。
+
+**How to apply:** 先按实例 ID、`db.name` 和计算组对齐 ARMS SQL span 与只读连接；读 `hg_query_log` 时核对 `current_user` 与应用 `db.user`，出现 0 条不能推出没有执行或 Fixed Plan。发布接口用 `eval_dispatch_master.frozen_config` 核对素材集合/冻结成员规模，再从 `material_dispatch.py` 的 COUNT、范围 JOIN、排序分页 SQL 与当前计划区分 shard 裁剪和大集合内的工作量。质检员无搜索词普通页仍在 `LIMIT` 前处理标签和分配 JSON，不能把 `page-index` 的空搜索优化套用到普通页。整改提交用送审成员数和 `annotation_correction_prepare` SLS 阶段日志排除“人数多”的猜测；质检提交先查生产 trace 是否实际有 `trace_phase`，缺失就不要编函数耗时；质量详情用来源 task 的稳定 `quality_task_id` 和报告/判断时间戳重建当时范围，不能把后来增加的检查项算进历史请求。五条逐请求数据及证据缺口见上方固定窗口报告。

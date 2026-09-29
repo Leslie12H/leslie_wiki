@@ -803,3 +803,4 @@
 - 2026-09-28：记录转派后整改提交 403 修复的 main PR #2153、Platform Gate 成功、合并提交及合并后生产 SHA 仍旧的边界；见 domains/sandai-data-smith/pitfalls/sandeval-transferred-correction-task-visibility.md。
 - 2026-09-29：记录 Sand Eval 五个慢接口的固定窗口证据入口；确认质检员列表 summary SQL 仍慢、发布受理同步范围查询、整改和报告提交的多次 DB 往返及质量详情默认样本展开；数据库物理原因待执行计划核验。见 domains/sandai-data-smith/refs/sandeval-review-performance.md。
 - 2026-09-29：生产只读复现 Sand Eval 同批质检队列与标注整改单的视频次序不一致，补充独立排序路径及按素材核对的入口；见 domains/sandai-data-smith/pitfalls/sandeval-cross-workbench-question-order.md。
+- 2026-09-29：补充 Sand Eval 五个慢接口的实际任务/样本规模、只读 Hologres 计划与 query log 用户可见性边界；见 domains/sandai-data-smith/refs/sandeval-review-performance.md 及其固定窗口报告。
