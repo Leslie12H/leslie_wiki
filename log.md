@@ -810,3 +810,4 @@
 - 2026-09-29：补正同一实例的流转顺序：石羽宁第 2 轮先通过、负责人验收并交 Sand；Sand 质检代改后退回，石羽宁第 3 轮才被安排且仍冻结旧答案。不能以再次派单或泛称重新送审作为现成解法；见 domains/sandai-data-smith/pitfalls/sandeval-cross-stage-frozen-answer-superseded.md。
 - 2026-09-29：记录 Sand Eval 整改提交执行历史批量读取的自动提交边界：写入前可合并只读历史，最终写入仍逐项复核处置、子处置、待执行轮次与 CAS；见 domains/sandai-data-smith/refs/sandeval-review-performance.md。
 - 2026-09-29：记录 VidMuse 生成返回、Zeus 实扣、DSL 成片与浏览器下载的独立证据链，以及导出 99% 时间估算和停止后在途素材核验入口；见 domains/vidmuse/pitfalls/thread-output-billing-and-export-evidence.md。
+- 2026-09-29：补充 Sand 退回前代改跨关卡继承的修复候选 PR #2163：按真实退回、委派和复验链承接新版，保持无关后续版本拦截；Gate、测试和生产状态须分别验证。见 domains/sandai-data-smith/pitfalls/sandeval-cross-stage-frozen-answer-superseded.md。

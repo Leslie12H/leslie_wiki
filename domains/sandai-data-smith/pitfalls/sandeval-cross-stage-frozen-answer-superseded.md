@@ -15,4 +15,6 @@ links: [sandeval-stopped-review-amendment-conflict, sandeval-amendment-lookup-re
 
 **How to apply:** 从精确 task / review / item 定位冻结答案及同一 `assignment_id` 的最新来源答案；对照整改流水中的上一轮报告、负责人验收、提交 Sand、Sand 修订和退回、供应商新轮派单时间。不能因冻结历史抽屉把第 2 版标为“最新”就断言来源没有第 3 版；也不能把当前第 3 轮未审核误解为当初未经供应商质检就提交 Sand。本例负责人已在 Sand 退回后安排新一轮，重复要求重新送审不足以解除冲突。应先明确未封存的 Sand 代改在后续供应商复验中的受控去向，再修复版本衔接；保留来源答案、修订和退回审计，不直接改写冻结引用或绕过最新版本保护。
 
+2026-09-29 修复候选：[测试分支 PR #2163](https://github.com/world-sim-dev/sandai-data-smith/pull/2163) 从 `main` 的任务分支提出，尚非生产生效证据。实现复用真实 Sand 人工退回、供应商负责人委派及空间复验执行链，仅在同一送审成员、Sand 修订早于报告提交或停止、退回证据版本一致时，把 Sand 新版带入空间复验；后续通过报告承认该修订。无关的更晚来源版本仍由最新版本保护拒绝。核验入口是 `quality/application/inspection/answer_amendment_service.py::_sand_return_basis`、`_sand_return_chain`、`effective_members` 与对应的 `test_same_member_amendment_lineage.py`；PR Gate、测试验收、main 合并和部署须分别回读。
+
 代码和产品指针：`sand-eval/platform/backend/app/services/facts/answer_amendment.py::verify_current`；`app/repositories/answer_cards.py::quality_versions_through`；`quality/application/inspection/review_history_service.py`；`quality/application/inspection/answer_amendment_service.py::visible_amendments`；`quality/domain/inspection/amendment_lineage.py::sealed_by`；`platform/frontend/src/pages/quality/inspection/StructuredAnswer.tsx`。实际部署以 `/health.deploy_sha` 现场核对。
