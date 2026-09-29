@@ -35,7 +35,7 @@
 
 ### maxwell — [业务全景](domains/maxwell/README.md)
 - [VidMuse Git 候选准备](domains/maxwell/projects/vidmuse-executor-candidates.md) — 独立候选 CLI、仅 DEV 发布隔离、执行账号与公共依赖版本核验指针
-- [VidMuse Executor P1 实现入口](domains/maxwell/projects/vidmuse-executor-p1.md) — P1 实现、轻量适配器去数据库方向、创建重试与部署核验指针
+- [VidMuse Executor P1 实现入口](domains/maxwell/projects/_archive/vidmuse-executor-p1.md) —（已归档） P1 实现、轻量适配器去数据库方向、创建重试与部署核验指针
 - [EVOLVE v2.2 工作台](domains/maxwell/refs/evolve-workbench-v22.md) — 固定框架、行内判卷、设计与真实接口边界及验证入口
 - [EVOLVE 已接收输出与未冻结证据集](domains/maxwell/pitfalls/evolve-received-evidence-before-run-freeze.md) — Attempt 输出与冻结证据的区别；SQL 审计定位 CAS，读写分离下的状态机一致性；修复 PR #276 与租约接管回归
 - [EVOLVE 全流程稳定性审计](domains/maxwell/refs/evolve-evaluation-blockers-20260910.md) — 取消收敛、大证据引用、判卷重试、故障回归与 PR/DEV 发布验证指针
@@ -50,7 +50,7 @@
 - [EVOLVE 调优 Agent Preset 业务私有坑](domains/maxwell/pitfalls/evolve-agent-preset-business-scoped.md) — 2026-09-04 单 Preset 写死导致跨业务不可用;根因链 + 共享调优 Agent 方案指针
 - [EVOLVE 调优 Agent 运行逻辑审计](domains/maxwell/pitfalls/evolve-tuning-agent-loop-audit-20260909.md) — 2026-09-09 main 审计：双冻结路径无通知、确认不校验 payload、产物形状对 Agent 不可见、context 混入被测输入等 8 点
 - [EVOLVE 对 Maxwell 目标的调优接应](domains/maxwell/projects/evolve-maxwell-tuning-receiving.md) — 2026-09-09 进行中：分支/拍板点（基准由 EVOLVE 获取、level 由预检决定、不用累计 patch）/第二轮待追加项
-- [EVOLVE 能力升级 P1–P4 实施](domains/maxwell/projects/evolve-capability-upgrade-20260910.md) — 2026-09-11 PR #281：5 项拍板、四阶段落地、评审三阻塞与 squash 基线前移的坑
+- [EVOLVE 能力升级 P1–P4 实施](domains/maxwell/projects/_archive/evolve-capability-upgrade-20260910.md) —（已归档） 2026-09-11 PR #281：5 项拍板、四阶段落地、评审三阻塞与 squash 基线前移的坑
 - [EVOLVE errorPolicy=fail 把执行错误变成质量结论](domains/maxwell/pitfalls/evolve-error-policy-fail-breach.md) — 2026-09-15 破口：外部可设的聚合开关绕过协议/质量分层；不删枚举、只在 Run 准入拒绝、历史回放逐字节不变
 - [EVOLVE 模型用量记账口径与落点](domains/maxwell/refs/evolve-usage-accounting.md) — 未知≠0/只记录不决策/不折算金额；判卷与非判卷两族指标；context 带外 Recorder 与冻结产物兼容锚点做法
 - [EVOLVE v3 前端：任务→执行器映射与会话 N+1](domains/maxwell/pitfalls/evolve-v3-work-executor-mapping.md) — 2026-09-19 targetRef≠执行器 id（要读 TargetProfile.executorRef）；会话列表慢在前端逐条补读；sessions executorRef 参数实按 target_ref；v3 视觉须对齐 Studio tokens
@@ -116,21 +116,21 @@
 
 - 判卷 endpoint 连带错误与托管业务凭据缺口：见 [EVOLVE 接入记录](domains/maxwell/refs/evolve-preset-evaluation-entry.md) 的 2026-09-14 核验，区分模型选择、Maxwell 业务 Key 与外部 A2A Token。
 
-- [EVOLVE 判卷授权解耦修复](domains/maxwell/projects/evolve-judge-authorization-decoupling.md) — 2026-09-14：基于最新 main 的独立判卷准备入口、权限与回归指针；未部署。
+- [EVOLVE 判卷授权解耦修复](domains/maxwell/projects/_archive/evolve-judge-authorization-decoupling.md) —（已归档） 2026-09-14：基于最新 main 的独立判卷准备入口、权限与回归指针；未部署。
 
-- EVOLVE 判卷授权修复 PR #288 与 DEV 发布、Studio 196 入口核验见 [判卷授权解耦](domains/maxwell/projects/evolve-judge-authorization-decoupling.md)（2026-09-14）；未执行真实初评。
+- EVOLVE 判卷授权修复 PR #288 与 DEV 发布、Studio 196 入口核验见 [判卷授权解耦](domains/maxwell/projects/_archive/evolve-judge-authorization-decoupling.md)（2026-09-14）；未执行真实初评。
 
-- 2026-09-14：首轮 Trial 远端交互阻断与评分状态误标的追溯入口见 [判卷授权后续核验](domains/maxwell/projects/evolve-judge-authorization-decoupling.md)。
+- 2026-09-14：首轮 Trial 远端交互阻断与评分状态误标的追溯入口见 [判卷授权后续核验](domains/maxwell/projects/_archive/evolve-judge-authorization-decoupling.md)。
 
-- 2026-09-14：Nextplay 初评被 Candidate-only 包装规则阻断，现场证据见 [授权修复后续诊断](domains/maxwell/projects/evolve-judge-authorization-decoupling.md)。
+- 2026-09-14：Nextplay 初评被 Candidate-only 包装规则阻断，现场证据见 [授权修复后续诊断](domains/maxwell/projects/_archive/evolve-judge-authorization-decoupling.md)。
 
-- 2026-09-14：Runner 包源码评估与基准执行复用入口见 [判卷授权后续诊断](domains/maxwell/projects/evolve-judge-authorization-decoupling.md)。
+- 2026-09-14：Runner 包源码评估与基准执行复用入口见 [判卷授权后续诊断](domains/maxwell/projects/_archive/evolve-judge-authorization-decoupling.md)。
 
-- 2026-09-14：基准 Runner 正式迁至 nextplay-eval 源码修复，Maxwell 保留接入与 UI 修复，见 [双仓库实施记录](domains/maxwell/projects/evolve-judge-authorization-decoupling.md)。
+- 2026-09-14：基准 Runner 正式迁至 nextplay-eval 源码修复，Maxwell 保留接入与 UI 修复，见 [双仓库实施记录](domains/maxwell/projects/_archive/evolve-judge-authorization-decoupling.md)。
 
-- 2026-09-14：nextplay-eval 正式构建及线上 Skill/Prompt 更新见 [部署核验记录](domains/maxwell/projects/evolve-judge-authorization-decoupling.md)。
+- 2026-09-14：nextplay-eval 正式构建及线上 Skill/Prompt 更新见 [部署核验记录](domains/maxwell/projects/_archive/evolve-judge-authorization-decoupling.md)。
 
-- [NextPlay 基准接入最终计划](domains/maxwell/projects/nextplay-benchmark-final-plan-20260914.md) — 复用现有 A2A Preset、共享执行能力、证据回读及 A/B/C 比较边界（2026-09-14）。
+- [NextPlay 基准接入最终计划](domains/maxwell/projects/_archive/nextplay-benchmark-final-plan-20260914.md) —（已归档） 复用现有 A2A Preset、共享执行能力、证据回读及 A/B/C 比较边界（2026-09-14）。
 
 - [NextPlay 基准接入实施指针](domains/maxwell/projects/nextplay-benchmark-implementation-20260914.md) — 两仓草稿 PR、受控证据回读、复用 Maxwell 续答通道与实际验收边界。
 

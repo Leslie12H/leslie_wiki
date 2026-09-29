@@ -48,6 +48,7 @@ log.md             # append-only 时间线
 ### Lint(体检,用户说"lint 一下"时执行)
 - 矛盾:两个 page 说法冲突。
 - 过期:`refs/` 指向的代码/文档可能已变;`projects/` 是否已完成该归档。
+  - 归档做法:把已完成/已被取代的 page `git mv` 到同级 `projects/_archive/`,frontmatter 加 `status: archived` 与 `archived: YYYY-MM-DD`,标题下加一行归档原因与后续 page 指针;index.md 保留条目、改路径并标「已归档」,log.md 追加一行。不删除 page。
 - Orphan:没有被 index.md 收录、或没有任何 links 的 page。
 - 缺失交叉引用:相关 page 之间没连起来。
 

@@ -2,12 +2,16 @@
 name: evolve-capability-upgrade-20260910
 type: project
 created: 2026-09-10
-updated: 2026-09-11
+updated: 2026-09-29
+status: archived
+archived: 2026-09-29
 tags: [maxwell, evolve, casegen, judge, optimization, responder, a2a]
 links: [maxwell, evolve-interactive-responder, evolve-tuning-agent-loop-audit-20260909, evolve-maxwell-tuning-receiving]
 ---
 
-# EVOLVE 能力升级 P1–P4 实施（2026-09-10 进行中）
+# EVOLVE 能力升级 P1–P4 实施（2026-09-10 至 2026-09-11）
+
+> **已归档（2026-09-29）：** PR #281 已于 2026-09-11 合并并带迁移发布 DEV（见 refs/evolve-pr281-dev-deployment-20260911.md）；P5 跨团队项不在本页继续跟踪。
 
 方案：飞书 https://j0yswlgboxz.feishu.cn/docx/Fzjid4GzkoFdKHxevXicN1sMnFd ；仓库 `services/evolve-server/docs/evolve-capability-upgrade-plan-20260910.md`，已提交在分支 `feat/evolve-capability-upgrade-20260910`（ca5cc800，基于 origin/main 828e7d87）。
 

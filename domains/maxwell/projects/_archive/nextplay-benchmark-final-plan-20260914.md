@@ -2,12 +2,16 @@
 name: nextplay-benchmark-final-plan-20260914
 type: project
 created: 2026-09-14
-updated: 2026-09-14
+updated: 2026-09-29
+status: archived
+archived: 2026-09-29
 tags: [maxwell, evolve, nextplay, benchmark, a2a]
 links: [evolve-judge-authorization-decoupling]
 ---
 
 # NextPlay 基准接入最终计划
+
+> **已归档（2026-09-29）：** 计划已由 nextplay-eval PR 1 与 maxwell-ai PR 291 实施（2026-09-14 合并），后续状态见 nextplay-benchmark-implementation-20260914。
 
 方案全文：`/private/tmp/nextplay-evolve-final-plan-20260914.md`。状态为计划，未实施新一轮改造。核验 nextplay-eval main 1182275、已上传本地修复 08cd798、Maxwell main e4693dbb；当前版本需从远端重新读取。
 

@@ -2,12 +2,16 @@
 name: evolve-judge-authorization-decoupling
 type: project
 created: 2026-09-14
-updated: 2026-09-14
+updated: 2026-09-29
+status: archived
+archived: 2026-09-29
 tags: [maxwell, evolve, judge, authorization]
 links: [evolve-preset-evaluation-entry]
 ---
 
 # EVOLVE 判卷授权与执行器登记解耦
+
+> **已归档（2026-09-29）：** PR #288 已于 2026-09-14 合并并发布 DEV；后续 Runner 基准模式与真实评测转入 nextplay-benchmark-implementation-20260914。
 
 2026-09-14 基于 main `56dca229e598196c0db09cbf5340b8313ec79eb4` 开始修复，分支 `codex/evolve-judge-auth`，隔离目录 `/private/tmp/maxwell-judge-auth-20260914`。复核入口为该目录 `docs/evolve-judge-authorization-fix.md`（变更范围、权限边界、技术验证与发布后步骤）；初始交付为本地修复，后续合并与发布核验见下节。
 

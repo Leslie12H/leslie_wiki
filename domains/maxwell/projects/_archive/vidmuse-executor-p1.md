@@ -2,12 +2,16 @@
 name: vidmuse-executor-p1
 type: project
 created: 2026-09-10
-updated: 2026-09-28
+updated: 2026-09-29
+status: archived
+archived: 2026-09-29
 tags: [maxwell, vidmuse, a2a, executor, postgres]
 links: [vidmuse-a2a-executor]
 ---
 
 # VidMuse Executor P1 实现入口
+
+> **已归档（2026-09-29）：** 独立 PostgreSQL 的 P1 设计已于 2026-09-12 被无库方向取代，后续见 vidmuse-stateless-adapter-implementation。
 
 独立本地仓库：`~/Downloads/sandai-code/vidmuse-executor`。查看 README、docs/acceptance.md、contracts/sources.json 与 scripts/check-maxwell.py 获取范围、核验源码和复现步骤；运行结果以当前仓库及回读为准。未在本次工作中部署或登记业务空间，也没有真实生成。
 

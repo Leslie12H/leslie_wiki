@@ -817,3 +817,4 @@
 - 2026-09-29：复核同一实例的操作方案：目标持有人两张均已答，派题页「未答 0」无法转移，默认转两张还会影响无关卡；记录当前运营 CLI 按实体卡排序取前 N 的精确核验与受控执行边界，未做生产写；见 domains/sandai-data-smith/pitfalls/sandeval-transferred-correction-task-visibility.md。
 - 2026-09-29：Sand Eval 同一质检实例经生产 CLI 预览并只转李阳目标卡一张至郭士琦，主库核对四张冻结卡统一持有人、李阳非目标卡未动及审计；整批退回仍待 3093 操作。见 domains/sandai-data-smith/pitfalls/sandeval-transferred-correction-task-visibility.md。
 - 2026-09-29：核实 3093 随后已整批退回，处置单实际接收郭士琦；弹窗「接收人：袁宁彤」取历史批次 producer_name，标签与真实接收人不一致。见 domains/sandai-data-smith/pitfalls/sandeval-transferred-correction-task-visibility.md。
+- 2026-09-29 lint：审查 maxwell/projects 十页，将已完成或被取代的 4 页（EVOLVE 能力升级 PR #281、判卷授权解耦 PR #288、NextPlay 最终计划、VidMuse Executor P1）移入 domains/maxwell/projects/_archive/ 并标 status: archived；CLAUDE.md 补归档约定。其余 6 页仍有未完成事项。
