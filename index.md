@@ -170,7 +170,7 @@
 
 - [Analytics Worker 超大聊天 OOM](domains/vidmuse/admin/pitfalls/analytics-worker-oversized-history-oom.md) — 完整响应内存放大、崩溃重试循环、流式体积准入、生产发布与 RSS/cgroup 恢复验收指针（2026-09-16）。
 
-- [Sand Eval SQL 与锁诊断入口](domains/sandai-data-smith/refs/sandeval-sql-lock-diagnosis.md) — 当前 SLS 日志库、热点 SQL 与接口映射、QPS/重扫描/慢写归因、后台计数用途与 PR 来源、锁和连接池证据边界（2026-09-28）。
+- [Sand Eval SQL 与锁诊断入口](domains/sandai-data-smith/refs/sandeval-sql-lock-diagnosis.md) — 当前 SLS 日志库、热点 SQL 与接口映射、QPS/重扫描/慢写归因、全局 API p95 尖峰分层诊断、transaction_trace 前缀解析及服务端证据边界（2026-09-29）。
 
 - [Sand Eval 本机启动入口](domains/sandai-data-smith/refs/sandeval-local-startup.md) — macOS 本机配置来源、Python/pnpm 依赖解析与页面验收指针（2026-09-17）。
 - [Sand Eval 供应商任务与批次分类入口](domains/sandai-data-smith/refs/sandeval-supplier-task-grouping.md) — 供应商派题列表、明确发布关联、配置装配与质检分组参考指针（2026-09-26）。

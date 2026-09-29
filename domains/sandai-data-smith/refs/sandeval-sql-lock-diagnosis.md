@@ -2,7 +2,7 @@
 name: sandeval-sql-lock-diagnosis
 type: reference
 created: 2026-09-17
-updated: 2026-09-28
+updated: 2026-09-29
 tags: [sandai-data-smith, sandeval, hologres, sls, sql, locks]
 links: []
 ---
@@ -53,3 +53,9 @@ links: []
 - 慢写入口：按 `ev3_response`、`ev3_response_field` INSERT 指纹核验 start_query_cost 与 extended_cost。记录到 lock_trx 长等待能定位阶段，不能单凭字段名判定行锁、死锁、具体持锁者或后台查询造成阻塞；继续需要 owner/waiter 和同窗事务证据。
 - 高频通知入口：`frontend/src/components/NotificationBell.tsx`。同时核验刷新间隔和 refreshCount 内的可见性判断；只看 setInterval 会漏掉已有后台跳过逻辑。按请求数和 SQL CPU 分别排序，再决定降频收益。
 - SQL 到接口的核验：[六类热点 SQL 入口映射](/Users/leslie/Documents/Playground/output/qps-pressure-20260928/api-map.md)。SQL 指纹是共享查询，不能按业务标签直接当 HTTP 路由；质检修订草稿/历史与普通详情封存快照走不同读取，派发进度既有 actions/refresh 异步入口也有 worker 自动刷新。先沿 router → service → repository 验证，再用 trace 区分请求内执行和后台执行；SQL 次数不直接分摊成接口次数。
+
+## 整体 API p95 尖峰的分层诊断（2026-09-29）
+
+**Why:** 2026-09-29 14:25–14:27、14:30–14:34、14:53–14:54（北京时间）的生产看板出现多次 p95 尖峰。按接口和 Pod 拆分后，轻量接口仍快，题目交互、提交和质检详情的数据库调用耗时却同步上升；四个 Web Pod 同步受影响且部署 SHA 不变。全局分位数不能直接解释为每个接口都慢，也不能仅凭客户端 SQL 计时判定数据库锁或 CPU。
+
+**How to apply:** 先用 [生产 API 看板](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/dashboard/dashboard-1790304848380-487363?slsRegion=cn-shanghai) 固定异常分钟，再在 [生产 SLS 日志库](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/sandeval-prod?slsRegion=cn-shanghai) 按 route、Pod、`deploy_sha`、`db_client_ms`、`pool_wait_ms` 和 `transaction_trace` 阶段分解。该日志库中的 `transaction_trace` 行以字面前缀 `transaction_trace ` 开头，先用 `substr(content,19)` 去掉前缀再调用 `json_extract_scalar`；直接对 `content` 提取 JSON 字段会得到空值。只统计 `event=finish`，按 `http_route` 与 `sql_fingerprint` 核对 SQL 来源。应用计时含驱动、网络及结果读取；服务端执行、锁等待和其他租户负载仍须生产 Hologres `hg_query_log`、实例指标与 owner/waiter 证据。当前 HoloWeb 用户缺少 `pg_read_all_stats`，历史慢 Query 页面不可见；查询返回零行不能解释为没有慢 SQL。代码入口（重新核对部署版本）：`sand-eval/platform/backend/app/repositories/choice_interaction.py` 的 `CHOICE_INTERACTION_BATCH_CONTEXT_SQL`、`CHOICE_INTERACTION_BATCH_WRITE_GUARD_SQL` 和 `authorized_batch_session`；计算组入口见 `sand-eval/platform/k8s/configmap.yaml` 的 `HOLO_CONTROL_COMPUTE_GROUP`。
