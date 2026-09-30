@@ -822,3 +822,5 @@
 - 2026-09-29：Sisyphus `RUN-20260929-0030` Attempt 2 在替换账号池专用服务凭据后 2/2 通过；补记生产账号池权限和空 JSON POST 会实际建号的探测陷阱。见 domains/sisyphus/pitfalls/scheduled-admin-jwt-expiry.md 与 domains/vidmuse/admin/pitfalls/service-jwt-permissions-and-expiry.md。
 - 2026-09-30：核对 Sand 直接整改先交原供应商质检员、再按需退标注员；区分原路线标签、系统使用负责人身份、复验申请与实际新轮次分配；本批执行回执未确认。见 domains/sandai-data-smith/pitfalls/sandeval-return-route-and-handoff-hints.md。
 - 2026-09-30：补核历史首轮质检分配与当前账号入口冲突；复验预览固定原接收人，不能把分配账号当作当前可执行资格或实际真人提交者。见 domains/sandai-data-smith/pitfalls/sandeval-return-route-and-handoff-hints.md。
+
+- 2026-09-30｜Ingest｜新增 Sand Eval 子整改完成后再次退回的上级授权断链排查：工作台准备度、完整历史阻塞范围、pending 执行边界和只读证据指针。
