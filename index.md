@@ -413,7 +413,7 @@
 - [Sand Eval 转派后整改任务可见性](domains/sandai-data-smith/pitfalls/sandeval-transferred-correction-task-visibility.md) — 核对历史批次、当前持卡工作项、整批退回的唯一持有人门禁、已答卡转派页与运营 CLI 口径、写入与提交恢复路径；含持有人分裂 409、单卡转派、退回弹窗错误接收人标签与真实处置单、复验提交 403 的排查指针（2026-09-29）。
 - [Sand Eval 子整改闭环后再次退回阻塞](domains/sandai-data-smith/pitfalls/sandeval-repeated-correction-ancestor-blocker.md) — 上级责任未结、新退回授权断链的取证、正式完成执行继承与单条受控修复入口（2026-09-30）。
 - 2026-09-27：首次继续整包送审、仅整改批次独立回交的范围与混合状态核验见 [直达整改与按批交接](domains/sandai-data-smith/refs/sandeval-direct-remediation-and-batch-handoff.md)。
-- [AI 秋招雷达固定入口与工作台](global/refs/ai-job-radar-stable-entry.md) — 固定公开 URL、全栈工作台嵌入与定时发布不回退的维护指针（2026-09-29）。
+- [AI 秋招雷达固定入口与工作台](global/refs/ai-job-radar-stable-entry.md) — 固定公开 URL、匿名岗位浏览与私人权限边界、全栈嵌入及定时发布不回退的维护指针（2026-09-30）。
 
 - [Test Center V2 run detail 性能记录](domains/vidmuse/admin/projects/2026-07-02-test-center-v2-run-detail-perf.md) — 2026-07-02 的接口实测、假设与分阶段优化计划；使用时重新核验。
 - [VidMuse QuickTracking 前端指标](domains/vidmuse/refs/quicktracking-frontend-metrics.md) — 报表取数入口、时间桶校准和前后端统计口径边界。

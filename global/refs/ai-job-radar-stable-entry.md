@@ -2,8 +2,8 @@
 name: ai-job-radar-stable-entry
 type: reference
 created: 2026-09-29
-updated: 2026-09-29
-tags: [miaoda, job-radar, deployment]
+updated: 2026-09-30
+tags: [miaoda, job-radar, deployment, authentication, privacy]
 links: [feishu-sheet-header-and-merge-sync]
 ---
 
@@ -15,4 +15,19 @@ links: [feishu-sheet-header-and-merge-sync]
 
 **Why:** 公开 URL 被复用为长期分享入口，而岗位、投递、简历和通知已迁至全栈工作台；直接改发日报会让后续定时发布覆盖入口页。
 
-**How to apply:** 改工作台功能时更新 `app_17abqm45rt4` 并发布；改入口包装或每日发布流程时更新 `portal.html` / `deploy_daily.sh`。发布后必须在已登录浏览器用固定入口验收 iframe 内容；未登录访客应看到工作台登录页或使用“在新窗口打开”兜底链接。
+**How to apply:** 改工作台功能时更新 `app_17abqm45rt4` 并发布；改入口包装或每日发布流程时更新 `portal.html` / `deploy_daily.sh`。发布后分别用本人已登录浏览器和未登录浏览器验收固定入口与工作台直达链接；访客应直接看到公共岗位，仅主动点击“关联飞书表格”后才打开飞书登录。
+
+## 访客浏览与私人权限边界
+
+2026-09-30 起按用户要求支持匿名岗位浏览。平台可见范围与业务角色是两个独立层：运行时入口允许未登录访问，不代表访客可以读取私人工作台。当前配置用 `apps +access-scope-get --app-id app_17abqm45rt4 --as user` 回读；不要只看页面按钮判断安全。
+
+实现与回归入口在 `/Users/leslie/Documents/面试 2/job-radar-fullstack/`：
+
+- `client/src/api/index.ts`：公共读取不自动跳转登录；`client/src/pages/Workspace/Workspace.tsx`：关联按钮调用平台登录 SDK，嵌入页面时在新窗口登录。
+- `server/modules/workspace/workspace.service.ts`：访客只查公共岗位投影，源表自由文本和链接可能混入个人时间线，因此不直接公开；私人数据仍通过现有 `radar_owner` 平台角色授权。
+- `server/modules/workspace/workspace.controller.ts` 与 `workspace.privacy.spec.ts`：公共 GET 不要求登录，私人写入要求登录并继续核验角色；匿名请求、无角色用户和伪造请求体均需覆盖。
+- 发布证据指针：代码提交 `82c03ee144c9d19c1c35b19e9561044b9559bb8a`，release `7691228014432881600`；状态用 `apps +release-get` 查询，不能把发布中返回的旧 commit 当作本轮完成版本。
+
+**Why:** “一打开就登录”可能同时来自平台入口强制登录和客户端请求库收到登录提示后自动跳转；只隐藏私人导航不能替代后端数据隔离。
+
+**How to apply:** 先验证公共投影与私人权限，再发布代码并关闭入口强制登录；用独立未登录浏览器检查搜索、翻页和岗位详情不触发登录，关联按钮才打开登录页，同时核验本人已登录视图仍保留原有记录。不用生产写接口作为权限探测，也不向飞书源表回写。
