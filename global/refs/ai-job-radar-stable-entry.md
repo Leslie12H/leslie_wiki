@@ -3,7 +3,7 @@ name: ai-job-radar-stable-entry
 type: reference
 created: 2026-09-29
 updated: 2026-09-30
-tags: [miaoda, job-radar, deployment, authentication, privacy]
+tags: [miaoda, job-radar, deployment, authentication, privacy, ownership]
 links: [feishu-sheet-header-and-merge-sync]
 ---
 
@@ -31,3 +31,13 @@ links: [feishu-sheet-header-and-merge-sync]
 **Why:** “一打开就登录”可能同时来自平台入口强制登录和客户端请求库收到登录提示后自动跳转；只隐藏私人导航不能替代后端数据隔离。
 
 **How to apply:** 先验证公共投影与私人权限，再发布代码并关闭入口强制登录；用独立未登录浏览器检查搜索、翻页和岗位详情不触发登录，关联按钮才打开登录页，同时核验本人已登录视图仍保留原有记录。不用生产写接口作为权限探测，也不向飞书源表回写。
+
+## 个人账号使用与应用归属
+
+应用业务角色、开发协作者/资产所有者、所属租户是不同边界。私人工作台角色用 `apps +role-match-list` 回读；资产所有者在[妙搭我的应用](https://miaoda.feishu.cn/my-apps)及应用协作者设置核查。登录页展示的组织名不能用业务角色授权来改变，授予角色也不等于转移应用。
+
+个人版能力查[官方数据库公网连接说明](https://bytedance.larkoffice.com/wiki/SKtpwTnaqiP6wgkATbMcRlEOncf#KUIVdouqOokfOuxwS3zcHf0JnyC)的个人版租户条目。该说明不证明现有应用可以跨租户转移；2026-09-30 本应用的 CLI 协作者查询返回 `feature_not_available`，网页已核查的菜单也未找到转移入口。跨租户直接转移、目标账号的创建/导入额度、能否保留旧 app ID 与 URL 均需另行确认，不能据此断言平台完全不支持转移。
+
+**Why:** 能用应用、能开发应用和拥有应用资产是三件事；保留旧公开入口作为包装也不等于旧入口已脱离原组织。
+
+**How to apply:** 若要迁至个人账号，先让目标账号登录自己的妙搭空间核验创建/导入能力，再确认官方转移路径及代码、数据库、业务角色和飞书源表授权的迁移边界。未经明确授权不更改所有者或扩展私人数据权限；保留原入口的要求需单独验收。
