@@ -824,3 +824,5 @@
 - 2026-09-30：补核历史首轮质检分配与当前账号入口冲突；复验预览固定原接收人，不能把分配账号当作当前可执行资格或实际真人提交者。见 domains/sandai-data-smith/pitfalls/sandeval-return-route-and-handoff-hints.md。
 
 - 2026-09-30｜Ingest｜新增 Sand Eval 子整改完成后再次退回的上级授权断链排查：工作台准备度、完整历史阻塞范围、pending 执行边界和只读证据指针。
+
+- 2026-09-30｜Ingest｜补充 Sand Eval 重复退回的正式完成执行继承、单条 hash-bound 父关联修复与实际用户提交验收指针；保留负责人独立验收。

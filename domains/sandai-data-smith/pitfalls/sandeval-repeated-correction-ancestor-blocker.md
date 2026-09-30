@@ -17,3 +17,12 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-roles-and-work
 - 本次部署源码入口：`sand-eval/platform/backend/quality/application/resolution/manual_return_service.py::_return`、`reinspection_authorization_service.py::manual_parent`、`resolution_service.py::_ancestors / capture_manual_annotation_return / resubmit`；完整阻塞范围扩展在 `quality/application/management/inspection_context_service.py::expand_disposition_targets`。源码属于可变指针，修复或发布后应重读。
 - 当次 `manual_parent` 仅定位直接上一轮 group 的负责人退回，实例的旧负责人责任位于更早轮次，结果为空；`capture_manual_annotation_return` 仅捕获 pending 执行，而保存旧上级授权的子整改执行已 completed。具体对象与 SHA 保存在报告，本页不作为当前生产状态证明。
 - 原始请求响应正文未保存在应用日志；本次通过同部署的只读阻塞查询、校验表达式和 212 字节响应大小交叉确认拒绝分支，没有为取证执行提交。浏览器未登录，本人工作台事实来自生产服务按当前身份的只读投影。
+
+## 受控恢复与防复发
+
+**Why:** 已完成的下级整改是正式历史依据，不能因为执行离开 pending 集合就丢弃它冻结的上级授权。恢复关联与关闭上级责任是不同动作；恢复后仍保留负责人验收。
+
+**How to apply:** 用 `ReinspectionAuthorizationService.completed_annotation_parent` 核验唯一 completed/resolved 执行、完整通过报告、同一真实批次的逐版本送审继承、父责任精确版本以及既有 v2 正式授权。新退回据此继承 `parent_manual_return_version`；历史缺关联的 untouched open 单通过 owning operator CLI `python -m app.cli.correction_parent_repair` 恢复。工具默认只读，显式 hash-bound apply；先备份 before-image，再重新核验计划，并用当前单版本/原证据、父单 processing 状态与版本作条件更新，保留 `parent_inheritance_repair` 审计标记。授权查询在操作事务外完成，事实校验在调用者 session 内复用，避免嵌套读连接。
+
+- [2026-09-30 修复报告与实时证据入口](/Users/leslie/Documents/Playground/output/wuqiuyu-correction-20260930/repair-report.md)：单条 apply、旧部署代码的独立门禁回读、真实用户 HTTP 200/执行回执、代码分支及 CI 指针。状态会变化，引用时以报告和当前线上回读为准。
+- 仅“门禁通过 / 按钮可用”仍不等于实际提交验收；应继续核对原用户的成功命令回执、新执行和 answers POST 结果。已经进入 processing 或存在执行/命令的单子不再适用 untouched-open 关联修复。
