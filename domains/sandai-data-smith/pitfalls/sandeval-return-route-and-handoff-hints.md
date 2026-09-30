@@ -24,3 +24,12 @@ links: [sandeval-direct-remediation-and-batch-handoff, sandeval-whole-package-re
 **How to apply:** 核对运行版本的 `SandReturnRouteField.tsx` 说明、`direct_return_service.py::DirectReturnService` 与正式父子处置、执行回执。直接路线先交原供应商质检员；质检员再退回标注员时才形成标注整改责任。系统复用负责人命令和身份，流水名字本身不能证明人工点击；`BatchRemediations.tsx` 的 route 标签不能证明下游任务已生成。`ResolutionTimelineRepository` 分别投影执行记录创建和新检查分配，提交复验不能替代派出新轮次的证据。旧轮次进度与当前整改状态须分别判读。
 
 - 部署版本、批次观察与权限限制：[2026-09-30 只读核查报告](/Users/leslie/Documents/Playground/sandeval-direct-route-audit-20260930/report.md)。该报告未取得本批正式执行回执，未确认复验生成受阻的具体原因。
+
+## 历史质检分配不等于当前可执行身份
+
+**Why:** 2026-09-30 后续核对发现，管理页的首轮质检分配与复验预览可以继续显示一个当前看不到质检入口的账号。只看“质检员”列会误导用户去找无法访问的按钮。
+
+**How to apply:** 分开核对正式检查记录的 `assignee_id`、账号当前权限和质检线路、本人任务入口、新轮次任务是否存在。第一轮分配账号不等于实际真人点击者；代登录操作者需另查审计。负责人复验命令的继承接收人与当前人员资格必须同时有效，界面没有换人选项时不能声称点退回即可改派。
+
+- 代码指针：`quality/application/management/leader_query_service.py::_detail_batches`、`quality/application/resolution/leader_resolution_service.py` 的复验分配回执、`quality/application/management/reinspection_service.py::_create`、`quality/infrastructure/client/reviewer_client.py`、`frontend/src/routes/quality.tsx`。先核对部署 SHA，再验证实时账号入口。
+- 当前个案、观察边界和恢复前置见上述只读报告的“当前接收账号与入口核对”。报告未确认历史角色或实际提交操作者，不能据此判定第一轮由谁人工完成。
