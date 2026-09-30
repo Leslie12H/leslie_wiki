@@ -2,7 +2,7 @@
 name: sandeval-runtime-profile-evidence
 type: reference
 created: 2026-09-25
-updated: 2026-09-25
+updated: 2026-09-30
 tags: [sand-eval, performance, runtime, prometheus]
 links: [sandeval-api-observability, sandeval-sql-lock-diagnosis]
 ---
@@ -41,3 +41,7 @@ links: [sandeval-api-observability, sandeval-sql-lock-diagnosis]
 
 - 双峰排查入口：[2026-09-25 15:56 与 16:09 的同窗 SLS、ARMS、Hologres 服务端查询及 Prometheus](/Users/leslie/Documents/Playground/sandeval-spikes-20260925-1556-1609/report.md)。每条 PostgreSQL span 必须先按 `db.name` 分组，再查对应 warehouse 的指标和 query log；应用默认 compute group 不能代表控制池或强一致读实际使用的计算组。
 - 服务端与客户端核对：同模板、开始时间和耗时的紧密对应可加强归因，但缺少 query_id 贯通时保留候选匹配的边界；calls>1 的聚合记录不能强行对到一次请求。数据库 start_query_cost / get_next_cost 增长表明内部执行阶段变慢，不能直接解释成 CPU 打满或 admission 队列。迁移控制池读取前保留 leader 一致性契约。
+
+- 2026-09-30 跨服务共享计算组退化取证入口：[Caption Flow 与 Eval 慢请求因果报告](/Users/leslie/Documents/Playground/sandeval-slow-20260930/report.md)。截图绝对时间、Kubernetes 生效配置、SLS/ARMS、服务端 query_id、历史执行计划和 Flow Run 对照均存报告；未来使用需重新核验。
+- **Why:** 应用名和 Kubernetes 集群不同不代表数据库资源隔离；普通读计算组正常也不能排除 control/leader 路径受其他服务重查询影响。
+- **How to apply:** 同时回读各服务普通读、强一致读及 heavy-query 的实际 warehouse；以相同 SQL 模板、client_addr 与 Flow 读取中的 run ID 关联具体负载，再对齐启停、版本和流量。批量 IN/LIMIT 不保证扫描裁剪，须看已执行计划与扫描行数；CPU 秒是并行累计量，查询日志权限与 calls 加权边界必须保留。不要在只读排查中顺手暂停 Flow 或迁移生产连接。

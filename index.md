@@ -394,7 +394,7 @@
 - [复验抽样与停止轮次继承](domains/sandai-data-smith/refs/sandeval-reinspection-sampling-lineage.md) — 供应商与 Sand 退回重提的跨轮不合格必检、有效改判、最近有效结论展示及实际抽样核对入口。
 - [质检批量分配延迟](domains/sandai-data-smith/refs/sandeval-bulk-allocation-latency.md) — 供应商与 Sand 批量分配的完整范围核查、串行批次、Sand 整包重复校验及一分钟客户端超时边界（2026-09-23）。
 - [Caption 旧模块数量与整题迁移](domains/sandai-data-smith/pitfalls/caption-module-count-and-migration.md) — 模块义务与答题卡数量差异、已验收迁移门禁及祖先退回闭环核验入口（2026-09-24）。
-- [Sand Eval CPU 与恢复取证入口](domains/sandai-data-smith/refs/sandeval-runtime-profile-evidence.md) — CFS、事件循环、SET/acquire、状态筛选、整包分页、后台化前后对比、流式分配中断，以及整改工作台、发布前置查询和批量派题运行栈的证据边界（2026-09-25）。
+- [Sand Eval CPU 与恢复取证入口](domains/sandai-data-smith/refs/sandeval-runtime-profile-evidence.md) — CFS、事件循环、SET/acquire、运行栈与计算组分层归因；含 2026-09-30 Caption Flow 重扫描、跨服务共享 leader 资源和启停对照取证入口。
 - [质检待处理与质检中状态判读](domains/sandai-data-smith/pitfalls/quality-allocation-blocked-status.md) — 分配姓名、送审与真实任务的区别，凭证过期及继续完成分配核验入口（2026-09-25）。
 - [质检分配与半完成送审冻结](domains/sandai-data-smith/refs/sandeval-partial-submission-freeze.md) — 写入中断根因、保留原快照的单批受控修复、备份及独立验收指针（2026-09-25）。
 - [Sand 分配与过期整包报告](domains/sandai-data-smith/refs/sandeval-stale-package-allocation.md) — 新复验使旧交接报告失效、数据包 tab 判读、选中范围求交、历史证据与实时依赖边界、恢复脚本及题目正文验收（2026-09-26）。
