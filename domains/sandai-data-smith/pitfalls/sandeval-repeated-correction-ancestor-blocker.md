@@ -3,7 +3,7 @@ name: sandeval-repeated-correction-ancestor-blocker
 type: pitfall
 created: 2026-09-30
 updated: 2026-09-30
-tags: [sand-eval, quality-center, remediation, reinspection, responsibility]
+tags: [sand-eval, quality-center, remediation, reinspection, responsibility, release]
 links: [sandeval-transferred-correction-task-visibility, sandeval-roles-and-workflow]
 ---
 
@@ -26,3 +26,12 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-roles-and-work
 
 - [2026-09-30 修复报告与实时证据入口](/Users/leslie/Documents/Playground/output/wuqiuyu-correction-20260930/repair-report.md)：单条 apply、旧部署代码的独立门禁回读、真实用户 HTTP 200/执行回执、代码分支及 CI 指针。状态会变化，引用时以报告和当前线上回读为准。
 - 仅“门禁通过 / 按钮可用”仍不等于实际提交验收；应继续核对原用户的成功命令回执、新执行和 answers POST 结果。已经进入 processing 或存在执行/命令的单子不再适用 untouched-open 关联修复。
+
+## 发布与运行时验收指针
+
+**Why:** 分支或 PR 的 Gate 证明被测源码通过检查，仍需证明生产运行该修复，并保留已修复实例的正式责任链。PR 合并、镜像构建、滚动发布和真人提交回执各自提供不同证据。
+
+**How to apply:** 发布获授权后，把 main 合并 SHA、同一流水线的 Gate 与镜像 digest 绑定；等待发布任务成功，再独立核对公开 `/health` 版本、全部副本镜像、实际容器源码和实例责任链。若合并后没有该 SHA 的发布任务，先排除已运行或排队的任务并重新确认 main，再调度 owning workflow；不并行启动本机发布，也不将“没有触发”的观察臆断为 webhook 或凭据故障。
+
+- [修复 PR #2192](https://github.com/world-sim-dev/sandai-data-smith/pull/2192) 与 [main 发布流水线](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/36685310505)：2026-09-30 发布证据入口。
+- [独立生产版本、4 个副本与责任链回读](/Users/leslie/Documents/Playground/output/wuqiuyu-correction-20260930/production-release-verification.json)：具体 SHA、digest、容器源码哈希和执行状态保存在当次证据；使用时须重新核验，不能视为持续的生产状态。

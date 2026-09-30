@@ -827,3 +827,5 @@
 
 - 2026-09-30｜Ingest｜补充 Sand Eval 重复退回的正式完成执行继承、单条 hash-bound 父关联修复与实际用户提交验收指针；保留负责人独立验收。
 - 2026-09-30｜Ingest｜秋招雷达原地址支持匿名岗位浏览，仅主动关联飞书表格时登录；补记平台入口与请求库两层登录门槛、私人数据隔离和双身份验收指针。见 global/refs/ai-job-radar-stable-entry.md。
+
+- 2026-09-30｜Ingest｜补充 Sand Eval 重复退回修复 PR 与 main 发布指针，区分 Gate、滚动发布及生产容器/责任链回读，记录 owning workflow 未触发时的核验与调度边界。
