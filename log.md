@@ -820,3 +820,4 @@
 - 2026-09-29：记录 AI 秋招雷达固定公开入口嵌入全栈工作台的发布边界，避免每日岗位日报发布覆盖入口页；见 global/refs/ai-job-radar-stable-entry.md。
 - 2026-09-29：确认 Sisyphus `event-tracking` 的 `new_user_join` setup 401 与生产 Admin 会话 JWT 过期对应，记录 Runner 凭据映射和重试验证方法；见 domains/sisyphus/pitfalls/scheduled-admin-jwt-expiry.md。
 - 2026-09-29：Sisyphus `RUN-20260929-0030` Attempt 2 在替换账号池专用服务凭据后 2/2 通过；补记生产账号池权限和空 JSON POST 会实际建号的探测陷阱。见 domains/sisyphus/pitfalls/scheduled-admin-jwt-expiry.md 与 domains/vidmuse/admin/pitfalls/service-jwt-permissions-and-expiry.md。
+- 2026-09-30：核对 Sand 直接整改先交原供应商质检员、再按需退标注员；区分原路线标签、系统使用负责人身份、复验申请与实际新轮次分配；本批执行回执未确认。见 domains/sandai-data-smith/pitfalls/sandeval-return-route-and-handoff-hints.md。
