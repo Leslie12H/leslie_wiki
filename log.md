@@ -841,3 +841,5 @@
 - 2026-10-05: 补充 Sand Eval 整改分区接续的实现与回归入口；记录精确答案校验、相邻分区和独立 Sand 批次边界，验证/发布状态以 Git 与 CI 为准。
 
 - 2026-10-05｜Ingest｜补充 Sand Eval 整改署名 review 的状态分支和刷新 DTO 核验方法；具体现象及未完成 CI 的边界见 review 记录。见 domains/sandai-data-smith/pitfalls/sandeval-correction-reviewer-display-scope.md。
+
+- 2026-10-05｜Ingest｜补充 Sand Eval 整改接续 review：已有正式批次不能证明恢复暂缓后的完整应交范围；回归须覆盖先改变来源投影再提交整改的真实时序。见 domains/sandai-data-smith/pitfalls/sandeval-remediation-scope-change-stale-handoff.md。

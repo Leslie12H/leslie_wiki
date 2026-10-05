@@ -23,3 +23,8 @@ links: [sandeval-direct-remediation-and-batch-handoff, sandeval-handoff-duplicat
 修复实现入口：业务仓库分支 `codex/correction-reviewer-names`，提交 `b65ccc9d1`；主要代码为 `quality/application/management/remediation_batch_scope.py`，完整回归在 `tests/quality/application/management/test_remediation_batch_scope.py`。该提交的验证与发布状态应重新查 Git 和 CI，不由本页推断。生产恢复仍需独立验收原 Sand 检查员唯一新轮次。
 
 **接续判据：** 来源普通分批与冻结质检分区分开；已完成整改执行、连续送审链、全部差异工作项和当前精确答案共同证明换作者的接续。接收整改卡的相邻批次也要核验。无依据的普通改派或后来答案不能借历史整改恢复；一个候选失效仅排除相关分区，不连带阻断其他正常 Sand 批次。最终结果资格以已验证完整包范围核对精确历史答案，作者事实仍独立保留。
+
+
+**Review 核验边界（2026-10-05）：** 审查业务提交 `b65ccc9d1` 时，不能只比对当前正式送审批次和报告组来证明整包仍已交接：恢复此前暂缓但尚未送审的批次，会增加当前应交清单，而正式批次集合和注册范围身份可能不变。核对 `leader_query_service.py::_require_current_handoff_evidence` 是否也校验当前完整清单；来源规则与既有负例分别见 `app/services/facts/task_assignments.py::_quality_context`、`tests/quality/application/management/test_result_eligibility.py::test_restored_deferred_batch_blocks_package_qualification_until_quality_is_complete`。此处是该提交的修复覆盖遗漏，是否已补齐须重新查代码和 CI。
+
+整改换作者的回归还应按真实顺序安排：先保存新作者答案并改变来源投影，再提交整改、复验、验收与交接。`test_remediation_batch_scope.py::completed_author_change` 在上述审查提交中把投影变化延后到负责人验收之后，因此不能单凭它证明真实时序通过；这属于验证缺口，尚未据此确认默认整包路线存在新的运行故障。
