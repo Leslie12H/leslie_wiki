@@ -21,4 +21,8 @@ links: [sandeval-repeated-return-feedback-lineage]
 - 已有查名路径：`quality/application/inspection/review_history_service.py` → `quality/infrastructure/client/reviewer_client.py::account_labels` → `app/services/facts/spaces.py::account_summaries`。
 - 历史渲染：`sand-eval/platform/frontend/src/pages/quality/inspection/AnswerVersions.tsx`。原功能提交指针：`38852ca1173843c094261c9b0aa987aada21cc39`。
 
-复查时重新核对生产版本及实际数据；本次仅完成定位，没有修改业务代码、回填数据或部署。
+复查时重新核对生产版本及实际数据；以上是原始只读定位的证据，不代表后续部署状态。
+
+## 修复与验收指针
+
+2026-10-05 用户授权修复后，从重新 fetch 的 main 创建 `codex/correction-reviewer-names`，提交指针：[d001cfbb67b4687a5466f639b5d3fa296a9daebb](https://github.com/world-sim-dev/sandai-data-smith/commit/d001cfbb67b4687a5466f639b5d3fa296a9daebb)。接口与展示覆盖、回归用例和本地验证边界见上方排查报告。是否创建 PR、Gate 是否通过、测试验收及上线状态均须现场核对，不将分支推送当作发布证据。
