@@ -832,3 +832,5 @@
 - 2026-09-30｜Ingest｜补记秋招雷达个人账号业务角色、应用资产所有权与租户的区别，附个人版官方能力与后台核查入口；跨租户转移及原 URL 保留仍待确认。见 global/refs/ai-job-radar-stable-entry.md。
 
 - 2026-09-30：补充 Sand Eval 与 Sandworm Caption Flow 共享计算组的慢请求取证入口；保留实际计划、Flow Run 启停、client/server 对照、权限及 CPU 秒口径边界。
+
+- 2026-10-05｜Ingest｜记录 Sand Eval 整改意见姓名展示覆盖缺口的只读核验入口，区分原身份事实、账号昵称、历史链路与整改清单/完整预览投影；业务代码未修改。见 domains/sandai-data-smith/pitfalls/sandeval-correction-reviewer-display-scope.md。
