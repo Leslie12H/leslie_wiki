@@ -37,3 +37,6 @@ links: [sandeval-repeated-return-feedback-lineage]
 **刷新草稿边界：** 将局部 manifest 刷新改成整台 workspace 刷新，会卸载子组件；除了答案编辑状态，还要检查弹窗取消或提交失败后留在组件中的整改说明。刷新会丢弃这些输入时先确认，拒绝后保留原草稿；不能仅靠禁用提交中的按钮保护取消后的输入。
 
 2026-10-05 的补修指针为业务分支 `codex/correction-reviewer-names` 本地提交 `e92221efb0c149cffa14e7e9612ca8675b7844cd`；入口是 `MyCorrectionPage.tsx`、`AnswerCorrectionPanel.tsx` 和 `MyCorrectionPage.test.tsx`。非编辑署名、完整工作台刷新和草稿确认的实现及验证边界见 `/Users/leslie/Documents/Playground/output/sandeval-resubmit-20261005/review-fixes.md`，后续发布与验收状态以 Git、CI 和浏览器为准。
+
+
+**刷新定位边界（2026-10-05）：** 全工作台重载还会卸载题目队列，使子组件本地 selected 恢复默认首题；刷新失败保留旧 DTO 后重挂，也可能丢当前位置。Why：署名刷新覆盖与编辑器重挂是两个独立验收点，姓名更新成功不能证明长批次核对连续性。How to apply：按稳定 work_unit_id 保留刷新前题目，覆盖成功、失败和题目退出范围；测试不要只断言每题相同的姓名或状态。静态发现的代码版本、调用链与验证边界见 [第二轮 review](/Users/leslie/Documents/Playground/output/sandeval-resubmit-20261005/review-2.md)，修复及上线状态重新核查。

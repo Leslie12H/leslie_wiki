@@ -845,3 +845,5 @@
 - 2026-10-05｜Ingest｜补充 Sand Eval 整改接续 review：已有正式批次不能证明恢复暂缓后的完整应交范围；回归须覆盖先改变来源投影再提交整改的真实时序。见 domains/sandai-data-smith/pitfalls/sandeval-remediation-scope-change-stale-handoff.md。
 
 - 2026-10-05｜Ingest｜记录整改交接与署名 review 补修指针、先变化来源的回归入口及整台刷新草稿确认边界；静态检查不代替 CI/浏览器验收。见 sandeval-remediation-scope-change-stale-handoff 与 sandeval-correction-reviewer-display-scope。
+
+- 2026-10-05：补充 Sand Eval 第二轮只读 review 指针：整改换作者后的正式质检代改与冻结接续冲突，以及全工作台刷新丢失当前题；记录条件、调用链和未运行验证边界。

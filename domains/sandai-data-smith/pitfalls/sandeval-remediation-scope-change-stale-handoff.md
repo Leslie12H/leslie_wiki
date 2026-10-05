@@ -31,3 +31,6 @@ links: [sandeval-direct-remediation-and-batch-handoff, sandeval-handoff-duplicat
 
 
 **Review 修复指针（2026-10-05）：** 业务分支 `codex/correction-reviewer-names` 的本地提交 `e92221efb0c149cffa14e7e9612ca8675b7844cd` 补入当前完整应交范围的只读校验；整包及单批交接成功路径都复用 `SubmissionService.check_completeness`。真实先投影的回归入口仍在 `test_remediation_batch_scope.py`；实现及验证记录见 `/Users/leslie/Documents/Playground/output/sandeval-resubmit-20261005/review-fixes.md`。CI 与生产状态须重新查证，提交和静态检查不代表运行验收通过。
+
+
+**代改兼容性 review（2026-10-05）：** 在 `e92221efb0c149cffa14e7e9612ca8675b7844cd` 的静态审查中，整改换作者完成后再正式质检代改，会产生合法的新答案版本；只要求当前引用等于整改冻结引用，会排除依赖接续的批次，阻断后续 Sand 提交和整包成果准入。Why：当前来源展示最新版本，质量冻结版本与合法代改谱系是不同事实，不能把所有新版本都视为无关变化。How to apply：同时核对 `remediation_batch_scope.py`、`facts/answer_amendment.py`、`inspection_context_service.py::_sand_batch_predecessors` 和 `result_eligibility_service.py`；代改执行中与最终封存的资格分别验证，避免报告自身无法提交。组合场景、影响边界与测试缺口见 [第二轮 review](/Users/leslie/Documents/Playground/output/sandeval-resubmit-20261005/review-2.md)。该条是审查提交上的发现，不代表后续修复或生产故障已验证。
