@@ -26,3 +26,9 @@ links: [sandeval-repeated-return-feedback-lineage]
 ## 修复与验收指针
 
 2026-10-05 用户授权修复后，从重新 fetch 的 main 创建 `codex/correction-reviewer-names`，提交指针：[d001cfbb67b4687a5466f639b5d3fa296a9daebb](https://github.com/world-sim-dev/sandai-data-smith/commit/d001cfbb67b4687a5466f639b5d3fa296a9daebb)。接口与展示覆盖、回归用例和本地验证边界见上方排查报告。是否创建 PR、Gate 是否通过、测试验收及上线状态均须现场核对，不将分支推送当作发布证据。
+
+## 展示分支与刷新核验
+
+**Why:** 姓名字段接通后，意见仍可能经过多个状态分支展示；只验证可编辑工作台会遗漏待复验和已完成界面。可降级的人员读取还需要验证服务恢复后用户刷新是否能拿到新字段。
+
+**How to apply:** 逐一核对所有仍展示意见的状态是否使用署名字段；追踪页面刷新所更新的 DTO 是否与署名绑定的 DTO 一致。字段放在 detail、刷新仅更新 manifest 时，新增展示可能无法随刷新恢复。2026-10-05 的源码 review 与具体验证边界见 [review 记录](/Users/leslie/Documents/Playground/output/sandeval-missing-reviewer-20261005/review.md)；修复和验收状态须重新核对代码与 CI。
