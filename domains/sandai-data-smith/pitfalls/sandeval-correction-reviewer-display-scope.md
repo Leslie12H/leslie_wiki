@@ -32,3 +32,8 @@ links: [sandeval-repeated-return-feedback-lineage]
 **Why:** 姓名字段接通后，意见仍可能经过多个状态分支展示；只验证可编辑工作台会遗漏待复验和已完成界面。可降级的人员读取还需要验证服务恢复后用户刷新是否能拿到新字段。
 
 **How to apply:** 逐一核对所有仍展示意见的状态是否使用署名字段；追踪页面刷新所更新的 DTO 是否与署名绑定的 DTO 一致。字段放在 detail、刷新仅更新 manifest 时，新增展示可能无法随刷新恢复。2026-10-05 的源码 review 与具体验证边界见 [review 记录](/Users/leslie/Documents/Playground/output/sandeval-missing-reviewer-20261005/review.md)；修复和验收状态须重新核对代码与 CI。
+
+
+**刷新草稿边界：** 将局部 manifest 刷新改成整台 workspace 刷新，会卸载子组件；除了答案编辑状态，还要检查弹窗取消或提交失败后留在组件中的整改说明。刷新会丢弃这些输入时先确认，拒绝后保留原草稿；不能仅靠禁用提交中的按钮保护取消后的输入。
+
+2026-10-05 的补修指针为业务分支 `codex/correction-reviewer-names` 本地提交 `e92221efb0c149cffa14e7e9612ca8675b7844cd`；入口是 `MyCorrectionPage.tsx`、`AnswerCorrectionPanel.tsx` 和 `MyCorrectionPage.test.tsx`。非编辑署名、完整工作台刷新和草稿确认的实现及验证边界见 `/Users/leslie/Documents/Playground/output/sandeval-resubmit-20261005/review-fixes.md`，后续发布与验收状态以 Git、CI 和浏览器为准。

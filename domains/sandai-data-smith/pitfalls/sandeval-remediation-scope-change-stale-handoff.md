@@ -28,3 +28,6 @@ links: [sandeval-direct-remediation-and-batch-handoff, sandeval-handoff-duplicat
 **Review 核验边界（2026-10-05）：** 审查业务提交 `b65ccc9d1` 时，不能只比对当前正式送审批次和报告组来证明整包仍已交接：恢复此前暂缓但尚未送审的批次，会增加当前应交清单，而正式批次集合和注册范围身份可能不变。核对 `leader_query_service.py::_require_current_handoff_evidence` 是否也校验当前完整清单；来源规则与既有负例分别见 `app/services/facts/task_assignments.py::_quality_context`、`tests/quality/application/management/test_result_eligibility.py::test_restored_deferred_batch_blocks_package_qualification_until_quality_is_complete`。此处是该提交的修复覆盖遗漏，是否已补齐须重新查代码和 CI。
 
 整改换作者的回归还应按真实顺序安排：先保存新作者答案并改变来源投影，再提交整改、复验、验收与交接。`test_remediation_batch_scope.py::completed_author_change` 在上述审查提交中把投影变化延后到负责人验收之后，因此不能单凭它证明真实时序通过；这属于验证缺口，尚未据此确认默认整包路线存在新的运行故障。
+
+
+**Review 修复指针（2026-10-05）：** 业务分支 `codex/correction-reviewer-names` 的本地提交 `e92221efb0c149cffa14e7e9612ca8675b7844cd` 补入当前完整应交范围的只读校验；整包及单批交接成功路径都复用 `SubmissionService.check_completeness`。真实先投影的回归入口仍在 `test_remediation_batch_scope.py`；实现及验证记录见 `/Users/leslie/Documents/Playground/output/sandeval-resubmit-20261005/review-fixes.md`。CI 与生产状态须重新查证，提交和静态检查不代表运行验收通过。
