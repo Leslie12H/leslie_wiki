@@ -20,4 +20,6 @@ links: [sandeval-direct-remediation-and-batch-handoff, sandeval-handoff-duplicat
 - 旧包展示与交接条件入口：`leader_query_service.py::_package`、`aggregation_service.py::require_supplier_acceptance` / `package_submitted`、`frontend/src/pages/quality/management/AllocationDetail.tsx`。
 - 默认负责人路线自动派回发现入口：`quality/infrastructure/persistence/disposition_repository.py::handed_off_supplier_returns`；源代码存在不等于新包交接后已自动派回。
 
-本次仅排查，未实施业务代码修复、生产数据恢复或部署。修复与现场恢复应保全正式答案和已验证质检证据，并独立验收原 Sand 检查员唯一新轮次。
+修复实现入口：业务仓库分支 `codex/correction-reviewer-names`，提交 `b65ccc9d1`；主要代码为 `quality/application/management/remediation_batch_scope.py`，完整回归在 `tests/quality/application/management/test_remediation_batch_scope.py`。该提交的验证与发布状态应重新查 Git 和 CI，不由本页推断。生产恢复仍需独立验收原 Sand 检查员唯一新轮次。
+
+**接续判据：** 来源普通分批与冻结质检分区分开；已完成整改执行、连续送审链、全部差异工作项和当前精确答案共同证明换作者的接续。接收整改卡的相邻批次也要核验。无依据的普通改派或后来答案不能借历史整改恢复；一个候选失效仅排除相关分区，不连带阻断其他正常 Sand 批次。最终结果资格以已验证完整包范围核对精确历史答案，作者事实仍独立保留。

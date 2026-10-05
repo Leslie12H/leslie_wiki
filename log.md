@@ -837,3 +837,5 @@
 - 2026-10-05｜Ingest｜补充整改意见姓名修复的干净 main 分支与提交指针；区分本地文档/生成物检查、DEFER_TO_GATE、测试 PR、浏览器验收及部署。
 
 - 2026-10-05｜Ingest｜记录 Sand Eval 整改重提的批次范围变化、整包完整性阻断与旧首次交接状态误导的生产只读核验入口；保留源代码、后台重试和成员差集证据指针。见 domains/sandai-data-smith/pitfalls/sandeval-remediation-scope-change-stale-handoff.md。
+
+- 2026-10-05: 补充 Sand Eval 整改分区接续的实现与回归入口；记录精确答案校验、相邻分区和独立 Sand 批次边界，验证/发布状态以 Git 与 CI 为准。
