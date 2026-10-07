@@ -2,7 +2,7 @@
 name: sandeval-correction-reviewer-display-scope
 type: pitfall
 created: 2026-10-05
-updated: 2026-10-05
+updated: 2026-10-07
 tags: [sandeval, quality, correction, identity, frontend]
 links: [sandeval-repeated-return-feedback-lineage]
 ---
@@ -40,3 +40,5 @@ links: [sandeval-repeated-return-feedback-lineage]
 
 
 **刷新定位边界（2026-10-05）：** 全工作台重载还会卸载题目队列，使子组件本地 selected 恢复默认首题；刷新失败保留旧 DTO 后重挂，也可能丢当前位置。Why：署名刷新覆盖与编辑器重挂是两个独立验收点，姓名更新成功不能证明长批次核对连续性。How to apply：按稳定 work_unit_id 保留刷新前题目，覆盖成功、失败和题目退出范围；测试不要只断言每题相同的姓名或状态。静态发现的代码版本、调用链与验证边界见 [第二轮 review](/Users/leslie/Documents/Playground/output/sandeval-resubmit-20261005/review-2.md)，修复及上线状态重新核查。
+
+**刷新定位修复指针（2026-10-07）：** 业务仓库本地提交 `9b94a882df4bdff109b203b1115fde698cf7e0ed`；实现与验证边界见 [第二轮 review 修复记录](/Users/leslie/Documents/Playground/output/sandeval-resubmit-20261005/review-2-fixes.md)。**Why:** 完整工作台重载会卸载题目面板，因此当前题身份必须由卸载边界之外持有。**How to apply:** 按质量任务和整改单隔离稳定 work_unit_id，在成功或失败重载后重新定位；清单重排和 issue ID 更新不应改变当前题，目标退出清单才回首题。继续保留未保存答案与整改说明的丢弃确认，回归同时断言当前题身份、跨单隔离与失败重试，不能只检查姓名更新。代码入口为 `MyCorrectionPage.tsx`、`AnswerCorrectionPanel.tsx`，回归入口为 `MyCorrectionPage.test.tsx`；该提交尚无 CI 或浏览器验收通过证据，发布状态须另查。

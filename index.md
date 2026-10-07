@@ -178,7 +178,7 @@
 
 - [Sand Eval 角色与两侧工作流](domains/sandai-data-smith/refs/sandeval-roles-and-workflow.md) — 角色节点、Sand 视角、成员权限与新旧质检链路的核验入口（2026-09-17）。
 - [Sand Eval 多轮退回的上游意见链](domains/sandai-data-smith/pitfalls/sandeval-repeated-return-feedback-lineage.md) — 整批意见须有父处置，逐题意见还须原报告、送审包与冻结计划（2026-09-28）。
-- [Sand Eval 整改意见姓名的展示覆盖](domains/sandai-data-smith/pitfalls/sandeval-correction-reviewer-display-scope.md) — 原身份、账号昵称、部署 DTO 与卡片覆盖核验；含干净 main 修复分支、清单/单题/预览与整批发起人、状态分支/刷新署名、草稿确认及题目定位回归的核验指针（2026-10-05）。
+- [Sand Eval 整改意见姓名的展示覆盖](domains/sandai-data-smith/pitfalls/sandeval-correction-reviewer-display-scope.md) — 原身份、账号昵称、部署 DTO 与状态分支覆盖；完整工作台刷新、草稿确认、稳定题目定位与跨单隔离修复及验收指针（2026-10-07）。
 - [Caption Refine 跳过与待定阻断交卷](domains/sandai-data-smith/pitfalls/sandeval-caption-refine-skip-defer-handoff.md) — 定位限制历史与修复分支；待定排除须覆盖整包，跳过须保留固定作答上下文，交付状态另行核验；含全待定兄弟批次恢复后的整包资格修复与回归指针（2026-09-28）。
 - [Sand Eval 质检员整改轮次与可编辑性核验](domains/sandai-data-smith/pitfalls/sandeval-inspector-rework-round-list-and-editability.md) — 源任务、标注员范围、当前/历史质检轮次与编辑权限的区分（2026-09-28）。
 - [Sand Eval 整批退回后的代改版本冲突](domains/sandai-data-smith/pitfalls/sandeval-stopped-review-amendment-conflict.md) — 上轮停止后代改继承的原因、main 修复 PR #2144 与生产验收边界（2026-09-28）。
@@ -420,6 +420,6 @@
 - [VidMuse QuickTracking 前端指标](domains/vidmuse/refs/quicktracking-frontend-metrics.md) — 报表取数入口、时间桶校准和前后端统计口径边界。
 - [知识库多分支历史分叉的同步](disciplines/dev/wiki-history-sync.md) — 双方历史保全、未跟踪文档、目录与日志合并及远端回读方法（2026-09-28）。
 
-- [Sand Eval 整改后范围变化与旧包交接状态](domains/sandai-data-smith/pitfalls/sandeval-remediation-scope-change-stale-handoff.md) — 来源最新作者改变批次范围、整包完整性阻断、旧包已交接投影及默认路线自动派回的核验入口；受控冻结分区接续、恢复暂缓范围、真实整改时序及后续正式代改兼容性的 review 入口（2026-10-05）。
+- [Sand Eval 整改后范围变化与旧包交接状态](domains/sandai-data-smith/pitfalls/sandeval-remediation-scope-change-stale-handoff.md) — 换作者整改、整包完整性、旧包投影与自动派回；正式代改连续证据、来源成功但质量账本中断的受控恢复及组合回归指针（2026-10-07）。
 
 - [Sand Eval 四接口重复读取取证](domains/sandai-data-smith/refs/sandeval-four-api-repeated-read-evidence.md) — 整改历史、代改回执、列表摘要和提交快照的部署源、完整trace、扫描量与查询计划核对入口（2026-10-07）。
