@@ -420,6 +420,6 @@
 - [VidMuse QuickTracking 前端指标](domains/vidmuse/refs/quicktracking-frontend-metrics.md) — 报表取数入口、时间桶校准和前后端统计口径边界。
 - [知识库多分支历史分叉的同步](disciplines/dev/wiki-history-sync.md) — 双方历史保全、未跟踪文档、目录与日志合并及远端回读方法（2026-09-28）。
 
-- [Sand Eval 整改后范围变化与旧包交接状态](domains/sandai-data-smith/pitfalls/sandeval-remediation-scope-change-stale-handoff.md) — 换作者整改、整包完整性、旧包投影与自动派回；正式代改连续证据、来源成功但质量账本中断的受控恢复、组合回归及测试 PR #2241 指针（2026-10-07）。
+- [Sand Eval 整改后范围变化与旧包交接状态](domains/sandai-data-smith/pitfalls/sandeval-remediation-scope-change-stale-handoff.md) — 换作者整改、整包完整性、旧包投影与自动派回；正式代改连续证据、来源回执受控恢复、质量/来源引用差异及组合回归与测试 PR #2241 指针（2026-10-07）。
 
 - [Sand Eval 四接口重复读取取证](domains/sandai-data-smith/refs/sandeval-four-api-repeated-read-evidence.md) — 整改历史、代改回执、本人列表和提交快照的运行证据、无数据库变更方案及权限/恢复/业务影响审查入口（2026-10-07）。
