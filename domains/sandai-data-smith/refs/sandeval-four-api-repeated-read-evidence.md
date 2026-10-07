@@ -26,3 +26,5 @@ links: [sandeval-runtime-profile-evidence]
 - **How to apply:** 原始回执仅在一次prepare内隔离复用；完整历史可按QT批量用于本人列表，但写前和恢复阶段继续现读。精准授权先选每批最新处置，再筛成员；三次snapshot按准备、写前、写后职责评估。应用回退不撤销已经产生的业务写入。禁止数据库变更时只采用现有键过滤和应用读取组织，不隐含新增索引或lookup表。
 
 - [本地实现与验证交付](/Users/leslie/Documents/Playground/sandeval-four-api-evidence-20261007/implementation-report.md)保存独立工作区、main基线、分项提交、检查结果及CI/实测缺口。整改入口窄预检的候选在实现复核中收窄为已授权config复用：完整详情的历史损坏检查位于receipt重放之前，不能仅因handler没有消费executions字段就删除读取。
+
+- 2026-10-07：实现评审见[正式审查报告](/Users/leslie/Documents/Playground/sandeval-four-api-evidence-20261007/formal-review.md)；main PR 为 [#2245](https://github.com/world-sim-dev/sandai-data-smith/pull/2245)。使用时回读 PR 的当前 head、base、Gate 与合并状态；创建 PR 不代表测试环境验收、性能收益或部署已完成。

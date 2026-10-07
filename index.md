@@ -422,4 +422,4 @@
 
 - [Sand Eval 整改后范围变化与旧包交接状态](domains/sandai-data-smith/pitfalls/sandeval-remediation-scope-change-stale-handoff.md) — 换作者整改、整包完整性、旧包投影与自动派回；正式代改连续证据、来源回执受控恢复、质量/来源引用差异及组合回归与测试 PR #2241 指针（2026-10-07）。
 
-- [Sand Eval 四接口重复读取取证](domains/sandai-data-smith/refs/sandeval-four-api-repeated-read-evidence.md) — 整改历史、代改回执、本人列表和提交快照的运行证据、无数据库变更方案、本地实现和权限/恢复/业务影响验证入口（2026-10-07）。
+- [Sand Eval 四接口重复读取取证](domains/sandai-data-smith/refs/sandeval-four-api-repeated-read-evidence.md) — 整改历史、代改回执、本人列表和提交快照的运行证据、无数据库变更方案、正式审查及 main PR #2245 验证入口（2026-10-07）。
