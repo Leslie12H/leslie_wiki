@@ -847,3 +847,5 @@
 - 2026-10-05｜Ingest｜记录整改交接与署名 review 补修指针、先变化来源的回归入口及整台刷新草稿确认边界；静态检查不代替 CI/浏览器验收。见 sandeval-remediation-scope-change-stale-handoff 与 sandeval-correction-reviewer-display-scope。
 
 - 2026-10-05：补充 Sand Eval 第二轮只读 review 指针：整改换作者后的正式质检代改与冻结接续冲突，以及全工作台刷新丢失当前题；记录条件、调用链和未运行验证边界。
+
+- 2026-10-07：补充 Sand Eval 四接口重复读取取证指针，保存部署源、完整请求trace、Hologres扫描和分片计划的验证方法；尚未优化或部署。

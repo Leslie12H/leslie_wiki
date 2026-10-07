@@ -421,3 +421,5 @@
 - [知识库多分支历史分叉的同步](disciplines/dev/wiki-history-sync.md) — 双方历史保全、未跟踪文档、目录与日志合并及远端回读方法（2026-09-28）。
 
 - [Sand Eval 整改后范围变化与旧包交接状态](domains/sandai-data-smith/pitfalls/sandeval-remediation-scope-change-stale-handoff.md) — 来源最新作者改变批次范围、整包完整性阻断、旧包已交接投影及默认路线自动派回的核验入口；受控冻结分区接续、恢复暂缓范围、真实整改时序及后续正式代改兼容性的 review 入口（2026-10-05）。
+
+- [Sand Eval 四接口重复读取取证](domains/sandai-data-smith/refs/sandeval-four-api-repeated-read-evidence.md) — 整改历史、代改回执、列表摘要和提交快照的部署源、完整trace、扫描量与查询计划核对入口（2026-10-07）。
