@@ -13,6 +13,10 @@ links: [sandeval-return-route-and-handoff-hints]
 
 **How to apply:** 从链接里的 `line`、`review` 和正式报告 `stage / assignee_id` 识别关卡，再核对账号当前能力和空间事实。区分供应商质检人、Sand 质检人、Sand 负责人复核人；同时检查验收资格与独立复核限制。列表固定提示不能替代真实身份核对。
 
+## 角色与流程名称
+
+“Sand 负责人”是复核流程的称呼，不是独立可指派的系统角色。`RoleService.role_for` 根据根空间事实返回 `sand_staff`，这也不是角色表中可分配的岗位；Sand 复核关卡 `sand_review` 校验根空间资格和复核权限，不要求另行任命“Sand 负责人”。最后仍须核对独立复核限制。代码指针：`app/services/facts/roles.py`、`quality/application/reviewer_service.py::_require_qualified`；每次使用核对运行版本。
+
 ## 当前规则的核验指针
 
 - Sand 质检允许已分配的有效外部账号，Sand 负责人复核仍要求根空间资格；以运行版本的 `quality/application/reviewer_service.py::ReviewerService.validate_candidates`、`quality/infrastructure/client/reviewer_client.py` 和宿主 `RoleService.batch_get_account_capabilities` 为准。
