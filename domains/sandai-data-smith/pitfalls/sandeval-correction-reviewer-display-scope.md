@@ -54,3 +54,7 @@ links: [sandeval-repeated-return-feedback-lineage]
 **How to apply:** 从当前复验的目标送审和报告继承链找到明确委派子处置，再沿 `parent_disposition_id` 读取 Sand 原父处置的 `created_by` 与原报告检查人；分别核对意见作者、当前复验人和标注员。检查 `upstream_return_note` 是否具有对应的作者投影及组件渲染；现有 `return_author_name` 对应本地整改摘要，不能直接作为上游 Sand 原作者。姓名读取沿已授权的精确意见事实批量取值，不借用账号切换或放宽权限来补展示。
 
 取证与修复方案见 [2026-10-08 质检复验页缺名报告](/Users/leslie/Documents/Playground/output/sandeval-inspection-feedback-author-20261008/report.md)，包含精确链接、截图意见匹配、生产身份链、部署源码快照及未实施方案。入口为 `quality/application/resolution/delegated_feedback.py::delegated_sand_return`、`quality/application/inspection/review_query_service.py`、`ReviewTaskDetailResponse`、`frontend/src/pages/quality/inspection/ReviewWorkspace.tsx` 与 `SandFeedbackNote.tsx`。后续修复、部署和浏览器验收状态现场回读，不由该只读诊断推定。
+
+**复验页实现指针（2026-10-08）：** 用户授权修复后，从新获取的 main 创建 `codex/sand-feedback-author`，代码提交 [5addb8be51bd6b936f4b5ae7d0d7b264af90abc5](https://github.com/world-sim-dev/sandai-data-smith/commit/5addb8be51bd6b936f4b5ae7d0d7b264af90abc5)。覆盖复验页整批/逐题原意见及同一详情的只读观察页，范围、回归、43 文件直接证据转 CI、结构检查边界和验收步骤见 [实现记录](/Users/leslie/Documents/Playground/output/sandeval-inspection-feedback-author-20261008/fix/implementation.md)。PR、Gate、浏览器和部署状态按该记录及 GitHub 实时回读，代码提交不能当作线上生效。
+
+**原意见作者边界：** Why：逐题原话可能来自仲裁裁定，而意见仍通过原检查项继承；仅用最外层原报告的检查人会把裁定意见署给错误的人。How to apply：在解析有效意见时保留其实际来源报告，经过精确成员授权与分页后再批量取作者姓名；姓名降级不丢原话，页面刷新须同时覆盖整批详情和独立逐题接口，并断言题目位置没有变化。
