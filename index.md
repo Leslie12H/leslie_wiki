@@ -423,3 +423,5 @@
 - [Sand Eval 整改后范围变化与旧包交接状态](domains/sandai-data-smith/pitfalls/sandeval-remediation-scope-change-stale-handoff.md) — 换作者整改、整包完整性、旧包投影与自动派回；正式代改连续证据、来源回执受控恢复、质量/来源引用差异及组合回归、测试 PR #2241 / main PR #2246，以及上线后包已生成但待正式交接的生产核查指针（2026-10-07）。
 
 - [Sand Eval 四接口重复读取取证](domains/sandai-data-smith/refs/sandeval-four-api-repeated-read-evidence.md) — 整改历史、代改回执、本人列表和提交快照的运行证据、无数据库变更方案、正式审查及 main PR #2245 验证入口（2026-10-07）。
+
+- [Sand 质检待验收与自验身份](domains/sandai-data-smith/pitfalls/sandeval-self-review-stage-identity.md) — 供应商与 Sand 质检人、待验收状态、当前资格、自验门禁及负责人验收入口的生产核验指针（2026-10-08）。
