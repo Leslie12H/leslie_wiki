@@ -2,7 +2,7 @@
 name: sandeval-correction-reviewer-display-scope
 type: pitfall
 created: 2026-10-05
-updated: 2026-10-07
+updated: 2026-10-08
 tags: [sandeval, quality, correction, identity, frontend]
 links: [sandeval-repeated-return-feedback-lineage]
 ---
@@ -46,3 +46,11 @@ links: [sandeval-repeated-return-feedback-lineage]
 **PR 核验入口（2026-10-07）：** [测试 PR #2241](https://github.com/world-sim-dev/sandai-data-smith/pull/2241) 由 `codex/correction-reviewer-names` 指向 `sandeval-test-only`。四条任务提交已从原 main 基线更新到 `afd72cda8d10`，生成文档由原生成器处理冲突，业务补丁的 range-diff 核对记录见 [PR 准备记录](/Users/leslie/Documents/Playground/output/sandeval-resubmit-20261005/pr-status.md)。CI、合并与部署状态读取 PR 和对应 run，不能由历史本地提交推定。
 
 **Main PR 指针（2026-10-07）：** 用户授权后由干净开发分支创建 [main PR #2246](https://github.com/world-sim-dev/sandai-data-smith/pull/2246)，五条补丁更新到最新 main 后经 range-diff 确认等价。前序测试 PR #2241 的合入与测试部署证据、准确 base/head、main Gate 及浏览器/生产验收边界见 [main PR 记录](/Users/leslie/Documents/Playground/output/sandeval-resubmit-20261005/main-pr-status.md)；后续状态以对应 PR/run 回读为准。
+
+## 质检复验页的上游 Sand 意见（2026-10-08）
+
+**Why:** 标注整改卡片与供应商质检复验页的上游 Sand 意见使用不同的身份事实、DTO 字段和组件。原作者已存在且标注整改页已增加署名，也不能证明 `SandFeedbackNote` 的整批或逐题意见已展示作者。顶部批次后的 `producer_name` 是标注员，不是质检人；当前复验任务 `assignee_id` 也不能代替原 Sand 意见作者。
+
+**How to apply:** 从当前复验的目标送审和报告继承链找到明确委派子处置，再沿 `parent_disposition_id` 读取 Sand 原父处置的 `created_by` 与原报告检查人；分别核对意见作者、当前复验人和标注员。检查 `upstream_return_note` 是否具有对应的作者投影及组件渲染；现有 `return_author_name` 对应本地整改摘要，不能直接作为上游 Sand 原作者。姓名读取沿已授权的精确意见事实批量取值，不借用账号切换或放宽权限来补展示。
+
+取证与修复方案见 [2026-10-08 质检复验页缺名报告](/Users/leslie/Documents/Playground/output/sandeval-inspection-feedback-author-20261008/report.md)，包含精确链接、截图意见匹配、生产身份链、部署源码快照及未实施方案。入口为 `quality/application/resolution/delegated_feedback.py::delegated_sand_return`、`quality/application/inspection/review_query_service.py`、`ReviewTaskDetailResponse`、`frontend/src/pages/quality/inspection/ReviewWorkspace.tsx` 与 `SandFeedbackNote.tsx`。后续修复、部署和浏览器验收状态现场回读，不由该只读诊断推定。
