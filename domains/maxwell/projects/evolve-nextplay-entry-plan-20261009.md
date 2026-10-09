@@ -39,3 +39,16 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 - 参照方案的版本 diff 与 CRUD 语义，区分成员移除、资产归档、物理删除；新版本不能静默改写已有 Benchmark/Run。
 - Benchmark 新建与扩充继续同等支持生成、导入和混合使用。历史口径不同的总分不能直接当提升，增量运行不能冒充全量重跑。
 - 具体 DDL、唯一键/关系和 OpenAPI 变更实施前按项目规则确认；同名历史 Case 不自动合并，保留历史 ID、内容与授权边界。
+
+## 2026-10-09 多套 Benchmark 与交互设计稿
+
+用户明确要求同一业务可维护效果、性能、成本等多套 Benchmark，并要求结合现有 Maxwell 风格提供可用的前端设计。当前代码已具备业务级多 Benchmark 版本基础，开工缺口与边界见[实施准备](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/implementation-readiness.md)。
+
+**Why:** 将所有评测都压成一套质量分会丢失性能/成本的单位、运行条件与缺失语义；仅改界面不能解开已有 Work 与 rubric 执行限制。
+
+**How to apply:**
+
+- 用途作为可扩展标签/模板，Benchmark 分别锁定资产与运行条件；性能/成本可由执行数据计算，不要求 LLM Judge。
+- 一次多选建议展开为多个 Run，由 Work 组织；证据复用需条件一致，不另造套件资产。
+- 以[原型说明](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/README.md)及[设计 QA](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-qa.md)查看本地原型、12 个 SVG/Figma 导入画板与验证边界。全部为演示数据；原生 Figma 插件未在编辑器内执行，没有在线 Figma 文件。
+- 实施前完成精确资产迁移、API/结果契约和 Nextplay 原 Judge 同证据验收清单；产品讨论和原型不构成接口/DDL 的批准。发布/回滚继续后置。
