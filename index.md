@@ -429,3 +429,5 @@
 - [AAC 坏包导致浏览器固定时间停播](domains/sandai-data-smith/pitfalls/sandeval-aac-corrupt-packet-browser-stall.md) — 原文件11.448秒解码失败、音轨修复对照、严格解码与媒体交付健康的边界（2026-10-08）。
 
 - [Sand 直接整改后负责人再次退回](domains/sandai-data-smith/pitfalls/sandeval-direct-return-interrupted-by-leader.md) — 区分系统代委派与负责人独立退回，保存过期配置快照导致重检门禁拒绝、旧轮次 stopped 的只读复现，以及直接整改入口限制、手动重检修复与存量责任桥接、验收中断恢复及配置迁移接续的完整回归指针（2026-10-09）。
+
+- [EVOLVE 自迭代设计审查 2026-10-09](domains/maxwell/refs/evolve-design-review-self-iteration-20261009.md) — 统一采纳门槛、final 独立性、搜索反馈、Judge 校准及预算/交付边界的代码与反例核验入口
