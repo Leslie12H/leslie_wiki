@@ -114,3 +114,15 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 - 谱系用于打开实际对象、源对话、证据与版本；边必须来自明确的来源引用。共享基线不代表某任务生成了该候选。当前原型按所选记录展示一条关联链，不宣称全局网络布局已完成。
 - 趋势除完整执行、Benchmark/指标版本与 Agent/Skill 范围一致外，还要区分有效评分题目集合；覆盖数量相同但缺失题不同，也不能连成同口径趋势。规则/题集变动可并列结果但不计算收益，人工复核不静默改原始趋势。
 - 可变实现与实际覆盖继续回到 [V7 体验方案](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/experience-plan-v7.md)、[验收记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/acceptance.md) 和 [增量 harden](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/harden-review.md)。对话、生成和候选验证为明确模拟，未接真实模型/Agent/Judge；没有接口或数据库改动。
+
+
+## 2026-10-09 布局连续性与背景动效偏好
+
+**Why:** 用户进一步关注整个页面是否顺畅，并明确喜欢 [VidMuse 波纹背景参考](https://vidmuse-record-waves.katliyue.chatgpt.site/)。功能路径可执行不等于高频操作连贯；独立评审与浏览器检查发现趋势返回口径丢失、谱系来源返回与滚动起点问题，以及助手审阅叠层和首屏信息权重问题。
+
+**How to apply:**
+
+- 当前证据与具体调整回到 [布局、连续操作与动效方案](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/motion-layout-review.md)。该文为审查和提案，不能标成已经实施；真实模型等待、多人并发和帧率尚未验收。
+- 先验证对象跳转、返回、筛选/口径/所选节点及滚动锚点的连续性，再叠加动效。助手与长草案应保持来源和审阅上下文；谱系详情应与所选节点同屏。
+- 参考背景采用缓慢扩散与空间层次；设计提案将其限制在空状态和助手局部，Maxwell 暖色及稳定的数据阅读表面继续保留。持续背景提供暂停和减少动态支持；具体风格与参数仍需在新原型验收，用户喜欢参考不代表已批准换成黑色视觉系统。
+- 以现有 Maxwell motion tokens 统一反馈，并测试快速中断、回焦和历史消息不抢滚动。不要把背景运动、自动递增进度或装饰连线当作真实执行/提升证据。
