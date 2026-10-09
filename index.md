@@ -427,3 +427,5 @@
 - [Sand 质检待验收与自验身份](domains/sandai-data-smith/pitfalls/sandeval-self-review-stage-identity.md) — 供应商与 Sand 质检人、待验收状态、Sand 复核与角色的区别、实际授权拒绝点、冻结复核配置、正规恢复及自动复核入口的生产核验指针（2026-10-08）。
 
 - [AAC 坏包导致浏览器固定时间停播](domains/sandai-data-smith/pitfalls/sandeval-aac-corrupt-packet-browser-stall.md) — 原文件11.448秒解码失败、音轨修复对照、严格解码与媒体交付健康的边界（2026-10-08）。
+
+- [Sand 直接整改后负责人再次退回](domains/sandai-data-smith/pitfalls/sandeval-direct-return-interrupted-by-leader.md) — 区分系统代委派与负责人独立退回，旧轮次 stopped、按钮不可用及后继未生成的生产取证入口（2026-10-09）。
