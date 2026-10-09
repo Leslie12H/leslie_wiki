@@ -126,3 +126,17 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 - 先验证对象跳转、返回、筛选/口径/所选节点及滚动锚点的连续性，再叠加动效。助手与长草案应保持来源和审阅上下文；谱系详情应与所选节点同屏。
 - 参考背景采用缓慢扩散与空间层次；设计提案将其限制在空状态和助手局部，Maxwell 暖色及稳定的数据阅读表面继续保留。持续背景提供暂停和减少动态支持；具体风格与参数仍需在新原型验收，用户喜欢参考不代表已批准换成黑色视觉系统。
 - 以现有 Maxwell motion tokens 统一反馈，并测试快速中断、回焦和历史消息不抢滚动。不要把背景运动、自动递增进度或装饰连线当作真实执行/提升证据。
+
+
+## 2026-10-09 完整产品组织、通用对象与 A2A 职责对齐
+
+**Why:** 用户明确被测对象还可以是外部 HTTP 系统，要求保留原有「评测与调优」整体产品；同时强调 Benchmark 是核心能力，不能每次纠正一个入口便遗漏此前的资产、对话、版本、复核、趋势、谱系和动效。
+
+**How to apply:**
+
+- 后续从 [完整产品体验与业务接入路径](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/business-journeys.md) 和 [交互增量验收](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/interaction-refinement-acceptance.md) 进入。这两份文件集中记录整体职责、路径、分支、设计系统、源码/PDF依据、当前模拟能力与真实接入缺口；旧文档和截图保留历史，不逐条拼成当前完成结论。
+- Benchmark 组织可复用的版本化标准；评测产生冻结执行与评分事实；调优组织目标、候选和验证。被测对象、调优 Agent、执行 Agent/适配器职责不同，Case/Judge 仍是业务共享资产。维护全局目录与 Benchmark 内入口的同一对象关系，不复制另一套结果或任务。
+- 被测对象包括 Maxwell 预设、A2A 服务和 HTTP 系统，Skill 选填。是否能应用候选由真实能力与本次回执决定，不能由 A2A/HTTP 协议名称推断。当前实现核对回到 [Executor Kit](/Users/leslie/Downloads/sandai-code/maxwell-ai/services/evolve-server/docs/executor-kit/README.md)、[对象入驻设计](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-executor-onboarding-design.md) 和体验方案内源码指针；较早 A2A 文档中的类型数量和 probe 门槛不是当前事实。
+- 用户要求有动效但不必复制参考网站。以连续操作与稳定阅读为先：紧凑工作区、对话/审阅同屏、谱系详情同屏，持续动效仅在空状态局部、可暂停并尊重 reduced-motion。
+- 任务/运行/Benchmark 对话应按实际来源隔离；无基线候选不能默认关联第一套 Benchmark。保护未保存编辑时不能覆盖历史条目，浏览器 Forward 回到原页须撤销过期离开回调。修复与定向证据回到验收文件，不以此宣称所有浏览器分支或多人协作通过。
+- PDF 原临时文件在本次工作中已失效，使用前次审查保留的逐页文本及截图，留存位置与范围见体验方案。独立评分、冻结版本、多维指标、预算和候选应用证据用于约束设计；发布回滚按用户决定后置。原型模拟通过不代表 Nextplay 原 Judge、VidMuse 媒体证据或真实候选应用已经接通。
