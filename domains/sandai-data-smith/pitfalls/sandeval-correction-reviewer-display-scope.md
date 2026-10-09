@@ -2,7 +2,7 @@
 name: sandeval-correction-reviewer-display-scope
 type: pitfall
 created: 2026-10-05
-updated: 2026-10-08
+updated: 2026-10-09
 tags: [sandeval, quality, correction, identity, frontend]
 links: [sandeval-repeated-return-feedback-lineage]
 ---
@@ -58,3 +58,5 @@ links: [sandeval-repeated-return-feedback-lineage]
 **复验页实现指针（2026-10-08）：** 用户授权修复后，从新获取的 main 创建 `codex/sand-feedback-author`，代码提交 [5addb8be51bd6b936f4b5ae7d0d7b264af90abc5](https://github.com/world-sim-dev/sandai-data-smith/commit/5addb8be51bd6b936f4b5ae7d0d7b264af90abc5)。覆盖复验页整批/逐题原意见及同一详情的只读观察页，范围、回归、43 文件直接证据转 CI、结构检查边界和验收步骤见 [实现记录](/Users/leslie/Documents/Playground/output/sandeval-inspection-feedback-author-20261008/fix/implementation.md)。PR、Gate、浏览器和部署状态按该记录及 GitHub 实时回读，代码提交不能当作线上生效。
 
 **原意见作者边界：** Why：逐题原话可能来自仲裁裁定，而意见仍通过原检查项继承；仅用最外层原报告的检查人会把裁定意见署给错误的人。How to apply：在解析有效意见时保留其实际来源报告，经过精确成员授权与分页后再批量取作者姓名；姓名降级不丢原话，页面刷新须同时覆盖整批详情和独立逐题接口，并断言题目位置没有变化。
+
+**复验页 review 与测试 PR 指针（2026-10-09）：** [PR #2266](https://github.com/world-sim-dev/sandai-data-smith/pull/2266) 对应开发分支 `codex/sand-feedback-author`。类型 fixture 补修、准确提交、测试分支冲突及 CI 验证边界见 [review 记录](/Users/leslie/Documents/Playground/output/sandeval-inspection-feedback-author-20261008/fix/review-20261009.md)。Why：前序开发提交在 main 重放后，测试分支即使含相同代码，也可能因共同祖先未同步而使下一条 PR 冲突；独立开发分支 Gate 也不能证明 PR 合并树通过。How to apply：重新读取 base/head 和 mergeable，检查测试分支是否缺 main；需要时从测试侧同步 main，禁止反向把测试历史合入开发分支。原 PR、分支 CI、合并与部署分别取证。
