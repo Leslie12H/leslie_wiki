@@ -60,3 +60,5 @@ links: [sandeval-repeated-return-feedback-lineage]
 **原意见作者边界：** Why：逐题原话可能来自仲裁裁定，而意见仍通过原检查项继承；仅用最外层原报告的检查人会把裁定意见署给错误的人。How to apply：在解析有效意见时保留其实际来源报告，经过精确成员授权与分页后再批量取作者姓名；姓名降级不丢原话，页面刷新须同时覆盖整批详情和独立逐题接口，并断言题目位置没有变化。
 
 **复验页 review 与测试 PR 指针（2026-10-09）：** [PR #2266](https://github.com/world-sim-dev/sandai-data-smith/pull/2266) 对应开发分支 `codex/sand-feedback-author`。类型 fixture 补修、准确提交、测试分支冲突及 CI 验证边界见 [review 记录](/Users/leslie/Documents/Playground/output/sandeval-inspection-feedback-author-20261008/fix/review-20261009.md)。Why：前序开发提交在 main 重放后，测试分支即使含相同代码，也可能因共同祖先未同步而使下一条 PR 冲突；独立开发分支 Gate 也不能证明 PR 合并树通过。How to apply：重新读取 base/head 和 mergeable，检查测试分支是否缺 main；需要时从测试侧同步 main，禁止反向把测试历史合入开发分支。原 PR、分支 CI、合并与部署分别取证。
+
+**直接 main PR 指针（2026-10-09）：** 用户明确要求后，从最新 main 上的干净任务分支另建 [PR #2267](https://github.com/world-sim-dev/sandai-data-smith/pull/2267)。重放等价性、测试依赖路径和术语修复、具名本地回归、准确 head Gate 及存量工具自检失败的区分见上方 review 记录；main PR 未沿用测试分支历史，合并、部署和浏览器验收状态按实时证据核查。
