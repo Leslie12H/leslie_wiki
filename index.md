@@ -432,4 +432,4 @@
 
 - [EVOLVE 自迭代设计审查 2026-10-09](domains/maxwell/refs/evolve-design-review-self-iteration-20261009.md) — 统一采纳门槛、final 独立性、搜索反馈、Judge 校准及预算/交付边界的代码与反例核验入口
 
-- [EVOLVE 交互与 Nextplay 原生评测接入方案](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md) — 2026-10-09：原资产与原 Judge 接入、分阶段准入、最短评测主流程；发布回滚后置，未实施。
+- [EVOLVE 通用工作台与 Nextplay 接入方案](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md) — 2026-10-09 用户纠正：从零生成、接入与混合使用同等重要；Case/评分来源独立组合，Nextplay 仅为业务接入场景，未实施。
