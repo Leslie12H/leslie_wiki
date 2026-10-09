@@ -49,6 +49,19 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 **How to apply:**
 
 - 用途作为可扩展标签/模板，Benchmark 分别锁定资产与运行条件；性能/成本可由执行数据计算，不要求 LLM Judge。
-- 一次多选建议展开为多个 Run，由 Work 组织；证据复用需条件一致，不另造套件资产。
+- 一次多选建议展开为多个 Run，在前端汇总。2026-10-09 后续交互评审纠正：普通评测不应前置迭代 Work；历史后端容器约束应内部兼容。证据复用需条件一致，不另造套件资产。
 - 以[原型说明](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/README.md)及[设计 QA](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-qa.md)查看本地原型、12 个 SVG/Figma 导入画板与验证边界。全部为演示数据；原生 Figma 插件未在编辑器内执行，没有在线 Figma 文件。
 - 实施前完成精确资产迁移、API/结果契约和 Nextplay 原 Judge 同证据验收清单；产品讨论和原型不构成接口/DDL 的批准。发布/回滚继续后置。
+
+
+## 2026-10-09 用户路径、评分两层与完整性纠正
+
+**Why:** 用户连续指出导航和对象割裂，明确 Judge 分为通用方法与由其派生的业务指标，并要求从零/已有 Case 与 Judge 导入、历史、人工修正结果和指标迭代形成完整交互。把对象逐个做成列表并不能替代用户路径。
+
+**How to apply:**
+
+- 当前设计以[用户路径与完整交互规范](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/user-journeys.md)为准，尤其第二轮严谨性复核。主工作在同一 Benchmark 上下文内完成；资产管理和 Agent 接入提供跨集复用，普通评测不要求先建迭代任务。
+- 核对通用方法、业务指标规则/参数与固定版本关系；一个原程序可产生多项指标，不能强制一指标一次 Judge 调用。Case 来源与评分来源独立组合，导入/生成同等重要。
+- 已有评分方案应区分规则配置导入、原程序/服务接入和已登记方案复用；原始逻辑、原生裁决及缺失状态需要保留。当前代码能力回到正式 Studio ConnectPage/Library 和 Provider 执行链路核验，不能从原型推断已接通。
+- 人工复核、修订指标后的重新评分、新 Agent 版本重跑是三种操作；分别保留原始结果、追加记录与计算版本。人工修改不能伪造原执行成功或证据，规则升级不静默刷新历史分数。
+- 以[设计验证](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-qa.md)查看实际覆盖。V5 为局部交互稿，评分方案导入完整向导、人工复核版本、重新评分、草稿离开保护与并发权限尚未实现；不能称为完整定稿或真实业务验收通过。
