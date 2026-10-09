@@ -438,4 +438,4 @@
 
 - [Sand Eval 复验部分提交后的验收阻断](domains/sandai-data-smith/pitfalls/sandeval-reinspection-partial-submit-acceptance-blocker.md) — 正式报告、整改后继关联、提交回执与列表动作的分层核验；提交409部分落库、CAS推断边界、拒绝报告补登记、多轮接续及单批恢复/独立回读指针（2026-10-09）。
 
-- [AI 产品整体设计与交互动线技能](global/refs/ai-product-design-skills.md) — 整体设计、设计规则持久化、动线与状态交付约束；上游技能指针和效果验证边界（2026-10-09）。
+- [AI 产品整体设计与交互动线技能](global/refs/ai-product-design-skills.md) — 整体设计、设计规则持久化、动线与状态交付约束；上游技能指针、本机安装和启动检查入口及效果验证边界（2026-10-09）。
