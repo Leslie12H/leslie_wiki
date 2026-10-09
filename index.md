@@ -436,6 +436,6 @@
 
 - [Sand Eval 已终结主任务的素材占用恢复](domains/sandai-data-smith/pitfalls/sandeval-terminated-dispatch-material-occupancy.md) — 停止执行与有效下发占用的区别、正式软删除/审计路径及逐素材范围验收指针（2026-10-09）。
 
-- [Sand Eval 复验部分提交后的验收阻断](domains/sandai-data-smith/pitfalls/sandeval-reinspection-partial-submit-acceptance-blocker.md) — 正式报告、整改后继关联、提交回执与列表动作的分层核验；提交409部分落库、CAS推断边界和空关联恢复缺口的生产只读指针（2026-10-09）。
+- [Sand Eval 复验部分提交后的验收阻断](domains/sandai-data-smith/pitfalls/sandeval-reinspection-partial-submit-acceptance-blocker.md) — 正式报告、整改后继关联、提交回执与列表动作的分层核验；提交409部分落库、CAS推断边界、拒绝报告补登记、多轮接续及单批恢复/独立回读指针（2026-10-09）。
 
 - [AI 产品整体设计与交互动线技能](global/refs/ai-product-design-skills.md) — 整体设计、设计规则持久化、动线与状态交付约束；上游技能指针和效果验证边界（2026-10-09）。
