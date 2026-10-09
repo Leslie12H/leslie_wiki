@@ -432,7 +432,7 @@
 
 - [EVOLVE 自迭代设计审查 2026-10-09](domains/maxwell/refs/evolve-design-review-self-iteration-20261009.md) — 统一采纳门槛、final 独立性、搜索反馈、Judge 校准及预算/交付边界的代码与反例核验入口
 
-- [EVOLVE 通用工作台与 Nextplay 接入方案](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md) — 2026-10-09：生成/导入同等重要，Case/Judge 与 Work 解耦；通用方法派生业务指标、Benchmark 内完整路径、人工复核/重评/重跑与历史边界、工作台文案规范、动线审查与 Maxwell 真实组件复用；局部原型非定稿，正式改造未实施。
+- [EVOLVE 通用工作台与 Nextplay 接入方案](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md) — 2026-10-09：生成/导入同等重要，Case/Judge 与 Work 解耦；通用方法派生业务指标、Benchmark 内完整路径、人工复核/重评/重跑与历史边界、工作台文案规范、动线审查、V7 完整前端体验及展开菜单纠正；多人 Skill 调优与复核证据要求；对话草案、候选显式来源、可操作谱系与可比趋势，实际验收指针和真实执行边界。
 
 - [Sand Eval 已终结主任务的素材占用恢复](domains/sandai-data-smith/pitfalls/sandeval-terminated-dispatch-material-occupancy.md) — 停止执行与有效下发占用的区别、正式软删除/审计路径及逐素材范围验收指针（2026-10-09）。
 

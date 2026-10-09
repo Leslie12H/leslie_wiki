@@ -60,11 +60,11 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 
 **How to apply:**
 
-- 当前设计以[用户路径与完整交互规范](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/user-journeys.md)为准，尤其第二轮严谨性复核。主工作在同一 Benchmark 上下文内完成；资产管理和 Agent 接入提供跨集复用，普通评测不要求先建迭代任务。
+- 此前设计以[用户路径与完整交互规范](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/user-journeys.md)为准，尤其第二轮严谨性复核。主工作在同一 Benchmark 上下文内完成；资产管理和 Agent 接入提供跨集复用，普通评测不要求先建迭代任务。
 - 核对通用方法、业务指标规则/参数与固定版本关系；一个原程序可产生多项指标，不能强制一指标一次 Judge 调用。Case 来源与评分来源独立组合，导入/生成同等重要。
 - 已有评分方案应区分规则配置导入、原程序/服务接入和已登记方案复用；原始逻辑、原生裁决及缺失状态需要保留。当前代码能力回到正式 Studio ConnectPage/Library 和 Provider 执行链路核验，不能从原型推断已接通。
 - 人工复核、修订指标后的重新评分、新 Agent 版本重跑是三种操作；分别保留原始结果、追加记录与计算版本。人工修改不能伪造原执行成功或证据，规则升级不静默刷新历史分数。
-- 以[设计验证](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-qa.md)查看实际覆盖。V5 为局部交互稿，评分方案导入完整向导、人工复核版本、重新评分、草稿离开保护与并发权限尚未实现；不能称为完整定稿或真实业务验收通过。
+- 以[设计验证](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-qa.md)查看实际覆盖。此处记录 V5 历史边界；后续 V7 本机原型已补齐导入、复核、重评、草稿保护和模拟权限，当前状态须看下方 V7 指针，不能视为真实业务验收通过。
 
 ## 2026-10-09 产品文案纠正
 
@@ -86,4 +86,31 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 
 **Why:** 用户指出下拉框未使用 Maxwell 系统组件，整体设计仍不统一。只复制颜色、边框或重新绘制控件，不能保证尺寸、焦点态与交互一致。
 
-**How to apply:** 原型通过 [ui.jsx](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/src/ui.jsx) 直接引用 Studio 的 Select、Button、Tabs、TableFrame，样式编译入口为同目录 maxwell.css。Benchmark 使用稳定页头与内容页签，Agent/版本配置集中在新建评测。当前结构、截图与验证边界回到 [README](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/README.md) 和 [设计 QA](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-qa.md) 查看，不从旧 Figma 导出推断当前状态。系统 Select 本身封装原生 select，复用时应核对源码与实际选择行为，不另造下拉实现。正式 Studio、后端和接口未改；组件统一不等于人工复核、重新评分等完整链路已经实现。
+**How to apply:** 原型通过 [ui.jsx](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/src/ui.jsx) 直接引用 Studio 的 Select、Button、Tabs、TableFrame，样式编译入口为同目录 maxwell.css。Benchmark 使用稳定页头与内容页签，Agent/版本配置集中在新建评测。当前结构、截图与验证边界回到 [README](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/README.md) 和 [设计 QA](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-qa.md) 查看，不从旧 Figma 导出推断当前状态。V6 当时引用的 base/Select 封装原生 select；用户后续截图确认其展开菜单仍不符合目标。V7 改用现有 EVOLVE EvolveSelect，详见下节，不能把同名组件引用当成菜单样式已经一致的证据。正式 Studio、后端和接口未改；组件统一不等于人工复核、重新评分等完整链路已经实现。
+
+
+## 2026-10-09 V7 完整体验与展开菜单纠正
+
+**Why:** 用户截图显示 V6 的原生灰色弹出菜单仍与 Maxwell 不一致，并要求以完整产品体验交付信息架构、操作动线、异常状态、设计系统、可点击原型与实际验收。用户确认业务负责人、开发者及调优同学共同使用，同一业务多人调优不同 Skill，调优同学需要复核平台判定。
+
+**How to apply:**
+
+- 优先读当前 [V7 体验方案](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/experience-plan-v7.md)、[设计系统](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/.interface-design/system.md) 和 [实际验收](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/acceptance.md)，不要从旧 SVG/Figma 导出判断现有交互。
+- Maxwell 具有不同选择组件：基础 Select 是原生菜单；本次复用来源是 [EvolveSelect](/Users/leslie/Downloads/sandai-code/maxwell-ai/apps/studio/src/products/evolve/v3/EvolveSelect.tsx) 的页面内 listbox。验收必须展开菜单，并检查焦点、方向键、Tab/Esc 与辅助语义；仅检查 import 不足。本轮只在正式组件补齐键盘行为，业务流程改造仍是隔离原型。
+- 对齐完整任务路径，避免把概览、资产目录、结果目录堆在一起。默认进入 Benchmark，多种来源在同一集内组合；共享 Case/业务指标/通用方法独立维护，Agent/Skill 版本在新建评测时选择，迭代任务不前置。
+- 人工复核要同处提供任务输入、预期、输出、冻结评分标准、方法版本和原始/当前判定，并追加理由与版本；执行失败、质量低分、尚未复核是独立条件。标准修订、旧证据重评、新 Agent 执行必须分开追溯。
+- 趋势比较必须限定可比口径，取消、部分执行和明确排除用例的子集不能悄悄混入完整测试曲线。方法详情应从方法版本追到派生指标版本及 Benchmark 引用。
+- 本轮实际覆盖和可变状态只存上述验收指针。所有执行/生成/评分为本地模拟，真实 Nextplay 等价性、多用户同步/鉴权/并发与自动迭代未接通；原型负责人字段不等于服务端身份权限模型。没有新增接口/DDL，也没有业务代码发布。
+
+## 2026-10-09 对话协作、候选来源、谱系与可比趋势
+
+**Why:** 用户要求当前阶段聚焦整体交互，明确从零开始、与 Agent 对话生成 Case/Judge/候选、谱系和趋势变化均不能遗漏。助手若单独成为聊天页，生成内容和后续评测仍会割裂；由共同基线或对话顺序推断来源，又会制造错误谱系。
+
+**How to apply:**
+
+- 对话是各对象页的就地协作入口：空业务准备整套资产，用例/指标页生成草案，结果/任务页生成候选。先审阅可编辑内容，再显式保存共享资产或候选。手工新建和导入保持并列，Case/通用方法/业务指标不依赖 Work。
+- 历史对话恢复对应任务类型；切换协作任务开启新对话。采用后不覆盖既有资产版本；保存位置切回当前 Benchmark 时必须恢复入口对象 ID，不能沿用此前选过的其它对象。
+- 每次候选验证固定所选基线的题集与评分版本，并独立保存 baselineRunId。从较早候选继续修订时显式传 parentCandidateId，不能把同一对话最新候选当作来源。
+- 谱系用于打开实际对象、源对话、证据与版本；边必须来自明确的来源引用。共享基线不代表某任务生成了该候选。当前原型按所选记录展示一条关联链，不宣称全局网络布局已完成。
+- 趋势除完整执行、Benchmark/指标版本与 Agent/Skill 范围一致外，还要区分有效评分题目集合；覆盖数量相同但缺失题不同，也不能连成同口径趋势。规则/题集变动可并列结果但不计算收益，人工复核不静默改原始趋势。
+- 可变实现与实际覆盖继续回到 [V7 体验方案](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/experience-plan-v7.md)、[验收记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/acceptance.md) 和 [增量 harden](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/harden-review.md)。对话、生成和候选验证为明确模拟，未接真实模型/Agent/Judge；没有接口或数据库改动。
