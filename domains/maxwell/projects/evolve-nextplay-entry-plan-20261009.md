@@ -80,3 +80,10 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 **Why:** 删除教学文案未解决 Benchmark 维护、运行配置和结果分析混排；是否连贯必须实际走完进入、执行配置、结果和返回路径，不能只按页面功能齐全度判断。
 
 **How to apply:** 下一轮用稳定 Benchmark 页头和内容页签保持上下文，运行参数集中在新建评测中；Case/指标/方法仍独立复用。先修操作重复、返回状态和逐题复核，再处理视觉权重。参考产品只借鉴适用的结构，不引入其固定输入格式或所有权限制。本轮是局部原型审查，未修改实现；提案与已验收能力必须继续区分。
+
+
+## 2026-10-09 Maxwell 组件复用与 V6 布局修订
+
+**Why:** 用户指出下拉框未使用 Maxwell 系统组件，整体设计仍不统一。只复制颜色、边框或重新绘制控件，不能保证尺寸、焦点态与交互一致。
+
+**How to apply:** 原型通过 [ui.jsx](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/src/ui.jsx) 直接引用 Studio 的 Select、Button、Tabs、TableFrame，样式编译入口为同目录 maxwell.css。Benchmark 使用稳定页头与内容页签，Agent/版本配置集中在新建评测。当前结构、截图与验证边界回到 [README](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/README.md) 和 [设计 QA](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-qa.md) 查看，不从旧 Figma 导出推断当前状态。系统 Select 本身封装原生 select，复用时应核对源码与实际选择行为，不另造下拉实现。正式 Studio、后端和接口未改；组件统一不等于人工复核、重新评分等完整链路已经实现。
