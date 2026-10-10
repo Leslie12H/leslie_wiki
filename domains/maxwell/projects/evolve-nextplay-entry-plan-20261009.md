@@ -160,3 +160,15 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 **Why:** 用户确认原型、要求从最新 main 开分支实施并增加 YAML 导入；同时要求说明旧接口调整、DDL、性能与通用性。产品确认不替代仓库要求的精确接口/迁移确认；用户对第一批清单的追问不能当作批准。
 
 **How to apply:** 以[正式实施设计与修订清单](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)为入口，核对其中当前进度与批准状态。新旧入口应复用领域命令与可见性逻辑；Case/Judge 共享不意味着候选、运行和证据失去 Work 授权。修改 Artifact 来源可空时必须检查已有 membership 触发器；不能仅修改列。业务目录需要数据库筛选、可见性在分页前处理、轻量投影和固定查询次数；导入应按本批来源键查最新修订，不能把 Work 历史扫描扩大到全业务。真实查询计划与性能结果单独验收，静态发现不等于已测延迟。YAML 通过前端序列化适配进入既有 JSON 契约，不为格式单独增加业务 API；业务字段适配与原 Judge 等价运行仍是不同能力。
+
+
+## 2026-10-10 实施授权与 EVOLVE 域边界
+
+**Why:** 用户明确批准按修订方案完整实施，同时要求只改造 EVOLVE 域、旧接口兼容、查询性能与通用性；迁移只写文件，不执行。此前待确认记录是当时状态，不能继续用来阻止已经批准的第一批工作，也不能把整体目标当作未列明契约/DDL 的无限授权。
+
+**How to apply:** 先核对[实施设计](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)中的域边界、批准清单、补项和当前证据。前端在 EVOLVE 页面/业务组件及专用生成客户端内实现；后端在 evolve-server 内实现；需要导航时复用共享路由已提供的入口，不静默修改 Maxwell 公共组件、Agent Runtime 或通用鉴权。基于最新代码逐条核查，不用原型模拟结果替代正式验证。
+
+- 业务级目录不等于 Agent 会话有权跨 Work；在新 HTTP 目录保留受信会话绑定，再做业务/hidden 过滤和分页。
+- 列表、定义与正文读取分开：元数据页不逐行拉证据，不为显示来源名称加载全部任务；选择记录/用例后才读取正文。取最新 Benchmark 定义不能把历史成绩一起读回后丢弃。
+- 内容参与 hash 不代表已经持久化；检查 memory 与 Postgres 字段往返的一致性。来源依据字段补项与极长 Unicode 来源索引的风险见实施设计的补充确认节，不能重算旧 hash 或静默截断来掩盖问题。
+- 浏览器技术替身、内存 HTTP 回归、Postgres 真实计划和 Agent 自然场景分别记录。迁移未执行时，静态 SQL 检查与绿色单测不能被描述为数据库上线或性能验收已完成。
