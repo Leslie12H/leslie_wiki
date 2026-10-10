@@ -206,3 +206,10 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 **Why:** 用户明确批准实施设计第 8 节和第 6.1 节，但继续限定 EVOLVE 域及迁移文件权限。名称/组合不能充当通用 Benchmark 的身份；Case 内容参与 hash 的来源依据也必须在真实仓储往返。
 
 **How to apply:** 以[实施设计第 7.6、8 节](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)核对当前进度和迁移边界。新建用请求身份保证重试，修订用明确对象和 expectedVersion；同名独立资产、恢复旧组合与历史结果各自保留。共享标准仅存身份/修订元数据并引用 Artifact，CaseSet 用精确成员索引做权限和有界查询；不要复制正文或引入每题 SQL。缺失成员/祖先索引不得默认为可见；新管理接口、旧冻结读取与历史回填需要一起验收。Case basis 缺失不能靠重算历史 hash 修复。迁移尚未执行，SQL 替身的固定查询次数与静态约束检查仍不是实际数据库计划或性能证据；第 6.2 节长 Unicode 索引补项另行确认。
+
+
+## 2026-10-10 共享标准交互与最小前置条件
+
+**Why:** 用户再次要求通用平台避免过多门禁。资产维护与实际执行就绪是不同职责；强制先建 Work、先接入对象、先预检，或禁止从历史版本继续修订，会制造无必要的使用顺序。共享标准只有目录读写也不够，生成结果采用与 Benchmark 选择必须能衔接。
+
+**How to apply:** 从[实施设计第 7.7 节](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)核对当前代码和证据。预检保持可选，保存自己检查结构与引用；方法专属配置原样保留，环境就绪在执行时判定。采用冻结产物保留精确 ID/hash，编辑正文则生成新定义并保留来源；草稿跨页面恢复，返回保留业务和来源上下文。历史内容可以作为新修订基础，expectedRevision 取当前头来保护并发，不用名称合并身份。版本对比仅按需取上一正文；目录不预读全部正文或任务。趋势必须保留后端被测版本分段，Benchmark 来源 Work 不能充当每条 Run 的归属。维护工具默认只读、索引与目录分阶段、按业务和 ID 有界推进，当前执行边界见[维护说明](/Users/leslie/Downloads/sandai-code/maxwell-ai/services/evolve-server/docs/standard-maintenance.md)。数据库迁移与回填未执行；浏览器内存替身、HTTP 内存测试、构建通过不能证明真实评分、数据库性能或完整候选闭环。

@@ -442,3 +442,5 @@
 - [AI 产品整体设计与交互动线技能](global/refs/ai-product-design-skills.md) — 整体设计、设计规则持久化、动线与状态交付约束；上游技能指针、本机安装和启动检查入口及效果验证边界（2026-10-09）。
 
 - EVOLVE 候选上下文、隐式比较调用与共享标准补项：见 [实施记录](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md) 的 2026-10-10 记录；当前批准、仓储进度及未执行迁移指针。
+
+- EVOLVE 共享标准交互与最小前置条件：见 [实施记录](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md) 的 2026-10-10 记录；可选预检、生成采用、历史续写、Benchmark 精确版本、被测版本趋势及只读维护工具指针。
