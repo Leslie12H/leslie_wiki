@@ -252,3 +252,10 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 - 重评引用原执行输出，依据已授权冻结 EvidenceSet hash，再校验同业务源 Trial、题目/次数及成功 Attempt 的输出 hash。来源关系与当前上下文可见性分别判断；原评分、人工复核和新重评记录不能互相覆盖。
 - 汇总只消费已校验结果，避免重复序列化固定定义；保留原单位和样本分母，对溢出、未知聚合及摘要截断明确返回状态。固定规模 CPU/分配探针不代表数据库计划或线上性能。目录趋势仍需持久化有界投影，不能调用旧统计接口逐行扫 Trial 来填列表。
 - 组成指标/用例的详情必须能返回原标准修订，保留外层重评、分页和筛选。正式组件 + 模拟接口、内存仓库 + 真实 Worker、数据库与自然 Agent 验收分开；迁移仅文件和整体目标未完成的边界见实施设计。
+
+
+## 2026-10-10 结果投影、复核代次和分页一致性
+
+**Why:** 页面同步扫描每条 Run 的所有 Trial 会把汇总成本转移给用户请求；复核与汇总并发时，只有租约没有代次仍可能把旧判断发布为最新结果。单项值、指标判定和整题判定又不能互相隐式覆盖。
+
+**How to apply:** 核对[实施设计第 7.15 节](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)与[结果汇总验收](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/result-projection-acceptance-20261010.md)的当前代码和证据。终态 Run/当前复核头与待处理代次在同事务发布，重放不重复排队；原 Worker 按页读取，发布同时检查代次和未过期租约。失败保留旧投影并退避，新的复核不继承旧失败等待。visible/hidden 各自汇总，页面只取所选范围和口径；头与指标页同 SQL 快照读取，代次改变时从第一页继续。人工明确判定可以独立于缺失数值，不能因此制造零值或自动改整题结果。切换口径需保留展开状态，读取失败保留数据，未完成汇总显示状态。数据库计划/锁行为仍需真实验证；迁移只写文件，Benchmark 分页趋势与完整自然 Agent 链路以实施设计为准，不以组件替身或内存 Worker 通过代替。
