@@ -153,3 +153,10 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 - 查候选到对象版本默认值的副作用；临时验证版本不能变成下次普通评测的默认对象。Skill 也不能因为接入登记而自动成为评测范围。
 - 评分的 not_applicable、未采集、原始值和人工复核分开；复核反馈与人工有效结论投影不能混称已有能力。完整原评分保留需验证数值、缺失和聚合责任，不以导入成功代替。
 - 本轮验收、独立 A/B 评审及明确未覆盖分支见 [验收记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/workflow-acceptance-20261010.md)。只有前端模拟与源码核验，没有真实 Judge/候选应用或后端契约变更。
+
+
+## 2026-10-10 原型确认后进入正式实施评审
+
+**Why:** 用户确认原型、要求从最新 main 开分支实施并增加 YAML 导入；同时要求说明旧接口调整、DDL、性能与通用性。产品确认不替代仓库要求的精确接口/迁移确认；用户对第一批清单的追问不能当作批准。
+
+**How to apply:** 以[正式实施设计与修订清单](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)为入口，核对其中当前进度与批准状态。新旧入口应复用领域命令与可见性逻辑；Case/Judge 共享不意味着候选、运行和证据失去 Work 授权。修改 Artifact 来源可空时必须检查已有 membership 触发器；不能仅修改列。业务目录需要数据库筛选、可见性在分页前处理、轻量投影和固定查询次数；导入应按本批来源键查最新修订，不能把 Work 历史扫描扩大到全业务。真实查询计划与性能结果单独验收，静态发现不等于已测延迟。YAML 通过前端序列化适配进入既有 JSON 契约，不为格式单独增加业务 API；业务字段适配与原 Judge 等价运行仍是不同能力。
