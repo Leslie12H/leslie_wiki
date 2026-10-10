@@ -446,3 +446,5 @@
 - EVOLVE 共享标准交互与最小前置条件：见 [实施记录](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md) 的 2026-10-10 记录；可选预检、生成采用、历史续写、Benchmark 精确版本、被测版本趋势及只读维护工具指针。
 
 - Benchmark 建议性预检、按页运行准备与提交返回证据：见 [EVOLVE 通用工作区实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md) 的 2026-10-10 运行预检记录。
+
+- [Sand Eval 2026-10-10 计算组延迟取证](domains/sandai-data-smith/refs/sandeval-init-warehouse-latency-20261010.md) — 同模板 SQL 启动等待、提交锁阶段、计算组 CPU 与跨业务触发源的证据及授权边界。
