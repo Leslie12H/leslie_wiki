@@ -472,3 +472,5 @@
 - EVOLVE 固定来源诊断、晚完成证据关联与候选样本批读：见[工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md)的 2026-10-11 第 7.26 记录；旧搜索与真实验证边界单列。
 
 - EVOLVE 原生指标的旧方法适用性及任务用例精确引用/返回：见[工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md)的 2026-10-11 第 7.27–7.28 记录。
+
+- EVOLVE 候选同页对照与来源索引：见 [通用工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md) 的 2026-10-11 补充；精确定义、未知/缺失、窄屏固定列及长 Unicode 有界索引。
