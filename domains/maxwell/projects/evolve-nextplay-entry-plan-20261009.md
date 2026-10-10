@@ -239,3 +239,16 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 - 重评分复用冻结执行输入、保留原始结果与人工复核。旧历史缺少快照时继续未知。ModelSelect 的默认初始化可触发 onChange；“沿用原模型”场景应核查 EVOLVE 调用处的默认值，不只检查 UI 文案。证据见[重评验收](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/rescore-acceptance-20261010.md)。
 - 候选验证使用独立评测上下文，固定基线测量与候选 Variant，原决策不自动改写。比较按各 Run 自己的归属授权和读取回执，不把同一个 Work 参数套给跨任务证据。基线列表、选择、请求身份与返回路径一起保留；见[候选验证验收](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/candidate-validation-acceptance-20261010.md)。
 - 数据库迁移仍仅文件，真实 PostgreSQL 计划、外部候选实际应用及自然 A2A 对话未验收。指标原值、逐题绑定、自动结果投影等剩余能力回到实施方案，不把本段当成整个目标完成。
+
+
+## 2026-10-10 原单位指标、逐题绑定及冻结证据重评
+
+**Why:** 把费用、延迟和类别强制放入旧归一化总分会丢失含义；用例自带评分若未进入领域内容和仓储往返，就只能“导入成功、运行丢规则”。重评使用独立上下文时，原输出引用的源 Trial 仍属于原 Work，不能机械套用新 Work，也不能简单取消证据归属校验。
+
+**How to apply:** 以[实施设计第 7.14 节](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)和[原生指标技术验收](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/native-metrics-acceptance-20261010.md)核对当前代码与证据。
+
+- 指标定义与评分方法分离；同方法/版本/配置可以一次产出多指标。原值、单位、缺失/错误/不适用、显式判定分别保留，不默认换成零或平台总分。共享指标固定精确修订，名称不是身份。
+- 逐题绑定进入 CaseContent、导入、生成和修订；无新增内容时保持旧 hash，有内容时验证 Postgres 扫描/写入往返。核查实际列，不能假设存在统一 expectations JSONB。按页合并绑定并去重精确引用/CAS，避免每题每指标查询。
+- 重评引用原执行输出，依据已授权冻结 EvidenceSet hash，再校验同业务源 Trial、题目/次数及成功 Attempt 的输出 hash。来源关系与当前上下文可见性分别判断；原评分、人工复核和新重评记录不能互相覆盖。
+- 汇总只消费已校验结果，避免重复序列化固定定义；保留原单位和样本分母，对溢出、未知聚合及摘要截断明确返回状态。固定规模 CPU/分配探针不代表数据库计划或线上性能。目录趋势仍需持久化有界投影，不能调用旧统计接口逐行扫 Trial 来填列表。
+- 组成指标/用例的详情必须能返回原标准修订，保留外层重评、分页和筛选。正式组件 + 模拟接口、内存仓库 + 真实 Worker、数据库与自然 Agent 验收分开；迁移仅文件和整体目标未完成的边界见实施设计。

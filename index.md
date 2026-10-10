@@ -454,3 +454,5 @@
 - [EVOLVE 直接评测与人工复核](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md)：2026-10-10 冻结输入重试、原始/采用结果、复核头分页与当前验证边界，见实施设计指针。
 
 - [EVOLVE 重评与固定基线候选验证](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md)：2026-10-10 原执行输入保留、独立候选测量、跨任务证据授权与分页返回修复的实现/验收指针。
+
+- EVOLVE 原单位指标、逐题评分绑定、冻结证据重评和有界汇总的 Why/How 与代码证据：见[工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md)的 2026-10-10 原生指标记录；数据库迁移未执行。
