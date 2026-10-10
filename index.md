@@ -460,3 +460,5 @@
 - EVOLVE 结果汇总的事务代次、租约发布、双口径/可见范围和分页快照：见[工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md)的 2026-10-10 结果投影记录；迁移未执行、趋势闭环继续实施。
 
 - EVOLVE Benchmark 多对多登记、有界分页趋势与原生外部评分：见[工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md)的 2026-10-10 新记录；窄屏 SVG 实际尺寸、服务到标准返回、迁移及业务等价边界。
+
+- EVOLVE 整题判定、选定用例重评、表单边界及历史冻结版本：见[工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md)的 2026-10-10 补充记录；executor 与业务对象筛选独立，迁移未执行。

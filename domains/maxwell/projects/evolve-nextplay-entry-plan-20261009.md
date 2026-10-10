@@ -268,3 +268,16 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 **How to apply:** 当前契约与文件迁移见[实施设计第 7.16、7.17 节](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)，以代码而非本页判断部署状态。Benchmark 先授权和 keyset 分页，再联接汇总；指标身份带精确版本，自动/采用口径分开。窄屏 SVG 的 computed 字号不代表实际像素，应同时测图形变换后的文字与命中区，证据见[Benchmark 验收](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/benchmark-results-acceptance-20261010.md)。
 
 原生评分复用服务登记与方法调用，通过可选协议传 Case/config/evidence 与多指标，不将原值强制压成整数。服务实际版本缺省保持未知；逐指标异常不抹去其他结果。目录一次带回协议/显示名以避免逐项补查；服务到标准的跳转和来源返回一并验证，见[原生评分验收](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/native-provider-acceptance-20261010.md)及[接入协议](/Users/leslie/Downloads/sandai-code/maxwell-ai/services/evolve-server/docs/native-grading-provider.md)。数据库迁移仍仅文件；真实计划、原业务评分等价、整题结论选择与完整自然 A2A 链路的进度回到实施设计，不以替身测试替代。
+
+
+## 2026-10-10 整题判定、子集重评与编辑边界
+
+**Why:** 性能/成本观测与业务通过判定独立；规则迭代后常只需重评选定题目，不能把它变成重新调用目标或覆盖历史。空类别值、自定义汇总名称也属于合法业务表达，不应被表单误判。
+
+**How to apply:** 以仓库 `docs/evolve-workspace-implementation.md` 第 7.18、7.19 节及 `output/evolve-prototype-20261009/design-v7/{outcome-policy,rescore-selection}-acceptance-20261010.md` 为当前实现/验收指针。核对整题 outcome 与指标 passed、原 EvidenceSet 和派生 CaseSet、子集不混入原 Benchmark 趋势、失败重试与返回分页；版本与未知值不能补猜。类别空字符串须明确显示，编辑自定义名称不能因中间输入为空而销毁输入框；弹窗下拉按可视边界展开。迁移仅写文件，数据库计划和真实业务评分等价性未验收。
+
+## 2026-10-10 直接评测历史版本与执行器目录
+
+**Why:** 业务对象标识与实际执行连接不同；直接评测只查数据库登记会拒绝已配置的静态执行器，按业务对象筛历史也可能漏掉同一连接的版本。
+
+**How to apply:** 以实施文档第 7.20 节为指针：复用原 Variant ID/hash 和有界谱系，保留旧请求重放；目录的 executorRef 与旧 targetRef 分开，精确过滤后 keyset 分页，只读取选中 Run 详情。静态回退必须来自可信 Describe 且通过业务范围，动态登记删除不能借缓存回退。冻结配置不是实际应用证明；源码、技术替身和真实目标回执分开验收。0030 为索引文件，未执行。
