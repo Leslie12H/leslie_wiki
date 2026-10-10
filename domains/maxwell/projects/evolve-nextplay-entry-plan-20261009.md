@@ -186,3 +186,10 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 **Why:** 共享标准需要从人工采用、目录和版本管理一直贯穿 Run 准入、事务入队与实际判卷；只让 Artifact.WorkID 可空会留下“能创建、不能运行”的断点。旧按名称+组合去重的 Benchmark 唯一键还可能把更新回放到其它身份，或吞掉仅修改适用范围的操作。
 
 **How to apply:** 先核对[实施设计第 7.3、7.4 节及第 8 节补充确认单](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)的当前批准和实现状态。修订应以明确身份和 expectedVersion 原子追加；Postgres 新旧写入口共享锁序，锁后以 READ COMMITTED 重读，精确重试定位 expectedVersion+1，不能全量读历史。名称去重的存储限制应明确返回冲突，不能伪装为已保存；修改唯一键仍需要精确 DDL 确认。按代码中的实际调用路径核对准入、仓储、worker 判卷及详情的 Case.WorkID 限制，候选和执行证据继续保留 Work 隔离。共享引用批量 SQL 的 jsonb_to_recordset 字段名必须与 Go JSON tag 一致，特别是带引号的 contentHash；SQL 字符串单测不证明数据库实际执行。当前数据库迁移、回填与查询计划仍未执行，不把内存 HTTP 或 race 测试当作数据库验收。
+
+
+## 2026-10-10 共享标准采用与评测权限闭环
+
+**Why:** 将 Case.WorkID 改成可空后，权限不能简单删除 Work 判断。执行阶段必须采用冻结标准，结果读取依赖已授权 Run/Trial 的精确引用；共享标准的祖先可见性与祖先在当前 Work 的直接访问是不同问题。若遍历缓存忽略 Work 范围，还可能把共享路径的可见结果错误复用于私有路径。
+
+**How to apply:** 从[实施设计第 7.4 节](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)核对当前链路与技术验收。标准采用应与 Run 图创建同事务提交，重试先判断已有 Run，来源不改写；Case 正文按小批精确 ID 读取而非逐题 SQL 或全量保留。Worker 仍核对冻结 hash，详情/反馈/比较从已授权 Trial 读取，旧 Work Case 接口保持原边界。成对比较必须命中两边 Run 的 Trial，不能凭 EvidenceSet 中的 Case ID 取任意正文。共享标准祖先仍做业务/hash/hidden 检查但不自动添加任务关联，遍历缓存区分范围；取消/停止依据实际 Trial 覆盖的 Case 检查隐藏权限。内存仓库与本地对象存储闭环、SQL 结构测试和 race 结果不替代真实数据库计划、候选应用或自然 Agent 场景；公共标准管理入口与存储补项的批准状态另查实施设计。
