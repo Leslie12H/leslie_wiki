@@ -227,3 +227,15 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 **Why:** 普通评测不能要求先有调优会话或 Skill；人工改判也不能复写自动评分或只显示在详情里。准备后重试若重新解析“最新”会漂移，仓储若用 JSON 克隆则可能丢掉不对外序列化的幂等字段。
 
 **How to apply:** 以[实施设计第 7.9–7.11 节](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)及[复核技术验收](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/trial-review-acceptance-20261010.md)核对当前代码。直接执行保留内部上下文并固定已接受输入，终态与 Run 一同收敛；任务列表和普通记录分清。版本备注不等于目标快照证明。人工复核追加事件并维护采用头，作者由认证身份取得，幂等重试先于并发版本校验；原 Assessment 和执行状态保持不变。逐题列表一次读取本页精确 Trial ID 的轻量头，展示自动与采用口径，不按行拉完整历史。编辑离开保留草稿，冲突明确合并；只读仍能查历史。用户已免除本目标内后续逐项确认，但只改 EVOLVE、迁移仅写文件不执行的限定继续有效。当前测试包含真实评分处理器加外部执行替身、内存/HTTP/静态 SQL 及正式组件浏览器验收；不等于数据库计划、真实目标执行或自然 Agent 验收。指标 v2、仅重评、固定基线候选和汇总趋势的完成状态继续以实施设计为准。
+
+
+## 2026-10-10 原证据重评与固定基线候选验证
+
+**Why:** 评分规则修订不应再次调用被测系统；候选验证也不应被原调优任务终态或旧预算阻断。页面返回时只保留选项但丢掉分页仍会打断工作；执行成功、准备成功和候选实际应用需要分别显示。
+
+**How to apply:**
+
+- 当前契约、迁移文件和实现边界见[实施方案第 7.12、7.13 节](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)。先核验当前分支，不从此页判断部署状态。
+- 重评分复用冻结执行输入、保留原始结果与人工复核。旧历史缺少快照时继续未知。ModelSelect 的默认初始化可触发 onChange；“沿用原模型”场景应核查 EVOLVE 调用处的默认值，不只检查 UI 文案。证据见[重评验收](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/rescore-acceptance-20261010.md)。
+- 候选验证使用独立评测上下文，固定基线测量与候选 Variant，原决策不自动改写。比较按各 Run 自己的归属授权和读取回执，不把同一个 Work 参数套给跨任务证据。基线列表、选择、请求身份与返回路径一起保留；见[候选验证验收](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/candidate-validation-acceptance-20261010.md)。
+- 数据库迁移仍仅文件，真实 PostgreSQL 计划、外部候选实际应用及自然 A2A 对话未验收。指标原值、逐题绑定、自动结果投影等剩余能力回到实施方案，不把本段当成整个目标完成。
