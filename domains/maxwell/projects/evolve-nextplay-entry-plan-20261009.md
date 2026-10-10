@@ -193,3 +193,16 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 **Why:** 将 Case.WorkID 改成可空后，权限不能简单删除 Work 判断。执行阶段必须采用冻结标准，结果读取依赖已授权 Run/Trial 的精确引用；共享标准的祖先可见性与祖先在当前 Work 的直接访问是不同问题。若遍历缓存忽略 Work 范围，还可能把共享路径的可见结果错误复用于私有路径。
 
 **How to apply:** 从[实施设计第 7.4 节](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)核对当前链路与技术验收。标准采用应与 Run 图创建同事务提交，重试先判断已有 Run，来源不改写；Case 正文按小批精确 ID 读取而非逐题 SQL 或全量保留。Worker 仍核对冻结 hash，详情/反馈/比较从已授权 Trial 读取，旧 Work Case 接口保持原边界。成对比较必须命中两边 Run 的 Trial，不能凭 EvidenceSet 中的 Case ID 取任意正文。共享标准祖先仍做业务/hash/hidden 检查但不自动添加任务关联，遍历缓存区分范围；取消/停止依据实际 Trial 覆盖的 Case 检查隐藏权限。内存仓库与本地对象存储闭环、SQL 结构测试和 race 结果不替代真实数据库计划、候选应用或自然 Agent 场景；公共标准管理入口与存储补项的批准状态另查实施设计。
+
+
+## 2026-10-10 候选验证上下文与比较开销
+
+**Why:** 候选的历史决策与后来验证记录不是同一结论；切换候选或 Run 时复用上一份分数会造成错误归因。旧页面为显示评分质量自动调用比较接口，而该接口默认可以触发模型成对判卷，仅打开页面便产生外部调用。
+
+**How to apply:** 从[实施设计第 7.5 节](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)核对正式组件与浏览器替身证据。以明确候选、精确 Variant ID/hash、Run 和基线恢复上下文；旧决策单列，未选基线不推断收益。逐题详情返回须保留所选 Run、基线和目录筛选，加载/失败不沿用旧分数。普通浏览只读已冻结 Scorecard；LLM 比较必须由明确操作触发。成对比较先限定双方授权 Trial 交集及上限，再按小批读取 Case 正文并复用完整上下文；不要因复用缓存留下 nil Case，或先读取所有输出再截断。浏览器 mock 与技术测试不证明真实 Agent 或数据库链路。
+
+## 2026-10-10 共享标准补项获批与元数据仓储
+
+**Why:** 用户明确批准实施设计第 8 节和第 6.1 节，但继续限定 EVOLVE 域及迁移文件权限。名称/组合不能充当通用 Benchmark 的身份；Case 内容参与 hash 的来源依据也必须在真实仓储往返。
+
+**How to apply:** 以[实施设计第 7.6、8 节](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)核对当前进度和迁移边界。新建用请求身份保证重试，修订用明确对象和 expectedVersion；同名独立资产、恢复旧组合与历史结果各自保留。共享标准仅存身份/修订元数据并引用 Artifact，CaseSet 用精确成员索引做权限和有界查询；不要复制正文或引入每题 SQL。缺失成员/祖先索引不得默认为可见；新管理接口、旧冻结读取与历史回填需要一起验收。Case basis 缺失不能靠重算历史 hash 修复。迁移尚未执行，SQL 替身的固定查询次数与静态约束检查仍不是实际数据库计划或性能证据；第 6.2 节长 Unicode 索引补项另行确认。
