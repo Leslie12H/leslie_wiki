@@ -16,6 +16,8 @@ links: [sandeval-sql-lock-diagnosis, sandeval-api-observability]
 ## 证据指针
 
 - [2026-10-10 16:00–17:02 只读取证报告](/Users/leslie/Documents/Playground/sandeval-latency-20261010/report.md)：已验证的部署、接口分位数、请求/trace/QueryID、计算组 CPU、扫描量与证据缺口；同目录保留脱敏查询、日志和只读脚本。
-- 本次已定位慢 SQL 在 `init_warehouse`，普通 `sand_eval` 读取相对稳定；Eval 自身重扫描为已证实负载，但不能单独解释后半段恶化。具体数值及版本只读报告，不作为当前状态复用。
-- 查其他业务的 query log 需明确覆盖该范围的授权；此次访问被自动审批拒绝，未执行。未取得完整其他工作负载前，不点名触发任务。
+- 本次已定位慢 SQL 在 `init_warehouse`，普通 `sand_eval` 读取相对稳定。用户追加授权后，定位到 Caption FPS 动作召回查询是后半段最大的新增压力源，叠加既有 videoonly 查询；负载名称、时间、并发、CPU 和读取规模见报告，不作为当前状态复用。尚未做停/启对照，不称所有尖峰的唯一原因。
+- 2026-10-10 用户已明确授权跨业务只读取证；实际收窄为资源聚合、连接元数据、表名、布尔查询形状及固定计划节点名称。节点提取只能使用固定名称白名单，不能使用 Bitmap 后匹配整行的正则，避免带出过滤条件参数。
 - [SQL 与锁诊断](sandeval-sql-lock-diagnosis.md)、[API 观测入口](sandeval-api-observability.md)：生产资源与查询方法须在新事故中重新核实。
+
+- **How to apply（补充）：** point-readonly 名称、clip_id IN、LIMIT 或 Index Scan 都不能证明低开销；继续核对每次实际读取规模与 CPU。按 query_start/query_end 计算执行并发，不以 session 数代替；相同客户端出口也不能直接识别操作者。

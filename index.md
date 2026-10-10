@@ -448,3 +448,5 @@
 - Benchmark 建议性预检、按页运行准备与提交返回证据：见 [EVOLVE 通用工作区实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md) 的 2026-10-10 运行预检记录。
 
 - [Sand Eval 2026-10-10 计算组延迟取证](domains/sandai-data-smith/refs/sandeval-init-warehouse-latency-20261010.md) — 同模板 SQL 启动等待、提交锁阶段、计算组 CPU 与跨业务触发源的证据及授权边界。
+
+- 2026-10-10 追加授权后已定位 Caption FPS 动作召回为主要新增数据库压力源，补充只读并发、逻辑读取与 Index Scan 成本边界，见 [计算组延迟取证](domains/sandai-data-smith/refs/sandeval-init-warehouse-latency-20261010.md)。
