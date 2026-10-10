@@ -177,6 +177,7 @@
 - [Sand Eval 供应商任务与批次分类入口](domains/sandai-data-smith/refs/sandeval-supplier-task-grouping.md) — 供应商派题列表、明确发布关联、配置装配与质检分组参考指针（2026-09-26）。
 
 - [Sand Eval 角色与两侧工作流](domains/sandai-data-smith/refs/sandeval-roles-and-workflow.md) — 角色节点、Sand 视角、成员权限与新旧质检链路的核验入口（2026-09-17）。
+- [Sand Eval 换空间与个人派题核验](domains/sandai-data-smith/pitfalls/sandeval-space-membership-and-personal-distribution.md) — 单空间/单角色、同名账号、供应商下发与个人派题的分层核对及未派题批次改派入口（2026-10-10）。
 - [Sand Eval 多轮退回的上游意见链](domains/sandai-data-smith/pitfalls/sandeval-repeated-return-feedback-lineage.md) — 整批意见须有父处置，逐题意见还须原报告、送审包与冻结计划（2026-09-28）。
 - [Sand Eval 整改意见姓名的展示覆盖](domains/sandai-data-smith/pitfalls/sandeval-correction-reviewer-display-scope.md) — 原身份、账号昵称、部署 DTO 与状态分支覆盖；完整工作台刷新、草稿确认、稳定题目定位与跨单隔离修复及测试 PR #2241 / main PR #2246 指针；质检复验页上游 Sand 意见的身份边界、仲裁作者、署名/刷新修复、测试 PR #2266 / main PR #2267、基线冲突与 CI 验证边界（2026-10-09）。
 - [Caption Refine 跳过与待定阻断交卷](domains/sandai-data-smith/pitfalls/sandeval-caption-refine-skip-defer-handoff.md) — 定位限制历史与修复分支；待定排除须覆盖整包，跳过须保留固定作答上下文，交付状态另行核验；含全待定兄弟批次恢复后的整包资格修复与回归指针（2026-09-28）。
