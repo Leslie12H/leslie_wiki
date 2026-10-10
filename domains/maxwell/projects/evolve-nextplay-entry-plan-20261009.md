@@ -213,3 +213,10 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 **Why:** 用户再次要求通用平台避免过多门禁。资产维护与实际执行就绪是不同职责；强制先建 Work、先接入对象、先预检，或禁止从历史版本继续修订，会制造无必要的使用顺序。共享标准只有目录读写也不够，生成结果采用与 Benchmark 选择必须能衔接。
 
 **How to apply:** 从[实施设计第 7.7 节](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)核对当前代码和证据。预检保持可选，保存自己检查结构与引用；方法专属配置原样保留，环境就绪在执行时判定。采用冻结产物保留精确 ID/hash，编辑正文则生成新定义并保留来源；草稿跨页面恢复，返回保留业务和来源上下文。历史内容可以作为新修订基础，expectedRevision 取当前头来保护并发，不用名称合并身份。版本对比仅按需取上一正文；目录不预读全部正文或任务。趋势必须保留后端被测版本分段，Benchmark 来源 Work 不能充当每条 Run 的归属。维护工具默认只读、索引与目录分阶段、按业务和 ID 有界推进，当前执行边界见[维护说明](/Users/leslie/Downloads/sandai-code/maxwell-ai/services/evolve-server/docs/standard-maintenance.md)。数据库迁移与回填未执行；浏览器内存替身、HTTP 内存测试、构建通过不能证明真实评分、数据库性能或完整候选闭环。
+
+
+## 2026-10-10 Benchmark 运行预检与有界准备
+
+**Why:** 后端已有继续运行的适配性选项，前端却把能力差异当作无法打开表单的错误；复用完整任务工作区准备一次评测，还会读取全部用例、产物、候选和 Run 历史。去掉界面拦截与减少读取必须同时处理，不能让用户走到提交才发现不可恢复的失败。
+
+**How to apply:** 从[实施设计第 7.8 节](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)核对代码与技术证据。能力差异呈现建议，用户可沿用既有 ignoreApplicability 运行；权限与冻结引用完整性继续由对应层负责。运行表单按任务类型读取一页版本或候选元数据，精确读取 Benchmark 两份标准；更多内容由显式分页操作加载，不因提交重扫历史。普通版本选择固定，调优使用候选绑定的 Variant；同一表单相同设置的未知结果重试保持请求身份，成功记录及返回上下文保留在导航状态。浏览器内存替身和已有后端回归不等于真实运行、数据库性能或无 Work 评测已经完成；运行独立化须继续核对 prepareRun、Worker 领取、Run/Trial 关系、冻结证据与授权，不能伪造会话或任务填平依赖。
