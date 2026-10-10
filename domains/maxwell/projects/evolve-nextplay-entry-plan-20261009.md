@@ -2,7 +2,7 @@
 name: evolve-nextplay-entry-plan-20261009
 type: project
 created: 2026-10-09
-updated: 2026-10-09
+updated: 2026-10-10
 tags: [maxwell, evolve, nextplay, interaction, judge, import]
 links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20260916, evolve-design-review-self-iteration-20261009]
 ---
@@ -140,3 +140,16 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 - 用户要求有动效但不必复制参考网站。以连续操作与稳定阅读为先：紧凑工作区、对话/审阅同屏、谱系详情同屏，持续动效仅在空状态局部、可暂停并尊重 reduced-motion。
 - 任务/运行/Benchmark 对话应按实际来源隔离；无基线候选不能默认关联第一套 Benchmark。保护未保存编辑时不能覆盖历史条目，浏览器 Forward 回到原页须撤销过期离开回调。修复与定向证据回到验收文件，不以此宣称所有浏览器分支或多人协作通过。
 - PDF 原临时文件在本次工作中已失效，使用前次审查保留的逐页文本及截图，留存位置与范围见体验方案。独立评分、冻结版本、多维指标、预算和候选应用证据用于约束设计；发布回滚按用户决定后置。原型模拟通过不代表 Nextplay 原 Judge、VidMuse 媒体证据或真实候选应用已经接通。
+
+
+## 2026-10-10 全链路复审与通用性约束
+
+**Why:** 用户要求从负责人/调优人员实际走完从零、既有资产、复核与候选，并再次明确不能为 Nextplay 改写通用平台。候选验证影响普通评测默认版本、仅保存原文却未明确评分绑定、导入成功没有后续入口都会误导用户判断是否已完成。
+
+**How to apply:**
+
+- 完整职责、原型联包格式与真实后端契约的区别、当前源码问题和待确认实施范围见 [2026-10-10 复审](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/workflow-backend-review-20261010.md)。会变化的代码和运行结论以该证据及当前源码为准。
+- 通用规则是可选的 Case→业务规则→输出指标关联，不是 Nextplay 专属 evaluation.profile/rules 字段。源 YAML、目录与多轮流程由业务适配器处理；独立导入、生成和混合复用平等保留。
+- 查候选到对象版本默认值的副作用；临时验证版本不能变成下次普通评测的默认对象。Skill 也不能因为接入登记而自动成为评测范围。
+- 评分的 not_applicable、未采集、原始值和人工复核分开；复核反馈与人工有效结论投影不能混称已有能力。完整原评分保留需验证数值、缺失和聚合责任，不以导入成功代替。
+- 本轮验收、独立 A/B 评审及明确未覆盖分支见 [验收记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/workflow-acceptance-20261010.md)。只有前端模拟与源码核验，没有真实 Judge/候选应用或后端契约变更。
