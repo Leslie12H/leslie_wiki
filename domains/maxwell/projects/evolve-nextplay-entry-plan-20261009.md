@@ -172,3 +172,10 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 - 列表、定义与正文读取分开：元数据页不逐行拉证据，不为显示来源名称加载全部任务；选择记录/用例后才读取正文。取最新 Benchmark 定义不能把历史成绩一起读回后丢弃。
 - 内容参与 hash 不代表已经持久化；检查 memory 与 Postgres 字段往返的一致性。来源依据字段补项与极长 Unicode 来源索引的风险见实施设计的补充确认节，不能重算旧 hash 或静默截断来掩盖问题。
 - 浏览器技术替身、内存 HTTP 回归、Postgres 真实计划和 Agent 自然场景分别记录。迁移未执行时，静态 SQL 检查与绿色单测不能被描述为数据库上线或性能验收已完成。
+
+
+## 2026-10-10 用例维护与异步编辑验收
+
+**Why:** 纯 Store 测试不能发现 render prop 中 MobX 读取未被响应式跟踪造成的受控表单显示落后；关闭确认若复用第二次关闭事件，会让再次 Escape 绕过用户明确放弃。文件读取中导航离开还可能留下永久 reading 锁。
+
+**How to apply:** 回到 [实施设计第 7.2 节](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md) 核对当前正式实现与验收边界。编辑器回调视图需在自己的 Observer 内读取状态；关闭、遮罩和 Escape 使用同一未保存保护，只有明确放弃按钮丢弃内容；异步读取离开页面须失效迟到结果并释放锁。保存失败按原请求身份重试，退出登录使未完成响应失效。CSV input 文本与 inputJson 结构化输入分开，防止前导零和数字含义被自动推断改变。浏览器替身验收只能证明交互与客户端行为，不能代替真实数据库持久化、评分等价性或完整 Agent 链路。
