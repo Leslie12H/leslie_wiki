@@ -466,3 +466,5 @@
 - EVOLVE 评测到独立调优、原生草稿审阅和无目标设计的资产准备：见[工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md)的 2026-10-10 第 7.21–7.23 记录；精确基线/修订、小批查询、两种审阅恢复与可信会话上下文。
 
 - EVOLVE Benchmark 分页版本目录、相邻变更与旧组合恢复：见[工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md)的 2026-10-10 第 7.24 记录；CAS 冲突恢复、上下文与验收边界。
+
+- EVOLVE 共享用例/原生指标诊断、取样后批读与报告逐题返回：见[工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md)的 2026-10-11 第 7.25 记录；来源 Work、实际轨迹与模拟验收边界。

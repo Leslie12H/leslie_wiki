@@ -2,7 +2,7 @@
 name: evolve-nextplay-entry-plan-20261009
 type: project
 created: 2026-10-09
-updated: 2026-10-10
+updated: 2026-10-11
 tags: [maxwell, evolve, nextplay, interaction, judge, import]
 links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20260916, evolve-design-review-self-iteration-20261009]
 ---
@@ -295,3 +295,10 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 **Why:** 能通过精确版本链接读历史，不等于用户能发现历史、理解变化或复用旧标准；保存遇到并发更新时，只有错误提示会让已有修改无处接续。定义历史不应靠载入整个评测结果历史来展示。
 
 **How to apply:** 当前实现及证据见 EVOLVE 仓库实施设计第 7.24 节和 `design-v7/benchmark-versions-acceptance-20261010.md`。目录只读定义，按业务、身份和版本游标分页，复用既有主键，不扫 history_json 或逐条取用例。历史组合从精确引用恢复，保存基于最新 CAS 生成新版本，不覆盖原版；并发恢复保留用户名称、引用及运行规则，读取最新基准后由用户再次保存。版本选择、评测结果及返回筛选同时变化。模拟 UI、内存路由测试、静态 SQL 与真实数据库计划仍分别记录，迁移未执行。旧诊断与候选比较的原生指标语义继续以源码审查为准，不能由新结果页面可用推断旧入口已兼容。
+
+
+## 2026-10-11 共享用例诊断、先取样再取正文与报告引用
+
+**Why:** 共享 Case 的来源 Work 不是当前 Run 的所有权；读取全量正文再截取样本会把成本放大到整次运行。原生指标的原值、单位、定义版本也不能套进旧总分/旧 rubric。只修模型输入仍不构成可用交互：诊断产物种类、真实字段和逐题按钮必须贯通。
+
+**How to apply:** 当前实现/验收指针为仓库实施设计第 7.25 节和 `design-v7/diagnosis-report-acceptance-20261011.md`。基于已授权 Run/Trial 取 visible 样本，先按方法容量稳定选择，再小批读 Case/产物；相同冻结证据只解析一次，工具轨迹须从已验证的实际输出 blob 提取。原生失败按 key+完整定义 hash 区分，不从数值猜判定；报告由应用记录自动口径、范围和截断，旧报告无字段时保留未知及原 hash。OpenAPI 产物枚举、分派视图、实际报告字段、引用和返回状态同时核对。模拟 UI、内存测试与真实数据库/自然 Agent 验收分开；固定来源 Run 跨 Work 的诊断/候选旧入口仍须继续查代码，不能由 baseline 可读推断已贯通。
