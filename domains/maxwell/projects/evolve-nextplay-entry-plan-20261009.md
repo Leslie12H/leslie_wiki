@@ -320,3 +320,10 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 **Why:** 只显示比较口径与回执仍让调优者来回记数；原生指标同名不等于同定义，计数相同也不证明逐题配对。长 Unicode 来源的原文复合唯一键另有 B-tree 项长度风险，不能靠收紧业务字段解决。
 
 **How to apply:** 当前代码及证据以 EVOLVE 实施设计 §7.29–7.30 与 `design-v7/delivery-status-20261011.md` 为指针。对照只读取固定两条 Run 的有界汇总，按精确定义匹配，原始/复核口径分开并保留返回状态；读取失败、未知和缺失分别显示，差值不冒充收益。窄屏横滚保留指标身份。来源头按已有长度定界 SHA-256 AssetID 主键查找并核对原文，目录摘要索引仅缩小候选行，不充当唯一身份或权限。PostgreSQL convert_to 是 stable，不能直接塞入要求 immutable 的索引表达式；不要通过伪造 immutable 包装器绕过。仅修订尚未应用的迁移文件；实际计划、迁移锁和自然业务验收仍须独立证据，不把静态测试或跳过的数据库集成测试称为通过。
+
+
+## 2026-10-11 直接评测与待办旧入口兼容
+
+**Why:** 新增直接评测容器后，旧“失败运行”待办仍跳转任务页；草稿待办从全部 Work 分页也会让直接执行挤掉真正的调优草稿。仅验收 Benchmark 主入口会漏掉这类二级入口断点。
+
+**How to apply:** 失败待办应按精确 Run 进入业务级结果，保留待办查询与返回焦点；草稿在分页前按 Agent Work 范围筛选，不在分页后丢弃直接执行。当前实现、状态/重试/窄屏证据及审查范围见[实施设计第 7.31 节](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)和[待办验收](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/inbox-records-acceptance-20261011.md)。真实环境和数据库条件以[交付矩阵](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/delivery-status-20261011.md)为准；模拟页面通过不证明自然 Agent 或实际 SQL 性能。

@@ -474,3 +474,5 @@
 - EVOLVE 原生指标的旧方法适用性及任务用例精确引用/返回：见[工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md)的 2026-10-11 第 7.27–7.28 记录。
 
 - EVOLVE 候选同页对照与来源索引：见 [通用工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md) 的 2026-10-11 补充；精确定义、未知/缺失、窄屏固定列及长 Unicode 有界索引。
+
+- EVOLVE 直接评测的失败待办、草稿分页和返回上下文：见 [工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md) 的 2026-10-11 第 7.31 记录；注意主入口以外的兼容路径与真实环境边界。
