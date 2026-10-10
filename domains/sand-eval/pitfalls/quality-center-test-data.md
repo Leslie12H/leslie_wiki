@@ -2,7 +2,7 @@
 name: sand-eval-quality-center-test-data
 type: pitfall
 created: 2026-09-17
-updated: 2026-09-27
+updated: 2026-10-10
 tags: [sand-eval, testing, quality-center]
 links: []
 ---
@@ -32,3 +32,5 @@ links: []
 2026-09-27 受控恢复指针：`/Users/leslie/Documents/Playground/wuzijie-package-recovery-20260927/report.md` 与同目录 `recover_config.py`。**Why:** 补齐配置后仍需证明后台生成整包且指定负责人本人具有提交权限。**How to apply:** 取得本次生产恢复授权后，默认 dry-run 备份目标报告和配置、校验实时人员资格；显式 apply 复用 `ReviewerConfigService.put` 的版本比较和审计回执；回读报告摘要、整包及待推进记录，再以指定负责人身份核对 `submit_to_sand` 并浏览器验收。恢复到可交接状态与正式提交 Sand 分别核验。
 
 2026-09-27 PR 复核指针：[PR #1792](https://github.com/world-sim-dev/sandai-data-smith/pull/1792)，核验版本 `a84bf1f13c3a6a84fbc3ec370b07a6dabb83261d`。**Why:** 负责人兜底能解除多人验收的生成阻断，但不能证明任意被选人当前仍具备交接权限；前端“整包生成中”也不能证明后台只是短暂延迟。**How to apply:** 在原任务无显式配置的条件下，对照来源指定接收人、唯一验收人、最近 READY 供应商质检下发人三个来源，并以最终接收人实时身份核对来源 `submit` 权限；`PackageDetail.tsx` 忽略 `PACKAGE_NOT_READY` 时，需要沿 `LeaderQueryService.package` 回读真实 advancement 阻断，检查显式空配置和无可用下发记录是否被误报为生成中。合并状态、Gate 和生产部署分别实时查询。
+
+2026-10-10 视角排查指针：`/Users/leslie/Documents/Playground/sandeval-awaiting-handoff-20261010/read-only-findings.md`。**Why:** 未带 `stage` 的管理链接会随账号空间选择视角；同一个包在 Sand 视角显示“整包生成中”，供应商视角却可能已提供提交按钮。缺少供应商动作不能据此认定后台正在生成。**How to apply:** 先确认反馈的数据包和操作账号，再核对 `QualityManagementPage.tsx` 的 stage 选择、`PackageDetail.tsx` 的提示分支和 `LeaderQueryService._package` 的提交资格。列表进度、详情权限、正式提交成功分别核验；抽查其他包和 root 按钮可用不能代替指定供应商负责人的现场结论。
