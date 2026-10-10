@@ -179,3 +179,10 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 **Why:** 纯 Store 测试不能发现 render prop 中 MobX 读取未被响应式跟踪造成的受控表单显示落后；关闭确认若复用第二次关闭事件，会让再次 Escape 绕过用户明确放弃。文件读取中导航离开还可能留下永久 reading 锁。
 
 **How to apply:** 回到 [实施设计第 7.2 节](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md) 核对当前正式实现与验收边界。编辑器回调视图需在自己的 Observer 内读取状态；关闭、遮罩和 Escape 使用同一未保存保护，只有明确放弃按钮丢弃内容；异步读取离开页面须失效迟到结果并释放锁。保存失败按原请求身份重试，退出登录使未完成响应失效。CSV input 文本与 inputJson 结构化输入分开，防止前导零和数字含义被自动推断改变。浏览器替身验收只能证明交互与客户端行为，不能代替真实数据库持久化、评分等价性或完整 Agent 链路。
+
+
+## 2026-10-10 共享标准与 Benchmark 原子修订
+
+**Why:** 共享标准需要从人工采用、目录和版本管理一直贯穿 Run 准入、事务入队与实际判卷；只让 Artifact.WorkID 可空会留下“能创建、不能运行”的断点。旧按名称+组合去重的 Benchmark 唯一键还可能把更新回放到其它身份，或吞掉仅修改适用范围的操作。
+
+**How to apply:** 先核对[实施设计第 7.3、7.4 节及第 8 节补充确认单](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)的当前批准和实现状态。修订应以明确身份和 expectedVersion 原子追加；Postgres 新旧写入口共享锁序，锁后以 READ COMMITTED 重读，精确重试定位 expectedVersion+1，不能全量读历史。名称去重的存储限制应明确返回冲突，不能伪装为已保存；修改唯一键仍需要精确 DDL 确认。按代码中的实际调用路径核对准入、仓储、worker 判卷及详情的 Case.WorkID 限制，候选和执行证据继续保留 Work 隔离。共享引用批量 SQL 的 jsonb_to_recordset 字段名必须与 Go JSON tag 一致，特别是带引号的 contentHash；SQL 字符串单测不证明数据库实际执行。当前数据库迁移、回填与查询计划仍未执行，不把内存 HTTP 或 race 测试当作数据库验收。

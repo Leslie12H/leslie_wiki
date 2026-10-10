@@ -432,7 +432,7 @@
 
 - [EVOLVE 自迭代设计审查 2026-10-09](domains/maxwell/refs/evolve-design-review-self-iteration-20261009.md) — 统一采纳门槛、final 独立性、搜索反馈、Judge 校准及预算/交付边界的代码与反例核验入口
 
-- [EVOLVE 通用工作台与 Nextplay 接入方案](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md) — 2026-10-09：生成/导入同等重要，Case/Judge 与 Work 解耦；通用方法派生业务指标、Benchmark 内完整路径、人工复核/重评/重跑与历史边界、工作台文案规范、动线审查、V7 完整前端体验及展开菜单纠正；多人 Skill 调优与复核证据要求；对话草案、候选显式来源、可操作谱系与可比趋势；布局连续性与局部可暂停动效；Benchmark/评测/调优整体组织、Maxwell/A2A/HTTP 通用对象与候选应用能力区分，实际验收及真实接入边界。 2026-10-10 补全全链路复审、候选默认版本隔离、联合评分关联与源适配边界、导入接续及后端差距指针；原型确认后的正式实施、YAML 与接口/迁移/性能评审入口。 2026-10-10 已批准首批代码与迁移文件，限定 EVOLVE 域；新增目录会话权限、定义/历史分读及持久化一致性证据指针。 补充用例修订/归档、四格式导入与异步编辑交互验收指针。
+- [EVOLVE 通用工作台与 Nextplay 接入方案](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md) — 2026-10-09：生成/导入同等重要，Case/Judge 与 Work 解耦；通用方法派生业务指标、Benchmark 内完整路径、人工复核/重评/重跑与历史边界、工作台文案规范、动线审查、V7 完整前端体验及展开菜单纠正；多人 Skill 调优与复核证据要求；对话草案、候选显式来源、可操作谱系与可比趋势；布局连续性与局部可暂停动效；Benchmark/评测/调优整体组织、Maxwell/A2A/HTTP 通用对象与候选应用能力区分，实际验收及真实接入边界。 2026-10-10 补全全链路复审、候选默认版本隔离、联合评分关联与源适配边界、导入接续及后端差距指针；原型确认后的正式实施、YAML 与接口/迁移/性能评审入口。 2026-10-10 已批准首批代码与迁移文件，限定 EVOLVE 域；新增目录会话权限、定义/历史分读及持久化一致性证据指针。 补充用例修订/归档、四格式导入与异步编辑交互验收指针。 补充共享标准全链路、Benchmark 原子修订与存储唯一键限制指针。
 
 - [Sand Eval 已终结主任务的素材占用恢复](domains/sandai-data-smith/pitfalls/sandeval-terminated-dispatch-material-occupancy.md) — 停止执行与有效下发占用的区别、正式软删除/审计路径及逐素材范围验收指针（2026-10-09）。
 
