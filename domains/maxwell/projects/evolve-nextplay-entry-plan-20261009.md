@@ -220,3 +220,10 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 **Why:** 后端已有继续运行的适配性选项，前端却把能力差异当作无法打开表单的错误；复用完整任务工作区准备一次评测，还会读取全部用例、产物、候选和 Run 历史。去掉界面拦截与减少读取必须同时处理，不能让用户走到提交才发现不可恢复的失败。
 
 **How to apply:** 从[实施设计第 7.8 节](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)核对代码与技术证据。能力差异呈现建议，用户可沿用既有 ignoreApplicability 运行；权限与冻结引用完整性继续由对应层负责。运行表单按任务类型读取一页版本或候选元数据，精确读取 Benchmark 两份标准；更多内容由显式分页操作加载，不因提交重扫历史。普通版本选择固定，调优使用候选绑定的 Variant；同一表单相同设置的未知结果重试保持请求身份，成功记录及返回上下文保留在导航状态。浏览器内存替身和已有后端回归不等于真实运行、数据库性能或无 Work 评测已经完成；运行独立化须继续核对 prepareRun、Worker 领取、Run/Trial 关系、冻结证据与授权，不能伪造会话或任务填平依赖。
+
+
+## 2026-10-10 直接评测与人工复核实现指针
+
+**Why:** 普通评测不能要求先有调优会话或 Skill；人工改判也不能复写自动评分或只显示在详情里。准备后重试若重新解析“最新”会漂移，仓储若用 JSON 克隆则可能丢掉不对外序列化的幂等字段。
+
+**How to apply:** 以[实施设计第 7.9–7.11 节](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)及[复核技术验收](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/trial-review-acceptance-20261010.md)核对当前代码。直接执行保留内部上下文并固定已接受输入，终态与 Run 一同收敛；任务列表和普通记录分清。版本备注不等于目标快照证明。人工复核追加事件并维护采用头，作者由认证身份取得，幂等重试先于并发版本校验；原 Assessment 和执行状态保持不变。逐题列表一次读取本页精确 Trial ID 的轻量头，展示自动与采用口径，不按行拉完整历史。编辑离开保留草稿，冲突明确合并；只读仍能查历史。用户已免除本目标内后续逐项确认，但只改 EVOLVE、迁移仅写文件不执行的限定继续有效。当前测试包含真实评分处理器加外部执行替身、内存/HTTP/静态 SQL 及正式组件浏览器验收；不等于数据库计划、真实目标执行或自然 Agent 验收。指标 v2、仅重评、固定基线候选和汇总趋势的完成状态继续以实施设计为准。
