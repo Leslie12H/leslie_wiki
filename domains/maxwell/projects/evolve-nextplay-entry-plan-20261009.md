@@ -259,3 +259,12 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 **Why:** 页面同步扫描每条 Run 的所有 Trial 会把汇总成本转移给用户请求；复核与汇总并发时，只有租约没有代次仍可能把旧判断发布为最新结果。单项值、指标判定和整题判定又不能互相隐式覆盖。
 
 **How to apply:** 核对[实施设计第 7.15 节](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)与[结果汇总验收](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/result-projection-acceptance-20261010.md)的当前代码和证据。终态 Run/当前复核头与待处理代次在同事务发布，重放不重复排队；原 Worker 按页读取，发布同时检查代次和未过期租约。失败保留旧投影并退避，新的复核不继承旧失败等待。visible/hidden 各自汇总，页面只取所选范围和口径；头与指标页同 SQL 快照读取，代次改变时从第一页继续。人工明确判定可以独立于缺失数值，不能因此制造零值或自动改整题结果。切换口径需保留展开状态，读取失败保留数据，未完成汇总显示状态。数据库计划/锁行为仍需真实验证；迁移只写文件，Benchmark 分页趋势与完整自然 Agent 链路以实施设计为准，不以组件替身或内存 Worker 通过代替。
+
+
+## 2026-10-10 Benchmark 分页与原生外部评分
+
+**Why:** Benchmark 和 Run 是多对多登记关系，不能为了自动趋势改写原执行身份；列表页应从有界投影读取，避免每个点重新扫描 Trial。外部整数维度适配器也不能代表任意业务的小数、布尔、类别与逐题规则。仅连接成功不足以证明评分等价。
+
+**How to apply:** 当前契约与文件迁移见[实施设计第 7.16、7.17 节](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)，以代码而非本页判断部署状态。Benchmark 先授权和 keyset 分页，再联接汇总；指标身份带精确版本，自动/采用口径分开。窄屏 SVG 的 computed 字号不代表实际像素，应同时测图形变换后的文字与命中区，证据见[Benchmark 验收](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/benchmark-results-acceptance-20261010.md)。
+
+原生评分复用服务登记与方法调用，通过可选协议传 Case/config/evidence 与多指标，不将原值强制压成整数。服务实际版本缺省保持未知；逐指标异常不抹去其他结果。目录一次带回协议/显示名以避免逐项补查；服务到标准的跳转和来源返回一并验证，见[原生评分验收](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/native-provider-acceptance-20261010.md)及[接入协议](/Users/leslie/Downloads/sandai-code/maxwell-ai/services/evolve-server/docs/native-grading-provider.md)。数据库迁移仍仅文件；真实计划、原业务评分等价、整题结论选择与完整自然 A2A 链路的进度回到实施设计，不以替身测试替代。

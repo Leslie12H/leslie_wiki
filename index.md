@@ -458,3 +458,5 @@
 - EVOLVE 原单位指标、逐题评分绑定、冻结证据重评和有界汇总的 Why/How 与代码证据：见[工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md)的 2026-10-10 原生指标记录；数据库迁移未执行。
 
 - EVOLVE 结果汇总的事务代次、租约发布、双口径/可见范围和分页快照：见[工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md)的 2026-10-10 结果投影记录；迁移未执行、趋势闭环继续实施。
+
+- EVOLVE Benchmark 多对多登记、有界分页趋势与原生外部评分：见[工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md)的 2026-10-10 新记录；窄屏 SVG 实际尺寸、服务到标准返回、迁移及业务等价边界。
