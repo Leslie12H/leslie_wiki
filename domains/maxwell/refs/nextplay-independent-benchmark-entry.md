@@ -25,3 +25,6 @@ links: [evolve-nextplay-entry-plan-20261009, nextplay-benchmark-import-audit-202
 - 2026-10-12 接入交付与验收继续查上述实施记录及 [EVOLVE PR 338](https://github.com/world-sim-dev/maxwell-ai/pull/338)、[Nextplay PR 19](https://github.com/world-sim-dev/nextplay-eval/pull/19)。通用平台只承担可选异步评分协议、恢复/取消/结果保真；业务规则和完整轨迹解释留在 Nextplay。凭据转交须获明确授权并核对临时文件、artifact 与工作流步骤的清理。
 - 首次导入出现版本冲突时，检查应用时间精度与 PostgreSQL timestamptz 精度；回归入口为 `services/evolve-server/internal/modules/evolve/infrastructure/postgres/case_asset_timestamp_integration_test.go`。同时验证合法写入、幂等与真正旧版本拒绝，不能仅增加重试。
 - A2A Runner 运行版本与 Benchmark 资产冻结属于不同层次。回到 `commands/runner_baseline.go`、`commands/direct_run.go` 核对目标快照和运行声明；不能把“连接当前版本”当成已绑定内层目标快照。更新已有 Skill 先对比实际导出并保留 runtime.env，只替换必要运行包。
+
+- MCP 服务已发布新 schema，不能证明共享调优 Agent 已登记相同工具定义。遇到新 action 被 oneOf 拒绝时，先核对 Studio「工具管理 → 服务接入」里的实际 schema，并通过现有刷新、预览、同步流程更新；入口见 `services/agent-server/internal/app/api/http/tools_mcp_wiring.go`。2026-10-12 的差异、同步计数和 baseline 实际成功证据见实施记录，避免让 Agent 反复重试旧 schema。
+- hidden Case/CaseSet 对准备 Agent 返回不可见，不意味着资产丢失。维持评分材料隔离；由有权限的 Studio 页面选择冻结 Benchmark 和 Work 版本执行，真实结果再回读。不要为了通过准备流程更改原测试集可见性。
