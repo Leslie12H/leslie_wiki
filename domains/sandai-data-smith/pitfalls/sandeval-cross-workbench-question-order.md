@@ -35,3 +35,10 @@ links: [sandeval-direct-remediation-and-batch-handoff]
 
 
 **2026-10-12 验收附带观察：** 已验收通过的只读质检页仍显示“未保存”，并拦截原标签页离开；新标签页可正常查看并返回本人。`ReviewWorkspace.tsx` 的脏状态和 `useUnsavedReview` 判定不在本次题序 PR 的改动行内。现象、源码和截图指针见验收报告；不能由此推断答案未持久化或题序修复引入了导航问题。**Why / How to apply:** 将只读页面提示、服务器提交结果和退回单终态分别核对；只读误报脏状态属于独立交互问题，须单独复现定位，不能为了离页重新提交已验收报告。
+
+
+## 2026-10-12 题序修复的性能评审入口
+
+**Why:** 冻结题号解决跨轮次顺序问题，但每页重建完整题序，以及旧成员按块重建派题批次索引，会让小页仍承担整批或整任务的工作量。真实五题业务验收与绿色 Gate 不证明大批次响应时间没有回退；输入参数规模也可能触及驱动边界。
+
+**How to apply:** 以 [main PR #2386](https://github.com/world-sim-dev/sandai-data-smith/pull/2386) 的实际提交为准，沿 `quality/application/inspection/review_query_service.py::{queue_page,items_page}` → `quality/infrastructure/persistence/review_task_repository.py::{queue_members,queue_items}` 检查全量元数据、排序、摘要与 `VALUES` 输入是否在分页前反复构造。再沿 `quality/application/question_order.py::question_numbers` → `app/services/facts/task_assignments.py::annotation_question_positions` → `app/repositories/assignment_wave.py::{waves,members_by_wave}` 检查分块是否反复加载整任务批次；首次冻结和旧历史缺题号都须覆盖。参数上限按仓库实际锁定的驱动版本核实，不凭 PostgreSQL 通用印象推断。具体输入规模、官方驱动源码链接和证据边界见 [验收报告的性能补充](/Users/leslie/Documents/Playground/sandeval-question-order-20261012.md) 与 [输入规模证据](/Users/leslie/Documents/Playground/sandeval-order-proof-20261012/performance-shape.json)。该证据只执行原函数与内存协作者，不代表真实数据库执行或延迟；性能结论需在 TEST 同规模对齐执行计划、查询次数、冷/热路径和并发。复用冻结事实或请求内索引时，保持动态权限、当前检查范围与写入版本实时校验。历史性能核验规矩见 [检查读取与保存性能入口](../refs/sandeval-review-performance.md)。
