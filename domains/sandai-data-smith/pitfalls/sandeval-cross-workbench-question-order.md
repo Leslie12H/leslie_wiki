@@ -56,3 +56,10 @@ links: [sandeval-direct-remediation-and-batch-handoff]
 **Why:** 题序修复发布后，两份 100 题抽检页显示原第 632、770、893 题，用户以为突然需要检查接近 900 题或切成标注页面。只读回读固定检查项和来源投影、再以平台正式只读观察核验，显示变化来自原标注批次题号；实际各从 1,000 个送审成员抽取 100 个检查项，仍是 Sand 质检，既有判断保持原检查项身份。具体轮次、读数、代码归因和截图见 [验收报告的发布后反馈](/Users/leslie/Documents/Playground/sandeval-question-order-20261012.md) 及 [持久化与来源题号证据](/Users/leslie/Documents/Playground/sandeval-order-proof-20261012/production-sample-number-display.json)；实时进度须重新读取。
 
 **How to apply:** 先区分显示题号、固定样本总数、已判断数和标注源批次数。以 review stage、冻结策略、送审成员及检查项计数证明是否真的扩样；不能由最大题号推算数量。抽样保号应显示“原标注第 N 题”，并保留独立“已检查 X/总样本数、剩余 Y”的进度说明。下方答案表单是质检上下文，须和上方质检判断及提交动作区分；不要为消除误解恢复 1–100 重编号，破坏跨标注、整改和历史意见的定位。该文案建议尚未实施，相关变更与发布从 PR 实时核对。
+
+
+## 2026-10-12 处理中批次换序与保存后继续
+
+**Why:** 发布前按检查项 ID 完成的连续一段，在原标注题号重排后会散落在队列各处。当前已发布 `ReviewWorkspace.tsx::save` 的质检分支保存后直接选择相邻队列项，不判断下一项是否本轮已有结论；跨页 `more` 也按相邻位置推进。原第 770 题后为已合格原第 784 题的现场证据见上述报告截图。新批次从新顺序第一题连续完成不会受此次中途换序影响，但回头修改、跳题或从中间继续也会遇到相同选题逻辑；不能保证所有新批次均不重复访问已判断题。
+
+**How to apply:** 区分普通“下一题”的顺序浏览与“保存并继续”的待检查推进。若修复推进，应按本轮 `verdict` 是否为空寻找未判断题，跨页跳过已判断项并在队尾回找前面的未判断题；全部完成再提示提交。不能按上轮或上游的合格记录跳过本轮尚未检查项。验证覆盖旧顺序已做一段后重排、新批次从头顺做、回头修改、跨页、队尾与前面仍有未判断项。代码指针为 `frontend/src/pages/quality/inspection/ReviewWorkspace.tsx::{save,more}` 与 `backend/quality/application/inspection/review_query_service.py::queue_page`，实际版本从 [PR #2386](https://github.com/world-sim-dev/sandai-data-smith/pull/2386) 与发布记录读取；本次为只读确认，推进修复尚未实施。
