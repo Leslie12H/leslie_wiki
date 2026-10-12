@@ -16,3 +16,9 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-cross-stage-fr
 2026-10-12 邓敏实例的只读时间线、独立 Pod 核验和真实新旧检查项入口见 [现场报告](/Users/leslie/Documents/Playground/output/deng-qc-version-20261012/report.md)。该报告记录核验时点事实，不代表之后状态。未执行生产修复或任务处置。
 
 代码指针：`sand-eval/platform/backend/app/services/facts/answer_amendment.py::verify_current`（最新答案保护）；`app/repositories/task_assignments.py`（逐卡改派审计与新批次）；`quality/infrastructure/persistence/submission_repository.py`、`review_task_repository.py`（冻结成员与轮次）；`frontend/src/pages/quality/inspection/StructuredAnswer.tsx`（可普通判断与禁用代改的提示）。复用时按 live DEPLOY_SHA 读取对应代码。
+
+## 2026-10-12 修复方案指针（尚未实施）
+
+源码核查定位到两个相同身份断点：`app/api/annotation_write_gate.py::_correction_work_unit_if_fenced` 按当前 `wave_id:account_id` 查送审/分配；`quality/application/management/submission_service.py::check_revision` 仅对相同 scope_key 查重。对应文件已与现场部署提交比对。**Why:** 改派不改变稳定工作项，但会改变两个门禁依赖的批次/账号键，原送审约束没有跟到新键。
+
+**How to apply:** 设计修复时把冻结写入保护与跨批次送审准入统一到稳定工作项及正式版本链；保留实际答案作者和历史批次展示，保留已授权换作者整改及合法多质检员。存量修复先核对完整送审范围与下游依赖，不能因为一个抽样题重叠就停止整批，不能直接替换冻结答案或把被替代视为通过。详细设计与验收要求见 [修复建议](/Users/leslie/Documents/Playground/output/deng-qc-version-20261012/repair-plan.md)；本建议不代表规则已获实施或生产修复已执行。

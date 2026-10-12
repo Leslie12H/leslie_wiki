@@ -496,3 +496,5 @@
 - [Sand Eval 转派后标注新版与旧质检冲突](domains/sandai-data-smith/pitfalls/sandeval-reassigned-answer-frozen-review-conflict.md) — 稳定工作项、逐卡改派审计、普通标注新版本、两条送审任务与通用重新送审提示的判断边界（2026-10-12）。
 
 - EVOLVE 对象整体图、任务下钻、多指标共享时间轴和 A/B 对照：见[谱系可读性与可比性](domains/maxwell/pitfalls/evolve-lineage-readability-and-comparability.md)的 2026-10-12 补充；含精确历史定位、默认零和窄屏验收边界。
+
+- 2026-10-12：转派后旧质检冲突的源码门禁与尚未实施的修复建议，见[工作项冻结冲突](domains/sandai-data-smith/pitfalls/sandeval-reassigned-answer-frozen-review-conflict.md)；覆盖跨批次写入保护、重复送审与存量部分覆盖。
