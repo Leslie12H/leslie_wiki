@@ -504,3 +504,5 @@
 - [Sand Eval 无空间账号未作答卡回收](domains/sandai-data-smith/pitfalls/sandeval-orphan-card-reclamation.md) — 成员资格拒绝、冻结题池与身份 guard、明确卡范围、独立提交对账及受控 CLI/验证指针（2026-10-12）。
 
 - 2026-10-12：无空间账号卡回收的生产网络、Leader 客户端与执行审计核验入口见[回收指针](domains/sandai-data-smith/pitfalls/sandeval-orphan-card-reclamation.md)。
+
+- 2026-10-12：Sand 连续退回复验的代改继承修复、测试 PR 与真实两题候选只读验证，见[复验换版修订链](domains/sandai-data-smith/pitfalls/sandeval-sand-reinspection-summary-revision-amendment-conflict.md)。

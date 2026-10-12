@@ -18,3 +18,12 @@ links: [sandeval-cross-stage-frozen-answer-superseded, sandeval-stopped-review-a
 修复应按正式版本/退回/委派证据，把同一固定叶子成员的合法修订继承到新的 Sand 汇总；读取、保存与修订资格共用判据。不得无条件读取来源最新、全局取消同送审限制、继承同组其他质检员草稿或改写历史快照。回归需包含第一次复验一题正常、再次代改退回后两题复验，以及无关新答案、平行检查和被否报告的反例。
 
 代码指针：`sand-eval/platform/backend/quality/application/inspection/answer_amendment_service.py::visible_amendments`、`_lineages`、`_sand_return_chain`；`quality/domain/inspection/amendment_lineage.py::is_same_member_predecessor`；`quality/application/management/inspection_context_service.py::resolve_predecessor_reports`；`app/services/facts/answer_amendment.py::verify_current`。复用时按当前部署 SHA 核对实现。
+
+
+## 2026-10-12 修复与验收指针
+
+后续修复采用冻结前置空间报告的退回委派链，逐一核对连续复验中的每次 Sand 返回，保持原标注成员相同；不全局放宽 Sand 相同送审的直系规则。候选代码位置为 `AnswerAmendmentService._sand_return_chains`，读取/保存候选与 `effective_members` 复用修订链。
+
+**Why:** 两次退回的代改可能分别由不同空间复验报告封存，只展开最新一次返回会继续丢掉较早题目的修订。**How to apply:** 同时验证早期代改题与再次代改题，并保留缺少委派、来源版本/计划不符、停止后修订、被拒封存、其他成员及无关普通新答案的反例。
+
+实现、精确提交、生产数据强制只读候选验证、完整 CI 和发布边界见[修复交付记录](/Users/leslie/Documents/Playground/output/kemeng-qc-version-20261012/repair-status.md)及[测试 PR #2385](https://github.com/world-sim-dev/sandai-data-smith/pull/2385)。该记录与 PR 是会变状态的指针，不能将候选验证等同于生产页面恢复；后续复用时核对部署 SHA 和真实页面。
