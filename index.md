@@ -500,3 +500,5 @@
 - 2026-10-12：转派后旧质检冲突的源码门禁与尚未实施的修复建议，见[工作项冻结冲突](domains/sandai-data-smith/pitfalls/sandeval-reassigned-answer-frozen-review-conflict.md)；覆盖跨批次写入保护、重复送审与存量部分覆盖。
 
 - [Sand 复验换汇总版本后丢失代改基线](domains/sandai-data-smith/pitfalls/sandeval-sand-reinspection-summary-revision-amendment-conflict.md) — 固定叶子不变、顶层汇总换版与委派修订读取缺口；可梦两题连续退回的只读验证指针（2026-10-12）。
+
+- [Sand Eval 无空间账号未作答卡回收](domains/sandai-data-smith/pitfalls/sandeval-orphan-card-reclamation.md) — 成员资格拒绝、冻结题池与身份 guard、明确卡范围、独立提交对账及受控 CLI/验证指针（2026-10-12）。
