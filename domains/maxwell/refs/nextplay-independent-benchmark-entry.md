@@ -38,3 +38,5 @@ links: [evolve-nextplay-entry-plan-20261009, nextplay-benchmark-import-audit-202
 - 同一 dev 服务存在并行发布时，构建成功不代表目标镜像已生效。查 Nextplay `.github/workflows/deploy-eval-service.yml` 与 `eval-service/deploy/preflight.py`：保留活跃任务排空保护，核对镜像 SHA、业务身份和任务阶段，不为发布取消别人的任务。完整评测快照/通知能力与 score-only 上报边界应在合并时分别保留；本轮发布与未得分边界见实施记录。
 
 - 2026-10-12 统一 PR 与正文传输中断复查见 [PR 342 审查记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/nextplay-pr342-backend-review-20261012.md)。Why：HTTP 状态已返回不等于正文完整；把 body 读取错误当成报告超限会丢失已接纳任务的取分机会。How：区分真实字节超限与传输错误，异步重试必须保持同一 invocationId，同步未声明幂等时不自动重发；测试覆盖 POST 接纳正文和 GET 结果正文中断。合并其他 PR 时先验证远端祖先关系，保留历史后快进推送，不覆盖其他任务工作区；原 PR 状态及 CI/发布/65 题实际评分以 GitHub 和实施记录回读为准。
+
+- 2026-10-12 原报告读写预算一致性：回到 `evaluation/contracts.go` 的 MaxAssessmentBytes 以及 queries、judge_usage、judge_quality、case_proposals 的读取入口。Why：外部原文上限不能直接作为冻结对象读取上限，评分/来源封装与 JSON HTML 转义会扩张字节；只测写入会遗漏详情打不开或用量静默缺失。How：保持现有 CAS 写入上限，评分报告读取共用对应预算，其他产物上限与权限不扩张；用真实 CAS 覆盖接近上限原文、转义膨胀、隐藏/跨任务拒绝、元数据校验及用量。具体修复、测试和合并状态查 [PR 342 审查记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/nextplay-pr342-backend-review-20261012.md) 与 GitHub。
