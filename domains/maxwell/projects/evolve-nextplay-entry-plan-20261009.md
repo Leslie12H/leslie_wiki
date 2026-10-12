@@ -341,3 +341,10 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 **Why:** 本地审查通过与 main PR 的实际文件、提交数及实时 CI 状态是不同证据，不能只凭本地分支或旧日志推断远端交付完成。
 
 **How to apply:** 当前正式代码交付见 [Maxwell PR #336](https://github.com/world-sim-dev/maxwell-ai/pull/336)，具体提交、main 基线、文件范围、CI 及是否合并均以 PR 实时状态为准。PR 描述包含实现范围、review 修复、技术回归、数据库仅提交迁移文件及真实 PostgreSQL/自然 Agent/评分等价性/候选应用的未验证项。创建时回读确认单提交且只包含本次 EVOLVE 改动；不把 PR 创建视为合并、部署或真实验收，不将本地原型截图及无关工作区文件加入代码提交。
+
+
+## 2026-10-12 PR Checks 的范围与跨架构浮点断言
+
+**Why:** EVOLVE 子目录回归不包含服务根目录架构守卫和部署清单合同；新增迁移文件如果未同时加入 Job 参数与 ConfigMap 来源，代码测试成功仍可能漏掉部署结构。浮点增量均值在 arm64 与 amd64 上可能产生末位舍入差异，严格相等的测试会误报已生效的人工复核。
+
+**How to apply:** 提交前对照当前 [.github/workflows/pr-checks.yml](/Users/leslie/Downloads/sandai-code/maxwell-ai/.github/workflows/pr-checks.yml) 的 EVOLVE 范围，执行完整服务 vet/test，并保持数据库集成环境变量显式移除；测试需要回环端口时申请对应执行权限，不修改测试绕过。新增迁移需同步 EVOLVE Job 与部署 action 的文件清单，检查文件不等于执行迁移。HTTP 依赖应用契约而非存储 ports，复用类型身份避免重复 DTO。聚合测试用精度容差比较具体期望值，仍检查缺失、NaN 和复核计数；架构差异可用 amd64 定向复现。具体根因、修复与验证见[分支审查记录的 PR #336 CI 补充修复](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-branch-review-20261012.md)；远端检查、提交数与是否合并以 [PR #336](https://github.com/world-sim-dev/maxwell-ai/pull/336) 为准。

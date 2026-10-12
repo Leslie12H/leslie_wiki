@@ -480,3 +480,5 @@
 - EVOLVE 分支兼容审查、已发布标准的来源/复用边界、Benchmark 趋势绑定、迁移事务与错误映射：见 [工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md) 的 2026-10-12 记录；静态及技术测试不替代真实数据库和自然 Agent 验收。
 
 - EVOLVE 正式实现的单提交 main PR、精确文件范围与真实验收缺口：见 [工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md) 的 2026-10-12 PR 交付记录；动态 CI/合并状态读取 PR。
+
+- 2026-10-12 EVOLVE PR Checks：完整服务测试覆盖架构/部署合同，迁移清单同步与跨 CPU 浮点断言；见 [EVOLVE 接入工程计划](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md)。
