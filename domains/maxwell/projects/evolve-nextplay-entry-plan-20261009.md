@@ -355,3 +355,10 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 **Why:** PR #336 已合入 main，但部署新程序需要数据库具备相应结构。此前“迁移只提交文件”的授权不能自动扩展为 dev DDL；健康检查也不能证明共享资产、复核和结果表已存在。本机旧 Maxwell kubeconfig 的认证失效不应成为跳过结构检查的理由。
 
 **How to apply:** 当前源码以 [PR #336](https://github.com/world-sim-dev/maxwell-ai/pull/336) 的 merge commit 为准；发布前元数据证据见[既有只读预检的第二次运行](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34967133774/attempts/2)。该历史工作流只在固定 dev Pod 内执行固定查询，连接和事务均只读，不输出 DSN/Secret 或业务正文；回读迁移台账/checksum、表名及工作负载镜像，再与目标版本的迁移清单比较。查出待执行迁移时，在明确数据库执行授权前保留现有服务，不用关闭迁移后直接发新代码来冒充完成。授权后通过标准 Maxwell CI/CD 显式选择 dev、Evolve、Web 和迁移开关；其它服务保持未选。后续实际发布与迁移是否成功仍须读取新工作流和独立读回，不能复用这次预检快照作当前状态。
+
+
+## 2026-10-12 DEV 迁移授权与发布完成指针
+
+**Why:** 用户在明确了解缺失的 0014–0031、锁表和回退影响后，授权仅在 dev 执行迁移并发布 EVOLVE API/Worker 与 Studio；这次授权取代本次 dev 部署的“迁移只提交文件”限制，不扩展到 staging/prod 或其它服务。迁移日志、实际 Pod、台账与前端入口需要分别验证。
+
+**How to apply:** 发布源码与选中组件以 [Maxwell CI/CD 38206105294](https://github.com/world-sim-dev/maxwell-ai/actions/runs/38206105294) 为准；流程按 Evolve → Web 执行，迁移后核对 API/Worker rollout、健康及认证路由。独立只读回读见[元数据探针第三次运行](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34967133774/attempts/3)，比对全部迁移 checksum 与实际镜像/就绪状态，不能只看部署 Job 成功。前端入口从 `https://static.sandcdn.com/deploy/maxwell/dev/studio/index.html` 回读，与该 run 构建目录的 index 逐字节比较，并校验静态资源版本路径。当前状态应重新查这些入口，不沿用历史快照。业务仓库未因部署新增改动；未同步 Agent 资源，也未执行真实 Nextplay/VidMuse 评测、从零生成或候选应用，发布验收不替代这些业务闭环。

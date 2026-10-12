@@ -484,3 +484,5 @@
 - 2026-10-12 EVOLVE PR Checks：完整服务测试覆盖架构/部署合同，迁移清单同步与跨 CPU 浮点断言；见 [EVOLVE 接入工程计划](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md)。
 
 - 2026-10-12 EVOLVE DEV 发布前的只读结构核对、迁移执行授权与固定组件选择：见 [工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md) 的 DEV 发布记录。
+
+- 2026-10-12 EVOLVE 获 dev 迁移执行授权后的发布、独立台账/Pod 回读和 Studio 入口证据：见 [工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md) 的发布完成记录。
