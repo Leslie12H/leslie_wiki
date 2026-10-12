@@ -29,4 +29,6 @@ links: [evolve-nextplay-entry-plan-20261009, nextplay-benchmark-import-audit-202
 - MCP 服务已发布新 schema，不能证明共享调优 Agent 已登记相同工具定义。遇到新 action 被 oneOf 拒绝时，先核对 Studio「工具管理 → 服务接入」里的实际 schema，并通过现有刷新、预览、同步流程更新；入口见 `services/agent-server/internal/app/api/http/tools_mcp_wiring.go`。2026-10-12 的差异、同步计数和 baseline 实际成功证据见实施记录，避免让 Agent 反复重试旧 schema。
 - hidden Case/CaseSet 对准备 Agent 返回不可见，不意味着资产丢失。维持评分材料隔离；由有权限的 Studio 页面选择冻结 Benchmark 和 Work 版本执行，真实结果再回读。不要为了通过准备流程更改原测试集可见性。
 
-- A2A Data part 出现在模型消息中，不证明运行脚本能以文件方式读取同一份完整 JSON。排查入口为 EVOLVE `internal/app/integration/a2a/registry.go`、Agent Server `runtime/application/task_commands.go` 与 Nextplay Runner SKILL。保持原始字节和哈希，避免模型重建 fixtures；当前真实失败与待确认接口清单见实施记录及其补充确认单。
+- A2A Data part 出现在模型消息中，不证明运行脚本能以文件方式读取同一份完整 JSON。排查入口为 EVOLVE `internal/app/integration/a2a/registry.go`、Agent Server `runtime/application/task_commands.go` 与 Nextplay Runner SKILL。保持原始字节和哈希，避免模型重建 fixtures；原始失败、已确认的文件扩展和真实验收边界见实施记录及其补充确认单。
+
+- 2026-10-12 完整分支 review 与最小复现见 [审查记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/nextplay-evolve-review-20261012.md)。Why：按内容哈希保证重试幂等，不能替代 Run/Trial 任务隔离；已取消的本地终态不能代替远端停止。How：核对 `measurement_provider_method.go`、`native_processor.go`、`measurements.go` 和后台 cleanup 的归属及恢复路径，同时检查 Nextplay 共享 Worker 在两类队列非空时的调度公平性。修复与是否通过验收以审查/实施记录和当前代码为准，不沿用更早“无问题”的结论。
