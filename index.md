@@ -489,7 +489,7 @@
 
 - [Nextplay 独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md) — 2026-10-12：Case/原评分程序边界，通用异步评分、实际资产交付、PostgreSQL 导入时间精度、A2A 基准绑定、MCP schema 同步、hidden 资产隔离、原始请求文件及跨 Run 幂等/取消恢复/队列公平性审查指针。
 
-- [EVOLVE 谱系可读性与可比性](domains/maxwell/pitfalls/evolve-lineage-readability-and-comparability.md) — 完整历史与联动谱系实施、原统计/新投影兼容、明确来源、连续画布交互、可读方案及真实页面验收指针（2026-10-12）。
+- [EVOLVE 谱系可读性与可比性](domains/maxwell/pitfalls/evolve-lineage-readability-and-comparability.md) — 完整历史与联动谱系实施、原统计/新投影兼容、明确来源、连续画布交互、可读方案、全指标图优先与下钻、跨业务指标展示及真实页面验收指针（2026-10-12）。
 
 - EVOLVE 完整趋势/调优路径的入口与分页范围：见[谱系可读性审查](domains/maxwell/pitfalls/evolve-lineage-readability-and-comparability.md)的 2026-10-12 补充，保留完整主视图及跨视图定位需求。
 
