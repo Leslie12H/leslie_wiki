@@ -334,3 +334,10 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 **Why:** 共享标准保留原来源 Work，不能因此继续把来源当成复用权限；内存仓储的成功也不能证明 PostgreSQL 错误映射和迁移事务正确。旧接口中的建议性 Benchmark 引用进入新自动趋势时，还需要区分“允许执行”与“按同一测量组合登记”。
 
 **How to apply:** 从[本轮分支审查记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-branch-review-20261012.md)和[实施设计 §7.32](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)读取当前代码、回归与未验证边界。追踪发布标准的精确修订登记、旧 Work 预览/运行及 EvidenceSet 读回，保留业务和 hidden 边界；批读授权元数据，不逐题读取正文。将 PostgreSQL no-rows 与内存 ErrNotFound 对齐，同时保留真实存储错误。迁移文件不自行提交 runner 的事务，并检查每个中间版本对旧有效数据的兼容性。审查还需覆盖原生 Judge 的确认入口、部分草稿 dirty 状态和维护工具对新增标准类型的解析；只验证最新主页面会漏掉这些断点。技术测试、跳过的数据库测试、真实计划和自然业务验收分别记录；数据库迁移未获执行授权时不能为通过验收而执行。
+
+
+## 2026-10-12 单提交 PR 交付指针
+
+**Why:** 本地审查通过与 main PR 的实际文件、提交数及实时 CI 状态是不同证据，不能只凭本地分支或旧日志推断远端交付完成。
+
+**How to apply:** 当前正式代码交付见 [Maxwell PR #336](https://github.com/world-sim-dev/maxwell-ai/pull/336)，具体提交、main 基线、文件范围、CI 及是否合并均以 PR 实时状态为准。PR 描述包含实现范围、review 修复、技术回归、数据库仅提交迁移文件及真实 PostgreSQL/自然 Agent/评分等价性/候选应用的未验证项。创建时回读确认单提交且只包含本次 EVOLVE 改动；不把 PR 创建视为合并、部署或真实验收，不将本地原型截图及无关工作区文件加入代码提交。
