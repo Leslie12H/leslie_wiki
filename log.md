@@ -993,3 +993,5 @@
 - 2026-10-12 ingest: 用户授权 dev 0014–0031 迁移，记录 EVOLVE/Studio 发布 run 与独立只读回验；保留部署成功与真实业务评测边界。
 
 - 2026-10-12 ingest: Nextplay 独立 Benchmark 接入方案指针；区分通用格式与业务适配、原 Judge 与简化 rubric、历史成绩与平台执行，保留只读核对边界。
+
+- 2026-10-12 ingest: Nextplay 已有 Eval Service 的扩展位置与 dev 数据库确认边界；记录离线导出实际契约校验指针，保留评分校准、真实导入和部署未完成边界。

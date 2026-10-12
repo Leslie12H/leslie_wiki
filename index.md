@@ -487,4 +487,4 @@
 
 - 2026-10-12 EVOLVE 获 dev 迁移执行授权后的发布、独立台账/Pod 回读和 Studio 入口证据：见 [工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md) 的发布完成记录。
 
-- [Nextplay 独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md) — 2026-10-12：Case/原评分程序/历史成绩三类范围，旧 exporter 与原生指标协议对齐、同证据校准及独立 Benchmark 实施指针。
+- [Nextplay 独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md) — 2026-10-12：Case/原评分程序/历史成绩范围，复用现有 Eval Service 的异步评分扩展、CaseContent 导入校验与同证据校准指针。
