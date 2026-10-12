@@ -1,0 +1,18 @@
+---
+name: sandeval-reassigned-answer-frozen-review-conflict
+type: pitfall
+created: 2026-10-12
+updated: 2026-10-12
+tags: [sand-eval, quality, reassignment, frozen-answer, submission]
+links: [sandeval-transferred-correction-task-visibility, sandeval-cross-stage-frozen-answer-superseded, sandeval-amendment-lookup-recovery]
+---
+
+# 转派后的标注新版与原质检冻结版本冲突
+
+**Why:** 质检检查引用固定送审成员，来源作答卡按稳定工作项追加答案。工作项转派后，新持卡人的普通标注提交也能产生后续版本；旧质检仍检查原版本，编辑保护发现原答案不再是来源最新答案，就禁止继续代改。历史作者、当前持卡人、新版作者和各自送审任务要分别核对。仅有“已有后续版本”提示不能推定为质检代改继承丢失，也不能推定新版尚未送审；同一工作项可能已在另一批次中建立新的质检任务。
+
+**How to apply:** 从精确 task/review/item 找到冻结 `submission_item.object_ref` 与 `work_unit_id`；按同一 `assignment_id` 查询全部来源响应和正式执行回执，判断新版属于标注 submit 还是 inspector_amend。逐卡查询 `ev2_change_log(entity='assignment', entity_id=assignment_id, operation='reassign')`，任务汇总或 assigned_at 不能证明目标卡的改派时间。再按 work_unit_id 找全部正式送审成员与对应真实 review_task，核对当前处理人与状态。刷新不会替换原轮次的冻结引用；如果新版已送审，应先核对新旧质检任务衔接，不能重复执行通用“重新送审”提示。
+
+2026-10-12 邓敏实例的只读时间线、独立 Pod 核验和真实新旧检查项入口见 [现场报告](/Users/leslie/Documents/Playground/output/deng-qc-version-20261012/report.md)。该报告记录核验时点事实，不代表之后状态。未执行生产修复或任务处置。
+
+代码指针：`sand-eval/platform/backend/app/services/facts/answer_amendment.py::verify_current`（最新答案保护）；`app/repositories/task_assignments.py`（逐卡改派审计与新批次）；`quality/infrastructure/persistence/submission_repository.py`、`review_task_repository.py`（冻结成员与轮次）；`frontend/src/pages/quality/inspection/StructuredAnswer.tsx`（可普通判断与禁用代改的提示）。复用时按 live DEPLOY_SHA 读取对应代码。

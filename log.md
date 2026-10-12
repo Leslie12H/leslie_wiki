@@ -1007,3 +1007,5 @@
 - 2026-10-12 ingest: 更新 Nextplay 独立 Benchmark 接入入口，补充部署/资产证据指针、PostgreSQL 时间精度导入冲突和 A2A 基准绑定边界。
 
 - 2026-10-12：Nextplay 接入入口追加 MCP 实际登记 schema 同步及 hidden 资产隔离验收指针，真实执行状态仍查实施记录。
+
+- 2026-10-12 Ingest：转派后普通标注产生新版与原质检冻结版冲突；补充逐卡审计、正式回执和新版已另行送审时的新旧任务核对方法。来源：output/deng-qc-version-20261012/report.md；生产仅只读。
