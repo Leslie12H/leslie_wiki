@@ -498,3 +498,5 @@
 - EVOLVE 对象整体图、任务下钻、多指标共享时间轴和 A/B 对照：见[谱系可读性与可比性](domains/maxwell/pitfalls/evolve-lineage-readability-and-comparability.md)的 2026-10-12 补充；含精确历史定位、默认零和窄屏验收边界。
 
 - 2026-10-12：转派后旧质检冲突的源码门禁与尚未实施的修复建议，见[工作项冻结冲突](domains/sandai-data-smith/pitfalls/sandeval-reassigned-answer-frozen-review-conflict.md)；覆盖跨批次写入保护、重复送审与存量部分覆盖。
+
+- [Sand 复验换汇总版本后丢失代改基线](domains/sandai-data-smith/pitfalls/sandeval-sand-reinspection-summary-revision-amendment-conflict.md) — 固定叶子不变、顶层汇总换版与委派修订读取缺口；可梦两题连续退回的只读验证指针（2026-10-12）。

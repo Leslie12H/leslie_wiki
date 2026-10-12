@@ -20,3 +20,5 @@ links: [sandeval-stopped-review-amendment-conflict, sandeval-amendment-lookup-re
 2026-09-29 按要求把同一修复补丁快进纳入[指向 main 的 PR #2164](https://github.com/world-sim-dev/sandai-data-smith/pull/2164)，保留该 PR 原有整改提交性能改动；修复提交的 patch-id 与测试 PR 相同，没有合入 test 分支历史。以 #2164 最新 head 的 Gate 和最终部署 SHA 判断生效，不能用 #2163 单独通过的 Gate 代替组合验证。
 
 代码和产品指针：`sand-eval/platform/backend/app/services/facts/answer_amendment.py::verify_current`；`app/repositories/answer_cards.py::quality_versions_through`；`quality/application/inspection/review_history_service.py`；`quality/application/inspection/answer_amendment_service.py::visible_amendments`；`quality/domain/inspection/amendment_lineage.py::sealed_by`；`platform/frontend/src/pages/quality/inspection/StructuredAnswer.tsx`。实际部署以 `/health.deploy_sha` 现场核对。
+
+2026-10-12：空间复验链修订可用不代表再次交接 Sand 后读取也正确；换汇总版本导致的 Sand 第 3 轮基线丢失，是新的读取路径缺口，见[重新进入 Sand 的复验继承](sandeval-sand-reinspection-summary-revision-amendment-conflict.md)。
