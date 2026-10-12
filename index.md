@@ -515,3 +515,5 @@
 - 2026-10-12：处理中质检批次重排后“保存并继续”进入已判断题的原因、新批次顺做与回头修改的区别，以及本轮未判断跨页/回找规则，见 [跨工作台顺序](domains/sandai-data-smith/pitfalls/sandeval-cross-workbench-question-order.md)。
 
 - 2026-10-12：直接评测与 Agent 调优的入口、MCP 与 A2A 职责、复用既有批量任务及原始证据不经飞书的交付边界，见 [Nextplay 独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
+
+- 2026-10-12：原始 ExecutionResult 直接接入既有评分、skip_judge 的实际边界与65题离线对照入口，见 [Nextplay 独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
