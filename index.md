@@ -519,3 +519,5 @@
 - 2026-10-12：原始 ExecutionResult 直接接入既有评分、skip_judge 的实际边界与65题离线对照入口，见 [Nextplay 独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
 
 - [Sand Eval 改派与多轮复验重构审查](domains/sandai-data-smith/refs/sandeval-reassignment-refactor-review-20261012.md) — 2026-10-12 问题分类、当前/历史责任与稳定卡身份、冻结谱系、原子交接和可恢复流程、旧批次升级及真实验收组合；重构建议尚未实施。
+
+- 2026-10-12：外部指标目录、逐题评分关联、稳定资产编辑与Run快照，以及HTTP批次中断恢复入口，见[Nextplay独立Benchmark接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
