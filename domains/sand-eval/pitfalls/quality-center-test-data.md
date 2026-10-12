@@ -2,7 +2,7 @@
 name: sand-eval-quality-center-test-data
 type: pitfall
 created: 2026-09-17
-updated: 2026-10-10
+updated: 2026-10-12
 tags: [sand-eval, testing, quality-center]
 links: []
 ---
@@ -38,3 +38,5 @@ links: []
 2026-10-10 纸面 08 包历史退回阻断指针：`/Users/leslie/Documents/Playground/sandeval-awaiting-handoff-20261010/paper-findings.md`。**Why:** 当前四批质检及验收完整通过，仍可能被连续复验链中的旧标注退回拦截；历史执行 completed/rejected 和后继 completed/resolved 不证明祖先责任已关闭。**How to apply:** 用指定负责人实时身份读取 package DTO，调用只读 `_unblocked` 取得准确处置 ID，再核对原执行、后继报告、related 与 ancestor 责任集合，以及 `ResolutionService._close/recover` 和 `ManualReturnService.capture` 的边界。区分祖先授权与关闭依据，不做全局自动关祖先；恢复必须保留原报告和审计。该次结论来自两个生产 Pod 与部署 SHA 对齐，是修复前的诊断快照；后续恢复核验见下一条指针。
 
 2026-10-10 受控恢复实施指针：[PR #2332](https://github.com/world-sim-dev/sandai-data-smith/pull/2332) 与 `/Users/leslie/Documents/Playground/sandeval-awaiting-handoff-20261010/recovery-report.md`。**Why:** 解除真实退回阻断后，已持久化的推进记录仍可能保留旧失败结果，不能仅凭处置 resolved 宣称用户已可提交。**How to apply:** 使用 `app/cli/inherited_annotation_return_recovery.py` 的 dry-run、固定摘要、JSONL before-image、版本比较与独立实例回读；如需重试汇总，只重放既有正式验收的持久化推进身份，核对包级锁、当前权限、`submit_to_sand` 与浏览器入口。新的列表逻辑复用已有当前范围的完整批次版本链统计历史未结退回，不扩展逐包查询。生产恢复、分支 Gate、测试 PR 可合并性、发布及正式交接分别留证，状态以 PR 和恢复报告的日期快照为准。
+
+2026-10-12 鸿鑫 10 题包核验指针：`/Users/leslie/.codex/visualizations/2026/10/10/01a12599-2842-7070-9644-92cfca89cfb3/hongxin-20261012/report.md`。**Why:** 管理页逐题进度为 1/1、零不合格，并不证明质检报告已正式提交或负责人已验收；不能按“验收丢失”直接修状态。**How to apply:** 先从完整包名和来源任务定位，检查 review_task 的 status/result/submitted_at、review_item 的封存字段及 vendor_review，再用质检员实时身份只读核对 submit 动作和阻断。需要区分点击未发出与服务端成功记录时，查询限定包和时间窗的实际保存/提交/验收请求；SLS 的 content 可能是 Nginx 文本而非 JSON，先确认格式，再解析 method/path/status。若只有已保存判断且正常开放提交入口，由原质检员正式提交、负责人验收，Agent 不补造报告或代验收。当前结果属于报告日期快照，后续需重新读取。
