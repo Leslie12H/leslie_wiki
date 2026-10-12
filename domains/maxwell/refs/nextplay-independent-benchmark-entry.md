@@ -58,3 +58,5 @@ links: [evolve-nextplay-entry-plan-20261009, nextplay-benchmark-import-audit-202
 
 - 2026-10-12 稳定资产关联与运行快照：见[指标与 Case 补充清单](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/provider-metrics-case-binding-change-review-20261012.md)。Why：Case 编辑后不应要求另建 Benchmark 或手动升级关联；指标目录能展示也不等于 Provider 接受修改后的规则。How：检查 metricBindings/metricRef、Nextplay grading.py 原版哈希校验及 direct_run.go 的冻结组合入口；普通新 Run 按稳定资产身份解析最新内容并冻结，历史/调优复测沿用原快照，不能只隐藏版本号或更改评分文案。导入原件关联数、当前实现差距与契约范围读取补充清单。
 - 2026-10-12 原始批次实施与恢复校验：用户已批准收敛清单的代码/迁移文件实施，仍未授权本轮提交、迁移或部署。入口见[全流程复查记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/nextplay-full-flow-review-20261012.md)。Why：远端已接纳而逐题 Attempt 尚未全部落库时，临时分组会产生重复任务。How：检查 live_http_batch.go 和对应故障测试，先持久化完整批次与成员再提交，恢复使用同一调用和原件；本地测试不替代真实数据库、65题得分和调优应用验收。
+
+- 2026-10-12 失败执行原件与可读性：见[全流程复查记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/nextplay-full-flow-review-20261012.md)的失败原件续接。Why：远端失败也可能携带唯一执行轨迹，丢弃结果或按中间产物清理会让用户和调优Agent无法判断失败原因。How：核对 liveFailResult/FailWithEvidence、queries/attempt_evidence.go 与两种Repository的retention分类；保持错误状态、不参与评分，校验原件哈希与身份后按既有权限提供有界预览。批次接纳丢失时的取消和单题错误影响兄弟题仍是独立恢复边界，源码/测试不能替代真实停止与65题取分验收。
