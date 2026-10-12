@@ -11,7 +11,7 @@ links: [evolve-nextplay-entry-plan-20261009]
 
 **Why:** 2026-10-12 用户指出对象谱系难读。截图与本地源码审查发现，稀疏候选仍占完整双泳道，节点靠短 ID、颜色和图例传达含义；趋势连线与来源推断还会影响结果解释。视觉调整必须同时保护证据语义。
 
-**How to apply:** 从[本次审查记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/lineage-readability-review-20261012.md)和 `apps/studio/src/products/evolve/v3/lineage/` 的 `LineageGraph`、`LineagePage`、`EvolutionTrend`、`evolutionModel` 重新核对当前实现。先让用户读懂来源、改动、验证结果及接受/应用状态；稀疏记录用紧凑布局，真实分支才展开图。明确引用才能证明派生，内容相同只能证明一致。趋势需核对题集、评分版本、有效评分范围及执行范围，不能仅按时间串联。未知、未评分、无有效样本与真实零分分别处理。
+**How to apply:** 从[本次审查记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/lineage-readability-review-20261012.md)和 `apps/studio/src/products/evolve/v3/lineage/` 的 `LineageGraph`、`LineagePage`、`EvolutionTrend`、`evolutionModel` 重新核对当前实现。先让用户读懂来源、改动、验证结果及接受/应用状态；整体以对象的方案和候选图为主，单任务完整谱系通过节点下钻保留；稀疏验证可聚合，但不能把任务列表替代为整体演进。明确引用才能证明派生，内容相同只能证明一致。趋势需核对题集、评分版本、有效评分范围及执行范围，不能仅按时间串联。未知、未评分、无有效样本与真实零分分别处理。
 
 产品约束回到[通用工作台方案](../projects/evolve-nextplay-entry-plan-20261009.md)的“对话协作、候选来源、谱系与可比趋势”。初次审查仅覆盖截图和源码；后续本地实施与真实页面验收见下节。未获得新的接口或数据库变更授权。
 
@@ -30,3 +30,14 @@ links: [evolve-nextplay-entry-plan-20261009]
 趋势与谱系共享精确的 Work/Candidate/Run/Artifact 选择，URL 保留范围与评分口径；跨视图定位可清除遮挡筛选，外页返回恢复原上下文。历史目录与任务资产分批到达时，链接不能丢掉所选候选/验证。派生只认明确引用；显示同一冻结标准的测量时还需核对执行方式、判卷配置及完整判定，不能因题集/评分 ID 相同就混连。范围名称要可区分。
 
 此次证据覆盖本地 Studio 接真实后端的历史阅读、双向定位、详情往返、过滤及桌面/窄屏。多百条分页、复杂分支与竞态属于技术回归，不能写成真实后端大历史或自然 Agent 场景通过。此记录不表示代码已发布。
+
+
+## 2026-10-12 对象整体、任务下钻与多指标补充
+
+**Why:** 用户继续指出任务列表不是谱系图，逐任务图也不能回答整个对象如何变化；同时要求多维度、多指标、随时间变化及对照。首轮展示结论因此需要修正，不能仅增加装饰性连线。
+
+**How to apply:** 以[对象演进与多指标验收记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/lineage-object-evolution-acceptance-20261012.md)和 `objectEvolutionModel.ts`、`EvolutionLineage.tsx`、`TaskLineageGraph.tsx`、`EvolutionMetrics.tsx` 为当前阅读入口。整体按方案/候选归集跨任务历史，任务作为来源并保留完整路径；精确的方案引用和候选父引用可以连接，同内容归集不能推断采用或升级。运行时报告版本、冻结方案、候选接受和实际应用是四种证据；版本漂移不归为单一版本。
+
+多指标共享时间轴与选中记录，分别保留单位、完整指标定义和聚合口径。实际时间间隔与评测顺序是不同阅读方式，不应默默互换。A/B 需显示采样覆盖和具体条件差异；同设置的差值仍不能证明应用或显著收益。旧统计的归一化均分可能有未判卷默认零，显示前必须有评分/明确判定证据；真正失败的零分仍保留。新投影缺失不应覆盖原统计。
+
+下钻/返回/跨任务切换只写一次路由，保留原历史 Run 而不是自动跳到最新；离开某任务选择其他任务的点时须清除旧任务范围。窄屏多图须约束 Grid 最小宽度、保持独立滚动容器并同步横轴；整个画布缩小到不可读不能代替可读节点导航。带导入副作用的画布依赖避免进入全局组件 barrel，以免影响不相关 SSR 检查。真实页面、运行中新增历史与技术构造的大规模/多单位用例分别记录，不互相替代。

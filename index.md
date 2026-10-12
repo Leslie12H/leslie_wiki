@@ -494,3 +494,5 @@
 - EVOLVE 完整趋势/调优路径的入口与分页范围：见[谱系可读性审查](domains/maxwell/pitfalls/evolve-lineage-readability-and-comparability.md)的 2026-10-12 补充，保留完整主视图及跨视图定位需求。
 
 - [Sand Eval 转派后标注新版与旧质检冲突](domains/sandai-data-smith/pitfalls/sandeval-reassigned-answer-frozen-review-conflict.md) — 稳定工作项、逐卡改派审计、普通标注新版本、两条送审任务与通用重新送审提示的判断边界（2026-10-12）。
+
+- EVOLVE 对象整体图、任务下钻、多指标共享时间轴和 A/B 对照：见[谱系可读性与可比性](domains/maxwell/pitfalls/evolve-lineage-readability-and-comparability.md)的 2026-10-12 补充；含精确历史定位、默认零和窄屏验收边界。
