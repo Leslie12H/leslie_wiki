@@ -18,3 +18,5 @@ links: [sandeval-space-membership-and-personal-distribution, sandeval-local-star
 - 2026-10-12 本次范围、只读预览、验证与执行状态：[本地回收报告](/Users/leslie/Documents/Playground/sandeval-reclaim-20261012/report.md)。业务 ID 和当时统计留在本地证据，不复制到外部 PR 描述或知识页。
 - 本机 `.env` 可能指向隔离测试资源；数据库、Redis 与占用 namespace 必须与目标运行实例分别核实。需要读取云凭据并取得生产集群连接配置时，不能绕过自动审批拒绝；先完成可审核方案，再取得该凭据访问动作的明确授权。
 - 普通账号与任务可见性规则见[空间成员与个人派题](sandeval-space-membership-and-personal-distribution.md)。成员缺失可解释改派资格拒绝，不能据此认定验证码或登录认证故障。
+
+- 网络和客户端核验：Redis 若仅私网可达，应在目标生产网络执行已验证的所属 CLI，并使用运行实例的占用 namespace，不能借用测试 Redis。数据库名与计算组的组合逻辑核对 `sand-eval/platform/backend/app/infra/holo.py`，避免调用者与客户端重复拼接计算组后缀。生产回收、审计及独立回读结果仍以本地报告为准。

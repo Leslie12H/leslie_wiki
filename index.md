@@ -502,3 +502,5 @@
 - [Sand 复验换汇总版本后丢失代改基线](domains/sandai-data-smith/pitfalls/sandeval-sand-reinspection-summary-revision-amendment-conflict.md) — 固定叶子不变、顶层汇总换版与委派修订读取缺口；可梦两题连续退回的只读验证指针（2026-10-12）。
 
 - [Sand Eval 无空间账号未作答卡回收](domains/sandai-data-smith/pitfalls/sandeval-orphan-card-reclamation.md) — 成员资格拒绝、冻结题池与身份 guard、明确卡范围、独立提交对账及受控 CLI/验证指针（2026-10-12）。
+
+- 2026-10-12：无空间账号卡回收的生产网络、Leader 客户端与执行审计核验入口见[回收指针](domains/sandai-data-smith/pitfalls/sandeval-orphan-card-reclamation.md)。
