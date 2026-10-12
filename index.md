@@ -527,3 +527,5 @@
 - 2026-10-12：失败执行原件留存、未冻结证据读取、证据TTL与批次取消缺口，见[Nextplay独立Benchmark接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
 
 - 2026-10-12：Nextplay原件清理失败恢复、003显式迁移入口与原维度名称保留，见[独立Benchmark接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
+
+- 2026-10-12：EVOLVE/Nextplay结果落库不确定提交、状态重读和同份原件重写，见[独立Benchmark接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。

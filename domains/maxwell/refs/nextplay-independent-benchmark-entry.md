@@ -62,3 +62,5 @@ links: [evolve-nextplay-entry-plan-20261009, nextplay-benchmark-import-audit-202
 - 2026-10-12 失败执行原件与可读性：见[全流程复查记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/nextplay-full-flow-review-20261012.md)的失败原件续接。Why：远端失败也可能携带唯一执行轨迹，丢弃结果或按中间产物清理会让用户和调优Agent无法判断失败原因。How：核对 liveFailResult/FailWithEvidence、queries/attempt_evidence.go 与两种Repository的retention分类；保持错误状态、不参与评分，校验原件哈希与身份后按既有权限提供有界预览。批次接纳丢失时的取消和单题错误影响兄弟题仍是独立恢复边界，源码/测试不能替代真实停止与65题取分验收。
 
 - 2026-10-12 原件清理与发布准备：见[全流程复查记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/nextplay-full-flow-review-20261012.md)的迁移入口与指标名称续接。Why：原件入库不代表目标资源已清理，SQL文件存在不代表发布入口会执行，内部指标键也不等于用户可读名称。How：核对 execution_worker.py 的保留/停止分支、migrate.py 的独立003入口和 shared_export.py 的原维度标题；旧迁移入口不自动应用ALTER，名称修正只作用于新导出。真实数据库、线上旧资产和实际取分另行核验。
+
+- 2026-10-12 结果落库不确定提交：见[全流程复查记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/nextplay-full-flow-review-20261012.md)的落库失败续接。Why：写入报错不证明数据库没有提交；将存储故障转成执行失败会丢失已完成结果或误触发重跑。How：核对 EVOLVE live.go/live_evidence_persistence_test.go 的状态重读、同Attempt恢复及明确错误分类，Nextplay database.py/execution_worker.py 的同份原件有界重写与租约检查；代码级故障注入不能替代真实数据库中断验收。
