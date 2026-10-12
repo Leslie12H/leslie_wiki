@@ -32,3 +32,7 @@ links: [evolve-nextplay-entry-plan-20261009, nextplay-benchmark-import-audit-202
 - A2A Data part 出现在模型消息中，不证明运行脚本能以文件方式读取同一份完整 JSON。排查入口为 EVOLVE `internal/app/integration/a2a/registry.go`、Agent Server `runtime/application/task_commands.go` 与 Nextplay Runner SKILL。保持原始字节和哈希，避免模型重建 fixtures；原始失败、已确认的文件扩展和真实验收边界见实施记录及其补充确认单。
 
 - 2026-10-12 完整分支 review 与最小复现见 [审查记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/nextplay-evolve-review-20261012.md)。Why：按内容哈希保证重试幂等，不能替代 Run/Trial 任务隔离；已取消的本地终态不能代替远端停止。How：核对 `measurement_provider_method.go`、`native_processor.go`、`measurements.go` 和后台 cleanup 的归属及恢复路径，同时检查 Nextplay 共享 Worker 在两类队列非空时的调度公平性。修复与是否通过验收以审查/实施记录和当前代码为准，不沿用更早“无问题”的结论。
+
+- 2026-10-12 请求上限与原 Case 保真检查：具体授权见 `nextplay-case-size-change-review-20261012.md`，实现查 EVOLVE `execution/contract.go` 与 Agent `inputformat/json_file.go`，结果查实施记录。Why：单字段大小、Case 合计、JSON 编码与 Base64 传输大小是不同边界。How：同时验证实际 BuildRequest、接收端总量及原字节，不通过删改 Case 或静默裁剪过限输入规避。
+- 2026-10-12 用例选择与内容预览：查 Studio `CaseEditorDialog.css`、`CaseSetSelection.tsx`、`CaseContentPreview.tsx` 和 `CasePreviewStore.ts`。Why：表单宽泛的 label 样式会覆盖 Checkbox 内部布局，只有编号无法帮助用户判断题目。How：缩小表单字段样式范围，复用 Checkbox 与 JSON 查看器，按需获取精确修订，旧请求/关闭后的响应不得恢复错题内容；实际截图与筛选、跨页、批选证据查实施记录。
+- 同一 dev 服务存在并行发布时，构建成功不代表目标镜像已生效。查 Nextplay `.github/workflows/deploy-eval-service.yml` 与 `eval-service/deploy/preflight.py`：保留活跃任务排空保护，核对镜像 SHA、业务身份和任务阶段，不为发布取消别人的任务。完整评测快照/通知能力与 score-only 上报边界应在合并时分别保留；本轮发布与未得分边界见实施记录。
