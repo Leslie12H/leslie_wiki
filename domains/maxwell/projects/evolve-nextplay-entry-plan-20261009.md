@@ -2,7 +2,7 @@
 name: evolve-nextplay-entry-plan-20261009
 type: project
 created: 2026-10-09
-updated: 2026-10-11
+updated: 2026-10-12
 tags: [maxwell, evolve, nextplay, interaction, judge, import]
 links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20260916, evolve-design-review-self-iteration-20261009]
 ---
@@ -327,3 +327,10 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 **Why:** 新增直接评测容器后，旧“失败运行”待办仍跳转任务页；草稿待办从全部 Work 分页也会让直接执行挤掉真正的调优草稿。仅验收 Benchmark 主入口会漏掉这类二级入口断点。
 
 **How to apply:** 失败待办应按精确 Run 进入业务级结果，保留待办查询与返回焦点；草稿在分页前按 Agent Work 范围筛选，不在分页后丢弃直接执行。当前实现、状态/重试/窄屏证据及审查范围见[实施设计第 7.31 节](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)和[待办验收](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/inbox-records-acceptance-20261011.md)。真实环境和数据库条件以[交付矩阵](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-prototype-20261009/design-v7/delivery-status-20261011.md)为准；模拟页面通过不证明自然 Agent 或实际 SQL 性能。
+
+
+## 2026-10-12 分支兼容审查与来源边界
+
+**Why:** 共享标准保留原来源 Work，不能因此继续把来源当成复用权限；内存仓储的成功也不能证明 PostgreSQL 错误映射和迁移事务正确。旧接口中的建议性 Benchmark 引用进入新自动趋势时，还需要区分“允许执行”与“按同一测量组合登记”。
+
+**How to apply:** 从[本轮分支审查记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-branch-review-20261012.md)和[实施设计 §7.32](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-workspace-implementation.md)读取当前代码、回归与未验证边界。追踪发布标准的精确修订登记、旧 Work 预览/运行及 EvidenceSet 读回，保留业务和 hidden 边界；批读授权元数据，不逐题读取正文。将 PostgreSQL no-rows 与内存 ErrNotFound 对齐，同时保留真实存储错误。迁移文件不自行提交 runner 的事务，并检查每个中间版本对旧有效数据的兼容性。审查还需覆盖原生 Judge 的确认入口、部分草稿 dirty 状态和维护工具对新增标准类型的解析；只验证最新主页面会漏掉这些断点。技术测试、跳过的数据库测试、真实计划和自然业务验收分别记录；数据库迁移未获执行授权时不能为通过验收而执行。
