@@ -487,7 +487,7 @@
 
 - 2026-10-12 EVOLVE 获 dev 迁移执行授权后的发布、独立台账/Pod 回读和 Studio 入口证据：见 [工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md) 的发布完成记录。
 
-- [Nextplay 独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md) — 2026-10-12：Case/原评分程序边界，通用异步评分、实际资产交付、PostgreSQL 导入时间精度、A2A 基准绑定、MCP schema 同步、hidden 资产隔离、原始请求文件、输入大小边界、用例内容预览及跨 Run 幂等/取消恢复/队列公平性、并行发布排空、响应正文中断重试、原报告读写预算一致性、API/Worker JSON 输入装配、按改动选择发布服务与统一 PR 审查指针。
+- [Nextplay 独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md) — 2026-10-12：Case/原评分程序边界，通用异步评分、实际资产交付、PostgreSQL 导入时间精度、A2A 基准绑定、MCP schema 同步、hidden 资产隔离、原始请求文件、输入大小边界、用例内容预览及跨 Run 幂等/取消恢复/队列公平性、并行发布排空、响应正文中断重试、原报告读写预算一致性、API/Worker JSON 输入装配、按改动选择发布服务、复制 Preset 与冻结快照的工具一致性及统一 PR 审查指针。
 
 - [EVOLVE 谱系可读性与可比性](domains/maxwell/pitfalls/evolve-lineage-readability-and-comparability.md) — 完整历史与联动谱系实施、原统计/新投影兼容、明确来源、连续画布交互、可读方案、全指标图优先与下钻、跨业务指标展示及真实页面验收指针（2026-10-12）。
 
