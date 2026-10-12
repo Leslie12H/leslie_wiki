@@ -27,3 +27,6 @@ links: [sandeval-cross-stage-frozen-answer-superseded, sandeval-stopped-review-a
 **Why:** 两次退回的代改可能分别由不同空间复验报告封存，只展开最新一次返回会继续丢掉较早题目的修订。**How to apply:** 同时验证早期代改题与再次代改题，并保留缺少委派、来源版本/计划不符、停止后修订、被拒封存、其他成员及无关普通新答案的反例。
 
 实现、精确提交、生产数据强制只读候选验证、完整 CI 和发布边界见[修复交付记录](/Users/leslie/Documents/Playground/output/kemeng-qc-version-20261012/repair-status.md)及[测试 PR #2385](https://github.com/world-sim-dev/sandai-data-smith/pull/2385)。该记录与 PR 是会变状态的指针，不能将候选验证等同于生产页面恢复；后续复用时核对部署 SHA 和真实页面。
+
+
+2026-10-12 后续组合交付指针：原始开发提交与题序修复共同进入 [main PR #2386](https://github.com/world-sim-dev/sandai-data-smith/pull/2386)，原 TEST PR #2385 被覆盖；TEST 实际五题两次退回、第三轮候选保存、历史原题对应及责任闭环见 [组合验收报告](/Users/leslie/Documents/Playground/sandeval-question-order-20261012.md)，发布版本从 [main 流水线](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/38243270210) 与部署回读核实。该组合的开发分支从 main 重放两份开发提交，没有引用 TEST 历史；相关题号风险见 [跨工作台顺序](sandeval-cross-workbench-question-order.md)。

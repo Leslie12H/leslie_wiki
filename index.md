@@ -506,3 +506,6 @@
 - 2026-10-12：无空间账号卡回收的生产网络、Leader 客户端与执行审计核验入口见[回收指针](domains/sandai-data-smith/pitfalls/sandeval-orphan-card-reclamation.md)。
 
 - 2026-10-12：Sand 连续退回复验的代改继承修复、测试 PR 与真实两题候选只读验证，见[复验换版修订链](domains/sandai-data-smith/pitfalls/sandeval-sand-reinspection-summary-revision-amendment-conflict.md)。
+
+
+- 2026-10-12：题序与连续 Sand 修订继承的组合 TEST、精确头 Gate 和 main 发布入口，见 [跨工作台顺序](domains/sandai-data-smith/pitfalls/sandeval-cross-workbench-question-order.md) 与 [复验换版修订链](domains/sandai-data-smith/pitfalls/sandeval-sand-reinspection-summary-revision-amendment-conflict.md)；实际 TEST push 自动部署与合并身份区别见 [分支自动化](domains/sandai-data-smith/refs/sandeval-branch-automation.md)。

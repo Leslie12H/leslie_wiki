@@ -42,3 +42,10 @@ links: [sandeval-direct-remediation-and-batch-handoff]
 **Why:** 冻结题号解决跨轮次顺序问题，但每页重建完整题序，以及旧成员按块重建派题批次索引，会让小页仍承担整批或整任务的工作量。真实五题业务验收与绿色 Gate 不证明大批次响应时间没有回退；输入参数规模也可能触及驱动边界。
 
 **How to apply:** 以 [main PR #2386](https://github.com/world-sim-dev/sandai-data-smith/pull/2386) 的实际提交为准，沿 `quality/application/inspection/review_query_service.py::{queue_page,items_page}` → `quality/infrastructure/persistence/review_task_repository.py::{queue_members,queue_items}` 检查全量元数据、排序、摘要与 `VALUES` 输入是否在分页前反复构造。再沿 `quality/application/question_order.py::question_numbers` → `app/services/facts/task_assignments.py::annotation_question_positions` → `app/repositories/assignment_wave.py::{waves,members_by_wave}` 检查分块是否反复加载整任务批次；首次冻结和旧历史缺题号都须覆盖。参数上限按仓库实际锁定的驱动版本核实，不凭 PostgreSQL 通用印象推断。具体输入规模、官方驱动源码链接和证据边界见 [验收报告的性能补充](/Users/leslie/Documents/Playground/sandeval-question-order-20261012.md) 与 [输入规模证据](/Users/leslie/Documents/Playground/sandeval-order-proof-20261012/performance-shape.json)。该证据只执行原函数与内存协作者，不代表真实数据库执行或延迟；性能结论需在 TEST 同规模对齐执行计划、查询次数、冷/热路径和并发。复用冻结事实或请求内索引时，保持动态权限、当前检查范围与写入版本实时校验。历史性能核验规矩见 [检查读取与保存性能入口](../refs/sandeval-review-performance.md)。
+
+
+## 2026-10-12 组合连续 Sand 修订继承的发布指针
+
+题序修复与 [原修订继承 PR #2385](https://github.com/world-sim-dev/sandai-data-smith/pull/2385) 的原始开发提交组合，通过 [TEST 集成 #2389](https://github.com/world-sim-dev/sandai-data-smith/pull/2389) 和 [组合 TEST 部署](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/38240793405) 验收，再经 [main PR #2386](https://github.com/world-sim-dev/sandai-data-smith/pull/2386) 发布；精确头 Gate 见 [38242605584](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/38242605584)，main 发布见 [38243270210](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/38243270210)。动态状态须读取 PR、流水线与环境；完整证据存于上述验收报告的组合验收段。修订谱系背景见 [复验换版修订链](sandeval-sand-reinspection-summary-revision-amendment-conflict.md)。
+
+**Why:** 顺序正确不能证明多次退回后有效答案仍正确；新汇总版本下，早期代改题与后来代改题可能需要继承不同 Sand 返回链。**How to apply:** 组合验收至少连续两次代改不同题，再分别经过供应商委派、空间复验、负责人正式交接；第三轮同时验证两题基线、可保存候选、原题号和历史意见。区分不改写的原始冻结引用与合法继承后的有效修订，封存前验证保存能力、封存后以只读报告和退回单核对闭环。本次真实五题链路、浏览器及两张 resolved 退回单是业务证据；不能替代大批次性能证明。

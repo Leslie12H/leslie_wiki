@@ -2,7 +2,7 @@
 name: sandeval-branch-automation
 type: reference
 created: 2026-09-18
-updated: 2026-09-28
+updated: 2026-10-12
 tags: [sand-eval, github-actions, deployment, git]
 links: [team-test-main-cherry-pick-workflow]
 ---
@@ -37,3 +37,8 @@ GitHub Actions 创建 PR 需要仓库设置允许；使用 GITHUB_TOKEN 创建�
 **Why:** 准备 [PR #2144](https://github.com/world-sim-dev/sandai-data-smith/pull/2144) 时，开发分支以提交 `b9bce96ad` 为父，`sandeval-test-only` 当时也停在该提交，但该提交已经属于 `main`。单独检查“测试分支是开发分支祖先”会误判为携带测试专属历史；同时，直接向已前进的 `main` 提 PR 曾与新改动的质检使用文档冲突。
 
 **How to apply:** 先刷新远端并核对源、目标和父提交；同时比较 `origin/main..origin/sandeval-test-only` 是否有测试专属提交，以及 `origin/main..开发分支` 的提交列表、合并提交和实际差异。只有共享祖先属于 `main`、没有测试专属提交且差异均为本任务时，才能继续。若 `main` 前进造成冲突，只从最新 `main` 更新开发分支并逐处合并两侧意图；PR 的 Gate 与可合并状态最后重新读取。
+
+
+## 2026-10-12 实际 TEST 合并后的自动部署
+
+**Why:** 较早的显式 dispatch 经验不能直接套用所有合并身份；重复触发会让同一验收版本多次构建或排队。**How to apply:** 先查看当前 `.github/workflows/sand-eval-test-ci.yml` 的 push 触发器、实际合并提交与已经启动的 Actions，再决定是否需要手动 dispatch。本次通过用户身份普通合并 [#2389](https://github.com/world-sim-dev/sandai-data-smith/pull/2389) 后，push 自动启动 [完整 TEST 检查和部署](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/38240793405)，无需额外手动发布。GITHUB_TOKEN 抑制后续事件的历史案例仍需按执行身份区分。验收绑定部署源、镜像与运行代码；main 并发新增冲突时仅从 main 重放，保留两侧业务字段，并以最终精确头 Gate 和可合并状态为准，不能沿用旧头绿灯。
