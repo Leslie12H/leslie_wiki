@@ -509,3 +509,5 @@
 
 
 - 2026-10-12：题序与连续 Sand 修订继承的组合 TEST、精确头 Gate 和 main 发布入口，见 [跨工作台顺序](domains/sandai-data-smith/pitfalls/sandeval-cross-workbench-question-order.md) 与 [复验换版修订链](domains/sandai-data-smith/pitfalls/sandeval-sand-reinspection-summary-revision-amendment-conflict.md)；实际 TEST push 自动部署与合并身份区别见 [分支自动化](domains/sandai-data-smith/refs/sandeval-branch-automation.md)。
+
+- 2026-10-12：抽样保留原标注题号后“100 题变 900 题”的只读归因、固定样本与进度分层、界面标识建议，见 [跨工作台顺序](domains/sandai-data-smith/pitfalls/sandeval-cross-workbench-question-order.md)。

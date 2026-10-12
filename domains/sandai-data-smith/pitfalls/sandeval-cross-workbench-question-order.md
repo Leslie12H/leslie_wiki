@@ -49,3 +49,10 @@ links: [sandeval-direct-remediation-and-batch-handoff]
 题序修复与 [原修订继承 PR #2385](https://github.com/world-sim-dev/sandai-data-smith/pull/2385) 的原始开发提交组合，通过 [TEST 集成 #2389](https://github.com/world-sim-dev/sandai-data-smith/pull/2389) 和 [组合 TEST 部署](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/38240793405) 验收，再经 [main PR #2386](https://github.com/world-sim-dev/sandai-data-smith/pull/2386) 发布；精确头 Gate 见 [38242605584](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/38242605584)，main 发布见 [38243270210](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/38243270210)。动态状态须读取 PR、流水线与环境；完整证据存于上述验收报告的组合验收段。修订谱系背景见 [复验换版修订链](sandeval-sand-reinspection-summary-revision-amendment-conflict.md)。
 
 **Why:** 顺序正确不能证明多次退回后有效答案仍正确；新汇总版本下，早期代改题与后来代改题可能需要继承不同 Sand 返回链。**How to apply:** 组合验收至少连续两次代改不同题，再分别经过供应商委派、空间复验、负责人正式交接；第三轮同时验证两题基线、可保存候选、原题号和历史意见。区分不改写的原始冻结引用与合法继承后的有效修订，封存前验证保存能力、封存后以只读报告和退回单核对闭环。本次真实五题链路、浏览器及两张 resolved 退回单是业务证据；不能替代大批次性能证明。
+
+
+## 2026-10-12 抽样保号引发“质检题量增加”的误解
+
+**Why:** 题序修复发布后，两份 100 题抽检页显示原第 632、770、893 题，用户以为突然需要检查接近 900 题或切成标注页面。只读回读固定检查项和来源投影、再以平台正式只读观察核验，显示变化来自原标注批次题号；实际各从 1,000 个送审成员抽取 100 个检查项，仍是 Sand 质检，既有判断保持原检查项身份。具体轮次、读数、代码归因和截图见 [验收报告的发布后反馈](/Users/leslie/Documents/Playground/sandeval-question-order-20261012.md) 及 [持久化与来源题号证据](/Users/leslie/Documents/Playground/sandeval-order-proof-20261012/production-sample-number-display.json)；实时进度须重新读取。
+
+**How to apply:** 先区分显示题号、固定样本总数、已判断数和标注源批次数。以 review stage、冻结策略、送审成员及检查项计数证明是否真的扩样；不能由最大题号推算数量。抽样保号应显示“原标注第 N 题”，并保留独立“已检查 X/总样本数、剩余 Y”的进度说明。下方答案表单是质检上下文，须和上方质检判断及提交动作区分；不要为消除误解恢复 1–100 重编号，破坏跨标注、整改和历史意见的定位。该文案建议尚未实施，相关变更与发布从 PR 实时核对。
