@@ -348,3 +348,10 @@ links: [nextplay-benchmark-import-audit-20260915, evolve-runtime-judge-review-20
 **Why:** EVOLVE 子目录回归不包含服务根目录架构守卫和部署清单合同；新增迁移文件如果未同时加入 Job 参数与 ConfigMap 来源，代码测试成功仍可能漏掉部署结构。浮点增量均值在 arm64 与 amd64 上可能产生末位舍入差异，严格相等的测试会误报已生效的人工复核。
 
 **How to apply:** 提交前对照当前 [.github/workflows/pr-checks.yml](/Users/leslie/Downloads/sandai-code/maxwell-ai/.github/workflows/pr-checks.yml) 的 EVOLVE 范围，执行完整服务 vet/test，并保持数据库集成环境变量显式移除；测试需要回环端口时申请对应执行权限，不修改测试绕过。新增迁移需同步 EVOLVE Job 与部署 action 的文件清单，检查文件不等于执行迁移。HTTP 依赖应用契约而非存储 ports，复用类型身份避免重复 DTO。聚合测试用精度容差比较具体期望值，仍检查缺失、NaN 和复核计数；架构差异可用 amd64 定向复现。具体根因、修复与验证见[分支审查记录的 PR #336 CI 补充修复](/Users/leslie/Downloads/sandai-code/maxwell-ai/docs/evolve-branch-review-20261012.md)；远端检查、提交数与是否合并以 [PR #336](https://github.com/world-sim-dev/maxwell-ai/pull/336) 为准。
+
+
+## 2026-10-12 DEV 发布前的迁移授权边界
+
+**Why:** PR #336 已合入 main，但部署新程序需要数据库具备相应结构。此前“迁移只提交文件”的授权不能自动扩展为 dev DDL；健康检查也不能证明共享资产、复核和结果表已存在。本机旧 Maxwell kubeconfig 的认证失效不应成为跳过结构检查的理由。
+
+**How to apply:** 当前源码以 [PR #336](https://github.com/world-sim-dev/maxwell-ai/pull/336) 的 merge commit 为准；发布前元数据证据见[既有只读预检的第二次运行](https://github.com/world-sim-dev/maxwell-ai/actions/runs/34967133774/attempts/2)。该历史工作流只在固定 dev Pod 内执行固定查询，连接和事务均只读，不输出 DSN/Secret 或业务正文；回读迁移台账/checksum、表名及工作负载镜像，再与目标版本的迁移清单比较。查出待执行迁移时，在明确数据库执行授权前保留现有服务，不用关闭迁移后直接发新代码来冒充完成。授权后通过标准 Maxwell CI/CD 显式选择 dev、Evolve、Web 和迁移开关；其它服务保持未选。后续实际发布与迁移是否成功仍须读取新工作流和独立读回，不能复用这次预检快照作当前状态。
