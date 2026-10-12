@@ -489,6 +489,6 @@
 
 - [Nextplay 独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md) — 2026-10-12：Case/原评分程序/历史成绩范围，复用现有 Eval Service 的异步评分扩展、CaseContent 导入校验与同证据校准指针。
 
-- [EVOLVE 谱系可读性与可比性](domains/maxwell/pitfalls/evolve-lineage-readability-and-comparability.md) — 稀疏节点、来源引用、跨任务趋势和零分语义的设计及代码审查入口（2026-10-12）。
+- [EVOLVE 谱系可读性与可比性](domains/maxwell/pitfalls/evolve-lineage-readability-and-comparability.md) — 完整历史与联动谱系实施、原统计/新投影兼容、明确来源和真实页面验收指针（2026-10-12）。
 
 - EVOLVE 完整趋势/调优路径的入口与分页范围：见[谱系可读性审查](domains/maxwell/pitfalls/evolve-lineage-readability-and-comparability.md)的 2026-10-12 补充，保留完整主视图及跨视图定位需求。
