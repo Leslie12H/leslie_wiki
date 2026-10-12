@@ -525,3 +525,5 @@
 - 2026-10-12：用户业务实体图的稳定卡、答案版本、检查轮次与 `0..1` 当前归属/历史语义审查，见 [改派与复验重构审查](domains/sandai-data-smith/refs/sandeval-reassignment-refactor-review-20261012.md)；截图未展开不等于完整设计缺失，条件性建议未实施。
 
 - 2026-10-12：失败执行原件留存、未冻结证据读取、证据TTL与批次取消缺口，见[Nextplay独立Benchmark接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
+
+- 2026-10-12：Nextplay原件清理失败恢复、003显式迁移入口与原维度名称保留，见[独立Benchmark接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。

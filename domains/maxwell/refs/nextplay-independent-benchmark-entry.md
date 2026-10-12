@@ -60,3 +60,5 @@ links: [evolve-nextplay-entry-plan-20261009, nextplay-benchmark-import-audit-202
 - 2026-10-12 原始批次实施与恢复校验：用户已批准收敛清单的代码/迁移文件实施，仍未授权本轮提交、迁移或部署。入口见[全流程复查记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/nextplay-full-flow-review-20261012.md)。Why：远端已接纳而逐题 Attempt 尚未全部落库时，临时分组会产生重复任务。How：检查 live_http_batch.go 和对应故障测试，先持久化完整批次与成员再提交，恢复使用同一调用和原件；本地测试不替代真实数据库、65题得分和调优应用验收。
 
 - 2026-10-12 失败执行原件与可读性：见[全流程复查记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/nextplay-full-flow-review-20261012.md)的失败原件续接。Why：远端失败也可能携带唯一执行轨迹，丢弃结果或按中间产物清理会让用户和调优Agent无法判断失败原因。How：核对 liveFailResult/FailWithEvidence、queries/attempt_evidence.go 与两种Repository的retention分类；保持错误状态、不参与评分，校验原件哈希与身份后按既有权限提供有界预览。批次接纳丢失时的取消和单题错误影响兄弟题仍是独立恢复边界，源码/测试不能替代真实停止与65题取分验收。
+
+- 2026-10-12 原件清理与发布准备：见[全流程复查记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/nextplay-full-flow-review-20261012.md)的迁移入口与指标名称续接。Why：原件入库不代表目标资源已清理，SQL文件存在不代表发布入口会执行，内部指标键也不等于用户可读名称。How：核对 execution_worker.py 的保留/停止分支、migrate.py 的独立003入口和 shared_export.py 的原维度标题；旧迁移入口不自动应用ALTER，名称修正只作用于新导出。真实数据库、线上旧资产和实际取分另行核验。
