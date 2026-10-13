@@ -1116,3 +1116,5 @@
 - 2026-10-13：补充 Nextplay dev 发布/真实取分验收指针与 Agent 指标目录读取缺口；区分稳定资产、运行快照和自然生成验收。
 
 - 2026-10-13 ingest：补充图虫精筛三包下发中批次开放开关、人数锁定及质量系统规则独立回读的 Why/How 与验收指针。
+
+- 2026-10-13：补充第 6 批次固定答案上下文失败取证与复用原分配恢复边界，新增 [分配冻结 execution](domains/sandai-data-smith/pitfalls/sandeval-allocation-frozen-execution-context.md)。

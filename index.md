@@ -548,3 +548,5 @@
 - 2026-10-13：Nextplay dev 发布、现有任务表原件字段、直接批次与真实评分证据，以及 Agent 生成 Case 的指标目录消费和确认边界，见[独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
 
 - 2026-10-13：已有草稿的批次开放、每题人数锁定、质量系统规则与个人派题分层验收，见[主任务占用恢复页](domains/sandai-data-smith/pitfalls/sandeval-terminated-dispatch-material-occupancy.md)的三包验收补充。
+
+- [Sand Eval 分配冻结 execution 与失败残留](domains/sandai-data-smith/pitfalls/sandeval-allocation-frozen-execution-context.md) — 0/0、三答案两回执、精确 SQL span 对齐、当前读取恢复与正式续跑的证据边界（2026-10-13）。
