@@ -2,7 +2,7 @@
 name: sandeval-correction-reviewer-display-scope
 type: pitfall
 created: 2026-10-05
-updated: 2026-10-09
+updated: 2026-10-13
 tags: [sandeval, quality, correction, identity, frontend]
 links: [sandeval-repeated-return-feedback-lineage]
 ---
@@ -62,3 +62,13 @@ links: [sandeval-repeated-return-feedback-lineage]
 **复验页 review 与测试 PR 指针（2026-10-09）：** [PR #2266](https://github.com/world-sim-dev/sandai-data-smith/pull/2266) 对应开发分支 `codex/sand-feedback-author`。类型 fixture 补修、准确提交、测试分支冲突及 CI 验证边界见 [review 记录](/Users/leslie/Documents/Playground/output/sandeval-inspection-feedback-author-20261008/fix/review-20261009.md)。Why：前序开发提交在 main 重放后，测试分支即使含相同代码，也可能因共同祖先未同步而使下一条 PR 冲突；独立开发分支 Gate 也不能证明 PR 合并树通过。How to apply：重新读取 base/head 和 mergeable，检查测试分支是否缺 main；需要时从测试侧同步 main，禁止反向把测试历史合入开发分支。原 PR、分支 CI、合并与部署分别取证。
 
 **直接 main PR 指针（2026-10-09）：** 用户明确要求后，从最新 main 上的干净任务分支另建 [PR #2267](https://github.com/world-sim-dev/sandai-data-smith/pull/2267)。重放等价性、测试依赖路径和术语修复、具名本地回归、准确 head Gate 及存量工具自检失败的区分见上方 review 记录；main PR 未沿用测试分支历史，合并、部署和浏览器验收状态按实时证据核查。
+
+
+## 单题保存回执与答案回显分开取证
+
+**Why:** 单题保存成功后，整改工作台还需要刷新引用和读取答案。HTTP 200、正式新版本已存在，以及页面正在展示哪一版，是不同证据。重复点击可能追加多条内容相同的正式版本；不能把最后看见新答案推定为前几次未保存。
+
+**How to apply:** 按准确页面题号、投放和责任人，关联提交请求、正式 response 字段、随后 GET 与选项点击流。内部序号与界面题号分别核对；客户端时钟可能偏移，跨层关联优先使用服务端接收与数据库时间。点击事件的 before_values 可证明修订仍带旧值，但不能单独判断来自 GET、草稿还是浏览器状态。固定部署 SHA，核对当前读取计算组和写入 leader；leader/follower 现时一致不能证明事发瞬间一致。对缺失的历史响应正文和只读未复现的环节保留未知，不用延时、加重试或用户重复提交代替版本衔接。
+
+- 2026-10-13 澳鹏声音整改的第 67 题正式版本、重复提交与旧值点击、网关日志、客户端时钟偏移、部署读取链路、leader/follower 对照及候选修复边界：[单题重复保存只读报告](/Users/leslie/Documents/Playground/sandeval-aopeng-repeated-save-20261013/report.md)。当前任务、人员、版本、部署和是否已修复均须现场回读，不在知识页固化。
+- 源码入口：QuestionWorkPage.tsx 的 write / enterRevision；AnswerCorrectionPanel.tsx 的 withSavedAnswer；MyCorrectionPage.tsx 的编辑器实例身份；后端 ev3_answer_cards.py 的 versions_by_id 与 infra/holo.py 的读取连接池。按线上 SHA 读取；需要修改时保持持有人、版本与幂等授权。
