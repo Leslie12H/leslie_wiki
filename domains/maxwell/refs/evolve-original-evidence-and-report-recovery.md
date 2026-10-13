@@ -50,3 +50,5 @@ links: [nextplay-independent-benchmark-entry, evolve-design-clarity-20261013]
 2026-10-13 用户明确要求：改动通过 PR 审查合并；**dev 部署须再次询问，不频繁自动部署**。这撤回了此前本轮连续部署的默认授权。PR、迁移、部署与真实业务验收分别记录；本地界面 fixture 不能充当 dev 或自然 Agent 验收。
 
 - 查 `CaseContentPreview`、`JsonSchemaReadView` 与 `ProviderMetricStore.catalogState`：用服务已声明的 Schema 阅读冻结 Case，默认值不能补进原内容，未知字段和完整 JSON 必须保留；任务和评分区域共享目录读取。Why：结构化输入的协议字段容易遮住真实用户需求，目录读取失败也不能被解释为未配置规则。How：分别验证加载、列表失败、明细失败、服务不存在和未声明定位，失败原位重试；同时覆盖 0/false、转义、未知字段、窄屏和原题库内容。页面、测试及发布状态仅查[链路审查台账](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-final-flow-review-20261014.md)，既有按数组位置定位的语义缺口不能由布局改进掩盖。
+
+- 查 `metric/catalog.go`、`providerMetricModel.ts` 与 Nextplay `grading_rules.metric_catalog`：指标规则定位由 Provider 声明集合、身份指针和精确值，平台只接受唯一匹配；不要把数组位置当身份或在歧义时回退旧下标。Why：新 Case 合法换序、取子集及编辑中位置变化会使旧位置指向兄弟指标。How：目录预览、Case 阅读及写入共用解析器；写入时重读当前材料和关联，并继承只读父级，陈旧事件不能覆盖较新的规则。指针必须区分缺失与显式空根路径，限制只加在声明契约，不顺手收紧其他通用读写调用方。验证、授权和发布状态见[2026-10-14 链路台账](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-final-flow-review-20261014.md)，技术 Judge 与浏览器本地编辑不等于真实评分。

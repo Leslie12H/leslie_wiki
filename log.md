@@ -1155,3 +1155,5 @@
 - 2026-10-14：补充多 Provider 输入身份与摘要顺序、65 题新身份确定性评分覆盖，以及合法维度换序引发规则错位的核验和契约确认指针，见 `domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md`。
 
 - 2026-10-14：补充 EVOLVE Case/指标阅读布局、Schema 值保真、目录失败重试与本地验收边界指针。
+
+- 2026-10-14：ingest EVOLVE Provider 规则稳定身份定位与陈旧编辑保护，更新原件/评分链路引用页及索引；实时实现和验证结果保留为审查台账指针。
