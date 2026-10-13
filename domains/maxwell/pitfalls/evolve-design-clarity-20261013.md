@@ -2,7 +2,7 @@
 name: evolve-design-clarity-20261013
 type: pitfall
 created: 2026-10-13
-updated: 2026-10-13
+updated: 2026-10-14
 tags: [maxwell, evolve, design, information-architecture]
 links: [ai-product-design-skills]
 ---
@@ -28,3 +28,11 @@ links: [ai-product-design-skills]
 **Why:** 历史方案要求不等于当前实现。普通新运行采用最新关联资产的设计要求，必须与当前启动入口取冻结 Benchmark 组合的实际语义区分；只展示版本名称无法解释何时生效。
 
 **How to apply:** 从该文档的代码指针重新核对资产修订、基准版本与 Run 快照。分别画清修用例、修评分后重评原证据、改 Agent 后重新执行，以及候选产生、采纳、实际应用和回归验证。图中的目标流程与已验证能力分别标明，不能以页面可点击证明完整自动闭环。
+
+## 2026-10-14 目录身份与失败状态
+
+Benchmark / 评测记录列表的实现、截图和浏览器验证见[列表布局记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-catalog-layout-20261014.md)；通用平台的执行连接与被测对象是独立身份。
+
+**Why:** 按连接名称筛选不能把 executorRef 填进 targetRef；读取目录失败也不等于连接已删除。把运行 completed 表述为评分通过，或从一页记录推测总成绩，会把导航展示变成错误结论。
+
+**How to apply:** 复用生成客户端与元数据目录，连接按准确身份匹配名称；技术标识按需展开，保留独立对象筛选和返回上下文。目录读取失败不阻断已可读取的记录，主列表失败收敛成一处可恢复提示。验证更换筛选重置游标、返回保留筛选、空/错/长内容和窄屏操作；UI 夹具与真实评分验收分开记，当前实现及运行环境仅查上述记录。

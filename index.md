@@ -574,3 +574,5 @@
 - 2026-10-14：Case 结构化任务与规则的只读阅读、目录失败/缺失区分、列表与历史返回及窄屏验收指针，见[原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md)；布局验证不替代真实评分或稳定维度定位。
 
 - 2026-10-14：EVOLVE 跨 Work 集成夹具、临时库 UTF-8 / 查询统计和 Nextplay Python 环境前提，以及全包技术回归边界，见[原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md)。
+
+- 2026-10-14：Benchmark / 评测记录列表的连接与对象身份、状态语义和可恢复展示，见[页面清晰度约束](domains/maxwell/pitfalls/evolve-design-clarity-20261013.md)；实际代码和本地验收仅留记录指针。
