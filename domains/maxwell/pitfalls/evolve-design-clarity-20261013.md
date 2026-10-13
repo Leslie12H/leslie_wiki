@@ -20,3 +20,11 @@ links: [ai-product-design-skills]
 - 本轮独立原型与检查记录：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-navigation-prototype-20261013/README.md`。
 - 原型只演示前端关系与交互，不代表真实接口、执行结果或用户认可的最终方案。
 - 后续应查看当前原型源码及最新用户反馈，不将本次导航顺序或视觉稿当作已批准的产品规范。
+
+## 2026-10-13 对象关系与操作流程优先
+
+用户进一步要求先画清用例、评分、基准、评测和调优的关系及完整操作流程，不再只调整入口和文案。关系图、操作图、问题分流与源码核对见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-model-and-workflow-20261013.md`。
+
+**Why:** 历史方案要求不等于当前实现。普通新运行采用最新关联资产的设计要求，必须与当前启动入口取冻结 Benchmark 组合的实际语义区分；只展示版本名称无法解释何时生效。
+
+**How to apply:** 从该文档的代码指针重新核对资产修订、基准版本与 Run 快照。分别画清修用例、修评分后重评原证据、改 Agent 后重新执行，以及候选产生、采纳、实际应用和回归验证。图中的目标流程与已验证能力分别标明，不能以页面可点击证明完整自动闭环。
