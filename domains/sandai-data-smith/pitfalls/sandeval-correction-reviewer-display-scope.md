@@ -72,3 +72,6 @@ links: [sandeval-repeated-return-feedback-lineage]
 
 - 2026-10-13 澳鹏声音整改的第 67 题正式版本、重复提交与旧值点击、网关日志、客户端时钟偏移、部署读取链路、leader/follower 对照及候选修复边界：[单题重复保存只读报告](/Users/leslie/Documents/Playground/sandeval-aopeng-repeated-save-20261013/report.md)。当前任务、人员、版本、部署和是否已修复均须现场回读，不在知识页固化。
 - 源码入口：QuestionWorkPage.tsx 的 write / enterRevision；AnswerCorrectionPanel.tsx 的 withSavedAnswer；MyCorrectionPage.tsx 的编辑器实例身份；后端 ev3_answer_cards.py 的 versions_by_id 与 infra/holo.py 的读取连接池。按线上 SHA 读取；需要修改时保持持有人、版本与幂等授权。
+
+
+**历史回读实参补证（2026-10-13）：** 保存成功后的回读已能沿 request/trace/query_id 找到 Hologres 真实绑定的旧 response_id，补证与代码中的回执衔接缺口见[根因报告](/Users/leslie/Documents/Playground/sandeval-root-causes-20261013/report.md)。Why：新回执仅用于 React key 重挂，不能要求随后 GET 达到该正式版本；重新初始化仍可采用副本旧值。How to apply：将已确认 response_id 贯穿成功回显、重挂读取与再次修订，核对该版本或有效后继后才替换已确认内容；保留持有人、幂等、过期版本保护和未保存输入。绑定实参与 calls 的通用匹配方法归[工作台取证](sandeval-workbench-context-404-evidence.md)维护，不因当前回读正常而撤销历史证据。

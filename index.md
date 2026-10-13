@@ -179,7 +179,7 @@
 - [Sand Eval 角色与两侧工作流](domains/sandai-data-smith/refs/sandeval-roles-and-workflow.md) — 角色节点、Sand 视角、成员权限与新旧质检链路的核验入口（2026-09-17）。
 - [Sand Eval 换空间与个人派题核验](domains/sandai-data-smith/pitfalls/sandeval-space-membership-and-personal-distribution.md) — 单空间/单角色、同名账号、供应商下发与个人派题的分层核对及未派题批次改派入口（2026-10-10）。
 - [Sand Eval 多轮退回的上游意见链](domains/sandai-data-smith/pitfalls/sandeval-repeated-return-feedback-lineage.md) — 整批意见须有父处置，逐题意见还须原报告、送审包与冻结计划（2026-09-28）。
-- [Sand Eval 整改意见姓名的展示覆盖](domains/sandai-data-smith/pitfalls/sandeval-correction-reviewer-display-scope.md) — 原身份、账号昵称、部署 DTO 与状态分支覆盖；完整工作台刷新、草稿确认、稳定题目定位与跨单隔离修复及测试 PR #2241 / main PR #2246 指针；质检复验页上游 Sand 意见的身份边界、仲裁作者、署名/刷新修复、测试 PR #2266 / main PR #2267、基线冲突与 CI 验证边界；成功保存后的旧值回显、重复版本和 leader/follower 对照的证据边界指针（2026-10-13）。
+- [Sand Eval 整改意见姓名的展示覆盖](domains/sandai-data-smith/pitfalls/sandeval-correction-reviewer-display-scope.md) — 原身份、账号昵称、部署 DTO 与状态分支覆盖；完整工作台刷新、草稿确认、稳定题目定位与跨单隔离修复及测试 PR #2241 / main PR #2246 指针；质检复验页上游 Sand 意见的身份边界、仲裁作者、署名/刷新修复、测试 PR #2266 / main PR #2267、基线冲突与 CI 验证边界；成功保存后的旧值回显、重复版本、leader/follower 对照及历史 SQL 实参确认的回执衔接缺口指针（2026-10-13）。
 - [Caption Refine 跳过与待定阻断交卷](domains/sandai-data-smith/pitfalls/sandeval-caption-refine-skip-defer-handoff.md) — 定位限制历史与修复分支；待定排除须覆盖整包，跳过须保留固定作答上下文，交付状态另行核验；含全待定兄弟批次恢复后的整包资格修复与回归指针（2026-09-28）。
 - [Sand Eval 质检员整改轮次与可编辑性核验](domains/sandai-data-smith/pitfalls/sandeval-inspector-rework-round-list-and-editability.md) — 源任务、标注员范围、当前/历史质检轮次与编辑权限的区分（2026-09-28）。
 - [Sand Eval 整批退回后的代改版本冲突](domains/sandai-data-smith/pitfalls/sandeval-stopped-review-amendment-conflict.md) — 上轮停止后代改继承的原因、main 修复 PR #2144 与生产验收边界（2026-09-28）。
@@ -413,7 +413,7 @@
 - [Sand Eval 整包交接后复验等待](domains/sandai-data-smith/pitfalls/sandeval-whole-package-reinspection-wait.md) — 2026-09-28 测试环境整包已提交、Sand 待复验但原质检员未按用例时限收到新轮次，须分开核对交接和自动派回。
 - [Sand Eval 退回路线与整包交接提示](domains/sandai-data-smith/pitfalls/sandeval-return-route-and-handoff-hints.md) — 路线文案、整包提示、直接整改链路、系统执行身份，以及历史质检分配、当前账号资格和实际复验任务的区别（更新至 2026-09-30）。
 - [Sand Eval 转派后整改任务可见性](domains/sandai-data-smith/pitfalls/sandeval-transferred-correction-task-visibility.md) — 核对历史批次、当前持卡工作项、整批退回的唯一持有人门禁、已答卡转派页与运营 CLI 口径、写入与提交恢复路径；含持有人分裂 409、单卡转派、退回弹窗错误接收人标签与真实处置单、复验提交 403 的排查指针（2026-09-29）。
-- [Sand Eval 工作台 404 与任务事实分层取证](domains/sandai-data-smith/pitfalls/sandeval-workbench-context-404-evidence.md) — 共享查看接口与原业务 API、管理员查看与人员原始会话、路由门禁与处理器、历史失败和当前成功的证据边界；澳鹏 9.30 声音任务只读报告指针；新增质检轮次的普通读取/leader 对照、自然收敛、精确授权读取修复范围及引入提交/发布考古；代改后精确答案 false 404、完整草稿只读对照、前端判断阻塞及跨四副本历史失败/现时收敛（2026-10-13）。
+- [Sand Eval 工作台 404 与任务事实分层取证](domains/sandai-data-smith/pitfalls/sandeval-workbench-context-404-evidence.md) — 共享查看接口与原业务 API、管理员查看与人员原始会话、路由门禁与处理器、历史失败和当前成功的证据边界；澳鹏 9.30 声音任务只读报告指针；新增质检轮次的普通读取/leader 对照、自然收敛、精确授权读取修复范围及引入提交/发布考古；代改后精确答案 false 404、完整草稿只读对照、前端判断阻塞及跨四副本历史失败/现时收敛与 trace/query 实参补证（2026-10-13）。
 - [Sand Eval 子整改闭环后再次退回阻塞](domains/sandai-data-smith/pitfalls/sandeval-repeated-correction-ancestor-blocker.md) — 上级责任未结、新退回授权断链的取证、正式完成执行继承、单条受控修复及 main 发布验收指针（2026-09-30）。
 - 2026-09-27：首次继续整包送审、仅整改批次独立回交的范围与混合状态核验见 [直达整改与按批交接](domains/sandai-data-smith/refs/sandeval-direct-remediation-and-batch-handoff.md)。
 - [AI 秋招雷达固定入口与工作台](global/refs/ai-job-radar-stable-entry.md) — 固定公开 URL、匿名岗位与私人权限、个人账号使用与资产归属边界、全栈嵌入及定时发布维护指针（2026-09-30）。

@@ -40,3 +40,14 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-direct-return-
 - 2026-10-13 纸面杨洋第 4 轮、第 3 题保存后七次 answer-draft 404，覆盖全部四个新版本 Pod；调查时普通读取已成功、两路查询一致且浏览器无错误：[第二例只读报告](/Users/leslie/Documents/Playground/sandeval-multi-save-sync-20261013/report.md)。先固定最近成功部署完成时间，再与失败窗口比较；历史失败加当前收敛只能确认这两种状态，不能自动证明同一底层成因或把临时 leader 替身当成修复。未保存的截图输入与正式回执分别核对，重新加载前先保留未保存内容。
 - 代码指针：`quality/application/inspection/answer_amendment_service.py::prepare`、`app/services/facts/qc_verdict.py::_quality_records/prepare_answer_amendment`、`app/repositories/ev3_qc.py::quality_response_records`、`app/services/facts/answer_amendment.py::prepare`，以及 `StructuredAnswer.tsx` 与 `ReviewWorkspace.tsx::amendmentIssue`。修正精确版本、字段、元信息和固定 execution 的一致读取时，保留账号/范围和冻结版本保护。
 - 相邻但不同的成因：[修订索引缺失与质检版本冲突](../refs/sandeval-amendment-lookup-recovery.md)。本案有正确 replacement 且 leader 能完整读取，不能直接套用补齐索引操作。
+
+
+## 历史请求与数据库实参补证
+
+**Why:** 现时普通读和 leader 已一致，不代表历史读取路径无法定因。只有请求状态码会留下空读成因未知；实际 SQL 的绑定版本、result_rows 与 calls 可以把“写入成功后读不到”的候选升级为直接运行证据。空结果后的字段读取若不短路，还可能放大读取失败成本。
+
+**How to apply:** 从精确页面、Pod、完成时间和耗时匹配结构化 request_id / OTel trace_id，分页取完整 ARMS trace；用 SQL 模板、毫秒起始时间、时长与计算组对应 Hologres query_id，再读取 query_detail 中的真实参数。检查 calls，单次结果与合并记录分开；跨分钟 query_end 与首组参数不能代表每次执行。查询日志可见性还受账号范围影响，原账号未命中时先核对身份，不以空结果证明没有 SQL；可用已授权应用身份的独立只读进程，不扩权限、不启动恢复。把精确新版本读为空、空集合后续查询和前端 ready 门禁分别归因；禁止为复现大结果而重放大范围生产读取。
+
+- 2026-10-13 纸面第 3 题的精确新答案读取 0 行、后续空数组字段查询大结果、根 span 与单次查询实参，以及王美华第 67/13 题保存后明确绑定旧版本的补证：[两个答案链路根因报告](/Users/leslie/Documents/Playground/sandeval-root-causes-20261013/report.md)。此前只读报告的未知项以本报告的后续证据为准；底层复制/优化器触发解释仍需 Hologres 服务端证据。
+- 空集检查指针：`app/repositories/ev3_qc.py::quality_response_records` 在 response 读取后的 rows / 字段 fetch；存在性拒绝指针：`app/services/facts/qc_verdict.py::_quality_records`。精确已保存版本及其依赖使用一致权威读取，rows 为空立即返回；不得用全量查询或增加用户重试消除错误。
+- 发布边界也需重读：本次调查中的新生产提交、实际修改的 owner 方法与未覆盖的答案链路见上述报告“最新部署边界”。源码和修复状态会变，知识页仅保存核验入口。
