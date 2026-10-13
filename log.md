@@ -1153,3 +1153,5 @@
 - 2026-10-14：补充历史评测进入 HTTP 资源调优时的冻结来源、父候选完整替换、拒绝当前配置回退及本地验证边界，见 `domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md`。
 
 - 2026-10-14：补充多 Provider 输入身份与摘要顺序、65 题新身份确定性评分覆盖，以及合法维度换序引发规则错位的核验和契约确认指针，见 `domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md`。
+
+- 2026-10-14：补充 EVOLVE Case/指标阅读布局、Schema 值保真、目录失败重试与本地验收边界指针。

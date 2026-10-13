@@ -48,3 +48,5 @@ links: [nextplay-independent-benchmark-entry, evolve-design-clarity-20261013]
 - 查 [Case 编辑与规则定位审查](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-final-flow-review-20261014.md)：复制原题为新身份、编辑任务及评分说明，应核对 Judge 实际收到的冻结内容和原题不变；确定性 Judge 回归不能证明真实 Agent 取分。规则目录的数组下标也不等于稳定维度身份，合法换序或子集必须单独验证，防止显示和编辑相邻指标。Why：固定模板及原题库同序会掩盖新题路径错误。How：对照 Provider 合同允许的结构变化，使用由 Provider 声明的稳定身份定位；平台不推断业务字段，新增目录契约须先确认。当前方案、授权与修复状态只查审查台账，不在 Wiki 固化为已完成。
 
 2026-10-13 用户明确要求：改动通过 PR 审查合并；**dev 部署须再次询问，不频繁自动部署**。这撤回了此前本轮连续部署的默认授权。PR、迁移、部署与真实业务验收分别记录；本地界面 fixture 不能充当 dev 或自然 Agent 验收。
+
+- 查 `CaseContentPreview`、`JsonSchemaReadView` 与 `ProviderMetricStore.catalogState`：用服务已声明的 Schema 阅读冻结 Case，默认值不能补进原内容，未知字段和完整 JSON 必须保留；任务和评分区域共享目录读取。Why：结构化输入的协议字段容易遮住真实用户需求，目录读取失败也不能被解释为未配置规则。How：分别验证加载、列表失败、明细失败、服务不存在和未声明定位，失败原位重试；同时覆盖 0/false、转义、未知字段、窄屏和原题库内容。页面、测试及发布状态仅查[链路审查台账](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-final-flow-review-20261014.md)，既有按数组位置定位的语义缺口不能由布局改进掩盖。
