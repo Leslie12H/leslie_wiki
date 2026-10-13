@@ -544,3 +544,5 @@
 - 2026-10-13：来源服务权威读边界、保存回执版本衔接，以及标注整改入口与单题保存/批次交接/本人首页分层核验及 disposition_owner 主节点修复 PR 指针，见 [工作台取证](domains/sandai-data-smith/pitfalls/sandeval-workbench-context-404-evidence.md)。
 
 - 2026-10-13：失败副本的在途素材占用、不可恢复终止授权、零执行任务预检与并发发布去重，见[已终结主任务与素材未下发范围](domains/sandai-data-smith/pitfalls/sandeval-terminated-dispatch-material-occupancy.md)。
+
+- 2026-10-13：Nextplay dev 发布、现有任务表原件字段、直接批次与真实评分证据，以及 Agent 生成 Case 的指标目录消费和确认边界，见[独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
