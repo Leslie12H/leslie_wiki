@@ -3,7 +3,7 @@ name: sandeval-workbench-context-404-evidence
 type: pitfall
 created: 2026-10-13
 updated: 2026-10-13
-tags: [sand-eval, correction, shared-observation, authorization, evidence]
+tags: [sand-eval, correction, shared-observation, authorization, amendment, read-consistency, evidence]
 links: [sandeval-transferred-correction-task-visibility, sandeval-direct-return-interrupted-by-leader]
 ---
 
@@ -26,3 +26,14 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-direct-return-
 
 - 2026-10-13 刘逸君批次、张靖茹新第 2 轮的普通读取返回空 / 同实例 leader 查到、业务和任务列表、入口 404、后续自然收敛及浏览器恢复：[新轮次只读报告](/Users/leslie/Documents/Playground/sandeval-aopeng-new-inspection-20261013/report.md)。当前状态、部署与是否已修复从现行环境回读；不将本案自动推广到当日上午全部历史错误。
 - 读取指针：`app/repositories/observation.py::review_owner`、`app/api/root_observation.py::resolve_owner` 与 `infra/holo.py` 的普通和 leader 连接；列表摘要另看 `quality_inspector_summaries.py` 和 `SupplierInspectionList.tsx`。按线上 SHA 核对。
+
+
+## 代改保存后的精确答案读取
+
+**Why:** “改后合格”的新答案、修订事实和幂等回执已写入，并不保证普通读取源立即能查到该版本。后端把空结果视为不存在时，编辑器保持未 ready；前端可能因此连纯合格/不合格判断也一起阻塞。此机制与旧轮次继承索引缺失、答案已被后续版本替换分别取证，不能凭错误文案混为一类。
+
+**How to apply:** 固定 QT/RT/RI、检查员和新旧 response_id，先以来源答案行、修订事实和回执证明保存，再核对本轮可编辑性及可见 replacement 引用。记录用户失败请求的精确时间/耗时，使用同部署、同身份、同 SQL/参数比较普通读与 leader；再用不带 join 的主键读取排除关联行遗漏。完整草稿对照按“原路失败 → 独立只读进程临时 leader → 恢复原路再查”的顺序执行，保持 DML 拒绝且不启动恢复。只读替身成功是候选读取方案的证据，不等于生产修复或实际判题写入成功；复制迟滞的基础设施原因需另查同期指标。
+
+- 2026-10-13 徐翰臣、Caption Refine 代改保存后重复 answer-draft 404 的时间线、原生身份错误堆栈、普通读取为空而 leader 有行、完整草稿对照及前端保存门禁：[代改答案只读报告](/Users/leslie/Documents/Playground/sandeval-qc-amended-missing-20261013/report.md)。当前状态、部署和修复进度按现行环境核验。
+- 代码指针：`quality/application/inspection/answer_amendment_service.py::prepare`、`app/services/facts/qc_verdict.py::_quality_records/prepare_answer_amendment`、`app/repositories/ev3_qc.py::quality_response_records`、`app/services/facts/answer_amendment.py::prepare`，以及 `StructuredAnswer.tsx` 与 `ReviewWorkspace.tsx::amendmentIssue`。修正精确版本、字段、元信息和固定 execution 的一致读取时，保留账号/范围和冻结版本保护。
+- 相邻但不同的成因：[修订索引缺失与质检版本冲突](../refs/sandeval-amendment-lookup-recovery.md)。本案有正确 replacement 且 leader 能完整读取，不能直接套用补齐索引操作。
