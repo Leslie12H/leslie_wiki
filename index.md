@@ -590,3 +590,5 @@
 - 2026-10-14：Nextplay 候选临时资源清理的精确 404、删除响应丢失重试及退出信号边界，见[原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md)；重试幂等不等于重启自动恢复。
 
 - 2026-10-14：Nextplay 辅助目录采集完整性、失败原件穿过外层清理仍保留，以及大候选 CAS 引用的权限缺口，见[原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md)。
+
+- 2026-10-14：Nextplay 已完成评分的有界提交重试、同文终态确认、取消 / 截止时间原子裁决与跨进程恢复边界，见[原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md)。

@@ -72,3 +72,6 @@ links: [nextplay-independent-benchmark-entry, evolve-design-clarity-20261013]
 
 
 - 查 Nextplay `ResourceLease.retained_threads`、共享 `_capture_output_files`、CandidateRunner 与[原件保留复核](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-evidence-retention-review-20261014.md)：采集不完整必须穿过逐题和批次末尾清理仍保留来源；可选目录不存在与目录读取失败应分开。Why：宽泛吞掉目录 / 文件错误会把缺失证据误作完整，外层清理又会删除唯一可重读来源。How：对照原生文件 API 的精确错误与 entries / 分页完整性字段，保留已下载部分并按目录 / 路径报告缺失，持久记录保留原因并保护依赖配置；进程信号仍传播。自动补采、旧入口和新 HTTP 入口的真实恢复分别验收。原始结果大文件传输不能代替大候选资源的受权读取 / 应用：裸 CAS 哈希没有 Work 归属，容量与权限链路须分别核对。代码、未完成能力及本地 / 真实验收范围只查复核记录。
+
+
+- 查 Nextplay `grading_worker._finish_result`、`GradingRepository.finish` 与[评分提交复核](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-grading-commit-review-20261014.md)：Judge 完成、数据库提交和收到提交回执是不同时间点。Why：提交断连不能证明 Judge 失败；完成后的额外心跳也会成为丢失已计算分数的出口。How：仅对同一结果做有界保存重试，完成事务核对租约、取消和截止时间，按原完成时间确认同一 Worker 的同文终态，拒绝异文覆盖；真实事务验证提交前回滚、提交后回执丢失、取消竞争和并发重放。持续故障与跨进程回补仍须单独验证，不把本地数据库回归称作真实取分。当前实现、测试与环境条件只查复核记录。
