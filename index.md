@@ -556,3 +556,5 @@
 - 2026-10-13：整改后空间管理员复验确认的流程评估、生产自动开关和截图/当前轮次边界，见[自动复验派回验收](domains/sandai-data-smith/refs/sandeval-auto-reinspection-verification.md)。
 
 - 2026-10-13：大结果原件归档、评分引用传输、Agent 按需查证与窗口读取性能边界，见[Nextplay 独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
+
+- [Sand Eval 整改回交选入旧答案](domains/sandai-data-smith/pitfalls/sandeval-correction-handoff-stale-response.md) — 2026-10-13：单题代改保护、回交前已存在新版、不可变意图及历史副本延迟的证据边界。
