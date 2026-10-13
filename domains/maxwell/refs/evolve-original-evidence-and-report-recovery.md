@@ -2,7 +2,7 @@
 name: evolve-original-evidence-and-report-recovery
 type: reference
 created: 2026-10-13
-updated: 2026-10-13
+updated: 2026-10-14
 tags: [maxwell, evolve, nextplay, evidence, recovery, grading]
 links: [nextplay-independent-benchmark-entry, evolve-design-clarity-20261013]
 ---
@@ -29,5 +29,8 @@ links: [nextplay-independent-benchmark-entry, evolve-design-clarity-20261013]
 - 结果页面按执行异常、评分异常、质量未达标分别组织，可读回答优先，原件和诊断按需展开。实时数量、截图及技术测试的适用范围只查收尾记录。
 - 在干净的最新 main 工作区整合后重跑验证，不能把旧实施分支通过直接当作合并通过。Nextplay 的 Agentic Judge 测试依赖 `eval-runner/agentic-judge` 的构建产物；先按其 package 入口运行 `pnpm test`，再跑 Python Judge 回归。缺少 `dist/system-prompt.json` 属于构建前提未满足，应与业务逻辑失败区分。整合基线和日志只查收尾记录。
 - Benchmark 将评测记录与趋势分开；通过率必须伴随已判定覆盖和异常数量，避免部分样本误导成整批通过。接入向导读取失败须保留未知/失败反馈，不能转成空列表后引导重复登记；已登记对象应进入管理页，首次直接评测进入 Benchmark。当前页面完成度和截图仍以收尾记录为准。
+- 查 `evaluation/live_http_batch.go`、`integration/httpjobs` 与回归：Case 本体和批次封装的容量不同；无效输入必须落成逐题终态，不能反复耗尽 Worker 时间片。远端接纳回执丢失或无法解码时，仍使用冻结调用身份和截止时间，截止后先保存取消意图，再追踪原批次，不把连接恢复当成重新起跑。
+- 查 `v3/ledger/LedgerLineage`、`TaskLineageGraph` 与 `CandidateResultsStore`：任务谱系复用完整 Run 身份，图形折叠不能丢历史；验证表单不能遮掉已完成结果。Run 冻结基线可能来自另一 Work，应复用业务级受权读取和固定基线比较，不能从当前任务列表缺失推断基线不存在，也不能借此允许任意跨任务比较。打开基线结果必须保留其原 Work，返回后保留原候选/Run 选择。
+- 查 `BaselineResultsPanel`、`baselineMetrics` 与收尾截图：接受候选、实际应用回执、比较口径一致和指标变化是不同事实；没有判定不能展示 0%。差值须遵守指标身份、原单位与覆盖条件。真实父容器、窄屏滚动、部分读取失败和精确跳转需浏览器核验；本地 fixture 数字不代表真实调优增益。
 
 2026-10-13 用户明确要求：改动通过 PR 审查合并；**dev 部署须再次询问，不频繁自动部署**。这撤回了此前本轮连续部署的默认授权。PR、迁移、部署与真实业务验收分别记录；本地界面 fixture 不能充当 dev 或自然 Agent 验收。

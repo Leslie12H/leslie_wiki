@@ -1141,3 +1141,5 @@
 - 2026-10-13：补充 EVOLVE/Nextplay 长事件原件、冻结资源与快照持久性、评分报告归档期登记保护、Case 分层容量及本地 1 GiB 技术证明的核对指针；不将本地测试记录为 dev 业务通过。
 
 - 2026-10-13：补充 EVOLVE/Nextplay 干净 main 整合与 Judge 构建前提，记录评测覆盖展示、接入向导失败不可伪装空列表的核对指针；不把本地组件验证作为真实业务闭环。
+
+- 2026-10-14：补充 EVOLVE 批次封装与接纳回执恢复、任务谱系只读结果和跨任务固定基线的 Why/How 及验证入口；仅本地实现，部署仍须确认。见 [原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md)。
