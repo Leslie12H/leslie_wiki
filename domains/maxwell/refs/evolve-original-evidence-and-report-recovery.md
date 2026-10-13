@@ -27,5 +27,7 @@ links: [nextplay-independent-benchmark-entry, evolve-design-clarity-20261013]
 - 查 `MetricUpdateScope` 与 `StandardEditorStore`：共享指标编辑需说明未来普通评测与冻结历史的差异，名称与实际定义同步；不能用猜测计数冒充真实引用清单。
 - 新 SQL 同时核对迁移 ConfigMap 与 Job 参数。SQL 文件存在、单元测试通过都不代表真实环境迁移已执行；共享 PVC/NAS 与 1 GiB 实际传输须独立验收。
 - 结果页面按执行异常、评分异常、质量未达标分别组织，可读回答优先，原件和诊断按需展开。实时数量、截图及技术测试的适用范围只查收尾记录。
+- 在干净的最新 main 工作区整合后重跑验证，不能把旧实施分支通过直接当作合并通过。Nextplay 的 Agentic Judge 测试依赖 `eval-runner/agentic-judge` 的构建产物；先按其 package 入口运行 `pnpm test`，再跑 Python Judge 回归。缺少 `dist/system-prompt.json` 属于构建前提未满足，应与业务逻辑失败区分。整合基线和日志只查收尾记录。
+- Benchmark 将评测记录与趋势分开；通过率必须伴随已判定覆盖和异常数量，避免部分样本误导成整批通过。接入向导读取失败须保留未知/失败反馈，不能转成空列表后引导重复登记；已登记对象应进入管理页，首次直接评测进入 Benchmark。当前页面完成度和截图仍以收尾记录为准。
 
 2026-10-13 用户明确要求：改动通过 PR 审查合并；**dev 部署须再次询问，不频繁自动部署**。这撤回了此前本轮连续部署的默认授权。PR、迁移、部署与真实业务验收分别记录；本地界面 fixture 不能充当 dev 或自然 Agent 验收。
