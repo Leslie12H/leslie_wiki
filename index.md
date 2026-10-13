@@ -592,3 +592,5 @@
 - 2026-10-14：Nextplay 辅助目录采集完整性、失败原件穿过外层清理仍保留，以及大候选 CAS 引用的权限缺口，见[原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md)。
 
 - 2026-10-14：Nextplay 已完成评分的有界提交重试、同文终态确认、取消 / 截止时间原子裁决与跨进程恢复边界，见[原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md)。
+
+- 2026-10-14：[HTTP 冻结资源自动提案](domains/maxwell/refs/evolve-http-resource-proposals.md) — Provider 分类、来源 Run 授权、父候选替换、完整 payload 校验及本地连续复测边界。
