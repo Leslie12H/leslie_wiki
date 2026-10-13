@@ -558,3 +558,5 @@
 - 2026-10-13：大结果原件归档、评分引用传输、Agent 按需查证与窗口读取性能边界，见[Nextplay 独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
 
 - [Sand Eval 整改回交选入旧答案](domains/sandai-data-smith/pitfalls/sandeval-correction-handoff-stale-response.md) — 2026-10-13：单题代改保护、回交前已存在新版、不可变意图及历史副本延迟的证据边界。
+
+- 2026-10-13：Nextplay 长批次等待全量执行后出分、派发时限与整批耗时的区别，见[独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
