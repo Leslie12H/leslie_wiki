@@ -33,4 +33,7 @@ links: [nextplay-independent-benchmark-entry, evolve-design-clarity-20261013]
 - 查 `v3/ledger/LedgerLineage`、`TaskLineageGraph` 与 `CandidateResultsStore`：任务谱系复用完整 Run 身份，图形折叠不能丢历史；验证表单不能遮掉已完成结果。Run 冻结基线可能来自另一 Work，应复用业务级受权读取和固定基线比较，不能从当前任务列表缺失推断基线不存在，也不能借此允许任意跨任务比较。打开基线结果必须保留其原 Work，返回后保留原候选/Run 选择。
 - 查 `BaselineResultsPanel`、`baselineMetrics` 与收尾截图：接受候选、实际应用回执、比较口径一致和指标变化是不同事实；没有判定不能展示 0%。差值须遵守指标身份、原单位与覆盖条件。真实父容器、窄屏滚动、部分读取失败和精确跳转需浏览器核验；本地 fixture 数字不代表真实调优增益。
 
+- 查 `benchmarks/BenchmarkTrendStore`、`benchmarkTrendModel` 与本轮收尾记录：记录分页不是完整趋势范围，指标也不能只从一次评测发现；同一 Benchmark 版本内读取完整 Run 目录，再有界并发读取各次全部指标页。评分代际、口径或更新时间变化时重读，不能混合分页快照。失败位置保留，原单位、精确指标身份及覆盖不足应直接可见；不从历史曲线推断真实调优增益。截图、当前完成度与测试结果只查收尾记录。
+- Benchmark 关联 Case/规则阅读应使用受权投影，不遍历全资产库或虚构 Work 拼引用；新增契约须先确认。当前补充清单及是否实施以收尾记录为准，预览读取不能调用会创建修订的普通评测准入路径。
+
 2026-10-13 用户明确要求：改动通过 PR 审查合并；**dev 部署须再次询问，不频繁自动部署**。这撤回了此前本轮连续部署的默认授权。PR、迁移、部署与真实业务验收分别记录；本地界面 fixture 不能充当 dev 或自然 Agent 验收。

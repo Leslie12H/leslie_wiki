@@ -1143,3 +1143,5 @@
 - 2026-10-13：补充 EVOLVE/Nextplay 干净 main 整合与 Judge 构建前提，记录评测覆盖展示、接入向导失败不可伪装空列表的核对指针；不把本地组件验证作为真实业务闭环。
 
 - 2026-10-14：补充 EVOLVE 批次封装与接纳回执恢复、任务谱系只读结果和跨任务固定基线的 Why/How 及验证入口；仅本地实现，部署仍须确认。见 [原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md)。
+
+- 2026-10-14：补充 Benchmark 全历史与指标分页一致性、原单位与覆盖展示的核对入口；Case/规则受权投影仍按契约确认推进，不把局部 UI 验证作为完整业务验收。见 [原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md)。
