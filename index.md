@@ -536,3 +536,5 @@
 - 2026-10-13：指标目录索引与完整规则阅读、技术字段收纳、窄屏切换以及真实评分服务父容器验证，见[Nextplay 独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
 
 - 2026-10-13：Nextplay 本地实现与真实取分的准备度、内联/共享指标生效范围，以及已确认五入口与逐页布局方案，见[Nextplay 独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
+
+- [EVOLVE 当前模式整体设计复核](domains/maxwell/refs/evolve-mode-design-audit-20261013.md) — 2026-10-13：统一采纳、独立验收、Judge 校准、多轮反馈及新评测/原生指标与旧搜索的接线指针；区分源码问题、授权策略和线上证据。
