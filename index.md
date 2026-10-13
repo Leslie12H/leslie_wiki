@@ -554,3 +554,5 @@
 - [Sand Eval 整批手动恢复到未派题](domains/sandai-data-smith/refs/sandeval-manual-batch-reset.md) — 2026-10-13：子批次精确题池、已有答案授权、卡与槽位释放、完整归档及正式读取路径核验指针。
 
 - 2026-10-13：整改后空间管理员复验确认的流程评估、生产自动开关和截图/当前轮次边界，见[自动复验派回验收](domains/sandai-data-smith/refs/sandeval-auto-reinspection-verification.md)。
+
+- 2026-10-13：大结果原件归档、评分引用传输、Agent 按需查证与窗口读取性能边界，见[Nextplay 独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
