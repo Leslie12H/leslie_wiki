@@ -552,3 +552,5 @@
 - [Sand Eval 分配冻结 execution 与失败残留](domains/sandai-data-smith/pitfalls/sandeval-allocation-frozen-execution-context.md) — 0/0、三答案两回执、精确 SQL span 对齐、当前读取恢复与正式续跑的证据边界（2026-10-13）。
 
 - [Sand Eval 整批手动恢复到未派题](domains/sandai-data-smith/refs/sandeval-manual-batch-reset.md) — 2026-10-13：子批次精确题池、已有答案授权、卡与槽位释放、完整归档及正式读取路径核验指针。
+
+- 2026-10-13：整改后空间管理员复验确认的流程评估、生产自动开关和截图/当前轮次边界，见[自动复验派回验收](domains/sandai-data-smith/refs/sandeval-auto-reinspection-verification.md)。

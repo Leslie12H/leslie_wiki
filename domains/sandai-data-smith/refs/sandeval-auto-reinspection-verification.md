@@ -2,7 +2,7 @@
 name: sandeval-auto-reinspection-verification
 type: reference
 created: 2026-09-20
-updated: 2026-09-24
+updated: 2026-10-13
 tags: [sandeval, quality, reinspection, production, acceptance]
 links: [sandeval-correction-fixtures, sandeval-e2e-acceptance]
 ---
@@ -41,3 +41,5 @@ links: [sandeval-correction-fixtures, sandeval-e2e-acceptance]
 - 2026-09-20 逐条提交恢复的代码与验证入口：[PR #1484](https://github.com/world-sim-dev/sandai-data-smith/pull/1484)；`quality/application/resolution/resubmission_intent.py` 保存固定提交意图，先补齐授权再发布执行记录；`test_correction_resumes_autocommit_writes_after_restart` 使用不回滚的测试存储，在快照、处置、授权、执行落库后注入中断。自动回交入口必须复用首次请求版本与原操作者，不能用当前处置版本重算固定请求。合并、Gate 和部署状态以 PR/CI 现场结果为准。
 
 - 2026-09-20 正式环境独立 2 题“Sand B 退回 → A 直接验收 → 新整包回交 → 原 B 第二轮待办”验收入口：`/Users/leslie/Documents/Playground/output/prod-sand-handoff-reinspection-20260920/report.md`。报告包含不可变部署 digest、服务端回执时序、自动请求关联、第二轮唯一性观察、真实小九浏览器截图及两条未阻断派单的幂等冲突警告；后续状态以报告中的任务 ID 回读。
+
+- 2026-10-13：整改重提交后管理员确认弹窗的只读评估、当前生产开关及实际 AUTO_REINSPECT 后继任务证据，见[流程评估报告](/Users/leslie/Documents/Playground/output/reinspection-auto-evaluation-20261013/report.md)。截图对应批次的后续轮次已再次退回，不能将历史“待复验”截图当作当前卡住的证明；同任务另一批次自动生成成功也不能代替目标批次成功。建议普通回交自动接续、异常时管理员处理；此次未改产品流程。
