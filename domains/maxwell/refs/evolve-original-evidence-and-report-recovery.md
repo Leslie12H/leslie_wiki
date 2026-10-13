@@ -19,6 +19,12 @@ links: [nextplay-independent-benchmark-entry, evolve-design-clarity-20261013]
 - 查 `queries/evidence_files.go`、`integration/evidenceresolve/authorization.go` 和对应测试：下载与 Agent 读取都核对 Trial 和冻结 assessment，不能凭 CAS 哈希或引用内自报归属授权；共享 Case、跨业务、隐藏题及兄弟题分别测试。
 - 查 Nextplay `grading_reports.py` 与 `API.md`：报告只有显式协商时才改用引用；数据库 JSON 调整键序时，应按 JSON 值核对清单，再用封存原字节校验成员。完整文件与摘要不得互相替代。
 - 查 `worker/evidence_cleanup.go` 和 `evidencearchive/store_test.go`：未完成传输用独立租期和活动锁清理，已发布清单不能随临时任务清理。
+- 查 `executor/identity.go`、`infrastructure/{memory,postgres}/executors.go` 及评分恢复集成测试：付费评分完成和原报告归档完成是两个时间点。所属 Run 仍活跃时，连接和评分声明必须保持可恢复；重新探测不能绕过登记保护。
+- 查 Nextplay `event_archive.py`、`grading_evidence.py`、`judge_bundle.py`：长事件原件与索引分开，按字节偏移读取、校验归档及成员哈希；元数据边界不等于附件边界。执行时采集仍积累内容的限制须明确，不把传输流式化说成全程恒定内存。
+- 查 Nextplay `resource_control.py` 与 Snapshot 服务：先冻结实际目标，后准备候选，再以执行回执证明应用；目录标为只读的资源，后端必须同样拒绝替换。快照发布需先持久化，回读可以流式核验但不改变旧哈希语义。
+- 查 Case 领域准入、Studio 导入和 `0033_evolve_case_content_limit.sql`：提高 HTTP 上限不能遗漏数据库约束，JSONB 存储形式也不等于请求字节数。回滚保留大 Case 的不可变历史。
+- 查本轮收尾记录的 `large-original-local-check.py` 与日志：真实不同数据块、本地服务中断续取和最终哈希是本地技术证明；fixture 元数据仓库、跨 Pod 持久卷、真实 Judge 和完整业务闭环须分别标注。
+- 查 `MetricUpdateScope` 与 `StandardEditorStore`：共享指标编辑需说明未来普通评测与冻结历史的差异，名称与实际定义同步；不能用猜测计数冒充真实引用清单。
 - 新 SQL 同时核对迁移 ConfigMap 与 Job 参数。SQL 文件存在、单元测试通过都不代表真实环境迁移已执行；共享 PVC/NAS 与 1 GiB 实际传输须独立验收。
 - 结果页面按执行异常、评分异常、质量未达标分别组织，可读回答优先，原件和诊断按需展开。实时数量、截图及技术测试的适用范围只查收尾记录。
 

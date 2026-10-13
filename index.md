@@ -569,4 +569,4 @@
 
 - 2026-10-13：EVOLVE 五对象关系、完整操作流程与重评/重执行分流，及“最新资产”设计和冻结基准实现的区别，见[页面清晰度约束](domains/maxwell/pitfalls/evolve-design-clarity-20261013.md)。
 
-- [EVOLVE 原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md) — 2026-10-13：完整报告分块续取、共享 Case 归属、JSON 键序、活动传输清理与部署须再次确认的边界。
+- [EVOLVE 原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md) — 2026-10-13：完整报告与长事件分块续取、评分完成后连接保护、冻结候选、容量分层及真实本地大文件验证边界；部署仍须确认。
