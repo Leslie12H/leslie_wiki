@@ -1147,3 +1147,5 @@
 - 2026-10-14：补充 Benchmark 全历史与指标分页一致性、原单位与覆盖展示的核对入口；Case/规则受权投影仍按契约确认推进，不把局部 UI 验证作为完整业务验收。见 [原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md)。
 
 - 2026-10-14：记录 EVOLVE/Nextplay 新建与编辑 Case 的冻结附件评分、原题库回退缺陷及 Judge 缓存身份核对指针；本地技术回归与真实 65 题/调优闭环继续分开，部署须单独确认。
+
+- 2026-10-14：补充 EVOLVE/Nextplay 逐题原件与原评分归因、历史发布覆盖修复的核验方法及缺分原说明展示指针；执行重跑与已有原件重评分开，技术测试不代替真实取分。见 [原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md)。

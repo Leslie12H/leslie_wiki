@@ -38,4 +38,8 @@ links: [nextplay-independent-benchmark-entry, evolve-design-clarity-20261013]
 
 - 查 Nextplay `grading_evidence.frozen_case_attachments`、`grading.grade` 与 `AgenticJudge._bundle`：执行附件不一定出现在输出原件中，评分应读取本次冻结 Case 的附件，不能回退原题库；新建、替换、删除都需覆盖。复用执行输入校验器核对原字节与哈希，临时来源须存活至全部 Judge 完成，异常后同样清理；缓存身份包含附件元数据与哈希，不包含本机临时路径。具体发现、回归与全分支审查边界见[2026-10-14 链路台账](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-final-flow-review-20261014.md)，不把确定性 Judge 当成真实评分。
 
+- 查 [65 题逐条失败归因记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/nextplay-65-failure-audit-20261014.md)：错误数量不能由单题抽样归因；逐条核对原执行中的 Thread、完成标记与清理状态，再查看原评分报告。未执行成功需要重跑；已有有效原件而 Judge 初始化失败应重评，保留原历史记录。具体数量与环境状态只读该记录，不在 Wiki 固化为实时事实。
+- 查同一核验记录的 Actions 元数据和对应 SHA 源码：一次修复部署成功后，后续从另一基线发布可能覆盖修复；应按组件、SHA、部署时点和失败观测时点还原发布链，不能仅凭“修复曾上线”排除旧代码。后续交付走审查合并后的统一 main，仍需单独部署授权。
+- 查 Nextplay `grading.grade` 与 Studio `TrialDetailPanel`：缺分应保留原 Judge 说明并遵循既有 UTF-8 字节上限，完整报告保持原文；默认展示名称、值、判定和覆盖，长说明按需展开。0 和 false 是有效值，技术失败不能换算成质量零分；渲染必须转义外部文本。相关桌面/窄屏截图与技术测试仍查核验记录。
+
 2026-10-13 用户明确要求：改动通过 PR 审查合并；**dev 部署须再次询问，不频繁自动部署**。这撤回了此前本轮连续部署的默认授权。PR、迁移、部署与真实业务验收分别记录；本地界面 fixture 不能充当 dev 或自然 Agent 验收。
