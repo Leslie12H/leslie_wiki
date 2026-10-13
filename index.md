@@ -564,3 +564,5 @@
 - 2026-10-13：关小琪指定批次通过原退回/回交/自动复验服务恢复，旧判断保留历史且不改来源答案，独立核验和新入口见[整改回交旧版页](domains/sandai-data-smith/pitfalls/sandeval-correction-handoff-stale-response.md)。
 
 - [EVOLVE 页面清晰度与核心能力位置](domains/maxwell/pitfalls/evolve-design-clarity-20261013.md) — 2026-10-13：用例与评分属于核心能力；连续页面、对象关系和具体操作优先，不能将不清晰误解为复杂。
+
+- [已验收退回后缺少新轮次](domains/sandai-data-smith/pitfalls/sandeval-manual-return-missing-reinspection.md) — 退回事实与后继重检分离、旧轮次未结阻断、原生单条恢复及回执收尾核验（2026-10-13）。
