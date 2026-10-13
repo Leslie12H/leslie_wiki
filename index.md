@@ -530,3 +530,5 @@
 - 2026-10-12：Nextplay原件清理失败恢复、003显式迁移入口与原维度名称保留，见[独立Benchmark接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
 
 - 2026-10-12：EVOLVE/Nextplay结果落库不确定提交、状态重读和同份原件重写，见[独立Benchmark接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
+
+- 2026-10-13：保留粗线条的 Case 编辑布局、Provider 规则逐指标对应、通用按钮内层排版、窄屏规则可见性，以及 Benchmark 趋势／调优谱系入口方向与只读内容投影缺口，见[Nextplay 独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
