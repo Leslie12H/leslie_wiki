@@ -26,6 +26,7 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-direct-return-
 
 - 2026-10-13 刘逸君批次、张靖茹新第 2 轮的普通读取返回空 / 同实例 leader 查到、业务和任务列表、入口 404、后续自然收敛及浏览器恢复：[新轮次只读报告](/Users/leslie/Documents/Playground/sandeval-aopeng-new-inspection-20261013/report.md)。当前状态、部署与是否已修复从现行环境回读；不将本案自动推广到当日上午全部历史错误。
 - 读取指针：`app/repositories/observation.py::review_owner`、`app/api/root_observation.py::resolve_owner` 与 `infra/holo.py` 的普通和 leader 连接；列表摘要另看 `quality_inspector_summaries.py` 和 `SupplierInspectionList.tsx`。按线上 SHA 核对。
+- 最小改动检查点：精确 `review_owner/disposition_owner` 通过 leader 读取，并核查 `viewer_scope/task_space/quality_target/has_sand_assignment` 的授权事实一致性；保存原有真实查看者和跨空间限制。用“普通读取空、leader 有行”的回归场景验证，不以重建业务记录消除读取问题。具体修复清单与部署变化核对见上述报告的“追问：原因与具体修复”；基础设施触发原因需要同期复制/回放指标，不能仅凭两路 SQL 差异归因。
 
 
 ## 代改保存后的精确答案读取
