@@ -541,5 +541,6 @@
 - [EVOLVE 当前模式整体设计复核](domains/maxwell/refs/evolve-mode-design-audit-20261013.md) — 2026-10-13：统一采纳、独立验收、Judge 校准、多轮反馈及新评测/原生指标与旧搜索的接线指针；区分源码问题、授权策略和线上证据。
 
 - [Hologres 2026-10-13 副本同步延迟取证](domains/sandai-data-smith/refs/hologres-replica-sync-lag-20261013.md) — 实例级最大延迟、全部计算组与小 Follower 满载对照、samples 批量更新候选、重复 DDL 与具体 Shard 的证据边界。
+- 2026-10-13：来源服务权威读边界、保存回执版本衔接，以及标注整改入口与单题保存/批次交接/本人首页分层核验及 disposition_owner 主节点修复 PR 指针，见 [工作台取证](domains/sandai-data-smith/pitfalls/sandeval-workbench-context-404-evidence.md)。
 
 - 2026-10-13：失败副本的在途素材占用、不可恢复终止授权、零执行任务预检与并发发布去重，见[已终结主任务与素材未下发范围](domains/sandai-data-smith/pitfalls/sandeval-terminated-dispatch-material-occupancy.md)。

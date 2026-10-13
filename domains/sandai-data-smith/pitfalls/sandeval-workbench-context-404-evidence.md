@@ -51,3 +51,22 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-direct-return-
 - 2026-10-13 纸面第 3 题的精确新答案读取 0 行、后续空数组字段查询大结果、根 span 与单次查询实参，以及王美华第 67/13 题保存后明确绑定旧版本的补证：[两个答案链路根因报告](/Users/leslie/Documents/Playground/sandeval-root-causes-20261013/report.md)。此前只读报告的未知项以本报告的后续证据为准；底层复制/优化器触发解释仍需 Hologres 服务端证据。
 - 空集检查指针：`app/repositories/ev3_qc.py::quality_response_records` 在 response 读取后的 rows / 字段 fetch；存在性拒绝指针：`app/services/facts/qc_verdict.py::_quality_records`。精确已保存版本及其依赖使用一致权威读取，rows 为空立即返回；不得用全量查询或增加用户重试消除错误。
 - 发布边界也需重读：本次调查中的新生产提交、实际修改的 owner 方法与未覆盖的答案链路见上述报告“最新部署边界”。源码和修复状态会变，知识页仅保存核验入口。
+
+## 权威读取必须贯穿来源服务
+
+**Why:** 质量元数据的主节点连接不会自动传给独立来源答案服务，独立答案读池也不自动保证读取已确认版本。只修入口 owner 或外层 UoW，内部 false 404 和旧答案回显仍可能存在。
+
+**How to apply:** 按线上 SHA 从 UnitOfWork、AnnotationClient、result_service 追到来源仓储与固定 execution，逐层核对实际读源。质检保持冻结/代改精确引用；标注整改将保存回执 response_id 贯穿加载、回显和再次修订。保留账号、空间、工作项和责任保护，旧 GET 不覆盖已确认版本，不修改共享服务单例的 client。
+
+- 2026-10-13 两类答案故障的修复边界与待实施验收清单：[修复设计](/Users/leslie/Documents/Playground/sandeval-root-causes-20261013/repair-design.md)。代码和发布状态会变，按现行环境核验；底层复制/优化器解释不以应用补丁代替。
+- 组合指针：`quality/infrastructure/runtime.py`、`quality/infrastructure/persistence/unit_of_work.py`、`quality/infrastructure/client/source/annotation_client.py`、`app/services/facts/qc_verdict.py::read_response_versions`、`app/infra/holo.py::answer_read_chain/_read_pool`、`MyCorrectionPage.tsx` 与 `QuestionWorkPage.tsx`。
+
+## 标注整改入口与首页完成状态分开验证
+
+**Why:** 质检入口修复不自动覆盖标注整改的 disposition_owner。单题保存、批次交接和首页操作文案又是不同事实；管理员只读查看使用自己的前端登录上下文，其正常页面不能否定本人原会话反馈。旧首页固定按钮的代码存在，也不能证明用户实际进入了旧首页。
+
+**How to apply:** 新退回入口做真实接收人门禁、同参数普通读/leader 对照、原路失败/临时权威读成功/恢复原路失败，保留明确处置单。完成状态则分别核对正式答案、精确 batch handoff、submit-qc 请求、批次计数、本人权限节点及客户端页面；显示分歧时保留未知并补本人页面证据，不重交答案或代执行批次确认来掩盖问题。
+
+- 2026-10-13 冯杰新退回入口 false 404 的完整复现，以及柴华单题已保存、批次未交接和本人/管理员首页文案分歧：[新两例只读报告](/Users/leslie/Documents/Playground/sandeval-return-and-complete-20261013/report.md)。首例已证实具体入口路径；次例原会话文案成因仍未知，当前状态和源码按报告指针重新核验。
+- 入口指针：`app/repositories/observation.py::disposition_owner` 与 `app/api/root_observation.py::resolve_owner`；状态指针：`AnnotationBatchList.tsx::annotationBatchState`、`MyTasksPage.tsx::LegacyMyTasksPage`、`app/repositories/annotation_batch_handoff.py` 与 `app/services/facts/my_tasks.py::list_my_annotation_batches`。
+- 2026-10-13 `disposition_owner` 主节点修复与普通读空/真实缺失/跨空间拒绝回归的交付指针：[main PR #2406](https://github.com/world-sim-dev/sandai-data-smith/pull/2406)。改动限于精确处置接收人读取；Gate、合并、发布和本人入口验收分别从 PR 与生产环境核验，不把 PR 创建当作上线。
