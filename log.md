@@ -1118,3 +1118,5 @@
 - 2026-10-13 ingest：补充图虫精筛三包下发中批次开放开关、人数锁定及质量系统规则独立回读的 Why/How 与验收指针。
 
 - 2026-10-13：补充第 6 批次固定答案上下文失败取证与复用原分配恢复边界，新增 [分配冻结 execution](domains/sandai-data-smith/pitfalls/sandeval-allocation-frozen-execution-context.md)。
+
+2026-10-13 — Ingest Sand Eval 整批恢复未派题的精确范围、完整答案归档、写入锁与独立读取核验指针；本次动态事实留在本地操作报告。
