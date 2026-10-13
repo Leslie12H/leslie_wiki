@@ -534,3 +534,5 @@
 - 2026-10-13：保留粗线条的 Case 编辑布局、Provider 规则逐指标对应、通用按钮内层排版、窄屏规则可见性，以及 Benchmark 趋势／调优谱系入口方向与只读内容投影缺口，见[Nextplay 独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
 
 - 2026-10-13：指标目录索引与完整规则阅读、技术字段收纳、窄屏切换以及真实评分服务父容器验证，见[Nextplay 独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
+
+- 2026-10-13：Nextplay 本地实现与真实取分的准备度、内联/共享指标生效范围，以及已确认五入口与逐页布局方案，见[Nextplay 独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。

@@ -70,3 +70,5 @@ links: [evolve-nextplay-entry-plan-20261009, nextplay-benchmark-import-audit-202
 - 2026-10-13 入口与数据投影：同一逐页记录保存当前方向及缺口。Why：按被测对象组织底层历史，不等于用户应先进入对象才能看 Benchmark 趋势或调优谱系；Artifact 引用不能回答测什么。How：主入口分别围绕 Benchmark 测量与调优任务组织，对象历史保留辅助关联；冻结快照与普通新运行的最新资产明确区分。未有直接内容读取投影时，不扫描全库修订或按名称猜关联；契约变更沿用仓库确认流程。路由和 Benchmark 详情的新布局尚未实施。
 
 - 2026-10-13 指标目录的完整阅读布局：见[目录布局验证记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-provider-catalog-layout-20261013.md)。Why：原页面把七项指标纵向铺开、隐藏规则、突出内部标识；孤立预览通过也不能保证真实父容器可用。How：复用目录声明的名称与原文，以指标索引切换阅读区，技术标识默认收起；窄屏按容器宽度切换选择器，并挂载真实 JudgeOnboardPage 核对固定宽度、inline-size containment 与后代段落样式。实际改动、截图和本地验证边界以记录为准，业务代码未提交或部署。
+
+- 2026-10-13 全链路准备度与整站布局：当前源码、回归、真实取分剩余步骤见[运行准备度](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/nextplay-readiness-20261013.md)，用户确认的五入口、逐页信息与验收见[整体布局方案](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-layout-master-plan-20261013.md)。Why：历史失败及旧审查中的“尚未实现”不能代表当前本地实现，也不能将本地通过等同于线上取得分数；底层对象关系不决定用户的分析入口。How：分别检查接口、表单接入、迁移、部署、真实逐题证据和评分回读；确认内联与共享指标的实际引用关系后再解释修改范围。效果趋势归 Benchmark、谱系归调优任务，对象配置归接入管理；先贯通直接评测主线，页面精修不阻塞独立取分验收。变动状态和数量只查上述记录，不据此推断实时 dev 状态。
