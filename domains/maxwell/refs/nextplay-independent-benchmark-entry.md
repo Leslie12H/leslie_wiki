@@ -68,3 +68,5 @@ links: [evolve-nextplay-entry-plan-20261009, nextplay-benchmark-import-audit-202
 
 - 2026-10-13 指标规则与 Case 编辑布局：见[逐页修改记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-case-editor-layout-20261013.md)及其真实组件截图。Why：单纯折叠七项绑定再在底部追加完整规则表单，无法对应指标和判定标准；基础 Button 的居中内层、等宽字体和重复序号会让业务列表持续错位。How：复用组件的 face 样式入口，按 Provider 已声明的 rulePointer/schema 下钻同一份材料，保留兄弟规则、未知字段和父级只读约束；窄屏先让所选规则可见，保存动作固定。用户选择保留暖色粗线条、逐页验收；本地模拟保存不能代替 dev 持久化或65题取分。
 - 2026-10-13 入口与数据投影：同一逐页记录保存当前方向及缺口。Why：按被测对象组织底层历史，不等于用户应先进入对象才能看 Benchmark 趋势或调优谱系；Artifact 引用不能回答测什么。How：主入口分别围绕 Benchmark 测量与调优任务组织，对象历史保留辅助关联；冻结快照与普通新运行的最新资产明确区分。未有直接内容读取投影时，不扫描全库修订或按名称猜关联；契约变更沿用仓库确认流程。路由和 Benchmark 详情的新布局尚未实施。
+
+- 2026-10-13 指标目录的完整阅读布局：见[目录布局验证记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-provider-catalog-layout-20261013.md)。Why：原页面把七项指标纵向铺开、隐藏规则、突出内部标识；孤立预览通过也不能保证真实父容器可用。How：复用目录声明的名称与原文，以指标索引切换阅读区，技术标识默认收起；窄屏按容器宽度切换选择器，并挂载真实 JudgeOnboardPage 核对固定宽度、inline-size containment 与后代段落样式。实际改动、截图和本地验证边界以记录为准，业务代码未提交或部署。
