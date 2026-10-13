@@ -2,7 +2,7 @@
 name: sandeval-terminated-dispatch-material-occupancy
 type: pitfall
 created: 2026-10-09
-updated: 2026-10-09
+updated: 2026-10-13
 tags: [sand-eval, dispatch, recovery, production]
 links: [sandeval-dispatch-history-fixture]
 ---
@@ -24,3 +24,14 @@ links: [sandeval-dispatch-history-fixture]
 ## 2026-10-09授权恢复证据指针
 
 本次恢复的前后范围、部署版本、正式操作回执、临时operator CLI和页面截图，统一见 `/Users/leslie/Documents/Playground/sandeval-unissue-647-20261009/RESULT.md` 与同目录证据文件。具体数量与任务状态是当次快照，不能当作当前生产事实复用。
+
+
+## 2026-10-13 失败副本的在途占用与主任务优先下发
+
+**Why:** 题目数量预览与正式发布受理是两道不同的核对。失败或部分失败的发布可以在没有供应商执行任务时继续占用来源；暂停不等于释放。预览显示未下发素材充足，仍可能在正式受理被 `MATERIAL_PUBLISH_BUSY` 拒绝。
+
+**How to apply:** 先按素材来源查占用主任务、原发布回执、租约、执行项和实际任务；对零执行任务的已失败副本，也须取得终止不可恢复的明确授权。预检、版本及计划哈希核对后调用部署版本的正式 request_action/control/finish，保留历史。解除占用后重新核对目标草稿：版本或状态变化应停止旧计划；若另一请求已发布成功，验证实际批次与题目集，不再重复创建。主任务下发与个人派题分别验收。
+
+- 当前受理停止点：核对仓内 `sand-eval/platform/backend/app/repositories/material_dispatch.py::guard_publish` 的在途及失败发布谓词；本页不固化未来状态。
+- 正式控制与不可恢复边界：核对 `app/repositories/dispatch_masters.py::request_action`、`app/services/facts/dispatch_masters.py::control` 及 `sand-eval/docs/subsystems/dispatch-masters.md`。
+- 本次授权、默认只读预检、显式 apply、并发发布及 Leader/页面核验：[2026-10-13 证据](/Users/leslie/Documents/Playground/tuchong-dispatch-20261013/RESULT.md)。具体任务标识、人数和操作状态留在证据文件，复用前实时读取。
