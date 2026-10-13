@@ -69,3 +69,6 @@ links: [nextplay-independent-benchmark-entry, evolve-design-clarity-20261013]
 
 
 - 查 Nextplay `materializer/cleanup.py`、`SnapshotMaterializer._cleanup_lease`、逐题 / 批次 Thread 清理及[候选资源清理复核](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-materializer-cleanup-review-20261014.md)：部分删除成功或删除响应丢失后，重试必须区分“资源已不存在”和其他失败。Why：把所有 404 当失败会永久卡住清理，把所有 404 当成功又会掩盖路由、业务和权限问题；捕获 BaseException 会吞掉退出信号。How：核对当前服务的精确方法 / 路径 / 错误 envelope，只接受对应资源缺失，其他故障保留；普通清理捕获 Exception，中断直接传播。重试幂等不等于已实现重启扫描或跨 Pod 恢复，保留 Thread 与原件仍要单独验收。版本、测试结果、环境限制和同步范围只查复核记录；不把本地故障注入称为真实评分。
+
+
+- 查 Nextplay `ResourceLease.retained_threads`、共享 `_capture_output_files`、CandidateRunner 与[原件保留复核](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-evidence-retention-review-20261014.md)：采集不完整必须穿过逐题和批次末尾清理仍保留来源；可选目录不存在与目录读取失败应分开。Why：宽泛吞掉目录 / 文件错误会把缺失证据误作完整，外层清理又会删除唯一可重读来源。How：对照原生文件 API 的精确错误与 entries / 分页完整性字段，保留已下载部分并按目录 / 路径报告缺失，持久记录保留原因并保护依赖配置；进程信号仍传播。自动补采、旧入口和新 HTTP 入口的真实恢复分别验收。原始结果大文件传输不能代替大候选资源的受权读取 / 应用：裸 CAS 哈希没有 Work 归属，容量与权限链路须分别核对。代码、未完成能力及本地 / 真实验收范围只查复核记录。

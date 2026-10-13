@@ -588,3 +588,5 @@
 - 2026-10-14：执行连接登记、检查状态读取失败与无报告的区分，以及 Agent 草稿能力声明与专属字段传递，见[页面清晰度约束](domains/maxwell/pitfalls/evolve-design-clarity-20261013.md)；真实评分另验。
 
 - 2026-10-14：Nextplay 候选临时资源清理的精确 404、删除响应丢失重试及退出信号边界，见[原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md)；重试幂等不等于重启自动恢复。
+
+- 2026-10-14：Nextplay 辅助目录采集完整性、失败原件穿过外层清理仍保留，以及大候选 CAS 引用的权限缺口，见[原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md)。
