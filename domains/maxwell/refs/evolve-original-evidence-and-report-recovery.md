@@ -63,3 +63,6 @@ links: [nextplay-independent-benchmark-entry, evolve-design-clarity-20261013]
 
 
 - 查 Nextplay `repository.create_job`、`grading_repository.create`、`Repository.heartbeat` 与 `test_repository_mysql_integration.py`：幂等入队要核对真实 InnoDB 的锁顺序；不存在记录上的先读后插，以及 INSERT IGNORE 后升级排他锁，均可能使并发重试死锁。续租同样要验证原租约仍有效，不能仅验证 Worker 名称。Why：游标 mock 不表现间隙锁、共享锁升级或数据库实际影响行数，顺序测试会漏掉网络重试时的失败。How：使用显式隔离的本机数据库验证同键并发、异文冲突、取消先到、原件不可变和过期 Worker，保留失败与修复后证据；迁移、65 条输入落库和大原件读回都不等于模型评分。当前版本、数量、代码同步与停止实例记录只查[本地 MySQL 复核](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-nextplay-mysql-review-20261014.md)，不从本地数据库版本推断生产兼容或部署授权。
+
+
+- 查 Nextplay `execution_worker.run_execution_job`、`worker.run_job` 与[执行控制失效复核](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-execution-recovery-review-20261014.md)：线程池退出会等待活跃任务，控制读取 / 租约失败必须先禁止后续动作、取消未启动项，再停止本 Worker 观察到的远端 Run。Why：先抛异常再等线程池不会自动停止远端执行；失败收尾再次访问故障数据库也可能退出共用 Worker。How：用真实线程池验证在途接纳、第一次查询为空或失败、Runner 返回后仍保留 Run、最终控制读取失败及旧租约不能推进；收尾不能写入时保留持久恢复状态，不用缓存身份证明终态，不重放执行，进程中断仍传播。具体修复和测试范围只查复核记录，本地故障注入不能替代真实进程 / 数据库 / 跨 Pod 恢复验收。

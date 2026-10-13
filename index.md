@@ -580,3 +580,5 @@
 - 2026-10-14：Nextplay 执行 / 评分幂等队列的真实 InnoDB 并发锁、过期续租保护与隔离 MySQL 验证边界，见[原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md)。
 
 - 2026-10-14：调优冻结基线、紧凑工作台摘要与候选复测的提交 / 实际应用语义，见[页面清晰度约束](domains/maxwell/pitfalls/evolve-design-clarity-20261013.md)；本地组件验收与真实闭环分开记录。
+
+- 2026-10-14：Nextplay 控制失效时先停止远端再等待线程池，以及失败收尾的二次异常边界，见[原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md)；本地故障注入与真实恢复分开验收。
