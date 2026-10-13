@@ -560,3 +560,5 @@
 - [Sand Eval 整改回交选入旧答案](domains/sandai-data-smith/pitfalls/sandeval-correction-handoff-stale-response.md) — 2026-10-13：单题代改保护、回交前已存在新版、不可变意图及历史副本延迟的证据边界。
 
 - 2026-10-13：Nextplay 长批次等待全量执行后出分、派发时限与整批耗时的区别，见[独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
+
+- 2026-10-13：关小琪指定批次通过原退回/回交/自动复验服务恢复，旧判断保留历史且不改来源答案，独立核验和新入口见[整改回交旧版页](domains/sandai-data-smith/pitfalls/sandeval-correction-handoff-stale-response.md)。

@@ -17,3 +17,12 @@ links: [sandeval-reassigned-answer-frozen-review-conflict, sandeval-stopped-revi
 - 提示与写入保护：sand-eval/platform/backend/app/services/facts/answer_amendment.py::verify_current；quality/application/inspection/answer_amendment_service.py::candidate；frontend/src/pages/quality/inspection/StructuredAnswer.tsx。
 - 回交版本验证与不可变意图：quality/application/resolution/answer_correction_service.py::prepare、resubmission_intent.py；当前来源查询：app/repositories/task_assignments.py::quality_submission_owners。部署对应实现须现场核验。
 - [转派后版本冲突](sandeval-reassigned-answer-frozen-review-conflict.md)和[停止轮次代改继承](sandeval-stopped-review-amendment-conflict.md)是其他原因，不能按相同页面提示直接套用。
+
+## 2026-10-13 指定批次恢复
+
+**Why:** 旧送审和已保存判断是历史证据；把最新 response 直接写进旧成员会改写该轮检查依据。已存在正确的新答案时，恢复也不应冒充标注员生成另一份答案或把旧判断自动算成新版本结论。
+
+**How to apply:** 先核对完整批次的最新版本、正式送审下游和原角色资格；只有明确授权后，以任务专用 operator CLI 的只读计划摘要显式 apply。保存并读回完整归档，持有来源写入锁和任务占用，复用正式整批退回、整改回交和精确执行的自动复验服务建立后继轮次。原角色仅用于原协议授权校验，实际运维执行者独立留审计。旧判断保留历史，新轮重新复验；不修改来源答案或放宽版本保护。最后以另一生产实例及原质检员身份读取候选，核验 amendable、save_items、新任务唯一性和旧记录完整性，再验证真实页面。
+
+- 本次明确授权、预览、归档、执行步骤和原质检员新入口：[恢复报告](/Users/leslie/Documents/Playground/output/guan-qc-repair-20261013/report.md)。动态 ID、轮次和核验时状态只保存在该报告及证据目录。
+- 本次只完成指定批次的存量恢复，未发布防止回交再次选旧版的代码修复；原始历史读取根因仍需证据。
