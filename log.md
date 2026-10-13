@@ -1151,3 +1151,5 @@
 - 2026-10-14：补充 EVOLVE/Nextplay 逐题原件与原评分归因、历史发布覆盖修复的核验方法及缺分原说明展示指针；执行重跑与已有原件重评分开，技术测试不代替真实取分。见 [原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md)。
 
 - 2026-10-14：补充历史评测进入 HTTP 资源调优时的冻结来源、父候选完整替换、拒绝当前配置回退及本地验证边界，见 `domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md`。
+
+- 2026-10-14：补充多 Provider 输入身份与摘要顺序、65 题新身份确定性评分覆盖，以及合法维度换序引发规则错位的核验和契约确认指针，见 `domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md`。
