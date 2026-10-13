@@ -568,3 +568,5 @@
 - [已验收退回后缺少新轮次](domains/sandai-data-smith/pitfalls/sandeval-manual-return-missing-reinspection.md) — 退回事实与后继重检分离、旧轮次未结阻断、原生单条恢复及回执收尾核验（2026-10-13）。
 
 - 2026-10-13：EVOLVE 五对象关系、完整操作流程与重评/重执行分流，及“最新资产”设计和冻结基准实现的区别，见[页面清晰度约束](domains/maxwell/pitfalls/evolve-design-clarity-20261013.md)。
+
+- [EVOLVE 原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md) — 2026-10-13：完整报告分块续取、共享 Case 归属、JSON 键序、活动传输清理与部署须再次确认的边界。
