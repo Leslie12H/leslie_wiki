@@ -1105,3 +1105,7 @@
 - 2026-10-13：补充主任务发布 Follower 问题的 Git 考古：PR #1173 的创建人检查、PR #1160 的事务外备题读取、PR #1892 的外层校验回归；明确合入 main、生产部署与副本积压触发时间的边界。
 
 - 2026-10-13 ingest: 新增 Hologres 副本同步延迟取证入口，记录实例级最大值、全计算组资源对照及触发候选与因果验证边界；详见 domains/sandai-data-smith/refs/hologres-replica-sync-lag-20261013.md。
+
+- 2026-10-13：补证副本延迟的四日曲线与最近 41 个关闭 PR/26 个 main 合并，核对 #2383/#2386/#2391 的实际发布及转交耗时；确认持续复制延迟放大旧缺口，未将时间兼容候选当作已证明根因。
+
+- 2026-10-13：结合同日 Hologres 底层报告，独立复核 sand_worm/sand_data_hub/sand_vibable 小 Follower 满载指标，补充 samples 批量更新的更强触发候选与 PR 来源、具体 Shard 和停启因果仍未确认的边界。

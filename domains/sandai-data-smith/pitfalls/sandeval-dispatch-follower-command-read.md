@@ -4,7 +4,7 @@ type: pitfall
 created: 2026-10-13
 updated: 2026-10-13
 tags: [sandai-data-smith, sandeval, dispatch, hologres, read-after-write]
-links: [sandeval-sql-lock-diagnosis]
+links: [sandeval-sql-lock-diagnosis, hologres-replica-sync-lag-20261013]
 ---
 
 # Sand Eval 主任务发布与 Follower 误报不存在
@@ -35,3 +35,18 @@ links: [sandeval-sql-lock-diagnosis]
 - 发布路径外层检查在 PR 内重新加入的指针：[PR #1892](https://github.com/world-sim-dev/sandai-data-smith/pull/1892)，2026-09-25 12:15:16 合入 main；`fc4a8c40` 先将正式确认移至 Leader，随后 [`0ca5cd387`](https://github.com/world-sim-dev/sandai-data-smith/commit/0ca5cd3870132e742ba4ce8fd47693c9457b7c27) 在进入该函数前重新加回默认池归属检查。上一 main 版本也有默认池检查；这里是 PR 内提交的回归，不代表生产曾修复后再次回归。
 - 背景配置指针：[PR #440](https://github.com/world-sim-dev/sandai-data-smith/pull/440) 于 2026-08-14 10:57:31 合入 main，将主池指向 sand_eval。读写分离配置早于上述缺口；生产实际生效时间不能只从 merge 时间推出。
 - Git 证据和时间边界已加入上面的本次证据 JSON。历史生产上线时间及本次副本积压的开始时间尚未核实。
+
+
+## 复制积压与近期 PR 对齐（2026-10-13）
+
+**Why:** 旧读后写缺口在副本延迟从毫秒变成分钟、小时后更容易持续触发。PR 合并时间相近不证明它造成了积压；部署在首次异常之后的改动不能解释最初触发，仍可能影响后续负载。新增 mixed DML 路径也必须证明实际调用及事务时长，不能只凭源码推断长事务。
+
+**How to apply:** 先核对云监控 `warehouse_replica_sync_lag` 的元数据与时间序列；它是全实例所有计算组/Shard 副本的最大延迟，不能直接称为 Eval 精确复制延迟。将当前业务 Leader/Follower 差异、CPU/IO、发布请求、main PR diff、生产 deploy job 起止及新功能实际 HTTP 调用对齐。查询日志无 `pg_read_all_stats` 时，只能报告可见账号负载；CPU/IO和 Compaction 相关性不能替代逐 Shard 复制阻塞证据。
+
+- 固定日期的指标、41 个关闭 PR/26 个 main 合并的文件清单、发布流水线、转交 POST 耗时、查询负载与因果边界：[复制积压与 PR 证据](/Users/leslie/Documents/Playground/sandeval-dispatch-20261013/amplification-evidence.json)。本次已证实持续复制延迟放大旧缺口；尚未建立某个近期 PR 导致复制积压的因果链。
+- 同日另一个 [Hologres 底层取证入口](../refs/hologres-replica-sync-lag-20261013.md) 指向持续 samples 批量更新与三个 32 CU 小 Follower 满载；本次独立复取了三个组 2026-10-13 03–11 时的 CPU/内存指标，并在证据 JSON 中保留外部报告的更新摘要和来源。该更新负载是更强候选，尚未找到它与近期 PR 的对应关系，也未取得具体 Shard 阻塞或停启对照。不能把实例最大延迟直接归属为 Eval 精确延迟，或把小组满载推成已证明的跨组传播因果。
+- [官方指标定义](https://help.aliyun.com/zh/hologres/user-guide/hologres-metrics)：核对 Replica 同步与 FE 元数据 replay 的不同含义；查看实时监控需重新锁定日期、实例、计算组与时间粒度。
+- [PR #2383](https://github.com/world-sim-dev/sandai-data-smith/pull/2383) 的作业转交、迁移及 mixed DML 是时间上兼容的候选；[发布流水线](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/38232749389) 和证据中的初次转交请求耗时提供检查入口，尚未证明它造成积压。
+- [PR #2386](https://github.com/world-sim-dev/sandai-data-smith/pull/2386)、[#2391](https://github.com/world-sim-dev/sandai-data-smith/pull/2391) 的 deploy job 均晚于首个明显积压采样点；大批次题序读取和恢复调用可能影响后续负载，未进行反事实验收，不能解释最初积压。
+- [PR #2398](https://github.com/world-sim-dev/sandai-data-smith/pull/2398) 是主任务列表供应商筛选；[#2403](https://github.com/world-sim-dev/sandai-data-smith/pull/2403) 将质检工作台 owner 检查改读 Leader。这两份 diff 未改主任务发布/题目包准备的错误读取。
+- Sandworm [#2395](https://github.com/world-sim-dev/sandai-data-smith/pull/2395)、[#2399](https://github.com/world-sim-dev/sandai-data-smith/pull/2399)、[#2400](https://github.com/world-sim-dev/sandai-data-smith/pull/2400) 是降轮询和控制面一致性修复；修改的是 Worm 运行链路，不能凭它们命名倒推它们是 Eval 积压的来源。
