@@ -35,3 +35,12 @@ links: [sandeval-dispatch-history-fixture]
 - 当前受理停止点：核对仓内 `sand-eval/platform/backend/app/repositories/material_dispatch.py::guard_publish` 的在途及失败发布谓词；本页不固化未来状态。
 - 正式控制与不可恢复边界：核对 `app/repositories/dispatch_masters.py::request_action`、`app/services/facts/dispatch_masters.py::control` 及 `sand-eval/docs/subsystems/dispatch-masters.md`。
 - 本次授权、默认只读预检、显式 apply、并发发布及 Leader/页面核验：[2026-10-13 证据](/Users/leslie/Documents/Playground/tuchong-dispatch-20261013/RESULT.md)。具体任务标识、人数和操作状态留在证据文件，复用前实时读取。
+
+
+## 2026-10-13 已有草稿的开放、人数与质检验收
+
+**Why:** 既有草稿中的批次开放开关、每题人数和质检配置是不同合同。发布成功回执不能代替执行任务确已开放、人数限制实际落库及质量系统已登记规则的证据；应答目标也不能当作已派出的个人答题卡。
+
+**How to apply:** 默认只读预览时逐包核对素材身份、完整配额、供应商、`batches_active` 与人数策略；按用户要求通过正式保存服务最小改动，再按计划哈希显式发布。发布后独立读取冻结题目集、执行任务的空间/开放状态和人数字段、质量系统规则以及实际个人分配，最后核验页面。核对 `AssignmentPolicy`、`DispatchTaskOptions`、`DispatchRegistrationService` 与 `QualityConfigRepository` 的当前部署实现，不仅看草稿。已有失败副本仍按上节明确授权与正式终止流程处理。
+
+- 三包下发、首包人数锁定、质量规则独立回读与页面证据：[2026-10-13 三包验收](/Users/leslie/Documents/Playground/tuchong-dispatch-20261013/THREE-RESULT.md)。具体人数、题量和任务标识只留在证据，下次重新核对。

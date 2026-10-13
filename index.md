@@ -546,3 +546,5 @@
 - 2026-10-13：失败副本的在途素材占用、不可恢复终止授权、零执行任务预检与并发发布去重，见[已终结主任务与素材未下发范围](domains/sandai-data-smith/pitfalls/sandeval-terminated-dispatch-material-occupancy.md)。
 
 - 2026-10-13：Nextplay dev 发布、现有任务表原件字段、直接批次与真实评分证据，以及 Agent 生成 Case 的指标目录消费和确认边界，见[独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
+
+- 2026-10-13：已有草稿的批次开放、每题人数锁定、质量系统规则与个人派题分层验收，见[主任务占用恢复页](domains/sandai-data-smith/pitfalls/sandeval-terminated-dispatch-material-occupancy.md)的三包验收补充。
