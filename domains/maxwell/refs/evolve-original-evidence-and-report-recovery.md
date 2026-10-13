@@ -36,4 +36,6 @@ links: [nextplay-independent-benchmark-entry, evolve-design-clarity-20261013]
 - 查 `benchmarks/BenchmarkTrendStore`、`benchmarkTrendModel` 与本轮收尾记录：记录分页不是完整趋势范围，指标也不能只从一次评测发现；同一 Benchmark 版本内读取完整 Run 目录，再有界并发读取各次全部指标页。评分代际、口径或更新时间变化时重读，不能混合分页快照。失败位置保留，原单位、精确指标身份及覆盖不足应直接可见；不从历史曲线推断真实调优增益。截图、当前完成度与测试结果只查收尾记录。
 - Benchmark 关联 Case/规则阅读应使用受权投影，不遍历全资产库或虚构 Work 拼引用；新增契约须先确认。当前补充清单及是否实施以收尾记录为准，预览读取不能调用会创建修订的普通评测准入路径。
 
+- 查 Nextplay `grading_evidence.frozen_case_attachments`、`grading.grade` 与 `AgenticJudge._bundle`：执行附件不一定出现在输出原件中，评分应读取本次冻结 Case 的附件，不能回退原题库；新建、替换、删除都需覆盖。复用执行输入校验器核对原字节与哈希，临时来源须存活至全部 Judge 完成，异常后同样清理；缓存身份包含附件元数据与哈希，不包含本机临时路径。具体发现、回归与全分支审查边界见[2026-10-14 链路台账](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-final-flow-review-20261014.md)，不把确定性 Judge 当成真实评分。
+
 2026-10-13 用户明确要求：改动通过 PR 审查合并；**dev 部署须再次询问，不频繁自动部署**。这撤回了此前本轮连续部署的默认授权。PR、迁移、部署与真实业务验收分别记录；本地界面 fixture 不能充当 dev 或自然 Agent 验收。
