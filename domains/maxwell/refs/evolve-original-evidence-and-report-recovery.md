@@ -42,4 +42,6 @@ links: [nextplay-independent-benchmark-entry, evolve-design-clarity-20261013]
 - 查同一核验记录的 Actions 元数据和对应 SHA 源码：一次修复部署成功后，后续从另一基线发布可能覆盖修复；应按组件、SHA、部署时点和失败观测时点还原发布链，不能仅凭“修复曾上线”排除旧代码。后续交付走审查合并后的统一 main，仍需单独部署授权。
 - 查 Nextplay `grading.grade` 与 Studio `TrialDetailPanel`：缺分应保留原 Judge 说明并遵循既有 UTF-8 字节上限，完整报告保持原文；默认展示名称、值、判定和覆盖，长说明按需展开。0 和 false 是有效值，技术失败不能换算成质量零分；渲染必须转义外部文本。相关桌面/窄屏截图与技术测试仍查核验记录。
 
+- 查 `commands/resource_tuning_baseline.go`、`resource_baseline.go` 与命令入口回归：从历史评测启动的调优，资源读取必须沿仓库保存的 Work → 来源 Run 关系取得冻结 Variant，再校验 Artifact 归属/哈希、执行器、目标、版本及清单；不能仅凭调用参数抓当前配置。来源是候选时，阅读内容要叠加其原有替换，但保持原始基线和完整 Variant，避免下一轮无意撤回父候选改动。旧快照不可读应失败，不能静默回退当前版本；直接新评测仍可捕获当前配置。Why：评测结论对应具体配置，读取漂移会破坏归因与复测。How：测试真实 StartRunTuning 后目标变更、旧快照不可读、清单身份冲突及父候选继承，验证范围见[链路审查台账](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-final-flow-review-20261014.md)，不把本地适配器回读当作真实候选运行。
+
 2026-10-13 用户明确要求：改动通过 PR 审查合并；**dev 部署须再次询问，不频繁自动部署**。这撤回了此前本轮连续部署的默认授权。PR、迁移、部署与真实业务验收分别记录；本地界面 fixture 不能充当 dev 或自然 Agent 验收。
