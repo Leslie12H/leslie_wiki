@@ -16,3 +16,13 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-direct-return-
 - 2026-10-13 澳鹏 9.30 声音批次的数据库时间线、身份门禁、浏览器只读查看、接口 404/200 聚合、部署指纹和未知项：[只读取证报告](/Users/leslie/Documents/Playground/sandeval-aopeng-missing-20261013/report.md)。任务状态、人员、部署与报错是否仍发生须从报告脚本和现行环境重新核验，知识页不保存当前结论。
 - 入口指针：`sand-eval/platform/backend/app/api/root_observation.py` 的 `open_context` 与 `resolve_owner`；`app/dependencies.py` 的 `require_area`；`app/services/facts/shared_observation.py` 的页面资源与共享授权；`app/repositories/observation.py` 的精确责任人查询；前端 `pages/observation/RootReadBoundary.tsx` 的加载与错误展示。源码会变，按线上 SHA 读取。
 - 相邻场景：[改派后的整改可见性](sandeval-transferred-correction-task-visibility.md)、[重复退回与旧轮次只读](sandeval-direct-return-interrupted-by-leader.md)。先确认是否属于对应场景，再复用修复方法。
+
+
+## 新轮次的读取源对照
+
+**Why:** 新轮次在业务详情和本人列表中存在，入口精确责任人读取仍可能返回空。入口、权威业务读取和列表摘要是不同边界；普通读取与 leader 不一致时，不能把 None 直接当成业务记录不存在。后来原读取自然收敛也不能认定代码已修复。
+
+**How to apply:** 在同一独立应用实例、同一真实人员身份和 DML 拒绝保护下，先跑完整路由门禁与原入口，再用完全相同的 task/review 条件对照普通读取和 leader 读取；保留各次时间和原始结果。继续核对业务 detail、全部/todo 列表与实际浏览器错误。需要验证候选读取替身时，必须同时保留该次原路基线；原路已经恢复时，替身成功只证明兼容，不能证明修复效果。现时重新加载成功与永久修复分开报告；修复应让精确存在性、责任人和授权事实使用一致的权威读取，保留真实查看者与跨空间拒绝，不补派重复记录或绕过鉴权。
+
+- 2026-10-13 刘逸君批次、张靖茹新第 2 轮的普通读取返回空 / 同实例 leader 查到、业务和任务列表、入口 404、后续自然收敛及浏览器恢复：[新轮次只读报告](/Users/leslie/Documents/Playground/sandeval-aopeng-new-inspection-20261013/report.md)。当前状态、部署与是否已修复从现行环境回读；不将本案自动推广到当日上午全部历史错误。
+- 读取指针：`app/repositories/observation.py::review_owner`、`app/api/root_observation.py::resolve_owner` 与 `infra/holo.py` 的普通和 leader 连接；列表摘要另看 `quality_inspector_summaries.py` 和 `SupplierInspectionList.tsx`。按线上 SHA 核对。
