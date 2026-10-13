@@ -66,3 +66,6 @@ links: [nextplay-independent-benchmark-entry, evolve-design-clarity-20261013]
 
 
 - 查 Nextplay `execution_worker.run_execution_job`、`worker.run_job` 与[执行控制失效复核](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-execution-recovery-review-20261014.md)：线程池退出会等待活跃任务，控制读取 / 租约失败必须先禁止后续动作、取消未启动项，再停止本 Worker 观察到的远端 Run。Why：先抛异常再等线程池不会自动停止远端执行；失败收尾再次访问故障数据库也可能退出共用 Worker。How：用真实线程池验证在途接纳、第一次查询为空或失败、Runner 返回后仍保留 Run、最终控制读取失败及旧租约不能推进；收尾不能写入时保留持久恢复状态，不用缓存身份证明终态，不重放执行，进程中断仍传播。具体修复和测试范围只查复核记录，本地故障注入不能替代真实进程 / 数据库 / 跨 Pod 恢复验收。
+
+
+- 查 Nextplay `materializer/cleanup.py`、`SnapshotMaterializer._cleanup_lease`、逐题 / 批次 Thread 清理及[候选资源清理复核](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-materializer-cleanup-review-20261014.md)：部分删除成功或删除响应丢失后，重试必须区分“资源已不存在”和其他失败。Why：把所有 404 当失败会永久卡住清理，把所有 404 当成功又会掩盖路由、业务和权限问题；捕获 BaseException 会吞掉退出信号。How：核对当前服务的精确方法 / 路径 / 错误 envelope，只接受对应资源缺失，其他故障保留；普通清理捕获 Exception，中断直接传播。重试幂等不等于已实现重启扫描或跨 Pod 恢复，保留 Thread 与原件仍要单独验收。版本、测试结果、环境限制和同步范围只查复核记录；不把本地故障注入称为真实评分。
