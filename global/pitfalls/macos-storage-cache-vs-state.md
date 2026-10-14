@@ -14,7 +14,7 @@ links: []
 **How to apply:**
 
 1. 先用 `df -k /System/Volumes/Data` 固定可用空间，再按目录检查。整机 `du` 若停滞，检查该扫描进程的打开目录；本次卡在 `~/Library/Mobile Documents` 的 iCloud 目录访问，后续本地扫描排除 `Mobile Documents` 和 `CloudStorage`。受 macOS 隐私保护而不可读的路径明确列为未统计，不用目录估算冒充全盘审计。
-2. Go 构建缓存须验证根目录 README 的官方缓存说明、无跟踪文件和 Git ignored，并检查当前 Go 编译/测试进程。按精确 `GOCACHE` 使用 `go clean -cache`，不删除包源码或证据目录。Maxwell 的缓存位置以其 [AGENTS.md](/Users/leslie/Downloads/sandai-code/maxwell-ai/AGENTS.md) 为当前入口，包含 `.tmp/` 下的独立实验缓存。
+2. Go 构建缓存须验证根目录 README 的官方缓存说明、无跟踪文件和 Git ignored，并检查当前 Go 编译/测试进程。按精确 `GOCACHE` 使用 `go clean -cache`，不删除包源码或证据目录。Maxwell 的缓存位置以其 [AGENTS.md](/Users/leslie/Downloads/sandai-code/maxwell-ai/AGENTS.md) 为当前入口，包含 `.tmp/` 下的独立实验缓存。跨仓库扫描还需覆盖 `services/*/.tmp/`、嵌套实验仓库与 `.claude/worktrees/`；只检查主仓库一级 `.tmp` 会漏掉缓存。递归遇到已验证的缓存根目录就停止深入，避免把缓存内部当成业务文件；`node_modules` 和虚拟环境作为依赖保留。
 3. 包管理器下载缓存和旧更新暂存包可按已核实的路径清理。uv 使用官方命令并保留 in-use 检查；存在应用更新进程时保留对应安装/更新缓存。保留项目依赖与虚拟环境。
 4. `~/.codex/sessions`、`~/.codex/thread_history_1.sqlite`、Orca 的 `codex-runtime-home/home/sessions` 是会话相关数据；`~/.codex/worktrees` 可能含未提交代码。需要由用户选择保留范围并通过对应应用的受支持流程归档/删除，不做盲删或手工截断数据库。
 5. Docker 虚拟磁盘、Claude VM、模拟器设备、飞书数据分别核对应用内可回收项。Docker daemon 未运行时不直接删除 raw 磁盘，也不为磁盘统计启动已有容器或数据库。
