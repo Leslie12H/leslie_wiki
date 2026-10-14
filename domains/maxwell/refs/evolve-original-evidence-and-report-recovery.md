@@ -78,3 +78,6 @@ links: [nextplay-independent-benchmark-entry, evolve-design-clarity-20261013]
 
 
 - 查 Nextplay `test_execution_grading_flow.py` 与[执行到评分专项记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-execution-grading-flow-review-20261014.md)：分别测试 Runner 和 Judge 时，还要补真实产物在两者之间的交接。Why：测试手工组装 ExecutionResult 可能掩盖字段、临时路径和完整性边界的不一致。How：冻结原题或新题，经过实际输入恢复、证据构造、封存及评分材料构建；清理目标与临时目录后，核对原件、长回复、历史上下文和附件仍可读取。外部 Run 与模型替身只建立本地技术证据，不能声称原题已真实取分。场景数量、源码版本与未完成项只查专项记录。
+
+
+- 查 Studio `CaseEditorStore`、`prepareProviderCase` 与[平台保存到 Provider 的交接验证](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-core-chain-validation-20261014.md)：应把实际表单保存准备后的序列化内容交给执行准入及评分程序，而不是两端各自手工构造看似相同的夹具。Why：各端单独通过仍可能遗漏输入摘要重算、复制身份、原题规则升级和保存后材料差异。How：分别经过编辑、复制和从模板新建，修改正文与规则，核对原题不变、跨语言摘要一致、Judge 收到的冻结内容；明确真实校验 / 聚合与替身执行 / 模型的边界。测试数量、代码身份、运行条件和未完成真实验收只查验证记录。

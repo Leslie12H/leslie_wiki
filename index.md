@@ -641,3 +641,5 @@
 - 2026-10-14：运行中基线到候选复测的自动衔接、判定与尝试统计分离、谱系导航保留上游筛选，见[页面清晰度约束](domains/maxwell/pitfalls/evolve-design-clarity-20261013.md)；仅本地桌面验证。
 
 - 2026-10-14：[多 Provider 原件下载身份](domains/maxwell/pitfalls/evolve-bundle-local-file-identity.md) — 包内 ID 与聚合下载身份分开，旧链接歧义、晚到报告和精确授权的验证指针。
+
+- 2026-10-14：实际 Studio 编辑 / 复制 / 新建保存内容到 Nextplay 准入与评分的跨语言交接、原题不变及替身模型边界，见[原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md)；当前数量和运行条件仅存验证记录指针。
