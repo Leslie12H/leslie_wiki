@@ -674,3 +674,5 @@
 - [LangSmith 具体交互研究](domains/maxwell/refs/langsmith-interaction-study-20261014.md) — 2026-10-14：公开 Trace 实操、官方实验与审阅动线、同题对照及保存恢复建议；保留 EVOLVE 视觉风格，未实施。
 
 - [评测与调优平台交互对照](domains/maxwell/refs/evaluation-platform-interactions-20261014.md) — 2026-10-14：Braintrust、Opik、Langfuse、Phoenix 的官方交互来源与 EVOLVE 对象映射；保持现有风格，研究未实施。
+
+- 2026-10-14：内部评测消息排队与 Run 创建之间的取消时序、原件过滤检查点一致性和真实 Runtime 用量契约，见[Nextplay 接入复核入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)；缺陷状态和本地复现仅存报告指针。

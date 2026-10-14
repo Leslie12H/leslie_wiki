@@ -92,3 +92,5 @@ links: [evolve-nextplay-entry-plan-20261009, nextplay-benchmark-import-audit-202
 - 2026-10-14 内部执行适配器完整审查入口：[审查记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-native-review-20261014.md)。Why：65 题成功的接口桩可能掩盖真实业务 Key 权限、非账户主体可见性和慢速原件下载的差异，测试绿色不证明能进入真实执行。How：对照 Agent Server 实际鉴权与 Thread 创建契约；分别检查明确未接受、接受结果未知、产物不存在和读取中断；Runtime → EVOLVE 与 EVOLVE → Judge 两段传输分别验证恢复。具体缺陷状态、五个复现及本轮边界只查审查记录，不把只读评审记为已修复或可发布。
 
 - 2026-10-14 内部执行审查修复及后台凭据职责：见[修复验证记录](/private/tmp/evolve-internal-agent-20261014/docs/verification/2026-10-14-evolve-native-agent.md#2026-10-14-审查后修复)。Why：后台业务 Key 与 Studio 用户登录身份不同，调用相同 Runtime API 也必须遵守各自的权限和 Thread 可见性；Range 接口存在不代表源端按块读取。How：用实际 Router 验证身份与读写权限，明确拒绝才允许清除创建意图，未知受理结果继续对账；正常原件连续下载并保存检查点，中断后按强校验器恢复，弱校验器不用于跨响应拼接。产物不存在是业务证据，读取失败才是采集故障；修复完成、真实取分和发布状态只查验证记录。
+
+- 2026-10-14 内部执行修复后复审：缺陷状态、完整影响面、三条故障复现与验收边界见[复审记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-native-review-followup-20261014.md)。Why：持久消息已排队但 Run 尚未生成时，空 Run 列表不能证明取消成功；采集过滤操作也可能使新检查点与文件不一致。How：核对 Temporal 受理与业务回执的时序，未决 Action 必须保留取消对账；过滤后重复采集与进程恢复应幂等，并用真实 Runtime 事件结构校验用量读取与归档。此处只保存复核入口，具体问题是否已修复、真实评分和发布状态以记录及当前代码为准。
