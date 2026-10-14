@@ -16,3 +16,5 @@ links: [evolve-original-evidence-and-report-recovery]
 **How to apply:** 同时核对最新 main 的被调用方默认值、调用方所需语义与测试替身；对持久化改动核对运行时代码、迁移及部署打包链。用干净同版本 main、相同依赖和必要编译产物复现失败，区分基线问题与新增回归。单 commit PR、检查通过、真实业务验收和部署是分别验证的事实。
 
 当前实现、精确测试结果与真实验收边界只查 [Maxwell PR #350](https://github.com/world-sim-dev/maxwell-ai/pull/350) 及 [Nextplay PR #19](https://github.com/world-sim-dev/nextplay-eval/pull/19) 中的验证文档；本文不保存易变的通过数量或发布状态。
+
+独立模块验证还须对齐 CI 的 `GOWORK=off` 模式：本机 workspace 可能从其他模块补齐新 import，掩盖当前模块缺失的 `go.mod` / `go.sum`。Why：本机通过不代表镜像或独立 CI 可构建；How：对新增跨模块依赖运行实际发布模块的独立 vet / test，具体修复和结果只查上述 PR 验证记录。

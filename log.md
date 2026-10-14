@@ -1253,3 +1253,4 @@
 - 2026-10-14 ingest：更新质检 review 两项修复的 main PR / 精确 head Gate 指针，并记录朱炜整批退回的历史祖先误判；退回链只读取证与代码修复分开。
 
 - 2026-10-14 ingest：EVOLVE 最新 main 整合中的构造器默认值与迁移打包边界，记录同基线失败复现及 PR 验证指针。
+- 2026-10-14 ingest：补充 EVOLVE PR CI 暴露的 GOWORK=off 独立模块依赖边界；运行状态仍查 PR 当前 head。
