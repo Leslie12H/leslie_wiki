@@ -44,3 +44,13 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-roles-and-work
 
 - [2026-10-14 本单诊断与只读证据](/Users/leslie/Documents/Playground/output/correction-xujiayu-20261014/report.md)：转交、四条旧/新版本、原生拒绝分支、许可摘要与执行范围核验、本人操作建议及未改规则边界。具体状态仅保存在报告，现场复用须重新核验。
 - 当前实现指针：`quality/infrastructure/persistence/disposition_repository.py::transfer / reinspection_permit`、`quality/application/resolution/reinspection_authorization_service.py::manual_ancestors / _validate_execution_permit`、`quality/application/resolution/resolution_service.py::_ancestors / resubmit`。是否支持合法转交后的授权接续以当次部署源码和原生检查为准。
+
+## 明示批准的单案数据例外与快照范围（2026-10-14）
+
+**Why:** 缺少现成接续机制不等于任何单案数据操作都不可行，但恢复历史许可所绑定的责任版本属于对单调版本栅栏的例外，可能改变旧请求及审计版本语义。“修复本单”或“直接改数据”不能代替对具体回退及其风险的明示批准。2026-10-14 在用户对四条具体版本回退及风险明示批准后，使用原生管理转交的混合 DML 边界完成单案恢复；未修改共用授权规则、原许可、执行上下文、报告或答案，保留当前接收人及完整转交历史。具体对象、版本、部署、计划摘要和回执只保存在当次报告，不作为通用修复规则。
+
+**How to apply:** 先备份精确 before-image，核对版本增量是否全部来自同一 scope 的正式转交，并排除活跃依赖、本单提交 intent 及现接收人可重放的历史命令。用拟修改数据的内存投影运行未修改的原生门禁，明确区分预演与生产恢复。若只能回退版本，必须把确切修改与栅栏风险交给人批准；不能把本次批准延伸到其他单。写入时固定本单完整依赖摘要、条件行数及真实事务边界，保存不可变管理审计；提交后用独立连接和另一副本回查，再读取本人身份的工作台准备度。门禁/准备度通过仍不等于本人 POST 或质检验收成功。
+
+同质量任务的其他批次会持续更新后台重试次数。完整快照应保留，但冻结修复摘要应绑定本单全部依赖，不应把无关批次的进度计数当成本单前置。漂移先停止并做精确 diff，证明无关后再冻结新计划；不能直接忽略任意变化。滚动发布更换 Pod 后须以当前部署重新预检。
+
+- [2026-10-14 单案数据修复、批准边界及独立验收指针](/Users/leslie/Documents/Playground/output/correction-xujiayu-20261014/data-repair-report.md)：实际修改、审计回执、原许可保留、新连接/另一副本回查及本人工作台证据。仅证明当次授权阻断解除，真实复验提交另验。
