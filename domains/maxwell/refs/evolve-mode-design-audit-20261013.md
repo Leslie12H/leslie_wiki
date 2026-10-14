@@ -2,7 +2,7 @@
 name: evolve-mode-design-audit-20261013
 type: reference
 created: 2026-10-13
-updated: 2026-10-13
+updated: 2026-10-14
 tags: [maxwell, evolve, architecture, evaluation, optimization, decision]
 links: [maxwell, evolve-design-review-self-iteration-20261009, evolve-nextplay-entry-plan-20261009, evolve-usage-accounting]
 ---
@@ -26,3 +26,6 @@ links: [maxwell, evolve-design-review-self-iteration-20261009, evolve-nextplay-e
 - 生命周期从 `commands/candidate.go` 的 candidateDecisionWorkChanges 和 `services/evolve-server/docs/external-candidate-control.md` 核对 accepted、published、applied、runtimeVerified、线上收益与回滚的分别取证。发布仍由 Adapter/外部发布器负责；EVOLVE 的后续证据关联不能用接受候选或完成 Work 替代。
 
 本轮运行 optimization、judge/calibrate、domain/search 三个包的既有 Go 测试，均通过（缓存结果）。只核对代码语义；未执行真实被测 Agent、业务数据库查询、浏览器验收、业务代码修改或部署。
+
+
+- 2026-10-14：内置 Judge 与外部原生指标混用应从 [EVOLVE PR 350](https://github.com/world-sim-dev/maxwell-ai/pull/350) 的 `methods/judge_catalog.go`、`methods/measurement_catalog.go`、`application/measurements/invoke.go`、`application/evaluation/judge_admission.go` 和 `judge_dispatch.go` 核对。**Why:** 新评分标准不等于新算法；平台已有 LLM / 断言 / 组合 Judge，也不能据此认定它与 Nextplay 当前原生指标绑定已互通。**How:** 逐一对照方法输入输出协议、准入检查与 Case 绑定形态；原生协议的外部服务可互相组合，不代表旧 scores/rubrics Judge 可直接加入。补齐时应复用平台 Judge 的通用适配、同一冻结原件和明确判定策略，不把新平台指标硬塞成 Nextplay 的维度或修改其原总分。实际可用性仍需混合评分的端到端证据，本次仅核对代码，未实施或部署。

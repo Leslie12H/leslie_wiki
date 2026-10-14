@@ -1254,3 +1254,5 @@
 
 - 2026-10-14 ingest：EVOLVE 最新 main 整合中的构造器默认值与迁移打包边界，记录同基线失败复现及 PR 验证指针。
 - 2026-10-14 ingest：补充 EVOLVE PR CI 暴露的 GOWORK=off 独立模块依赖边界；运行状态仍查 PR 当前 head。
+
+- 2026-10-14 ingest：补充 EVOLVE 内置 Judge 与 Nextplay 原生指标的协议边界、通用组合方向和端到端验收要求。

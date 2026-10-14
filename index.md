@@ -648,3 +648,5 @@
 - 2026-10-14：Case 目录失败恢复、开放对象 JSON 编辑及错误草稿保留、YAML 绑定解析一致性，见[页面清晰度约束](domains/maxwell/pitfalls/evolve-design-clarity-20261013.md)；仅桌面组件验收。
 
 - [整批退回把历史祖先误当直接前置](domains/sandai-data-smith/pitfalls/sandeval-manual-return-ancestor-misclassification.md) — 完整历史授权与直接前一轮的区别、真实资格通过后的身份不匹配核验（2026-10-14）。
+
+- 2026-10-14：内置 LLM / 断言 Judge 与外部原生指标的混用、方法协议准入及新评分标准和新算法的区别，见[EVOLVE 模式设计复核](domains/maxwell/refs/evolve-mode-design-audit-20261013.md)；源码核验不替代混合评分验收。
