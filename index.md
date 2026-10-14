@@ -670,3 +670,5 @@
 - [EVOLVE 借鉴 LangSmith](domains/maxwell/refs/evolve-langsmith-learning.md) — 2026-10-14：实验对照、人工校准、线上失败入库、轨迹与 CI 的官方来源及源码复核入口；建议未实施。
 
 - 2026-10-14：LangSmith 四张官方公开 UI 截图、实验到逐题对照的布局研究及 EVOLVE 参考边界，见 [LangSmith 借鉴入口](domains/maxwell/refs/evolve-langsmith-learning.md)；未执行登录后交互或修改业务 UI。
+
+- [LangSmith 具体交互研究](domains/maxwell/refs/langsmith-interaction-study-20261014.md) — 2026-10-14：公开 Trace 实操、官方实验与审阅动线、同题对照及保存恢复建议；保留 EVOLVE 视觉风格，未实施。
