@@ -616,3 +616,5 @@
 - 2026-10-14：原件完整性错误与评分报告摘要的复核指针，见 [HTTP 资源提案与原件边界](domains/maxwell/refs/evolve-http-resource-proposals.md)。
 
 - 2026-10-14：逐题结果的连续阅读、页内边界、返回焦点与失败恢复，见[页面清晰度约束](domains/maxwell/pitfalls/evolve-design-clarity-20261013.md)；本地组件示例与真实评分分开验收。
+
+- 2026-10-14：临科 02 三笔分配的作答上下文读取已恢复，按原分配续跑、保留成功批次并以真实质检员本人待办验收，见[分配状态判读](domains/sandai-data-smith/pitfalls/quality-allocation-blocked-status.md)。

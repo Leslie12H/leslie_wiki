@@ -2,7 +2,7 @@
 name: quality-allocation-blocked-status
 type: pitfall
 created: 2026-09-25
-updated: 2026-09-25
+updated: 2026-10-14
 tags: [sand-eval, quality, allocation, status]
 links: [sandeval-bulk-allocation-latency]
 ---
@@ -18,3 +18,13 @@ links: [sandeval-bulk-allocation-latency]
 来源检查凭证过期时，先核对 `dto.py::ExecutionEvidence.assert_valid` 和失败阶段，不直接归因于数据库。恢复入口看 `AllocationDetail.tsx` 的“继续完成分配”、`available_actions` 以及 `batch_allocation_service.py::_resume`；后者按未完成批次续跑，成功批次应保留。查询原因不授权执行恢复；刷新页面本身不代表已重试。
 
 本次只读证据指针：`/Users/leslie/Documents/Playground/output/sandeval-qc-status-20260925/report.md`。其中包含任务标识、批次错误、真实检查进度和未执行恢复的边界。当前数据及按钮权限需重新查询，不在知识库固化活跃状态。
+
+## 2026-10-14 固定答案上下文门禁恢复后续跑原分配
+
+**Why:** 答案已提交和批次已流转不保证质检任务已生成。指定三批的原分配记录均为 SOURCE_RESULT_INVALID / 固定答案缺少作答上下文，group/submission 尚未登记；当前精确答案、不可变上下文回执及原生内容读取均已有效，失败分配仍需完成。当前存在回执不能倒推历史读取缺失的具体原因，也不能把一次原生恢复当永久代码修复。
+
+**How to apply:** 定位明确来源任务、姓名、scope 和既有 allocation，先核对真实错误和当前来源读取。若上下文读取已通过，不补造回执或重交答案；经恢复授权、完整备份/读回、摘要和实时资格再校验、互斥租约，对精确既有 allocation 调用 BatchAllocationService.resume。保留已成功批次的 group/submission；每笔保存原生结果并独立核验。完成要求三层证据：allocation ready、真实 active 轮次及样本、实际非 root 质检员本人 todo 列表和可用题目入口。仅管理页状态变化或 root 可以查看不够。
+
+- [2026-10-14 临科 02 三笔分配恢复报告](/Users/leslie/Documents/Playground/output/sandeval-three-feedback-20261014/report.md)：王星灿、韩易呈、宋梦莹的精确对象、原错误、当前作答上下文、摘要和完整备份、原生续跑、已成功批次保护、两名真实质检员本人待办及页面验收。实例状态、人员与部署会变化，后续引用重新核验。
+- 来源读取门禁指针：app/services/facts/qc_verdict.py::read_response_versions 与 app/repositories/answer_execution.py::for_responses；当前权威读取和部署边界按现行源码核验，不把外层质量元数据连接当所有来源上下文均一致的证明。
+- 本次是指定存量恢复，未改平台代码、来源答案或作答上下文。用户已收窄为第一项，其余一次性错误不据此继续改动。
