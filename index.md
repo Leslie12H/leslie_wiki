@@ -596,3 +596,5 @@
 - 2026-10-14：[HTTP 冻结资源自动提案](domains/maxwell/refs/evolve-http-resource-proposals.md) — Provider 分类、来源 Run 授权、父候选替换、完整 payload 校验及本地连续复测边界。
 
 - 2026-10-14：[大候选文件与应用证据](domains/maxwell/refs/evolve-resource-content.md) — 受权原件引用、确定性编辑、分段阅读、候选继承及禁止调用方自证生效。
+
+- 2026-10-14：历史 Trial 不借实时 Provider 目录解释旧评分材料、普通 Case 的版本匹配和冻结规则阅读，见[原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md)。
