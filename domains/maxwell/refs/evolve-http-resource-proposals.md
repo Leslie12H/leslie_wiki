@@ -24,3 +24,5 @@ links: [evolve-original-evidence-and-report-recovery]
 - 技术替身证明接线与合同，不证明真实模型效果、自然 Agent 决策或远端配置生效。prepared 与 applied、测试通过与发布、单题与 65 题全量分别验收。
 
 - 2026-10-14：候选复测自动准备、旧计划恢复及冻结清单的容量对齐，见[专项复核记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-candidate-auto-prepare-review-20261014.md)。Why：把运行必要条件交给前端 Artifact 预览推断，会让可读性故障阻断执行；只移除页面门禁仍会撞上后端容量限制。How：先授权冻结候选再由后端推导准备，保留用户原始请求身份与已接纳 Run 重放；逐层核对准入、Worker 读取、请求编码和原字节验证，完整请求预算包括转义及副本。Agent 草稿、清单和资源正文属于不同容量边界，测试大冻结资产不能宣称大草稿创建通过。当前测试与真实验收状态查记录，不固化在 Wiki。
+
+- 2026-10-14：Agent 大草稿创建、人工审阅、冻结与修订的容量收敛，见[专项复核记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-draft-capacity-review-20261014.md)。Why：已冻结大候选可运行不代表 Agent 能创建同样内容；数据库 JSONB 格式空格还可能让合法草稿保存后无法确认。How：分别核对完整请求、紧凑 payload、对象自身和物理存储上限，穿过实际起草 / 人工确认 / 冻结入口，再验证修订不覆盖历史。大内容按题、按文本页读取，折叠内容延迟挂载；完整 Unicode、末页可达、陈旧审阅失效及权限不能因性能优化丢失。本地数据库验证、SSR 和真实浏览器交互分开记录；浏览器不可用不宣称视觉通过。当前代码、迁移与验收状态仅查记录。
