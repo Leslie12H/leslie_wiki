@@ -2,7 +2,7 @@
 name: evolve-v3-work-executor-mapping
 type: pitfall
 created: 2026-09-19
-updated: 2026-09-19
+updated: 2026-10-14
 tags: [maxwell, evolve, studio, 前端, 分页]
 links: [maxwell, evolve-workbench-v22, evolve-usage-accounting]
 ---
@@ -23,3 +23,7 @@ links: [maxwell, evolve-workbench-v22, evolve-usage-accounting]
 - 会话列表：一次请求渲染；只对泛化标题（服务端默认「和 Agent 的会话」或 `… · 会话`）后台补读，规则在 `sessionsModel.isGenericSessionTitle`。
 - 会话"对象"筛选传的是 `targetRef` 值，不是执行器 id，除非后端改语义。
 - v3 视觉要跟 Studio 其他模块一致：Inter、2px 强边框、像素阴影、tokens；不要另起字体/氛围层（这次已回收 Instrument Serif 与光晕点阵）。
+
+## 2026-10-14 整页视觉与状态复核
+
+复核与桌面整改规范见[架构与界面复核](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-nextplay-architecture-ui-review-20261014.md)。**Why:** 引用了 Studio tokens 只保证颜色来源一致，不能证明整页面板层次、信息密度和状态一致；执行终态也不是评分成功。**How to apply:** 回到 surface.css 与真实页面核对 page/surface/muted/elevated 的实际承载区域，复用 Card/TableFrame 等组件组织整页；用真实的全部执行失败与未评分结果检查顶部、汇总和逐题状态一致。用户保留暖色、粗线条，仅桌面验收；本轮未实施新样式。

@@ -82,3 +82,5 @@ links: [evolve-nextplay-entry-plan-20261009, nextplay-benchmark-import-audit-202
 
 - 2026-10-14 合并后发布与验收：实际 main、服务范围、迁移、工作流和单题终态见[发布验证记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-dev-verification-20261014/plan.md)。Why：工作流 rollout 超时不等于应用启动失败，Deployment 的就绪副本也可能仍是旧镜像；可选 evidence-volume 组件存在不代表共享存储已启用。How：核对新 Pod 镜像、Ready 与拉取事件，发布后只读验证 source Git SHA；同时检查 namespace 中实际 PVC 和 API/Worker 的同卷挂载，不能用 Pod 临时目录替代。
 - 2026-10-14 当前版本与旧基线验收：同一记录保留原始错误和限定任务的只读查询。Why：资源准备能力依赖持久卷，旧快照也可能已随目标配置变化失效；通用「证据不匹配」会掩盖实际 baseline_drift。How：回到 Nextplay resource_control.configured_control、CandidateRunner 的 snapshot 校验，以及 EVOLVE direct_run/runner_result 核对声明与冻结身份；通过已准备基线不能替代首次准备验收，旧基线漂移不得靠篡改冻结资产或放宽校验绕过。
+
+- 2026-10-14 内部 Agent 调用与版本语义复核：见[架构与界面复核](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-nextplay-architecture-ui-review-20261014.md)。Why：复用业务 Runner 的 HTTP 接入不代表并发必须依赖外部服务；结构化 Case 当 JSON 文本发送也不能替代工作区恢复。How：对照 maxwell_preset 的直接派发、并发限制、maxwellCaseText 与 Nextplay inputs/runner，迁移时核对文件、历史、续接和原件等价；普通新评测、历史重跑和调优比较区分版本语义，旧快照漂移不等于历史结果无效。持久存储必要性与共享 PVC 这种具体实现分开判断；本次为建议，不是已完成迁移。
