@@ -28,3 +28,5 @@ links: [evolve-original-evidence-and-report-recovery]
 - 2026-10-14：Agent 大草稿创建、人工审阅、冻结与修订的容量收敛，见[专项复核记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-draft-capacity-review-20261014.md)。Why：已冻结大候选可运行不代表 Agent 能创建同样内容；数据库 JSONB 格式空格还可能让合法草稿保存后无法确认。How：分别核对完整请求、紧凑 payload、对象自身和物理存储上限，穿过实际起草 / 人工确认 / 冻结入口，再验证修订不覆盖历史。大内容按题、按文本页读取，折叠内容延迟挂载；完整 Unicode、末页可达、陈旧审阅失效及权限不能因性能优化丢失。本地数据库验证、SSR 和真实浏览器交互分开记录；浏览器不可用不宣称视觉通过。当前代码、迁移与验收状态仅查记录。
 
 - 2026-10-14：Provider 配置身份与 Case 准备的通用边界，见[专项复核记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-provider-config-identity-review-20261014.md)。Why：合法的 Provider JSON 值可能是对象、数组或大整数，语言直接比较或浮点解码会导致异常或误用格式。How：按声明数据比较，保留数值身份；同时核对表单 / 导入 / 草稿入口及保存后的目录离线重放。不将其他 Provider 的兼容性问题归因为 Nextplay 字符串版本的历史执行失败；测试、当前改动和真实评分状态只查记录。
+
+- 2026-10-14：草稿审阅的窄侧栏与主区域适配，见[浏览器验证记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-draft-review-layout-20261014.md)。Why：宽窗口里的窄侧栏不会触发视口媒体查询，选题栏仍可能被按钮挤压；单纯 SSR 不证明能读完大材料。How：按实际容器宽度重排，在真实组件中检查末页及末行、切题、版本更新后的再审阅和只读权限；普遍性提示不能遮住内容，具体缺规则提示仍保留。Chrome 不可用时应用内浏览器可做隔离组件技术验证，不将其改称自然 Agent 或真实保存验收。运行条件和截图只查记录。
