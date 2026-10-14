@@ -19,6 +19,9 @@ links: []
 4. `~/.codex/sessions`、`~/.codex/thread_history_1.sqlite`、Orca 的 `codex-runtime-home/home/sessions` 是会话相关数据；`~/.codex/worktrees` 可能含未提交代码。需要由用户选择保留范围并通过对应应用的受支持流程归档/删除，不做盲删或手工截断数据库。
 5. Docker 虚拟磁盘、Claude VM、模拟器设备、飞书数据分别核对应用内可回收项。Docker daemon 未运行时不直接删除 raw 磁盘，也不为磁盘统计启动已有容器或数据库。
 6. 清理后独立读取 `df`，逐路径保存执行回执。硬链接、APFS 共享块、活跃进程写入会导致各目录 `du` 数字与实际回收量不同，不能直接求和宣称释放空间。
+7. pnpm 的 `packageImportMethod=auto` 默认先尝试 clone（写时复制），然后才尝试 hardlink/copy；见 [pnpm 10.x 配置](https://pnpm.io/10.x/settings#packageimportmethod)。APFS 下，`nlink=1` 只排除普通硬链接，不能证明底层数据块独占。删除 `node_modules` 后 store 或其他 clone 仍保留数据块，故目录占用与物理回收可能差很多；原目录已删除时只能根据现存 store、文件系统与配置推断，不能声称逐文件证实历史共享关系。
+8. pnpm store 清理先核对实际 `store path`，显式指定 `--store-dir`，避免当前项目/目录配置指向另一套 store。v10、v11 使用各自现有版本的官方 `store prune`，不强制删除未知目录、不升级包管理器；原已安装依赖仍保留，但以后安装可能重新下载缓存包。参见 [官方 prune 边界](https://pnpm.io/10.x/cli/store)。清理前检查安装进程与直接 store 使用；清理后抽查已有依赖文件、包管理器本身与 `df`，回收量仍按磁盘实测记录。
+
 
 ## 证据入口
 

@@ -634,7 +634,7 @@
 
 - 2026-10-14：候选对照独立汇总生命周期、复核刷新联动、真实分页上限与桌面阅读层级，见[页面清晰度约束](domains/maxwell/pitfalls/evolve-design-clarity-20261013.md)；实现与验证仅存记录指针。
 
-- [macOS 存储清理边界](global/pitfalls/macos-storage-cache-vs-state.md) — 跨仓库/工作树 Go 缓存识别、iCloud 扫描停滞、会话/虚拟磁盘保留及独立空间核验（2026-10-14）。
+- [macOS 存储清理边界](global/pitfalls/macos-storage-cache-vs-state.md) — 跨仓库 Go 缓存、pnpm/APFS 共享块、iCloud 扫描停滞、会话保留及空间核验（2026-10-14）。
 
 - 2026-10-14：质检一致读 review 的混合权限读取与原生数据库异常分类反例，见[分配状态判读](domains/sandai-data-smith/pitfalls/quality-allocation-blocked-status.md)。
 
