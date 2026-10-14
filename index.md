@@ -658,3 +658,5 @@
 - 2026-10-14：历史退回修复的验收部分提交与恢复审查指针，见[历史继承与验收重放](domains/sandai-data-smith/pitfalls/sandeval-manual-return-ancestor-misclassification.md)。
 
 - 2026-10-14：历史退回验收中断的原生重放修复、两种提交边界与后台推进回归，见[验收恢复修复指针](domains/sandai-data-smith/pitfalls/sandeval-manual-return-ancestor-misclassification.md)。
+
+- 2026-10-14：合并后按需发布、新旧 Pod 与 rollout 超时判定、共享卷启用边界、首次基线与旧快照漂移验收，见[Nextplay 独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。

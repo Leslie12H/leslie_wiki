@@ -2,7 +2,7 @@
 name: nextplay-independent-benchmark-entry
 type: reference
 created: 2026-10-12
-updated: 2026-10-13
+updated: 2026-10-14
 tags: [maxwell, evolve, nextplay, benchmark, import, judge]
 links: [evolve-nextplay-entry-plan-20261009, nextplay-benchmark-import-audit-20260915]
 ---
@@ -79,3 +79,6 @@ links: [evolve-nextplay-entry-plan-20261009, nextplay-benchmark-import-audit-202
 - 2026-10-13 大结果文件与评分往返：见[大证据传输设计](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-large-evidence-transport-review-20261013.md)。Why：内联输出限额提高不能解决 Nextplay 原件完整回传后又进入评分请求的重复传输，引用类型或 Range 能力也不证明端到端支持大文件。How：核对 execution_worker、httpjobs、native_processor、CAS 与 File Server；归档原件后冻结带身份/哈希/大小的引用，采集与评分读取均需有界，临时资源清理不能破坏复评分。现有 CAS 窗口读取会重扫整件校验，分块方案须单独验证；这是待确认设计，未改变运行中任务。
 
 - 2026-10-13 长批次出分时机与时限：见[发布验收记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/nextplay-dev-release-acceptance-20261013.md)的 17:01 核验。Why：已收原件但尚无判定不必然是评分服务故障；执行器 WallTime 也不等于整套 Benchmark 总耗时。How：检查 evaluation/live.go 的 pending 清零及 freezeLiveEvidence、processor.go 的评分启动顺序，以及 live_http_batch.go 每次派发新 deadline 的语义；按题及时评分尚待实现，实时数量只读验收记录和实际 Run。
+
+- 2026-10-14 合并后发布与验收：实际 main、服务范围、迁移、工作流和单题终态见[发布验证记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-dev-verification-20261014/plan.md)。Why：工作流 rollout 超时不等于应用启动失败，Deployment 的就绪副本也可能仍是旧镜像；可选 evidence-volume 组件存在不代表共享存储已启用。How：核对新 Pod 镜像、Ready 与拉取事件，发布后只读验证 source Git SHA；同时检查 namespace 中实际 PVC 和 API/Worker 的同卷挂载，不能用 Pod 临时目录替代。
+- 2026-10-14 当前版本与旧基线验收：同一记录保留原始错误和限定任务的只读查询。Why：资源准备能力依赖持久卷，旧快照也可能已随目标配置变化失效；通用「证据不匹配」会掩盖实际 baseline_drift。How：回到 Nextplay resource_control.configured_control、CandidateRunner 的 snapshot 校验，以及 EVOLVE direct_run/runner_result 核对声明与冻结身份；通过已准备基线不能替代首次准备验收，旧基线漂移不得靠篡改冻结资产或放宽校验绕过。
