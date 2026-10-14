@@ -22,3 +22,5 @@ links: [evolve-original-evidence-and-report-recovery]
 - 查 `resource_proposal_flow_test.go`：用真实应用命令串起直接评测、调优来源、目标与候选草稿确认、冻结、准备、异步派发 / 查询和评分；错误实际应用哈希不可获得有效质量分。新调优目标仍走现有审阅流程，不能为测试放宽阶段保护。
 - 查 `docs/evolve-http-resource-proposals.md` 与调优技能：自动编辑的模型输入预算、合法 Manifest 序列化上限、原始结果大文件传输是不同边界；合法父候选读取不能误用 Agent 预览限制。大候选编辑需完整授权和应用链，不能靠扩大预览或读取任意 CAS 替代。
 - 技术替身证明接线与合同，不证明真实模型效果、自然 Agent 决策或远端配置生效。prepared 与 applied、测试通过与发布、单题与 65 题全量分别验收。
+
+- 2026-10-14：候选复测自动准备、旧计划恢复及冻结清单的容量对齐，见[专项复核记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-candidate-auto-prepare-review-20261014.md)。Why：把运行必要条件交给前端 Artifact 预览推断，会让可读性故障阻断执行；只移除页面门禁仍会撞上后端容量限制。How：先授权冻结候选再由后端推导准备，保留用户原始请求身份与已接纳 Run 重放；逐层核对准入、Worker 读取、请求编码和原字节验证，完整请求预算包括转义及副本。Agent 草稿、清单和资源正文属于不同容量边界，测试大冻结资产不能宣称大草稿创建通过。当前测试与真实验收状态查记录，不固化在 Wiki。
