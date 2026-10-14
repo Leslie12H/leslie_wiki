@@ -19,3 +19,5 @@ links: [quality-allocation-blocked-status, sandeval-repeated-correction-ancestor
 - [历史退回与连续重检验收修复 PR #2438](https://github.com/world-sim-dev/sandai-data-smith/pull/2438)：区分直接前置与完整历史，原始冻结依据仍拥有各自的责任关闭路径；后续重检必须同送审、同质检员、规则一致、轮次连续且有真实退回事实，才能承接已封存答案整改与当前验收。完整回归应覆盖退回、重检和最终验收，不能只验按钮不再报错。当前 CI、合并和部署状态回查 PR；[修复及验证记录](/Users/leslie/Documents/Playground/output/sandeval-three-feedback-20261014/zhu-return-fix.md)。
 
 - [2026-10-14 同一 PR 的验收中断 review](/Users/leslie/Documents/Playground/output/sandeval-three-feedback-20261014/zhu-return-review.md)：普通质量写入是 autocommit，完整退回/重检/验收成功不代表部分提交后可恢复。历史责任从直接 parent 改为完整继承时，必须同步验收重放：覆盖新退回已关闭而旧退回未关闭、以及负责人退回都已关闭但历史标注 closure 尚未提交的边界；不能只跑正常一次完成和重复点击。具体复现、审查 head 与后续修复状态回查记录及 PR，review 没有修改业务代码。
+
+- [2026-10-14 验收中断恢复修复及最终 Gate](/Users/leslie/Documents/Playground/output/sandeval-three-feedback-20261014/zhu-return-replay-fix.md)：同一已封存验收的原生重放按精确冻结引用补完历史责任；已关闭负责人记录保持原样，只重验其待完成的标注 closure。跨答案整改仍须已完成执行与连续真实重检，不得把历史授权当当前写权限。新增两种提交边界、连续退回、幂等、拒绝异常证据与后台推进回归；PR #2438 的本次 head 和 Gate 见验证记录，合并、部署及线上实际恢复分别核验。

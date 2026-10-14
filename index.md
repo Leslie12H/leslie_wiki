@@ -656,3 +656,5 @@
 - [整改待定与复验范围](domains/sandai-data-smith/pitfalls/sandeval-correction-defer-reinspection.md) — 草稿回执、历史答案读取与送审分离、冻结排除依据和实际复验抽样；含真实双栏吸顶及本地合成验收边界（2026-10-14）。
 
 - 2026-10-14：历史退回修复的验收部分提交与恢复审查指针，见[历史继承与验收重放](domains/sandai-data-smith/pitfalls/sandeval-manual-return-ancestor-misclassification.md)。
+
+- 2026-10-14：历史退回验收中断的原生重放修复、两种提交边界与后台推进回归，见[验收恢复修复指针](domains/sandai-data-smith/pitfalls/sandeval-manual-return-ancestor-misclassification.md)。
