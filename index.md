@@ -652,3 +652,5 @@
 - 2026-10-14：内置 LLM / 断言 Judge 与外部原生指标的混用、方法协议准入及新评分标准和新算法的区别，见[EVOLVE 模式设计复核](domains/maxwell/refs/evolve-mode-design-audit-20261013.md)；源码核验不替代混合评分验收。
 
 - 2026-10-14：整批退回区分历史授权与直接前置，完整回归覆盖后续重检和验收关闭；见[历史退回链修复指针](domains/sandai-data-smith/pitfalls/sandeval-manual-return-ancestor-misclassification.md)。
+
+- [整改待定与复验范围](domains/sandai-data-smith/pitfalls/sandeval-correction-defer-reinspection.md) — 草稿回执、历史答案读取与送审分离、冻结排除依据和实际复验抽样；含真实双栏吸顶及本地合成验收边界（2026-10-14）。
