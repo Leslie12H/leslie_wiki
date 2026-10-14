@@ -17,3 +17,5 @@ links: [quality-allocation-blocked-status, sandeval-repeated-correction-ancestor
 - 源码指针：quality/application/resolution/manual_return_service.py::_return 的 parent_refs / candidate.target_ref.object_id 校验，以及 ReviewService.validate_plan、ReinspectionAuthorizationService。这个前置解析问题与来源权限读取/异常重试修复分别评估，不能用另一个 PR 的绿 Gate 当已经修复退回链。
 
 - [历史退回与连续重检验收修复 PR #2438](https://github.com/world-sim-dev/sandai-data-smith/pull/2438)：区分直接前置与完整历史，原始冻结依据仍拥有各自的责任关闭路径；后续重检必须同送审、同质检员、规则一致、轮次连续且有真实退回事实，才能承接已封存答案整改与当前验收。完整回归应覆盖退回、重检和最终验收，不能只验按钮不再报错。当前 CI、合并和部署状态回查 PR；[修复及验证记录](/Users/leslie/Documents/Playground/output/sandeval-three-feedback-20261014/zhu-return-fix.md)。
+
+- [2026-10-14 同一 PR 的验收中断 review](/Users/leslie/Documents/Playground/output/sandeval-three-feedback-20261014/zhu-return-review.md)：普通质量写入是 autocommit，完整退回/重检/验收成功不代表部分提交后可恢复。历史责任从直接 parent 改为完整继承时，必须同步验收重放：覆盖新退回已关闭而旧退回未关闭、以及负责人退回都已关闭但历史标注 closure 尚未提交的边界；不能只跑正常一次完成和重复点击。具体复现、审查 head 与后续修复状态回查记录及 PR，review 没有修改业务代码。

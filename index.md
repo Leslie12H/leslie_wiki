@@ -654,3 +654,5 @@
 - 2026-10-14：整批退回区分历史授权与直接前置，完整回归覆盖后续重检和验收关闭；见[历史退回链修复指针](domains/sandai-data-smith/pitfalls/sandeval-manual-return-ancestor-misclassification.md)。
 
 - [整改待定与复验范围](domains/sandai-data-smith/pitfalls/sandeval-correction-defer-reinspection.md) — 草稿回执、历史答案读取与送审分离、冻结排除依据和实际复验抽样；含真实双栏吸顶及本地合成验收边界（2026-10-14）。
+
+- 2026-10-14：历史退回修复的验收部分提交与恢复审查指针，见[历史继承与验收重放](domains/sandai-data-smith/pitfalls/sandeval-manual-return-ancestor-misclassification.md)。
