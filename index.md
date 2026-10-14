@@ -672,3 +672,5 @@
 - 2026-10-14：LangSmith 四张官方公开 UI 截图、实验到逐题对照的布局研究及 EVOLVE 参考边界，见 [LangSmith 借鉴入口](domains/maxwell/refs/evolve-langsmith-learning.md)；未执行登录后交互或修改业务 UI。
 
 - [LangSmith 具体交互研究](domains/maxwell/refs/langsmith-interaction-study-20261014.md) — 2026-10-14：公开 Trace 实操、官方实验与审阅动线、同题对照及保存恢复建议；保留 EVOLVE 视觉风格，未实施。
+
+- [评测与调优平台交互对照](domains/maxwell/refs/evaluation-platform-interactions-20261014.md) — 2026-10-14：Braintrust、Opik、Langfuse、Phoenix 的官方交互来源与 EVOLVE 对象映射；保持现有风格，研究未实施。
