@@ -21,4 +21,4 @@ links: [sandeval-caption-refine-skip-defer-handoff, sandeval-caption-review-scro
 - 真实双栏与吸顶：`frontend/src/pages/myTasks/annotationWorkbench.css`、`components/questionTypes/shared/useResizableQuestionFace.tsx`。应按实际容器是否仍为双栏核验，不用视口断点关闭仍在双栏中的视频吸顶；滚动到页面底部也必须保持视频可见。
 - 回归与内置角色文档：`backend/tests/quality/application/resolution/test_answer_correction_service.py`、`frontend/src/pages/myTasks/MyCorrectionPage.test.tsx`、`QuestionWorkPage.workflow.test.tsx`、`backend/app/usage_docs/content/annotator/start-and-finish.md`。
 
-本地真实组件配合合成素材的浏览器证据位于本次 PR 所属 worktree 的 `platform/frontend/output/playwright/`；它验证布局和交互，不代替已部署测试平台或生产业务验收。测试分支发生与本任务无关的冲突时，不将测试历史合进开发分支；可在干净任务分支独立运行仅测试的完整 Gate，冲突仍由对应负责人处理。
+本地真实组件配合合成素材的浏览器截图归档于 `/Users/leslie/Documents/Playground/annotation-sticky-defer-20261014/`；它验证布局和交互，不代替已部署测试平台或生产业务验收。测试分支发生与本任务无关的冲突时，不将测试历史合进开发分支；可在干净任务分支独立运行仅测试的完整 Gate，冲突仍由对应负责人处理。
