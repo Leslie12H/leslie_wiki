@@ -49,3 +49,12 @@ links: [sandeval-bulk-allocation-latency]
 - [修复分支 Platform Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/38507778753)：测试 PR 若因其他领域的 main/test 差异无法合并，分支验证须先核对构建和部署 job 的 main ref 条件。单独分支 CI 不替代测试分支集成或生产验收；不得把测试分支历史带回开发分支。
 
 - 源码位置变化会使 `docs/reference/performance-profile.md` 的生成行号过期；使用 `scripts/generate_performance_profile.py` 同步，再以 `--check` 验证，不能手改生成内容或把新代码造成的 freshness 失败误判为基线问题。
+
+
+## 2026-10-14 Review 的两个合并前边界
+
+**Why:** 把正文读切到 Leader 后，前置授权仍从 Follower 读会形成新的混合事实窗口。另一类盲区是单测直接注入 SOURCE_UNAVAILABLE，却没有验证实际数据库异常如何经过来源适配器到达重试分支。Gate 成功只证明已有用例，不证明这两个边界已成立。
+
+**How to apply:** review 时同时核对身份、角色、任务/空间状态及当前持有人使用的读目的，并构造 Leader 已撤权、Follower 仍保留旧许可且新答案仅 Leader 可见的反例。对原生异常检查实际继承关系和 call_source_service 映射；只对确认可恢复的数据库故障映射为可重试类别，保留真实数据、权限及版本失败。用真实异常与分离读取替身验证，不能只在高层抛人工 QualityError。
+
+- [main PR #2432](https://github.com/world-sim-dev/sandai-data-smith/pull/2432) 的 review 指针：QcVerdictService._quality_records 的授权在 authoritative_reads 之前；连接断开、语句取消和 HologresBusy 也未在来源适配器映射为 SOURCE_UNAVAILABLE。此次为本地受控反例，未证明生产已发生越权，也没有修复或发布这些 review 问题。后续处理状态以 PR 差异和测试为准。
