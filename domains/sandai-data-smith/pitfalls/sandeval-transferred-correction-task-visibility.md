@@ -2,7 +2,7 @@
 name: sandeval-transferred-correction-task-visibility
 type: pitfall
 created: 2026-09-28
-updated: 2026-09-29
+updated: 2026-10-14
 tags: [sand-eval, quality-center, reassignment, remediation, my-tasks]
 links: [sandeval-cross-stage-feedback, sandeval-roles-and-workflow]
 ---
@@ -26,3 +26,5 @@ links: [sandeval-cross-stage-feedback, sandeval-roles-and-workflow]
 - 2026-09-29 同一实例进一步核对：李阳当前两张卡都已标注，派题页「指定标注员手上的未答题」把他显示为「未答 0」，无法按页面默认值转移；另一张卡不属于上述四题，整批转走会扩大影响范围。当前源码的 `backend/app/cli/assignments.py::handle_reassign` 复用 `TaskAssignmentService._build_distribution_preview`，该服务按当前实体卡构造转派计划，`--from-count 1` 取持卡集合按 `question_id` 等字段排序的首张；旧页面文案和 CLI 帮助仍写「只转未答」，不能以文案代替执行代码。若要用运营 CLI 只转目标卡，先在**生产库**核对两张精确 `assignment_id`、排序、接收人资格及无重复投放，再只读预览并核对计划，显式 apply 后读回目标与非目标卡及审计；缺少生产库权限时停止，不能用浏览器管理员端点代替受控 CLI。
 - 2026-09-29 16:22 +08:00：生产运营 CLI 已将目标卡 `d561120e-d1b7-5b86-8372-497b8e15ce72` 从李阳转给郭士琦。只读预览的 `plan_hash=7b1f798ba98c05bbe3df1136ecc17a6b8cd000c5bab501b327141d5477614bfa` 精确包含这一张；显式 `--apply` 回报 `written=1`。生产主库复核冻结四张卡均归郭士琦，李阳的非目标卡 `11a22615-ddd2-54cd-91a4-abecd2901c78` 仍归李阳；`ev2_change_log` 中目标卡 `reassign` 记录和任务级记录同在 `2026-09-29 08:22:05.906 +00:00`，actor 为 `service:codex-qc-holder-unify`。对应质检任务仍为 `active`，本次没有执行整批退回；下一步需由质检员 3093 在自己的账号提交退回并验证整改接收人。
 - 2026-09-29 16:28 +08:00：3093 随后完成整批退回，质检任务变为 `stopped`；生产主库处置单 `DISP-e6e19013ecde5c4d809c26cfeb699b46` 的 `recipient_id` 对应郭士琦，状态 `open`。当时四张冻结卡的当前持有人仍全是郭士琦。退回弹窗却显示「接收人：袁宁彤」：`frontend/src/pages/quality/inspection/ReviewWorkspace.tsx` 将 `task.producer_name` 直接放在「接收人」字段；该值来自批次分配快照的历史 `producer_name`，本实例确为袁宁彤。`quality/application/resolution/manual_return_service.py::_return` 实际经 `source.correction_recipient` 按四张冻结卡当前唯一持有人确定接收人，故页面标签与真实处置单接收人不一致。排查此类疑问时核对处置单 `recipient_id` 和当前工作项持有人；若修 UI，应由后端投影实际接收人或将现有字段准确命名为「原标注员」，避免误称当前接收人。
+
+- 2026-10-14：对“已完成题被转派，整批退回报持有人分裂”，先核对每个冻结成员的历史答案作者、全部当前持有人及精确转派审计；答案保存时间早于转派只证明事实顺序，不能据此臆断操作者动机。恢复原作者前，必须确认数量式运营 CLI 的精确计划只命中目标卡，并冻结计划哈希；执行时可在原生 CLI 上增加精确卡、原作者、冻结成员、本轮版本与答案历史未变的守卫，不能放宽原生范围、资格、快照或事务校验。不同 Pod 的主库回读应比较目标与非目标卡、答案历史、冻结提交、已保存质检意见和审计，再以真实质检员当前权限只读重跑 `annotation_correction_recipient`。卡片恢复与正式整批退回分开验收；存在页面未保存判断时，质检员保留或保存草稿后自行确认退回。本次运行、限定实例、回执和验证结果仅保存于[处理报告](/Users/leslie/Documents/Playground/output/qc-holder-20261014/report.md)，现场状态复用前须重查。
