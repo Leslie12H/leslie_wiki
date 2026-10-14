@@ -650,3 +650,5 @@
 - [整批退回把历史祖先误当直接前置](domains/sandai-data-smith/pitfalls/sandeval-manual-return-ancestor-misclassification.md) — 完整历史授权与直接前一轮的区别、真实资格通过后的身份不匹配核验（2026-10-14）。
 
 - 2026-10-14：内置 LLM / 断言 Judge 与外部原生指标的混用、方法协议准入及新评分标准和新算法的区别，见[EVOLVE 模式设计复核](domains/maxwell/refs/evolve-mode-design-audit-20261013.md)；源码核验不替代混合评分验收。
+
+- 2026-10-14：整批退回区分历史授权与直接前置，完整回归覆盖后续重检和验收关闭；见[历史退回链修复指针](domains/sandai-data-smith/pitfalls/sandeval-manual-return-ancestor-misclassification.md)。
