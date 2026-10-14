@@ -491,7 +491,7 @@
 
 - 2026-10-12 EVOLVE 获 dev 迁移执行授权后的发布、独立台账/Pod 回读和 Studio 入口证据：见 [工作台实施指针](domains/maxwell/projects/evolve-nextplay-entry-plan-20261009.md) 的发布完成记录。
 
-- [Nextplay 独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md) — 2026-10-12：Case/原评分程序边界，通用异步评分、实际资产交付、PostgreSQL 导入时间精度、A2A 基准绑定、MCP schema 同步、hidden 资产隔离、原始请求文件、输入大小边界、用例内容预览及跨 Run 幂等/取消恢复/队列公平性、并行发布排空、响应正文中断重试、原报告读写预算一致性、API/Worker JSON 输入装配、按改动选择发布服务、复制 Preset 与冻结快照的工具一致性、middleware 探测、完整证据保存顺序、结果限额与全流程复查指针；内部 Agent、单份权威原件拉取、最后一轮输出语义及本地/真实验收边界见页内 2026-10-14 实施指针。
+- [Nextplay 独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md) — 2026-10-12：Case/原评分程序边界，通用异步评分、实际资产交付、PostgreSQL 导入时间精度、A2A 基准绑定、MCP schema 同步、hidden 资产隔离、原始请求文件、输入大小边界、用例内容预览及跨 Run 幂等/取消恢复/队列公平性、并行发布排空、响应正文中断重试、原报告读写预算一致性、API/Worker JSON 输入装配、按改动选择发布服务、复制 Preset 与冻结快照的工具一致性、middleware 探测、完整证据保存顺序、结果限额与全流程复查指针；内部 Agent、单份权威原件拉取、最后一轮输出语义、真实业务 Key 契约与两段下载恢复审查，以及本地/真实验收边界见页内 2026-10-14 指针。
 
 - [EVOLVE 谱系可读性与可比性](domains/maxwell/pitfalls/evolve-lineage-readability-and-comparability.md) — 完整历史与联动谱系实施、原统计/新投影兼容、明确来源、连续画布交互、可读方案、全指标图优先与下钻、跨业务指标展示及真实页面验收指针（2026-10-12）。
 
@@ -668,3 +668,5 @@
 - 2026-10-14：整改转交后的明示批准单案数据例外、依赖快照范围、滚动发布复核与本人工作台验收，见[上级授权阻断](domains/sandai-data-smith/pitfalls/sandeval-repeated-correction-ancestor-blocker.md)；具体版本与回执仅存修复报告。
 
 - [EVOLVE 借鉴 LangSmith](domains/maxwell/refs/evolve-langsmith-learning.md) — 2026-10-14：实验对照、人工校准、线上失败入库、轨迹与 CI 的官方来源及源码复核入口；建议未实施。
+
+- 2026-10-14：LangSmith 四张官方公开 UI 截图、实验到逐题对照的布局研究及 EVOLVE 参考边界，见 [LangSmith 借鉴入口](domains/maxwell/refs/evolve-langsmith-learning.md)；未执行登录后交互或修改业务 UI。
