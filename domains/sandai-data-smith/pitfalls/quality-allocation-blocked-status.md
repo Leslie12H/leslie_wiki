@@ -37,3 +37,13 @@ links: [sandeval-bulk-allocation-latency]
 
 - [2026-10-14 三笔分配根因补证与长期修复设计](/Users/leslie/Documents/Playground/output/sandeval-three-feedback-20261014/root-cause.md)：精确失败时点、零行实参、历史/当前部署读取边界、恢复开关及仍未知的数据库机制。该报告补充前一恢复报告的历史未知项；没有新增业务写入、代码改动或配置发布。
 - 精确实现入口：TaskAssignmentRepository.quality_submission_owners、QcVerdictService.read_response_versions、AnswerExecutionRepository.for_responses、HoloClient.fetch / _read_pool / answer_read_chain，以及 QualityRuntime 的 allocations recovery。独立答案连接池不自动等于主节点读取，真实缺失仍须明确拒绝。
+
+
+## 2026-10-14 来源读取边界与请求内有界重试
+
+**Why:** 外层质检 UoW 的 Leader 连接和 answer GET 专用连接池都不会自动约束来源服务自己的 fetch。冻结所需的最新提交归属、精确答案正文/字段和同版本执行上下文必须由来源 owner 明确声明权威读取。瞬时连接错误可以重试，真实答案缺失不能按相同类别循环重试。
+
+**How to apply:** 用仅在来源读取期间生效的 ContextVar 选择 Leader，正常列表和并发请求保留自己的读取策略，不改写共享客户端，不替换冻结引用。请求内 SOURCE_UNAVAILABLE 最多尝试 3 次，每次重新核验实时权限，复用原分配及原幂等身份、跳过成功批次；时间预算耗尽或权限/范围/真实缺失失败后保留可处理的错误。这个机制不等于打开后台 allocation recovery，重启后的恢复仍按当前配置和原生续跑入口判断。
+
+- [来源一致读与瞬时失败重试测试 PR #2431](https://github.com/world-sim-dev/sandai-data-smith/pull/2431)：代码、回归与角色使用文档指针；是否合并、验收或上线需查看 PR 和部署记录。
+- [修复分支 Platform Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/38507305702)：测试 PR 若因其他领域的 main/test 差异无法合并，分支验证须先核对构建和部署 job 的 main ref 条件。单独分支 CI 不替代测试分支集成或生产验收；不得把测试分支历史带回开发分支。
