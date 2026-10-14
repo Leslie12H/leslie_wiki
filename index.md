@@ -632,3 +632,5 @@
 - 2026-10-14：异步结果自动更新、保留阅读与失败恢复，以及用户明确桌面优先的范围约束，见[页面清晰度约束](domains/maxwell/pitfalls/evolve-design-clarity-20261013.md)；实现和本地验证仅存报告指针。
 
 - 2026-10-14：候选对照独立汇总生命周期、复核刷新联动、真实分页上限与桌面阅读层级，见[页面清晰度约束](domains/maxwell/pitfalls/evolve-design-clarity-20261013.md)；实现与验证仅存记录指针。
+
+- [macOS 存储清理边界](global/pitfalls/macos-storage-cache-vs-state.md) — Go 构建缓存识别、iCloud 扫描停滞、会话/虚拟磁盘保留及独立空间核验（2026-10-14）。
