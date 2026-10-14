@@ -624,3 +624,5 @@
 - 2026-10-14：三笔分配的历史送审失败、零行上下文 SQL 与旧版本实参已补证，分清当前恢复开关、来源一致读和长期修复，见[分配状态判读](domains/sandai-data-smith/pitfalls/quality-allocation-blocked-status.md)。
 
 - 2026-10-14：指标编辑时并排核对引用范围、窄屏保存可达及失败重试保留草稿，见[页面清晰度约束](domains/maxwell/pitfalls/evolve-design-clarity-20261013.md)；本地组件交互与真实保存、评分分开验收。
+
+- 2026-10-14：Thread 已删除但其余资源清理失败时的取消恢复、精确不存在返回与停止 / 清理分离，见[HTTP 资源与恢复指针](domains/maxwell/refs/evolve-http-resource-proposals.md)。

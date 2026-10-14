@@ -34,3 +34,6 @@ links: [evolve-original-evidence-and-report-recovery]
 - 2026-10-14：原件归档失败分类与报告摘要身份，见[专项复核记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-evidence-integrity-review-20261014.md)。Why：逐块正确不保证整文件正确，底层普通错误会让上层反复重试不可恢复的同一原件；浮点解码也可能让不同的 Provider 详情标识看似一致。How：沿执行与评分的所有归档调用方传递既有完整性错误类型，分别验证损坏原件停止、暂时中断续传以及已完成评分不重跑；不透明 JSON 数字不经过浮点转换。当前范围、失败证据与真实验收边界只查记录。
 
 - 2026-10-14：异步评分状态存储中断的错误分类与 Worker 接管，见[专项复核记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-measurement-recovery-review-20261014.md)。Why：Provider 调用的普通存储异常可能在 Method 映射中变成最终失败指标，从而失去已接纳任务的恢复机会。How：分别检查创建、accepted、completed、owner 读取及取消意图的写前 / 写后不确定结果；内部恢复信号穿过 Method 到 Run 编排，沿同一调用身份恢复，确定的身份冲突与协议错误保持终止。测试必须先证明实际触达故障，再验证租约接管、冻结输入和不重复执行；替身分数不等于真实取分，局部恢复不等于所有持久化阶段均已恢复。具体源码、测试和未完成验收只查记录。
+
+
+- 2026-10-14：部分资源清理后已删除 Thread 的取消恢复，见[专项复核记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-execution-cancel-missing-review-20261014.md)。Why：原生 Thread 删除先停止并终结 Run，随后剩余资源清理失败仍可能留下取消恢复任务；把精确的 Thread 不存在当普通网络失败会永久重试。How：先核对服务端删除语义，再仅接受同一 Thread、同一原生读取路径的精确不存在返回；路由、身份、权限及其他对象错误不得放宽。其他未停止题目独立保留未确认，停止确认不等于剩余资源清理完成。源码、失败证据、专项回归和真实环境边界只查记录。
