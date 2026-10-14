@@ -22,3 +22,11 @@ links: [sandeval-caption-refine-skip-defer-handoff, sandeval-caption-review-scro
 - 回归与内置角色文档：`backend/tests/quality/application/resolution/test_answer_correction_service.py`、`frontend/src/pages/myTasks/MyCorrectionPage.test.tsx`、`QuestionWorkPage.workflow.test.tsx`、`backend/app/usage_docs/content/annotator/start-and-finish.md`。
 
 本地真实组件配合合成素材的浏览器截图归档于 `/Users/leslie/Documents/Playground/annotation-sticky-defer-20261014/`；它验证布局和交互，不代替已部署测试平台或生产业务验收。测试分支发生与本任务无关的冲突时，不将测试历史合进开发分支；可在干净任务分支独立运行仅测试的完整 Gate，冲突仍由对应负责人处理。
+
+## Review 的历史排除与摘要核查
+
+**Why:** 已发布版本的排除依据属于冻结历史，不能把它等同于本轮尚未发布的待定状态；排除后新复验成员也不再与旧完整批次一一对应。
+
+**How to apply:** 多轮整改时，分别核查本轮新增排除与历史排除的校验时机；恢复或转派上轮待定题后，剩余题的整改回交应仍能解释原冻结范围。列表摘要应显式处理被排除成员，不能因两个版本成员不同就把有效进度投影为未知。重点入口为 `SubmissionService.prepare_correction/freeze` 和 `AnswerCorrectionService.annotation_page`。
+
+2026-10-14 review 证据：PR #2439 的 `ca969cf43`，复现脚本及输出位于 `/Users/leslie/Documents/Playground/annotation-sticky-defer-20261014/review/`。检查涵盖正常关闭、多次退回、历史排除项恢复及待复验/已完成摘要。具体发现和后续修复状态以 review 记录与 PR 为准，此次 review 未修改业务代码、未访问生产。
