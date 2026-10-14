@@ -28,3 +28,12 @@ links: [sandeval-bulk-allocation-latency]
 - [2026-10-14 临科 02 三笔分配恢复报告](/Users/leslie/Documents/Playground/output/sandeval-three-feedback-20261014/report.md)：王星灿、韩易呈、宋梦莹的精确对象、原错误、当前作答上下文、摘要和完整备份、原生续跑、已成功批次保护、两名真实质检员本人待办及页面验收。实例状态、人员与部署会变化，后续引用重新核验。
 - 来源读取门禁指针：app/services/facts/qc_verdict.py::read_response_versions 与 app/repositories/answer_execution.py::for_responses；当前权威读取和部署边界按现行源码核验，不把外层质量元数据连接当所有来源上下文均一致的证明。
 - 本次是指定存量恢复，未改平台代码、来源答案或作答上下文。用户已收窄为第一项，其余一次性错误不据此继续改动。
+
+## 2026-10-14 历史 SQL 实参与自动接续补证
+
+**Why:** 一次恢复只能证明当前任务恢复，不能解释为何最初冻结失败或保证不再发生。后续补证将原 allocation 的送审阶段 error 与对应零行 SQL、同任务及旧答案实参匹配；来源 execution/context 用普通 fetch，外层质量主节点读取不会自动覆盖它。当前 allocation recovery 开关关闭，失败单不会由该循环自动续建。回执 created_at 早于失败仍不单独证明历史实际提交/可读时间，不能把底层复制延迟当已确认。
+
+**How to apply:** 用 allocation/request/phase/部署绑定原失败，再读取 hg_query_log 的 calls、result_rows 和 query_detail，排除相同时段其他任务及嵌套 SQL。来源版本选择、精确正文/字段和执行上下文要贯穿权威读取，保留历史冻结版本与责任门禁；在分类、退避、上限和幂等保护下接续原分配，不能直接给所有 SOURCE_RESULT_INVALID 无限重试。当前代码和开关须现场核验，数据恢复与长期代码修复分别交付。
+
+- [2026-10-14 三笔分配根因补证与长期修复设计](/Users/leslie/Documents/Playground/output/sandeval-three-feedback-20261014/root-cause.md)：精确失败时点、零行实参、历史/当前部署读取边界、恢复开关及仍未知的数据库机制。该报告补充前一恢复报告的历史未知项；没有新增业务写入、代码改动或配置发布。
+- 精确实现入口：TaskAssignmentRepository.quality_submission_owners、QcVerdictService.read_response_versions、AnswerExecutionRepository.for_responses、HoloClient.fetch / _read_pool / answer_read_chain，以及 QualityRuntime 的 allocations recovery。独立答案连接池不自动等于主节点读取，真实缺失仍须明确拒绝。
