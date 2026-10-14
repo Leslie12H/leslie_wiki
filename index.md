@@ -643,3 +643,5 @@
 - 2026-10-14：[多 Provider 原件下载身份](domains/maxwell/pitfalls/evolve-bundle-local-file-identity.md) — 包内 ID 与聚合下载身份分开，旧链接歧义、晚到报告和精确授权的验证指针。
 
 - 2026-10-14：实际 Studio 编辑 / 复制 / 新建保存内容到 Nextplay 准入与评分的跨语言交接、原题不变及替身模型边界，见[原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md)；当前数量和运行条件仅存验证记录指针。
+
+- 2026-10-14：Case 目录失败恢复、开放对象 JSON 编辑及错误草稿保留、YAML 绑定解析一致性，见[页面清晰度约束](domains/maxwell/pitfalls/evolve-design-clarity-20261013.md)；仅桌面组件验收。
