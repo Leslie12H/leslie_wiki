@@ -608,3 +608,5 @@
 - 2026-10-14：候选复测的服务端必要准备、预览与派发容量分离、旧计划 / 原请求恢复边界，见[HTTP 资源提案与复测](domains/maxwell/refs/evolve-http-resource-proposals.md)。
 
 - 2026-10-14：大草稿的完整请求 / JSONB 容量、实际确认冻结与逐题分页阅读，以及浏览器不可用的验收边界，见[HTTP 资源提案与复测](domains/maxwell/refs/evolve-http-resource-proposals.md)。
+
+- 2026-10-14：Provider 任意 JSON 配置身份比较、Case 保存与目录离线重放的兼容边界，见[HTTP 资源提案与复测](domains/maxwell/refs/evolve-http-resource-proposals.md)。
