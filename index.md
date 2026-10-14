@@ -600,3 +600,5 @@
 - 2026-10-14：历史 Trial 不借实时 Provider 目录解释旧评分材料、普通 Case 的版本匹配和冻结规则阅读，见[原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md)。
 
 - 2026-10-14：HTTP 冻结资源在归因与自动提案中的一致读取、大候选清单和空列表 / 读取失败分离，见[HTTP 资源提案与复测](domains/maxwell/refs/evolve-http-resource-proposals.md)。
+
+- 2026-10-14：[EVOLVE 人工复核边界](domains/maxwell/refs/evolve-trial-review-boundaries.md) — 自动 / 采用 / 草稿区分、单指标与整题独立投影、隔离交互验收指针。
