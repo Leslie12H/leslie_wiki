@@ -58,3 +58,6 @@ links: [sandeval-bulk-allocation-latency]
 **How to apply:** review 时同时核对身份、角色、任务/空间状态及当前持有人使用的读目的，并构造 Leader 已撤权、Follower 仍保留旧许可且新答案仅 Leader 可见的反例。对原生异常检查实际继承关系和 call_source_service 映射；只对确认可恢复的数据库故障映射为可重试类别，保留真实数据、权限及版本失败。用真实异常与分离读取替身验证，不能只在高层抛人工 QualityError。
 
 - [main PR #2432](https://github.com/world-sim-dev/sandai-data-smith/pull/2432) 的 review 指针：QcVerdictService._quality_records 的授权在 authoritative_reads 之前；连接断开、语句取消和 HologresBusy 也未在来源适配器映射为 SOURCE_UNAVAILABLE。此次为本地受控反例，未证明生产已发生越权，也没有修复或发布这些 review 问题。后续处理状态以 PR 差异和测试为准。
+
+
+- 2026-10-14 后续 review 修复：权限/当前持有人读取纳入来源权威边界，并发身份读取按读目的隔离；来源适配器补充原生数据库瞬时异常分类和取消/终止错误保护。代码与回归看 [main PR #2432](https://github.com/world-sim-dev/sandai-data-smith/pull/2432)，精确提交验证看 [Platform Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/38521498523)，实施记录看[review 后续修复](/Users/leslie/Documents/Playground/output/sandeval-three-feedback-20261014/review.md)。合并、部署与生产业务验收仍须独立查询，不能把早期 review 的待修状态当当前源码。
