@@ -31,4 +31,4 @@ links: [sandeval-caption-refine-skip-defer-handoff, sandeval-caption-review-scro
 
 2026-10-14 review 证据：PR #2439 的 `ca969cf43`，复现脚本及输出位于 `/Users/leslie/Documents/Playground/annotation-sticky-defer-20261014/review/`。检查涵盖正常关闭、多次退回、历史排除项恢复及待复验/已完成摘要。具体发现和后续修复状态以 review 记录与 PR 为准，此次 review 未修改业务代码、未访问生产。
 
-2026-10-14 修复与回归指针：[提交 6421b114a](https://github.com/world-sim-dev/sandai-data-smith/commit/6421b114a9b65e9972ce10f94ea5e6470d524af0)、[完整 Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/38533169760)。回归覆盖历史待定保持、恢复及转派后再次复验，以及两个冻结终态的有效范围进度和异常成员。具体通过、冲突或发布状态以 PR 与工作流为准。
+2026-10-14 修复与回归指针：[最终提交 60305ca75](https://github.com/world-sim-dev/sandai-data-smith/commit/60305ca7510f9c5de8ade7cfca04fbd80f483092)、[完整 Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/38534096535)。回归覆盖历史待定保持、恢复及转派后再次复验，以及两个冻结终态的有效范围进度和异常成员。具体通过、冲突或发布状态以 PR 与工作流为准。
