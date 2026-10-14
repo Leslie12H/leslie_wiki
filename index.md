@@ -666,3 +666,5 @@
 - 2026-10-14：内部 Agent 并发调用与业务 Case 准备边界、当前/历史/调优版本语义，见[Nextplay 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)；整页表面层次和终态语义见[EVOLVE v3 界面坑](domains/maxwell/pitfalls/evolve-v3-work-executor-mapping.md)。
 
 - 2026-10-14：整改转交后的明示批准单案数据例外、依赖快照范围、滚动发布复核与本人工作台验收，见[上级授权阻断](domains/sandai-data-smith/pitfalls/sandeval-repeated-correction-ancestor-blocker.md)；具体版本与回执仅存修复报告。
+
+- [EVOLVE 借鉴 LangSmith](domains/maxwell/refs/evolve-langsmith-learning.md) — 2026-10-14：实验对照、人工校准、线上失败入库、轨迹与 CI 的官方来源及源码复核入口；建议未实施。
