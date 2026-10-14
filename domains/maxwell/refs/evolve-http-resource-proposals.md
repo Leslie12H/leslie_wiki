@@ -30,3 +30,5 @@ links: [evolve-original-evidence-and-report-recovery]
 - 2026-10-14：Provider 配置身份与 Case 准备的通用边界，见[专项复核记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-provider-config-identity-review-20261014.md)。Why：合法的 Provider JSON 值可能是对象、数组或大整数，语言直接比较或浮点解码会导致异常或误用格式。How：按声明数据比较，保留数值身份；同时核对表单 / 导入 / 草稿入口及保存后的目录离线重放。不将其他 Provider 的兼容性问题归因为 Nextplay 字符串版本的历史执行失败；测试、当前改动和真实评分状态只查记录。
 
 - 2026-10-14：草稿审阅的窄侧栏与主区域适配，见[浏览器验证记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-draft-review-layout-20261014.md)。Why：宽窗口里的窄侧栏不会触发视口媒体查询，选题栏仍可能被按钮挤压；单纯 SSR 不证明能读完大材料。How：按实际容器宽度重排，在真实组件中检查末页及末行、切题、版本更新后的再审阅和只读权限；普遍性提示不能遮住内容，具体缺规则提示仍保留。Chrome 不可用时应用内浏览器可做隔离组件技术验证，不将其改称自然 Agent 或真实保存验收。运行条件和截图只查记录。
+
+- 2026-10-14：原件归档失败分类与报告摘要身份，见[专项复核记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-evidence-integrity-review-20261014.md)。Why：逐块正确不保证整文件正确，底层普通错误会让上层反复重试不可恢复的同一原件；浮点解码也可能让不同的 Provider 详情标识看似一致。How：沿执行与评分的所有归档调用方传递既有完整性错误类型，分别验证损坏原件停止、暂时中断续传以及已完成评分不重跑；不透明 JSON 数字不经过浮点转换。当前范围、失败证据与真实验收边界只查记录。

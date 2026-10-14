@@ -612,3 +612,5 @@
 - 2026-10-14：Provider 任意 JSON 配置身份比较、Case 保存与目录离线重放的兼容边界，见[HTTP 资源提案与复测](domains/maxwell/refs/evolve-http-resource-proposals.md)。
 
 - 2026-10-14：草稿审阅的容器宽度布局、长材料末行与版本再审阅的实际浏览验证，见[HTTP 资源提案与复测](domains/maxwell/refs/evolve-http-resource-proposals.md)。
+
+- 2026-10-14：原件完整性错误与评分报告摘要的复核指针，见 [HTTP 资源提案与原件边界](domains/maxwell/refs/evolve-http-resource-proposals.md)。
