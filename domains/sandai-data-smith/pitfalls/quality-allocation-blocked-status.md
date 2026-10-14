@@ -45,5 +45,7 @@ links: [sandeval-bulk-allocation-latency]
 
 **How to apply:** 用仅在来源读取期间生效的 ContextVar 选择 Leader，正常列表和并发请求保留自己的读取策略，不改写共享客户端，不替换冻结引用。请求内 SOURCE_UNAVAILABLE 最多尝试 3 次，每次重新核验实时权限，复用原分配及原幂等身份、跳过成功批次；时间预算耗尽或权限/范围/真实缺失失败后保留可处理的错误。这个机制不等于打开后台 allocation recovery，重启后的恢复仍按当前配置和原生续跑入口判断。
 
-- [来源一致读与瞬时失败重试测试 PR #2431](https://github.com/world-sim-dev/sandai-data-smith/pull/2431)：代码、回归与角色使用文档指针；是否合并、验收或上线需查看 PR 和部署记录。
-- [修复分支 Platform Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/38507305702)：测试 PR 若因其他领域的 main/test 差异无法合并，分支验证须先核对构建和部署 job 的 main ref 条件。单独分支 CI 不替代测试分支集成或生产验收；不得把测试分支历史带回开发分支。
+- [来源一致读与瞬时失败重试 main PR #2432](https://github.com/world-sim-dev/sandai-data-smith/pull/2432)：代码、回归与角色使用文档指针；是否合并、验收或上线需查看 PR 和部署记录。
+- [修复分支 Platform Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/38507778753)：测试 PR 若因其他领域的 main/test 差异无法合并，分支验证须先核对构建和部署 job 的 main ref 条件。单独分支 CI 不替代测试分支集成或生产验收；不得把测试分支历史带回开发分支。
+
+- 源码位置变化会使 `docs/reference/performance-profile.md` 的生成行号过期；使用 `scripts/generate_performance_profile.py` 同步，再以 `--check` 验证，不能手改生成内容或把新代码造成的 freshness 失败误判为基线问题。

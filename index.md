@@ -627,6 +627,6 @@
 
 - 2026-10-14：Thread 已删除但其余资源清理失败时的取消恢复、精确不存在返回与停止 / 清理分离，见[HTTP 资源与恢复指针](domains/maxwell/refs/evolve-http-resource-proposals.md)。
 
-- 2026-10-14：质检来源权威读取边界与请求内 3 次瞬时失败重试的代码、回归和发布指针，见[分配状态判读](domains/sandai-data-smith/pitfalls/quality-allocation-blocked-status.md)。
+- 2026-10-14：质检来源权威读取边界与请求内 3 次瞬时失败重试的 main PR、回归和生成档案指针，见[分配状态判读](domains/sandai-data-smith/pitfalls/quality-allocation-blocked-status.md)。
 
 - 2026-10-14：异步结果自动更新、保留阅读与失败恢复，以及用户明确桌面优先的范围约束，见[页面清晰度约束](domains/maxwell/pitfalls/evolve-design-clarity-20261013.md)；实现和本地验证仅存报告指针。
