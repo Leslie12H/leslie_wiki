@@ -618,3 +618,5 @@
 - 2026-10-14：逐题结果的连续阅读、页内边界、返回焦点与失败恢复，见[页面清晰度约束](domains/maxwell/pitfalls/evolve-design-clarity-20261013.md)；本地组件示例与真实评分分开验收。
 
 - 2026-10-14：临科 02 三笔分配的作答上下文读取已恢复，按原分配续跑、保留成功批次并以真实质检员本人待办验收，见[分配状态判读](domains/sandai-data-smith/pitfalls/quality-allocation-blocked-status.md)。
+
+- 2026-10-14：异步评分状态存储中断不得变成最终评分失败，Method 到 Worker 的恢复信号与同身份接管，见[HTTP 资源与恢复指针](domains/maxwell/refs/evolve-http-resource-proposals.md)；本地替身与真实取分分开验收。
