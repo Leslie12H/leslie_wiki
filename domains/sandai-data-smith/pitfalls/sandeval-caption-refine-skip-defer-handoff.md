@@ -2,7 +2,7 @@
 name: sandeval-caption-refine-skip-defer-handoff
 type: pitfall
 created: 2026-09-28
-updated: 2026-09-28
+updated: 2026-10-14
 tags: [sand-eval, caption-refine, annotation, handoff, quality]
 links: [sandeval-roles-and-workflow]
 ---
@@ -32,3 +32,12 @@ links: [sandeval-roles-and-workflow]
 **How to apply:** 合并前给最终整包资格核验补充当前应交清单与冻结叶子的精确比较，保留单个未变化批次独立质检的能力；回归应覆盖全待定兄弟批次恢复、未正式交接、之后补齐质检的状态变化。现有 `test_annotation_exception_handoff.py` 使用 `pass_quality` 整包路径，不能替代按批次路径的证据。修复状态以 PR 最新差异及测试为准。
 
 2026-09-28 修复指针：[追加提交 `086ed1559`](https://github.com/world-sim-dev/sandai-data-smith/commit/086ed1559275b7ea8562ab2082b81c4f0a7f2078) 在 `ResultEligibilityService.qualify` 复用 `SubmissionService.check_completeness`，比较当前应交清单与全部冻结批次叶子，旧凭证复验沿用该检查。`tests/quality/application/management/test_result_eligibility.py` 的恢复待定回归覆盖首次资格、旧凭证、未变化批次独立检查，以及恢复批次完成质检后新包可用；[Platform Gate #36412820402](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/36412820402) 验证该提交成功。CI 使用来源投影夹具与真实质量服务，非浏览器或生产验收；是否合并上线须另查 PR 与部署状态。
+
+## 误点待定且已交卷的继续作答恢复（2026-10-14）
+
+**Why:** “没有正式答案”与“没有保存内容”是两个事实。`local_edit_v1` 的待定回执保存完整字段、结构操作与元数据，但不产生正式 response；管理答题详情因此可同时显示待定和“还没有作答”。原批次确认提交后，写入门禁覆盖待定卡；仅打开待定题不能绕过交卷锁。未冻结、未分配质检的个人交卷可以作为受控管理恢复候选，不需要虚构质检退回或替标注员提交答案。
+
+**How to apply:** 用原生 `ev3_answer_card_id(assignment_id)` 查询作答回执，不能把稳定 assignment ID 当成派生答题卡 ID。先核对本人账号、当前持有人、原 wave 成员、交卷轮次/请求、待定 checkpoint、另一题正式答案，以及冻结提交和质检分配（包括 preparing）；任何已经冻结或已分配的范围都不适用本次管理撤回。受控 operator 默认 dry-run，冻结计划并显式 apply，使用 producer 提交 lease 和写时未分配/交卷/归属/答案条件；复用交卷 retirement 与原生审计，不删除待定回执、答案或原交卷历史。没有真实质检处置时，不向 `reopened_by_disposition_id` 伪填处置单，原因和实际操作者留在明确的管理 requested/completed 审计里。不同 Pod 的主库回查须证明只有交卷 reopen 时间改变，原生作答 fence 已解除，原生快照读取确实选入未变的 checkpoint。恢复资格后仍可显示待定，标注员需从待定入口核对内容并正式提交，之后再确认提交批次；入口恢复不等于本人提交成功。
+
+- 本次限定实例、operator、运行方案、五项保护测试、生产 EXPLAIN、apply 回执与独立快照验收：[2026-10-14 处理报告](/Users/leslie/Documents/Playground/output/deferred-ailingling-20261014/report.md)。状态会变化，复用前重查；本次没有新增普通用户自助撤回能力，也没有修改线上平台代码。
+- 当前实现指针：`backend/app/usage_docs/content/annotator/start-and-finish.md` 的待定说明；`backend/app/api/annotation_write_gate.py::_correction_work_unit_if_fenced`；`backend/app/repositories/annotation_batch_handoff.py`；`backend/app/repositories/annotation_qc_allocation.py`；`backend/app/repositories/answer_execution_snapshot.py`。部署、后续本人正式提交和整包质量资格分别核验。
