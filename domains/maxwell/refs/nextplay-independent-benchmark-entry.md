@@ -84,3 +84,5 @@ links: [evolve-nextplay-entry-plan-20261009, nextplay-benchmark-import-audit-202
 - 2026-10-14 当前版本与旧基线验收：同一记录保留原始错误和限定任务的只读查询。Why：资源准备能力依赖持久卷，旧快照也可能已随目标配置变化失效；通用「证据不匹配」会掩盖实际 baseline_drift。How：回到 Nextplay resource_control.configured_control、CandidateRunner 的 snapshot 校验，以及 EVOLVE direct_run/runner_result 核对声明与冻结身份；通过已准备基线不能替代首次准备验收，旧基线漂移不得靠篡改冻结资产或放宽校验绕过。
 
 - 2026-10-14 内部 Agent 调用与版本语义复核：见[架构与界面复核](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-nextplay-architecture-ui-review-20261014.md)。Why：复用业务 Runner 的 HTTP 接入不代表并发必须依赖外部服务；结构化 Case 当 JSON 文本发送也不能替代工作区恢复。How：对照 maxwell_preset 的直接派发、并发限制、maxwellCaseText 与 Nextplay inputs/runner，迁移时核对文件、历史、续接和原件等价；普通新评测、历史重跑和调优比较区分版本语义，旧快照漂移不等于历史结果无效。持久存储必要性与共享 PVC 这种具体实现分开判断；本次为建议，不是已完成迁移。
+
+- 2026-10-14 避免扩张 Agent Runtime 的执行方案：见[内部 Agent 调用流程与必要改动](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-native-execution-flow-20261014.md)。Why：Nextplay 的 nextplay-maxwell-runtime 是通过现有 Thread/Run/文件 API 工作的执行库，不是 Agent Runtime 内核；并发不要求新增 A2A 扩展。How：先复用执行库并对接 EVOLVE 的任务归属、原件和检查点；检查 materializer/service.py 的实时源 Preset 复制约束，快照归档不等于旧版本可执行。当前为用户要求重新解释的方案，前版 Runtime 扩展未获批准，不能记为已实施。
