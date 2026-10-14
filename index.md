@@ -637,3 +637,5 @@
 - [macOS 存储清理边界](global/pitfalls/macos-storage-cache-vs-state.md) — 跨仓库/工作树 Go 缓存识别、iCloud 扫描停滞、会话/虚拟磁盘保留及独立空间核验（2026-10-14）。
 
 - 2026-10-14：质检一致读 review 的混合权限读取与原生数据库异常分类反例，见[分配状态判读](domains/sandai-data-smith/pitfalls/quality-allocation-blocked-status.md)。
+
+- 2026-10-14：运行中基线到候选复测的自动衔接、判定与尝试统计分离、谱系导航保留上游筛选，见[页面清晰度约束](domains/maxwell/pitfalls/evolve-design-clarity-20261013.md)；仅本地桌面验证。
