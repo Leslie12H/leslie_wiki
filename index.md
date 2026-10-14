@@ -602,3 +602,5 @@
 - 2026-10-14：HTTP 冻结资源在归因与自动提案中的一致读取、大候选清单和空列表 / 读取失败分离，见[HTTP 资源提案与复测](domains/maxwell/refs/evolve-http-resource-proposals.md)。
 
 - 2026-10-14：[EVOLVE 人工复核边界](domains/maxwell/refs/evolve-trial-review-boundaries.md) — 自动 / 采用 / 草稿区分、单指标与整题独立投影、隔离交互验收指针。
+
+- 2026-10-14：原题 / 新题从真实 Runner 产物到 Judge 材料的本地交接、临时文件清理后读取与模型替身边界，见[原件与评分报告恢复](domains/maxwell/refs/evolve-original-evidence-and-report-recovery.md)。

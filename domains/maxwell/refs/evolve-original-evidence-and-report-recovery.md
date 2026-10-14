@@ -75,3 +75,6 @@ links: [nextplay-independent-benchmark-entry, evolve-design-clarity-20261013]
 
 
 - 查 Nextplay `grading_worker._finish_result`、`GradingRepository.finish` 与[评分提交复核](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-grading-commit-review-20261014.md)：Judge 完成、数据库提交和收到提交回执是不同时间点。Why：提交断连不能证明 Judge 失败；完成后的额外心跳也会成为丢失已计算分数的出口。How：仅对同一结果做有界保存重试，完成事务核对租约、取消和截止时间，按原完成时间确认同一 Worker 的同文终态，拒绝异文覆盖；真实事务验证提交前回滚、提交后回执丢失、取消竞争和并发重放。持续故障与跨进程回补仍须单独验证，不把本地数据库回归称作真实取分。当前实现、测试与环境条件只查复核记录。
+
+
+- 查 Nextplay `test_execution_grading_flow.py` 与[执行到评分专项记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-execution-grading-flow-review-20261014.md)：分别测试 Runner 和 Judge 时，还要补真实产物在两者之间的交接。Why：测试手工组装 ExecutionResult 可能掩盖字段、临时路径和完整性边界的不一致。How：冻结原题或新题，经过实际输入恢复、证据构造、封存及评分材料构建；清理目标与临时目录后，核对原件、长回复、历史上下文和附件仍可读取。外部 Run 与模型替身只建立本地技术证据，不能声称原题已真实取分。场景数量、源码版本与未完成项只查专项记录。
