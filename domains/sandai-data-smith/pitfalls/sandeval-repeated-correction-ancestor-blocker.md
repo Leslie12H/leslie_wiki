@@ -2,7 +2,7 @@
 name: sandeval-repeated-correction-ancestor-blocker
 type: pitfall
 created: 2026-09-30
-updated: 2026-09-30
+updated: 2026-10-14
 tags: [sand-eval, quality-center, remediation, reinspection, responsibility, release]
 links: [sandeval-transferred-correction-task-visibility, sandeval-roles-and-workflow]
 ---
@@ -35,3 +35,12 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-roles-and-work
 
 - [修复 PR #2192](https://github.com/world-sim-dev/sandai-data-smith/pull/2192) 与 [main 发布流水线](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/36685310505)：2026-09-30 发布证据入口。
 - [独立生产版本、4 个副本与责任链回读](/Users/leslie/Documents/Playground/output/wuqiuyu-correction-20260930/production-release-verification.json)：具体 SHA、digest、容器源码哈希和执行状态保存在当次证据；使用时须重新核验，不能视为持续的生产状态。
+
+## 整改转交后，冻结许可与当前责任版本分离（2026-10-14）
+
+**Why:** 同批次历史整改转交后，当前持有人和接收人可以正确，页面也可以显示必需题目已更新，但上级继承证据和复验许可仍绑定转交前的版本。本次只读实例中，四条 processing 责任经过两次正式管理转交各增加两个版本，原 v2 许可仍存在且摘要、执行与精确范围可核验；当前版本没有许可，原生祖先门禁返回 `REINSPECTION_AUTHORIZATION_STALE / 上级整改授权已变化`。答案准备度不能替代完整授权链。
+
+**How to apply:** 对同一报错，先区分客户端旧版本、缺父关系、原许可丢失和转交后的版本失配。读取同一真实 scope 的管理转交命令、当前处置与 inherited refs、旧/新版本的精确许可，再在数据库强制只读连接中重放原生祖先门禁和冻结执行范围校验。不能因页面显示可提交就让用户反复改题，也不能因旧许可有效便跳过当前授权校验。`correction_parent_repair` 的 fresh untouched missing-parent 条件不能推广到已经转交或有历史执行的单。没有已批准且适用的授权接续机制时，给出诊断并保留答案、旧许可、报告和上级独立验收；不要关闭旧责任、回退版本或虚构授权。仅诊断的结果不能描述为提交恢复成功。
+
+- [2026-10-14 本单诊断与只读证据](/Users/leslie/Documents/Playground/output/correction-xujiayu-20261014/report.md)：转交、四条旧/新版本、原生拒绝分支、许可摘要与执行范围核验、本人操作建议及未改规则边界。具体状态仅保存在报告，现场复用须重新核验。
+- 当前实现指针：`quality/infrastructure/persistence/disposition_repository.py::transfer / reinspection_permit`、`quality/application/resolution/reinspection_authorization_service.py::manual_ancestors / _validate_execution_permit`、`quality/application/resolution/resolution_service.py::_ancestors / resubmit`。是否支持合法转交后的授权接续以当次部署源码和原生检查为准。

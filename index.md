@@ -417,7 +417,7 @@
 - [Sand Eval 退回路线与整包交接提示](domains/sandai-data-smith/pitfalls/sandeval-return-route-and-handoff-hints.md) — 路线文案、整包提示、直接整改链路、系统执行身份，以及历史质检分配、当前账号资格和实际复验任务的区别（更新至 2026-09-30）。
 - [Sand Eval 转派后整改任务可见性](domains/sandai-data-smith/pitfalls/sandeval-transferred-correction-task-visibility.md) — 核对历史批次、当前持卡工作项、整批退回的唯一持有人门禁、已答卡转派页与运营 CLI 口径、写入与提交恢复路径；含持有人分裂 409、单卡转派、退回弹窗接收人标签、复验提交 403，以及原作者接回的精确计划、冻结守卫、非目标保全与真实质检员接收人校验指针（2026-10-14）。
 - [Sand Eval 工作台 404 与任务事实分层取证](domains/sandai-data-smith/pitfalls/sandeval-workbench-context-404-evidence.md) — 共享查看接口与原业务 API、管理员查看与人员原始会话、路由门禁与处理器、历史失败和当前成功的证据边界；澳鹏 9.30 声音任务只读报告指针；新增质检轮次的普通读取/leader 对照、自然收敛、精确授权读取修复范围及引入提交/发布考古；代改后精确答案 false 404、完整草稿只读对照、前端判断阻塞及跨四副本历史失败/现时收敛与 trace/query 实参补证（2026-10-13）。
-- [Sand Eval 子整改闭环后再次退回阻塞](domains/sandai-data-smith/pitfalls/sandeval-repeated-correction-ancestor-blocker.md) — 上级责任未结、新退回授权断链的取证、正式完成执行继承、单条受控修复及 main 发布验收指针（2026-09-30）。
+- [Sand Eval 子整改闭环后再次退回阻塞](domains/sandai-data-smith/pitfalls/sandeval-repeated-correction-ancestor-blocker.md) — 上级责任未结、再次退回缺父关系与正式执行继承；含整改转交后旧许可/当前版本失配的只读核验、缺父工具适用边界和本人操作建议（2026-10-14）。
 - 2026-09-27：首次继续整包送审、仅整改批次独立回交的范围与混合状态核验见 [直达整改与按批交接](domains/sandai-data-smith/refs/sandeval-direct-remediation-and-batch-handoff.md)。
 - [AI 秋招雷达固定入口与工作台](global/refs/ai-job-radar-stable-entry.md) — 固定公开 URL、匿名岗位与私人权限、个人账号使用与资产归属边界、全栈嵌入及定时发布维护指针（2026-09-30）。
 
