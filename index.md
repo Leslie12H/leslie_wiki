@@ -690,3 +690,5 @@
 - [LangSmith 与 Opik 核心交互](domains/maxwell/refs/langsmith-opik-core-interactions-20261015.md) — 2026-10-15：用户否定修订图后回到操作链研究；实验表到同题证据、优化 Trial 到样本与 Trace、Opik 2.0 项目范围，既有视觉未认可。
 
 - [历史整改从旧送审基线重复生成版本](domains/sandai-data-smith/pitfalls/sandeval-historical-correction-stale-base.md) — 2026-10-15：本人工作台准备度、同批次后续已通过版本和原始失败意图分层核验；仅只读诊断。
+
+- [EVOLVE 连续工作台交互建议](domains/maxwell/refs/evolve-interaction-design-20261015.md) — Benchmark 评测、任务候选、逐题证据共用路径及页面状态规划；待讨论，未实施（2026-10-15）。
