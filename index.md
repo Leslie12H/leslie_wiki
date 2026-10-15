@@ -759,3 +759,5 @@
 - 2026-10-16 EVOLVE 校准精确标准归属、分页读取范围与 rubric 维度编辑：见 [正式前端实施指针](domains/maxwell/refs/evolve-workspace-implementation-20261015.md)，只读/未保存证据与真实校准执行分开核验。
 
 - 2026-10-16 EVOLVE 全目录任务筛选、个人视图隔离与旧路由返回：见 [正式前端实施指针](domains/maxwell/refs/evolve-workspace-implementation-20261015.md)，筛选视图与资产草稿持久化分开核验。
+
+- 2026-10-16 EVOLVE 资产草稿刷新恢复、未确认提交重试与账号清理：见 [正式前端实施指针](domains/maxwell/refs/evolve-workspace-implementation-20261015.md)，本地持久化与服务端保存分开证明。

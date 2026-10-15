@@ -146,3 +146,15 @@ links: [evolve-commercial-ui-20261015, evolve-continuous-workspace-layout-202610
 - 视图与隔离：`apps/studio/src/products/evolve/library/CatalogViewsStore.ts` 及测试、`src/business-components/evolve/CatalogViews.tsx`。持久化只指个人筛选视图，不能称为资产草稿恢复。
 - 浏览器任务筛选、视图恢复、键盘输入、窄屏和检查日志：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/interaction-audit.md` 对应日期记录。
 - Benchmark 目录新增搜索/排序需要独立契约确认，清单在同目录 `benchmark-directory-contract-plan.md`；以会话中的明确答复作为实施授权，不把提交清单当作同意。迁移/部署与 Agent 自然闭环仍需独立验证。
+
+
+## 2026-10-16 资产草稿刷新恢复与未确认提交
+
+**Why:** 正文恢复不能替代完整编辑会话恢复。历史原件、已知当前修订、冻结引用与写请求身份若在刷新时被重新推导，会造成意外升级、版本冲突误处理或重复保存。浏览器记录失败时仍显示“已保留”，也会让用户在刷新时丢失修改。
+
+**How to apply:** 按账号、业务、编辑器隔离版本化本地检查点，保留未完成输入与原始修订；写请求发出前记录同一次提交身份，未知结果只允许显式重试，不自动提交或取最新替代。保存确认/放弃清理，账号信息延迟到达时重新绑定同一编辑器，同账号 token 轮换不丢稿，退出与账号切换清理。浏览器配额、损坏记录与其他页面变化必须显式说明，不能将内存内容称为已持久化。
+
+- 草稿与账号生命周期：`apps/studio/src/products/evolve/library/LocalDraftRecovery.ts`、`persistentEditorSession.ts` 及相邻测试。
+- 业务快照：`CaseEditorStore.ts`、`StandardEditorStore.ts`、`benchmarks/SharedBenchmarkEditorStore.ts`。冻结 Agent 产物保留原 ID/hash 和来源，不重新序列化替代。
+- 界面：`src/business-components/evolve/DraftRecoveryNotice.tsx`、三个资产编辑 Dialog 与 `CaseEditorDialog.css`；标题与操作区固定，长内容滚动。
+- 2,001 项技术样例、未确认请求重试、真实页面用例/用例集/指标/Benchmark 刷新恢复、桌面/窄屏截图与验证边界，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/interaction-audit.md` 对应日期记录。浏览器本地保留不等于服务端保存或跨设备同步；接入密钥不持久化，临时选择/页码不等于资产内容。实际服务写入、Agent 自然闭环、迁移和部署仍须独立验证。
