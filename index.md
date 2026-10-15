@@ -680,3 +680,5 @@
 - 2026-10-15：评测矩阵、执行诊断双栏、自动调优趋势与轮次，以及手动试验并排布局，见[平台交互研究入口](domains/maxwell/refs/evaluation-platform-interactions-20261014.md)；官方图片和公开 Trace 的证据边界分别记录，未修改业务 UI。
 
 - 2026-10-15：内部 Agent 取消精确回执对账、原件过滤检查点及累计用量归档，见[Nextplay 接入修复入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)；本地 65 题交接与真实模型评分分开验收。
+
+- [EVOLVE 统一展示规划](domains/maxwell/refs/evolve-unified-ia-plan-20261015.md) — 2026-10-15：参考 LangSmith、Opik，统一用例、评分、Benchmark、评测、候选与谱系的对象归属、页面骨架和验收；保持现有风格，规划未实施。
