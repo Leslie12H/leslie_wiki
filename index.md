@@ -730,7 +730,7 @@
 
 - [两级抽检范围与题号变化](domains/sandai-data-smith/pitfalls/sandeval-two-stage-sampling-scope.md) — 2026-10-15：供应商首轮、Sand 和重新抽样的集合分别核验；区分 URL 锚定题与真正退回题，业务口径与单案只读证据入口。
 
-- 2026-10-15：[EVOLVE 连续工作区实装](domains/maxwell/refs/evolve-workspace-implementation-20261015.md) — 首版纠正、成熟布局研究与连续工作台原型：导航重新评估，资产修订到基准更新、趋势到证据和调优的路径；示例交互与业务实装边界分别记录，附 SVG 比例修复、全域规模管理、保持既有导航的 Agent 协作及详情抽屉原型指针，待评价。
+- 2026-10-15：[EVOLVE 连续工作区实装](domains/maxwell/refs/evolve-workspace-implementation-20261015.md) — 首版纠正、成熟布局研究与连续工作台原型：导航重新评估，资产修订到基准更新、趋势到证据和调优的路径；示例交互与业务实装边界分别记录，附 SVG 比例修复、全域规模管理、固定导航的 Agent 协作、正式前端与已批准搜索/引用/恢复契约实装和验收边界指针。
 
 - [已跳过答案修订的同步误判](domains/sandai-data-smith/pitfalls/sandeval-skipped-answer-revision-baseline-mismatch.md) — 2026-10-15：同 response 的跳过正式字段与 caption 执行基线用途不同，单题修订/整批准备度分层及滚动发布后的只读核查指针。
 
@@ -753,3 +753,5 @@
 - [EVOLVE 与 Nextplay dev 发布核验](domains/maxwell/refs/evolve-nextplay-dev-release-20261015.md) — 2026-10-15：限定 main 服务发布、OSS 版本、原件拉取配置及独立镜像/健康核验入口；部署与真实出分边界。
 
 - 2026-10-15：[数据包筛选版本漂移](domains/sandai-data-smith/pitfalls/sandeval-package-status-filter-summary-schema-drift.md) 补充修复 PR、独立候选测试与生产运行/分页验收证据指针。
+
+- [Nextplay 原题十题抽样验收入口](domains/maxwell/refs/evolve-nextplay-ten-case-acceptance-20261015.md) — 2026-10-15 的独立子集、真实运行、逐题诊断和前端核验指针；连接探测与执行出分分开证明。
