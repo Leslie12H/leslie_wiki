@@ -236,3 +236,14 @@ links: [evolve-commercial-ui-20261015, evolve-continuous-workspace-layout-202610
 
 - 源码入口：`apps/studio/src/products/evolve/benchmarks/runComparisonModel.ts`、`benchmarkOverview.ts`、`BenchmarkMetricsOverview.tsx`、`RunComparisonWorkspace.tsx`、`../RunComparisonStore.ts` 及相邻测试。
 - 证据与后续范围：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/interaction-audit.md` 的“汇总语义与对比联动”。真实既有异常记录的浏览器检查、数值组件测试和真实新执行应分别核验；视觉截图不代表已有候选应用或生产部署。
+
+
+## 2026-10-16 全目录比较与多指标历史
+
+**Why:** 只在单个 Benchmark 内比较会遗漏历史未绑定和跨基准记录。表格分页也不能代表完整时间趋势；不同指标逐 Run 拉取正文会在真实规模下放大请求。比较提示若没有冻结配置可核对，用户无法解释口径差异。
+
+**How to apply:** 将有限数量的比较选择和基线保留在 URL，筛选、详情和返回沿用同一上下文；配置明细仅显示 Run 冻结事实。主时间轴与用户关注的精确指标分别按既有历史接口分页，共用运行坐标，保留单位、缺失、局部失败和读取边界。曲线标签按固定像素绘制，窄屏滚动且固定指标名称，不缩放文字。
+
+- 目录比较与上下文：`apps/studio/src/products/evolve/v3/catalog/RecordsPage.tsx`、`benchmarks/RunComparisonSelectionBar.tsx`、`runComparisonSelection.ts`、`RunComparisonContext.tsx` 及相邻测试。
+- 多指标历史：`benchmarks/BenchmarkTrendStore.ts`、`BenchmarkHistoryStore.ts`、`BenchmarkMetricsOverview.tsx`、`BenchmarkResultsPanel.tsx` 和 `benchmarkTrend.test.mjs`；以当前实现核对并发、分页及选择上限。
+- 真实既有记录的筛选/刷新/抽屉返回、数值历史、窄屏比例与验证范围：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/interaction-audit.md` 的“全目录比较与多指标历史”。浏览器不足一页的数据与技术分页测试分别记录；没有新建评测或生产写入，整体完成状态以最新验收记录为准。
