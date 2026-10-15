@@ -682,3 +682,5 @@
 - 2026-10-15：内部 Agent 取消精确回执对账、原件过滤检查点及累计用量归档，见[Nextplay 接入修复入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)；本地 65 题交接与真实模型评分分开验收。
 
 - [EVOLVE 统一展示规划](domains/maxwell/refs/evolve-unified-ia-plan-20261015.md) — 2026-10-15：参考 LangSmith、Opik，统一用例、评分、Benchmark、评测、候选与谱系的对象归属、页面骨架和验收；保持现有风格，规划未实施。
+
+- [EVOLVE 整体工作区布局](domains/maxwell/refs/evolve-continuous-workspace-layout-20261015.md) — 2026-10-15：用户否定独立面板拼装，要求学习 LangSmith、Opik 的连续页面；第一版未认可，修订图仍待评价。
