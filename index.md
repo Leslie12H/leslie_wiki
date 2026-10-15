@@ -745,3 +745,5 @@
 - 2026-10-15：[跳过答案整改的同步误判](domains/sandai-data-smith/pitfalls/sandeval-caption-refine-skip-defer-handoff.md#2026-10-15-跳过答案整改被误判为未同步) — 正式 skip 与可编辑正文是同一 response 的不同投影；以不可变身份核对再恢复修订，PR 2491、浏览器与生产核验留指针；并行转派后须按当前接收人复验。
 
 - [数据包状态筛选与摘要版本漂移](domains/sandai-data-smith/pitfalls/sandeval-package-status-filter-summary-schema-drift.md) — 2026-10-15：生产列表空但总数非零的双入口核验、生产端 / SQL / 测试夹具版本一致性及只读报告指针；尚未实施修复。
+
+- 2026-10-15：[数据包筛选版本漂移](domains/sandai-data-smith/pitfalls/sandeval-package-status-filter-summary-schema-drift.md) 补充引入 PR 与后续部署 PR 的独立归因、版本统一及当前版分页回归方案；未实施修复。
