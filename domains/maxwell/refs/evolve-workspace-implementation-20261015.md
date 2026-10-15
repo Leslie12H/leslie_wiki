@@ -180,3 +180,15 @@ links: [evolve-commercial-ui-20261015, evolve-continuous-workspace-layout-202610
 - 请求、版本选择与恢复：`apps/studio/src/products/evolve/benchmarks/DirectRunStore.ts`、`DirectVersionStore.ts`、`directRunSession.ts` 及相邻测试；账号生命周期见 `library/persistentEditorSession.test.mjs`。
 - 正式入口与嵌入布局：`v3/library/BenchmarkDetailPage.tsx`、`DirectBenchmarkRun.tsx`、`v3/ProposalCard.tsx`；记录目录返回见 `v3/catalog/RecordsPage.tsx`。
 - 浏览器未提交草稿、刷新和来源返回、桌面/窄屏截图与检查结果：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/interaction-audit.md` 对应日期章节。技术注入请求/回执不等于真实执行；任务候选入口、Agent 自然闭环、实际迁移与部署仍须分别验收。
+
+
+## 2026-10-16 任务版本运行的选择与请求身份
+
+**Why:** 任务选择器不能把第一页当完整目录，加载失败也不能显示为没有任务。任务内候选评测使用所属任务的预算与当前 Benchmark；独立候选验证继承指定基线的口径，两者不能混成一个未经说明的提交动作。响应未知时更换请求编号会产生重复运行风险。
+
+**How to apply:** 用已有目录 API 做分页前搜索与类型筛选，选择完成后收起为摘要，翻页不清除选择。草稿按账号/业务/Benchmark 版本隔离，普通恢复重新预检，未知提交只重试已保存的原请求；存储失败停在发送前。保留任务内运行和独立基线验证的不同归属，跳转后携带原 Benchmark 返回上下文。
+
+- 任务选择、模型、版本与候选状态：`apps/studio/src/products/evolve/benchmarks/TaskBenchmarkRunStore.ts`、`taskBenchmarkRunSession.ts`、`taskBenchmarkRun.test.mjs`。
+- 请求身份、预检与回执恢复：`benchmarks/BenchmarkRunStore.ts` 及 `benchmarkRunSelection.test.mjs`；账号生命周期仍在 `library/persistentEditorSession.test.mjs`。
+- 连续表单与返回：`v3/library/BenchmarkRunProposal.tsx`、`v3/ledger/LedgerPage.tsx`。真实 API 语义分别查 `services/evolve-server/internal/modules/evolve/application/commands/run.go` 与 `candidate_validation.go`。
+- 桌面/窄屏、只读目录搜索、未提交草稿刷新与候选往返、检查结果及剩余验收范围：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/interaction-audit.md` 对应日期章节。技术注入回执不是实际新 Run；独立候选验证状态、Agent 自然场景、实际迁移和部署仍须分别核验。

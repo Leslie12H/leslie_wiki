@@ -765,3 +765,5 @@
 - 2026-10-16 EVOLVE 接入页面与对话卡片的草稿/登记回执恢复、鉴权补填和未知请求防重复：见 [正式前端实施指针](domains/maxwell/refs/evolve-workspace-implementation-20261015.md)，浏览器草稿、技术回执与真实接入分别核验。
 
 - 2026-10-16 EVOLVE 直接评测的精确版本、能力确认、同请求恢复与来源返回：见 [正式前端实施指针](domains/maxwell/refs/evolve-workspace-implementation-20261015.md)，未提交草稿验证与真实执行分开。
+
+- 2026-10-16 EVOLVE 任务版本入口的目录搜索、冻结请求恢复及独立基线验证分流：见 [正式前端实施指针](domains/maxwell/refs/evolve-workspace-implementation-20261015.md)，只读页面和技术提交测试与真实运行分别核验。
