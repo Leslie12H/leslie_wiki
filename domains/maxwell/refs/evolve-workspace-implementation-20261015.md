@@ -158,3 +158,14 @@ links: [evolve-commercial-ui-20261015, evolve-continuous-workspace-layout-202610
 - 业务快照：`CaseEditorStore.ts`、`StandardEditorStore.ts`、`benchmarks/SharedBenchmarkEditorStore.ts`。冻结 Agent 产物保留原 ID/hash 和来源，不重新序列化替代。
 - 界面：`src/business-components/evolve/DraftRecoveryNotice.tsx`、三个资产编辑 Dialog 与 `CaseEditorDialog.css`；标题与操作区固定，长内容滚动。
 - 2,001 项技术样例、未确认请求重试、真实页面用例/用例集/指标/Benchmark 刷新恢复、桌面/窄屏截图与验证边界，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/interaction-audit.md` 对应日期记录。浏览器本地保留不等于服务端保存或跨设备同步；接入密钥不持久化，临时选择/页码不等于资产内容。实际服务写入、Agent 自然闭环、迁移和部署仍须独立验证。
+
+## 2026-10-16 接入登记草稿与回执恢复
+
+**Why:** 登记响应丢失不代表创建失败，连接检查读取失败也不代表登记失败。自动重发无幂等标识的创建会产生重复对象；旧检查成功不能覆盖正在进行的新检查。独立页面和对话工具卡片共享表单，却需要不同的草稿身份。
+
+**How to apply:** 将未提交内容、待确认请求和已接受对象 ID 分开保留。普通字段按账号/业务/入口隔离，Token 与带鉴权/查询信息的 URL 不落盘；恢复后明确补填，不静默删除参数后使用新地址。未知创建结果先核对目录，已接受 ID 仅通过 GET 恢复最新状态；检查与结束本地进度都是明确动作。恢复的用户编辑优先于 Agent 原建议，状态迟到不能复活已结束流程。
+
+- 状态与字段保留：`apps/studio/src/products/evolve/executor/ExecutorRegistrationStore.ts`、`executorRegistrationSession.ts`；独立入口 `v3/onboard/ConnectPage.tsx` 与对话入口 `ExecutorRegistrationCard.tsx`。
+- 结果显示与鉴权：`ExecutorRegistrationForm.tsx`；无需鉴权由用户明确选择，缺失检查结果、检查中与读取失败分别呈现，不能仅按 probe 是否为空显示转圈。
+- 行为、账号隔离和回执恢复测试：同目录 `ExecutorRegistrationStore.test.mjs`、`executorRegistrationRecovery.test.mjs` 与 `library/persistentEditorSession.test.mjs`。
+- 真实浏览器未提交草稿、桌面/窄屏截图、检查日志及剩余范围：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/interaction-audit.md` 对应日期章节。技术注入回执不等于真实登记；本轮没有发送 Agent 消息、执行服务写入、迁移或部署。
