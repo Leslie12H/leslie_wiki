@@ -192,3 +192,14 @@ links: [evolve-commercial-ui-20261015, evolve-continuous-workspace-layout-202610
 - 请求身份、预检与回执恢复：`benchmarks/BenchmarkRunStore.ts` 及 `benchmarkRunSelection.test.mjs`；账号生命周期仍在 `library/persistentEditorSession.test.mjs`。
 - 连续表单与返回：`v3/library/BenchmarkRunProposal.tsx`、`v3/ledger/LedgerPage.tsx`。真实 API 语义分别查 `services/evolve-server/internal/modules/evolve/application/commands/run.go` 与 `candidate_validation.go`。
 - 桌面/窄屏、只读目录搜索、未提交草稿刷新与候选往返、检查结果及剩余验收范围：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/interaction-audit.md` 对应日期章节。技术注入回执不是实际新 Run；独立候选验证状态、Agent 自然场景、实际迁移和部署仍须分别核验。
+
+
+## 2026-10-16 独立候选验证的基线选择与未知请求
+
+**Why:** 大量历史记录需要可核对的列表与固定口径；未知提交后改设置可能重复创建验证。后续一次认证或权限拒绝，也不能反向证明早先未收到响应的请求没有执行。
+
+**How to apply:** 将候选、基线和请求身份分开保留。普通草稿恢复重新核对基线，未确认请求只能显式核对原请求；接受回执按冻结引用验证，实时进度通过评测记录读取。选中基线后收起列表，侧栏记录将时间放在记录编号下方以保留基线关系。
+
+- 状态与校验入口：`apps/studio/src/products/evolve/candidates/CandidateValidationStore.ts`、`validationSession.ts` 和 `candidateValidationFlow.test.mjs`。继承与独立预算的服务语义查 `services/evolve-server/internal/modules/evolve/application/commands/candidate_validation.go`。
+- 列表/摘要/执行选项与返回：`candidates/CandidateValidationPanel.tsx`、`v3/catalog/RecordsPage.tsx`；只使用既有分页/状态/精确 ID 读取，不等同于全目录名称搜索。
+- 恢复、账号生命周期、浏览器未提交草稿、窄屏截图与剩余范围：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/interaction-audit.md` 的对应章节。未知结果测试不等于真实验证执行；调优创建/重评分、长任务头部及自然 Agent 闭环继续按证据分别验收。
