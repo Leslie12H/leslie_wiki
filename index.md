@@ -185,7 +185,7 @@
 - [Sand Eval 整改意见姓名的展示覆盖](domains/sandai-data-smith/pitfalls/sandeval-correction-reviewer-display-scope.md) — 原身份、账号昵称、部署 DTO 与状态分支覆盖；完整工作台刷新、草稿确认、稳定题目定位与跨单隔离修复及测试 PR #2241 / main PR #2246 指针；质检复验页上游 Sand 意见的身份边界、仲裁作者、署名/刷新修复、测试 PR #2266 / main PR #2267、基线冲突与 CI 验证边界；成功保存后的旧值回显、重复版本、leader/follower 对照及历史 SQL 实参确认的回执衔接缺口指针（2026-10-13）。
 - [Caption Refine 跳过与待定阻断交卷](domains/sandai-data-smith/pitfalls/sandeval-caption-refine-skip-defer-handoff.md) — 定位限制历史与修复分支；待定排除须覆盖整包，跳过须保留固定作答上下文，交付状态另行核验；含全待定兄弟批次恢复后的整包资格，以及误点待定且已交卷、未分配质检时的受控管理撤回、完整保存内容读取和本人重新提交边界（2026-10-14）。
 - [Sand Eval 质检员整改轮次与可编辑性核验](domains/sandai-data-smith/pitfalls/sandeval-inspector-rework-round-list-and-editability.md) — 源任务、标注员范围、当前/历史质检轮次与编辑权限的区分（2026-09-28）。
-- [Sand Eval 退回标注员部分落库](domains/sandai-data-smith/pitfalls/sandeval-manual-return-partial-write.md) — 停止检查成功、整改进度条件更新失败、标注退回缺失的精确 SQL 实参和独立回读；普通负责人路线与直接整改的区分、受控个案恢复及可重放命令修复 PR 指针（2026-10-15）。
+- [Sand Eval 退回标注员部分落库](domains/sandai-data-smith/pitfalls/sandeval-manual-return-partial-write.md) — 停止检查成功、整改进度条件更新失败、标注退回缺失的精确 SQL 实参和独立回读；普通负责人路线与直接整改的区分、受控个案恢复及可重放命令 main/测试 PR 指针（2026-10-15）。
 - [Sand Eval 整批退回后的代改版本冲突](domains/sandai-data-smith/pitfalls/sandeval-stopped-review-amendment-conflict.md) — 上轮停止后代改继承的原因、main 修复 PR #2144 与生产验收边界（2026-09-28）。
 - [Sand Eval Sand 退回前代改与空间复验版本冲突](domains/sandai-data-smith/pitfalls/sandeval-cross-stage-frozen-answer-superseded.md) — 上轮供应商已通过并交 Sand；Sand 代改退回后新空间轮次冻结旧答案的时间线、测试与 main PR 指针及验证边界（2026-09-29）。
 
