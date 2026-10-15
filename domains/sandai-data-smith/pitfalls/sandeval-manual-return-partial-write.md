@@ -15,3 +15,7 @@ links: [sandeval-inspector-rework-round-list-and-editability, sandeval-direct-re
 
 - 2026-10-15 只读取证、精确对象、SQL 实参、失败请求、当前部署和证据边界：[报告](/Users/leslie/Documents/Playground/output/wangzhen-rework-20261015/report.md)。诊断没有修复生产；后续状态须重新核验。
 - 源码指针：quality/application/resolution/manual_return_service.py::_return；resolution_service.py::capture_manual_annotation_return；quality/infrastructure/persistence/resolution_execution_repository.py::update；quality/application/inspection/review_query_service.py::detail 与 inspector_display_status。先核对实际部署，不能将当前 main 当成事发版本。
+
+- 2026-10-15 用户授权此单恢复；精确预检 hash、现有业务服务执行、原轮次与父责任保全、本人列表 source_available 及完整整改清单的独立验收见 [恢复报告](/Users/leslie/Documents/Playground/output/wangzhen-rework-20261015/repair-report.md)。这仅证明个案已恢复为可处理状态，实际整改、复验与验收须另行读取。修复根因的代码在 [测试 PR #2468](https://github.com/world-sim-dev/sandai-data-smith/pull/2468)，是否可合并、Gate 及部署必须现场核验。
+- 恢复命令应在首个业务写入前保存完整不可变意图，绑定检查版本、原发起身份、接收人、原意见、精确执行上下文和责任版本；重放只能接续自己的已提交步骤。只有执行关联完成后才能发布给标注员；已发布后缺回执不得覆盖标注工作。只模拟事务回滚会掩盖真实的逐语句提交故障，回归应注入每个提交前缀的中断。实现位置查 PR 中的 manual_return_intent.py，不据知识页认定已上线。
+- 操作审计不能只 fsync 在临时 Pod：并行滚动发布可能销毁该文件，应实时输出并由操作者本机保存。写后对象比较还须区分数据库时间精度截断与业务字段漂移；出现校验失败先独立读取，不能盲目再次 apply。只读探针对大批参数化 SELECT 的解析预算不足时，可提高该探针进程的 parser token budget，但须保留并验证 DML 拒绝，不能据探针限制认定本人工作台失败。
