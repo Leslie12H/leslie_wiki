@@ -63,7 +63,7 @@
 - [定时用例的 Admin 会话凭据过期](domains/sisyphus/pitfalls/scheduled-admin-jwt-expiry.md) — `event-tracking` setup 401 的时间线、Runner 凭据映射、Attempt 2 验证与账号池探测陷阱（2026-09-29）
 
 ## Disciplines(职业知识)
-- [CI 范围与间接门禁](disciplines/testing/ci-scope-and-indirect-gates.md) — 路径分类、步骤条件、检查依赖图及失败聚合的收窄核验方法
+- [CI 范围与间接门禁](disciplines/testing/ci-scope-and-indirect-gates.md) — 路径分类、步骤条件、检查依赖图、失败聚合，以及 PR 事件基线与浅克隆的核验方法（2026-10-15）
 - [testing](disciplines/testing/README.md) — 测试方法论 *(暂空)*
 - [dev](disciplines/dev/README.md) — 开发实践 *(暂空)*
 

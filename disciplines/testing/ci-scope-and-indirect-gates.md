@@ -2,7 +2,7 @@
 name: ci-scope-and-indirect-gates
 type: discipline
 created: 2026-09-22
-updated: 2026-09-23
+updated: 2026-10-15
 tags: [ci, testing, dependency, sand-eval]
 links: []
 ---
@@ -26,3 +26,9 @@ links: []
 - 仓库 `sand-eval/platform/scripts/change-scope-contract.json`：文档、生产源码、叶子测试、共享测试 helper、规则、Collect、工具、未知路径与 Draft 的闭合样例。
 
 本地 macOS 的 `/var` 与 `/private/var` 临时路径别名也可能让依赖 lexical 路径的结构夹具失败；先用规范化 TMPDIR 复核，再判断是否改坏业务代码。
+
+## PR 事件与浅克隆的比较对象
+
+**Why:** GitHub 的事件 base SHA 与稍后 checkout 的合并引用所用 base 可能不同。浅克隆即使包含合并提交的两个父提交，也不保证含事件中要比较的旧 base；路径检测可能在业务测试前以 `bad object` 失败。
+
+**How to apply:** 对照事件中的 base/head、checkout 日志中的实际合并父提交和 fetch 深度；用事件给定的精确两个 SHA 补取比较对象，不以猜测加深若干层替代。以本地真实 Git 浅克隆验证缺失对象、成功补取和路径筛选，确认 push 事件仍保持原语义。CI report 成功不能覆盖上游变更检测失败，检查各必需 job 的实际状态。证据与修复指针：[Maxwell PR #355](https://github.com/world-sim-dev/maxwell-ai/pull/355) 及仓库 `docs/verification/2026-10-15-candidate-runner-handoff.md`；当前运行状态回到 PR 查询。
