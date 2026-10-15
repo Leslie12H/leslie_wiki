@@ -25,3 +25,11 @@ links: [nextplay-independent-benchmark-entry, evolve-preset-evaluation-entry]
 实现及验证入口：Maxwell 工作树 `/private/tmp/evolve-internal-agent-20261014/docs/verification/2026-10-15-candidate-runner-handoff.md`；跨语言测试 `services/evolve-server/internal/app/integration/a2a/candidate_handoff_test.go`；Nextplay `maxwell-runtime/src/nextplay_runtime/request.py` 与 `tests/test_frozen_request.py`。检查请求冻结原文、完整 SP / Skill、实际绑定和先采集后清理；SDK / 模型替身不是真实评分证明。
 
 自动衔接的具体接口清单在 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-runner-handoff-contract-review-20261015.md`。确认状态与当前代码需回到任务 / PR 核验，不能把分工确认或交接测试通过当作自动准备、65 题真实取分、大原件和取消清理全部完成。未部署。
+
+## 衔接后的恢复与资产归属检查
+
+**Why:** 新调优 Work 关联了来源 CaseSet，不等于运行仓储已经允许读取其中仍归属原 Work 的 Case；同样，已派发的远端任务可能在调用方断线后丢失本地编号。只验证 JSON 形状或内存仓储，会漏掉真正的恢复和事务边界。
+
+**How to apply:** 顺着 Maxwell `commands/runner_preparation.go`、`runner_tuning_run.go`、PostgreSQL `works.go` / `runs.go` 及 `runner_handoff_integration_test.go` 核对：精确来源集合授权、实际准备回执、已知远端编号的有界持久化、未知接收不重发、首次基线的事务限制。协议到执行用跨语言测试，数据库 CAS 与资产归属用隔离 PostgreSQL；两者均不能代替真实 Agent / Judge 验收。
+
+2026-10-15 已获仅本地实施授权。实现清单、逐项测试与未验收的大原件 / 取消 / 65 题真实评分边界，统一查上方 `2026-10-15-candidate-runner-handoff.md` 验证记录；PR、提交和部署状态需另行核验。
