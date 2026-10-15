@@ -24,10 +24,16 @@ links: [sandeval-quality-sampling-return-map, sandeval-review-performance]
 
 [诊断报告](/Users/leslie/Documents/Playground/output/sandeval-package-filter-20261015/report.html) 保存“纸面 + Sand 未质检”浏览器复现、部署和运行源码哈希、两次独立只读数据库对照、引入提交和修复范围。版本数字、数量及运行态均以该固定报告为准，不从本页推断当前仍有故障。
 
-本次完成诊断，未修改业务代码、未发布或写生产；修复状态需查看后续 PR 与部署证据。
+诊断阶段的只读证据保留在报告；后续修复及发布证据见下方固定指针。
 
 ## 引入归因与修复核验补充
 
-2026-10-15 继续核验 GitHub PR 元数据及不可变 Git 历史，直接引入 PR 与后续部署 PR 的区别、提交差异和合入时间已追加到上方诊断报告，并另存同目录 `pr-attribution.json`。当前修复仍未实施；后续查实时状态不要把方案当作已修复。
+2026-10-15 继续核验 GitHub PR 元数据及不可变 Git 历史，直接引入 PR 与后续部署 PR 的区别、提交差异和合入时间已追加到上方诊断报告，并另存同目录 `pr-attribution.json`。后续修复已形成独立 PR；当前运行状态以对应提交和部署核验为准。
 
 **How to apply:** 摘要升级要同时核对生成器、投影读取器、SQL 前置过滤与仓储夹具；修复让它们共用当前版本来源，同时保留 ready、请求/发布世代一致和版本一致性。用当前版数据覆盖两侧列表、状态筛选、总数与分页，旧版及未完成刷新不得伪装成当前确认结果。已有有效新版摘要无需因读取缺陷回退或删除。
+
+## 2026-10-15 修复与验收指针
+
+[修复 PR #2494](https://github.com/world-sim-dev/sandai-data-smith/pull/2494) 保存版本来源统一与两侧状态筛选、旧版/未来版/升级中摘要和分页回归。测试完整检查与部署见 [38742013376](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/38742013376)，main PR Gate 见 [38742365289](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/38742365289)，对应生产发布见 [38743014293](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/38743014293)。实际运行提交、全部可用副本镜像及“纸面 + Sand 未质检”两页验收保存在上方诊断报告同目录的 `production-rollout.json`、`production-ui.json` 与 `release-progress.json`；这些是固定时间证据，不代表后续实时部署。
+
+**How to apply:** 共享测试分支有冲突时不得把它带入干净任务分支；依据独立测试环境 runbook 验证候选提交。上线以生产发布完成、实际提交/镜像一致和原始用户场景恢复三项共同确认，不能仅凭 PR 合并或 CI 通过宣称修复生效。
