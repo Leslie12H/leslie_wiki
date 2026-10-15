@@ -72,3 +72,17 @@ links: [evolve-commercial-ui-20261015, evolve-continuous-workspace-layout-202610
 **How to apply:** 全局探索、资产协助、任务持续会话作为现有页面的协作入口；打开仅准备输入，任务复用会话。草稿审阅入库后回到原分类，并保留来源、版本和引用；Benchmark 显式采用新版本。被测对象登记执行通道与版本，连接 / 执行 / 应用状态分别验证。目录、选择器和引用表统一考虑搜索、分页、跨页勾选与归档。评测和 Case 的长内容采用右侧详情面板，在同一面板中看逐题结果、输入输出、评分及轨迹，并携带证据进入协作；保存确认仍可用短弹窗。
 
 当前原型代码、现有产品能力源码指针、规模样例与验证记录见[连续工作台原型记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-continuous-prototype-20261015/README.md)的“全域规模检查与 Agent 协作”和“长内容详情抽屉”。公开交互证据以 [LangSmith 比较详情面板](https://docs.langchain.com/langsmith/compare-experiment-results#expand-details-panel) 和 [实验分析](https://docs.langchain.com/langsmith/analyze-an-experiment#view-the-traces) 为指针。原型预置回复、待执行计划和示例评分都不代表真实 Agent 调用、业务 UI 完成或生产执行。
+
+
+## 2026-10-15 正式前端与已批准接口增量
+
+**Why:** 规模化管理不能把已加载页当完整目录，恢复接口也不能绕过已有数据库触发器；图表、表格和 Agent 产物链接必须携带精确证据身份。相同冻结内容可能对应多个资产修订，不能把内容命中误报为独立的采用修订证明。
+
+**How to apply:** 当前实现、批准的契约/约束计划、测试命令、浏览器截图及未完成的环境验收统一见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/README.md`。先核对本地代理目标，再决定哪些浏览器操作是只读，不能把旧线上后端的返回当成新接口验收。用户授权仅编写恢复约束迁移及测试，不包括 dev/生产执行；真实部署与数据库状态须现场核对。
+
+- 目录与精确选择：`apps/studio/src/products/evolve/library/CatalogSelection.ts`、`CatalogCursor.ts`、`CaseRevisionUpdates.ts` 及相邻测试。检查新修订与采用新修订是不同操作。
+- 趋势与证据：`benchmarks/BenchmarkHistoryStore.ts`、`runComparisonModel.ts`、`v3/matrix/matrixMetrics.ts`。历史分页独立于记录表；每页指标退步统计不能冒充全量。
+- Agent 事实到产物：`v3/WorkspaceAgent.tsx`、`agentFactNavigation.ts`、`ledger/DraftReviewDrawer.tsx` 与 `drafts/freezeDraft.test.mjs`。单个草稿的确认/保存只作用于明确选中的版本，不顺带冻结其他已确认内容。
+- 恢复与引用：`services/evolve-server/internal/app/transport/http/openapi.json`、`internal/modules/evolve/application/ports/asset_directory.go`、`asset_references.go`、`migrations/postgres/0032_evolve_standard_restore.sql`。以实现记录核对状态幂等、内容身份引用、游标变化及 PostgreSQL 验收边界。
+
+截图是正式前端读取已有数据的证据，不是本轮执行了评测、Agent 生成或候选应用的证据，也不等于用户最终认可视觉设计。
