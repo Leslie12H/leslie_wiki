@@ -741,3 +741,5 @@
 - [空间与 Sand 质检抽样、打回和复验核验入口](domains/sandai-data-smith/refs/sandeval-quality-sampling-return-map.md) — 2026-10-15：两级母集、比例下限、同关卡历史拒绝继承、原计划与检查豁免分层、两条退回路线及五张流程图报告指针。
 
 - [部分转派后的整包完整性缺口](domains/sandai-data-smith/pitfalls/sandeval-partial-reassignment-package-completeness-gap.md) — 2026-10-15：页面6批20条已通过、后台5批19条的集合差异；普通转派、正式修订、单批回交与必检预览的保留成员证据及 PR 2488 交付指针。
+
+- 2026-10-15：[跳过答案整改的同步误判](domains/sandai-data-smith/pitfalls/sandeval-caption-refine-skip-defer-handoff.md#2026-10-15-跳过答案整改被误判为未同步) — 正式 skip 与可编辑正文是同一 response 的不同投影；以不可变身份核对再恢复修订，PR 2491 与本地浏览器验证留指针，生产状态另查。
