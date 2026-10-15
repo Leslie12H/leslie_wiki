@@ -19,3 +19,5 @@ links: [evolve-native-routing-vs-candidate-runner]
 - 最小复现应独立于已有理想测试桩。相关现有测试通过但复现失败，表示覆盖缺口，不能拿通过率抵消实际缺陷。
 
 具体代码位置、复现及当前修复状态入口：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-runner-review-20261015.md`；双入口分工见 [内部分流与候选 Runner](evolve-native-routing-vs-candidate-runner.md)。会变化的实现状态回到记录与 PR 核验，本页只保留检查方法。
+
+健康检查也要纳入评分恢复矩阵：登记行的乐观锁版本可能因重检而变化，不能直接等价于原件读取授权已撤销。检查凭据、端点、协议与业务绑定和探测状态是否分离，并用健康重检期间持续分块读取的场景验证。
