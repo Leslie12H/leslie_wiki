@@ -203,3 +203,14 @@ links: [evolve-commercial-ui-20261015, evolve-continuous-workspace-layout-202610
 - 状态与校验入口：`apps/studio/src/products/evolve/candidates/CandidateValidationStore.ts`、`validationSession.ts` 和 `candidateValidationFlow.test.mjs`。继承与独立预算的服务语义查 `services/evolve-server/internal/modules/evolve/application/commands/candidate_validation.go`。
 - 列表/摘要/执行选项与返回：`candidates/CandidateValidationPanel.tsx`、`v3/catalog/RecordsPage.tsx`；只使用既有分页/状态/精确 ID 读取，不等同于全目录名称搜索。
 - 恢复、账号生命周期、浏览器未提交草稿、窄屏截图与剩余范围：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/interaction-audit.md` 的对应章节。未知结果测试不等于真实验证执行；调优创建/重评分、长任务头部及自然 Agent 闭环继续按证据分别验收。
+
+
+## 2026-10-16 任务工作区长内容与滚动边界
+
+**Why:** 旧顶栏的固定高度会在新导航布局下浪费空间；长任务说明与阶段、动作挤在同一行，会压缩主要工作区。左右共用滚动时，长决策内容又会带走候选上下文。
+
+**How to apply:** 以父容器剩余空间组织工作区。任务说明提供有界摘要与完整阅读入口；阶段和页签有固定位置。宽屏候选列表/谱系与详情独立滚动，窄屏恢复单列阅读；协作窄屏在对话/进展之间切换，保留对话实例。验收必须覆盖实际长内容、焦点返回、键盘切换与导航断点，不能只看空页面。
+
+- 布局与上下文入口：`apps/studio/src/products/evolve/v3/TaskPageHeader.tsx`、`TaskPageHeader.css`、`workspace.css`、`ledger/TaskSidePanel.tsx`、`LedgerPage.css`、`LedgerLineage.tsx` / `.css`；公共页签键盘行为在 `components/base/Tabs/Tabs.tsx`。
+- 桌面、760px / 600px、抽屉返回焦点、独立滚动、分栏键盘调整和源码检查的证据：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/interaction-audit.md` 的对应章节，以及 `task-workspace-layout.png`、`task-candidate-scrolling.png`、`task-workspace-narrow.png`。
+- 此处仅证明本轮布局与只读交互。真实 Agent 闭环、运行写入、PostgreSQL 迁移与部署分别验收；完整实施目标仍在进行。
