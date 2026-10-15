@@ -1330,3 +1330,5 @@
 - 2026-10-15：记录 EVOLVE 内部执行分流与既有 Nextplay A2A Candidate Runner 的能力边界，保留历史替换验证入口，避免把新路径缺口误报为全平台缺失。
 
 - 2026-10-15 ingest：补充 EVOLVE 底色与被接入对象的明确否定反馈，保存 Opik 当前项目和 Agent Playground、LangSmith 目标函数与实验配置的研究指针；区分被测对象、连接和版本，未改原型。
+
+- 2026-10-15 ingest：补充竞品与 EVOLVE 的用例、指标身份、批量评测、调优和整体 Agent 质量映射；记录 Agent Beta 新证据及跨 Benchmark 曲线口径复查指针，未实施。

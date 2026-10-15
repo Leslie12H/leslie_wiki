@@ -704,3 +704,5 @@
 - 2026-10-15：[内部执行分流与既有候选 Runner](domains/maxwell/pitfalls/evolve-native-routing-vs-candidate-runner.md) — 历史 A2A 替换验证、新入口能力缺口、临时资源与 Runtime 修改的区分。
 
 - [EVOLVE 底色与对象入口反馈](domains/maxwell/refs/evolve-commercial-ui-20261015.md#2026-10-15底色与被接入对象的进一步反馈) — 2026-10-15：用户否定当前底色与对象入口遗漏；先研究 Opik 项目/Agent 接入、LangSmith 目标/实验配置及连续工作区，未继续画稿。
+
+- [LangSmith / Opik / EVOLVE 概念对应](domains/maxwell/refs/langsmith-opik-core-interactions-20261015.md) — 2026-10-15：指标 key、定义修订和结果身份，Experiment/Run/Trial 粒度，Agent Beta、Test Suite 与三种质量趋势的核验入口。
