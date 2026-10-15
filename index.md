@@ -721,3 +721,5 @@
 - 2026-10-15：[EVOLVE 色彩校准补充](domains/maxwell/refs/evolve-commercial-ui-20261015.md#同日追加纯白方案与-maxwell-不协调) — 用户指出纯白冷灰割裂，按实际 Maxwell 截图恢复暖色语义层级；保留放大的文字和连续布局，待评价。
 
 - 2026-10-15：[待定题与质检题号的同题核验](domains/sandai-data-smith/pitfalls/sandeval-caption-refine-skip-defer-handoff.md#2026-10-15-待定题与质检题号的同题核验) — 从冻结成员追到原工作项、待定回执和正式提交；相同题号不代表同题，单案只读证据留独立指针。
+
+- 2026-10-15：[EVOLVE Maxwell 视觉骨架](domains/maxwell/refs/evolve-commercial-ui-20261015.md#同日追加一致性包括边框投影与控件分量) — 用户要求更暖底色和投影；保留连续工作面，恢复外围与控件的强边框、硬投影，原型待评价。

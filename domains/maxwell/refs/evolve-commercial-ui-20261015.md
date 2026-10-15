@@ -57,3 +57,9 @@ links: [evolve-interaction-design-20261015, langsmith-opik-core-interactions-202
 ### 同日追加：纯白方案与 Maxwell 不协调
 
 用户随后提供 Maxwell 工具管理实际截图，指出纯白冷灰与其余模块不协调。不能把“暖色层次不佳”解释为接受完全替换 Maxwell 中性色。最新原型回到现有 surface / elevated / primary-text 等语义色，分别用于侧栏、浅暖白阅读区、深墨正文；保留更大的文字和连续布局。新的视觉仍待评价，纯白方案不应当作已确认方向。证据见同一原型 README 最新补充及 `comparison-warm-hierarchy.png`；全局 tokens 未修改。
+
+### 同日追加：一致性包括边框、投影与控件分量
+
+用户继续指出底色太白、阴影不足，认为与其他 Maxwell 页面差异明显。原因判断及修订依据转向完整视觉系统：`apps/studio/src/styles/tokens.css` 的 page / surface / border-strong / shadow-pixel，以及 `src/components/base/Button/Button.tsx` 的强边框与偏移阴影。后续保持连续布局，同时恢复单一外层工作区、按钮及选中导航的边框与硬投影；图表和表格内部仍共用工作面。“不要零散卡片”不能被解释成全部扁平无阴影。
+
+最新验证与截图见同一原型 README 的“恢复 Maxwell 的边框与投影”和 `comparison-maxwell-chrome.png`。本轮仍为待评价的原型，未修改业务代码或全局 tokens。
