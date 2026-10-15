@@ -749,3 +749,5 @@
 - 2026-10-15：[数据包筛选版本漂移](domains/sandai-data-smith/pitfalls/sandeval-package-status-filter-summary-schema-drift.md) 补充引入 PR 与后续部署 PR 的独立归因、版本统一及当前版分页回归方案；未实施修复。
 
 - [镜头尾帧与结束边界](domains/sandai-data-smith/pitfalls/sandeval-shot-tail-vs-end-boundary.md) — 2026-10-15：1.72 秒尾帧起点与 1.76 秒镜头时长/结束边界的逐帧口径及源码复核入口；仅截图和本地源码核对。
+
+- [EVOLVE 与 Nextplay dev 发布核验](domains/maxwell/refs/evolve-nextplay-dev-release-20261015.md) — 2026-10-15：限定 main 服务发布、OSS 版本、原件拉取配置及独立镜像/健康核验入口；部署与真实出分边界。
