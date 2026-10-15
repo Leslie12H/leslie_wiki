@@ -1338,3 +1338,5 @@
 - 2026-10-15 ingest：补充 EVOLVE 双入口分工与 Adapter 临时资源授权；记录冻结原文校验、配对基线缺口和跨语言本地验收指针，未部署。
 
 - 2026-10-15 ingest：核对 Runtime 架构图七类观测钩子的引入历史，保存平台监控、上下文治理、LangSmith 与模型恢复提交指针，区分 EVOLVE 记账与 Runtime 扩展。
+
+- 2026-10-15 ingest：补充 ARC Services 与独立后端服务的统计边界，保存 EVOLVE 引入前后字段集合核对及独立 evolve-server 的源码指针。
