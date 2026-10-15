@@ -737,3 +737,5 @@
 - 2026-10-15：[跳过修订的单案处理边界](domains/sandai-data-smith/pitfalls/sandeval-skipped-answer-revision-baseline-mismatch.md#2026-10-15-单案恢复边界) — 原生恢复预检、整批重做范围与正常新版本须确认正文的区别；未执行写入。
 
 - [转派范围与冻结批次责任](domains/sandai-data-smith/pitfalls/sandeval-reassignment-scope-and-batch-responsibility.md) — 2026-10-15：退回时显式选择一名接手人、整批责任与持卡一起转交的已确认裁决；单案两卡恢复、独立读回与长期实现 PR 的证据指针。
+
+- [空间与 Sand 质检抽样、打回和复验核验入口](domains/sandai-data-smith/refs/sandeval-quality-sampling-return-map.md) — 2026-10-15：两级母集、比例下限、同关卡历史拒绝继承、原计划与检查豁免分层、两条退回路线及五张流程图报告指针。
