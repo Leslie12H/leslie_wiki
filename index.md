@@ -771,3 +771,5 @@
 - 2026-10-16 EVOLVE 候选验证的基线目录、同请求恢复与侧栏记录：见 [正式前端实施指针](domains/maxwell/refs/evolve-workspace-implementation-20261015.md)，后续拒绝不能证明早先未知请求未执行；只读与技术测试和真实运行分别验收。
 
 - 2026-10-16 EVOLVE 任务工作区的长内容、完整说明抽屉、候选独立滚动和窄屏协作切换：见 [正式前端实施指针](domains/maxwell/refs/evolve-workspace-implementation-20261015.md)，浏览器布局与真实 Agent/运行分别验收。
+
+- 2026-10-16 EVOLVE 调优创建/重评的原请求恢复、回执核验与统一未知重试边界：见 [正式前端实施指针](domains/maxwell/refs/evolve-workspace-implementation-20261015.md)，浏览器草稿和技术提交验证不替代真实运行。

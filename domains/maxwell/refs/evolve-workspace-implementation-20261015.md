@@ -214,3 +214,15 @@ links: [evolve-commercial-ui-20261015, evolve-continuous-workspace-layout-202610
 - 布局与上下文入口：`apps/studio/src/products/evolve/v3/TaskPageHeader.tsx`、`TaskPageHeader.css`、`workspace.css`、`ledger/TaskSidePanel.tsx`、`LedgerPage.css`、`LedgerLineage.tsx` / `.css`；公共页签键盘行为在 `components/base/Tabs/Tabs.tsx`。
 - 桌面、760px / 600px、抽屉返回焦点、独立滚动、分栏键盘调整和源码检查的证据：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/interaction-audit.md` 的对应章节，以及 `task-workspace-layout.png`、`task-candidate-scrolling.png`、`task-workspace-narrow.png`。
 - 此处仅证明本轮布局与只读交互。真实 Agent 闭环、运行写入、PostgreSQL 迁移与部署分别验收；完整实施目标仍在进行。
+
+
+## 2026-10-16 调优创建与重评的请求恢复
+
+**Why:** 内存表单无法在刷新后核对已发送请求；网络断开不能称为未创建，后续一次拒绝也不能反证早先未执行。本地请求编号写入失败仍提交，会使恢复承诺失真。
+
+**How to apply:** 按账号、业务和来源评测保留原请求与输入，未知结果只显式核对同请求，发送前检查本地持久化成功。接受回执验证来源及冻结证据，只持久保留入口，不恢复旧实时状态。大量选择统一累计去重上限，标准/模型先显示选择摘要，调优与重评互斥展开并保留各自草稿。
+
+- 状态与调用：`apps/studio/src/products/evolve/tuning/RunTuningStore.ts`、`reviews/RescoreRunStore.ts`、对应 session/Panel；共用账号生命周期仍在 `library/persistentEditorSession.ts`。
+- 拒绝与本地存储边界：`benchmarks/DirectRunStore.ts`、`BenchmarkRunStore.ts`、`SharedBenchmarkEditorStore.ts`、`library/CaseEditorStore.ts`、`StandardEditorStore.ts`；恢复与请求测试见 `reviews/runActionRecovery.test.mjs`、`library/localDraftRecovery.test.mjs` 及相邻测试。
+- 真实浏览器草稿恢复、修订/勾选保留、窄屏抽屉、取消返回、截图和完整检查结果：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/interaction-audit.md` 对应日期章节。
+- 浏览器只读及未提交输入不能替代真实任务创建、重评分或 Agent 自然闭环；未执行迁移和部署。整体实施仍按验收记录逐项推进。
