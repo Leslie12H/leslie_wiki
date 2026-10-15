@@ -17,4 +17,6 @@ links: [sandeval-handoff-duplicate-scope, sandeval-remediation-scope-change-stal
 
 现有“已完成整改换作者”接续不能自动覆盖普通转派：先核对 persisted resolution_execution 的准确 source/target submission，不能借另一个批次的整改执行证明本批变化。正式修订证明也只能证明答案接续，不能单独当作新交接范围已生成。
 
-代码指针：`quality/application/management/submission_service.py::live_annotator_batches`、`remediation_batch_scope.py::continued_remediation_batches`、`aggregation_service.py::_vendor_package`、`batch_allocation_service.py` 的展示选择。实现、PR 和部署会变，复用前固定 SHA 重新核对。本次只有只读诊断和集合预演，未修复生产数据、未触发推进或提交 Sand。
+代码与交付指针：[修复 PR #2488](https://github.com/world-sim-dev/sandai-data-smith/pull/2488)，目标为 main；以 PR 的最终提交、Gate 和部署记录判断生效状态。成员接续由 `quality/application/management/reassigned_batch_scope.py` 证明，`FrozenAggregateEvidence.source_member_ids` 封存原成员身份子集，`SubmissionService.execution_items` 供后续执行共用；负责人选项还须同步到原正式版本，否则拼包成功后仍无法分配 Sand。修订/整改继承链继续走原受控接续，不能借子集掩盖链中已失效答案。复用旧 Sand 检查时也须比较两版包的成员子集。
+
+2026-10-15 生产调查仍限只读，代码 PR 不代表已合并或已部署；未修复生产数据、未触发推进或提交 Sand。单案候选规则验证、最终 CI 和 code review 证据见上述本地排查目录的 `candidate-readonly.json`、`review-findings.json` 及 PR。Gate 通过不能替代回交范围和必检预览的单独复现；是否可合并以 PR 中未决 review 项为准。
