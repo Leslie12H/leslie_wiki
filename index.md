@@ -34,7 +34,7 @@
 - [Kling 漏传分辨率导致 billing/500](domains/vidmuse/pitfalls/kling-billing-missing-resolution-20260909.md) — 2026-09-09 六次请求原始日志：价格 properties={}、未进入 Zeus 预扣费，I2V 输入缺图片/时长/分辨率
 
 ### maxwell — [业务全景](domains/maxwell/README.md)
-- [EVOLVE 最新 main 整合边界](domains/maxwell/pitfalls/evolve-latest-main-integration-boundaries.md) — 构造器默认值、候选严格预检、迁移打包、独立 Go 模块依赖及同基线失败复现
+- [EVOLVE 最新 main 整合边界](domains/maxwell/pitfalls/evolve-latest-main-integration-boundaries.md) — 构造器默认值、候选严格预检、迁移打包、独立 Go 模块依赖、同基线失败复现及局部回归漏跑架构守卫
 - [Nextplay 事务清理错误](domains/maxwell/pitfalls/nextplay-transaction-cleanup-errors.md) — 断连后回滚覆盖原错、真实驱动故障测试与同一结果重试边界
 - [VidMuse Git 候选准备](domains/maxwell/projects/vidmuse-executor-candidates.md) — 独立候选 CLI、仅 DEV 发布隔离、执行账号与公共依赖版本核验指针
 - [VidMuse Executor P1 实现入口](domains/maxwell/projects/vidmuse-executor-p1.md) — P1 实现、轻量适配器去数据库方向、创建重试与部署核验指针
