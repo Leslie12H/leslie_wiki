@@ -776,4 +776,4 @@
 
 - 2026-10-16 EVOLVE 汇总未知语义、聚合口径与图表/表格/证据基线联动：见 [正式前端实施指针](domains/maxwell/refs/evolve-workspace-implementation-20261015.md)，真实异常记录与数值组件测试分别核验。
 
-- 2026-10-16 EVOLVE 全目录跨筛选比较、冻结口径明细与多指标完整历史：见 [正式前端实施指针](domains/maxwell/refs/evolve-workspace-implementation-20261015.md)，表格页、历史页与逐题证据各自有界读取并保留同一上下文。
+- 2026-10-16 EVOLVE 全目录跨筛选比较、冻结口径明细与多指标完整历史：见 [正式前端实施指针](domains/maxwell/refs/evolve-workspace-implementation-20261015.md)，表格页、历史页与逐题证据各自有界读取并保留同一上下文，附宽窄屏往返尺寸观察验证。

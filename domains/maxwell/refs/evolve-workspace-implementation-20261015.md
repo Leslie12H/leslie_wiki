@@ -242,7 +242,7 @@ links: [evolve-commercial-ui-20261015, evolve-continuous-workspace-layout-202610
 
 **Why:** 只在单个 Benchmark 内比较会遗漏历史未绑定和跨基准记录。表格分页也不能代表完整时间趋势；不同指标逐 Run 拉取正文会在真实规模下放大请求。比较提示若没有冻结配置可核对，用户无法解释口径差异。
 
-**How to apply:** 将有限数量的比较选择和基线保留在 URL，筛选、详情和返回沿用同一上下文；配置明细仅显示 Run 冻结事实。主时间轴与用户关注的精确指标分别按既有历史接口分页，共用运行坐标，保留单位、缺失、局部失败和读取边界。曲线标签按固定像素绘制，窄屏滚动且固定指标名称，不缩放文字。
+**How to apply:** 将有限数量的比较选择和基线保留在 URL，筛选、详情和返回沿用同一上下文；配置明细仅显示 Run 冻结事实。主时间轴与用户关注的精确指标分别按既有历史接口分页，共用运行坐标，保留单位、缺失、局部失败和读取边界。曲线标签按固定像素绘制，窄屏滚动且固定指标名称，不缩放文字。尺寸观察随实际容器绑定并立即测量；必须验证窄屏恢复桌面后的坐标与渲染宽度一致，单向缩小正常不能证明往返正常。
 
 - 目录比较与上下文：`apps/studio/src/products/evolve/v3/catalog/RecordsPage.tsx`、`benchmarks/RunComparisonSelectionBar.tsx`、`runComparisonSelection.ts`、`RunComparisonContext.tsx` 及相邻测试。
 - 多指标历史：`benchmarks/BenchmarkTrendStore.ts`、`BenchmarkHistoryStore.ts`、`BenchmarkMetricsOverview.tsx`、`BenchmarkResultsPanel.tsx` 和 `benchmarkTrend.test.mjs`；以当前实现核对并发、分页及选择上限。
