@@ -2,7 +2,7 @@
 name: evaluation-platform-interactions-20261014
 type: reference
 created: 2026-10-14
-updated: 2026-10-14
+updated: 2026-10-15
 tags: [maxwell, evolve, evaluation, tuning, interaction, braintrust, opik, langfuse, phoenix]
 links: [langsmith-interaction-study-20261014, evolve-langsmith-learning, evolve-design-clarity-20261013]
 ---
@@ -16,3 +16,5 @@ links: [langsmith-interaction-study-20261014, evolve-langsmith-learning, evolve-
 **How to apply:** 先沿结果反馈、资源 Diff、小范围验证、固定基线复测和单题证据核对完整动线，再映射到 EVOLVE 的 Case、Run 与 Candidate。Opik 此处的 Trial 是候选 Prompt 实验，应映射到 Candidate 与 Run，不直接替换 EVOLVE 的单题 Trial。Prompt 调试与完整 Agent 执行分开；更改评分口径应让两侧使用同一定义重评。当前功能、账号限制及布局会变化，应回到研究记录和官方来源刷新；不将本轮建议当成实施批准。
 
 优先查阅 [Braintrust Playground](https://www.braintrust.dev/docs/evaluate/playgrounds) 和[实验比较](https://www.braintrust.dev/docs/evaluate/compare-experiments)、[Opik Optimization Studio](https://www.comet.com/docs/opik/development/optimization-runs/optimization_studio)；补充参照 [Langfuse UI 实验](https://langfuse.com/docs/evaluation/experiments/experiments-via-ui)与 [Phoenix Playground](https://arize.com/docs/phoenix/prompt-engineering/how-to-prompts/using-the-playground)。已有 LangSmith 现场实操见 [LangSmith 具体交互研究](langsmith-interaction-study-20261014.md)。
+
+2026-10-15，补充[整体布局研究](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evaluation-platform-layouts-20261015/README.md)：导航、对象标题和任务主体分层；评测矩阵、执行诊断、自动调优及手动试验分别组织主阅读区。记录包含本轮新检查的官方产品图与公开 Trace；Opik 右侧 Best prompt 卡不能被截图推断为任意选中轮次详情，公开共享页和文档截图也不能复原完整账号内导航。EVOLVE 参考框架保留用例与评分可达性，具体分栏及菜单仍需核对实际页面，未实施。
