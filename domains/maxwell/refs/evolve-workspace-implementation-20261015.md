@@ -169,3 +169,14 @@ links: [evolve-commercial-ui-20261015, evolve-continuous-workspace-layout-202610
 - 结果显示与鉴权：`ExecutorRegistrationForm.tsx`；无需鉴权由用户明确选择，缺失检查结果、检查中与读取失败分别呈现，不能仅按 probe 是否为空显示转圈。
 - 行为、账号隔离和回执恢复测试：同目录 `ExecutorRegistrationStore.test.mjs`、`executorRegistrationRecovery.test.mjs` 与 `library/persistentEditorSession.test.mjs`。
 - 真实浏览器未提交草稿、桌面/窄屏截图、检查日志及剩余范围：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/interaction-audit.md` 对应日期章节。技术注入回执不等于真实登记；本轮没有发送 Agent 消息、执行服务写入、迁移或部署。
+
+
+## 2026-10-16 直接评测的版本选择与请求恢复
+
+**Why:** Benchmark 最新版会变化，表单打开时的口径必须明确。历史版本读取失败而保留旧选择，不能等同用户同意继续运行旧版；响应未知后换请求编号也可能重复创建评测。浏览器无法保存编号时，应停在发送前，不能声称能够刷新恢复。
+
+**How to apply:** 打开运行设置即固定 Benchmark 版本，先通过现有接口读取能力匹配并核对身份，显式选择能力覆盖。历史配置读取失败要求重试或保留旧选择；保留原请求体与幂等编号，未知结果限制改动、显式重试，已接受回执与实时运行结果分开。按账号/业务/Benchmark 版本隔离，来源与目录返回携带原上下文，窄屏使用同一连续工作面与内部表格滚动。
+
+- 请求、版本选择与恢复：`apps/studio/src/products/evolve/benchmarks/DirectRunStore.ts`、`DirectVersionStore.ts`、`directRunSession.ts` 及相邻测试；账号生命周期见 `library/persistentEditorSession.test.mjs`。
+- 正式入口与嵌入布局：`v3/library/BenchmarkDetailPage.tsx`、`DirectBenchmarkRun.tsx`、`v3/ProposalCard.tsx`；记录目录返回见 `v3/catalog/RecordsPage.tsx`。
+- 浏览器未提交草稿、刷新和来源返回、桌面/窄屏截图与检查结果：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/interaction-audit.md` 对应日期章节。技术注入请求/回执不等于真实执行；任务候选入口、Agent 自然闭环、实际迁移与部署仍须分别验收。
