@@ -110,3 +110,15 @@ links: [evolve-commercial-ui-20261015, evolve-continuous-workspace-layout-202610
 - 正式对象目录、配置抽屉与返回状态：`apps/studio/src/products/evolve/v3/library/ObjectsDirectory.tsx`、`ObjectDetailDrawer.tsx`、`objectDirectoryModel.ts`、`v3/lineage/historyNavigation.ts`。
 - 真实资产向导与失败/竞态测试：`apps/studio/src/products/evolve/v3/onboard/OnboardStatusStore.ts`、`OnboardStatusStore.test.mjs`、`OnboardPage.tsx`。
 - 浏览器只读/未保存草稿证据、当前测试结果及未完成的新建接入与 Agent 执行范围，见上述 `output/evolve-frontend-implementation-20261015/interaction-audit.md` 的“接入对象与向导检查”。不要把目录和配置入口的验证写成已经登记、保存、预检或运行。
+
+
+## 2026-10-15 接入草稿与方法版本衔接
+
+**Why:** 接入类型共用隐藏字段会把地址、凭据或执行限制提交到另一种协议；登记已经被接受后，检查超时不能再次创建对象。评分领域的方法也不全是逐题评分器，校准、对比和锚点改进不能仅因 domain 相同就成为评分标准。目录摘要、精确方法详情和当前服务登记的版本/协议可能不同，不能相互替代。
+
+**How to apply:** 每类接入分别持有草稿，提交只取当前类型字段；凭据离开即清除，接受回执与检查状态分开。读取方法采用已生成契约的精确版本选择，并核对返回身份、可用性与能力；只在服务方法 ID 和版本一致时使用服务的协议声明。跨服务读取采用请求序号隔离，跨页返回保留原筛选和选择。
+
+- 接入状态与规模/竞态测试：`apps/studio/src/products/evolve/executor/ExecutorRegistrationStore.ts`、`executorRegistrationSession.ts`、`ExecutorRegistrationStore.test.mjs`。
+- 方法目录、精确版本与标准草稿：`apps/studio/src/products/evolve/v3/library/MethodsDirectory.tsx`、`MethodDirectoryStore.ts` 及相邻测试；来源返回见 `library/standardNavigation.ts`。
+- 服务读取竞态：`apps/studio/src/products/evolve/v3/onboard/JudgeProviderStore.ts`、`judgeProviderFlow.test.mjs`。
+- 浏览器只读/未保存证据、旧校准页未过滤标准引用的已知问题及剩余真实闭环范围，见前述 `interaction-audit.md` 的“接入草稿与方法目录”。内存草稿恢复不等于刷新持久化，技术注入的登记/轮询结果不等于真实接入成功。
