@@ -727,3 +727,5 @@
 - 2026-10-15：[基线恢复与执行证据一致性审查](domains/maxwell/pitfalls/evolve-baseline-failure-review.md) — 首次基线取消重试、准备失败终态、projectRoot 采集、评分恢复身份与对象清理风险核验。
 
 - 2026-10-15：[待定反馈的历史部署与素材深入核验](domains/sandai-data-smith/pitfalls/sandeval-caption-refine-skip-defer-handoff.md#同日深入核验历史部署底层素材与只读标题) — 固定反馈时部署并重放原队列查询，结合冻结媒体、逐帧内容与待定只读标题，区分真实送审与展示误导。
+
+- [两级抽检范围与题号变化](domains/sandai-data-smith/pitfalls/sandeval-two-stage-sampling-scope.md) — 2026-10-15：供应商首轮、Sand 和重新抽样的集合分别核验；区分 URL 锚定题与真正退回题，业务口径与单案只读证据入口。
