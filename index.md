@@ -700,3 +700,5 @@
 - [EVOLVE 趋势与记录上下同页](domains/maxwell/refs/evolve-interaction-design-20261015.md#2026-10-15-用户纠正趋势与记录上下同页) — 2026-10-15 用户纠正：Benchmark 和调优默认综合趋势、记录与选中详情同屏，取消空的独立指标页；新视觉待评价。
 
 - [EVOLVE 商业工具视觉修订](domains/maxwell/refs/evolve-commercial-ui-20261015.md) — 2026-10-15：用户继续否定视觉品质，重新检查 Opik/LangSmith 官方截图，保留上下同页并重做工作台视觉；新稿未认可，未改业务代码。
+
+- 2026-10-15：[内部执行分流与既有候选 Runner](domains/maxwell/pitfalls/evolve-native-routing-vs-candidate-runner.md) — 历史 A2A 替换验证、新入口能力缺口、临时资源与 Runtime 修改的区分。
