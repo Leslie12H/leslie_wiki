@@ -2,7 +2,7 @@
 name: sandeval-settlement-performance
 type: reference
 created: 2026-09-27
-updated: 2026-09-28
+updated: 2026-10-15
 tags: [sandai-data-smith, sandeval, settlement, performance, sls, arms]
 links: [sandeval-sql-lock-diagnosis, sandeval-api-load-and-auth-diagnosis]
 ---
@@ -62,3 +62,14 @@ links: [sandeval-sql-lock-diagnosis, sandeval-api-load-and-auth-diagnosis]
 **Why:** main 与测试分支可能有不同的历史，测试 PR 展示的差异不一定等于本任务相对主线的改动；多个 merge base 时，三点 diff 也不能直接当作实际合并结果。
 
 **How to apply:** [主线 PR #2129](https://github.com/world-sim-dev/sandai-data-smith/pull/2129) 与 [测试 PR #2128](https://github.com/world-sim-dev/sandai-data-smith/pull/2128) 均来自同一个开发分支。审查时分别核对相对 main 的任务提交、测试目标的缺失主线提交及 merge-tree 结果；不能将 test 合回任务分支来缩小 diff。交付提交映射和 CI 链接见上述 `fix-summary.md`，当前 Gate、合并及部署状态以 GitHub 和环境证据为准。
+
+## 2026-10-15 九月生成失败取证入口
+
+**Why:** 结算生成的 HTTP 500 可能发生在初始作答统计 SQL，不能直接沿用历史质检读取放大的归因。数据库异常列出的最大内存 QueryID 也不自动等于当前失败 SQL，需核验查询身份。
+
+**How to apply:** 读取 [2026-10-15 只读诊断报告](/Users/leslie/Documents/Playground/output/settlement-failure-20261015/report.md) 及同目录定向 SLS 记录，按 request_id 对齐部署、edge/app、异常栈与 QueryID。具体月份条件、耗时、内存、请求数量和版本仅以报告绝对窗口为准。
+
+- 失败坐标先核对 `SettlementExportRepository.output()` / `SETTLEMENT_OUTPUT_SQL` 与报表编排的调用顺序，区分后续 `SettlementQualityReader.counts()`。
+- 本机 env 可能指向测试 Holo；每次排查先核验端点、数据库、`current_warehouse()` 与日志权限。`pg_read_all_stats=false` 时查不到目标 QueryID 不能证明生产没有该查询。
+- 资源组异常中的总限额、当时使用量和各查询占用不等于全实例容量或查询生命周期峰值。没有查询身份与计划，不把大查询认作结算自身，也不把同时段其他计算组负载当作根因。
+- 本次只读排查没有修复或恢复成功证据；后续实施、发布和页面验收分别留证。
