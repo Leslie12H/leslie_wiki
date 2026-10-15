@@ -735,3 +735,5 @@
 - [已跳过答案修订的同步误判](domains/sandai-data-smith/pitfalls/sandeval-skipped-answer-revision-baseline-mismatch.md) — 2026-10-15：同 response 的跳过正式字段与 caption 执行基线用途不同，单题修订/整批准备度分层及滚动发布后的只读核查指针。
 
 - 2026-10-15：[跳过修订的单案处理边界](domains/sandai-data-smith/pitfalls/sandeval-skipped-answer-revision-baseline-mismatch.md#2026-10-15-单案恢复边界) — 原生恢复预检、整批重做范围与正常新版本须确认正文的区别；未执行写入。
+
+- [转派范围与冻结批次责任](domains/sandai-data-smith/pitfalls/sandeval-reassignment-scope-and-batch-responsibility.md) — 2026-10-15：退回时显式选择一名接手人、整批责任与持卡一起转交的已确认裁决；单案两卡恢复、独立读回与长期实现 PR 的证据指针。
