@@ -714,3 +714,5 @@
 - [Runtime 观测钩子来源](domains/maxwell/refs/runtime-observation-hooks-provenance.md) — 2026-10-15：截图七类接口的不可变引入提交、ARC Services 与独立 evolve-server 的统计边界、源码查找方法及 EVOLVE 独立记账边界；不代表部署状态。
 
 - [EVOLVE 连续证据工作区与色彩边界](domains/maxwell/refs/evolve-commercial-ui-20261015.md#2026-10-15连续证据工作区与色彩边界) — 2026-10-15：复用 Maxwell 色彩 token，自主设计布局与交互；对比图表、Case 证据、固定评分修订、Benchmark 趋势和候选谱系原型待评价。
+
+- [EVOLVE 布局改善与中性色精修](domains/maxwell/refs/evolve-commercial-ui-20261015.md#2026-10-15布局改善底色与文字仍被否定) — 2026-10-15：用户认可布局更舒服但继续否定视觉；保留品牌与状态色，原型增加中性表面与文字层，未修改全局 tokens。

@@ -43,3 +43,13 @@ links: [evolve-interaction-design-20261015, langsmith-opik-core-interactions-202
 - 原型与验证入口：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-evidence-workspace-20261015/README.md`。
 - 交互源：`/Users/leslie/.codex/visualizations/2026/10/14/01a139cd-2533-7c10-805a-f810890b12bf/evolve-evidence-workspace.html`。
 - 记录包含最终配色截图、退步筛选、冻结规则/试评、趋势与谱系检查；全部示例数据，未执行真实评测、评分、候选应用或后端保存，未修改业务代码。
+
+## 2026-10-15：布局改善，底色与文字仍被否定
+
+用户评价连续证据工作区“整体布局看起来舒服很多了”，同时明确认为仍然很丑，底色和文字不对。此反馈支持保留布局继续精修，不代表整体视觉验收通过。
+
+**Why:** 上轮把 Maxwell 的暖背景、棕文字和棕色基线系列同时用于高密度评测页面，品牌延续与阅读表面没有区分；字号与次级文字层级也偏弱。
+
+**How to apply:** 本轮提案保留 Maxwell 品牌与状态色的原值，在原型内增加中性白工作面、深灰正文、次级文字与灰色边界，并提高数据表字号。只调整视觉层与三版本表格的最小列宽，不改业务概念、布局主线或全局 Maxwell tokens。新的中性色层仍待用户评价。
+
+证据继续见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-evidence-workspace-20261015/README.md` 的对应日期补充；最新截图为 `comparison-neutral.png` 与 `comparison-neutral-1024.png`，上一轮 `final` 文件不再代表最新视觉。
