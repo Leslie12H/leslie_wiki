@@ -757,3 +757,5 @@
 - [Nextplay 原题十题抽样验收入口](domains/maxwell/refs/evolve-nextplay-ten-case-acceptance-20261015.md) — 2026-10-15 的独立子集、真实运行、逐题诊断和前端核验指针；连接探测与执行出分分开证明。
 
 - 2026-10-16 EVOLVE 校准精确标准归属、分页读取范围与 rubric 维度编辑：见 [正式前端实施指针](domains/maxwell/refs/evolve-workspace-implementation-20261015.md)，只读/未保存证据与真实校准执行分开核验。
+
+- 2026-10-16 EVOLVE 全目录任务筛选、个人视图隔离与旧路由返回：见 [正式前端实施指针](domains/maxwell/refs/evolve-workspace-implementation-20261015.md)，筛选视图与资产草稿持久化分开核验。

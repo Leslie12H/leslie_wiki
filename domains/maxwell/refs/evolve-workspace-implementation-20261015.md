@@ -134,3 +134,15 @@ links: [evolve-commercial-ui-20261015, evolve-continuous-workspace-layout-202610
 - 反馈到 Run 和返回：`apps/studio/src/products/evolve/library/standardNavigation.ts` 及测试、`v3/catalog/RecordsPage.tsx`。
 - 评分维度编辑与规模验证：`apps/studio/src/business-components/evolve/RubricJudgeEditor.tsx`、`RubricJudgeEditor.test.mjs`；共享编辑外壳继续保留取消和模式切换状态。
 - 只读校准页、未保存草稿的跨页操作、完整定义回读、窄屏截图、检查结果及剩余范围，见上述 `output/evolve-frontend-implementation-20261015/interaction-audit.md` 的对应日期记录。空校准页和注入测试不能代替真实校准执行或 Agent 自然场景，实际迁移/部署授权边界未改变。
+
+
+## 2026-10-16 目录筛选、个人视图和任务返回
+
+**Why:** 界面中的“搜索全部”必须对应分页前的服务端筛选；旧说明和前端包装可能落后于已有契约。保存视图也必须区分筛选、分页、资产选择与未提交输入，避免跨业务复用或恢复到过期游标。旧路径重定向是返回上下文常见的丢失点。
+
+**How to apply:** 先核对生成客户端再接入查询；筛选变化回到第一页，返回链接携带业务范围与原目录参数。个人视图只持久保存白名单筛选，按账号、业务、目录隔离；存储失败和其他页面已修改不能伪报成功。受控 Popover 的开关回调需要保持稳定，避免输入时重跑聚焦逻辑。
+
+- 查询与返回：`apps/studio/src/products/evolve/api.ts`、`v3/tasks/TasksPage.tsx`、`taskDirectoryNavigation.ts`、`taskDirectory.test.mjs`；旧矩阵/报告/讨论入口保留路由状态。
+- 视图与隔离：`apps/studio/src/products/evolve/library/CatalogViewsStore.ts` 及测试、`src/business-components/evolve/CatalogViews.tsx`。持久化只指个人筛选视图，不能称为资产草稿恢复。
+- 浏览器任务筛选、视图恢复、键盘输入、窄屏和检查日志：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/interaction-audit.md` 对应日期记录。
+- Benchmark 目录新增搜索/排序需要独立契约确认，清单在同目录 `benchmark-directory-contract-plan.md`；以会话中的明确答复作为实施授权，不把提交清单当作同意。迁移/部署与 Agent 自然闭环仍需独立验证。
