@@ -16,3 +16,12 @@ links: [sandeval-caption-refine-skip-defer-handoff]
 - 2026-10-15 黄超指定整改单、同 response 的 skip/执行回执、两题双次读取、排查中新旧生产部署及构建脚本对照：[只读核查报告](/Users/leslie/Documents/Playground/sandeval-huangchao-sync-20261015/report.md)。具体账号、版本、实时状态与后续修复均以报告和现场回读为准；本次未修复业务代码或生产数据。
 - 源码指针：`sand-eval/platform/frontend/src/pages/myTasks/QuestionWorkPage.tsx` 的 executionMatchesLatest / needsRevisionSync / enterRevision / submitDisabled，`frontend/src/domain/answerPrefill.ts::declaredFieldsOnly`，`backend/app/services/facts/answer_execution.py::snapshot` 与 `backend/app/repositories/answer_execution_snapshot.py`。按部署 SHA 读取，不保存漂移中的实现正文。
 - 相邻语义：[Caption Refine 跳过、待定与整批交接](sandeval-caption-refine-skip-defer-handoff.md)。
+
+
+## 2026-10-15 单案恢复边界
+
+**Why:** 正常保存服务可以从跳过时保留的可信 caption 追加新答案，但把该内容发布为普通正式答案会改变最新答案的业务含义，不能把它说成仅同步或仅恢复按钮。既有 TaskReworkService.request 按 task + account 作用于整批，并非单题恢复入口，可能把另一题也变成欠重做。
+
+**How to apply:** 优先修正已跳过答案恢复修订时的基线选择，让本人确认、编辑和保存；若需应急追加普通版本，先获得对精确正文和 skip 到正常作答这一变化的明确确认，保留旧 skip、非目标题与质检历史，走原生守卫/幂等/发布并独立回读。只读通过 annotation_write_gate 与 workflow.validate_submission 只证明当下权限和结构可用，不证明人工认可、完整提交成功或复验通过。
+
+- 本次真实本人权限、同一基线纯计算校验、无 pending claim、精确候选内容与两种处理范围：[单案恢复建议与预检](/Users/leslie/Documents/Playground/sandeval-huangchao-sync-20261015/recovery-plan.md)。没有执行生产写入，也没有实施建议代码；具体版本与实时状态重新核验。
