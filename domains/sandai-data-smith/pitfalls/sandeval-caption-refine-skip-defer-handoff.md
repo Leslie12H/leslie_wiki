@@ -50,3 +50,12 @@ links: [sandeval-roles-and-workflow]
 **How to apply:** 由质检链接的 `quality_task_id + review_task_id + item_id` 追到冻结送审成员的 `work_unit_id`，再与原 wave 成员、原始 seq、派生答题卡、`annotation_defer` 回执和正式 response 精确关联。核对整份送审成员清单和当前原生卡状态，确认真正待定的题是否被排除；历史反馈题号与当前页面的原题号投影要分别核验。跨工作台编号背景见[原题号与历史映射](sandeval-cross-workbench-question-order.md)。
 
 2026-10-15 单案只读证据指针：[石羽宁反馈的工作项映射与时间线](/Users/leslie/Documents/Playground/output/sandeval-shiyuning-defer-20261015/evidence.json)。归档含部署 SHA、两张卡的身份、待定/提交回执、原生状态以及完整送审和检查成员；实时状态与上线情况须重新读取。本次没有修改生产数据或平台代码，未执行用户当时的浏览器点击，也不以持久化取证断言其当时为何使用该题号。
+
+
+### 同日深入核验：历史部署、底层素材与只读标题
+
+**Why:** 原批次第 1 题与旧质检队列第 1 题可以同时指向不同素材；只查看最新代码或当前题号会漏掉反馈发生时的真实展示。另一方面，“备注由人工填写”只说明文本来源，不能据此排除平台题号、媒体或状态文案的误导。
+
+**How to apply:** 先以反馈时段 SLS 的部署 SHA 固定历史源码，再对同一冻结检查集合重放该版本的只读队列查询，确认它使用队列序号还是原标注位置；同时比对 question → video ID → OSS 对象、冻结快照与浏览器播放地址，并逐帧核对素材边界。待定卡还须分别检查卡片状态、正式 response、完整保存内容与表单标题，不能由 `readOnly` 直接推导“已提交答案”。历史显示问题已修复的结论，应限定到实际浏览器核验的对象和版本；当事人为何相信某题已待定，仍需原始点击或沟通证据。
+
+本次历史部署、原始队列查询回放、两道不同视频、正式答案里的 0.04 秒首镜头，以及只读工作页标题与待定状态并存的证据见[深入核验记录](/Users/leslie/Documents/Playground/output/sandeval-shiyuning-defer-20261015/follow-up-findings.json)。原反馈附图未能读取，未将它作为历史屏幕证据；本次没有修改业务代码、生产数据或执行发布。
