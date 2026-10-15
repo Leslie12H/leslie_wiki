@@ -2,7 +2,7 @@
 name: evolve-workspace-implementation-20261015
 type: reference
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-16
 tags: [maxwell, evolve, studio, ui, validation]
 links: [evolve-commercial-ui-20261015, evolve-continuous-workspace-layout-20261015]
 ---
@@ -122,3 +122,15 @@ links: [evolve-commercial-ui-20261015, evolve-continuous-workspace-layout-202610
 - 方法目录、精确版本与标准草稿：`apps/studio/src/products/evolve/v3/library/MethodsDirectory.tsx`、`MethodDirectoryStore.ts` 及相邻测试；来源返回见 `library/standardNavigation.ts`。
 - 服务读取竞态：`apps/studio/src/products/evolve/v3/onboard/JudgeProviderStore.ts`、`judgeProviderFlow.test.mjs`。
 - 浏览器只读/未保存证据、旧校准页未过滤标准引用的已知问题及剩余真实闭环范围，见前述 `interaction-audit.md` 的“接入草稿与方法目录”。内存草稿恢复不等于刷新持久化，技术注入的登记/轮询结果不等于真实接入成功。
+
+
+## 2026-10-16 校准精确归属与评分维度工作面
+
+**Why:** 方法不是标准修订，按方法入口汇总所有任务报告会造成跨标准混流。报告目录只读到部分任务或反馈过滤后的某页为空，也不能证明没有记录。旧式 rubric 把每个维度完整展开，在规模增加后会失去当前编辑对象和批量操作范围。
+
+**How to apply:** 从标准具体修订携带冻结 ID/内容哈希进入校准页，核对报告正文身份，反馈查询使用运行时冻结标准。显示任务/产物读取范围，错误与空结果分开，跳转证据后保留反馈页和外层标准修订。大型定义以分页列表和单项配置呈现，翻页不截断完整定义，未编辑的权重、关键项、方法分组及评审配置保留。
+
+- 归属、分页和异常读取：`apps/studio/src/products/evolve/v3/library/CalibrationStore.ts`、`CalibrationPage.tsx`、`CalibrationStore.test.mjs`。
+- 反馈到 Run 和返回：`apps/studio/src/products/evolve/library/standardNavigation.ts` 及测试、`v3/catalog/RecordsPage.tsx`。
+- 评分维度编辑与规模验证：`apps/studio/src/business-components/evolve/RubricJudgeEditor.tsx`、`RubricJudgeEditor.test.mjs`；共享编辑外壳继续保留取消和模式切换状态。
+- 只读校准页、未保存草稿的跨页操作、完整定义回读、窄屏截图、检查结果及剩余范围，见上述 `output/evolve-frontend-implementation-20261015/interaction-audit.md` 的对应日期记录。空校准页和注入测试不能代替真实校准执行或 Agent 自然场景，实际迁移/部署授权边界未改变。
