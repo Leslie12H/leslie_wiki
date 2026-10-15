@@ -31,3 +31,15 @@ links: [evolve-interaction-design-20261015, langsmith-opik-core-interactions-202
 **Why:** 上下布局无法弥补当前 Agent 身份、版本、接入入口和运行连接的缺失。业务被测对象与执行它的 Adapter 需要分别呈现；原型遗漏入口不代表现有产品没有接入能力。
 
 **How to apply:** 先阅读[研究补充](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/langsmith-opik-core-interactions-20261015/README.md)中“风格、布局、动线、展示与被接入对象”，核对其中本轮官方截图和当前源码指针。Opik 的项目范围与 Agent Playground 以[升级说明](https://www.comet.com/docs/opik/opik-v2-upgrade)和[接入文档](https://www.comet.com/docs/opik/development/agent-playground)刷新；LangSmith 的目标函数与实验配置以[评测文档](https://docs.langchain.com/langsmith/evaluate-llm-application)刷新。不要把旧导航、Prompt 优化截图或执行器名称直接当作 EVOLVE 的完整对象模型。
+
+## 2026-10-15：连续证据工作区与色彩边界
+
+用户要求借鉴 LangSmith 的整体性与清晰对比，但用 EVOLVE 自己的对象关系组织设计；随后明确“色彩 token 保持一致”，布局、信息层级和交互处理自行决定。此约束不等于照搬 Maxwell 既有组件外观，也不撤销此前对整页米色的否定。
+
+**Why:** 一页中的汇总、用例结果、评分依据与候选来源必须构成同一条判断路径；按名词堆导航或按模块堆卡片无法表达这些关系。
+
+**How to apply:** 先检查当前 `apps/studio/src/styles/tokens.css`，复用语义色并合理选择表面层级；对比页通过同一评测身份贯穿图与分组表头，由退步计数下钻 Case，再查看当次评分版本。Benchmark 综合趋势和记录同页，候选谱系仍需关联验证证据与对象生效状态。新原型尚待用户评价，不能记录为视觉通过。
+
+- 原型与验证入口：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-evidence-workspace-20261015/README.md`。
+- 交互源：`/Users/leslie/.codex/visualizations/2026/10/14/01a139cd-2533-7c10-805a-f810890b12bf/evolve-evidence-workspace.html`。
+- 记录包含最终配色截图、退步筛选、冻结规则/试评、趋势与谱系检查；全部示例数据，未执行真实评测、评分、候选应用或后端保存，未修改业务代码。

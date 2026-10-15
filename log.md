@@ -1340,3 +1340,5 @@
 - 2026-10-15 ingest：核对 Runtime 架构图七类观测钩子的引入历史，保存平台监控、上下文治理、LangSmith 与模型恢复提交指针，区分 EVOLVE 记账与 Runtime 扩展。
 
 - 2026-10-15 ingest：补充 ARC Services 与独立后端服务的统计边界，保存 EVOLVE 引入前后字段集合核对及独立 evolve-server 的源码指针。
+
+- 2026-10-15 ingest：记录 EVOLVE 连续证据工作区原型、浏览器验证指针及用户最新边界：保留 Maxwell 色彩 token，布局与交互按自身概念组织；原型未获视觉认可，未修改业务代码。

@@ -712,3 +712,5 @@
 - 2026-10-15：用户确认普通内部评测与 A2A Runner 配对调优的分工；冻结请求校验、完整资源替换及本地跨语言交接边界，见[内部分流与候选 Runner](domains/maxwell/pitfalls/evolve-native-routing-vs-candidate-runner.md)。
 
 - [Runtime 观测钩子来源](domains/maxwell/refs/runtime-observation-hooks-provenance.md) — 2026-10-15：截图七类接口的不可变引入提交、ARC Services 与独立 evolve-server 的统计边界、源码查找方法及 EVOLVE 独立记账边界；不代表部署状态。
+
+- [EVOLVE 连续证据工作区与色彩边界](domains/maxwell/refs/evolve-commercial-ui-20261015.md#2026-10-15连续证据工作区与色彩边界) — 2026-10-15：复用 Maxwell 色彩 token，自主设计布局与交互；对比图表、Case 证据、固定评分修订、Benchmark 趋势和候选谱系原型待评价。
