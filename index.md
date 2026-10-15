@@ -686,3 +686,5 @@
 - [EVOLVE 整体工作区布局](domains/maxwell/refs/evolve-continuous-workspace-layout-20261015.md) — 2026-10-15：用户否定独立面板拼装，要求学习 LangSmith、Opik 的连续页面；第一版未认可，修订图仍待评价。
 
 - 2026-10-15：内部 Agent 评测与原件拉取的双仓库单提交 PR、持久验证记录及合并/发布边界，见[Nextplay 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
+
+- [LangSmith 与 Opik 核心交互](domains/maxwell/refs/langsmith-opik-core-interactions-20261015.md) — 2026-10-15：用户否定修订图后回到操作链研究；实验表到同题证据、优化 Trial 到样本与 Trace、Opik 2.0 项目范围，既有视觉未认可。
