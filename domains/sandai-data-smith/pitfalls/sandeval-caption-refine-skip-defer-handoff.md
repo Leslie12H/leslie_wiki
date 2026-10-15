@@ -65,7 +65,7 @@ links: [sandeval-roles-and-workflow]
 
 **Why:** 正式 skip 版本只保存问题原因，工作流执行回执仍保留可编辑的 Caption 正文和结构元数据。用两份字段直接比较，会把同一个不可变 response 的两种合法投影判成不同版本；再次读取也不会自行消除差异。整批整改清单可提交，不代表当前单题的保存按钮可用。
 
-**How to apply:** 按真实接收人权限读取单题正式版本和执行基线，再用主库对应 response 与回执独立核验。跳过恢复修订应先核对正式 response ID 与执行基线的 `base_response_id`，保留结构目标身份及服务端版本令牌保护，再使用同一 response 留下的正文；真正版本错配不能靠取消同步保护放行，也不要为修复页面比较错误改写正式 skip 或虚构新答案。
+**How to apply:** 按真实接收人权限读取单题正式版本和执行基线，再用主库对应 response 与回执独立核验。跳过恢复修订应先核对正式 response ID 与执行基线的 `base_response_id`，保留结构目标身份及服务端版本令牌保护，再使用同一 response 留下的正文；真正版本错配不能靠取消同步保护放行，也不要为修复页面比较错误改写正式 skip 或虚构新答案。长时间排查期间可能发生并行转派；发布后先重查处置接收人和版本，以当前真实接收人的权限复验，旧接收人的 403 与答案同步门禁是不同事实，不能自动转回或误报修复回归。
 
 - 修复与回归入口：[PR #2491](https://github.com/world-sim-dev/sandai-data-smith/pull/2491)，代码入口为 `repositories/answer_cards.py::answer_version_content` 与前端 `QuestionWorkPage.tsx::executionMatchesLatest`。修订交付、Gate、合并和生产状态分别核对，不由 PR 存在推断已上线。
 - 本次指定实例的连续读取、主库复核、真实页面组件的本地样例保存/错误基线拦截、截图和最终验证指针：[黄超整改核查与修复报告](/Users/leslie/Documents/Playground/sandeval-huangchao-sync-20261015/report.md)。浏览器样例没有写生产，也没有替本人提交答案。
