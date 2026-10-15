@@ -684,3 +684,5 @@
 - [EVOLVE 统一展示规划](domains/maxwell/refs/evolve-unified-ia-plan-20261015.md) — 2026-10-15：参考 LangSmith、Opik，统一用例、评分、Benchmark、评测、候选与谱系的对象归属、页面骨架和验收；保持现有风格，规划未实施。
 
 - [EVOLVE 整体工作区布局](domains/maxwell/refs/evolve-continuous-workspace-layout-20261015.md) — 2026-10-15：用户否定独立面板拼装，要求学习 LangSmith、Opik 的连续页面；第一版未认可，修订图仍待评价。
+
+- 2026-10-15：内部 Agent 评测与原件拉取的双仓库单提交 PR、持久验证记录及合并/发布边界，见[Nextplay 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
