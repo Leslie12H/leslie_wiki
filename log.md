@@ -1332,3 +1332,5 @@
 - 2026-10-15 ingest：补充 EVOLVE 底色与被接入对象的明确否定反馈，保存 Opik 当前项目和 Agent Playground、LangSmith 目标函数与实验配置的研究指针；区分被测对象、连接和版本，未改原型。
 
 - 2026-10-15 ingest：补充竞品与 EVOLVE 的用例、指标身份、批量评测、调优和整体 Agent 质量映射；记录 Agent Beta 新证据及跨 Benchmark 曲线口径复查指针，未实施。
+
+- 2026-10-15 ingest：补充指标管理与页面交互研究指针；明确 LangSmith 独立 Evaluators 管理、Opik 人工定义与自动规则的区别，记录趋势到样本证据的设计建议，未实施。
