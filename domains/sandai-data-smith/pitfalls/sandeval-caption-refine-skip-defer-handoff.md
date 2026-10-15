@@ -2,7 +2,7 @@
 name: sandeval-caption-refine-skip-defer-handoff
 type: pitfall
 created: 2026-09-28
-updated: 2026-10-14
+updated: 2026-10-15
 tags: [sand-eval, caption-refine, annotation, handoff, quality]
 links: [sandeval-roles-and-workflow]
 ---
@@ -41,3 +41,12 @@ links: [sandeval-roles-and-workflow]
 
 - 本次限定实例、operator、运行方案、五项保护测试、生产 EXPLAIN、apply 回执与独立快照验收：[2026-10-14 处理报告](/Users/leslie/Documents/Playground/output/deferred-ailingling-20261014/report.md)。状态会变化，复用前重查；本次没有新增普通用户自助撤回能力，也没有修改线上平台代码。
 - 当前实现指针：`backend/app/usage_docs/content/annotator/start-and-finish.md` 的待定说明；`backend/app/api/annotation_write_gate.py::_correction_work_unit_if_fenced`；`backend/app/repositories/annotation_batch_handoff.py`；`backend/app/repositories/annotation_qc_allocation.py`；`backend/app/repositories/answer_execution_snapshot.py`。部署、后续本人正式提交和整包质量资格分别核验。
+
+
+## 2026-10-15 待定题与质检题号的同题核验
+
+**Why:** 用户反馈“标注第 1 题已经待定，质检第 1 题仍可见”时，两处题号可能属于不同队列。成功的待定回执与真实的质检记录可以同时成立，但对应不同工作项；仅凭相同题号或质检员备注中的“已待定”，不能认定待定排除失效，也不能直接归责标注员。
+
+**How to apply:** 由质检链接的 `quality_task_id + review_task_id + item_id` 追到冻结送审成员的 `work_unit_id`，再与原 wave 成员、原始 seq、派生答题卡、`annotation_defer` 回执和正式 response 精确关联。核对整份送审成员清单和当前原生卡状态，确认真正待定的题是否被排除；历史反馈题号与当前页面的原题号投影要分别核验。跨工作台编号背景见[原题号与历史映射](sandeval-cross-workbench-question-order.md)。
+
+2026-10-15 单案只读证据指针：[石羽宁反馈的工作项映射与时间线](/Users/leslie/Documents/Playground/output/sandeval-shiyuning-defer-20261015/evidence.json)。归档含部署 SHA、两张卡的身份、待定/提交回执、原生状态以及完整送审和检查成员；实时状态与上线情况须重新读取。本次没有修改生产数据或平台代码，未执行用户当时的浏览器点击，也不以持久化取证断言其当时为何使用该题号。
