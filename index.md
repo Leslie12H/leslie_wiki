@@ -696,3 +696,5 @@
 - 2026-10-15：Nextplay 直接评测、基线调优、Agent 计划待确认及内部执行候选能力边界，见 [独立 Benchmark 接入入口](domains/maxwell/refs/nextplay-independent-benchmark-entry.md)。
 
 - 2026-10-15：历史整改过期基线的指定单手动恢复、原始意图保留、连续前置和原质检员本人待办验收，见[旧基线页](domains/sandai-data-smith/pitfalls/sandeval-historical-correction-stale-base.md)；仍待真实复验，未发布防复发代码。
+
+- [EVOLVE 趋势与记录上下同页](domains/maxwell/refs/evolve-interaction-design-20261015.md#2026-10-15-用户纠正趋势与记录上下同页) — 2026-10-15 用户纠正：Benchmark 和调优默认综合趋势、记录与选中详情同屏，取消空的独立指标页；新视觉待评价。
