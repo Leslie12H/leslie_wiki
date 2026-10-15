@@ -99,3 +99,14 @@ links: [evolve-commercial-ui-20261015, evolve-continuous-workspace-layout-202610
 - 组合工作面：`apps/studio/src/business-components/evolve/CaseSetComposer.tsx`、`CaseCompositionPreview.tsx`、`NativeJudgeEditor.tsx` 及规模渲染测试。
 
 当前环境与验收结果以记录和现场为准；同会话状态保留不能称为刷新后持久恢复，旧线上代理也不能证明新查询/恢复接口已上线。
+
+
+## 2026-10-15 接入目录与向导的真实入口
+
+**Why:** 同名页面文件不一定是当前路由的挂载入口；复用已有配置编辑器也必须提供可发现的详情入口。目录到历史、任务与运行再返回，应保留最初的筛选上下文。方法可用、资产存在、连接通过、实际执行与候选应用属于不同证据，读取失败不能冒充空目录。
+
+**How to apply:** 先沿实际路由确认组件，再统一目录搜索/分页、详情编辑和返回上下文。向导按真实资产分别读取存在状态，区分使用中/不存在/读取失败；配置只读投影不含地址和凭据时，不能伪造原值。既有组件的 embedded 变体还要检查外层容器是否仍残留独立卡片阴影。
+
+- 正式对象目录、配置抽屉与返回状态：`apps/studio/src/products/evolve/v3/library/ObjectsDirectory.tsx`、`ObjectDetailDrawer.tsx`、`objectDirectoryModel.ts`、`v3/lineage/historyNavigation.ts`。
+- 真实资产向导与失败/竞态测试：`apps/studio/src/products/evolve/v3/onboard/OnboardStatusStore.ts`、`OnboardStatusStore.test.mjs`、`OnboardPage.tsx`。
+- 浏览器只读/未保存草稿证据、当前测试结果及未完成的新建接入与 Agent 执行范围，见上述 `output/evolve-frontend-implementation-20261015/interaction-audit.md` 的“接入对象与向导检查”。不要把目录和配置入口的验证写成已经登记、保存、预检或运行。

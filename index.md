@@ -730,7 +730,7 @@
 
 - [两级抽检范围与题号变化](domains/sandai-data-smith/pitfalls/sandeval-two-stage-sampling-scope.md) — 2026-10-15：供应商首轮、Sand 和重新抽样的集合分别核验；区分 URL 锚定题与真正退回题，业务口径与单案只读证据入口。
 
-- 2026-10-15：[EVOLVE 连续工作区实装](domains/maxwell/refs/evolve-workspace-implementation-20261015.md) — 首版纠正、成熟布局研究与连续工作台原型：导航重新评估，资产修订到基准更新、趋势到证据和调优的路径；示例交互与业务实装边界分别记录，附 SVG 比例修复、全域规模管理、固定导航的 Agent 协作、正式前端与已批准搜索/引用/恢复契约实装、组合编辑状态/累计选择上限/评分分页验收和剩余交互边界指针。
+- 2026-10-15：[EVOLVE 连续工作区实装](domains/maxwell/refs/evolve-workspace-implementation-20261015.md) — 首版纠正、成熟布局研究与连续工作台原型：导航重新评估，资产修订到基准更新、趋势到证据和调优的路径；示例交互与业务实装边界分别记录，附 SVG 比例修复、全域规模管理、固定导航的 Agent 协作、正式前端与已批准搜索/引用/恢复契约实装、组合编辑状态/累计选择上限/评分分页验收、对象配置抽屉/目录返回上下文/真实资产向导和剩余交互边界指针。
 
 - [已跳过答案修订的同步误判](domains/sandai-data-smith/pitfalls/sandeval-skipped-answer-revision-baseline-mismatch.md) — 2026-10-15：同 response 的跳过正式字段与 caption 执行基线用途不同，单题修订/整批准备度分层及滚动发布后的只读核查指针。
 
