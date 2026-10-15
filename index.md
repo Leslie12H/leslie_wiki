@@ -739,3 +739,5 @@
 - [转派范围与冻结批次责任](domains/sandai-data-smith/pitfalls/sandeval-reassignment-scope-and-batch-responsibility.md) — 2026-10-15：退回时显式选择一名接手人、整批责任与持卡一起转交的已确认裁决；单案两卡恢复、独立读回与长期实现 PR 的证据指针。
 
 - [空间与 Sand 质检抽样、打回和复验核验入口](domains/sandai-data-smith/refs/sandeval-quality-sampling-return-map.md) — 2026-10-15：两级母集、比例下限、同关卡历史拒绝继承、原计划与检查豁免分层、两条退回路线及五张流程图报告指针。
+
+- [部分转派后的整包完整性缺口](domains/sandai-data-smith/pitfalls/sandeval-partial-reassignment-package-completeness-gap.md) — 2026-10-15：页面6批20条已通过、后台5批19条的集合差异；普通转派、正式修订与有效保留子集的证据及调整边界。
