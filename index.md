@@ -729,3 +729,5 @@
 - 2026-10-15：[待定反馈的历史部署与素材深入核验](domains/sandai-data-smith/pitfalls/sandeval-caption-refine-skip-defer-handoff.md#同日深入核验历史部署底层素材与只读标题) — 固定反馈时部署并重放原队列查询，结合冻结媒体、逐帧内容与待定只读标题，区分真实送审与展示误导。
 
 - [两级抽检范围与题号变化](domains/sandai-data-smith/pitfalls/sandeval-two-stage-sampling-scope.md) — 2026-10-15：供应商首轮、Sand 和重新抽样的集合分别核验；区分 URL 锚定题与真正退回题，业务口径与单案只读证据入口。
+
+- 2026-10-15：[EVOLVE 连续工作区实装](domains/maxwell/refs/evolve-workspace-implementation-20261015.md) — 原型布局融入 Maxwell token、冻结用例与指标分组展示、真实浏览器和回归验证入口；不代表部署或最终视觉认可。
