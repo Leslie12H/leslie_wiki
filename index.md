@@ -716,3 +716,5 @@
 - [EVOLVE 连续证据工作区与色彩边界](domains/maxwell/refs/evolve-commercial-ui-20261015.md#2026-10-15连续证据工作区与色彩边界) — 2026-10-15：复用 Maxwell 色彩 token，自主设计布局与交互；对比图表、Case 证据、固定评分修订、Benchmark 趋势和候选谱系原型待评价。
 
 - [EVOLVE 布局改善与中性色精修](domains/maxwell/refs/evolve-commercial-ui-20261015.md#2026-10-15布局改善底色与文字仍被否定) — 2026-10-15：用户认可布局更舒服但继续否定视觉；保留品牌与状态色，原型增加中性表面与文字层，未修改全局 tokens。
+
+- 2026-10-15：[EVOLVE 色彩校准补充](domains/maxwell/refs/evolve-commercial-ui-20261015.md#同日追加纯白方案与-maxwell-不协调) — 用户指出纯白冷灰割裂，按实际 Maxwell 截图恢复暖色语义层级；保留放大的文字和连续布局，待评价。

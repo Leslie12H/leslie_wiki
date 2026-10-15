@@ -53,3 +53,7 @@ links: [evolve-interaction-design-20261015, langsmith-opik-core-interactions-202
 **How to apply:** 本轮提案保留 Maxwell 品牌与状态色的原值，在原型内增加中性白工作面、深灰正文、次级文字与灰色边界，并提高数据表字号。只调整视觉层与三版本表格的最小列宽，不改业务概念、布局主线或全局 Maxwell tokens。新的中性色层仍待用户评价。
 
 证据继续见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-evidence-workspace-20261015/README.md` 的对应日期补充；最新截图为 `comparison-neutral.png` 与 `comparison-neutral-1024.png`，上一轮 `final` 文件不再代表最新视觉。
+
+### 同日追加：纯白方案与 Maxwell 不协调
+
+用户随后提供 Maxwell 工具管理实际截图，指出纯白冷灰与其余模块不协调。不能把“暖色层次不佳”解释为接受完全替换 Maxwell 中性色。最新原型回到现有 surface / elevated / primary-text 等语义色，分别用于侧栏、浅暖白阅读区、深墨正文；保留更大的文字和连续布局。新的视觉仍待评价，纯白方案不应当作已确认方向。证据见同一原型 README 最新补充及 `comparison-warm-hierarchy.png`；全局 tokens 未修改。
