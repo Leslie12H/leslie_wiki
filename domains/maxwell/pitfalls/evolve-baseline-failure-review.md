@@ -21,3 +21,7 @@ links: [evolve-native-routing-vs-candidate-runner]
 具体代码位置、复现及当前修复状态入口：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-runner-review-20261015.md`；双入口分工见 [内部分流与候选 Runner](evolve-native-routing-vs-candidate-runner.md)。会变化的实现状态回到记录与 PR 核验，本页只保留检查方法。
 
 健康检查也要纳入评分恢复矩阵：登记行的乐观锁版本可能因重检而变化，不能直接等价于原件读取授权已撤销。检查凭据、端点、协议与业务绑定和探测状态是否分离，并用健康重检期间持续分块读取的场景验证。
+
+恢复验证还要保持原始请求身份：健康探测后使用新的登记行并恢复旧评分任务，验证请求哈希和原截止时间不变；同时修改 Case 必须继续触发幂等冲突。明确失败可用新键重试，旧键只回读旧结果；接收未知与未确认停止仍不允许另发。
+
+对象引用扫描不是删除决策。**Why:** 扫描未覆盖某个引用，并不等于清理器会删除对象；保守策略可能始终保留未知引用。**How to apply:** 沿扫描分类追到实际回收策略和配置，运行未识别引用对象的保留测试，再判断是否存在数据丢失风险。不要因为缺少引用扫描就扩改存储代码。EVOLVE 相关策略与回归入口为 `services/evolve-server/internal/modules/evolve/application/retention/policy.go`、`policy_test.go`；当前实现状态回到上述修复记录核验。

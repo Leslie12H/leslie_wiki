@@ -724,6 +724,6 @@
 
 - 2026-10-15：[EVOLVE Maxwell 视觉骨架](domains/maxwell/refs/evolve-commercial-ui-20261015.md#同日追加一致性包括边框投影与控件分量) — 用户要求更暖底色和投影；保留连续工作面，恢复外围与控件的强边框、硬投影，原型待评价。
 
-- 2026-10-15：[基线恢复与执行证据一致性审查](domains/maxwell/pitfalls/evolve-baseline-failure-review.md) — 首次基线取消重试、准备失败终态及 projectRoot 采集语义。
+- 2026-10-15：[基线恢复与执行证据一致性审查](domains/maxwell/pitfalls/evolve-baseline-failure-review.md) — 首次基线取消重试、准备失败终态、projectRoot 采集、评分恢复身份与对象清理风险核验。
 
 - 2026-10-15：[待定反馈的历史部署与素材深入核验](domains/sandai-data-smith/pitfalls/sandeval-caption-refine-skip-defer-handoff.md#同日深入核验历史部署底层素材与只读标题) — 固定反馈时部署并重放原队列查询，结合冻结媒体、逐帧内容与待定只读标题，区分真实送审与展示误导。
