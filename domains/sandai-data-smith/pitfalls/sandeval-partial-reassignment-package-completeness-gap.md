@@ -19,4 +19,6 @@ links: [sandeval-handoff-duplicate-scope, sandeval-remediation-scope-change-stal
 
 代码与交付指针：[修复 PR #2488](https://github.com/world-sim-dev/sandai-data-smith/pull/2488)，目标为 main；以 PR 的最终提交、Gate 和部署记录判断生效状态。成员接续由 `quality/application/management/reassigned_batch_scope.py` 证明，`FrozenAggregateEvidence.source_member_ids` 封存原成员身份子集，`SubmissionService.execution_items` 供后续执行共用；负责人选项还须同步到原正式版本，否则拼包成功后仍无法分配 Sand。修订/整改继承链继续走原受控接续，不能借子集掩盖链中已失效答案。复用旧 Sand 检查时也须比较两版包的成员子集。
 
-2026-10-15 生产调查仍限只读，代码 PR 不代表已合并或已部署；未修复生产数据、未触发推进或提交 Sand。单案候选规则验证、最终 CI 和 code review 证据见上述本地排查目录的 `candidate-readonly.json`、`review-findings.json` 及 PR。Gate 通过不能替代回交范围和必检预览的单独复现；是否可合并以 PR 中未决 review 项为准。
+2026-10-15 生产调查仍限只读，代码 PR 不代表已合并或已部署；未修复生产数据、未触发推进或提交 Sand。单案候选规则验证、最终 CI 和 code review 证据见上述本地排查目录的 `candidate-readonly.json`、`review-findings.json` 及 PR。review 后的修复复验见同目录 `review-fix-verification.json`。Gate 通过不能替代回交范围和必检预览的单独复现；是否可合并以 PR 的最终提交、检查和未决项为准。
+
+成员子集引入后，所有再次封存的交接类型都须携带同一选择，单批回交还须核对原退回工作项，不能自动扩大或缩小。必检数量也须按所选固定成员统计，并对照实际抽样验证普通及批量预览；仅把最终数量夹到题数上限会掩盖被移走题目仍参与必检计数的问题。
