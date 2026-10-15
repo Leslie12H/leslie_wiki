@@ -86,3 +86,16 @@ links: [evolve-commercial-ui-20261015, evolve-continuous-workspace-layout-202610
 - 恢复与引用：`services/evolve-server/internal/app/transport/http/openapi.json`、`internal/modules/evolve/application/ports/asset_directory.go`、`asset_references.go`、`migrations/postgres/0032_evolve_standard_restore.sql`。以实现记录核对状态幂等、内容身份引用、游标变化及 PostgreSQL 验收边界。
 
 截图是正式前端读取已有数据的证据，不是本轮执行了评测、Agent 生成或候选应用的证据，也不等于用户最终认可视觉设计。
+
+
+## 2026-10-15 编辑状态和规模交互验收
+
+**Why:** 大型组合编辑器的可用性不仅是分页。取消确认或编辑模式切换若卸载组件，会丢失筛选和跨页勾选；嵌套搜索框的 Enter 可能误提交外层表单；只限制单次全选也挡不住跨筛选累加超限。评分标准把每个指标的完整配置都展开，同样无法承载大量指标。
+
+**How to apply:** 明确区分未保存草稿、目录选择、当前编辑对象和整体判定引用；取消继续时保留编辑实例，搜索事件阻止外层提交，所有选择入口统一检查累计去重上限。大量指标使用分页列表与单项配置，移除其他行不能让配置或整题判定串到别的指标。技术规模样例不等同于服务端或 Agent 自然场景验收。
+
+- 逐项审计、浏览器草稿样例、截图和仍未完成范围：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/interaction-audit.md`。
+- 编辑状态与选择边界：`apps/studio/src/products/evolve/dialogs/DialogShell.tsx`、`library/CatalogSelection.ts`、`library/caseSetChanges.ts` 及相邻测试。
+- 组合工作面：`apps/studio/src/business-components/evolve/CaseSetComposer.tsx`、`CaseCompositionPreview.tsx`、`NativeJudgeEditor.tsx` 及规模渲染测试。
+
+当前环境与验收结果以记录和现场为准；同会话状态保留不能称为刷新后持久恢复，旧线上代理也不能证明新查询/恢复接口已上线。
