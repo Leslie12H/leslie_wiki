@@ -226,3 +226,13 @@ links: [evolve-commercial-ui-20261015, evolve-continuous-workspace-layout-202610
 - 拒绝与本地存储边界：`benchmarks/DirectRunStore.ts`、`BenchmarkRunStore.ts`、`SharedBenchmarkEditorStore.ts`、`library/CaseEditorStore.ts`、`StandardEditorStore.ts`；恢复与请求测试见 `reviews/runActionRecovery.test.mjs`、`library/localDraftRecovery.test.mjs` 及相邻测试。
 - 真实浏览器草稿恢复、修订/勾选保留、窄屏抽屉、取消返回、截图和完整检查结果：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/interaction-audit.md` 对应日期章节。
 - 浏览器只读及未提交输入不能替代真实任务创建、重评分或 Agent 自然闭环；未执行迁移和部署。整体实施仍按验收记录逐项推进。
+
+
+## 2026-10-16 汇总语义与对比证据
+
+**Why:** 未返回汇总不等于零样本，读取失败不等于没有指标；比较口径漏掉聚合策略会把不同规则的评分归入同一趋势。只有图表、表格和证据使用同一基线身份，用户才能持续调查差异。
+
+**How to apply:** 用冻结用例/评分/执行/聚合配置判断观察口径，规范化配置键序；未知、整理、失败与明确判定分别显示。比较图与表按同一 Run 标识联动，逐题结果核对身份并提供局部重试。真实执行报错且没有输出时，只说明已知错误与证据缺失，不推断仍在执行。
+
+- 源码入口：`apps/studio/src/products/evolve/benchmarks/runComparisonModel.ts`、`benchmarkOverview.ts`、`BenchmarkMetricsOverview.tsx`、`RunComparisonWorkspace.tsx`、`../RunComparisonStore.ts` 及相邻测试。
+- 证据与后续范围：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/interaction-audit.md` 的“汇总语义与对比联动”。真实既有异常记录的浏览器检查、数值组件测试和真实新执行应分别核验；视觉截图不代表已有候选应用或生产部署。
