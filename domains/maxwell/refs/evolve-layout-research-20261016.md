@@ -181,3 +181,12 @@ LangSmith 当前创建流程核查入口为 [Evaluators](https://docs.langchain.
 **How to apply:** 在请求发出前保留操作身份，接收时冻结评估器、独立指标修订、样本和模型；恢复原请求优先于读取新的默认配置。未知执行不自动重跑，取消与租约失效阻止旧 Worker 覆盖结果。正式评分与编辑器试评分开记账和验收，样本阅读、受控 Endpoint、真实模型、数据库事务与部署分别提供证据。
 
 当前接口、前后端实现、正式页面与键盘交互证据、未执行的迁移和剩余样本/Benchmark 能力，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/evaluator-create-flow-20261017.md` 的“持久试评、模型配置与结果阅读”。不能以源码及内存测试通过推断当前远端服务可用。
+
+
+## 2026-10-17：材料选择与实际试评范围
+
+**Why:** 编辑器隐藏未选材料却继续提交，或将最后一项取消后解释为采用全部材料，会改变实际评分依据。历史配置的空映射语义也不能因新增选择控件被静默重写。
+
+**How to apply:** 材料配置、样本编辑、请求和预览采用同一范围。未选文字保留草稿但不提交；显式选择至少保留一项，缺材料阻止新调用，旧映射按原含义读取。手动文本不自动变成结构化输入；未知试评恢复原冻结请求，不重新取当前选择。
+
+当前正式页面、请求裁剪、旧草稿兼容与实际方法消费测试，以及尚未完成的结构化样本和 Benchmark 编排，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/evaluator-create-flow-20261017.md` 的“正式评分材料配置与试评一致性”。界面已能选择材料不等于远端模型或资产发布已可用。
