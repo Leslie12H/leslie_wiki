@@ -78,6 +78,17 @@ links: [evolve-workspace-implementation-20261015]
 
 **Why:** 被测对象和外部 Judge 都可经网络调用，但业务用途不同；同一 Agent 的两条执行路径也不应成为两个待比较对象。把未暴露可用方法的 Provider 当作评分方法行，会混淆连接状态和评分能力。
 
-**How to apply:** 保留五类导航；被测对象管理效果与运行能力，评分资产管理方法／标准／指标，低频连接维护放辅助设置并允许业务页面就地接入。Prompt 与阈值变化走标准修订，新增通用实现才走方法管理。PR 的显式归属、冻结选路和历史规则可复用，旧页面结构不覆盖新版。评分与执行登记／凭据边界保持独立。
+**How to apply:** 保留五类导航；被测对象管理效果与运行能力，评分资产管理方法／标准／指标，初版曾建议低频连接维护放辅助设置，已被下方用户复核取消；评分配置归属也以最新用户澄清为准。PR 的显式归属、冻结选路和历史规则可复用，旧页面结构不覆盖新版。评分与执行登记／凭据边界保持独立。
 
 设计方案、PR 精确提交、当前源码差距、页面布局、返回路径和待补契约：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/target-and-connections-design-20261016.md`。PR 当前状态须重新读取；不能以提案表示已合并或部署。
+
+
+## 2026-10-16：唯一连接归属与指标内配置评分
+
+**Why:** 同一个执行连接出现在设置和被测对象会造成双重管理；把业务指标、底层方法和 Prompt 配置分散到多个创建步骤，也不符合用户心智。用户明确希望直接创建“稳定性”“剧本完整性”指标，选 LLM Judge 并写自己的 Prompt。
+
+**How to apply:** 执行连接唯一归属被测对象的接入配置，外部评分服务归评分资产的方法管理范围。业务指标编辑应整合名称、含义、计算方式、Prompt、模型、输出与样本试评；底层定义/绑定的拆分不成为多个前置创建步骤。评分标准组合精确指标配置版本，历史不随修改漂移。模型配置及真实试评当前契约边界须回源码确认，不把前端表单当作完整实现。
+
+- 官方概念、用户澄清、现有源码与待补能力：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/metric-evaluator-management-20261016.md`。此方向取代本轮早先将每个 Prompt 配置独立放到评分方法目录的建议；尚未实现新契约。
+- 连接归属的已实现范围、聚焦检查、Studio check 及真实只读页面验证：同目录 `task-states-20261016/README.md` 的“连接管理的归属与方法目录分离”。PR #358 归并和完整指标试评不在本轮已完成范围。
+- 竞品刷新入口：[LangSmith Evaluators](https://docs.langchain.com/langsmith/evaluators)、[LLM Judge](https://docs.langchain.com/langsmith/llm-as-judge)。Evaluator 是可执行配置，可以多输出；Feedback key 对应结果指标，不把 LLM Judge 类型本身当成业务指标。
