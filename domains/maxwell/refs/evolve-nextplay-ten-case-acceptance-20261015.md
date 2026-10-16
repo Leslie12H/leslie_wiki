@@ -41,3 +41,9 @@ links: [evolve-nextplay-dev-release-20261015, evolve-native-routing-vs-candidate
 - #357 的限定发布、独立镜像回读、新单题 Runtime 执行与停止、#358 延后合入的边界继续见[单题复验记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-ten-case-acceptance-20261015/retest-20261016.md)。原十题是否启动与最新评分必须沿该记录刷新，不以本页推断实时状态。
 - **Why:** 解决权限和消息兼容只代表进入真实执行；复杂 Agent 会继续派生作家、审查等长子任务。取消未确认类别可能覆盖原先的停止触发原因，时长接近固定值也不能直接当成配置已核实。
 - **How to apply:** 用 Worker 的派发/停止时间、同一 Runtime Run 的终态及前端刷新三处核对；必须读取实际登记 limits 才能确认执行时限，不能用代码默认值替代。完整输出与原评分成功前不扩大批次，不篡改旧 action 或原题绕过。
+
+## 2026-10-16 执行预算与异步取消回执修复指针
+
+- 具体超时原文、已部署版本边界、当前 PR 和待授权发布范围见[时限与取消复验记录](https://github.com/world-sim-dev/maxwell-ai/blob/codex/evolve-preflight-transport/docs/verification/2026-10-16-evolve-timeout-cancel.md)；线上状态仍需沿原 Run 与验收记录刷新。
+- **Why:** 取消接纳成功与 Run 终态是两个时间点；冻结的失败记录和后台稍后确认的清理状态也属于不同事实。新连接默认预算不能替代旧连接已保存值。
+- **How to apply:** 优先读失败 Assessment 的原始原因，沿执行器来源核对实际预算；取消只以对应 Run 的终态为回执，未知时保留恢复围栏。页面使用最新 Attempt 表示当前清理状态，历史记录不覆盖；本轮预算编辑和修复发布均需按验收记录核准，单题原评分成功后才扩大十题。
