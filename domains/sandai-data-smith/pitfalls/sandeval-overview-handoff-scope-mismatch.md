@@ -18,3 +18,5 @@ links: [sand-eval-quality-center-test-data]
 2026-10-16 只读核验与本地源码复现指针：`/Users/leslie/.codex/visualizations/2026/10/16/01a14502-ea48-7a43-942f-7a694bf14be4/database-evidence.json` 与 `reproduction.json`。代码对照 main `7e8ad38562a90f07afa1c1f8b8ee5fac76356942`；独立连接回读了生产 init_warehouse，未修改生产数据。该次生产网页访问超时、历史临时 KubeConfig 已不存在，因此没有当前浏览器或部署 SHA 验收；不得把源码复现写成已经修复上线。
 
 2026-10-16 修复实现与验收入口：[测试 PR #2559](https://github.com/world-sim-dev/sandai-data-smith/pull/2559)。概览直接复用 `live_annotator_batches`；回归包含真实整改后的精确重复作者批次、已交接 Sand 报告、供应商可见性、新正式版本使旧交接失效及来源失败透传。精确提交、本地检查与后续 CI 记录见同目录 `fix-validation.json` 和 PR；合并及发布状态须实时核对。测试分支与 main 基线冲突时，不把测试历史引入任务分支；独立分支 Gate 不代替测试 PR 合并树或测试站验收。
+
+2026-10-16 主线交付入口：[main PR #2560](https://github.com/world-sim-dev/sandai-data-smith/pull/2560)，同一干净任务分支直接指向 main，原测试 PR #2559 保留。主线 PR 的变更范围与检查结果、独立分支完整矩阵及测试站实际验收须分别读取；任一局部绿灯不替代其余证据。
