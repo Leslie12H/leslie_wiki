@@ -23,3 +23,9 @@ links: [evolve-nextplay-dev-release-20261015, evolve-native-routing-vs-candidate
 - ACK 内嵌应用日志检索、本次调用身份与时间窗、实际拒绝接口及代码解释见[十题诊断记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-ten-case-acceptance-20261015/diagnosis-20261016.md)。这是历史证据，不表示权限已修复或新运行已通过。
 - **Why:** 通用 HTTP 403 无法区分 Preset 读取、Thread 创建和后续文件访问；Card 检查成功不能替代这些实际调用。
 - **How to apply:** 先用 Run 时间及 Worker 来源关联独立 HTTP 请求，再按实际部署 SHA 查权限要求；凭据元数据核对、权限修复与新运行分别授权和验证。ACK 容器日志的最近行数不足时可在其日志中心限定业务日志库和时间窗，无需转入集群终端。
+
+## 2026-10-16 权限修复与预检回归指针
+
+- 管理员操作单、准确 Key 身份、账号权限阻塞、本地修复工作区与测试结果见[权限修复记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-ten-case-acceptance-20261015/permission-repair-20261016.md)。继续工作前重新核对该记录与线上状态，不能将本地测试当作线上出分。
+- **Why:** 业务编辑成员可以运行评测，不代表能管理程序执行 Key；业务执行 Key 也不应因此获得密钥管理或配置修改权限。
+- **How to apply:** 管理员针对已有 Key 仅补执行所需缺项，回读同一身份且不传输明文；预检用执行时的凭据、源地址和客户端覆盖必要只读接口，再以单题及原子集验证最终评分。
