@@ -199,3 +199,12 @@ LangSmith 当前创建流程核查入口为 [Evaluators](https://docs.langchain.
 **How to apply:** 指标集采用明确的评估器修订与输出指标修订，读取不改变采用；组合调整在草稿内完成，保存为集合新修订。从编辑器进入目录时保留草稿和返回上下文，恢复未知保存仍用原请求。正式页面、受控 Gateway、后端目录与真实发布分别验收；账号未恢复不能误报为浏览器存储故障。
 
 当前正式入口、测试、截图、服务不接受新资产类型的实际边界，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/metric-set-management-20261017.md`。独立 Case—指标关系的待确认接口/存储清单见同目录 `independent-case-metric-contract-plan-20261017.md`；不得将已批准的指标集实施扩大为该关系方案已获批，也不得把前端目录当成完整 Benchmark 编排已完成。
+
+
+## 2026-10-17：评估器的未完成输入
+
+**Why:** 表单中显示的数值或分类与真正提交的声明可能不同。即时数值转换会丢掉未完成输入，未添加分类仅保存在组件内则会随切换消失；按钮变灰也必须让用户看见原因。
+
+**How to apply:** 原始字段输入与有效声明分开保存到同一编辑草稿，保存、检查和新试评共同阻止遗漏；恢复时核对可见有效值与提交值一致。切换输出保留尚未添加的分类，切换模型保留用户参数，明确移除或改类型才清理不适用的输入。未知请求仍恢复原快照。
+
+当前正式页面、数值和分类恢复、固定操作栏、窄屏证据与尚未运行真实模型的边界，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/evaluator-create-flow-20261017.md` 的“未完成输入与统一提交边界”。这不是完整发布或 Benchmark 验收证明。
