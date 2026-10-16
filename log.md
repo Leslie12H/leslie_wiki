@@ -1450,3 +1450,5 @@
 - 2026-10-16 ingest：Nextplay 十题 HTTP 403 只读诊断入口；按调用身份、时间窗及部署源码区分 Preset 读取授权与后续 Thread/评分阶段，未修改权限或部署。
 
 - 2026-10-16 ingest：质检转交成功回执锁超时后遗留任务级待核对占用；补充请求/事务/占用分层取证及原事务结案边界，详见 sandeval-work-handoff-unsettled-occupancy。
+
+- 2026-10-16 ingest: 更正将 awaiting_assignment 原始执行数当真实未派单数的口径；记录稳定后继分组、已派出待人工与真实待派回的独立核验，以及恢复时间/尝试数的边界。

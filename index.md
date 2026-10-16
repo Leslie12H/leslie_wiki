@@ -783,3 +783,5 @@
 - 2026-10-16：Nextplay 十题执行拒绝的 ACK 历史日志、实际接口定位及 Card 检查边界，见[十题验收入口](domains/maxwell/refs/evolve-nextplay-ten-case-acceptance-20261015.md)。
 
 - [质检转交失败后的任务占用](domains/sandai-data-smith/pitfalls/sandeval-work-handoff-unsettled-occupancy.md) — 2026-10-16：成功回执写入锁超时、客户端断开与后端结束分层、任务级待核对占用及原事务结案边界；只读报告指针。
+
+- 2026-10-16：[自动复验派回验收](domains/sandai-data-smith/refs/sandeval-auto-reinspection-verification.md) 补充内部执行状态计数与真实后继派单分层、触发节奏和完成时间边界；原始计数已在现场报告更正。
