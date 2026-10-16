@@ -41,4 +41,4 @@ links: [sandeval-direct-remediation-and-batch-handoff, sandeval-whole-package-re
 **How to apply:** 先取当前部署 SHA，再以包内冻结 `recipient_id` 的真实账号读取原生 `available_actions` / `blocking_reasons`，同时核对完整应交集合和正式交接回执。批次质检员、验收人和整包提交人分别核查。没有显式接收人时，按部署中 `_vendor_package` 的实际选择顺序核对；多人验收在本次部署可回落到最近 ready 空间质检分配的创建人，不能照旧记忆一律认定 `RECIPIENT_UNRESOLVED`。截图缺少时刻和请求证据时，不把当前正常状态倒推为历史无故障，也不把客户端刷新缺口认作已证实的唯一历史根因。
 
 - 核查时间、当前负责人、真实退回、20/20 完整性与跨 Pod 原生读证据：[2026-10-16 核查报告](/Users/leslie/Documents/Playground/output/linke-packages-20261016/report.md)。变化数据只存本次报告，后续需重读。
-- 代码指针：`aggregation_service.py::_vendor_package` 选择并冻结接收人；`leader_query_service.py::_package` 负责权限投影；`PackageDetail.tsx` 负责重新读取与提示。显示具体姓名及有限次重查的修复在[测试 PR #2561](https://github.com/world-sim-dev/sandai-data-smith/pull/2561)，部署状态查 PR/Gate，不将提交代码等同上线。
+- 代码指针：`aggregation_service.py::_vendor_package` 选择并冻结接收人；`leader_query_service.py::_package` 负责权限投影；`PackageDetail.tsx` 负责重新读取与提示。显示具体姓名及有限次重查的修复已按用户要求整合至[main PR #2560](https://github.com/world-sim-dev/sandai-data-smith/pull/2560)，与概览有效批次范围修复一同审查；原[测试 PR #2561](https://github.com/world-sim-dev/sandai-data-smith/pull/2561)已关闭。部署状态查 PR/Gate，不将提交代码等同上线。
