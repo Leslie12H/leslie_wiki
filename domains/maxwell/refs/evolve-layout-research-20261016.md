@@ -226,3 +226,12 @@ LangSmith 当前创建流程核查入口为 [Evaluators](https://docs.langchain.
 **How to apply:** 指标目录与评估器编辑连接同一精确引用流程。新建采用所选修订，加入已有草稿保留 Prompt、模型、样本和原输出；超限或无效批量全部拒绝，未知请求保持冻结。类型切换仅替换已知不兼容的内置汇总，扩展配置保留；表单名称同步定义，冻结登记与显式源编辑分开处理。保留关闭与明确放弃继续分离，查看关联资产携带返回编辑器的上下文。
 
 正式实现、交互与测试证据、空指标目录及新版服务未就绪的验收边界，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/metric-evaluator-editing-20261017.md`。本条不是发布、模型试评或完整 Benchmark 链路完成证明；独立 Case—指标关系仍沿原批准流程核对。
+
+
+## 2026-10-17：评分资产导航与方法用途
+
+**Why:** Runtime 方法目录的 judge 分类包含计算、比较、校准和改进；把它们全部当作指标计算器，或让实现能力与日常资产占据同级入口，会继续增加理解成本。仅匹配方法标识还会将当前服务错误关联到历史版本。
+
+**How to apply:** 日常管理围绕评估器、指标、指标集；底层方法与外部服务作为辅助入口。按真实用途筛选方法，创建操作受精确方法版本及能力约束。恢复相同方法草稿而不覆盖 Prompt、样本和未知请求；历史服务按方法与版本共同关联。校准进入配置后返回时保留筛选、所选方法与外层上下文。
+
+正式前端、用途筛选、嵌套返回、草稿恢复与测试证据见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/scoring-navigation-20261017.md`。当前服务能力及发布/试评限制沿该记录现场核对；本条不是部署或端到端完成证明。
