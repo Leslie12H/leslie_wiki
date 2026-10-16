@@ -19,3 +19,13 @@ links: [sandeval-repeated-return-feedback-lineage, sandeval-correction-reviewer-
 - 前端入口：sand-eval/platform/frontend/src/pages/quality/inspection/ReviewWorkspace.tsx 的 selectedUpstreamNotes/selectedContextNotes，按稳定 work_unit_id 展示当前题意见。
 - 抽样入口：sand-eval/platform/backend/quality/application/management/reinspection_sampling.py 的 historical_priority_members/rejected_lineage_members，以及 reinspection_service.py 的 required_member_refs。
 - 跨关卡历史必抽变更指针：[99a5966622105a9370ba00637d0e11feb567a971](https://github.com/world-sim-dev/sandai-data-smith/commit/99a5966622105a9370ba00637d0e11feb567a971)。AuthorDate、主线 CommitDate、部署时间和历史计划创建时间分别取证；历史计划恢复须走本域 runbook 与明确生产授权，不裸改冻结检查项。
+
+
+## 分享链接权限与管理员查看模式
+
+**Why:** 上游 Sand 质检员拿到供应商第 2 轮工作台链接时，可能因该报告由另一位执行人持有而被拒绝。原 Sand 意见存在与本人能否访问供应商复验是两项事实。root 登录能打开也不能代替本人访问证据：具体记录的查看模式会按实际执行人自动切换，URL 的 observe_account 不一定是最终读取身份。
+
+**How to apply:** 先确认用户打不开的是当前复验还是原 Sand 检查，按当前账号真实来源上下文调用 ReviewService.require/assert_visible，分别核对执行人、allowed_actions、负责人和精确下钻授权。观察浏览器最终 URL 和“正在查看”的姓名；不可将 root 自动选中的执行人当作用户本人，也不可仅凭角色名断言可以看下游报告。区分历史检查、退回日期与今天的操作，不用历史署名证明当日质检。
+
+- [2026-10-16 侯香伊访问原链接只读核验](/Users/leslie/Documents/Playground/output/sandeval-sand-note-20261016/hou-access-report.md)：真实 Actor 授权、双方读取结果、历史日期及未检查用户真实会话的边界；账号与任务状态重新现场核查。
+- 代码入口：quality/application/inspection/review_service.py::assert_visible；app/api/root_observation.py::resolve_owner/open_context。按线上 SHA 读取，不能借管理员查看模式扩大原用户权限。
