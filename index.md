@@ -832,4 +832,4 @@
 
 - 2026-10-16：[联合历史整改授权](domains/sandai-data-smith/pitfalls/sandeval-repeated-correction-ancestor-blocker.md#2026-10-16-明示批准后的三条版本恢复) 补充明示批准后的刘钬三行版本恢复、完整正文/判断保留、不可变审计与跨副本独立验收；本人真实提交仍单独核验。
 
-- [Sand 未分配前整包自查退回与离职交接](domains/sandai-data-smith/refs/sandeval-package-self-check-return-and-offboarding.md) — 2026-10-16：单批退回入口前提、正式转交的状态/权限限制、原质检员及负责人失效、标注持卡与责任一致性、QC passed 语义及包级方案审查入口；未实施、未核对生产。
+- [Sand 整包自查退回与离职交接](domains/sandai-data-smith/refs/sandeval-package-self-check-return-and-offboarding.md) — 2026-10-17：整包及部分 Sand 已质检退回方案、离职改派、全部自查整改验收后重交的实现 PR #2564 与核查入口；运行态和测试集成结论以 PR 最新证据为准，未核对生产。
