@@ -789,3 +789,5 @@
 - 2026-10-16 EVOLVE 按原型替换旧布局：顶部五分类、连续趋势/记录、候选检查器、共享比较与操作抽屉；见 [正式前端实施指针](domains/maxwell/refs/evolve-workspace-implementation-20261015.md)，替代此前内嵌表单/固定分栏描述，保留冻结身份和恢复边界。
 
 - 2026-10-16：[质检转交占用](domains/sandai-data-smith/pitfalls/sandeval-work-handoff-unsettled-occupancy.md#2026-10-16-经授权的原事务结案) 补充明确授权后的原生 rolled_back 结案、冻结计划、跨 Pod 独立核验及恢复与实际转交的区别。
+
+- [空间复验遗漏更早 Sand 代改](domains/sandai-data-smith/pitfalls/sandeval-space-reinspection-older-sand-amendment-gap.md) — 2026-10-16：两轮 Sand 退回、汇总换版后只接最近轮次；徐咏晴指定题的真实基线、选项变化和双 Pod 只读核验指针，未修复。
