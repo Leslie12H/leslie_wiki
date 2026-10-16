@@ -792,7 +792,7 @@
 
 - [空间复验遗漏更早 Sand 代改](domains/sandai-data-smith/pitfalls/sandeval-space-reinspection-older-sand-amendment-gap.md) — 2026-10-16：两轮 Sand 退回、汇总换版后只接最近轮次；真实基线、双 Pod 只读候选、受校验继承修复 main PR #2504、测试 PR #2503 与生产未发布边界指针。
 
-- 2026-10-16 [EVOLVE 成熟产品交互研究](domains/maxwell/refs/evolve-layout-research-20261016.md) — LangSmith/Opik 的工作范围、比较调查与优化任务组织；当前差距、原型状态缺口和调整依据；含工作区/资产分组、评分配置实施与真实定义检查的证据入口。
+- 2026-10-16 [EVOLVE 成熟产品交互研究](domains/maxwell/refs/evolve-layout-research-20261016.md) — LangSmith/Opik 的工作范围、比较调查与优化任务组织；当前差距、原型状态缺口和调整依据；含工作区/资产分组、评分配置、候选工作区、历史证据阅读及新版优先的验收入口。
 
 - [复验历史优先级与重试冻结](domains/sandai-data-smith/pitfalls/sandeval-reinspection-history-priority-retry.md) — 2026-10-16：固定种子与可变历史输入、公开退回/后台恢复保护与安排复验延迟重试的入口差异、必入样与范围豁免分别核验的审查指针。
 
