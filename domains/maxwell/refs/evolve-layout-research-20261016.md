@@ -128,3 +128,12 @@ links: [evolve-workspace-implementation-20261015]
 **How to apply:** 共享目录身份、修订与精确依赖采用原子发布；未知响应保留原操作及版本。CAS 物化与目录提交分别说明，不能把目录回滚说成没有任何物理内容写入。接口先更新 canonical OpenAPI，再实际生成、检查和测试恢复路径。
 
 实现、当前生成器的互斥输入/布尔枚举注意项、真实测试及未验收边界，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/task-states-20261016/README.md` 的“评估器与输出指标的一次保存”。接口说明见同仓库 `services/evolve-server/docs/evaluator-publication.md`。内存/路由测试通过不替代 PostgreSQL 实际事务、完整编辑工作面或真实试评验收。
+
+
+## 2026-10-16：Benchmark 历史版本编辑与比较
+
+**Why:** 资产可更新与历史可复现同时成立。历史版本页如果直接打开最新内容，或更新并发保存基准时覆盖历史适用范围，会让用户以为在编辑所选版本而实际采用另一份配置。
+
+**How to apply:** 将编辑内容来源与当前保存基准分别保留；名称、组成和元数据采用所选版本，提交检查当前头。比较入口保留精确版本上下文，未解析的引用明确不可读，不替换成最新定义。
+
+实现、聚焦测试、完整 Studio 检查和只读浏览器证据，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/task-states-20261016/README.md` 的“Benchmark 独立版本的查看、比较与历史编辑”。记录同时保留一个真实历史用例集的目录解析缺口；版本阅读/未提交草稿验证不等于新版关联、实际发布或评测完成。
