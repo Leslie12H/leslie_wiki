@@ -797,3 +797,5 @@
 - [复验历史优先级与重试冻结](domains/sandai-data-smith/pitfalls/sandeval-reinspection-history-priority-retry.md) — 2026-10-16：固定种子与可变历史输入、公开退回/后台恢复保护与安排复验延迟重试的入口差异、必入样与范围豁免分别核验的审查指针。
 
 - 2026-10-16：[单题抽样与原题号](domains/sandai-data-smith/pitfalls/sandeval-two-stage-sampling-scope.md#2026-10-16-单题抽样显示原第-2-题) — 核对冻结应检集合、实际批次比例和原题号；只抽中题目二、整批仍有两题的双 Pod 只读核查入口。
+
+- [整改冻结分区与当前作者批次重叠](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md) — 2026-10-16：范围版本匹配仍可能同时选中原整改分区和新作者批次；完整性缺项与重复分开，双 Pod 只读单案证据留报告指针。
