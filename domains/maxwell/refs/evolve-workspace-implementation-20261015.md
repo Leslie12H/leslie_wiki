@@ -247,3 +247,17 @@ links: [evolve-commercial-ui-20261015, evolve-continuous-workspace-layout-202610
 - 目录比较与上下文：`apps/studio/src/products/evolve/v3/catalog/RecordsPage.tsx`、`benchmarks/RunComparisonSelectionBar.tsx`、`runComparisonSelection.ts`、`RunComparisonContext.tsx` 及相邻测试。
 - 多指标历史：`benchmarks/BenchmarkTrendStore.ts`、`BenchmarkHistoryStore.ts`、`BenchmarkMetricsOverview.tsx`、`BenchmarkResultsPanel.tsx` 和 `benchmarkTrend.test.mjs`；以当前实现核对并发、分页及选择上限。
 - 真实既有记录的筛选/刷新/抽屉返回、数值历史、窄屏比例与验证范围：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/interaction-audit.md` 的“全目录比较与多指标历史”。浏览器不足一页的数据与技术分页测试分别记录；没有新建评测或生产写入，整体完成状态以最新验收记录为准。
+
+
+## 2026-10-16 按原型替换旧布局
+
+用户明确允许抛弃现有布局，保留 Maxwell token 和原型的业务组织。此节取代上文旧布局中内嵌运行表单、独立阶段条与可调整分栏的实现指针；请求恢复与冻结身份规则继续有效。
+
+**Why:** 仅将旧表单换色、收窄或增加折叠，并不能还原趋势、记录与证据的连续阅读。运行/重评/验证设置常驻会把结果挤出首屏，未知汇总的空图也会掩盖已有逐题评分。
+
+**How to apply:** 先还原页面信息顺序，再复用 token 和原有数据状态。默认工作面展示上下文、趋势、记录和所选证据；配置由明确动作进入独立抽屉。候选列表与谱系共用趋势，任务与 Benchmark 共用按指标分组的比较表。未知汇总用状态行，不能补零或从当前页擅自外推；节点文字用 HTML 或固定像素，不能拉伸。
+
+- 导航与连续工作面：`apps/studio/src/products/evolve/v3/EvolveNavigation.tsx`、`workspace.css`、`library/BenchmarkDetailPage.tsx`。
+- 任务趋势/谱系/比较：`v3/ledger/TaskOptimizationView.tsx`、`CandidateLineage.tsx`、`v3/matrix/MatrixPage.tsx`、`benchmarks/RunComparisonWorkspace.tsx`。
+- 阅读与操作分离：`v3/catalog/RecordsPage.tsx`、`v3/matrix/TrialDetailPanel.tsx`、`components/composite/SettingsRow/SettingsRow.tsx`；运行/验证/重评继续使用已有 Store 恢复机制。
+- 最新截图、测试、只读真实记录路径及未完成范围：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/layout-20261016/README.md`。布局检查不代表 Agent 新对话、真实执行、迁移或部署，也不代替用户最终视觉验收。

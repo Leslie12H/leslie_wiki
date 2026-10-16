@@ -785,3 +785,5 @@
 - [质检转交失败后的任务占用](domains/sandai-data-smith/pitfalls/sandeval-work-handoff-unsettled-occupancy.md) — 2026-10-16：成功回执写入锁超时、客户端断开与后端结束分层、任务级待核对占用及原事务结案边界；只读报告指针。
 
 - 2026-10-16：[自动复验派回验收](domains/sandai-data-smith/refs/sandeval-auto-reinspection-verification.md) 补充内部执行状态计数与真实后继派单分层、触发节奏和完成时间边界；原始计数已在现场报告更正。
+
+- 2026-10-16 EVOLVE 按原型替换旧布局：顶部五分类、连续趋势/记录、候选检查器、共享比较与操作抽屉；见 [正式前端实施指针](domains/maxwell/refs/evolve-workspace-implementation-20261015.md)，替代此前内嵌表单/固定分栏描述，保留冻结身份和恢复边界。
