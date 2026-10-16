@@ -779,3 +779,5 @@
 - 2026-10-16 EVOLVE 全目录跨筛选比较、冻结口径明细与多指标完整历史：见 [正式前端实施指针](domains/maxwell/refs/evolve-workspace-implementation-20261015.md)，表格页、历史页与逐题证据各自有界读取并保留同一上下文，附宽窄屏往返尺寸观察验证。
 
 - 2026-10-16：[整改待定与复验范围](domains/sandai-data-smith/pitfalls/sandeval-correction-defer-reinspection.md) 补充单题完整范围、待定/本地草稿/正式回交/派回分层及独立只读验收指针。
+
+- 2026-10-16：Nextplay 十题执行拒绝的 ACK 历史日志、实际接口定位及 Card 检查边界，见[十题验收入口](domains/maxwell/refs/evolve-nextplay-ten-case-acceptance-20261015.md)。
