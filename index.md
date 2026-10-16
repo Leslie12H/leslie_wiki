@@ -832,7 +832,7 @@
 
 - 2026-10-16：[联合历史整改授权](domains/sandai-data-smith/pitfalls/sandeval-repeated-correction-ancestor-blocker.md#2026-10-16-明示批准后的三条版本恢复) 补充明示批准后的刘钬三行版本恢复、完整正文/判断保留、不可变审计与跨副本独立验收；本人真实提交仍单独核验。
 
-- [Sand 整包自查退回与离职交接](domains/sandai-data-smith/refs/sandeval-package-self-check-return-and-offboarding.md) — 2026-10-17：整包及部分 Sand 已质检退回、离职改派和全部自查后重交的 PR #2564；5c4c7fc35 原 review 与 9b18b3c5c 修复复审指针，运行态和测试集成以 PR 最新证据为准，未核对生产。
+- [Sand 整包自查退回与离职交接](domains/sandai-data-smith/refs/sandeval-package-self-check-return-and-offboarding.md) — 2026-10-17：整包退回、离职改派及全部自查后重交；测试 PR #2564、修复复审和用户明确授权的 main PR #2566。合并、Gate、测试集成及生产状态分别沿最新证据核对。
 
 - 2026-10-16：[EVOLVE 独立版本保存恢复](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-16独立版本的未知保存结果) — 后续拒绝不能解除首次未知保存的版本锁，保留各资产精确版本及同操作恢复证据。
 
