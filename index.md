@@ -818,3 +818,5 @@
 - 2026-10-16：[EVOLVE Case 关联与 Benchmark 指标推导](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-16由-case-关联推导-benchmark-指标) — 指标集作为可选复用工具；统一关联视图、冻结版本及已批准清单的实施边界。
 
 - [人工退回后的通过状态与转交断点](domains/sandai-data-smith/pitfalls/sandeval-manual-return-passed-status-handoff-gap.md) — 2026-10-16：默认待复验摘要不证明新轮次就绪；历史报告、退回责任、后继检查分别核验，附原单只读报告及未核实的准备错误边界。
+
+- 2026-10-16：[EVOLVE 独立关联与版本演进](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-16独立关联与资产版本演进) — Case/指标双向解耦；Benchmark、Case、指标各自更新；历史快照、版本采用与已取代方案边界。

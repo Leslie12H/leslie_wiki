@@ -110,3 +110,13 @@ links: [evolve-workspace-implementation-20261015]
 **How to apply:** Case 关联指标或指标集，Benchmark 按采用的 Case 及其关联汇总指标与适用范围；用例视图与指标视图是同一份关系的两个视角。指标集保留为可选批量复用资产，不能作为创建 Benchmark 的强制前置层。精确版本、集合展开、计算口径和证据范围一起冻结，不能按名称合并不同评估器，或让库更新改变历史。
 
 当前目标模型、原清单批准记录、后续契约细化边界及是否实际实现，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/metric-evaluator-management-20261016.md` 与同目录 `evaluator-metric-set-contract-plan-20261016.md`。本节优先于此前关于必选独立指标集的编排方向；原接口批准不自动扩大到未列出的 Case 字段或数据库变更。
+
+## 2026-10-16：独立关联与资产版本演进
+
+用户进一步明确：Case 与指标解耦，各自可编辑、可选择关联；Benchmark、Case 和指标都能持续更新并保留自己的版本。此澄清优先于把新关系嵌入 Case 内容修订的短期方案。
+
+**Why:** 把关系存成 Case 内容会让增删关联制造无关内容版本，也使指标侧难以独立管理；把历史快照解释成资产不可更新，又会阻断长期 Benchmark 的维护。
+
+**How to apply:** 独立资产、双向关联、版本采用分别处理。关系变更不修改 Case 或指标内容；Benchmark 修改组成或采用资产更新时保存新版本，历史运行继续读取原版本组合。库中改动与当前 Benchmark 的局部编排分别标明作用范围；跨版本趋势标出用例与评分口径的变化。
+
+最新目标、版本矩阵和编辑动线见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/metric-evaluator-management-20261016.md`。旧 Case 补充清单的批准与取代记录、代码撤回范围和当前实现/验证边界，分别查同目录 `case-metric-association-contract-plan-20261016.md`、`evaluator-metric-set-contract-plan-20261016.md` 与 `task-states-20261016/README.md`。不要把目标模型当成已部署行为，也不能将被取代的 Case 字段授权扩展成未列明的独立关系接口或表结构。
