@@ -2,7 +2,7 @@
 name: sandeval-return-route-and-handoff-hints
 type: pitfall
 created: 2026-09-28
-updated: 2026-09-30
+updated: 2026-10-16
 tags: [sandeval, quality, remediation, handoff, testing]
 links: [sandeval-direct-remediation-and-batch-handoff, sandeval-whole-package-reinspection-wait]
 ---
@@ -33,3 +33,12 @@ links: [sandeval-direct-remediation-and-batch-handoff, sandeval-whole-package-re
 
 - 代码指针：`quality/application/management/leader_query_service.py::_detail_batches`、`quality/application/resolution/leader_resolution_service.py` 的复验分配回执、`quality/application/management/reinspection_service.py::_create`、`quality/infrastructure/client/reviewer_client.py`、`frontend/src/routes/quality.tsx`。先核对部署 SHA，再验证实时账号入口。
 - 当前个案、观察边界和恢复前置见上述只读报告的“当前接收账号与入口核对”。报告未确认历史角色或实际提交操作者，不能据此判定第一轮由谁人工完成。
+
+## 整包指定提交人与页面旧提示
+
+**Why:** 2026-10-16 临科智华多个包显示“批次已通过”但不能提交。按真实供应商账号核查后，一部分已交接、一部分有真实 Sand 退回，另外两包已可由各自冻结提交人交接；仅看质检员列和旧截图会把不同状态当作同一故障。通用“指定负责人”提示没有姓名，已打开的详情也缺少后台推进完成后的主动重读。
+
+**How to apply:** 先取当前部署 SHA，再以包内冻结 `recipient_id` 的真实账号读取原生 `available_actions` / `blocking_reasons`，同时核对完整应交集合和正式交接回执。批次质检员、验收人和整包提交人分别核查。没有显式接收人时，按部署中 `_vendor_package` 的实际选择顺序核对；多人验收在本次部署可回落到最近 ready 空间质检分配的创建人，不能照旧记忆一律认定 `RECIPIENT_UNRESOLVED`。截图缺少时刻和请求证据时，不把当前正常状态倒推为历史无故障，也不把客户端刷新缺口认作已证实的唯一历史根因。
+
+- 核查时间、当前负责人、真实退回、20/20 完整性与跨 Pod 原生读证据：[2026-10-16 核查报告](/Users/leslie/Documents/Playground/output/linke-packages-20261016/report.md)。变化数据只存本次报告，后续需重读。
+- 代码指针：`aggregation_service.py::_vendor_package` 选择并冻结接收人；`leader_query_service.py::_package` 负责权限投影；`PackageDetail.tsx` 负责重新读取与提示。显示具体姓名及有限次重查的修复在[测试 PR #2561](https://github.com/world-sim-dev/sandai-data-smith/pull/2561)，部署状态查 PR/Gate，不将提交代码等同上线。
