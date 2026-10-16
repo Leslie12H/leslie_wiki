@@ -164,3 +164,11 @@ links: [evolve-workspace-implementation-20261015]
 **How to apply:** 空白与模板入口共用正式评估器编辑器；模板只预填同一 LLM Rubric 的业务配置，不新增公开方法或复用新指标身份。配置、样本材料预览、真实模型试评与正式发布分开验收，保留版本和草稿恢复边界。
 
 LangSmith 当前创建流程核查入口为 [Evaluators](https://docs.langchain.com/langsmith/evaluators) 与 [LLM-as-a-judge](https://docs.langchain.com/langsmith/llm-as-judge)。EVOLVE 的正式前端源码、用户登录后的实页交互证据、当前服务不可用和真实试评未完成范围，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/evaluator-create-flow-20261017.md`。以后复用须重新核对运行服务与接口，不把材料预览当作模型试评，也不把本条视为发布完成。
+
+## 2026-10-17：评估器配置与实际执行的验证边界
+
+**Why:** 前端热更新不能证明新增后端已运行；能保存 Prompt 和输出约束也不能证明计算调用消费了这些配置。
+
+**How to apply:** 验收先核对当前前端代理指向的服务，再分别验证精确指标读取、配置编译、真实调用和发布回读。配置编译须保留独立指标修订，将范围、类别和材料映射送入同一计算协议；受控 endpoint 测试不能替代真实模型试评。
+
+本轮代理定位、正式页面分类编辑、编译器测试及尚未接入的持久试评/Benchmark 边界，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/evaluator-create-flow-20261017.md` 的续接记录。环境地址和测试状态沿记录现场复核，不固化为产品能力。

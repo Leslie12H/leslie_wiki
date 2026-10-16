@@ -838,4 +838,4 @@
 
 - 2026-10-16：[EVOLVE 单一 LLM Rubric 与 Prompt 配置](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-16单一-llm-rubric-与可编辑-prompt) — 底层方法与业务评估器版本分工，独立输出指标及配置检查/真实试评的验收边界。
 
-- 2026-10-17：[EVOLVE 正式评估器创建流程](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-17直接落地正式评估器创建流程) — 空白/模板统一入口，真实目录与草稿恢复；材料预览、模型试评、资产发布分别验收。
+- 2026-10-17：[EVOLVE 正式评估器创建流程](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-17直接落地正式评估器创建流程) — 空白/模板统一入口，精确指标与分类编辑；代理定位、配置编译、真实试评和资产发布分别验收。
