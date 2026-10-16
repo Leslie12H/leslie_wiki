@@ -42,3 +42,12 @@ links: [nextplay-independent-benchmark-entry, evolve-preset-evaluation-entry]
 **How to apply:** 沿 `executorRegistration.ts` 的展示条件、`domain/executor/capability_level.go` 的级别推导、`commands/executors.go` 的预检持久化查清字段来源，再对照具体 Run。不能从声明级别推断评分成功，也不能仅为压缩列表删除历史执行器。对象与连接的归属应显式管理，不能按业务名称硬编码归并。
 
 准确登记身份、dev 页面只读证据、源码版本和建议见[三条连接状态诊断](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-executor-status-diagnosis-20261016.md)。这是 2026-10-16 的诊断记录；继续操作前刷新实际登记与引用，不以本页推断当前部署或运行状态。
+
+
+## 2026-10-16 单一执行器的本地实现指针
+
+**Why:** 同一个被测 Agent 可以有普通评测与候选验证两条技术路径。只隐藏 Runner 的列表行，会让旧候选选择器丢失执行身份；只改连接标签，也不能说明实际执行与评分状态。合并展示不能修改历史 Run 或在重试时重新选择路径。
+
+**How to apply:** 以显式同业务归属聚合连接；新调优任务冻结实际 Runner 与内层目标；重复创建沿用已保存路线；旧候选和历史查询保留物理执行器标识。关联变更属于展示与未来路由元数据，不应影响已开始任务的执行配置；比较含指针的配置结构时按值比较，避免从数据库重新读取后误判变化。
+
+代码、具体契约和本地验证记录查 `/Users/leslie/.codex/worktrees/evolve-logical-executor/maxwell-ai/docs/verification/2026-10-16-logical-executor.md`。检查 `domain/executor/routing.go`、`commands/logical_executor.go`、PostgreSQL `executor_routing_integration_test.go` 与 Studio `executor/executorRouting.ts`。本轮仅本地，页面测试数据、隔离 PostgreSQL 和技术回归不能替代 dev 关联生效、真实 Case 执行或评分验收；PR 与发布状态须另行核对。
