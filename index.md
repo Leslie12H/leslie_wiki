@@ -800,6 +800,9 @@
 
 - [整改冻结分区与当前作者批次重叠](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md) — 2026-10-16：范围版本匹配仍可能同时选中原整改分区和新作者批次；完整性缺项与重复分开，双 Pod 只读单案及受控排除重复批次的 main PR #2510 留报告指针。
 
+- [整改转交后历史标注的提交误报](domains/sandai-data-smith/pitfalls/sandeval-transferred-legacy-batch-submit-qc-mismatch.md) — 2026-10-16：个人 legacy 批次、普通 wave 送审范围与整改历史回执的区别；先证实已交整改和后继复验，再解释普通提交 404。
+- 2026-10-16：[石东亮整改转交占用](domains/sandai-data-smith/pitfalls/sandeval-work-handoff-unsettled-occupancy.md#2026-10-16-石东亮整改转交的独立实例) — 区分同类不同任务、原请求延后结束；经本单独立授权和冻结计划结案，保留七卡责任与审计，附恢复报告和长期修复入口。
+
 - 2026-10-16：[整改冻结分区与当前作者批次重叠](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md) 补充合并发布后的正式整包、负责人可提交动作与尚未正式交接Sand的分层核验指针。
 
 - Benchmark 范围内的记录命名、真实 targetRef 筛选与局部读取范围：见 [EVOLVE 交互设计指针](domains/maxwell/refs/evolve-layout-research-20261016.md) 的 2026-10-16 追加记录。

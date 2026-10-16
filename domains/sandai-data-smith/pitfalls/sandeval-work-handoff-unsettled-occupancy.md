@@ -28,3 +28,13 @@ links: [sandeval-sql-lock-diagnosis, sandeval-reassignment-scope-and-batch-respo
 ## 2026-10-16 经授权的原事务结案
 
 用户在诊断后明确授权手动恢复线上数据。正式 operator CLI 按原计划哈希将该操作按 rolled_back 结案；写入前冻结、跨 Pod 复核、原会话/请求结束证据、执行回执与写入后独立核验见 [恢复报告](/Users/leslie/Documents/Playground/output/quality-handoff-20261016/recovery/recovery-report.md)。结案 succeeded 仅表示人工核对完成，实际事务结果仍以 result.resolution 区分；不代表原转交成功。此次没有重放转交或修改当前质检人，具体时点状态只从报告和后续线上读取判断。
+
+
+## 2026-10-16 石东亮整改转交的独立实例
+
+[两案核查记录](/Users/leslie/Documents/Playground/output/correction-two-errors-20261016/report.txt) 保存该批次的完整冻结七卡、当前整改责任、同一任务的 needs_review 占用、原 499 与应用延后结束、对应数据库锁等待证据及跨 Pod 读回。此为与前述质检员交接不同的任务，不沿用前案已结案的状态或写入授权。用户随后明确要求手动处理，按本单独立冻结计划通过原生 CLI 将原事务按 rolled_back 结案，解除占用；跨 Pod 读回确认业务快照和原审计保留，未重放转交或替用户选择接手人。详见[恢复报告](/Users/leslie/Documents/Playground/output/correction-two-errors-20261016/recovery/report.txt)。处理人和操作状态仍须现场核验。
+
+长期修复指针：[PR #2510](https://github.com/world-sim-dev/sandai-data-smith/pull/2510)。事务内业务失败与 COMMIT 已开始后的确认丢失必须分开；只有回滚及连接模式重置均确认成功时才可自动解除占用，结果未知仍需核对。精确提交、Gate、部署和原单验收以本单报告为准。
+
+
+2026-10-16 部署后验收入口：[原单只读验收报告](/Users/leslie/Documents/Playground/output/correction-two-errors-20261016/postdeploy-report.txt)。报告独立保存 PR Gate、生产合并 SHA、全部副本、实际下发前端资源及多 Pod 原生查询；同时区分占用解除、列表状态、真实整包与正式提交，不能把源码或候选计算通过等同于业务交接完成。后续状态须实时读取。
