@@ -2,7 +2,7 @@
 name: sandeval-two-stage-sampling-scope
 type: pitfall
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-16
 tags: [sandeval, quality, sampling, inspection]
 links: [sandeval-cross-workbench-question-order, sandeval-reinspection-sampling-lineage]
 ---
@@ -25,3 +25,14 @@ links: [sandeval-cross-workbench-question-order, sandeval-reinspection-sampling-
 [岳黎明 / 冯杰批次核验报告](/Users/leslie/Documents/Playground/output/yueliming-sampling-20261015/report.md) 保存完整批次计数、三轮题号映射、真正 Sand 退回题与用户链接题的区别、运行提交/镜像、数据库只读保护和源码哈希核验。原始范围、提交与逐题判断见同目录 `production.json`；集合差异见 `scope-comparison.json`。实时状态须重新查询，不从此知识页推断。
 
 本次仅只读取证并给出业务边界，没有改变抽样、判断或生产部署。
+
+
+## 2026-10-16 单题抽样显示原第 2 题
+
+**Why:** “只有题目二，没有题目一”还可能是抽检只选中原第 2 题、界面继续保留原题号。不能用最大题号推断当前应检总数，也不能把质检员姓名当成答案作者。
+
+**How to apply:** 以冻结 `plan.assignments` 确认应检集合，用 `plan.question_order` 对齐原题号，再对照实际 `batch_allocation.sample_rate` / `plan.execution.sample_rate` 和最少抽样数；默认 `policy_snapshot` 不一定等于本批执行比例。核对首轮、复验和 `previous_task_id` 后再提供当前待办入口。
+
+[王文轩 Sand 抽检核查记录](/Users/leslie/Documents/Playground/output/wangwenxuan-inspection-20261016/report.txt) 保存两题的冻结身份、两级实际比例、原题号映射、原轮停止和新轮派回的查询证据。原始证据为同目录 `production.json`、`detail.json`、`detail-independent.json`，运行源码与生产不可变提交对照见 `source-verification.json`。两台 Pod 独立只读结果一致；页面跳到登录页后，自动审批拒绝飞书登录，未宣称已完成登录后的浏览器复现。实时比例、状态和待办入口须回读线上，不从本页推断。
+
+本次仅只读取证，没有修改生产数据、抽样规则、答案、判断或部署。
