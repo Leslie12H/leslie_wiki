@@ -179,6 +179,7 @@
 - [Sand Eval 供应商任务与批次分类入口](domains/sandai-data-smith/refs/sandeval-supplier-task-grouping.md) — 供应商派题列表、明确发布关联、配置装配与质检分组参考指针（2026-09-26）。
 - [Sand Eval 主任务发布与 Follower 误报不存在](domains/sandai-data-smith/pitfalls/sandeval-dispatch-follower-command-read.md) — 新建后发布 404、备题后题目包不存在、旧失败展示的 Leader/Follower 对照、外层权限检查与准备回调连接核验入口；原始引入 PR #1173/#1160 与后续 PR #1892 的 Git 历史，以及复制积压、近期 PR 部署时间/调用耗时与因果边界（2026-10-13）。
 
+- [Sand Eval 概览未提交与 Sand 可分配](domains/sandai-data-smith/pitfalls/sandeval-overview-handoff-scope-mismatch.md) — 真实交接时间线、持久化分区与当前有效分区的差异，以及重复覆盖批次导致的概览误判核验入口（2026-10-16）。
 - [Sand Eval 角色与两侧工作流](domains/sandai-data-smith/refs/sandeval-roles-and-workflow.md) — 角色节点、Sand 视角、成员权限与新旧质检链路的核验入口（2026-09-17）。
 - [Sand Eval 换空间与个人派题核验](domains/sandai-data-smith/pitfalls/sandeval-space-membership-and-personal-distribution.md) — 单空间/单角色、同名账号、供应商下发与个人派题的分层核对及未派题批次改派入口（2026-10-10）。
 - [Sand Eval 多轮退回的上游意见链](domains/sandai-data-smith/pitfalls/sandeval-repeated-return-feedback-lineage.md) — 整批意见须有父处置，逐题意见还须原报告、送审包与冻结计划（2026-09-28）。
