@@ -190,3 +190,12 @@ LangSmith 当前创建流程核查入口为 [Evaluators](https://docs.langchain.
 **How to apply:** 材料配置、样本编辑、请求和预览采用同一范围。未选文字保留草稿但不提交；显式选择至少保留一项，缺材料阻止新调用，旧映射按原含义读取。手动文本不自动变成结构化输入；未知试评恢复原冻结请求，不重新取当前选择。
 
 当前正式页面、请求裁剪、旧草稿兼容与实际方法消费测试，以及尚未完成的结构化样本和 Benchmark 编排，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/evaluator-create-flow-20261017.md` 的“正式评分材料配置与试评一致性”。界面已能选择材料不等于远端模型或资产发布已可用。
+
+
+## 2026-10-17：指标集精确组合与跨页编辑
+
+**Why:** 评估器输出组合如果隐式采用最新版本、跳转目录后丢失编辑状态，或用旧评分标准冒充指标集，会再次把独立资产和运行口径混在一起。热更新中的旧 Store 实例也不能代替完整页面加载验收。
+
+**How to apply:** 指标集采用明确的评估器修订与输出指标修订，读取不改变采用；组合调整在草稿内完成，保存为集合新修订。从编辑器进入目录时保留草稿和返回上下文，恢复未知保存仍用原请求。正式页面、受控 Gateway、后端目录与真实发布分别验收；账号未恢复不能误报为浏览器存储故障。
+
+当前正式入口、测试、截图、服务不接受新资产类型的实际边界，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/metric-set-management-20261017.md`。独立 Case—指标关系的待确认接口/存储清单见同目录 `independent-case-metric-contract-plan-20261017.md`；不得将已批准的指标集实施扩大为该关系方案已获批，也不得把前端目录当成完整 Benchmark 编排已完成。
