@@ -59,3 +59,12 @@ links: [nextplay-independent-benchmark-entry, evolve-preset-evaluation-entry]
 **How to apply:** 关联和主体修改均在同一业务事务锁内检查；持久化测试同时覆盖重复绑定、主体角色变化、解除关系后的历史查询。启用隔离 PostgreSQL 集成测试前先核对 server_encoding，使用 UTF-8 数据库，不为环境编码问题放宽业务约束。
 
 统一执行器代码与原预算、预检、取消修复统一查看 [Maxwell PR #358](https://github.com/world-sim-dev/maxwell-ai/pull/358) 及其中 `docs/verification/2026-10-16-logical-executor.md`。PR 当前状态、CI 和部署状态以远端为准；本次授权为提交到既有 PR，不含合并或部署。
+
+
+## 2026-10-16 合并发布与真实原题复验入口
+
+**Why:** main 已合并和预检通过，仍不能证明真实长任务结束、评分服务收到完整原件或页面结果可持久化；登记预算也可能保留旧值，不随代码默认值自动变化。0–1 原值、子项分数与 Boolean 通过比例应分别解释，不能从汇总页的整数格式推断丢失精度。
+
+**How to apply:** 发布前锁定 main SHA 和组件范围；回读现有连接实际预算，再顺着执行 Thread、终态原件、原 Provider 方法/版本与原始数值核验。普通评测成功不能扩大为候选配置已验证、全部题库已通过或调优闭环通过。合并发布、原单题、原十题及限制统一查 [PR #358 发布复验记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-ten-case-acceptance-20261015/release-retest-pr358-20261016.md)；当前数量和状态以该记录及关联真实 Run 为准。
+
+原件浏览器下载使用 Chromium `showSaveFilePicker` 时，须将页面聚焦并完成系统保存对话框；不要只等待传统 download 事件就将 0 B 归因为网络或存储故障。落盘后核对字节数、哈希及格式解析；小原件成功不代替超大文件验证。相关实现入口：Studio `products/evolve/evidence/evidenceDownload.ts` 与 `EvidenceDownloadStore.ts`。
