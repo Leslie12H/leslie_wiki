@@ -2,7 +2,7 @@
 name: sandeval-repeated-correction-ancestor-blocker
 type: pitfall
 created: 2026-09-30
-updated: 2026-10-14
+updated: 2026-10-16
 tags: [sand-eval, quality-center, remediation, reinspection, responsibility, release]
 links: [sandeval-transferred-correction-task-visibility, sandeval-roles-and-workflow]
 ---
@@ -54,3 +54,12 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-roles-and-work
 同质量任务的其他批次会持续更新后台重试次数。完整快照应保留，但冻结修复摘要应绑定本单全部依赖，不应把无关批次的进度计数当成本单前置。漂移先停止并做精确 diff，证明无关后再冻结新计划；不能直接忽略任意变化。滚动发布更换 Pod 后须以当前部署重新预检。
 
 - [2026-10-14 单案数据修复、批准边界及独立验收指针](/Users/leslie/Documents/Playground/output/correction-xujiayu-20261014/data-repair-report.md)：实际修改、审计回执、原许可保留、新连接/另一副本回查及本人工作台证据。仅证明当次授权阻断解除，真实复验提交另验。
+
+
+## 联合历史整改单时触发旧祖先授权（2026-10-16）
+
+**Why:** 当前链接本身的祖先门禁通过，仍不能证明整批复验能提交。提交服务会联合详情列出的同批未结历史责任，其中某张更早子单可能承接旧负责人退回；其继承证据和精确范围许可绑定转交前版本，当前责任已因后续转交增加版本。于是完整集合返回 `REINSPECTION_AUTHORIZATION_STALE`，即使本人全部答案已保存更新、页面准备度为真。这一阻断与从旧送审基线重复生成版本不同。
+
+**How to apply:** 固定主单与实际接收人，读取完整 manifest 和 related_dispositions；先对主单、每张历史关联单以及联合集合分别只读重放原生 `_ancestors`，再沿失败历史子单追父责任的 `inherited_reinspection`。对每条继承引用比较旧/当前版本、原精确范围旧许可与当前许可、正式转交历史，保留“旧许可存在但当前版本无许可”的区别。实际 POST 的时间、request_id、部署 SHA 和响应长度独立核对；历史响应正文未留存时明确区分日志事实与当前只读重放。排查中若滚动发布，再在新副本复核门禁。恢复须单独有精确授权，不能让标注员重做答案、直接关旧单或跳过版本校验。
+
+- [2026-10-16 刘钬本批只读报告](/Users/leslie/Documents/Playground/output/liuhuo-correction-20261016/report.md)：本人四题准备度、主单通过/历史子单阻断、三条旧/新版本及许可、真实失败请求和滚动更新后独立复核。具体 ID、状态和 SHA 仅存现场证据；本次未恢复提交、未修改生产数据或发布。

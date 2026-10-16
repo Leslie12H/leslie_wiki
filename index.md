@@ -824,3 +824,5 @@
 - [Sand Eval 重抽范围与原意见可见性](domains/sandai-data-smith/pitfalls/sandeval-resampling-upstream-note-visibility.md) — 冻结样本与意见关联、跨关卡必抽、分享链接权限及 root 查看身份的独立核验（2026-10-16）。
 
 - 2026-10-16：[EVOLVE 评分资产发布与契约生成核验](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-16评分资产发布与生成契约核验) — 原子发布、未知响应保留版本、CAS 与目录边界及生成器核验指针。
+
+- 2026-10-16：[历史整改授权版本失配](domains/sandai-data-smith/pitfalls/sandeval-repeated-correction-ancestor-blocker.md#联合历史整改单时触发旧祖先授权2026-10-16) 补充主单门禁通过但联合历史子单失败、旧/新精确许可与滚动更新后独立只读核验；具体证据见刘钬本批报告。
