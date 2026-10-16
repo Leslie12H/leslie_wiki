@@ -812,3 +812,5 @@
 - 2026-10-16 被测对象、评分方法与服务连接的新版分工提案及 PR #358 吸收边界：见 [EVOLVE 交互设计指针](domains/maxwell/refs/evolve-layout-research-20261016.md)。
 
 - 2026-10-16 用户澄清指标内直接配置 LLM Judge Prompt、执行连接唯一归属和外部评分服务分离：见 [EVOLVE 交互设计指针](domains/maxwell/refs/evolve-layout-research-20261016.md)，附竞品事实、当前契约缺口与局部实装验收。
+
+- 2026-10-16：[EVOLVE 指标与评估器最新澄清](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-16评估器实例指标集与证据范围) — 方法能力、评估器配置、指标集和 Benchmark 证据范围；旧指标内 calculation 草案取代与未批准边界。

@@ -83,7 +83,7 @@ links: [evolve-workspace-implementation-20261015]
 设计方案、PR 精确提交、当前源码差距、页面布局、返回路径和待补契约：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/target-and-connections-design-20261016.md`。PR 当前状态须重新读取；不能以提案表示已合并或部署。
 
 
-## 2026-10-16：唯一连接归属与指标内配置评分
+## 2026-10-16：唯一连接归属与指标内配置评分（后续已澄清对象归属）
 
 **Why:** 同一个执行连接出现在设置和被测对象会造成双重管理；把业务指标、底层方法和 Prompt 配置分散到多个创建步骤，也不符合用户心智。用户明确希望直接创建“稳定性”“剧本完整性”指标，选 LLM Judge 并写自己的 Prompt。
 
@@ -92,3 +92,12 @@ links: [evolve-workspace-implementation-20261015]
 - 官方概念、用户澄清、现有源码与待补能力：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/metric-evaluator-management-20261016.md`。此方向取代本轮早先将每个 Prompt 配置独立放到评分方法目录的建议；尚未实现新契约。
 - 连接归属的已实现范围、聚焦检查、Studio check 及真实只读页面验证：同目录 `task-states-20261016/README.md` 的“连接管理的归属与方法目录分离”。PR #358 归并和完整指标试评不在本轮已完成范围。
 - 竞品刷新入口：[LangSmith Evaluators](https://docs.langchain.com/langsmith/evaluators)、[LLM Judge](https://docs.langchain.com/langsmith/llm-as-judge)。Evaluator 是可执行配置，可以多输出；Feedback key 对应结果指标，不把 LLM Judge 类型本身当成业务指标。
+
+
+## 2026-10-16：评估器实例、指标集与证据范围
+
+**Why:** 用户再次指出现有方法列表是底层能力；把指标与配置好的评估器合并，或仅把评分标准改名，仍未解决 case 证据如何进入计算并形成可比较指标的问题。
+
+**How to apply:** 以最新用户模型为准：方法/类型提供算法，评估器实例保存 Prompt/模型/规则/输入输出配置，指标关联输出并定义解释与汇总，指标集组织多项指标。Benchmark 还要固定用例与评估器的证据范围和运行配置。一个评估器允许多输出；区分逐例汇总与多例联合评估。旧指标内 calculation 草案已被取代、未获批准，不可据此开始接口实现。
+
+目标关系、LangSmith 官方依据、当前逐 Trial 实现差距及前端名称修改撤回边界，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/metric-evaluator-management-20261016.md`。本节取代上一节关于 Prompt 持久化对象归属的方案；唯一连接归属仍有效。历史 JudgeSpec 不能通过改名被视为已经迁移到指标集。
