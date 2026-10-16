@@ -2,7 +2,7 @@
 name: sandeval-correction-defer-reinspection
 type: pitfall
 created: 2026-10-14
-updated: 2026-10-14
+updated: 2026-10-16
 tags: [sand-eval, annotation, correction, defer, reinspection, css]
 links: [sandeval-caption-refine-skip-defer-handoff, sandeval-caption-review-scroll]
 ---
@@ -34,3 +34,13 @@ links: [sandeval-caption-refine-skip-defer-handoff, sandeval-caption-review-scro
 2026-10-14 修复与回归指针：[最终提交 60305ca75](https://github.com/world-sim-dev/sandai-data-smith/commit/60305ca7510f9c5de8ade7cfca04fbd80f483092)、[完整 Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/38534096535)。回归覆盖历史待定保持、恢复及转派后再次复验，以及两个冻结终态的有效范围进度和异常成员。具体通过、冲突或发布状态以 PR 与工作流为准。
 
 2026-10-14 main PR 准备指针：[PR #2442](https://github.com/world-sim-dev/sandai-data-smith/pull/2442)、[对应 Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/38535971376)。发布分支 `codex/annotation-sticky-defer-main` 从 main 的 `b7842bee7` 创建，只挑入本任务 6 个原始提交；原测试分支 PR 保留独立。核查最新差异应以该 main PR 为准，测试平台验收、合并与生产运行态不得由 PR 创建推断。
+
+## 单题待定、正式回交与复验派回分层核验（2026-10-16）
+
+**Why:** 完整个人批次可能仅有一条视频答案，多个 shot 备注仍属于同一题。唯一题待定时整批复验为空；本地草稿提示不代表正式保存。随后回交成功也不保证已经生成复验任务，自动派回还有有界队列与前置授权。
+
+**How to apply:** 沿稳定工作项核对原个人完整成员、历次送审和转交，避免把历史生产人当作当前接收人；以单题 submit/defer 不可变回执区分状态与内容保存，再核对正式版本、完成命令回执、整改执行及实际复验任务。读取当前本人工作台与负责人动作，区分已回交待分配和仍可编辑；自动开关开启也需核对队列范围。队列中一次未入选只能证明当前未处理，不能单独证明永久饥饿。
+
+[2026-10-16 只读核查报告](/Users/leslie/Documents/Playground/output/xiaojinsheng-correction-20261016/report.md) 保存截图对应的精确批次、待定和提交时间线、当前工作台、自动派回前置、队列与另一生产副本独立回读。对象 ID、数量、运行版本和当时状态以报告为准，不从本页推断当前仍待分配。本次未修业务代码、未修改生产或发起复验派单。
+
+代码入口：`AnswerCorrectionService` 的全待定门禁、`AnswerCorrectionPanel` 的提交禁用原因、`AutosaveBadge` 的本地保存提示，以及 `ResolutionService.auto_assign_reinspections` 与 `ResolutionExecutionRepository.pending` 的队列和范围。
