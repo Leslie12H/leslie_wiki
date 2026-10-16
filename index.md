@@ -820,3 +820,5 @@
 - [人工退回后的通过状态与转交断点](domains/sandai-data-smith/pitfalls/sandeval-manual-return-passed-status-handoff-gap.md) — 2026-10-16：默认待复验摘要不证明新轮次就绪；原生资格预检、待重检责任转交链、原报告保留及同请求恢复，附原单证据与 PR #2522。
 
 - 2026-10-16：[EVOLVE 独立关联与版本演进](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-16独立关联与资产版本演进) — Case/指标双向解耦；Benchmark、Case、指标各自更新；历史快照、版本采用与已取代方案边界。
+
+- [Sand Eval 重抽范围与原意见可见性](domains/sandai-data-smith/pitfalls/sandeval-resampling-upstream-note-visibility.md) — 稳定工作项集合比对、跨关卡历史必抽与既有冻结计划的独立核验（2026-10-16）。
