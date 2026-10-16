@@ -172,3 +172,12 @@ LangSmith 当前创建流程核查入口为 [Evaluators](https://docs.langchain.
 **How to apply:** 验收先核对当前前端代理指向的服务，再分别验证精确指标读取、配置编译、真实调用和发布回读。配置编译须保留独立指标修订，将范围、类别和材料映射送入同一计算协议；受控 endpoint 测试不能替代真实模型试评。
 
 本轮代理定位、正式页面分类编辑、编译器测试及尚未接入的持久试评/Benchmark 边界，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/evaluator-create-flow-20261017.md` 的续接记录。环境地址和测试状态沿记录现场复核，不固化为产品能力。
+
+
+## 2026-10-17：持久试评与未知执行恢复
+
+**Why:** 试评同样会调用收费模型。请求丢失、Worker 崩溃或取消后迟到回执，若沿用普通评分的自动重试或直接清空草稿，会造成重复调用、状态倒退和错误归因。
+
+**How to apply:** 在请求发出前保留操作身份，接收时冻结评估器、独立指标修订、样本和模型；恢复原请求优先于读取新的默认配置。未知执行不自动重跑，取消与租约失效阻止旧 Worker 覆盖结果。正式评分与编辑器试评分开记账和验收，样本阅读、受控 Endpoint、真实模型、数据库事务与部署分别提供证据。
+
+当前接口、前后端实现、正式页面与键盘交互证据、未执行的迁移和剩余样本/Benchmark 能力，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/evaluator-create-flow-20261017.md` 的“持久试评、模型配置与结果阅读”。不能以源码及内存测试通过推断当前远端服务可用。
