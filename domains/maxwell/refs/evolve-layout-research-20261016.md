@@ -101,3 +101,12 @@ links: [evolve-workspace-implementation-20261015]
 **How to apply:** 以最新用户模型为准：方法/类型提供算法，评估器实例保存 Prompt/模型/规则/输入输出配置，指标关联输出并定义解释与汇总，指标集组织多项指标。Benchmark 还要固定用例与评估器的证据范围和运行配置。一个评估器允许多输出；区分逐例汇总与多例联合评估。旧指标内 calculation 草案已被取代、未获批准，不可据此开始接口实现。
 
 目标关系、LangSmith 官方依据、当前逐 Trial 实现差距及前端名称修改撤回边界，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/metric-evaluator-management-20261016.md`。本节取代上一节关于 Prompt 持久化对象归属的方案；唯一连接归属仍有效。历史 JudgeSpec 不能通过改名被视为已经迁移到指标集。
+
+
+## 2026-10-16：由 Case 关联推导 Benchmark 指标
+
+**Why:** 用户指出指标集属于复用用的中间概念；同时维护 Case 的指标关联和 Benchmark 的另一份必选指标集，会造成重复编排与范围不一致。
+
+**How to apply:** Case 关联指标或指标集，Benchmark 按采用的 Case 及其关联汇总指标与适用范围；用例视图与指标视图是同一份关系的两个视角。指标集保留为可选批量复用资产，不能作为创建 Benchmark 的强制前置层。精确版本、集合展开、计算口径和证据范围一起冻结，不能按名称合并不同评估器，或让库更新改变历史。
+
+当前目标模型、原清单批准记录、后续契约细化边界及是否实际实现，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/metric-evaluator-management-20261016.md` 与同目录 `evaluator-metric-set-contract-plan-20261016.md`。本节优先于此前关于必选独立指标集的编排方向；原接口批准不自动扩大到未列出的 Case 字段或数据库变更。
