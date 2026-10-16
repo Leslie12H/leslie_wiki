@@ -808,3 +808,5 @@
 - Benchmark 范围内的记录命名、真实 targetRef 筛选与局部读取范围：见 [EVOLVE 交互设计指针](domains/maxwell/refs/evolve-layout-research-20261016.md) 的 2026-10-16 追加记录。
 
 - 2026-10-16 用例表单的未完成数值/字段恢复与导入输入完整性边界：见 [EVOLVE 交互设计指针](domains/maxwell/refs/evolve-layout-research-20261016.md)。
+
+- 2026-10-16 被测对象、评分方法与服务连接的新版分工提案及 PR #358 吸收边界：见 [EVOLVE 交互设计指针](domains/maxwell/refs/evolve-layout-research-20261016.md)。
