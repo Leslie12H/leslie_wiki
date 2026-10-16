@@ -1470,3 +1470,5 @@
 - 2026-10-16：新增 [复验历史优先级与重试冻结](domains/sandai-data-smith/pitfalls/sandeval-reinspection-history-priority-retry.md)，记录同一次复验重试应复用冻结计划，以及必入样和实际检查义务分别核验的方法与只读证据指针。
 
 - 2026-10-16 ingest：补充两级抽检范围中的单题抽样/原题号区分、默认与实际比例差异及王文轩检查记录的只读核查指针；生产无写入。
+
+- 2026-10-16：更正 [复验历史优先级与重试冻结](domains/sandai-data-smith/pitfalls/sandeval-reinspection-history-priority-retry.md) 的入口边界：公开退回和后台恢复已就绪组会跳过，另补安排复验实际服务入口的延迟重试复现；不把内部方法异常直接归于普通页面操作。

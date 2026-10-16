@@ -794,6 +794,6 @@
 
 - 2026-10-16 [EVOLVE 成熟产品交互研究](domains/maxwell/refs/evolve-layout-research-20261016.md) — LangSmith/Opik 的工作范围、比较调查与优化任务组织；当前差距、原型状态缺口和调整依据，先研究后实施。
 
-- [复验历史优先级与重试冻结](domains/sandai-data-smith/pitfalls/sandeval-reinspection-history-priority-retry.md) — 2026-10-16：固定种子与可变历史输入、已持久化计划复用、必入样与范围豁免分别核验的审查及复现指针。
+- [复验历史优先级与重试冻结](domains/sandai-data-smith/pitfalls/sandeval-reinspection-history-priority-retry.md) — 2026-10-16：固定种子与可变历史输入、公开退回/后台恢复保护与安排复验延迟重试的入口差异、必入样与范围豁免分别核验的审查指针。
 
 - 2026-10-16：[单题抽样与原题号](domains/sandai-data-smith/pitfalls/sandeval-two-stage-sampling-scope.md#2026-10-16-单题抽样显示原第-2-题) — 核对冻结应检集合、实际批次比例和原题号；只抽中题目二、整批仍有两题的双 Pod 只读核查入口。
