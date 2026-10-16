@@ -29,3 +29,9 @@ links: [evolve-nextplay-dev-release-20261015, evolve-native-routing-vs-candidate
 - 管理员操作单、准确 Key 身份、账号权限阻塞、本地修复工作区与测试结果见[权限修复记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-ten-case-acceptance-20261015/permission-repair-20261016.md)。继续工作前重新核对该记录与线上状态，不能将本地测试当作线上出分。
 - **Why:** 业务编辑成员可以运行评测，不代表能管理程序执行 Key；业务执行 Key 也不应因此获得密钥管理或配置修改权限。
 - **How to apply:** 管理员针对已有 Key 仅补执行所需缺项，回读同一身份且不传输明文；预检用执行时的凭据、源地址和客户端覆盖必要只读接口，再以单题及原子集验证最终评分。
+
+## 2026-10-16 权限配置后单题复验指针
+
+- 单题 Run/Thread、消息拒绝原因、取消回执边界、前端计数不一致及本地模式适配回归见[单题复验记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-ten-case-acceptance-20261015/retest-20261016.md)。继续验收必须先刷新该记录对应的真实运行，不能把 Thread 创建或“已有评分”汇总计数当原评分证据。
+- **Why:** 执行 Key 权限修复后仍可能暴露消息参数与 Preset 能力不匹配；可选执行模式不能无条件附加。取消后的 unknown 也可能被旧页面计入已有评分。
+- **How to apply:** 适配器按目标声明决定是否传执行模式，涉及确认模式时不能静默降级；用单题依次核验消息接纳、实际 Run、输出、原评分及页面持久化，成功后再扩大批次。接纳不明的旧 action 保留身份和原 payload，不能篡改后重发。代码通过与发布、真实出分分别记录，部署沿用户确认与 PR 流程。
