@@ -781,3 +781,5 @@
 - 2026-10-16：[整改待定与复验范围](domains/sandai-data-smith/pitfalls/sandeval-correction-defer-reinspection.md) 补充单题完整范围、待定/本地草稿/正式回交/派回分层及独立只读验收指针。
 
 - 2026-10-16：Nextplay 十题执行拒绝的 ACK 历史日志、实际接口定位及 Card 检查边界，见[十题验收入口](domains/maxwell/refs/evolve-nextplay-ten-case-acceptance-20261015.md)。
+
+- [质检转交失败后的任务占用](domains/sandai-data-smith/pitfalls/sandeval-work-handoff-unsettled-occupancy.md) — 2026-10-16：成功回执写入锁超时、客户端断开与后端结束分层、任务级待核对占用及原事务结案边界；只读报告指针。
