@@ -22,6 +22,7 @@ links: [sandeval-cross-stage-frozen-answer-superseded, sandeval-sand-reinspectio
 
 ## 受控修复指针
 
+- [main PR #2504](https://github.com/world-sim-dev/sandai-data-smith/pull/2504)：用户于 2026-10-16 明确要求直接发起 main PR，同一干净任务分支不引入 test 历史。合并、Gate 与部署结果以 PR 和修复报告为准。
 - [测试 PR #2503](https://github.com/world-sim-dev/sandai-data-smith/pull/2503)：仅从实际委派的最近退回，沿同一原批次的连续 Sand 汇总版本追溯更早停止轮次。每一跳校验正式退回、停止版本、送审前置契约及冻结成员摘要；读取、候选与资格共用该路径，不选任意来源最新。
 - [2026-10-16 修复报告](/Users/leslie/Documents/Playground/output/xuyongqing-qc-frozen-20261016/repair/report.md)：后续 Sand 的真实数据只读候选验证、原修订归属与空间封存证明，以及精确提交、CI、集成阻塞和发布状态。候选加载到一次性只读进程，不是线上部署。
 - 已验收报告下游仍在检查时，先核对依赖，再确定是否允许新轮次。原来源版本、修订 lookup 和退回事实都完整的读取缺口，没有可补齐的缺失数据字段；不要为手工恢复把旧修订改绑成当前轮代改，或更改已冻结成员引用。本案用户选择保留已验收记录，只修后续继承；代码发布、数据写入和候选验证分别取证。
