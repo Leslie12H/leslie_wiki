@@ -217,3 +217,12 @@ LangSmith 当前创建流程核查入口为 [Evaluators](https://docs.langchain.
 **How to apply:** 长编辑复用非模态 Drawer 的固定标题、独立内容滚动和固定操作栏。关闭与放弃分开，目录保留继续编辑入口；进入另一长编辑面先收起原草稿，历史内容基准与写入并发基准保持独立。写入中禁用关闭，未知结果继续同身份恢复。短归档和放弃确认保留模态。
 
 正式源码、三类资产的历史草稿恢复测试、指标集浏览器往返与窄屏证据，以及真实服务未验收边界，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/asset-editor-drawer-20261017.md`。此记录不代表整个 EVOLVE 已完成或用户已认可视觉效果。
+
+
+## 2026-10-17：独立指标编辑与评估器采用
+
+**Why:** 新旧流程并存时，指标目录仍可能将用户带回旧评分标准；不同编辑面若重置或保留了错误汇总，还会使可见配置与真实结果不一致。复用指标不能暗中更新其内容或采用最新修订。
+
+**How to apply:** 指标目录与评估器编辑连接同一精确引用流程。新建采用所选修订，加入已有草稿保留 Prompt、模型、样本和原输出；超限或无效批量全部拒绝，未知请求保持冻结。类型切换仅替换已知不兼容的内置汇总，扩展配置保留；表单名称同步定义，冻结登记与显式源编辑分开处理。保留关闭与明确放弃继续分离，查看关联资产携带返回编辑器的上下文。
+
+正式实现、交互与测试证据、空指标目录及新版服务未就绪的验收边界，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/metric-evaluator-editing-20261017.md`。本条不是发布、模型试评或完整 Benchmark 链路完成证明；独立 Case—指标关系仍沿原批准流程核对。
