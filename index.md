@@ -791,3 +791,5 @@
 - 2026-10-16：[质检转交占用](domains/sandai-data-smith/pitfalls/sandeval-work-handoff-unsettled-occupancy.md#2026-10-16-经授权的原事务结案) 补充明确授权后的原生 rolled_back 结案、冻结计划、跨 Pod 独立核验及恢复与实际转交的区别。
 
 - [空间复验遗漏更早 Sand 代改](domains/sandai-data-smith/pitfalls/sandeval-space-reinspection-older-sand-amendment-gap.md) — 2026-10-16：两轮 Sand 退回、汇总换版后只接最近轮次；徐咏晴指定题的真实基线、选项变化和双 Pod 只读核验指针，未修复。
+
+- 2026-10-16 [EVOLVE 成熟产品交互研究](domains/maxwell/refs/evolve-layout-research-20261016.md) — LangSmith/Opik 的工作范围、比较调查与优化任务组织；当前差距、原型状态缺口和调整依据，先研究后实施。
