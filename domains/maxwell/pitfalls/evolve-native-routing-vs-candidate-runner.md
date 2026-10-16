@@ -2,7 +2,7 @@
 name: evolve-native-routing-vs-candidate-runner
 type: pitfall
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-16
 tags: [maxwell, evolve, nextplay, a2a, candidate]
 links: [nextplay-independent-benchmark-entry, evolve-preset-evaluation-entry]
 ---
@@ -33,3 +33,12 @@ links: [nextplay-independent-benchmark-entry, evolve-preset-evaluation-entry]
 **How to apply:** 顺着 Maxwell `commands/runner_preparation.go`、`runner_tuning_run.go`、PostgreSQL `works.go` / `runs.go` 及 `runner_handoff_integration_test.go` 核对：精确来源集合授权、实际准备回执、已知远端编号的有界持久化、未知接收不重发、首次基线的事务限制。协议到执行用跨语言测试，数据库 CAS 与资产归属用隔离 PostgreSQL；两者均不能代替真实 Agent / Judge 验收。
 
 2026-10-15 已获仅本地实施授权。实现清单、逐项测试与未验收的大原件 / 取消 / 65 题真实评分边界，统一查上方 `2026-10-15-candidate-runner-handoff.md` 验证记录；PR、提交和部署状态需另行核验。
+
+
+## 2026-10-16 三条连接与长期待验证的排查指针
+
+**Why:** 接入列表的每行是执行连接，同一业务对象在迁移中可能保留内部 Agent、HTTP 批次和 A2A Runner 多条登记。连接检查、声明能力与真实运行证据不是同一状态；将声明未知写成“执行能力待验证”，会让用户误以为存在后台验收任务，或误以为历史执行没有发生。
+
+**How to apply:** 沿 `executorRegistration.ts` 的展示条件、`domain/executor/capability_level.go` 的级别推导、`commands/executors.go` 的预检持久化查清字段来源，再对照具体 Run。不能从声明级别推断评分成功，也不能仅为压缩列表删除历史执行器。对象与连接的归属应显式管理，不能按业务名称硬编码归并。
+
+准确登记身份、dev 页面只读证据、源码版本和建议见[三条连接状态诊断](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-executor-status-diagnosis-20261016.md)。这是 2026-10-16 的诊断记录；继续操作前刷新实际登记与引用，不以本页推断当前部署或运行状态。
