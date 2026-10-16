@@ -837,3 +837,5 @@
 - 2026-10-16：[EVOLVE 独立版本保存恢复](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-16独立版本的未知保存结果) — 后续拒绝不能解除首次未知保存的版本锁，保留各资产精确版本及同操作恢复证据。
 
 - 2026-10-16：[EVOLVE 单一 LLM Rubric 与 Prompt 配置](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-16单一-llm-rubric-与可编辑-prompt) — 底层方法与业务评估器版本分工，独立输出指标及配置检查/真实试评的验收边界。
+
+- 2026-10-17：[EVOLVE 正式评估器创建流程](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-17直接落地正式评估器创建流程) — 空白/模板统一入口，真实目录与草稿恢复；材料预览、模型试评、资产发布分别验收。

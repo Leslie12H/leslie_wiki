@@ -2,7 +2,7 @@
 name: evolve-layout-research-20261016
 type: reference
 created: 2026-10-16
-updated: 2026-10-16
+updated: 2026-10-17
 tags: [maxwell, evolve, interaction, langsmith, opik]
 links: [evolve-workspace-implementation-20261015]
 ---
@@ -155,3 +155,12 @@ links: [evolve-workspace-implementation-20261015]
 **How to apply:** 用户从同一 LLM Rubric 入口配置 Prompt 和输出指标；具体规则版本属于评估器，指标保留独立身份与修订。历史请求继续按冻结协议执行，新测量结果按原类型保存，缺失不补零。模型选择、输入映射、试评和 Benchmark 编译分别核验，不以表单、配置检查或受控 Endpoint 测试代替真实评分闭环。
 
 当前源码、目录与编辑器、业务模型准入测试、隔离组件截图和未完成范围：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/task-states-20261016/README.md` 的“单一 LLM Rubric 与自定义 Prompt”；批准范围及最新统一方法澄清见同目录 `evaluator-metric-set-contract-plan-20261016.md`。沿指针现场核对能力，不把本条视为已部署或已完成试评。
+
+
+## 2026-10-17：直接落地正式评估器创建流程
+
+**Why:** 用户明确要求直接进入正式前端；独立原型或组件模拟页无法证明目录入口、资产版本、恢复和实际服务已连通。
+
+**How to apply:** 空白与模板入口共用正式评估器编辑器；模板只预填同一 LLM Rubric 的业务配置，不新增公开方法或复用新指标身份。配置、样本材料预览、真实模型试评与正式发布分开验收，保留版本和草稿恢复边界。
+
+LangSmith 当前创建流程核查入口为 [Evaluators](https://docs.langchain.com/langsmith/evaluators) 与 [LLM-as-a-judge](https://docs.langchain.com/langsmith/llm-as-judge)。EVOLVE 的正式前端源码、用户登录后的实页交互证据、当前服务不可用和真实试评未完成范围，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/evaluator-create-flow-20261017.md`。以后复用须重新核对运行服务与接口，不把材料预览当作模型试评，也不把本条视为发布完成。
