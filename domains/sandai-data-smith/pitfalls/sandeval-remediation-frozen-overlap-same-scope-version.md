@@ -16,3 +16,5 @@ links: [sandeval-handoff-duplicate-scope, sandeval-remediation-scope-change-stal
 2026-10-16 临科智华20261010_03单案的任务身份、生产SHA、两个Pod只读核验、黄超/朱炜范围冲突及原生完整性结果见[排查报告](/Users/leslie/Documents/Playground/sandeval-linke-package-block-20261016/report.md)。运行状态和数字保留在报告，使用前重新读取。该次只读诊断未修复业务代码、生产数据或触发Sand提交；与2026-10-15普通转派后漏入保留成员的案例属于不同具体分支，不能复用其单案恢复计划。
 
 2026-10-16 后续修复指针：[main PR #2510](https://github.com/world-sim-dev/sandai-data-smith/pull/2510)。仅排除由已完成整改边解释、全部成员完全覆盖且当前答案相同的普通新批次；该普通批次还须已正式通过空间质检，且没有未结退回或召回。部分重叠、独有成员、不同或后续答案仍保持阻断。代码、只读候选范围、精确head与完整Gate的验收记录均见上述报告。用户明确同意将并行的整改转交/个人批次修复保留在同一PR；PR不代表已合并、发布或完成真实Sand提交。
+
+2026-10-16 发布后核验见[合并后生产核验](/Users/leslie/Documents/Playground/sandeval-linke-package-block-20261016/post-merge-verification.md)。**Why:** 新版本当前范围已完整时，旧推进记录和正式整包可能仍在不同阶段；仅无重复不足以证明提交入口恢复。**How to apply:** 同时核对实际部署SHA、正式完整包的冻结集合/摘要、指定负责人原生 `blocking_reasons` 和 `submit_to_sand`，再将真实交接回执及Sand后继任务作为独立完成事实。该次检查仅只读核验可提交状态，未代为正式提交。

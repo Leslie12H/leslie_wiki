@@ -799,3 +799,5 @@
 - 2026-10-16：[单题抽样与原题号](domains/sandai-data-smith/pitfalls/sandeval-two-stage-sampling-scope.md#2026-10-16-单题抽样显示原第-2-题) — 核对冻结应检集合、实际批次比例和原题号；只抽中题目二、整批仍有两题的双 Pod 只读核查入口。
 
 - [整改冻结分区与当前作者批次重叠](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md) — 2026-10-16：范围版本匹配仍可能同时选中原整改分区和新作者批次；完整性缺项与重复分开，双 Pod 只读单案及受控排除重复批次的 main PR #2510 留报告指针。
+
+- 2026-10-16：[整改冻结分区与当前作者批次重叠](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md) 补充合并发布后的正式整包、负责人可提交动作与尚未正式交接Sand的分层核验指针。
