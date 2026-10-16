@@ -137,3 +137,21 @@ links: [evolve-workspace-implementation-20261015]
 **How to apply:** 将编辑内容来源与当前保存基准分别保留；名称、组成和元数据采用所选版本，提交检查当前头。比较入口保留精确版本上下文，未解析的引用明确不可读，不替换成最新定义。
 
 实现、聚焦测试、完整 Studio 检查和只读浏览器证据，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/task-states-20261016/README.md` 的“Benchmark 独立版本的查看、比较与历史编辑”。记录同时保留一个真实历史用例集的目录解析缺口；版本阅读/未提交草稿验证不等于新版关联、实际发布或评测完成。
+
+
+## 2026-10-16：独立版本的未知保存结果
+
+**Why:** 第一次保存未收到确定结果后，后续重试被拒绝不等于原请求未提交；解除编辑锁可能让用户以另一组资产版本再保存，产生重复或错误修订。
+
+**How to apply:** 待确认的原操作应保留幂等键、编辑内容来源、各资产并发基准和精确引用；后续拒绝与刷新均不重新取最新版本，成功恢复回执后再清除草稿。首次明确拒绝与已有未知请求分别处理。
+
+评分发布的当前修正、六类后续拒绝回归与完整前端检查，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/task-states-20261016/README.md` 的“独立版本与未知保存结果”。这是保存恢复边界，不代表独立关联、Benchmark 更新采用或真实发布闭环已完成。
+
+
+## 2026-10-16：单一 LLM Rubric 与可编辑 Prompt
+
+**Why:** 整数、小数和不同业务 Prompt 不应成为不同底层方法；否则用户被迫理解协议版本而无法直接建立业务评估器。Prompt 修改也不能自动改写独立指标或既有 Benchmark 的评分口径。
+
+**How to apply:** 用户从同一 LLM Rubric 入口配置 Prompt 和输出指标；具体规则版本属于评估器，指标保留独立身份与修订。历史请求继续按冻结协议执行，新测量结果按原类型保存，缺失不补零。模型选择、输入映射、试评和 Benchmark 编译分别核验，不以表单、配置检查或受控 Endpoint 测试代替真实评分闭环。
+
+当前源码、目录与编辑器、业务模型准入测试、隔离组件截图和未完成范围：`/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/task-states-20261016/README.md` 的“单一 LLM Rubric 与自定义 Prompt”；批准范围及最新统一方法澄清见同目录 `evaluator-metric-set-contract-plan-20261016.md`。沿指针现场核对能力，不把本条视为已部署或已完成试评。
