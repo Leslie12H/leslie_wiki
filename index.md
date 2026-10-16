@@ -806,3 +806,5 @@
 - 2026-10-16：[整改冻结分区与当前作者批次重叠](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md) 补充合并发布后的正式整包、负责人可提交动作与尚未正式交接Sand的分层核验指针。
 
 - Benchmark 范围内的记录命名、真实 targetRef 筛选与局部读取范围：见 [EVOLVE 交互设计指针](domains/maxwell/refs/evolve-layout-research-20261016.md) 的 2026-10-16 追加记录。
+
+- 2026-10-16 用例表单的未完成数值/字段恢复与导入输入完整性边界：见 [EVOLVE 交互设计指针](domains/maxwell/refs/evolve-layout-research-20261016.md)。
