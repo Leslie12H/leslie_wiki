@@ -35,3 +35,9 @@ links: [evolve-nextplay-dev-release-20261015, evolve-native-routing-vs-candidate
 - 单题 Run/Thread、消息拒绝原因、取消回执边界、前端计数不一致及本地模式适配回归见[单题复验记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-ten-case-acceptance-20261015/retest-20261016.md)。继续验收必须先刷新该记录对应的真实运行，不能把 Thread 创建或“已有评分”汇总计数当原评分证据。
 - **Why:** 执行 Key 权限修复后仍可能暴露消息参数与 Preset 能力不匹配；可选执行模式不能无条件附加。取消后的 unknown 也可能被旧页面计入已有评分。
 - **How to apply:** 适配器按目标声明决定是否传执行模式，涉及确认模式时不能静默降级；用单题依次核验消息接纳、实际 Run、输出、原评分及页面持久化，成功后再扩大批次。接纳不明的旧 action 保留身份和原 payload，不能篡改后重发。代码通过与发布、真实出分分别记录，部署沿用户确认与 PR 流程。
+
+## 2026-10-16 PR 发布后复验指针
+
+- #357 的限定发布、独立镜像回读、新单题 Runtime 执行与停止、#358 延后合入的边界继续见[单题复验记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-ten-case-acceptance-20261015/retest-20261016.md)。原十题是否启动与最新评分必须沿该记录刷新，不以本页推断实时状态。
+- **Why:** 解决权限和消息兼容只代表进入真实执行；复杂 Agent 会继续派生作家、审查等长子任务。取消未确认类别可能覆盖原先的停止触发原因，时长接近固定值也不能直接当成配置已核实。
+- **How to apply:** 用 Worker 的派发/停止时间、同一 Runtime Run 的终态及前端刷新三处核对；必须读取实际登记 limits 才能确认执行时限，不能用代码默认值替代。完整输出与原评分成功前不扩大批次，不篡改旧 action 或原题绕过。
