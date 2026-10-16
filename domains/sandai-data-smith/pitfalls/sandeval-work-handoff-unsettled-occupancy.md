@@ -24,3 +24,7 @@ links: [sandeval-sql-lock-diagnosis, sandeval-reassignment-scope-and-batch-respo
 ## 关键经验
 
 将“客户端连接断开”“后端请求结束”“数据库事务结果已核实”“操作占用已结案”分别取证。同一请求的 Nginx 与应用结束时间可能相差数分钟；先定位失败 SQL，再解释持续冲突，不能把刷新建议当作恢复方案。
+
+## 2026-10-16 经授权的原事务结案
+
+用户在诊断后明确授权手动恢复线上数据。正式 operator CLI 按原计划哈希将该操作按 rolled_back 结案；写入前冻结、跨 Pod 复核、原会话/请求结束证据、执行回执与写入后独立核验见 [恢复报告](/Users/leslie/Documents/Playground/output/quality-handoff-20261016/recovery/recovery-report.md)。结案 succeeded 仅表示人工核对完成，实际事务结果仍以 result.resolution 区分；不代表原转交成功。此次没有重放转交或修改当前质检人，具体时点状态只从报告和后续线上读取判断。
