@@ -51,3 +51,11 @@ links: [nextplay-independent-benchmark-entry, evolve-preset-evaluation-entry]
 **How to apply:** 以显式同业务归属聚合连接；新调优任务冻结实际 Runner 与内层目标；重复创建沿用已保存路线；旧候选和历史查询保留物理执行器标识。关联变更属于展示与未来路由元数据，不应影响已开始任务的执行配置；比较含指针的配置结构时按值比较，避免从数据库重新读取后误判变化。
 
 代码、具体契约和本地验证记录查 `/Users/leslie/.codex/worktrees/evolve-logical-executor/maxwell-ai/docs/verification/2026-10-16-logical-executor.md`。检查 `domain/executor/routing.go`、`commands/logical_executor.go`、PostgreSQL `executor_routing_integration_test.go` 与 Studio `executor/executorRouting.ts`。本轮仅本地，页面测试数据、隔离 PostgreSQL 和技术回归不能替代 dev 关联生效、真实 Case 执行或评分验收；PR 与发布状态须另行核对。
+
+## 2026-10-16 统一执行器提交复查
+
+**Why:** 关系校验只检查“有上级引用的子连接”会漏掉主体的角色修改；内存实现通过不能证明 PostgreSQL 事务路径一致。临时数据库使用 SQL_ASCII 时，Unicode 长度约束还会按字节计数，造成与 UTF-8 环境不同的测试结果。
+
+**How to apply:** 关联和主体修改均在同一业务事务锁内检查；持久化测试同时覆盖重复绑定、主体角色变化、解除关系后的历史查询。启用隔离 PostgreSQL 集成测试前先核对 server_encoding，使用 UTF-8 数据库，不为环境编码问题放宽业务约束。
+
+统一执行器代码与原预算、预检、取消修复统一查看 [Maxwell PR #358](https://github.com/world-sim-dev/maxwell-ai/pull/358) 及其中 `docs/verification/2026-10-16-logical-executor.md`。PR 当前状态、CI 和部署状态以远端为准；本次授权为提交到既有 PR，不含合并或部署。
