@@ -120,3 +120,11 @@ links: [evolve-workspace-implementation-20261015]
 **How to apply:** 独立资产、双向关联、版本采用分别处理。关系变更不修改 Case 或指标内容；Benchmark 修改组成或采用资产更新时保存新版本，历史运行继续读取原版本组合。库中改动与当前 Benchmark 的局部编排分别标明作用范围；跨版本趋势标出用例与评分口径的变化。
 
 最新目标、版本矩阵和编辑动线见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/metric-evaluator-management-20261016.md`。旧 Case 补充清单的批准与取代记录、代码撤回范围和当前实现/验证边界，分别查同目录 `case-metric-association-contract-plan-20261016.md`、`evaluator-metric-set-contract-plan-20261016.md` 与 `task-states-20261016/README.md`。不要把目标模型当成已部署行为，也不能将被取代的 Case 字段授权扩展成未列明的独立关系接口或表结构。
+
+## 2026-10-16：评分资产发布与生成契约核验
+
+**Why:** 在一个编辑面板中配置评估器与多个指标时，逐个保存会留下部分成功的资产；前端重试还可能改用更新后的版本。有效 OpenAPI 形状也可能超出当前客户端生成器的支持，不能以手改生成文件掩盖问题。
+
+**How to apply:** 共享目录身份、修订与精确依赖采用原子发布；未知响应保留原操作及版本。CAS 物化与目录提交分别说明，不能把目录回滚说成没有任何物理内容写入。接口先更新 canonical OpenAPI，再实际生成、检查和测试恢复路径。
+
+实现、当前生成器的互斥输入/布尔枚举注意项、真实测试及未验收边界，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/task-states-20261016/README.md` 的“评估器与输出指标的一次保存”。接口说明见同仓库 `services/evolve-server/docs/evaluator-publication.md`。内存/路由测试通过不替代 PostgreSQL 实际事务、完整编辑工作面或真实试评验收。
