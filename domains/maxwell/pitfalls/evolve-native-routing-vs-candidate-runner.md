@@ -96,3 +96,12 @@ links: [nextplay-independent-benchmark-entry, evolve-preset-evaluation-entry]
 **How to apply:** 将公开目标策略随 Case 冻结，默认关闭；提问回答与主动跟进分别计数，后者在同一 Thread 发新 message。决策、实际上下文、文件哈希和派发状态先保存，只有 accepted 计入已发送次数；unknown 保留资源待核对。公开交付检查与原 Judge 质量评分分开，文件存在或哈希变化不证明媒体有效。旧 Runner 必须拒绝不支持的能力，不能静默跳过新策略。普通内部路径和 A2A Runner 保持相同冻结语义，不改 Runtime、不把评测资产塞入 Thread 元数据。
 
 本地代码、契约、技术回归与桌面截图查 `/Users/leslie/.codex/worktrees/evolve-executor-preflight/maxwell-ai/docs/verification/2026-10-17-case-goal-continuation.md`；Nextplay 配套工作树为 `/Users/leslie/.codex/worktrees/nextplay-case-continuation/nextplay-eval`。这是本地实施指针，未发布或重跑真实媒体题；PR、部署、65 题交付与真实评分必须另行核验。
+
+
+## 2026-10-17 目标续行审查的故障窗口
+
+**Why:** 回执未知保护不能只覆盖外层 CandidateRunner；直接 Dataset 执行入口也会走共享执行器。新 Run 已接收但首条 SSE 尚未到达时，使用旧 Run 身份确认停止会错误释放仍在使用的资源。取消成功也不代表推进记录已被归档。
+
+**How to apply:** 从每个调用入口检查 action 接收、会话当前 Run、证据提交和 lease 清理的同一状态链；覆盖 accepted 后写入失败及 unknown 派发两种窗口。对照 Provider schema、编辑保存和执行解析的联合约束；紧凑输出只携带摘要与引用。目标检查需读取关键交付字段，不能把文件前缀或哈希当成完整媒体/写回证明。
+
+本轮完整范围、实际复现、分级与待验收入口见 `/Users/leslie/.codex/worktrees/evolve-executor-preflight/maxwell-ai/output/reviews/2026-10-17-case-goal-continuation.md`。这是 2026-10-17 的本地审查记录，未据此宣称完成修复或真实评测；最新代码及解决状态需回到工作树/后续 PR 核对。
