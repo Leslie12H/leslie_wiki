@@ -878,4 +878,4 @@
 
 - [Sand Eval 已保存最新版与本人浏览器显示](domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md) — 2026-10-17：送审原引用、代改实际正文、执行回执、原生双接口与本机草稿分别取证；浏览器登录和个案归因的验收边界。
 
-- [复验命令的接收、发布与关闭恢复屏障](domains/sandai-data-smith/pitfalls/sandeval-reinspection-command-recovery-barriers.md) — 2026-10-17：退回与提交整体审查、逐语句故障前缀复现、报告/责任部分关闭、版本占用缺意图、人工复验重试和最新 main 补审；代码发布与历史卡单恢复分开核验。
+- [复验命令的接收、发布与关闭恢复屏障](domains/sandai-data-smith/pitfalls/sandeval-reinspection-command-recovery-barriers.md) — 2026-10-17：退回与提交整体审查、逐语句故障前缀、PR #2590 修复复审、仲裁发布屏障与重检恢复队列；代码发布与历史卡单恢复分开核验。
