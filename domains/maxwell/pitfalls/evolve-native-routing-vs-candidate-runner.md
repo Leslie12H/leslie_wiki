@@ -113,3 +113,9 @@ links: [nextplay-independent-benchmark-entry, evolve-preset-evaluation-entry]
 **How to apply:** 使用实际 Provider 目录和模板走平台准备、派生身份、计算摘要、严格校验全链路；草稿暂存与执行准入分开。用真实提交顺序注入接收后落盘失败，按 action 身份核对并检查相关 Run 全集，确认停止和归档后才清理。摘要按合法最小预算投影，完整记录走已授权的原件引用；交付字段从完整文件提取，超出有界检查能力时明确未完成，不把前缀、哈希或模型判断当成质量评分。
 
 本地修复、最终技术测试及未做的真实媒体/评分验收，见同工作树 `docs/verification/2026-10-17-case-goal-continuation.md`「审查修复」；原审查保留修复前证据。该记录不是部署状态，发布、线上 Case 策略与单题/十题真实结果需另行核验。未改 Maxwell Agent Runtime。
+
+## 2026-10-17 单提交配套 PR 交付指针
+
+**Why:** 平台策略编辑、原生执行与 Nextplay Provider/Runner 处在不同仓库；单个仓库的 PR 不能包含另一仓库的改动。只合并平台也不代表旧 Runner 已识别新能力，更不代表线上原 Case 已启用策略。
+
+**How to apply:** 查看 [Maxwell #361](https://github.com/world-sim-dev/maxwell-ai/pull/361) 与 [Nextplay Eval #22](https://github.com/world-sim-dev/nextplay-eval/pull/22) 的实际提交、验证记录及当前 CI/发布状态。2026-10-17 用户要求各仓库一个提交、PR 一句话描述；创建 PR 不包含合并或部署授权。部署后仍需核对目录与执行包能力、原 Case 的明确策略，再做单题/十题原件和原评分验收。

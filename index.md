@@ -866,7 +866,7 @@
 
 - [Sand 当前不合格但验收通过的审计](domains/sandai-data-smith/refs/sandeval-rejected-accepted-history-audit.md) — 2026-10-17：排除历史整改，核对当前送审/复验、批次验收、退回链及逐题明细；含下游落库证据边界。
 
-- 2026-10-17：A2A 协议与 Case 目标续行的区别、原 Nextplay 的 Ask User 输入与完成即结束行为，见 [内部执行分流与续答职责复核](domains/maxwell/pitfalls/evolve-native-routing-vs-candidate-runner.md#2026-10-17-a2a-与原续答实现的职责复核)；该段保留设计时点；同日获准后的有限续行本地实施、公开上下文、独立预算和派发回执边界见该页后续小节，尚未发布。 同页另补目标续行审查与本地修复指针，核对未知/已接收派发的清理、取消归档、真实 Provider 目录往返、JSON 缓冲区隔离及大文件观测边界。
+- 2026-10-17：A2A 协议与 Case 目标续行的区别、原 Nextplay 的 Ask User 输入与完成即结束行为，见 [内部执行分流与续答职责复核](domains/maxwell/pitfalls/evolve-native-routing-vs-candidate-runner.md#2026-10-17-a2a-与原续答实现的职责复核)；该段保留设计时点；同日获准后的有限续行本地实施、公开上下文、独立预算和派发回执边界见该页后续小节，尚未发布。 同页另补目标续行审查与本地修复指针，核对未知/已接收派发的清理、取消归档、真实 Provider 目录往返、JSON 缓冲区隔离及大文件观测边界；配套 PR 入口为 Maxwell #361 / Nextplay Eval #22，当前状态以远端为准。
 
 - [退回质检的版本占用与重复请求冲突](domains/sandai-data-smith/pitfalls/sandeval-manual-return-version-claim-conflict.md) — 2026-10-17：原退回已保存但后继重检缺失、报告版本唯一占用与新请求指纹、原单续办及截图请求体缺失时的归因边界。
 
