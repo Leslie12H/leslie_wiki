@@ -271,3 +271,12 @@ LangSmith 当前创建流程核查入口为 [Evaluators](https://docs.langchain.
 **How to apply:** 用真实目录筛选选择基线，结构化展示冻结配置，保留精确内容入口；把候选、基线、目录范围、视图和打开状态放入恢复/返回上下文。固定操作栏须在窄屏和长内容下验证，公共浮层复用层级 token。新增 Store 方法后还要完整刷新并验证持久草稿恢复，不能只依赖热更新实例。
 
 代码、受控测试与实际页面读取证据见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/candidate-validation-drawer-20261017.md`。本轮未启动真实评测；读取曾失败后重试成功，不代表服务故障或完整调优闭环已验收。
+
+
+## 2026-10-17：重新评分的连续工作面
+
+**Why:** 重新评分依赖原执行证据，却需要跨配置、用例列表和逐题证据往返。把表单直接堆在结果正文上、翻页时卸载提交状态、换模型时静默重置参数，都会破坏用户对同一评分操作的理解。
+
+**How to apply:** 同一抽屉切换配置、选择和阅读，操作栏固定且共用同一持久草稿。分页仅替换结果页，来源身份保持；结果返回优先回到来源评分上下文，再回上级任务或 Benchmark。模型选择保留明确的原参数；冻结读取失败可重试，不能换成最新修订。
+
+本轮代码、真实浏览器读取、窄屏证据、测试与未提交新评分的边界见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/rescore-workspace-20261017.md`。新结果的回执和返回路径由受控测试覆盖，不能当作真实运行出分证明。

@@ -855,3 +855,5 @@
 - 2026-10-17：[EVOLVE 冻结内容读取与分页返回](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-17冻结内容读取的错误边界与分页返回) — 安全错误分类、内容身份校验、分页上下文及完整反查与真实服务验收边界。
 
 - 2026-10-17：[EVOLVE 候选验证与证据往返](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-17候选验证抽屉与证据往返) — 基线选择、固定操作、布局返回与浮层层级；明确真实读取和运行验收边界。
+
+- 2026-10-17：[EVOLVE 重新评分连续工作面](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-17重新评分的连续工作面) — 固定操作、证据往返、分页身份与参数保留；区分真实读取和提交测试。
