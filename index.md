@@ -864,4 +864,6 @@
 
 - [整改封存缺凭证与待定后的批次接续](domains/sandai-data-smith/pitfalls/sandeval-correction-evidence-and-deferred-lineage.md) — 2026-10-17：原始 intent、半完成正式版本、责任占用与最新答案保护；合法待定排除、多轮成员谱系及负责人详情误报；补充原生续跑、未知写入结果回读与主线发布证据入口。
 
+- [Sand 当前不合格但验收通过的审计](domains/sandai-data-smith/refs/sandeval-rejected-accepted-history-audit.md) — 2026-10-17：排除历史整改，核对当前送审/复验、批次验收、退回链及逐题明细；含下游落库证据边界。
+
 - 2026-10-17：A2A 协议与 Case 目标续行的区别、原 Nextplay 的 Ask User 输入与完成即结束行为，见 [内部执行分流与续答职责复核](domains/maxwell/pitfalls/evolve-native-routing-vs-candidate-runner.md#2026-10-17-a2a-与原续答实现的职责复核)；目标驱动跟进仍为待确认方案。
