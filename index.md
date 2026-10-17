@@ -871,3 +871,5 @@
 - [退回质检的版本占用与重复请求冲突](domains/sandai-data-smith/pitfalls/sandeval-manual-return-version-claim-conflict.md) — 2026-10-17：原退回已保存但后继重检缺失、报告版本唯一占用与新请求指纹、原单续办及截图请求体缺失时的归因边界。
 
 - 2026-10-17：[退回版本占用与恢复](domains/sandai-data-smith/pitfalls/sandeval-manual-return-version-claim-conflict.md#2026-10-17-明确授权后的原单续办) 补充本单明确授权、原请求显式 apply、跨副本独立验收及 main PR #2575；个案恢复和代码发布分开核验。
+
+- [标注员历史整改通过与当前 Sand 退回](domains/sandai-data-smith/pitfalls/sandeval-annotator-historical-correction-status.md) — 2026-10-17：个人空间整改闭环、Sand 退回负责人和实际复验分开核验；逐题已保存备注、浏览器草稿及整批退回原因的只读证据入口。
