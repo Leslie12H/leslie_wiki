@@ -35,3 +35,9 @@ links: [sandeval-reinspection-command-recovery-barriers, sandeval-correction-evi
 **How to apply:** operator 将完整 ledger 前像纳入冻结摘要，确认停写后，在原范围守卫及版本 CAS 下仅接续选定业务键，保留其他范围和原命令/责任版本回执，并让占用变更与新执行发布在同一事务内回滚。归档续跑检查新引用、原命令和严格删除前缀；停写确认与有界混合 DML 仅用于低频运维，不进入普通服务写路径。原单重复发布只比较不可变方案，保留其他实例推进的状态。
 
 实现、故障回归及当前 CI 入口见 [复查修复记录](/Users/leslie/Documents/Playground/output/quality-scope-review-fixes-20261018/fix-report.md) 和 [PR #2594](https://github.com/world-sim-dev/sandai-data-smith/pull/2594)。代码交付、合并、发布和生产验收分别沿原始证据核对。
+
+## 2026-10-18 持久占用的性能审查入口
+
+**Why:** 业务占用能阻止版本分叉，但额外串行往返、同任务共用的 CAS 行和持续增长的 JSON 会产生开销；低频管理员事务还可能持有跨任务共用物理表的锁。正确性 CI 不提供延迟前后对照。
+
+**How to apply:** 区分完整 PR 的服务成本与最新 operator 补修，沿真实入口统计范围封存、重复预留、intent 和 ledger 查询；在同一环境分别验证同任务/不同任务并发。表锁按物理表判断影响范围，事务预算不能当作正常耗时或恢复 ETA。当前代码坐标、静态调用统计及未测量事项见[性能核对记录](/Users/leslie/Documents/Playground/output/quality-scope-review-fixes-20261018/performance-impact.md)；混合事务机制沿[官方文档](https://help.aliyun.com/en/hologres/developer-reference/sql-transaction-capabilities)刷新。

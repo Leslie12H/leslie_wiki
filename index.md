@@ -890,6 +890,8 @@
 
 - 2026-10-18：[跨请求同范围首送分叉](domains/sandai-data-smith/pitfalls/sandeval-cross-request-first-submission-race.md#2026-10-18-占用接续与恢复协议) 补充审计式 ledger 接续、严格归档前缀、停写边界与同原单进度保留；修复与 CI 状态沿交付记录刷新。
 
+- 2026-10-18：[持久占用的性能审查入口](domains/sandai-data-smith/pitfalls/sandeval-cross-request-first-submission-race.md#2026-10-18-持久占用的性能审查入口) — 区分额外串行 SQL、同任务 CAS 热点、历史 JSON 增长与低频管理员表锁；静态调用统计不冒充延迟实测。
+
 - 2026-10-18：[Benchmark 内嵌评分可见性](domains/maxwell/pitfalls/evolve-inline-metrics-catalog-visibility.md) — 独立目录为空不等于没有评分定义；冻结 Case 有效绑定、外部方法和结果分开核对。
 
 - 2026-10-18：[EVOLVE 试评替换与保存上下文](domains/maxwell/pitfalls/evolve-drawer-overflow.md#2026-10-18试评替换前的草稿检查点) — 存储失败保留旧结果、未知请求身份及抽屉保存回调的当前上下文；实现与验收边界查正式记录。
