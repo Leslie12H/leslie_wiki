@@ -881,3 +881,5 @@
 - [复验命令的接收、发布与关闭恢复屏障](domains/sandai-data-smith/pitfalls/sandeval-reinspection-command-recovery-barriers.md) — 2026-10-17：退回与提交整体审查、逐语句故障前缀、PR #2590 修复复审、仲裁发布屏障与重检恢复队列；代码发布与历史卡单恢复分开核验。
 
 - [跨请求同范围首送分叉](domains/sandai-data-smith/pitfalls/sandeval-cross-request-first-submission-race.md) — 2026-10-17：不同请求号、后台续跑与前台新分配交叠；按 SQL 指纹证明检查/INSERT 窗口，双任务同一质检员及 FakeUOW 全局锁的验收缺口；只读根因取证指针。
+
+- 2026-10-17：[跨请求同范围首送分叉](domains/sandai-data-smith/pitfalls/sandeval-cross-request-first-submission-race.md) 补充明确授权后的空白重复分支归档、连接中断后独立验收及根因修复 PR #2594 指针。
