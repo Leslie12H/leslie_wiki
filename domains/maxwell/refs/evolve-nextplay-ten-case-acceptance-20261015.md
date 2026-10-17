@@ -2,12 +2,18 @@
 name: evolve-nextplay-ten-case-acceptance-20261015
 type: reference
 created: 2026-10-15
-updated: 2026-10-16
+updated: 2026-10-17
 tags: [maxwell, evolve, nextplay, acceptance, permissions]
 links: [evolve-nextplay-dev-release-20261015, evolve-native-routing-vs-candidate-runner]
 ---
 
 # Nextplay 原题十题抽样验收入口
+
+## 2026-10-17 新工作台双轮验收入口
+
+- 用户要求合并 Maxwell #361 / Nextplay #22 后部署 dev、复用原十题、整理单一 Benchmark 并运行两轮。范围、发布任务、数据库迁移确认、登录前置及后续运行证据查[双轮验收记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-two-round-acceptance-20261017/plan.md)。此处只保存入口，完成度以记录及真实环境为准。
+- **Why:** 目标续行缺省关闭，新版本部署不会自动改变已有 Case；新评分工作台还依赖新增数据库结构。不能把合并、发布、策略启用、真实取分与对比可用混为同一结论。
+- **How to apply:** 发布前核对实际迁移版本和结构变更授权；从页面回读 Case 策略及 Benchmark 冻结版本。两轮之间保持输入、评分与交互策略不变；原先单轮结果只作历史参照，不计入新请求的两轮。系统禁止的生图/声音能力不能靠评测续问绕过。
 
 **Why:** 部署就绪和 Agent Card 探测通过不能证明实际内部执行接口权限、原件归档与评分链路可用。必须保留每次真实运行及失败，而不是覆盖结果或把基础设施错误当作质量未通过。
 

@@ -1,5 +1,7 @@
 # leslie_wiki 目录
 
+- 2026-10-17：[新工作台十题双轮验收入口](domains/maxwell/refs/evolve-nextplay-ten-case-acceptance-20261015.md#2026-10-17-新工作台双轮验收入口) — #361/#22 发布、结构迁移确认、旧题默认续行语义与两轮冻结口径；实际进度查验收记录。
+
 > 全库入口。每个 session 先读本文件,再按任务相关性 Read 具体 page。
 > 维护规矩见 [CLAUDE.md](./CLAUDE.md)。
 
