@@ -2,7 +2,7 @@
 name: evolve-native-routing-vs-candidate-runner
 type: pitfall
 created: 2026-10-15
-updated: 2026-10-16
+updated: 2026-10-17
 tags: [maxwell, evolve, nextplay, a2a, candidate]
 links: [nextplay-independent-benchmark-entry, evolve-preset-evaluation-entry]
 ---
@@ -68,3 +68,11 @@ links: [nextplay-independent-benchmark-entry, evolve-preset-evaluation-entry]
 **How to apply:** 发布前锁定 main SHA 和组件范围；回读现有连接实际预算，再顺着执行 Thread、终态原件、原 Provider 方法/版本与原始数值核验。普通评测成功不能扩大为候选配置已验证、全部题库已通过或调优闭环通过。合并发布、原单题、原十题及限制统一查 [PR #358 发布复验记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-ten-case-acceptance-20261015/release-retest-pr358-20261016.md)；当前数量和状态以该记录及关联真实 Run 为准。
 
 原件浏览器下载使用 Chromium `showSaveFilePicker` 时，须将页面聚焦并完成系统保存对话框；不要只等待传统 download 事件就将 0 B 归因为网络或存储故障。落盘后核对字节数、哈希及格式解析；小原件成功不代替超大文件验证。相关实现入口：Studio `products/evolve/evidence/evidenceDownload.ts` 与 `EvidenceDownloadStore.ts`。
+
+## 2026-10-17 资产阶段约束与自动续答诊断
+
+**Why:** 历史对话、当前请求和未来续答剧本属于不同输入。目标正常结束、等待用户、等待异步工具也不是同一状态。原题要求真实媒体，而所选 Preset 的实际系统指令限制在文字和图片 Prompt 阶段时，自动多发“继续”既不能证明原链路一致，也可能改变测试授权与业务范围。不能仅凭输出把配置限制归因为模型漏执行。
+
+**How to apply:** 对照真实首轮 MODEL.REQUEST 的系统指令与 Case 当前请求；沿 Nextplay `maxwell-runtime/src/nextplay_runtime/executor.py` 的 `_initial_input_with_context` / `_execute_conversation` 和 EVOLVE `maxwellexecutor/turns.go` / `reply.go` 分清恢复历史、原生 Ask User 回答和正常完成后的固定 turns。当前两种编排二选一；不得从“支持自动续答”推断支持固定阶段与动态澄清混排。续答只使用用户侧材料，保持回执与幂等身份，不把评分标准或期望工具路径交给被测 Agent。
+
+实际 Thread / Run / Preset、阶段限制原文、原 Case 的 8 次续答上限、源码版本和未验证边界见 [资产题与续答诊断](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-ten-case-acceptance-20261015/assets-continuation-diagnosis-20261017.md)。这是 2026-10-17 的只读诊断；原始评分、当前目标配置和其他样本归因须逐项回读，不以本页推断后续配置状态。
