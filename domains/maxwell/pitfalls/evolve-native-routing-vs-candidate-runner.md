@@ -78,3 +78,12 @@ links: [nextplay-independent-benchmark-entry, evolve-preset-evaluation-entry]
 实际 Thread / Run / Preset、阶段限制原文、原 Case 的 8 次续答上限、源码版本和未验证边界见 [资产题与续答诊断](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-ten-case-acceptance-20261015/assets-continuation-diagnosis-20261017.md)。这是 2026-10-17 的只读诊断；原始评分、当前目标配置和其他样本归因须逐项回读，不以本页推断后续配置状态。
 
 同日用户进一步明确：检查目标应为“Case 要求的流程是否走完”，不限于 Ask User 是否得到回答。逐题对照原请求、续答约束、实际输出、正式项目快照与评分原因，见 [十题流程完成度核验](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-ten-case-acceptance-20261015/ten-case-workflow-completion-20261017.md)。重点区分媒体停在 Prompt、文字文件未写入项目、跨对象确认未触发；不把预设回复指导当作固定待发送消息，也不因 Thread 正常完成就断言业务完成。
+
+
+## 2026-10-17 A2A 与原续答实现的职责复核
+
+**Why:** A2A 传输不等于外层 Agent 已具备目标完成检查。Nextplay CandidateRunner 继承 MaxwellExecutor；现有 continuation 在正常完成时结束，仅在原生 Ask User 时调用受约束的模拟用户。不能声称旧 A2A Runner 本来就保证走完每个业务阶段。
+
+**How to apply:** 查 Nextplay `maxwell-runtime/src/nextplay_runtime/runner.py` 的继承关系、`executor.py` 的 TASK_STATE_COMPLETED 分支、`reply.py` 的输入构造，以及 Candidate Runner SKILL.md 的“多轮及有界续答由 Python 统一完成”。区分初始历史与实际新增对话、问题回答与目标驱动跟进、内层一轮结束与外层 Case 会话终态；采集与清理不得抢在全部续行之前。
+
+源码证据、上下文视图、平台/Adapter/Runtime 职责及待确认的方案见 [Case 目标续行方案](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-case-goal-continuation-plan-20261017.md)。其中统一 A2A 与结束后跟进均为设计建议，尚未实施或验收；禁止从本页推断已变更线上路由。
