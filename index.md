@@ -885,3 +885,5 @@
 - [跨请求同范围首送分叉](domains/sandai-data-smith/pitfalls/sandeval-cross-request-first-submission-race.md) — 2026-10-17：不同请求号、后台续跑与前台新分配交叠；按 SQL 指纹证明检查/INSERT 窗口，双任务同一质检员及 FakeUOW 全局锁的验收缺口；只读根因取证指针。
 
 - 2026-10-17：[跨请求同范围首送分叉](domains/sandai-data-smith/pitfalls/sandeval-cross-request-first-submission-race.md) 补充明确授权后的空白重复分支归档、连接中断后独立验收及根因修复 PR #2594 指针。
+
+- 2026-10-17：[跨请求同范围首送分叉](domains/sandai-data-smith/pitfalls/sandeval-cross-request-first-submission-race.md) 补充新 ledger 与既有整改恢复的兼容、归档续跑额外引用及同原单进度重放审查，实际方法故障复现见审查记录。

@@ -18,3 +18,11 @@ links: [sandeval-reinspection-command-recovery-barriers, sandeval-correction-evi
 - 测试边界：检查 FakeUOW 是否在整个用例外持有全局锁或提供真实环境没有的快照事务。并发 gather 通过不证明覆盖生产检查后、发布前的交错；需要故障点/屏障强制两个业务命令经过该窗口，数据库原子约束另作独立验收。
 
 - 2026-10-17 用户明确要求先单案修复、再修根因。空白重复分支归档及逐对象移除通过原生 operator 执行；首次返回连接中断后，由另一生产实例独立核验保留判断、唯一当前链及负责人批次查询，未盲目重做。冻结计划、完整前像和回读结果见[单案修复验收](/Users/leslie/Documents/Playground/output/ambiguous-submission-20261017/manual-repair-report.md)；代码入口为 `app.cli.duplicate_quality_branch`，[根因修复 PR #2594](https://github.com/world-sim-dev/sandai-data-smith/pull/2594)。合并、CI 与上线状态以远端当前证据为准。
+
+## 2026-10-17 新占用的恢复兼容与归档重试审查
+
+**Why:** 新增的持久占用也是已接受业务事实。只让正式父记录守唯一，却让既有恢复工具继续以“没有父记录、明细、证据”判断从未发布，会漏掉首条写入之前的占用；归档重试若只核对旧对象，也会漏掉后来接受的新命令。同一原单已经前进时，整对象比较还会把正常进度误判为身份漂移。
+
+**How to apply:** 增加 ledger 时逐一审计旧的 partial-publication 判据、管理员最新意图恢复及停写协议，把占用纳入冻结计划与受审计的处置，普通失败不能自行释放。每次归档续跑都要重新检查当前额外引用，并阻止接收新命令与删除之间的竞争；同请求重复发布应核对不可变方案、保留已前进进度。复查 `correction_reservation_recovery.py::RecoveryStore.publication`、`duplicate_quality_branch.py::apply_plan/run` 和 `BatchAllocationRepository.put`；不要以 CI 通过替代这三种故障窗口。
+
+实际方法与 SQLite 的故障复现、审查提交及修复建议见 [PR #2594 审查记录](/Users/leslie/Documents/Playground/output/ambiguous-submission-20261017/review-2594.md)。该记录区分代码可复现窗口与生产已发生事件；当前修复和发布状态沿 PR 刷新。
