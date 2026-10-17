@@ -869,3 +869,5 @@
 - 2026-10-17：A2A 协议与 Case 目标续行的区别、原 Nextplay 的 Ask User 输入与完成即结束行为，见 [内部执行分流与续答职责复核](domains/maxwell/pitfalls/evolve-native-routing-vs-candidate-runner.md#2026-10-17-a2a-与原续答实现的职责复核)；该段保留设计时点；同日获准后的有限续行本地实施、公开上下文、独立预算和派发回执边界见该页后续小节，尚未发布。
 
 - [退回质检的版本占用与重复请求冲突](domains/sandai-data-smith/pitfalls/sandeval-manual-return-version-claim-conflict.md) — 2026-10-17：原退回已保存但后继重检缺失、报告版本唯一占用与新请求指纹、原单续办及截图请求体缺失时的归因边界。
+
+- 2026-10-17：[退回版本占用与恢复](domains/sandai-data-smith/pitfalls/sandeval-manual-return-version-claim-conflict.md#2026-10-17-明确授权后的原单续办) 补充本单明确授权、原请求显式 apply、跨副本独立验收及 main PR #2575；个案恢复和代码发布分开核验。
