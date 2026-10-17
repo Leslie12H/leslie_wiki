@@ -901,3 +901,5 @@
 - 2026-10-18：[Benchmark 组成采用与历史来源](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-18benchmark-组成采用与历史来源) — 采用失败的同源重试、明确保留、组成来源与保存基准分离，以及请求去重的代码与回归指针。
 
 - 2026-10-18：[Benchmark 外部评分展示与旧入口收敛](domains/maxwell/refs/evolve-benchmark-scoring-display-20261018.md) — 冻结有效规则、外部服务声明与独立资产分工；代码、三方向初稿和验证边界入口。
+
+- 2026-10-18：[Benchmark B 方向实施](domains/maxwell/refs/evolve-benchmark-scoring-display-20261018.md#b-方向的阅读连续性) — 0/1/多次阅读、冻结备注与实际版本分离、慢读取与轮询连续性；附真实只读页面证据边界。
