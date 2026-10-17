@@ -897,3 +897,5 @@
 - 2026-10-18：[EVOLVE 试评替换与保存上下文](domains/maxwell/pitfalls/evolve-drawer-overflow.md#2026-10-18试评替换前的草稿检查点) — 存储失败保留旧结果、未知请求身份及抽屉保存回调的当前上下文；实现与验收边界查正式记录。
 
 - 2026-10-18：[Benchmark 组成采用与历史来源](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-18benchmark-组成采用与历史来源) — 采用失败的同源重试、明确保留、组成来源与保存基准分离，以及请求去重的代码与回归指针。
+
+- 2026-10-18：[Benchmark 外部评分展示与旧入口收敛](domains/maxwell/refs/evolve-benchmark-scoring-display-20261018.md) — 冻结有效规则、外部服务声明与独立资产分工；代码、三方向初稿和验证边界入口。
