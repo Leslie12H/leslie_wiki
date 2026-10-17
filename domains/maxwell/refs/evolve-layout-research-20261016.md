@@ -291,3 +291,12 @@ LangSmith 当前创建流程核查入口为 [Evaluators](https://docs.langchain.
 授权范围、当前完成/未完成和后续顺序以 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/README.md` 的当前交付状态为准。用户于2026-10-17明确批准同目录 `independent-case-metric-contract-plan-20261017.md`；仅授权列明接口及三张表迁移文件/测试，未授权 dev/生产迁移、回填、部署。旧记录中的待确认状态为历史记录，查当前清单。
 
 调优入口的同抽屉证据往返、统一任务记录路由、草稿恢复及本轮真实读取/受控提交边界见同目录 `tuning-entry-workspace-20261017.md`。新关系、真实运行与性能验收仍须按当前源码与证据核对，不能从本页推断已上线。
+
+
+## 2026-10-17：独立关系的精确来源与批量读取
+
+**Why:** 同一评估器可以有多个输出指向同一指标。只用指标集依赖索引中的评估器/指标引用无法证明选中了哪个输出；逐条读取来源也会把大批量选择放大成重复请求。
+
+**How to apply:** 从精确指标集内容校验条目及 outputKey，事务内复核不可变来源和依赖。关系历史与资产内容各自版本化；重试先恢复原回执并重新核验权限。按精确引用/内容去重、批量读元数据并限制内容读取并发；查询次数验证与真实数据库耗时分别记录。
+
+源码、四个关联接口、三张表迁移文件及受控测试入口见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/independent-association-implementation-20261017.md`。当前部署、双向 UI、Benchmark 消费与实际性能是否完成，以该记录和 README 为准，不能据此推断已上线。

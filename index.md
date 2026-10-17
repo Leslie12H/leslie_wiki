@@ -859,3 +859,5 @@
 - 2026-10-17：[EVOLVE 重新评分连续工作面](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-17重新评分的连续工作面) — 固定操作、证据往返、分页身份与参数保留；区分真实读取和提交测试。
 
 - 2026-10-17：[EVOLVE 主线交付与性能验收](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-17主线交付独立关系授权与性能验收) — 独立 Case—指标关系清单获批，按关联/Benchmark/运行主线交付；记录接口与页面性能，区分局部验证和完整闭环。
+
+- 2026-10-17：[EVOLVE 独立关系精确来源与批量读取](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-17独立关系的精确来源与批量读取) — 指标集输出身份校验、独立关系回执及批量读取证据；实现与真实服务验收分开。
