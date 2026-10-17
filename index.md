@@ -861,3 +861,5 @@
 - 2026-10-17：[EVOLVE 主线交付与性能验收](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-17主线交付独立关系授权与性能验收) — 独立 Case—指标关系清单获批，按关联/Benchmark/运行主线交付；记录接口与页面性能，区分局部验证和完整闭环。
 
 - 2026-10-17：[EVOLVE 独立关系精确来源与批量读取](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-17独立关系的精确来源与批量读取) — 指标集输出身份校验、独立关系回执及批量读取证据；实现与真实服务验收分开。
+
+- [整改封存缺凭证与待定后的批次接续](domains/sandai-data-smith/pitfalls/sandeval-correction-evidence-and-deferred-lineage.md) — 2026-10-17：原始 intent、半完成正式版本、责任占用与最新答案保护；合法待定排除、多轮成员谱系及负责人详情误报的核验入口。
