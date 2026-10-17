@@ -235,3 +235,12 @@ LangSmith 当前创建流程核查入口为 [Evaluators](https://docs.langchain.
 **How to apply:** 日常管理围绕评估器、指标、指标集；底层方法与外部服务作为辅助入口。按真实用途筛选方法，创建操作受精确方法版本及能力约束。恢复相同方法草稿而不覆盖 Prompt、样本和未知请求；历史服务按方法与版本共同关联。校准进入配置后返回时保留筛选、所选方法与外层上下文。
 
 正式前端、用途筛选、嵌套返回、草稿恢复与测试证据见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/scoring-navigation-20261017.md`。当前服务能力及发布/试评限制沿该记录现场核对；本条不是部署或端到端完成证明。
+
+
+## 2026-10-17：Benchmark 编辑抽屉与运行规则输入
+
+**Why:** 长配置表单仍放在模态窗口或折叠区，会割裂资产管理与版本编辑；数值即时转换会让空输入与实际提交不一致。已有评分配置也不能因新版指标集出现而被静默改称同一概念。
+
+**How to apply:** Benchmark 编辑延续资产抽屉的固定标题、单一内容滚动和固定操作栏；关闭保留、放弃确认、提交中保护分开处理。跨目录操作携带精确返回上下文。数值草稿与有效请求配置分离并共同恢复，未知保存保持同一操作身份。当前评分配置与尚待批准的独立关联方案分别验收。
+
+正式源码、浏览器关闭/刷新/目录往返、窄屏与聚焦测试证据，以及空资产目录和真实运行未验收边界，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/benchmark-editor-drawer-20261017.md`。本条不代表新的 Benchmark 关联模型或完整 EVOLVE 已完成。

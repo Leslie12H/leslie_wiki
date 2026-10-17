@@ -847,3 +847,5 @@
 - 2026-10-17：[EVOLVE 独立指标编辑与评估器采用](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-17独立指标编辑与评估器采用) — 目录进入新版评估器、精确修订与批量上限、类型汇总一致性、保留草稿和返回上下文；含真实服务未验收边界。
 
 - 2026-10-17：[EVOLVE 评分资产导航与方法用途](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-17评分资产导航与方法用途) — 日常资产与底层能力分层、精确版本入口、草稿及返回上下文；实际服务未完成发布/试评的验收边界。
+
+- 2026-10-17：[EVOLVE Benchmark 编辑抽屉](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-17benchmark-编辑抽屉与运行规则输入) — 运行规则原始输入、关闭恢复、资产管理返回及真实服务验收边界。
