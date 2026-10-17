@@ -119,3 +119,11 @@ links: [nextplay-independent-benchmark-entry, evolve-preset-evaluation-entry]
 **Why:** 平台策略编辑、原生执行与 Nextplay Provider/Runner 处在不同仓库；单个仓库的 PR 不能包含另一仓库的改动。只合并平台也不代表旧 Runner 已识别新能力，更不代表线上原 Case 已启用策略。
 
 **How to apply:** 查看 [Maxwell #361](https://github.com/world-sim-dev/maxwell-ai/pull/361) 与 [Nextplay Eval #22](https://github.com/world-sim-dev/nextplay-eval/pull/22) 的实际提交、验证记录及当前 CI/发布状态。2026-10-17 用户要求各仓库一个提交、PR 一句话描述；创建 PR 不包含合并或部署授权。部署后仍需核对目录与执行包能力、原 Case 的明确策略，再做单题/十题原件和原评分验收。
+
+## 2026-10-17 独立调用兼容检查
+
+**Why:** 扩展共享执行器不等于让 Nextplay Eval 依赖 EVOLVE。旧 Case 是否启用跟进、原评分是否改动、异常时资源是否清理，是三个需要分别核对的兼容边界；默认关闭新策略不表示异常路径完全没有变化。
+
+**How to apply:** 沿 Dataset Continuation 的默认值和序列化、共享 executor 的 goal 缺省分支、Runner 的 `_evolve` 条件和原评分入口检查。旧 Case 正常完成仍结束，原 Ask User 按既有预算回答；目标跟进显式启用后才调用新增交付检查。派发/停止无法确认时保留 Thread 与临时资源供恢复，这是同时作用于独立入口的安全加固。
+
+原题库静态加载与独立入口回归的本地证据查 Nextplay 工作树 `.tmp/goal-independent-compatibility-20261017.log`；用例入口为 `maxwell-runtime/tests/test_baseline.py`、`test_standalone.py`、`test_inputs.py` 与 eval-runner 的本地 Dataset/模拟用户测试。题库内容、PR 合并状态和真实服务表现需现场刷新；本轮没有真实 Agent/Judge 调用，不将离线技术回归当作线上兼容验收。
