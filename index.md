@@ -1,6 +1,6 @@
 # leslie_wiki 目录
 
-- 2026-10-17：[新工作台十题双轮验收入口](domains/maxwell/refs/evolve-nextplay-ten-case-acceptance-20261015.md#2026-10-17-新工作台双轮验收入口) — #361/#22 发布、结构迁移确认、旧题默认续行语义、评分 Provider 版本升级与两轮冻结口径；含真实 Range 原件核验与恢复后状态基线；实际进度及工作台观察查验收记录。
+- 2026-10-17：[新工作台十题双轮验收入口](domains/maxwell/refs/evolve-nextplay-ten-case-acceptance-20261015.md#2026-10-17-新工作台双轮验收入口) — #361/#22 发布、结构迁移确认、旧题默认续行语义、评分 Provider 版本升级与两轮冻结口径；含真实 Range 原件核验、恢复后状态基线、内嵌原评分与 JSONB 资产身份核验；实际进度及工作台观察查验收记录。
 
 > 全库入口。每个 session 先读本文件,再按任务相关性 Read 具体 page。
 > 维护规矩见 [CLAUDE.md](./CLAUDE.md)。
