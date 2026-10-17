@@ -4,7 +4,7 @@ type: reference
 created: 2026-10-16
 updated: 2026-10-17
 tags: [sand-eval, package, self-check, handoff, offboarding]
-links: [sandeval-direct-remediation-and-batch-handoff, sandeval-reassignment-scope-and-batch-responsibility, sandeval-work-handoff-unsettled-occupancy]
+links: [sandeval-direct-remediation-and-batch-handoff, sandeval-reassignment-scope-and-batch-responsibility, sandeval-work-handoff-unsettled-occupancy, sandeval-package-transition-lock-regression-20261017]
 ---
 
 # Sand 整包自查退回与离职交接核查入口
@@ -12,6 +12,10 @@ links: [sandeval-direct-remediation-and-batch-handoff, sandeval-reassignment-sco
 **Why:** 2026-10-16 用户提出供应商正式交包后，Sand 不分配、不检查就整包退回供应商质检自查，并询问质检员或标注员离职的后果；2026-10-17 将范围扩展到部分批次已经分配或质检。包级退回不能依赖已有 Sand 检查任务，部分已检查时还需保留报告历史并阻止旧任务继续执行。
 
 **How to apply:** 固定最新 main/部署版本，分清包级总责任、按批检查、标注整改和历史作者。核对历史报告只读、新轮次、有效接手人、实际持卡与整改责任一起转交、负责人资格及重新整包交接；不要把已有转交按钮视为所有状态可改派，也不要用 QC 报告 passed 单独证明问题清零。建议与已确认业务规则分别记录。
+
+- [2026-10-17 用户要求回退 #2566 的 PR #2577](https://github.com/world-sim-dev/sandai-data-smith/pull/2577)：基于最新 main 撤销原 PR，后续整改发布和原退回恢复修复保留；合并及自动发布分别看该 PR 与其最新 Gate，不把回退 PR 创建当作生产已回退。
+- [2026-10-17 整包操作与性能核验](/Users/leslie/Documents/Playground/output/sandeval-revert-pr2566-20261017/audit-report.md)：包含生产 Leader 上的整包意图/批次处置、SLS Complete 窗口与请求覆盖、常驻恢复查询和回退文件树的只读证据。操作次数是时间点快照，今后重新查询；没有整包操作不能据此排除 PR 对旧接口的影响。
+- 归因应交叉读取[整包退回事务与提交锁等待](sandeval-package-transition-lock-regression-20261017.md)：该 PR 同时改变已有单批退回的事务边界和普通保存/提交的跨表 CAS。恢复扫描成本、数据库 CPU、BE 锁等待和全站尾延迟须分别核验；低 CPU 或无人点击新按钮不构成排除锁回归的依据。
 
 - [2026-10-16 源码核查与方案报告](/Users/leslie/Documents/Playground/output/sandeval-package-return-20261016/analysis.md)：保存准确 main SHA、代码永久链接、现有能力限制、包级自查建议、离职与并发风险及最小验收范围。仅源码/已有测试审查，未核验生产部署，未实施新功能或操作业务数据。
 - [2026-10-17 实现及测试 PR #2564](https://github.com/world-sim-dev/sandai-data-smith/pull/2564)：当前代码、验证和测试集成状态以 PR 最新 head 为准。开发基于 main，测试目标为 sandeval-test-only；PR 有集成冲突时不能把单分支 Gate 当作测试集成验收，不能将测试历史合入开发分支。
