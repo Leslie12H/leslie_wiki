@@ -2,7 +2,7 @@
 name: evolve-layout-research-20261016
 type: reference
 created: 2026-10-16
-updated: 2026-10-17
+updated: 2026-10-18
 tags: [maxwell, evolve, interaction, langsmith, opik]
 links: [evolve-workspace-implementation-20261015]
 ---
@@ -300,3 +300,12 @@ LangSmith 当前创建流程核查入口为 [Evaluators](https://docs.langchain.
 **How to apply:** 从精确指标集内容校验条目及 outputKey，事务内复核不可变来源和依赖。关系历史与资产内容各自版本化；重试先恢复原回执并重新核验权限。按精确引用/内容去重、批量读元数据并限制内容读取并发；查询次数验证与真实数据库耗时分别记录。
 
 源码、四个关联接口、三张表迁移文件及受控测试入口见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/independent-association-implementation-20261017.md`。当前部署、双向 UI、Benchmark 消费与实际性能是否完成，以该记录和 README 为准，不能据此推断已上线。
+
+
+## 2026-10-18：Benchmark 组成采用与历史来源
+
+**Why:** 用例库的当前关联和 Benchmark 的冻结关联是两种读取意图。采用失败后的重试若改读历史快照，会把旧组成伪装成采用成功；保存冲突后的最新版本号也不能代替原组成来源。
+
+**How to apply:** 将未完成的采用意图纳入草稿恢复和未保存修改，重试保持同一来源；旧组成和元数据完整时允许明确保留。组成的历史来源与乐观保存基准分离，历史恢复直接读取选定版本，重复读取共用在途请求。旧草稿缺少可证明的历史来源时显示错误，不回退当前库。
+
+实现、兼容与技术回归入口见 Maxwell `services/evolve-server/docs/evolve-evaluator-workspace.md` 的「Benchmark 组成读取的采用意图与历史来源」及 [PR #362](https://github.com/world-sim-dev/maxwell-ai/pull/362)。实际发布、浏览器与真实评测状态须另行核对，不能用这些源码测试替代。
