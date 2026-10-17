@@ -105,3 +105,11 @@ links: [nextplay-independent-benchmark-entry, evolve-preset-evaluation-entry]
 **How to apply:** 从每个调用入口检查 action 接收、会话当前 Run、证据提交和 lease 清理的同一状态链；覆盖 accepted 后写入失败及 unknown 派发两种窗口。对照 Provider schema、编辑保存和执行解析的联合约束；紧凑输出只携带摘要与引用。目标检查需读取关键交付字段，不能把文件前缀或哈希当成完整媒体/写回证明。
 
 本轮完整范围、实际复现、分级与待验收入口见 `/Users/leslie/.codex/worktrees/evolve-executor-preflight/maxwell-ai/output/reviews/2026-10-17-case-goal-continuation.md`。这是 2026-10-17 的本地审查记录，未据此宣称完成修复或真实评测；最新代码及解决状态需回到工作树/后续 PR 核对。
+
+## 2026-10-17 审查修复与真实目录往返
+
+**Why:** 仅用简化 schema 或手工构造最终回执，无法覆盖 Provider 目录被平台白名单拒绝、JSON 规范化覆盖原始缓冲区、第二轮接收后尚未出现 SSE 等真实边界。取消命令返回成功与可查询证据已经保存也属于两个不同步骤。
+
+**How to apply:** 使用实际 Provider 目录和模板走平台准备、派生身份、计算摘要、严格校验全链路；草稿暂存与执行准入分开。用真实提交顺序注入接收后落盘失败，按 action 身份核对并检查相关 Run 全集，确认停止和归档后才清理。摘要按合法最小预算投影，完整记录走已授权的原件引用；交付字段从完整文件提取，超出有界检查能力时明确未完成，不把前缀、哈希或模型判断当成质量评分。
+
+本地修复、最终技术测试及未做的真实媒体/评分验收，见同工作树 `docs/verification/2026-10-17-case-goal-continuation.md`「审查修复」；原审查保留修复前证据。该记录不是部署状态，发布、线上 Case 策略与单题/十题真实结果需另行核验。未改 Maxwell Agent Runtime。
