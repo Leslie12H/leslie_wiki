@@ -2,7 +2,7 @@
 name: evolve-v3-work-executor-mapping
 type: pitfall
 created: 2026-09-19
-updated: 2026-10-14
+updated: 2026-10-17
 tags: [maxwell, evolve, studio, 前端, 分页]
 links: [maxwell, evolve-workbench-v22, evolve-usage-accounting]
 ---
@@ -27,3 +27,12 @@ links: [maxwell, evolve-workbench-v22, evolve-usage-accounting]
 ## 2026-10-14 整页视觉与状态复核
 
 复核与桌面整改规范见[架构与界面复核](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-nextplay-architecture-ui-review-20261014.md)。**Why:** 引用了 Studio tokens 只保证颜色来源一致，不能证明整页面板层次、信息密度和状态一致；执行终态也不是评分成功。**How to apply:** 回到 surface.css 与真实页面核对 page/surface/muted/elevated 的实际承载区域，复用 Card/TableFrame 等组件组织整页；用真实的全部执行失败与未评分结果检查顶部、汇总和逐题状态一致。用户保留暖色、粗线条，仅桌面验收；本轮未实施新样式。
+
+
+## 2026-10-17：首屏依赖与按需读取
+
+**Why:** `Promise.all` 中即使捕获辅助请求错误，慢响应仍会阻塞主要内容；前端分页组件也不代表服务端按页读取。远端取消 Attempt 可能独立于 Run 版本变化，不能仅按 Run version 永久缓存否定结果。
+
+**How to apply:** 先查每个请求是否被当前视图消费，将连接状态与任务内容的读取分离；运行提交继续等待连接核实。历史辅助检查按可见视图启动、限制并发并取消过期请求。分页中断必须终止后续页，不能返回部分数据冒充完整快照。真实接口延迟、查询规模和页面可操作时间分别取证，自动化工具耗时不能替代它们。
+
+源码、受控千条历史测试、实页恢复、Chrome 连接限制与尚未解决的完整历史/冻结目录扫描，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/loading-performance-20261017.md`。局部请求优化不是整体性能验收；实际接口 P50/P95 以该记录后续证据为准。
