@@ -253,3 +253,12 @@ LangSmith 当前创建流程核查入口为 [Evaluators](https://docs.langchain.
 **How to apply:** 当前页来源名称按业务与任务身份读取、限制并发并隔离过期响应；名称限行保留详情，筛选只使用服务真实支持的范围。组成入口固定当前 Benchmark 版本，任务往返保留筛选和外层上下文；读取失败独立显示，不用新内容填补旧快照。
 
 正式代码、真实目录筛选/返回与桌面证据见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/benchmark-directory-reading-20261017.md`。该记录保留历史冻结用例集未读通、对象筛选仍由任务选择及全目录搜索未实现的边界，不代表完整链路验收。
+
+
+## 2026-10-17：冻结内容读取的错误边界与分页返回
+
+**Why:** 将前端已经确认的修订不一致、目录解析未命中与服务读取失败统一压成一个错误，会掩盖真实断点；只按 Case ID 复用缓存也不足以保证采用内容一致。已加载内容搜索不能代表完整冻结集合搜索。
+
+**How to apply:** 本地可控错误与远端错误分开处理，前者可提供明确原因，后者保留安全业务提示；缓存和历史读取共同核对精确版本与内容身份。分页与所选用例进入返回上下文，切换 Benchmark 版本清除旧位置。查不到采用修订时保留失败，不补最新内容，不判定为空数据。
+
+当前实现、受控分页测试、真实页面修订往返、未解析历史用例集及服务读取失败边界见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/benchmark-frozen-reading-20261017.md`。现有有界目录扫描不是完整反查；错误展示修复不等于历史数据或后端故障已经修复。

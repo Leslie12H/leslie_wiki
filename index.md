@@ -851,3 +851,5 @@
 - 2026-10-17：[EVOLVE Benchmark 编辑抽屉](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-17benchmark-编辑抽屉与运行规则输入) — 运行规则原始输入、关闭恢复、资产管理返回及真实服务验收边界。
 
 - 2026-10-17：[EVOLVE Benchmark 目录与冻结入口](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-17benchmark-目录的业务名称与冻结入口) — 当前页名称、真实目标筛选、长名称密度和任务往返；含历史内容读取及目录能力限制。
+
+- 2026-10-17：[EVOLVE 冻结内容读取与分页返回](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-17冻结内容读取的错误边界与分页返回) — 安全错误分类、内容身份校验、分页上下文及完整反查与真实服务验收边界。
