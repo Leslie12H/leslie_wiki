@@ -12,6 +12,7 @@ links: [evolve-nextplay-dev-release-20261015, evolve-native-routing-vs-candidate
 ## 2026-10-17 新工作台双轮验收入口
 
 - 用户要求合并 Maxwell #361 / Nextplay #22 后部署 dev、复用原十题、整理单一 Benchmark 并运行两轮。范围、发布任务、数据库迁移确认、登录前置及后续运行证据查[双轮验收记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-two-round-acceptance-20261017/plan.md)。此处只保存入口，完成度以记录及真实环境为准。
+- 2026-10-17 补充：旧 Benchmark 固定的评分 Provider 版本不会随服务发布自动变更；仅更新同源 Case 的评分绑定版本后，必须保存新 CaseSet/Benchmark 版本并在两轮中冻结一致。原始回执、两轮身份及暂不归档的用户范围查双轮验收记录；界面输入、运行备注和比较观察查[工作台操作观察](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-two-round-acceptance-20261017/workbench-observations.md)。
 - **Why:** 目标续行缺省关闭，新版本部署不会自动改变已有 Case；新评分工作台还依赖新增数据库结构。不能把合并、发布、策略启用、真实取分与对比可用混为同一结论。
 - **How to apply:** 发布前核对实际迁移版本和结构变更授权；从页面回读 Case 策略及 Benchmark 冻结版本。两轮之间保持输入、评分与交互策略不变；原先单轮结果只作历史参照，不计入新请求的两轮。系统禁止的生图/声音能力不能靠评测续问绕过。
 
