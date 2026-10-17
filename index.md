@@ -873,3 +873,5 @@
 - 2026-10-17：[退回版本占用与恢复](domains/sandai-data-smith/pitfalls/sandeval-manual-return-version-claim-conflict.md#2026-10-17-明确授权后的原单续办) 补充本单明确授权、原请求显式 apply、跨副本独立验收及 main PR #2575；个案恢复和代码发布分开核验。
 
 - [标注员历史整改通过与当前 Sand 退回](domains/sandai-data-smith/pitfalls/sandeval-annotator-historical-correction-status.md) — 2026-10-17：个人空间整改闭环、Sand 退回负责人和实际复验分开核验；逐题已保存备注、浏览器草稿及整批退回原因的只读证据入口。
+
+- [Sand Eval 整包退回事务与提交锁等待取证](domains/sandai-data-smith/refs/sandeval-package-transition-lock-regression-20261017.md) — 2026-10-17：先查卡顿时间，再对齐部署、五分钟 BE 锁错误、跨表 CAS 与显式退回事务；PR #2566 引入位置、持锁链和全站读取延迟的归因边界。
