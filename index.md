@@ -875,3 +875,5 @@
 - [标注员历史整改通过与当前 Sand 退回](domains/sandai-data-smith/pitfalls/sandeval-annotator-historical-correction-status.md) — 2026-10-17：个人空间整改闭环、Sand 退回负责人和实际复验分开核验；逐题已保存备注、浏览器草稿及整批退回原因的只读证据入口。
 
 - [Sand Eval 整包退回事务与提交锁等待取证](domains/sandai-data-smith/refs/sandeval-package-transition-lock-regression-20261017.md) — 2026-10-17：先查卡顿时间，再对齐部署、五分钟 BE 锁错误、跨表 CAS 与显式退回事务；PR #2566 引入位置、持锁链和全站读取延迟的归因边界；补充实验事务官方机制、持久执行准入修复建议及真实并发验收要求。
+
+- [Sand Eval 已保存最新版与本人浏览器显示](domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md) — 2026-10-17：送审原引用、代改实际正文、执行回执、原生双接口与本机草稿分别取证；浏览器登录和个案归因的验收边界。
