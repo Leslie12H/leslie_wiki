@@ -903,3 +903,5 @@
 - 2026-10-18：[Benchmark 外部评分展示与旧入口收敛](domains/maxwell/refs/evolve-benchmark-scoring-display-20261018.md) — 冻结有效规则、外部服务声明与独立资产分工；代码、三方向初稿和验证边界入口。
 
 - 2026-10-18：[Benchmark B 方向实施](domains/maxwell/refs/evolve-benchmark-scoring-display-20261018.md#b-方向的阅读连续性) — 0/1/多次阅读、冻结备注与实际版本分离、慢读取与轮询连续性；附真实只读页面证据边界。
+
+- 2026-10-18：[EVOLVE 新布局收敛](domains/maxwell/refs/evolve-layout-unification-20261018.md) — 保持五类框架，目录扫读与按需规则、选择后批量操作、单页控件收起及窄屏阅读的源码与验收指针。
