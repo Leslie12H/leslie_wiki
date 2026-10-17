@@ -244,3 +244,12 @@ LangSmith 当前创建流程核查入口为 [Evaluators](https://docs.langchain.
 **How to apply:** Benchmark 编辑延续资产抽屉的固定标题、单一内容滚动和固定操作栏；关闭保留、放弃确认、提交中保护分开处理。跨目录操作携带精确返回上下文。数值草稿与有效请求配置分离并共同恢复，未知保存保持同一操作身份。当前评分配置与尚待批准的独立关联方案分别验收。
 
 正式源码、浏览器关闭/刷新/目录往返、窄屏与聚焦测试证据，以及空资产目录和真实运行未验收边界，见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/benchmark-editor-drawer-20261017.md`。本条不代表新的 Benchmark 关联模型或完整 EVOLVE 已完成。
+
+
+## 2026-10-17：Benchmark 目录的业务名称与冻结入口
+
+**Why:** 内部引用不能代替可读名称；长调优目标会撑高列表行。按执行连接筛选也不能代表按真实被测对象筛选，进入历史内容时更不能悄悄采用最新版本。
+
+**How to apply:** 当前页来源名称按业务与任务身份读取、限制并发并隔离过期响应；名称限行保留详情，筛选只使用服务真实支持的范围。组成入口固定当前 Benchmark 版本，任务往返保留筛选和外层上下文；读取失败独立显示，不用新内容填补旧快照。
+
+正式代码、真实目录筛选/返回与桌面证据见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/benchmark-directory-reading-20261017.md`。该记录保留历史冻结用例集未读通、对象筛选仍由任务选择及全目录搜索未实现的边界，不代表完整链路验收。

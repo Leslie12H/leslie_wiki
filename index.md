@@ -849,3 +849,5 @@
 - 2026-10-17：[EVOLVE 评分资产导航与方法用途](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-17评分资产导航与方法用途) — 日常资产与底层能力分层、精确版本入口、草稿及返回上下文；实际服务未完成发布/试评的验收边界。
 
 - 2026-10-17：[EVOLVE Benchmark 编辑抽屉](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-17benchmark-编辑抽屉与运行规则输入) — 运行规则原始输入、关闭恢复、资产管理返回及真实服务验收边界。
+
+- 2026-10-17：[EVOLVE Benchmark 目录与冻结入口](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-17benchmark-目录的业务名称与冻结入口) — 当前页名称、真实目标筛选、长名称密度和任务往返；含历史内容读取及目录能力限制。
