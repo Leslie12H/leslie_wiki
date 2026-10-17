@@ -2,7 +2,7 @@
 name: evolve-latest-main-integration-boundaries
 type: pitfall
 created: 2026-10-14
-updated: 2026-10-15
+updated: 2026-10-17
 tags: [maxwell, evolve, nextplay, integration, review]
 links: [evolve-original-evidence-and-report-recovery]
 ---
@@ -20,3 +20,12 @@ links: [evolve-original-evidence-and-report-recovery]
 独立模块验证还须对齐 CI 的 `GOWORK=off` 模式：本机 workspace 可能从其他模块补齐新 import，掩盖当前模块缺失的 `go.mod` / `go.sum`。Why：本机通过不代表镜像或独立 CI 可构建；How：对新增跨模块依赖运行实际发布模块的独立 vet / test，具体修复和结果只查上述 PR 验证记录。
 
 2026-10-15 原件拉取的分层守卫遗漏：见 [PR #355](https://github.com/world-sim-dev/maxwell-ai/pull/355) 及其[修复验证记录](https://github.com/world-sim-dev/maxwell-ai/blob/caa558d7f30efeeb019fa141997a5440b1293eab/docs/verification/2026-10-14-evolve-native-agent.md#2026-10-15-pr-355-ci-分层修复)。Why：`./internal/app/...` 局部测试不包含放在 `./internal` 的架构守卫；业务集成通过也可能遗漏 transport 对 Store ports 的越层依赖。How：HTTP 层只依赖应用服务暴露的错误契约，保留原错误身份和状态码；不要放宽守卫或按字符串识别错误。提交前按 CI 的独立模块入口核对 vet、全包测试和架构检查，源码修复与远端 CI 状态分别回读。
+
+
+## 2026-10-17：新增类型不能收窄已合并的 Artifact 约束
+
+评分资产扩展与 Case 续行的整合证据见 [Maxwell PR #361](https://github.com/world-sim-dev/maxwell-ai/pull/361) 和仓库 `services/evolve-server/docs/evolve-evaluator-workspace.md`。数据库、外部 Runner、实际页面与 CI 状态只查这些当前来源，不以本文推断启用状态。
+
+**Why:** 从旧分支复制整份类型 CHECK 会遗漏另一个已合并功能增加的资源类型；三方合并与一般迁移语法测试都可能放过它。合并另一条用户流程时，旧页面结构也可能重新引入折叠 JSON 或丢失下载入口。
+
+**How to apply:** 对新旧约束枚举做集合包含回归，保留已有类型并单独核对私有资源的 Work 归属限制；不执行数据库来替代文件审查。界面整合以新版页面为容器接入新增能力，重新验证未知写入恢复、策略与能力声明不漂移、消息回执状态和原件下载。后端按独立模块入口验证，生成契约必须保留两侧新增字段；真实浏览器和外部执行仍需各自证据。
