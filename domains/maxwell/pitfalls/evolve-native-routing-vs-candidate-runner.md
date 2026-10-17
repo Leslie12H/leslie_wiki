@@ -86,4 +86,13 @@ links: [nextplay-independent-benchmark-entry, evolve-preset-evaluation-entry]
 
 **How to apply:** 查 Nextplay `maxwell-runtime/src/nextplay_runtime/runner.py` 的继承关系、`executor.py` 的 TASK_STATE_COMPLETED 分支、`reply.py` 的输入构造，以及 Candidate Runner SKILL.md 的“多轮及有界续答由 Python 统一完成”。区分初始历史与实际新增对话、问题回答与目标驱动跟进、内层一轮结束与外层 Case 会话终态；采集与清理不得抢在全部续行之前。
 
-源码证据、上下文视图、平台/Adapter/Runtime 职责及待确认的方案见 [Case 目标续行方案](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-case-goal-continuation-plan-20261017.md)。其中统一 A2A 与结束后跟进均为设计建议，尚未实施或验收；禁止从本页推断已变更线上路由。
+源码证据、上下文视图、平台/Adapter/Runtime 职责及待确认的方案见 [Case 目标续行方案](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-case-goal-continuation-plan-20261017.md)。此段记载的是当时的设计建议；同日获准开始后的本地实施见下节，线上路由与部署仍须单独核验。
+
+
+## 2026-10-17 有限目标续行的本地实施与回执边界
+
+**Why:** 正常回复可能停在 Prompt 或草稿；追加消息的决策也可能在取消、超时或丢失派发回执时尚未实际送达。把“决定继续”算作已跟进，或在回执未知时清理临时目标，会失真且破坏恢复条件。
+
+**How to apply:** 将公开目标策略随 Case 冻结，默认关闭；提问回答与主动跟进分别计数，后者在同一 Thread 发新 message。决策、实际上下文、文件哈希和派发状态先保存，只有 accepted 计入已发送次数；unknown 保留资源待核对。公开交付检查与原 Judge 质量评分分开，文件存在或哈希变化不证明媒体有效。旧 Runner 必须拒绝不支持的能力，不能静默跳过新策略。普通内部路径和 A2A Runner 保持相同冻结语义，不改 Runtime、不把评测资产塞入 Thread 元数据。
+
+本地代码、契约、技术回归与桌面截图查 `/Users/leslie/.codex/worktrees/evolve-executor-preflight/maxwell-ai/docs/verification/2026-10-17-case-goal-continuation.md`；Nextplay 配套工作树为 `/Users/leslie/.codex/worktrees/nextplay-case-continuation/nextplay-eval`。这是本地实施指针，未发布或重跑真实媒体题；PR、部署、65 题交付与真实评分必须另行核验。
