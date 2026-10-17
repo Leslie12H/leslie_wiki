@@ -262,3 +262,12 @@ LangSmith 当前创建流程核查入口为 [Evaluators](https://docs.langchain.
 **How to apply:** 本地可控错误与远端错误分开处理，前者可提供明确原因，后者保留安全业务提示；缓存和历史读取共同核对精确版本与内容身份。分页与所选用例进入返回上下文，切换 Benchmark 版本清除旧位置。查不到采用修订时保留失败，不补最新内容，不判定为空数据。
 
 当前实现、受控分页测试、真实页面修订往返、未解析历史用例集及服务读取失败边界见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/benchmark-frozen-reading-20261017.md`。现有有界目录扫描不是完整反查；错误展示修复不等于历史数据或后端故障已经修复。
+
+
+## 2026-10-17：候选验证抽屉与证据往返
+
+**Why:** 验证候选需要在固定基线、冻结用例和评分配置之间往返。若选择器要求内部 ID、返回时切换列表/谱系、浮层被抽屉覆盖或关闭状态与草稿分离，局部组件可渲染也不代表完整流程可用。
+
+**How to apply:** 用真实目录筛选选择基线，结构化展示冻结配置，保留精确内容入口；把候选、基线、目录范围、视图和打开状态放入恢复/返回上下文。固定操作栏须在窄屏和长内容下验证，公共浮层复用层级 token。新增 Store 方法后还要完整刷新并验证持久草稿恢复，不能只依赖热更新实例。
+
+代码、受控测试与实际页面读取证据见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-frontend-implementation-20261015/candidate-validation-drawer-20261017.md`。本轮未启动真实评测；读取曾失败后重试成功，不代表服务故障或完整调优闭环已验收。
