@@ -41,3 +41,9 @@ links: [sandeval-reinspection-command-recovery-barriers, sandeval-correction-evi
 **Why:** 业务占用能阻止版本分叉，但额外串行往返、同任务共用的 CAS 行和持续增长的 JSON 会产生开销；低频管理员事务还可能持有跨任务共用物理表的锁。正确性 CI 不提供延迟前后对照。
 
 **How to apply:** 区分完整 PR 的服务成本与最新 operator 补修，沿真实入口统计范围封存、重复预留、intent 和 ledger 查询；在同一环境分别验证同任务/不同任务并发。表锁按物理表判断影响范围，事务预算不能当作正常耗时或恢复 ETA。当前代码坐标、静态调用统计及未测量事项见[性能核对记录](/Users/leslie/Documents/Playground/output/quality-scope-review-fixes-20261018/performance-impact.md)；混合事务机制沿[官方文档](https://help.aliyun.com/en/hologres/developer-reference/sql-transaction-capabilities)刷新。
+
+## 2026-10-18 按业务键拆分占用与发布内守卫
+
+**Why:** 拆开任务级共享 ledger 不能以牺牲整组占用为代价；逐键忽略冲突会给失败分配留下私有范围，失败后再删除又可能误释放未知结果下已接受的命令。早期检查也不能替代正式发布时的归属守卫。
+
+**How to apply:** 独立业务键用独立主键，整组缺失键通过一条严格 INSERT 取得，主键冲突让整条语句回滚；回读精确键区分同命令与其他所有者，保留未知结果的原占用。预留后由父 INSERT 同时核对该键所有者与范围配置，已封存配置只读确认，避免共享配置的无效更新。重复分支维护使用停写后的归档和逐步自动提交；强制接续整改仍需表锁事务，默认拒绝 apply 并要求明确维护模式。当前实现、固定 SQL 调用数验证及尚未覆盖的 Hologres 性能边界沿[优化记录](/Users/leslie/Documents/Playground/output/quality-scope-review-fixes-20261018/performance-optimization.md)和 [PR #2594](https://github.com/world-sim-dev/sandai-data-smith/pull/2594)刷新。

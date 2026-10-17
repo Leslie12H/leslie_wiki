@@ -892,6 +892,8 @@
 
 - 2026-10-18：[持久占用的性能审查入口](domains/sandai-data-smith/pitfalls/sandeval-cross-request-first-submission-race.md#2026-10-18-持久占用的性能审查入口) — 区分额外串行 SQL、同任务 CAS 热点、历史 JSON 增长与低频管理员表锁；静态调用统计不冒充延迟实测。
 
+- 2026-10-18：[按业务键拆分占用与发布内守卫](domains/sandai-data-smith/pitfalls/sandeval-cross-request-first-submission-race.md#2026-10-18-按业务键拆分占用与发布内守卫) — 严格单语句整组占用、未知结果复用原键、父 INSERT 的归属/范围校验，以及自动提交归档维护与表锁维护模式的不同边界。
+
 - 2026-10-18：[Benchmark 内嵌评分可见性](domains/maxwell/pitfalls/evolve-inline-metrics-catalog-visibility.md) — 独立目录为空不等于没有评分定义；冻结 Case 有效绑定、外部方法和结果分开核对。
 
 - 2026-10-18：[EVOLVE 试评替换与保存上下文](domains/maxwell/pitfalls/evolve-drawer-overflow.md#2026-10-18试评替换前的草稿检查点) — 存储失败保留旧结果、未知请求身份及抽屉保存回调的当前上下文；实现与验收边界查正式记录。
