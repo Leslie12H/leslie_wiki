@@ -703,7 +703,7 @@
 
 - [EVOLVE 商业工具视觉修订](domains/maxwell/refs/evolve-commercial-ui-20261015.md) — 2026-10-15：用户继续否定视觉品质，重新检查 Opik/LangSmith 官方截图，保留上下同页并重做工作台视觉；新稿未认可，未改业务代码。
 
-- 2026-10-15：[内部执行分流与既有候选 Runner](domains/maxwell/pitfalls/evolve-native-routing-vs-candidate-runner.md) — 历史 A2A 替换验证、双入口衔接、来源集合归属与断线恢复检查；附 2026-10-16 三条连接诊断、单一执行器、冻结选路、历史保留、PostgreSQL 校验一致性，以及 PR #358 发布/原题取分与 Chrome 原件保存回读指针；2026-10-17 补充资产题系统阶段限制、历史恢复与 Ask User/固定多轮续答边界。
+- 2026-10-15：[内部执行分流与既有候选 Runner](domains/maxwell/pitfalls/evolve-native-routing-vs-candidate-runner.md) — 历史 A2A 替换验证、双入口衔接、来源集合归属与断线恢复检查；附 2026-10-16 三条连接诊断、单一执行器、冻结选路、历史保留、PostgreSQL 校验一致性，以及 PR #358 发布/原题取分与 Chrome 原件保存回读指针；2026-10-17 补充资产题系统阶段限制、历史恢复、Ask User/固定多轮续答边界及十题流程完成度核验。
 
 - [EVOLVE 底色与对象入口反馈](domains/maxwell/refs/evolve-commercial-ui-20261015.md#2026-10-15底色与被接入对象的进一步反馈) — 2026-10-15：用户否定当前底色与对象入口遗漏；先研究 Opik 项目/Agent 接入、LangSmith 目标/实验配置及连续工作区，未继续画稿。
 
@@ -863,3 +863,5 @@
 - 2026-10-17：[EVOLVE 独立关系精确来源与批量读取](domains/maxwell/refs/evolve-layout-research-20261016.md#2026-10-17独立关系的精确来源与批量读取) — 指标集输出身份校验、独立关系回执及批量读取证据；实现与真实服务验收分开。
 
 - [整改封存缺凭证与待定后的批次接续](domains/sandai-data-smith/pitfalls/sandeval-correction-evidence-and-deferred-lineage.md) — 2026-10-17：原始 intent、半完成正式版本、责任占用与最新答案保护；合法待定排除、多轮成员谱系及负责人详情误报；补充原生续跑、未知写入结果回读与主线发布证据入口。
+
+- [Sand 不合格题目随批次验收的历史审计](domains/sandai-data-smith/refs/sandeval-rejected-accepted-history-audit.md) — 2026-10-17：逐题不合格、冻结报告、人工/自动验收、正式作答回读和下游交付凭证的独立口径及计数证据入口。

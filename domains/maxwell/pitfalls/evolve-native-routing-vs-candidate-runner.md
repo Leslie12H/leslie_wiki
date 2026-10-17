@@ -76,3 +76,5 @@ links: [nextplay-independent-benchmark-entry, evolve-preset-evaluation-entry]
 **How to apply:** 对照真实首轮 MODEL.REQUEST 的系统指令与 Case 当前请求；沿 Nextplay `maxwell-runtime/src/nextplay_runtime/executor.py` 的 `_initial_input_with_context` / `_execute_conversation` 和 EVOLVE `maxwellexecutor/turns.go` / `reply.go` 分清恢复历史、原生 Ask User 回答和正常完成后的固定 turns。当前两种编排二选一；不得从“支持自动续答”推断支持固定阶段与动态澄清混排。续答只使用用户侧材料，保持回执与幂等身份，不把评分标准或期望工具路径交给被测 Agent。
 
 实际 Thread / Run / Preset、阶段限制原文、原 Case 的 8 次续答上限、源码版本和未验证边界见 [资产题与续答诊断](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-ten-case-acceptance-20261015/assets-continuation-diagnosis-20261017.md)。这是 2026-10-17 的只读诊断；原始评分、当前目标配置和其他样本归因须逐项回读，不以本页推断后续配置状态。
+
+同日用户进一步明确：检查目标应为“Case 要求的流程是否走完”，不限于 Ask User 是否得到回答。逐题对照原请求、续答约束、实际输出、正式项目快照与评分原因，见 [十题流程完成度核验](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-ten-case-acceptance-20261015/ten-case-workflow-completion-20261017.md)。重点区分媒体停在 Prompt、文字文件未写入项目、跨对象确认未触发；不把预设回复指导当作固定待发送消息，也不因 Thread 正常完成就断言业务完成。
