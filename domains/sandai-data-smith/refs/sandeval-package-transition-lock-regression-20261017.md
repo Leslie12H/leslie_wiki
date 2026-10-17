@@ -23,3 +23,9 @@ links: [sandeval-api-observability, sandeval-init-warehouse-latency-20261010]
 ## 复用边界
 
 共享物理表的事务或跨表 CAS 可影响不同任务，不能以业务包 ID 不同断定已经隔离。修复要保留冻结版本、整包退回防护和并发正确性，并用同任务/不同任务的保存、提交、代改和退回并发验收。生产回滚、部署或取消持锁查询属于独立操作，不由诊断自动授权。
+
+## 2026-10-17 修复设计补证
+
+- [SQL transactions](https://help.aliyun.com/en/hologres/developer-reference/sql-transaction-capabilities) 直接说明实验混合 DML 事务内所有读写都拿表级写锁，仅适合低 QPS；讨论本次模式时优先引用此页，不把通用锁文档中默认事务模式的描述当成实验模式行为。
+- 报告新增“修复建议”节：移除在线退回长事务，普通写入恢复单行 CAS，以持久包级执行准入与已开始写入收敛保留一致性；单批退回复用原 pending/不可变意图。该方案尚未实现，执行记录的承载位置和容量仍需实现前核对。
+- 仅拆成先查 fence 后更新，或仅增加 Redis 租约，都不能替代数据库执行令牌和版本守卫。延迟自动任务、分配和转交须覆盖同一准入协议；真实 Hologres 并发证据不能由 SQLite 或模拟锁测试替代。
