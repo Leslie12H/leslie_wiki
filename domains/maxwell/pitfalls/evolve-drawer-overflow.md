@@ -2,7 +2,7 @@
 name: evolve-drawer-overflow
 type: pitfall
 created: 2026-09-09
-updated: 2026-10-17
+updated: 2026-10-18
 tags: [maxwell, studio, evolve, frontend]
 links: [evolve-explainability-and-optimization]
 ---
@@ -29,3 +29,12 @@ links: [evolve-explainability-and-optimization]
 **Why:** Store 保留旧结果，不代表组件没有被 loading/error 整块替换；effect 在渲染后才清理旧 Case，也可能短暂显示别条用例的预期。非模态抽屉允许直接切换 Run，旧 Trial、复核目标或操作参数若留在 URL，会污染新选择。
 
 **How to apply:** 同时验证 Store 和实际组件的刷新/失败态，保留已读内容并明确状态；按当前业务与冻结 Case 修订同步门控正文和错误，只在所需页签读取，并取消过期请求。切换 Run 清理其内部状态，保留外层比较、筛选与分页；同一 Run 返回列表可保留阅读页签。取消已获接受后，以回执更新状态，不因后续读取失败退回旧状态。模拟网络与静态组件测试仍不替代真实浏览器视觉和滚动验收。
+
+
+## 2026-10-18：试评替换前的草稿检查点
+
+**Why:** 再次试评若先清除旧请求和分数、后保存新请求，存储失败会导致新调用未发送而旧结果丢失；配置检查和模型试评共用不准确的状态文案，也会让用户误解结果来源。保存后的迟到回调还可能覆盖当前目录位置。
+
+**How to apply:** 新操作先建立持久检查点，失败则恢复先前请求、结果及配置对应关系；原请求未知时继续保留其精确身份。配置检查结论与真实试评状态分开展示。仅在保存请求进行中保护关闭/跳转，未知结果仍可保留关闭；回调核对当前编辑器及挂载状态，沿用当前导航上下文。
+
+实现、技术回归和未执行浏览器/真实模型验收的边界见 [Maxwell PR #362](https://github.com/world-sim-dev/maxwell-ai/pull/362) 及仓库 `services/evolve-server/docs/evolve-evaluator-workspace.md` 的「评估器试评与保存的状态连续性」。PR 与发布状态需现场核对。

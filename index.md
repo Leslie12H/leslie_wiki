@@ -889,3 +889,5 @@
 - 2026-10-17：[跨请求同范围首送分叉](domains/sandai-data-smith/pitfalls/sandeval-cross-request-first-submission-race.md) 补充新 ledger 与既有整改恢复的兼容、归档续跑额外引用及同原单进度重放审查，实际方法故障复现见审查记录。
 
 - 2026-10-18：[Benchmark 内嵌评分可见性](domains/maxwell/pitfalls/evolve-inline-metrics-catalog-visibility.md) — 独立目录为空不等于没有评分定义；冻结 Case 有效绑定、外部方法和结果分开核对。
+
+- 2026-10-18：[EVOLVE 试评替换与保存上下文](domains/maxwell/pitfalls/evolve-drawer-overflow.md#2026-10-18试评替换前的草稿检查点) — 存储失败保留旧结果、未知请求身份及抽屉保存回调的当前上下文；实现与验收边界查正式记录。
