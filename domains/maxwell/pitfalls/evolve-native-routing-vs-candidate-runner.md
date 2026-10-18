@@ -127,3 +127,11 @@ links: [nextplay-independent-benchmark-entry, evolve-preset-evaluation-entry]
 **How to apply:** 沿 Dataset Continuation 的默认值和序列化、共享 executor 的 goal 缺省分支、Runner 的 `_evolve` 条件和原评分入口检查。旧 Case 正常完成仍结束，原 Ask User 按既有预算回答；目标跟进显式启用后才调用新增交付检查。派发/停止无法确认时保留 Thread 与临时资源供恢复，这是同时作用于独立入口的安全加固。
 
 原题库静态加载与独立入口回归的本地证据查 Nextplay 工作树 `.tmp/goal-independent-compatibility-20261017.log`；用例入口为 `maxwell-runtime/tests/test_baseline.py`、`test_standalone.py`、`test_inputs.py` 与 eval-runner 的本地 Dataset/模拟用户测试。题库内容、PR 合并状态和真实服务表现需现场刷新；本轮没有真实 Agent/Judge 调用，不将离线技术回归当作线上兼容验收。
+
+## 2026-10-18 双轮零分与普通消息确认复核
+
+**Why:** 运行和原评分终态不证明业务目标完成。仅启用 `llm/maxReplies` 的旧Case只回答原生AskUser，不会承接目标在普通文本中请求确认后正常结束的对话；新能力部署不等于既有冻结Case启用。实际SYSTEM阶段禁止媒体时，不能将未生成全部归为模型自行缩减范围，也不能靠模拟用户绕过限制。
+
+**How to apply:** 先读真实Benchmark终态，再按每次执行的原件统计轮次、AskUser实际回答和goalDecision；从对应首轮MODEL.REQUEST读取执行时系统约束，勿只看当前可变Preset。正文回复结束后继续工作须显式冻结目标策略，交付检查和原评分分别保留。先验证非媒体写回闭环，媒体题单独核对阶段授权与真实能力；新策略通过新Case/Benchmark版本验收，不改历史结果。
+
+本轮当前页面、原件统计和具体请求证据见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-interaction-diagnosis-20261018/diagnosis.md`、`evidence-summary.json` 与 `live-policy-readback.txt`。它是只读诊断，没有重跑、追加Agent消息、变更Preset或评分。
