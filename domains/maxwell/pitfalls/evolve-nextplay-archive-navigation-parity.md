@@ -25,3 +25,11 @@ links: [evolve-native-routing-vs-candidate-runner, nextplay-independent-benchmar
 Nextplay 修复工作树为 `/Users/leslie/.codex/worktrees/nextplay-evidence-parity/nextplay-eval`，原 Judge 导航转换与回归在 `evaluation/archived_maxwell_events.py`、`tests/test_archived_maxwell_events.py` 及 `eval-service/tests/test_grading_evidence.py`。Maxwell 交叉校验在 `services/evolve-server/internal/app/integration/maxwellexecutor/reply_test.go` 与 `testdata/verify_nextplay_original.py`。
 
 本次发现推翻了“全部 measured 就足以排除评测链路问题”的推论。新代码的提交、部署、Provider 版本及真实重评状态以报告、Git 和运行回执独立核验，不能由知识库日期推断已经上线。被测 Preset 的媒体阶段限制也须与原题适用性分开核对，见 [执行入口边界](evolve-native-routing-vs-candidate-runner.md)。
+
+## 2026-10-18 发布后原十题复验入口
+
+本次两仓库发布、精确 Provider 版本、十题单轮 Run、冻结输入/规则对照及最终结论统一查 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-parity-release-20261018/report.md`。代码回执为 [Maxwell #363](https://github.com/world-sim-dev/maxwell-ai/pull/363) 与 [Nextplay #23](https://github.com/world-sim-dev/nextplay-eval/pull/23)；动态结果以报告和真实 Run 为准。
+
+**Why:** Provider 的版本绑定属于冻结身份。部署新实现后，直接在旧 Benchmark 上运行可能与已冻结服务版本不符；更新绑定也不能顺便改输入、续行策略或评分条款。共享 SP 的媒体阶段限制是被测配置的一部分，不能为产生分数临时放开。
+
+**How to apply:** 只更新 method.version，逐字段回读新旧 Case，重新冻结 CaseSet/Benchmark，并核对原 JudgeSpec、runPolicy 和 Nextplay 的原输入及完整 grading_material。对新运行下载的原件执行同一 bundle 转换，与线上每个原 Judge 报告的 bundleHash 比较；这个核验不调用模型、不重评、不改分。媒体题同时查当次 model.request 的阶段边界与真实产物，不能仅凭 mutable Preset 当前内容或质量通过率宣称已生成媒体。
