@@ -913,3 +913,5 @@
 - 2026-10-18：[双轮零分与自动交互复核](domains/maxwell/pitfalls/evolve-native-routing-vs-candidate-runner.md#2026-10-18-双轮零分与普通消息确认复核) — 普通文本确认与原生AskUser的接续差异、冻结目标策略未启用及SYSTEM媒体阶段冲突；当前原件与页面诊断入口。
 
 - 2026-10-18：[精确整改链接与历史卡单复核](domains/sandai-data-smith/pitfalls/sandeval-reinspection-command-recovery-barriers.md#2026-10-18-精确整改链接补齐与历史卡单复核) — 补齐截图对象对应、逐条核对同原命令占用；代码接续保护与历史单据恢复分别验收。
+
+- 2026-10-18：[整改冻结分区与当前作者批次重叠](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md) 补充分配弹窗、普通作者计数与正式冻结题目范围的区别，以及前置通过仍需实际下发回执的只读核验指针。
