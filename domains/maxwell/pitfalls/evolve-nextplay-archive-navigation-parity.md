@@ -42,3 +42,12 @@ Nextplay 修复工作树为 `/Users/leslie/.codex/worktrees/nextplay-evidence-pa
 **Why:** `continuation.mode=llm` 的 maxReplies 约束 AskUser 应答次数，不等于普通回复后自动继续相同轮数。原 Runner 在 COMPLETED 且未配置 goal 时结束；SP 的“真实用户另行改变阶段”也不能由模拟用户根据低分自行补造授权。另一个独立展示陷阱是 Trial 的精简 Case 引用不含完整 input；已读取完整冻结 Case 却继续渲染精简引用，会误报“未填写”。
 
 **How to apply:** 比较同一 Case 的冻结 continuation、当次 SP、真实 AskUser/终态和原 `maxwell-runtime/src/nextplay_runtime/executor.py`，再判断是漏回复还是按约结束。若验收完整媒体制作，将真实阶段授权与 goal 续行作为新的冻结版本，原 Runner/EVOLVE 同配，保持原规则，不能覆盖旧结果。Trial 详情优先显示 caseRef 对应的完整冻结 input/context/fixtures，读取中保留加载状态，并校验身份避免切题串值。展示修复见 [Maxwell #364](https://github.com/world-sim-dev/maxwell-ai/pull/364)，代码入口为 `apps/studio/src/products/evolve/v3/matrix/TrialDetailPanel.tsx`；发布和同一 Trial 的页面回读仍查上述复验报告。
+
+
+## 2026-10-18 相同回复上下文仍不代表相同实验条件
+
+**Why:** 自动回复的指令与公开上下文一致，不等于模拟用户的模型及采样请求一致。部署提交中的 EVOLVE native Adapter 从当前 Preset 取模型来生成回复，并设置输出预算；原生 `LLMReplyModel.from_model` 接受独立 REPLY_MODEL，显式请求 temperature=0。文档建议的默认模型不能当作某次运行的实际值；同一执行重建的 Judge bundleHash 匹配，也不能证明另一条 CLI 执行与之等价。
+
+**How to apply:** 分开核对执行 Agent、模拟用户、Judge 三种角色的实际模型与参数，并定位真实发生 AskUser 的题目；无 AskUser 的媒体题不能由回复模型差异解释。比较实际 SP、Skill 内容和阶段授权，再比轨迹与关键条款。原生 direct 模式虽捕获 Snapshot，随后仍执行源 Preset；不要将有快照自动解释为隔离执行。只拿到单侧原件时，明确记录未确认最新 Run、缺少原生配对记录及不可量化的因果边界。
+
+本次只读分析、实际原件统计、部署提交与代码入口查 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-nextplay-gap-analysis-20261018.md`，逐题证据摘要查同目录 `evolve-nextplay-gap-evidence-20261018.json`。这是单侧诊断指针，不是新的评测、评分或修复发布回执。

@@ -1,6 +1,6 @@
 # leslie_wiki 目录
 
-- 2026-10-18：[EVOLVE 与 Nextplay 原 Judge 取证一致性](domains/maxwell/pitfalls/evolve-nextplay-archive-navigation-parity.md) — runtime/persisted 归档导航、原工具正文校验、模拟用户上下文对齐与旧分数证据边界；附两仓库发布、冻结版本升级、媒体 SP、原判适用性、AskUser/goal 停止条件、冻结输入展示及原 Judge bundleHash 复验入口。
+- 2026-10-18：[EVOLVE 与 Nextplay 原 Judge 取证一致性](domains/maxwell/pitfalls/evolve-nextplay-archive-navigation-parity.md) — runtime/persisted 归档导航、原工具正文校验、模拟用户上下文对齐与旧分数证据边界；附两仓库发布、冻结版本升级、媒体 SP、原判适用性、AskUser/goal 停止条件、冻结输入展示及原 Judge bundleHash 复验入口；另含模拟用户模型/采样差异及单侧实验比较边界。
 
 - 2026-10-17：[新工作台十题双轮验收入口](domains/maxwell/refs/evolve-nextplay-ten-case-acceptance-20261015.md#2026-10-17-新工作台双轮验收入口) — #361/#22 发布、结构迁移确认、旧题默认续行语义、评分 Provider 版本升级与两轮冻结口径；含真实 Range 原件核验、恢复后状态基线、内嵌原评分、JSONB 资产身份与运行中比较缓存核验；实际进度及工作台观察查验收记录。
 
