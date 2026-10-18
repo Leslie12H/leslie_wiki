@@ -915,3 +915,5 @@
 - 2026-10-18：[精确整改链接与历史卡单复核](domains/sandai-data-smith/pitfalls/sandeval-reinspection-command-recovery-barriers.md#2026-10-18-精确整改链接补齐与历史卡单复核) — 补齐截图对象对应、逐条核对同原命令占用；代码接续保护与历史单据恢复分别验收。
 
 - 2026-10-18：[整改冻结分区与当前作者批次重叠](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md) 补充分配弹窗、普通作者计数与正式冻结题目范围的区别，以及前置通过仍需实际下发回执的只读核验指针。
+
+- 2026-10-18：[原单恢复与凭证过期续办](domains/sandai-data-smith/pitfalls/sandeval-reinspection-command-recovery-barriers.md#2026-10-18-明确授权后的原单恢复与凭证过期续办) — 明确授权后的原生恢复、220秒后台耗时与两分钟凭证、历史答案重验边界及修复PR #2599指针。
