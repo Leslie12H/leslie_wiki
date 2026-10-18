@@ -35,3 +35,10 @@ Nextplay 修复工作树为 `/Users/leslie/.codex/worktrees/nextplay-evidence-pa
 **How to apply:** 只更新 method.version，逐字段回读新旧 Case，重新冻结 CaseSet/Benchmark，并核对原 JudgeSpec、runPolicy 和 Nextplay 的原输入及完整 grading_material。对新运行下载的原件执行同一 bundle 转换，与线上每个原 Judge 报告的 bundleHash 比较；这个核验不调用模型、不重评、不改分。媒体题同时查当次 model.request 的阶段边界与真实产物，不能仅凭 mutable Preset 当前内容或质量通过率宣称已生成媒体。
 
 输入包和原 Judge 策略哈希匹配，证明的是接入一致性，不能代替原判对当前业务阶段的适用性。若原判将“仅交付文字”归因为 Agent 自行缩小任务，应对照当次 model.request 和配置原件复核实际 SP 限制，将原分、限制归因与真实媒体交付分开记录；保留原判，不以删题、改分或放宽阈值消除冲突。动态实例和逐项原件仍查上述复验报告。
+
+
+## 2026-10-18 停止条件和冻结输入展示
+
+**Why:** `continuation.mode=llm` 的 maxReplies 约束 AskUser 应答次数，不等于普通回复后自动继续相同轮数。原 Runner 在 COMPLETED 且未配置 goal 时结束；SP 的“真实用户另行改变阶段”也不能由模拟用户根据低分自行补造授权。另一个独立展示陷阱是 Trial 的精简 Case 引用不含完整 input；已读取完整冻结 Case 却继续渲染精简引用，会误报“未填写”。
+
+**How to apply:** 比较同一 Case 的冻结 continuation、当次 SP、真实 AskUser/终态和原 `maxwell-runtime/src/nextplay_runtime/executor.py`，再判断是漏回复还是按约结束。若验收完整媒体制作，将真实阶段授权与 goal 续行作为新的冻结版本，原 Runner/EVOLVE 同配，保持原规则，不能覆盖旧结果。Trial 详情优先显示 caseRef 对应的完整冻结 input/context/fixtures，读取中保留加载状态，并校验身份避免切题串值。展示修复见 [Maxwell #364](https://github.com/world-sim-dev/maxwell-ai/pull/364)，代码入口为 `apps/studio/src/products/evolve/v3/matrix/TrialDetailPanel.tsx`；发布和同一 Trial 的页面回读仍查上述复验报告。
