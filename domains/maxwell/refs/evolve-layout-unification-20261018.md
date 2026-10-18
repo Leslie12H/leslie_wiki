@@ -18,3 +18,12 @@ links: [evolve-benchmark-scoring-display-20261018, evolve-layout-research-202610
 - 规则阅读：`v3/library/ExternalScoringAssets.tsx` 的摘要到全文；`BenchmarkContentsPanel.tsx` 的整题配置按需展开；冻结指标来自历史定义，不能拿当前服务名称或版本覆盖。
 - 窄屏：用例表保留最小阅读宽度，在容器内滚动，避免把长名称压成许多行；详情和编辑抽屉另行观察，不以 document 无溢出代替内容可读。
 - 验收只读，未创建运行、提交资产或发布服务。页面访问中出现的后端错误和历史协作内容解析警告保留在验收记录，布局检查不能代表这些链路全部通过。
+
+
+## 2026-10-18 结果优先与空目录收敛
+
+**Why:** 常驻的禁用比较、空独立资产目录的完整工具栏、同等强调的筛选控件和按返回哈希排列的指标，会让真实结果与已有定义退居次位。Run 的原始 outcomeCounts 又与人工采用后的指标属于不同统计来源，不能为了简洁混写。
+
+**How to apply:** Benchmark 默认读取一次运行，明确标注原始判定，显式选择多次后比较；指标仅做保留冻结名称和精确身份的自然排序。评分资产优先显示已有外部声明，空独立区按需管理；有筛选、错误、游标、已选项或实际资产时保留控件。过滤使用共享 Input/EvolveSelect 的可选 subtle 变体，编辑表单默认样式保持原样。窄表通过共享 PaginatedTable 的 minWidth 能力适配，不把 document 无溢出误当成列内容可读；规则全文继续可达。轮询不重播整页动效，减少动态效果单独验证。
+
+本轮源码、真实页面、只读交互回归、最终检查及本地/发布边界查 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-ui-refinement-20261018/report.md`。本地实现和页面截图不能代替整批 UI 已提交、合并或部署的回执。

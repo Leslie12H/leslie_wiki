@@ -906,6 +906,6 @@
 
 - 2026-10-18：[Benchmark B 方向实施](domains/maxwell/refs/evolve-benchmark-scoring-display-20261018.md#b-方向的阅读连续性) — 0/1/多次阅读、冻结备注与实际版本分离、慢读取与轮询连续性；附真实只读页面证据边界。
 
-- 2026-10-18：[EVOLVE 新布局收敛](domains/maxwell/refs/evolve-layout-unification-20261018.md) — 保持五类框架，目录扫读与按需规则、选择后批量操作、单页控件收起及窄屏阅读的源码与验收指针。
+- 2026-10-18：[EVOLVE 新布局收敛](domains/maxwell/refs/evolve-layout-unification-20261018.md) — 保持五类框架，目录扫读与按需规则、选择后批量操作、单页控件收起及窄屏阅读的源码与验收指针；附原始判定、指标自然排序、外部声明优先与轻量筛选的本地实施边界。
 
 - 2026-10-18：[双轮零分与自动交互复核](domains/maxwell/pitfalls/evolve-native-routing-vs-candidate-runner.md#2026-10-18-双轮零分与普通消息确认复核) — 普通文本确认与原生AskUser的接续差异、冻结目标策略未启用及SYSTEM媒体阶段冲突；当前原件与页面诊断入口。
