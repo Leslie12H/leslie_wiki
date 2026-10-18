@@ -911,3 +911,5 @@
 - 2026-10-18：[EVOLVE 新布局收敛](domains/maxwell/refs/evolve-layout-unification-20261018.md) — 保持五类框架，目录扫读与按需规则、选择后批量操作、单页控件收起及窄屏阅读的源码与验收指针；附原始判定、指标自然排序、外部声明优先与轻量筛选的本地实施边界。
 
 - 2026-10-18：[双轮零分与自动交互复核](domains/maxwell/pitfalls/evolve-native-routing-vs-candidate-runner.md#2026-10-18-双轮零分与普通消息确认复核) — 普通文本确认与原生AskUser的接续差异、冻结目标策略未启用及SYSTEM媒体阶段冲突；当前原件与页面诊断入口。
+
+- 2026-10-18：[精确整改链接与历史卡单复核](domains/sandai-data-smith/pitfalls/sandeval-reinspection-command-recovery-barriers.md#2026-10-18-精确整改链接补齐与历史卡单复核) — 补齐截图对象对应、逐条核对同原命令占用；代码接续保护与历史单据恢复分别验收。

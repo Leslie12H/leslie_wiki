@@ -2,7 +2,7 @@
 name: sandeval-reinspection-command-recovery-barriers
 type: pitfall
 created: 2026-10-17
-updated: 2026-10-17
+updated: 2026-10-18
 tags: [sand-eval, reinspection, idempotency, autocommit, recovery]
 links: [sandeval-manual-return-version-claim-conflict, sandeval-manual-return-partial-write, sandeval-reinspection-history-priority-retry, sandeval-correction-evidence-and-deferred-lineage]
 ---
@@ -21,3 +21,11 @@ links: [sandeval-manual-return-version-claim-conflict, sandeval-manual-return-pa
 - [PR #2590](https://github.com/world-sim-dev/sandai-data-smith/pull/2590) 与 [修复复审报告](/Users/leslie/Documents/Playground/output/quality-workflow-review-20261017/fix-review.md)：记录报告提交、责任关闭、冻结复验重试与恢复队列的修复证据；当前 head、Gate、合入、部署从 PR 实查，不在本页缓存状态。
 - [2026-10-17 重检准备中现场诊断](/Users/leslie/Documents/Playground/output/quality-submit-20261017/liyang-reinspection-report.md)：退回已保存而后继未创建时，区分首次中断原因、当前资格及计划预检、全历史扫描造成的持续恢复延迟。只读内存替身可验证预检，不能宣称真实任务已创建。
 - 代码入口：`quality/application/resolution/{resubmission_intent,resolution_service,manual_return_service}.py`；`quality/application/inspection/{review_service,review_plan_service,inspection_scope_service}.py`；`quality/application/management/reinspection_service.py`；`quality/infrastructure/persistence/unit_of_work.py`。先固定部署/提交再读，不把本页当成当前实现快照。
+
+## 2026-10-18 精确整改链接补齐与历史卡单复核
+
+**Why:** 只有截图或候选日志时，对象对应关系不能成立；用户补充精确整改链接后，才能将旧候选证据与本次对象合并。代码已包含同版本接续逻辑，也不能推导历史命令已经完成。
+
+**How to apply:** 对照原意图、每条相关责任的版本占用、最终回执、目标送审成员及复验执行，分别证明归属和发布状态。多个占用必须逐条核对是否属于同一原命令，不能只因涉及两条责任就断定它们互相冲突。没有首次异常日志时继续保留首次中断原因未知；恢复前核对最新答案，避免盲目发布旧冻结版本。
+
+- [精确链接只读复核报告](/Users/leslie/Documents/Playground/output/correction-conflict-20261018/report.md)：本次用户链接补齐此前候选对象对应关系；提供现场部署、同原命令占用、未完成回执与未发布复验的核验结论及证据边界。当前状态按后续现场读取，不缓存于本页。
