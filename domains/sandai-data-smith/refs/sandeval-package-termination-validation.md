@@ -107,3 +107,9 @@ links: [sandeval-package-transition-lock-regression-20261017]
 - **Why:** 逐包轮询遇到一个损坏登记或退役失败就退出，会饿死后续正常包的排空确认；单包锁独立不足以证明轮询也独立。**How to apply:** 沿 [轮询修复与回归](https://github.com/world-sim-dev/sandai-data-smith/blob/codex/package-termination-risk-repair/sand-eval/platform/backend/app/infra/package_control.py) 核对单包与状态批次分别隔离，其他包继续，末尾仍报告原错误，失败占用不核销；分别验证A缺失、A退役失败、跨批次读取失败及取消仍传播。不把模型复现当生产已发生。
 - **Why:** Hologres客户端SQL模板很短，绑定大JSON参与表达式拼接时仍可能在服务端展开超过查询派发上限；这种XX000不等同于用户取消，增加重试无法修复。**How to apply:** 沿 [占用CAS修复](https://github.com/world-sim-dev/sandai-data-smith/blob/codex/package-termination-risk-repair/sand-eval/platform/backend/quality/infrastructure/persistence/inspection_work_claim.py) 对比真实错误与隔离私有表原生复现；若使用已读payload整体替换，必须保留其他元数据、相同版本条件、冲突重读和整批原子性，不拆成半批占用。额外评估完整owners的序列化/传输成本，不能宣称无新增SQL即零性能成本。
 - **Why:** 测试集成可能缺少生产已有模块；只加入一个未被调用的新文件、或只跑其单元测试，会制造业务链路已验收的错觉。**How to apply:** 同时核对模块、实际调用方、夹具和镜像安装哈希；delete/modify冲突先查主线是否存在真实模块，不直接复活测试分支刻意删除的功能，也不将test历史带回main。具体复现、两项修复及动态门禁状态查本机 `Documents/Playground/package-termination-acceptance-20261019/production/REVIEW-ROUND2.md`。
+
+
+## 2026-10-20：撤销回执不确定与新鲜检查读取
+
+- **Why:** 空闲退役删除持久登记的CAS可能已经生效但响应丢失；若本地还允许复用旧参与记录，就会在数据库没有登记时准入新写，管理员可能错误确认已终止。**How to apply:** 沿 [核心修复分支](https://github.com/world-sim-dev/sandai-data-smith/blob/codex/package-termination-core-risk-repair/sand-eval/platform/backend/app/infra/package_control.py) 核对撤销前先关闭该包本地准入、确认后移除本地记录才能重新登记；同时覆盖撤销生效前后响应丢失、健康兄弟包与正常退役后重新登记。保持不确定时关闭，不用进程退出或超时伪造排空。
+- **Why:** 已完成任务日志与queued状态矛盾不一定是检查回写故障，读取缓存也可能造成旧状态。**How to apply:** 对同一固定SHA用no-cache和新鲜REST请求交叉核对run/job/check、完成时间和PR head；新鲜结果确认保护满足后只走正常受保护的合并接口，不重放旧请求、不改保护或伪造成功。出现新提交后重新等待其检查，旧SHA通过不代替新SHA。具体修正结论与证据仍沿本机生产观测记录查。
