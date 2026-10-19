@@ -1,5 +1,7 @@
 # leslie_wiki 目录
 
+- 2026-10-19：[运行发现与实验趋势分工](domains/maxwell/pitfalls/evolve-catalog-projection-and-external-adoption.md#2026-10-19-运行发现监控与实验趋势分工) — 业务内目录与跨业务进度、执行/评分区分、Benchmark 与候选曲线、官方产品研究指针；当前为建议。
+
 - 2026-10-19：[候选验证与正式决策衔接](domains/maxwell/pitfalls/evolve-candidate-loop-decision-boundaries.md) — 独立验证 Work、Runner 无候选基线、原生指标待定语义、采纳可比性与回归门禁的审查指针。
 
 - 2026-10-19：[EVOLVE 目录、关联与取消清理修复](domains/maxwell/pitfalls/evolve-catalog-projection-and-external-adoption.md#2026-10-19-main-发布与浏览器接续) — 统一 main 发布、499 与租约误报、NAS 跨节点文件锁失效、现有 Chrome 接续及真实验收入口。

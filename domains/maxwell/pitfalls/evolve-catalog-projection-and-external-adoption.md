@@ -60,3 +60,12 @@ links: [evolve-native-routing-vs-candidate-runner, evolve-inline-metrics-catalog
 **How to apply:** 不以单机多进程测试替代不同节点核验；检查节点、挂载语义及同一 Attempt 的检查点。Linux [nfs(5)](https://www.man7.org/linux/man-pages/man5/nfs.5.html) 明确 `local_lock=all` 的本地限制。沿 `foundation/database/advisory_lock.go` 和 app 装配注入 PostgreSQL 事务互斥，覆盖 Dispatch/Observe/Cancel 的完整读改写，使用有上限的独立连接池；锁不可用时不写共享记录，释放不延长请求期限，无需新表或配置。正常取消可安全退出 stale claim，但保留替代 claim 的所有权错误。回归真实 PostgreSQL 排他、等待取消、父取消及连接终止后的释放，再在两个实际 Pod 上读回。
 
 EVOLVE `remote_running` 可能仍在恢复文件；运行中停止验收必须先确认原生 `CurrentRunID` 存在，再核对停止回执、实际终态与幂等，不把未启动即取消算成运行中停止。实现与发布查 [PR #370](https://github.com/world-sim-dev/maxwell-ai/pull/370)；真实结果沿本页独立读回记录，区分两轮质量评分和取消技术用例。
+
+
+## 2026-10-19 运行发现、监控与实验趋势分工
+
+**Why:** 业务内记录页即使存在，如果主导航没有入口、路由又高亮为 Benchmark，用户仍无法发现独立运行；业务内“全部”也不能代表跨业务进度。把取消终态数解释成已评分、将最新技术取消运行作为质量主结果，会同时误导进度和趋势。仅将底部折线图移到首屏，仍不能回答改了什么、是否可比及哪些题退步。
+
+**How to apply:** 从 v3/routes.ts、EvolveNavigation.tsx、catalog/RecordsPage.tsx 与 HTTP catalog.go 一起核对入口、范围和鉴权。全局运行发现关注执行/评分进度；Benchmark 趋势关注同口径实验；调优曲线关注候选迭代和固定基线，三者不要混算。取消记录保留可查，缺测不补零；诊断集与隐藏验收集分开。跨业务聚合必须是已有可读业务的交集，不以去掉业务过滤或前端扫描全历史代替服务端分页与权限。
+
+讨论与本轮核验入口：[运行总览与趋势设计记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-candidate-loop-20261019/run-overview-and-trends.md)。该记录是建议与源码现状，不代表新界面已发布。外部产品以 [LangSmith 实验分析](https://docs.langchain.com/langsmith/analyze-an-experiment)、[实验比较](https://docs.langchain.com/langsmith/compare-experiment-results)、[Opik Dashboard](https://www.comet.com/docs/opik/tracing/dashboards/dashboards) 和 [调优结果](https://www.comet.com/docs/opik/development/optimization-runs/optimization/dashboard_results) 的官方文档为入口，能力会变化，使用时重新核验。
