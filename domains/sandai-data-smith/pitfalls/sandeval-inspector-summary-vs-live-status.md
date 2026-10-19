@@ -22,5 +22,7 @@ links: [sandeval-saved-version-vs-browser-display]
 
 **How to apply:** 先核对实际领取 SQL、候选位置、发布覆盖和 worker 日志，排除整体停摆；为首次发布、已有结果的变更和丢失提示后的周期校准分别保留反复获得的领取机会。变更按未完成变更的年龄排队，空类别借位，保留租约、退避、控制连接和原并发预算。持续新任务也不能饿死已有结果。调度公平不等于固定完成时限，仍需结合对象数与计算耗时核对容量。
 
+发布中途收到新代数时，既要保留新请求，也要让剩余变更重新排队。继续携带已完成一轮的最早 dirty_since，会使持续写入对象在新的排序下反复占据队首。Review 回归应直接断言其他等待对象获得下一次机会，并用旧发布逻辑复现；只覆盖“不断新增对象”会漏掉“同一对象不断变更”。[取证报告的 Review 节](/Users/leslie/Documents/Playground/output/inspector-summary-status-20261019/report.md#review持续写入的对象仍可能占据队首)保存复现和验证指针。
+
 - [修复与最终 Gate](https://github.com/world-sim-dev/sandai-data-smith/pull/2616)：当前调度契约为 `sand-eval/docs/subsystems/list-summary-refresh.md`，既有工程决定为 `.agents/notes/implemented/architecture/2026-09-24-qc-summary-business-priority.md`；真实 SQL 生命周期用例为 `test_qc_summary_lifecycle.py`。部署与生产恢复必须另行读回，不能将只读候选排序或 SQLite 模型视为已发布摘要。
 - [根因及修复探针](/Users/leslie/Documents/Playground/output/inspector-summary-status-20261019/report.md#后续根因与修复验证2026-10-19-17031709)：队列、实际顺序、worker 有界日志、修复后真实 SQL 的 Hologres 只读 EXPLAIN 与候选结果。动态数值和当前状态沿脚本重新读取。
