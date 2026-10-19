@@ -8,7 +8,7 @@
 
 ## 恢复
 
-需要 Python 3.8+ 和 Node.js（使用内置 crypto，无外部依赖）和单独保管的恢复密钥文件。进入本目录后执行：
+需要 Python 3.8+、curl、Node.js（使用内置 crypto，无外部依赖）和单独保管的恢复密钥文件。curl 使用系统证书验证下载连接。进入本目录后执行：
 
 ```sh
 python3 download.py

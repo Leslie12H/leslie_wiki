@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-19",
+  "archive_commit": "d21dee5801a20a06210ef230689adeb3fafb651e",
+  "remote_archive_verified": true,
+  "local_target_paths_removed": 16,
+  "all_local_target_paths_absent": true,
+  "claude_keychain_items_removed": 3,
+  "claude_keychain_services_remaining": [],
+  "claude_shell_history_entries_removed": 271,
+  "remaining_shell_history_matches": 0,
+  "cli_and_desktop_app_preserved": true,
+  "recovery_key_stored_separately": true,
+  "temporary_plaintext_copies_removed": true,
+  "cloud_history_deleted": false,
+  "server_side_api_key_revocation_performed": false,
+  "success": true
+}

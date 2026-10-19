@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-19",
+  "archive_commit": "d21dee5801a20a06210ef230689adeb3fafb651e",
+  "release_url": "https://github.com/Leslie12H/leslie_wiki/releases/tag/claude-history-20261019",
+  "method": "GitHub server-computed SHA-256 + exact size for every complete asset; downloaded 64 KiB prefixes; authenticated local decryption of the hash-identical ciphertext; complete source manifest verification",
+  "full_remote_redownload_performed": false,
+  "remote_assets_verified": [
+    {
+      "file": "claude-history-20261019.enc.part001",
+      "asset_id": "RA_kwDOTLhsn84nFFmq",
+      "server_sha256": "206722c9bf7d0514917a97b84c70938d8200c28b34c374d684f804725a620bd3",
+      "server_bytes": 50331648,
+      "downloaded_prefix_bytes_verified": 65536
+    },
+    {
+      "file": "claude-history-20261019.enc.part002",
+      "asset_id": "RA_kwDOTLhsn84nFFmf",
+      "server_sha256": "b7560b1a68538b379e9eddbd71a118c6f2bf7d5fc8884903e74acbc21762619f",
+      "server_bytes": 50331648,
+      "downloaded_prefix_bytes_verified": 65536
+    },
+    {
+      "file": "claude-history-20261019.enc.part003",
+      "asset_id": "RA_kwDOTLhsn84nFFmp",
+      "server_sha256": "bf713f6e5f66d6d60ecdee8fe75078b6b29104835a7bb79e5b1585feef4c1198",
+      "server_bytes": 38733839,
+      "downloaded_prefix_bytes_verified": 65536
+    }
+  ],
+  "authenticated_decryption_verified": true,
+  "source_files_verified": 1378,
+  "source_snapshot_unchanged": true
+}

@@ -1,12 +1,11 @@
 from pathlib import Path
-import hashlib,json,urllib.request
+import hashlib,json,subprocess
 root=Path(__file__).resolve().parent
 receipt=json.loads((root/'receipt.json').read_text())
 for part in receipt['parts']:
     dest=root/part['file']
     if not dest.exists() or hashlib.sha256(dest.read_bytes()).hexdigest()!=part['sha256']:
-        with urllib.request.urlopen(part['download_url'],timeout=120) as response,dest.open('wb') as out:
-            while data:=response.read(1024*1024):out.write(data)
+        subprocess.run(['curl','--fail','--location','--retry','3','--output',str(dest),part['download_url']],check=True)
     if hashlib.sha256(dest.read_bytes()).hexdigest()!=part['sha256']:raise RuntimeError('Part checksum mismatch: '+part['file'])
 combined=root/'claude-history-20261019.enc'
 with combined.open('wb') as out:
