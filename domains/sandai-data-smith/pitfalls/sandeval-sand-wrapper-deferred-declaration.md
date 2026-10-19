@@ -35,5 +35,5 @@ links: [sandeval-completed-review-followup-round]
 
 **How to apply:** 包装复验和单批回交显式解析、核验冻结子批次证据；直接个人复验保留原契约，普通 execution_items 不开启待定历史读取。测试应覆盖外层伪造声明无效、未声明缺失拒绝、个人历史兼容、普通读取不增加凭证查询和真实完整链路。没有冻结依据的包装仍阻断，不能承诺自动修复全部历史缺口。
 
-- 修复与 Review 指针：[测试 PR #2637](https://github.com/world-sim-dev/sandai-data-smith/pull/2637)、[本机影响 Review 与验证入口](/Users/leslie/Documents/Playground/sandeval-reinspection-20261019/review.md)。最终代码、Gate、可合并性和发布状态分别实时核验。
+- 修复与 Review 指针：[测试 PR #2637](https://github.com/world-sim-dev/sandai-data-smith/pull/2637)、[开发分支直接向 main 的 PR #2641](https://github.com/world-sim-dev/sandai-data-smith/pull/2641)、[本机影响 Review 与验证入口](/Users/leslie/Documents/Playground/sandeval-reinspection-20261019/review.md)。main PR 于 2026-10-19 按明确要求发起，测试环境未验收的事实已写入正文；最终代码、Gate、可合并性和发布状态分别实时核验。
 - 测试集成分支与 main 有无关分歧时，任务分支仍来自 main，只将本任务原始提交送入测试 PR；独立完整 Gate 不能代替最终测试合并树的 Gate 和环境验收。
