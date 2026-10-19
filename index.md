@@ -402,7 +402,7 @@
 - [报告准备的跨层预算](domains/vidmuse/admin/pitfalls/monitoring-report-preflight-budget.md) — 长 Run 分页读取、真实 HTTP 对照、分层超时与按历史 receipt 恢复的核验方法（2026-09-18）。
 - [Eval慢接口与事务SQL观测指针](domains/sandai-data-smith/refs/sandeval-slow-panels.md) — 现有日志面板、trace覆盖边界与2026-09-19排查入口。
 - [Sand Eval 可返回代登录入口](domains/sandai-data-smith/refs/sandeval-returnable-impersonation.md) — PR #1401、测试发布及首次/再次切号并发撤销的验收指针（2026-09-19）。
-- [Sand Eval 历史整改快照恢复](domains/sandai-data-smith/refs/sandeval-legacy-correction-recovery.md) — 2026-09-20：旧快照与失败意图区分、最新答案保留、PR #1504 和只读计划 / apply 操作入口。
+- [Sand Eval 历史整改快照恢复](domains/sandai-data-smith/refs/sandeval-legacy-correction-recovery.md) — 旧快照与失败意图、已消费后继和当前持有人区分；原生审计恢复、最新答案保留及共享版本依据修复测试 PR #2601 指针（更新至 2026-10-19）。
 - [供应商批量验收与送审测试数据](domains/sandai-data-smith/refs/sandeval-bulk-quality-fixtures.md) — 独立题包、待办状态、并行消费与页面证据核对入口
 - [复验抽样与停止轮次继承](domains/sandai-data-smith/refs/sandeval-reinspection-sampling-lineage.md) — 供应商与 Sand 退回重提的跨轮不合格必检、有效改判、最近有效结论展示及实际抽样核对入口。
 - [质检批量分配延迟](domains/sandai-data-smith/refs/sandeval-bulk-allocation-latency.md) — 供应商与 Sand 批量分配的完整范围核查、串行批次、Sand 整包重复校验及一分钟客户端超时边界（2026-09-23）。
