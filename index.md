@@ -1,6 +1,6 @@
 # leslie_wiki 目录
 
-- 2026-10-19：[EVOLVE 目录、关联与取消清理修复](domains/maxwell/pitfalls/evolve-catalog-projection-and-external-adoption.md#2026-10-19-main-发布与浏览器接续) — 统一 main PR/dev 发布回执、499 取消在正式监控中的误报、现有 Chrome 与锁屏边界及验收读回入口。
+- 2026-10-19：[EVOLVE 目录、关联与取消清理修复](domains/maxwell/pitfalls/evolve-catalog-projection-and-external-adoption.md#2026-10-19-main-发布与浏览器接续) — 统一 main 发布、499 与租约误报、NAS 跨节点文件锁失效、现有 Chrome 接续及真实验收入口。
 
 - 2026-10-19：[Sand Eval 已检完却显示新一轮零进度](domains/sandai-data-smith/pitfalls/sandeval-completed-review-followup-round.md) — 同版本正式报告、上下层整改执行衔接缺口、两路自动复验与摘要待确认的区分。
 

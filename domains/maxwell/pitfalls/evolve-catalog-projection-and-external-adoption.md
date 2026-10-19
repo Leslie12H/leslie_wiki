@@ -39,7 +39,7 @@ links: [evolve-native-routing-vs-candidate-runner, evolve-inline-metrics-catalog
 
 **Why:** 浏览器自动化会话关闭后，用户现有 Chrome 仍可能保持正确登录；此时重复开空白登录窗口会增加无效操作。系统锁屏又会使原窗口无法前置、按键无效、AppleEvent 超时，不能误判为登录失效。
 
-**How to apply:** 先检查现有窗口的目标域名、业务空间与账号，再检查 `CGSessionCopyCurrentDictionary` 的 `CGSSessionScreenIsLocked`；已锁屏时只要求解锁，不要求重新登录，也不尝试绕过锁屏或复制认证。自动化安全设置的变更与复用已有会话是两种授权，需按实际审批边界处理。
+**How to apply:** 优先用当前可用的 `cua_repl` 检查并复用现有 Chrome；扩展连接失败时使用该工具的原生 Chrome 入口。2026-10-19 解锁后 AppleEvent 仍超时，而 `cua_repl` 成功完成归档和比较，所以锁屏不是所有自动化失败的唯一原因。工具明确报告锁屏时只要求解锁，不要求重新登录，不复制认证或开启持久 JavaScript 自动化安全设置。
 
 统一交付已走 [PR #367](https://github.com/world-sim-dev/maxwell-ai/pull/367) → main → [dev 发布 39196828107](https://github.com/world-sim-dev/maxwell-ai/actions/runs/39196828107)；CI、迁移和部署以这两个外部回执核对。后续归档、十题与报警结论查 [本轮独立读回记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-six-fixes-1019/final-acceptance.json)，不能以发布成功代替业务验收完成。
 
@@ -51,3 +51,12 @@ links: [evolve-native-routing-vs-candidate-runner, evolve-inline-metrics-catalog
 **How to apply:** 沿 `foundation/observability/httpaccess` 的正式完成事实和 `platform/monitoring/slog` 的落地日志一起回归；只有 HTTP 499 且请求 context 确实已取消时分类为 canceled，保留请求关联与延迟，不把正常取消伪装为成功。真实 5xx 即使伴随断连也仍是 failed，原因不明的 499 和其他 4xx 不一并降级。回归覆盖 Gin → 校验 Recorder → 真实日志 Sink，部署成功与真实取消/SLS 报警解除仍分别验收。
 
 最小补丁、CI 与 main 合并查 [PR #369](https://github.com/world-sim-dev/maxwell-ai/pull/369)，实际 dev 发布查 [39198987832](https://github.com/world-sim-dev/maxwell-ai/actions/runs/39198987832)；运行、归档与真实取消结论继续查本页上方的独立读回记录。
+
+
+## 2026-10-19 NAS 文件锁不等于跨节点互斥
+
+**Why:** API 取消与 Worker 观察位于不同 Kubernetes 节点，NAS 的 `local_lock=all` 只提供同一客户端文件互斥。另一节点可用旧检查点覆盖已写入的取消标记；本轮真实取消后四份记录中一份取消标记未保留。数据库 CAS 阻止旧 Worker 继续推进，却不能修复共享文件覆盖；正常取消又触发 stale claim 的租约丢失误报。
+
+**How to apply:** 不以单机多进程测试替代不同节点核验；检查节点、挂载语义及同一 Attempt 的检查点。Linux [nfs(5)](https://www.man7.org/linux/man-pages/man5/nfs.5.html) 明确 `local_lock=all` 的本地限制。沿 `foundation/database/advisory_lock.go` 和 app 装配注入 PostgreSQL 事务互斥，覆盖 Dispatch/Observe/Cancel 的完整读改写，使用有上限的独立连接池；锁不可用时不写共享记录，释放不延长请求期限，无需新表或配置。正常取消可安全退出 stale claim，但保留替代 claim 的所有权错误。回归真实 PostgreSQL 排他、等待取消、父取消及连接终止后的释放，再在两个实际 Pod 上读回。
+
+EVOLVE `remote_running` 可能仍在恢复文件；运行中停止验收必须先确认原生 `CurrentRunID` 存在，再核对停止回执、实际终态与幂等，不把未启动即取消算成运行中停止。实现与发布查 [PR #370](https://github.com/world-sim-dev/maxwell-ai/pull/370)；真实结果沿本页独立读回记录，区分两轮质量评分和取消技术用例。
