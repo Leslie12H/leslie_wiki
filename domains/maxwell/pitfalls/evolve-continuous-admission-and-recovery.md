@@ -26,3 +26,11 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-candidate-loop-decisi
 进度 SSE 应批量统计整份 Run 的 Trial／实际已评分进度，并在分页前使用正式目录的完整权限与来源过滤；不能逐 Run 读取第一页 Trial 后声称整体进度。租约续期不进入安全摘要变化比较，避免把后台心跳放大为界面刷新。隔离本机数据库实验、模拟接口浏览器操作和真实目标／Judge／候选效果是不同层级的证据，沿下方执行记录查看当前覆盖与未完成范围。
 
 会变化的代码、性能数值、检查结果及剩余阻断统一查[三项整合执行记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-unified-20261019/progress.md)与[PR #372](https://github.com/world-sim-dev/maxwell-ai/pull/372)，不从本页推断已经合并或上线。
+
+## 2026-10-20 原件复用、决策收尾与真实 UI 生命周期
+
+**Why:** CAS命中相同旧字节并不自动刷新保留时间；回收器的全局扫描锁没有隔离之后的写入。控制热态又独立于Candidate和Work，人工正式决策若只更新旧两者，会让自动许可与页面阶段留在旧状态。React StrictMode重放effect清理时，永久disposed的可复用Store也可能令开发页面按钮失效，未启用StrictMode的模拟页看不出来。
+
+**How to apply:** 内容复用与最终删除使用同一跨节点按hash协调，并在复用成功返回前刷新保留时间，继续保留最短年龄保护；锁池与业务查询池分离，检查嵌套持锁和连接容量，不把它扩大为全局GC写入栅栏。参与者协议不一致的滚动／回退窗口不能据此宣称安全，上传前pending、提交未知与重启仍分别验证。正式决策沿原Work→Candidate事务收拢调度终态，失败一起回滚，旧Worker失效且累计额度与原期限保留；这不代替真实质量Gate或业务侧应用回执。
+
+页面按实测Run的冻结Objective读取评估依据，不沿Work初始目标或最新草稿猜测；缓存身份包含精确Artifact ID与hash。沿产品真正的StrictMode入口验证mount/cleanup、旧请求晚回与未知提交恢复，不以单纯Story/模拟页按钮可点击替代。性能实验需在同一后台写负载下交替读新旧对象，保留未达标样本，并独立核对历史列、TOAST、buffers和WAL；数值与当前交付状态查执行记录，不固化在知识页。
