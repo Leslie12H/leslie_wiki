@@ -27,3 +27,13 @@ links: [sandeval-completed-review-followup-round]
 **How to apply:** 用部署 commit 对齐生产源码，做同一原生映射的只读对照：外层空声明失败、唯一冻结子批次精确声明成功；核对缺失集合与合法声明完全相等。修复应统一冻结成员与排除证据解析，补跨完整包、Sand 包装、自动/手动复验及旧请求重试回归，保留未声明缺失的拒绝。本次是单例恢复，不代表全局产品缺陷已修改或发布。
 
 - [详细根因、北京时间线、部署源码副本及只读对照](/Users/leslie/Documents/Playground/sandeval-reinspection-20261019/root-cause.md)。版本、对象、日志和当前状态只在原始证据与实时回读中核验，不从本页推断。
+
+
+## 修复与影响复审入口（2026-10-19）
+
+**Why:** 修复包装证据读取时，若把新加的全部祖先凭证核验无差别用于个人 SPACE_QC 复验，会让原来有效的已发布声明因更早历史凭证缺失而新增阻断；公共成员读取若默认展开历史，也会扩大查询成本。
+
+**How to apply:** 包装复验和单批回交显式解析、核验冻结子批次证据；直接个人复验保留原契约，普通 execution_items 不开启待定历史读取。测试应覆盖外层伪造声明无效、未声明缺失拒绝、个人历史兼容、普通读取不增加凭证查询和真实完整链路。没有冻结依据的包装仍阻断，不能承诺自动修复全部历史缺口。
+
+- 修复与 Review 指针：[测试 PR #2637](https://github.com/world-sim-dev/sandai-data-smith/pull/2637)、[本机影响 Review 与验证入口](/Users/leslie/Documents/Playground/sandeval-reinspection-20261019/review.md)。最终代码、Gate、可合并性和发布状态分别实时核验。
+- 测试集成分支与 main 有无关分歧时，任务分支仍来自 main，只将本任务原始提交送入测试 PR；独立完整 Gate 不能代替最终测试合并树的 Gate 和环境验收。
