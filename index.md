@@ -932,3 +932,5 @@
 - 2026-10-19：[整改分区展示与实际抽样](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md) — 版本集合相等仍可能跳过冻结成员计数投影；冗余来源待分配误标、预估计数与实际逐题下发分别核验。
 
 - 2026-10-19：[整改分配投影修复](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md) — 列表、首开与只选一批确认统一冻结分区，补齐局部来源后严格证明完整性；PR #2607 与review/CI交付入口。
+
+- 2026-10-19：[后续版本提示与本轮正式代改](domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md#2026-10-19-后续版本提示与本轮正式代改) — 区分本轮前已纳入的答案、同轮正式代改与原设备旧提示；当前双接口和未决页面证据入口。
