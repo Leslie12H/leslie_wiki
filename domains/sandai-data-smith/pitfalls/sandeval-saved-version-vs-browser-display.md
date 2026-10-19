@@ -46,6 +46,6 @@ links: [sandeval-workbench-context-404-evidence, sandeval-correction-evidence-an
 
 **Why:** 保存正式送审快照与获得质检责任是两个事实。把防重复放在快照保存入口，会阻断历史整改分区和正常版本保存；只在页面预览检查又挡不住竞争发布。原生整改提交返回的固定回执也不必然包含随后形成的复验申请，不能把旧回执的空申请当成当前不可派检。
 
-**How to apply:** 在完整质检计划准备和恢复激活时，对稳定工作项执行同一持久发布准入；新作者不能借人员批次变化创建并行责任链，但仍允许正常快照保存。显式换版固定完整答案、真实负责人及原请求，复用原生退回/复验协议后，再读取当前复验申请。旧判断不复制；原上级整改仍待真实复验与正式验收。对历史重叠保留明确前驱，已通过的其它报告还有未结退回时继续阻断。
+**How to apply:** 在完整质检计划准备和恢复激活时，对稳定工作项执行同一持久发布准入；新作者不能借人员批次变化创建并行责任链，但仍允许正常快照保存。显式换版固定完整答案、真实负责人及原请求，复用原生退回/复验协议后，再读取当前复验申请。旧判断不复制；原上级整改仍待真实复验与正式验收。对历史重叠保留明确前驱，已通过的其它报告还有未结退回，或重叠题已从其它人员批次交接 Sand 时，旧链换版继续阻断；沿正式 Sand 退回事项接续。
 
 - [换版复验方案与代码 review/CI 入口](https://github.com/world-sim-dev/sandai-data-smith/pull/2613)：仓内方案 `sand-eval/docs/superpowers/specs/2026-10-19-inspection-version-continuation.md`；实现入口为 `LatestAnswerReinspectionService`、`inspection_work_claim` 和 `LatestAnswerReinspectionModal`。最终实现、测试分支冲突、Gate、部署及两条原卡单恢复分别沿 PR 和只读取证报告核验，不能把代码提交当成已上线或已完成生产换版。
