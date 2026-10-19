@@ -25,3 +25,11 @@ links: [sandeval-workbench-context-404-evidence, sandeval-correction-evidence-an
 **How to apply:** 分别核对版本作者、时间、代改所属 RT/RI、成员、计划与版本；再比较当前原生 item 的实际内容引用和 answer-draft 基线。当前基线一致、允许代改，不足以证明用户设备旧提示已消失；需保留草稿并对齐原设备请求。不能因这句话让质检员盲判，也不能未经谱系证明切到任意最新答案。
 
 - [两条复验的只读证据与未决项](/Users/leslie/Documents/Playground/output/two-inspection-superseded-20261019/report.md)：正式版本来源、本轮归属、原生双接口和保存前置校验；当前状态需沿脚本重新读取。该记录未包含生产写入或用户设备页面验收。
+
+## 2026-10-19 截图题号校准与跨批次正式代改
+
+**Why:** 用户给出的 URL 可能仍指向第1题，截图实际停在第3题。只读链接题正常，不能外推整任务；观察页按截图切题后，可能立即复现真实后续版本阻拦。来源新版也可能属于其他批次质检员的正式代改，而非本轮自己的修改。
+
+**How to apply:** 先对齐截图题号、队列 question_number 与 RI，再逐项读候选、按稳定 work_unit_id 找跨送审代改。不要在未排除其它题时宣称任务已无阻拦或归因缓存。区分“负责人退回质检员”沿原送审重抽样，与“质检员退回标注员—当前持有人提交整改—负责人安排复验”产生新送审快照；给操作步骤前只读核对资格、接收人和当前完整答案，实际命令另行验收。
+
+- [同一取证报告的更正与全任务核验](/Users/leslie/Documents/Playground/output/two-inspection-superseded-20261019/report.md)：更正先前只查两个第1题的外推，记录真正受阻的三个检查项、跨批次正式代改，以及现有接续路径和未执行边界。动态事实沿 queue/allfacts/lineage/route 脚本重读；未证明重叠送审最初由何代码或操作产生。
