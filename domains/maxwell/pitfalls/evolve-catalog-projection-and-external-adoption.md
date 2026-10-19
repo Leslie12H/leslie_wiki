@@ -33,3 +33,12 @@ links: [evolve-native-routing-vs-candidate-runner, evolve-inline-metrics-catalog
 - 迁移必须同时核对 SQL、Job 挂载/参数和 CI ConfigMap 清单；用 `deploy/jobs` 的全迁移守卫验收，不能只运行迁移文件测试。
 
 统一 main PR、审查补丁与发布核验入口：[maxwell-ai PR #367](https://github.com/world-sim-dev/maxwell-ai/pull/367)。按用户交付要求通过 main 发布，不继续单独部署功能分支；实时发布、报警和运行状态仍查 PR 与验收记录。
+
+
+## 2026-10-19 main 发布与浏览器接续
+
+**Why:** 浏览器自动化会话关闭后，用户现有 Chrome 仍可能保持正确登录；此时重复开空白登录窗口会增加无效操作。系统锁屏又会使原窗口无法前置、按键无效、AppleEvent 超时，不能误判为登录失效。
+
+**How to apply:** 先检查现有窗口的目标域名、业务空间与账号，再检查 `CGSessionCopyCurrentDictionary` 的 `CGSSessionScreenIsLocked`；已锁屏时只要求解锁，不要求重新登录，也不尝试绕过锁屏或复制认证。自动化安全设置的变更与复用已有会话是两种授权，需按实际审批边界处理。
+
+统一交付已走 [PR #367](https://github.com/world-sim-dev/maxwell-ai/pull/367) → main → [dev 发布 39196828107](https://github.com/world-sim-dev/maxwell-ai/actions/runs/39196828107)；CI、迁移和部署以这两个外部回执核对。后续归档、十题与报警结论查 [本轮独立读回记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-six-fixes-1019/final-acceptance.json)，不能以发布成功代替业务验收完成。

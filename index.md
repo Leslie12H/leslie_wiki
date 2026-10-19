@@ -1,5 +1,7 @@
 # leslie_wiki 目录
 
+- 2026-10-19：[EVOLVE 目录、关联与取消清理修复](domains/maxwell/pitfalls/evolve-catalog-projection-and-external-adoption.md#2026-10-19-main-发布与浏览器接续) — 统一 main PR/dev 发布回执、现有 Chrome 与锁屏边界及最终验收读回入口。
+
 - 2026-10-19：[Sand Eval 已检完却显示新一轮零进度](domains/sandai-data-smith/pitfalls/sandeval-completed-review-followup-round.md) — 同版本正式报告、上下层整改执行衔接缺口、两路自动复验与摘要待确认的区分。
 
 - 2026-10-19：[原生历史运行与工作台逐题差异](domains/maxwell/pitfalls/evolve-nextplay-archive-navigation-parity.md#2026-10-19-原生历史记录逐题配对取证入口) — 原生 Runs/Batch/Snapshot 配对、媒体阶段 SP 与 Skill 内容、三个模型角色、实际回复分支、初态/评分版本及最新运行状态边界。
