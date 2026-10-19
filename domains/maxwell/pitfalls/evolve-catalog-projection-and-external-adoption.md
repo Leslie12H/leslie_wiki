@@ -29,7 +29,7 @@ links: [evolve-native-routing-vs-candidate-runner, evolve-inline-metrics-catalog
 
 - 沿 `objectDirectoryPaths` 检查名称、类型和状态筛选与每条路径展示，不按主连接健康替代整个对象。
 - 目录写的 409 是否能解除未知态，取决于服务是否先查不可变回执、后做 CAS；不得把这个结论泛化到先检查当前依赖的其他写接口。恢复外部采用应直接使用已保留声明和原请求，不等当前 Provider 目录。
-- 沿 EVOLVE `application/evaluation/live.go` 与 `app/integration/maxwellexecutor/cancel.go` 核对：只让远端清理脱离父取消，取消和证据读回共用有限期限；停止接收回执跨重启保留，模糊响应沿用原 actionId，终态必须独立确认。普通执行继续受原 context 控制。
+- 沿 EVOLVE `application/evaluation/live.go` 与 `app/integration/maxwellexecutor/cancel.go` 核对：只让远端清理脱离父取消，取消和证据读回共用有限期限；停止接收回执跨重启保留，模糊响应沿用原 actionId，终态必须独立确认。普通执行继续受原 context 控制。Runtime 历史列表会排除从未启动即取消的任务；空列表不等于已取消。该场景需校验 stop 响应的 Thread/Run 身份和终态，普通 ACK 仍不能替代终态。真实契约及反例测试沿 PR 中的取消恢复测试查验。
 - 迁移必须同时核对 SQL、Job 挂载/参数和 CI ConfigMap 清单；用 `deploy/jobs` 的全迁移守卫验收，不能只运行迁移文件测试。
 
 统一 main PR、审查补丁与发布核验入口：[maxwell-ai PR #367](https://github.com/world-sim-dev/maxwell-ai/pull/367)。按用户交付要求通过 main 发布，不继续单独部署功能分支；实时发布、报警和运行状态仍查 PR 与验收记录。

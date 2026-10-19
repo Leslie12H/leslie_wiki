@@ -919,4 +919,4 @@
 
 - 2026-10-18：[原单恢复与凭证过期续办](domains/sandai-data-smith/pitfalls/sandeval-reinspection-command-recovery-barriers.md#2026-10-18-明确授权后的原单恢复与凭证过期续办) — 明确授权后的原生恢复、220秒后台耗时与两分钟凭证、历史答案重验边界及修复PR #2599指针。
 
-- 2026-10-19：[EVOLVE 目录投影与外部评分采用](domains/maxwell/pitfalls/evolve-catalog-projection-and-external-adoption.md) — 逻辑对象归并及路径故障展示、原子采用与未知写恢复、目录归档、嵌套阅读及独立限时取消；统一 main PR #367 与验收指针。
+- 2026-10-19：[EVOLVE 目录投影与外部评分采用](domains/maxwell/pitfalls/evolve-catalog-projection-and-external-adoption.md) — 逻辑对象归并及路径故障展示、原子采用与未知写恢复、目录归档、嵌套阅读及独立限时取消/未启动任务终态；统一 main PR #367 与验收指针。
