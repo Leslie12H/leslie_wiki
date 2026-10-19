@@ -2,7 +2,7 @@
 name: sandeval-package-termination-validation
 type: reference
 created: 2026-10-19
-updated: 2026-10-19
+updated: 2026-10-20
 tags: [sand-eval, package-termination, concurrency, validation]
 links: [sandeval-package-transition-lock-regression-20261017]
 ---
@@ -94,3 +94,9 @@ links: [sandeval-package-transition-lock-regression-20261017]
 
 - **Why:** 嵌套写借用外层准入，只监视外层最终是否抛异常，会漏掉被业务恢复捕获的通信失败或取消，进而错误确认排空；外层记录 blocked 或正常返回不证明内层写已结束。**How to apply:** 沿 [联合测试 PR #2647](https://github.com/world-sim-dev/sandai-data-smith/pull/2647) 核对外层 token 保留首个嵌套未知结果、后续成功或业务拒绝不可覆盖、嵌套错误不会无限产生 token；保留独立子任务和正常兄弟包的隔离。以修复前失败、真实 AdvancementService 包装和原生私有控制表验收分别取证，不把本页当上线状态。
 - **Why:** 仅改测试文件时，direct import 选择可能运行它的 importers，却没有收集该测试文件本身；绿色返回和总 passed 数不能代替新断言确实执行。**How to apply:** 对照选择器输出中的实际命令与 collected/具名用例，先用具名最小回归证明原行为失败；实现变更后再按正常选择器验证，并由最终完整 Gate 覆盖。具体实现沿 [选择器](https://github.com/world-sim-dev/sandai-data-smith/blob/main/sand-eval/platform/scripts/select_tests.py) 查，避免为补证据扩成无界全量本地测试。
+
+
+## 2026-10-20：取消包装、时限预算与检查回写阻塞
+
+- **Why:** 同一明确用户取消可能以 ORCA 表缓存 0A000 包装出现，而同为 57014 的语句超时具有不同预算含义；只按异常大类重试会扩大失败成本。**How to apply:** 沿 [最终测试 PR #2649](https://github.com/world-sim-dev/sandai-data-smith/pull/2649) 检查 SQLSTATE 与完整驱动主消息、真实查询样本和反例；仅对有证据的用户取消形式恢复，语句超时不重复整个时限。取消来源的跨账号审计与客户端有界恢复分别闭环，实际发布状态查本机生产观测记录。
+- **Why:** GitHub run/check 字段与已完成 job 日志、实际部署可能矛盾，不能据 queued 就推断无 runner，也不能以完成日志替代仓库强制检查。**How to apply:** 固定 PR head/base/tree，交叉核对汇总任务需要的各检查结果、错误/取消/清理标志和实际镜像源码；普通合并若仍被 required checks 拒绝，保留证据请求 Actions 回写排障，不使用管理员绕过、不修改保护或伪造 check，不把早一版已安装镜像冒充最终补丁验收。动态状态沿上述 PR 及本机 `Documents/Playground/package-termination-acceptance-20261019/production/RELEASE-OBSERVATION.md` 查。
