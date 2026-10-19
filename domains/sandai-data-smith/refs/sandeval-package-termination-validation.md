@@ -41,3 +41,10 @@ links: [sandeval-package-transition-lock-regression-20261017]
 - [准入异常分类](https://github.com/world-sim-dev/sandai-data-smith/blob/0b47411b4d0404fc80fefcb204343a002ec94c0d/sand-eval/platform/backend/app/infra/package_control.py#L263-L276)：使用真实服务抛出的领域异常检查 404/409 与未知数据库结果。HTTP 转换发生在外层时，不能仅凭异常有没有 status 字段判断是否已写入或结果未知；反复拒绝后仍须验证正常用户可写。
 - [主任务下发的子包准入](https://github.com/world-sim-dev/sandai-data-smith/blob/0b47411b4d0404fc80fefcb204343a002ec94c0d/sand-eval/platform/backend/app/services/facts/dispatch_masters.py#L527-L568)：覆盖 A 已有成功回执、B 尚未完成时终止 A，再恢复原发布操作；区分只读回执恢复与新增写入，并核对下发明细和质量登记的后续步骤。
 - [交付范围重验](https://github.com/world-sim-dev/sandai-data-smith/blob/0b47411b4d0404fc80fefcb204343a002ec94c0d/sand-eval/platform/backend/app/services/facts/result_delivery.py#L249-L251) 与 [交付页面](https://github.com/world-sim-dev/sandai-data-smith/blob/0b47411b4d0404fc80fefcb204343a002ec94c0d/sand-eval/platform/frontend/src/pages/dispatchMasters/ResultDeliveryPanel.tsx)：先冻结再终止 A，既要验证旧清单被拒绝，也要验证用户能保留旧记录并从页面重新预览、冻结仅含正常包的新清单。刷新自动恢复旧 sessionStorage 不是重建路径。
+
+## 2026-10-19：修复、main 更新与容量证据边界
+
+- [main 评审 PR #2623](https://github.com/world-sim-dev/sandai-data-smith/pull/2623) 与 [复审修复测试 PR #2621](https://github.com/world-sim-dev/sandai-data-smith/pull/2621) 是后续修复和最终验证的入口；不从本页推断合并或生产状态。
+- **Why:** 只补页面入口会遗漏后台持久意图恢复；更新 main 时，新业务写口可能在原审查后出现。**How to apply:** 沿 Quality runtime 的实际组合检查新增命令，换版复验需同时覆盖 submit、prepared.submission 身份的恢复及直接换版退回；测试应检查真实安装的声明列表，不能只单独验证绑定器。
+- **Why:** 读取已完成回执虽然不创建包，也可能绕开原有的权限和读一致性合同。**How to apply:** 主任务恢复在包写准入前读取固定回执时，保留 Leader、执行器租约和发起人当前权限校验，再将未完成的后续写入包在同一参与登记内。
+- **Why:** 同一新版本的正常/混合负载只回答“终止是否额外干扰”，不回答“新屏障相对旧版本增加多少开销”。**How to apply:** 单列版本对照、热/冷包、多执行器、大包和时长维度；入口关闭仍运行既有屏障，不能称为无后端影响。真实测量的 SHA、规模、时长与尚未覆盖范围放 PR/验收记录，避免把小包单 Pod 短测写成生产容量承诺。

@@ -953,3 +953,5 @@
 - 2026-10-19：数据包终止复审的业务拒绝、发布回执恢复和旧交付清单重建检查，见 [隔离验收入口](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-19复审时补查失败与恢复路径)。
 
 - 2026-10-19：[复验合并上线后的逐案验收](domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md#2026-10-19-上线验收与历史任务接续) — 部署、历史后继、真实负责人预览与实际确认分开；直接整改只读核对入口补漏及 PR #2622。
+
+- 2026-10-19：数据包终止复审修复与 main 入口核对、Leader 回执合同及容量对照边界，见 [验收入口](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-19修复main-更新与容量证据边界)。
