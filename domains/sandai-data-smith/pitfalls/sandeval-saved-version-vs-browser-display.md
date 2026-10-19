@@ -49,3 +49,12 @@ links: [sandeval-workbench-context-404-evidence, sandeval-correction-evidence-an
 **How to apply:** 在完整质检计划准备和恢复激活时，对稳定工作项执行同一持久发布准入；新作者不能借人员批次变化创建并行责任链，但仍允许正常快照保存。显式换版固定完整答案、真实负责人及原请求，复用原生退回/复验协议后，再读取当前复验申请。旧判断不复制；原上级整改仍待真实复验与正式验收。对历史重叠保留明确前驱，已通过的其它报告还有未结退回，或重叠题已从其它人员批次交接 Sand 时，旧链换版继续阻断；沿正式 Sand 退回事项接续。
 
 - [换版复验方案与代码 review/CI 入口](https://github.com/world-sim-dev/sandai-data-smith/pull/2613)：仓内方案 `sand-eval/docs/superpowers/specs/2026-10-19-inspection-version-continuation.md`；实现入口为 `LatestAnswerReinspectionService`、`inspection_work_claim` 和 `LatestAnswerReinspectionModal`。最终实现、测试分支冲突、Gate、部署及两条原卡单恢复分别沿 PR 和只读取证报告核验，不能把代码提交当成已上线或已完成生产换版。
+
+## 2026-10-19 上线验收与历史任务接续
+
+**Why:** 发布新功能不会替负责人自动确认答案，也不会自动生成历史任务的后继轮次。另一前端遗漏是把只读版本核对嵌套在“退回质检员”权限下：Sand 直接整改禁止再次退回，但仍需要读到新版来源和未整改题的阻断原因。维护账号具备 Sand root 身份，也不自动具备供应商本空间负责人资格。
+
+**How to apply:** 先核对部署 SHA、镜像和 Ready，再逐条读取旧 RT 状态、合法后继、全量检查项和负责人实际预览。以真实本空间负责人校验，不把维护账号的 REVIEW_FORBIDDEN 认作业务故障。旧轮仍受冻结版本保护；预览允许也不是实际换版成功。保留未整改的不合格题及下游交接守卫，只读入口与写动作权限分别呈现；直接整改的后续操作继续沿原责任链。浏览器验收要检查入口能否发现阻断，不能只测试弹窗本身。
+
+- 上线后的两条精确任务、石羽宁负责人页面和逐题只读证据：[生产验收记录](/Users/leslie/Documents/Playground/output/two-inspection-postrelease-20261019/report.md)。运行态事实沿该记录重读。
+- 只读入口补漏及最终 CI 指针：[main PR #2622](https://github.com/world-sim-dev/sandai-data-smith/pull/2622)。本地真实组件夹具验收、生产页面验收和实际换版写入分别记录，不相互替代。

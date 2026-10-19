@@ -949,3 +949,5 @@
 - 2026-10-19：[部分转派包详情与摘要的范围不一致](domains/sandai-data-smith/pitfalls/sandeval-partial-reassignment-package-completeness-gap.md) — 原始成员重复与真实缺题分开；已验收包的受控交接、正式回执与跨副本 Sand 可分配读回，以及后台分区统计修复入口。
 
 - 2026-10-19：数据包终止复审的业务拒绝、发布回执恢复和旧交付清单重建检查，见 [隔离验收入口](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-19复审时补查失败与恢复路径)。
+
+- 2026-10-19：[复验合并上线后的逐案验收](domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md#2026-10-19-上线验收与历史任务接续) — 部署、历史后继、真实负责人预览与实际确认分开；直接整改只读核对入口补漏及 PR #2622。
