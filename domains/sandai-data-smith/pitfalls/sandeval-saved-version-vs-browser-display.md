@@ -41,3 +41,11 @@ links: [sandeval-workbench-context-404-evidence, sandeval-correction-evidence-an
 **How to apply:** 分配冻结与发布都按稳定工作项、关卡和正式谱系核验占用，保留显式独立多评；活跃检查/整改转派须接续责任，不能再次作为新作者普通首送。本人同轮正式代改、合法继承和其它链新版分开处理；已保存结论继续绑定所检查版本，旧入口给出当前合法后继或明确处理动作。历史冲突与后续预防分开验收，不能清保护、批量判通过或静默切最新版。
 
 - [预防建议与尚未实施边界](/Users/leslie/Documents/Playground/output/two-inspection-superseded-20261019/report.md#复发风险与预防建议尚未实施)：部署版分配占用、版本链、整改分区与来源写保护的代码指针；尚未证明原始创建请求的唯一成因。后续修复须覆盖并发/重试/部分交叠及原生页面，不把此前分配展示修复当成完整防复发验收。
+
+## 2026-10-19 派检准入与固定版本续办
+
+**Why:** 保存正式送审快照与获得质检责任是两个事实。把防重复放在快照保存入口，会阻断历史整改分区和正常版本保存；只在页面预览检查又挡不住竞争发布。原生整改提交返回的固定回执也不必然包含随后形成的复验申请，不能把旧回执的空申请当成当前不可派检。
+
+**How to apply:** 在完整质检计划准备和恢复激活时，对稳定工作项执行同一持久发布准入；新作者不能借人员批次变化创建并行责任链，但仍允许正常快照保存。显式换版固定完整答案、真实负责人及原请求，复用原生退回/复验协议后，再读取当前复验申请。旧判断不复制；原上级整改仍待真实复验与正式验收。对历史重叠保留明确前驱，已通过的其它报告还有未结退回时继续阻断。
+
+- [换版复验方案与代码 review/CI 入口](https://github.com/world-sim-dev/sandai-data-smith/pull/2613)：仓内方案 `sand-eval/docs/superpowers/specs/2026-10-19-inspection-version-continuation.md`；实现入口为 `LatestAnswerReinspectionService`、`inspection_work_claim` 和 `LatestAnswerReinspectionModal`。最终实现、测试分支冲突、Gate、部署及两条原卡单恢复分别沿 PR 和只读取证报告核验，不能把代码提交当成已上线或已完成生产换版。
