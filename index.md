@@ -1,5 +1,7 @@
 # leslie_wiki 目录
 
+- 2026-10-20：[完整候选与共享测试恢复](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-20完整候选验收与共享测试恢复) — 原生精确候选入口、安装类验证、保留测试历史边界、恢复最新共享版本及main修复PR指针。
+
 - 2026-10-20：[持续调优准入与恢复](domains/maxwell/pitfalls/evolve-continuous-admission-and-recovery.md) — 原件复用与回收协调、人工决策收尾、精确调优目标与StrictMode验收；当前代码与未完成Gate查执行记录。
 - 2026-10-20：[撤销回执与新鲜检查](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-20撤销回执不确定与新鲜检查读取) — 持久登记撤销前关闭本地准入、正常重新登记及GitHub缓存状态的交叉核验。
 

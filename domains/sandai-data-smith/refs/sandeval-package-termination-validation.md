@@ -113,3 +113,9 @@ links: [sandeval-package-transition-lock-regression-20261017]
 
 - **Why:** 空闲退役删除持久登记的CAS可能已经生效但响应丢失；若本地还允许复用旧参与记录，就会在数据库没有登记时准入新写，管理员可能错误确认已终止。**How to apply:** 沿 [核心修复分支](https://github.com/world-sim-dev/sandai-data-smith/blob/codex/package-termination-core-risk-repair/sand-eval/platform/backend/app/infra/package_control.py) 核对撤销前先关闭该包本地准入、确认后移除本地记录才能重新登记；同时覆盖撤销生效前后响应丢失、健康兄弟包与正常退役后重新登记。保持不确定时关闭，不用进程退出或超时伪造排空。
 - **Why:** 已完成任务日志与queued状态矛盾不一定是检查回写故障，读取缓存也可能造成旧状态。**How to apply:** 对同一固定SHA用no-cache和新鲜REST请求交叉核对run/job/check、完成时间和PR head；新鲜结果确认保护满足后只走正常受保护的合并接口，不重放旧请求、不改保护或伪造成功。出现新提交后重新等待其检查，旧SHA通过不代替新SHA。具体修正结论与证据仍沿本机生产观测记录查。
+
+
+## 2026-10-20：完整候选验收与共享测试恢复
+
+- **Why:** 共享测试分支缺少已在生产的模块时，强行同步主线会扩大冲突范围；这也不意味着必须停下所有验收。**How to apply:** 先读拥有者的 [独立测试环境 runbook](https://github.com/world-sim-dev/sandai-data-smith/blob/main/sand-eval/docs/operations/isolated-test-environment.md) 与原生工作流，使用支持的固定候选分支入口，校验 expected SHA、代码树、完整测试、构建和部署 digest；不修改冲突模块，不将test历史带入开发/main，不以候选模块注入替代实际安装类。验收及私有对象清理后，重新核对共享分支和并发发布，通过同一原生流程恢复最新已批准测试版本。候选验收、main Gate、生产发布与健康观察分别取证。
+- 发布及实现审查入口为 [main修复 PR #2652](https://github.com/world-sim-dev/sandai-data-smith/pull/2652)；动态性能、遗留未知登记和尚待审计的取消来源沿本机生产观测记录查，不把PR已合并当作峰值容量或根因全部闭环。
