@@ -1,0 +1,5 @@
+claude-history-*.enc.part*
+*.key
+*.tar.gz
+*.enc
+claude-history-20261019/

@@ -1,0 +1,50 @@
+{
+  "created": "2026-10-19",
+  "encryption": "AES-256-GCM",
+  "key_derivation": "scrypt N=32768 r=8 p=1; 32-byte random salt; separate random 256-bit recovery secret",
+  "recovery_key_in_repository": false,
+  "archive_ciphertext_sha256": "8cbfbf5a4d5f159f53a87d5e73d281034060122cb9bc2c9373225335a5f9000e",
+  "archive_plaintext_sha256": "2df93e7d3b3cb9b3149607258a04f42b20c741bf72029195820867de94ab9456",
+  "parts": [
+    {
+      "file": "claude-history-20261019.enc.part001",
+      "bytes": 50331648,
+      "sha256": "206722c9bf7d0514917a97b84c70938d8200c28b34c374d684f804725a620bd3",
+      "download_url": "https://github.com/Leslie12H/leslie_wiki/releases/download/claude-history-20261019/claude-history-20261019.enc.part001"
+    },
+    {
+      "file": "claude-history-20261019.enc.part002",
+      "bytes": 50331648,
+      "sha256": "b7560b1a68538b379e9eddbd71a118c6f2bf7d5fc8884903e74acbc21762619f",
+      "download_url": "https://github.com/Leslie12H/leslie_wiki/releases/download/claude-history-20261019/claude-history-20261019.enc.part002"
+    },
+    {
+      "file": "claude-history-20261019.enc.part003",
+      "bytes": 38733839,
+      "sha256": "bf713f6e5f66d6d60ecdee8fe75078b6b29104835a7bb79e5b1585feef4c1198",
+      "download_url": "https://github.com/Leslie12H/leslie_wiki/releases/download/claude-history-20261019/claude-history-20261019.enc.part003"
+    }
+  ],
+  "local_snapshot_summary": {
+    "source_files": 1378,
+    "source_bytes": 544472530,
+    "jsonl_files": 354,
+    "jsonl_records": 164187,
+    "malformed_records": 0,
+    "user_records": 34859,
+    "assistant_records": 50191
+  },
+  "desktop_cache_summary": {
+    "matching_entries": 90,
+    "decoded_entries": 88,
+    "unparsed_entries": 2,
+    "distinct_cached_conversations": 29,
+    "messages_in_longest_cached_snapshot": 142
+  },
+  "scope_limit": "Local history only. Desktop Chat contains locally cached snapshots; this is not a full cloud export. JSONL counts include duplicate or audit copies, not unique messages.",
+  "storage": {
+    "type": "github_release_assets",
+    "tag": "claude-history-20261019",
+    "url": "https://github.com/Leslie12H/leslie_wiki/releases/tag/claude-history-20261019"
+  }
+}
