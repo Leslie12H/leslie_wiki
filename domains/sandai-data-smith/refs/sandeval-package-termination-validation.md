@@ -73,3 +73,8 @@ links: [sandeval-package-transition-lock-regression-20261017]
 
 - [入口开关配置 PR #2631](https://github.com/world-sim-dev/sandai-data-smith/pull/2631)、[配置 PR Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/39254950018) 与 [主干发布](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/39255185291) 是用户要求开放入口后的配置与生效核验入口；最新开关值和健康结论查本机生产观测记录，不把本页当运行状态。
 - **Why:** 开关来自进程启动环境，ConfigMap 已写或 PR 已合并不代表四个 Web 进程都已经生效；纯 release 配置的绿色 Gate 也可能按分类跳过应用测试。**How to apply:** 通过拥有者的配置 PR 与原生发布滚动，逐个回读实际 Web settings、镜像与就绪，再只读验证现有管理员资格和列表；报告实际执行的 CI jobs，把原功能完整验证与本次配置验证分开。用户明确开放入口不表示可以核销历史未知登记，也不意味着风险已解除。
+
+## 2026-10-19：数据库资源与入口身份取证
+
+- **Why:** Hologres 快查询按 calls 聚合，数据库累计峰值内存与 Web RSS 不同，按日志行数或把峰值相加会误判屏障成本。**How to apply:** 按 [官方查询日志定义](https://www.alibabacloud.com/help/en/hologres/user-guide/query-and-analyze-slow-query-logs) 加权 duration/cpu，保留 NULL；生产 digest 的 SQL 文本与源码生成文本做哈希绑定，再分开检查旧 summary metadata、leader candidates、handoff recovery 与新增控制条件。只读 EXPLAIN 对照不替代版本运行对照。实际样本和结论查本机 `Documents/Playground/package-termination-acceptance-20261019/production/PERFORMANCE-INVESTIGATION.md`，本页不存运行状态。
+- **Why:** Sand 根空间成员拥有普通导航能力，数据包终止另查显式平台管理员标记。**How to apply:** 联查 [administrator](https://github.com/world-sim-dev/sandai-data-smith/blob/51216a296c3ecaf60e361a735675b0028b125060/sand-eval/platform/backend/app/services/facts/package_termination.py)、capabilities 与 QualityManagementPage，核验账号 active、显式标记、有效根空间、非代入会话和运行开关。不能仅凭角色名称、Settings 可见或员工空间归属判断资格；管理员名单只保留查询指针，不当作永久授权清单。
