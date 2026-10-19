@@ -31,3 +31,13 @@ links: [sandeval-package-transition-lock-regression-20261017]
 7. 对齐部署 SHA、负载标签、正常/拒绝状态、p95/p99、吞吐与 pool/admission wait。混合负载变慢时先分层归因，不能以零错误宣布不影响正常包。
 
 相关背景见 [共享表锁风险](sandeval-package-transition-lock-regression-20261017.md)。
+
+## 2026-10-19：复审时补查失败与恢复路径
+
+**Why:** 正常提交压测与 A 先终止再交付 B/C，不能覆盖业务拒绝异常、下发恢复和冻结后范围变化。屏障的异常分类或父流程的重放顺序会把局部拒绝放大成正常工作不可用。
+
+**How to apply:** 沿下列固定审查版本查原路径，再核对当前分支是否已修复；不要从本页推定最新发布状态。
+
+- [准入异常分类](https://github.com/world-sim-dev/sandai-data-smith/blob/0b47411b4d0404fc80fefcb204343a002ec94c0d/sand-eval/platform/backend/app/infra/package_control.py#L263-L276)：使用真实服务抛出的领域异常检查 404/409 与未知数据库结果。HTTP 转换发生在外层时，不能仅凭异常有没有 status 字段判断是否已写入或结果未知；反复拒绝后仍须验证正常用户可写。
+- [主任务下发的子包准入](https://github.com/world-sim-dev/sandai-data-smith/blob/0b47411b4d0404fc80fefcb204343a002ec94c0d/sand-eval/platform/backend/app/services/facts/dispatch_masters.py#L527-L568)：覆盖 A 已有成功回执、B 尚未完成时终止 A，再恢复原发布操作；区分只读回执恢复与新增写入，并核对下发明细和质量登记的后续步骤。
+- [交付范围重验](https://github.com/world-sim-dev/sandai-data-smith/blob/0b47411b4d0404fc80fefcb204343a002ec94c0d/sand-eval/platform/backend/app/services/facts/result_delivery.py#L249-L251) 与 [交付页面](https://github.com/world-sim-dev/sandai-data-smith/blob/0b47411b4d0404fc80fefcb204343a002ec94c0d/sand-eval/platform/frontend/src/pages/dispatchMasters/ResultDeliveryPanel.tsx)：先冻结再终止 A，既要验证旧清单被拒绝，也要验证用户能保留旧记录并从页面重新预览、冻结仅含正常包的新清单。刷新自动恢复旧 sessionStorage 不是重建路径。
