@@ -78,3 +78,8 @@ links: [sandeval-package-transition-lock-regression-20261017]
 
 - **Why:** Hologres 快查询按 calls 聚合，数据库累计峰值内存与 Web RSS 不同，按日志行数或把峰值相加会误判屏障成本。**How to apply:** 按 [官方查询日志定义](https://www.alibabacloud.com/help/en/hologres/user-guide/query-and-analyze-slow-query-logs) 加权 duration/cpu，保留 NULL；生产 digest 的 SQL 文本与源码生成文本做哈希绑定，再分开检查旧 summary metadata、leader candidates、handoff recovery 与新增控制条件。只读 EXPLAIN 对照不替代版本运行对照。实际样本和结论查本机 `Documents/Playground/package-termination-acceptance-20261019/production/PERFORMANCE-INVESTIGATION.md`，本页不存运行状态。
 - **Why:** Sand 根空间成员拥有普通导航能力，数据包终止另查显式平台管理员标记。**How to apply:** 联查 [administrator](https://github.com/world-sim-dev/sandai-data-smith/blob/51216a296c3ecaf60e361a735675b0028b125060/sand-eval/platform/backend/app/services/facts/package_termination.py)、capabilities 与 QualityManagementPage，核验账号 active、显式标记、有效根空间、非代入会话和运行开关。不能仅凭角色名称、Settings 可见或员工空间归属判断资格；管理员名单只保留查询指针，不当作永久授权清单。
+
+## 2026-10-19：后台准备与未知写入取证
+
+- **Why:** 将只读记录读取和包锁等待也包进写参与登记，会让准备失败或等待取消产生不必要的永久占用；真正写入结果未知又必须继续保护。**How to apply:** 沿 [修复 PR #2644](https://github.com/world-sim-dev/sandai-data-smith/pull/2644) 与 [仅用于测试的集成 #2640](https://github.com/world-sim-dev/sandai-data-smith/pull/2640) 检查 `_attempt` 准入边界，覆盖反复读取失败、等待取消、等待期间终止、真实写失败和兄弟包可写；不把该边界修复当作全部生产取消根因已解决。
+- **Why:** SQL 取消日志与未知登记的时间相邻不等于客户端异常来源已明确；只看 main 池也会遗漏 leader/control 池。**How to apply:** 按源码 SQL 哈希、实际异常类型/SQLSTATE、执行器和原业务回执核对，按进程分别读 control/main 池；SQL 样本或 JSON 截断时在服务端提取固定字段，不以解析失败认定无异常。原生 CAS 简单成功/冲突场景不替代生产负载或取消路径。动态证据沿本机 `Documents/Playground/package-termination-acceptance-20261019/production/RELEASE-OBSERVATION.md` 查。
