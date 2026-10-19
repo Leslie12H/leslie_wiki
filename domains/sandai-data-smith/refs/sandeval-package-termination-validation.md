@@ -53,3 +53,5 @@ links: [sandeval-package-transition-lock-regression-20261017]
 
 - **Why:** 终止控制按执行包隔离，主任务的完成率与交付范围却是不同读取路径；正常包可交付不能推导主任务统计会自动完成。**How to apply:** 同时检查 [MasterProgressReader](https://github.com/world-sim-dev/sandai-data-smith/blob/codex/package-termination/sand-eval/platform/backend/app/repositories/master_progress.py)、主任务状态 reducer 与交付排除规则；统计分母和展示语义沿 [终止协议](https://github.com/world-sim-dev/sandai-data-smith/blob/codex/package-termination/sand-eval/docs/subsystems/package-termination.md) 核对，不把历史总量静默改成有效范围。
 - **Why:** 停用数据库账号不一定令已缓存的旧会话立即失效。**How to apply:** 临时身份清理先核对状态及会话版本，再在 JWT 尚未过期时验证真实 HTTP 拒绝；鉴权正缓存 TTL 和失效路径沿 [AuthService](https://github.com/world-sim-dev/sandai-data-smith/blob/codex/package-termination/sand-eval/platform/backend/app/services/facts/auth.py) 复核，不用自然 JWT 到期冒充撤销成功。
+
+- **Why:** 多人集中在少数包的短间隔压测会保持热登记，可能漏掉真实人工长时间作答后的反复冷登记。**How to apply:** 沿 [PackageControl 的空闲退役与登记路径](https://github.com/world-sim-dev/sandai-data-smith/blob/codex/package-termination/sand-eval/platform/backend/app/infra/package_control.py) 对照作答间隔，分别测试多包低频提交、热包与初次冷启动；不能只按服务启动时的一次性成本解释登记开销。

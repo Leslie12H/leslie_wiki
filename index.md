@@ -948,7 +948,7 @@
 
 - [Sand Eval 列表摘要与详情实时状态](domains/sandai-data-smith/pitfalls/sandeval-inspector-summary-vs-live-status.md) — 状态待确认不是人工确认节点；核对摘要发布、任务版本与实时复验状态；同类型调度公平、持续变更重新排队、隐藏历史计数减负与通知去重，PR #2616 的容量及验收边界（2026-10-19）。
 
-- 2026-10-19：[Sand Eval 数据包终止隔离与验收](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md) — 原生表形状、富文本交互、独立会话容量、未知结果对账、主任务统计与有效交付范围、临时会话撤销核验入口。
+- 2026-10-19：[Sand Eval 数据包终止隔离与验收](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md) — 原生表形状、富文本交互、独立会话容量与多包长间隔登记、未知结果对账、主任务统计与有效交付范围、临时会话撤销核验入口。
 
 - 2026-10-19：[部分转派包详情与摘要的范围不一致](domains/sandai-data-smith/pitfalls/sandeval-partial-reassignment-package-completeness-gap.md) — 原始成员重复与真实缺题分开；已验收包的受控交接、正式回执与跨副本 Sand 可分配读回，以及后台分区统计修复入口。
 
