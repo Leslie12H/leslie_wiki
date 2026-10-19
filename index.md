@@ -917,3 +917,5 @@
 - 2026-10-18：[整改冻结分区与当前作者批次重叠](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md) 补充分配弹窗、普通作者计数与正式冻结题目范围的区别，以及前置通过仍需实际下发回执的只读核验指针。
 
 - 2026-10-18：[原单恢复与凭证过期续办](domains/sandai-data-smith/pitfalls/sandeval-reinspection-command-recovery-barriers.md#2026-10-18-明确授权后的原单恢复与凭证过期续办) — 明确授权后的原生恢复、220秒后台耗时与两分钟凭证、历史答案重验边界及修复PR #2599指针。
+
+- 2026-10-19：[EVOLVE 目录投影与外部评分采用](domains/maxwell/pitfalls/evolve-catalog-projection-and-external-adoption.md) — 逻辑对象归并、原子采用后关联、可恢复 Benchmark 归档与嵌套评分阅读的实现和验收指针。
