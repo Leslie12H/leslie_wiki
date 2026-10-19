@@ -1,6 +1,6 @@
 # leslie_wiki 目录
 
-- 2026-10-19：[Sand Eval 换版复验提交权限](domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md#2026-10-19-换版复验的只读来源与标注编辑权限) — 负责人只读来源与标注编辑权限分离、实际提交回读和未整改题当前责任链。
+- 2026-10-19：[Sand Eval 换版复验提交权限](domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md#2026-10-19-换版复验的只读来源与标注编辑权限) — 负责人只读来源与标注编辑权限分离、旧冻结计划历史责任接续、实际提交回读和未整改题当前责任链。
 
 - 2026-10-19：[Benchmark 子集评测与调优方案](domains/maxwell/projects/evolve-benchmark-run-subset.md) — 过度设计复审与精简清单、CaseSet 首版常用子集管理、运行来源及 Runner 固定输入；待确认。
 

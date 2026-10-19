@@ -68,3 +68,13 @@ links: [sandeval-workbench-context-404-evidence, sandeval-correction-evidence-an
 
 - [源修复、原生回归和受控 CLI 的 main PR #2624](https://github.com/world-sim-dev/sandai-data-smith/pull/2624)。实现沿 `LatestAnswerReinspectionService`、`SubmissionService.resolve_items` 的 `review_refresh` 与 `app.cli.latest_answer_reinspection` 查，普通标注编辑解析接口权限未放宽。
 - [本次精确操作与逐题责任证据](/Users/leslie/Documents/Playground/output/latest-reinspection-apply-20261019/report.md)：实际结果、代码指纹、环境、冻结计划、原请求及独立回读沿记录核验；本页不保存现时执行成功或待办状态。
+
+
+## 2026-10-19 未完复验换版的历史责任接续
+
+**Why:** 旧复验可以同时携带多个历史整改单的正式授权。停止旧轮、保存最新版送审后，如果重提时只带新整改单，原生联合责任守卫会拒绝生成新待办；预览通过和送审已保存都不能说明闭环完成。已完成的整改责任与仍未结的共同责任也不能一起重新打开。
+
+**How to apply:** 从旧不可变检查计划读取精确责任引用和版本，仅将同范围未结非祖先责任显式带入原生重提；已关闭责任排除，祖先责任保留至正常验收。恢复请求先固定到原生回执，按质量任务、旧轮次及请求身份隔离；每次重试使用同一送审、原意图和请求，不重算当前答案或静默扩大授权。回归同时覆盖未完复验再次换版、已关闭责任、祖先验收和跨轮次复用请求标识。实际完成须独立回读正式回执、新轮次和真实工作台；一次维护操作的代码指纹与常驻服务发布SHA分别记录。
+
+- [main PR #2625](https://github.com/world-sim-dev/sandai-data-smith/pull/2625)：`LatestAnswerReinspectionService._resubmit_request`、原生回执及直接回归；代码、CI和合并发布状态沿PR查。
+- 精确任务的新轮次、4张旧整改单、冻结请求、实际操作代码及逐题回读，查[维护交付记录](/Users/leslie/Documents/Playground/output/latest-reinspection-apply-20261019/report.md)。不在wiki复制现时成功状态。
