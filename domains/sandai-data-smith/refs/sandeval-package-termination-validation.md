@@ -67,3 +67,9 @@ links: [sandeval-package-transition-lock-regression-20261017]
 - **Why:** 后台恢复会收拢部分异常，前台没有 5xx、延迟回落，也不能证明新的持久准入占用没有持续累积；旧质检阻塞与新的控制层未知结果可以同时存在。**How to apply:** 联查操作类型、执行器实例、登记数/未决操作数、增长速率与保护上限，再按原业务回执区分旧阻塞和新增控制层影响。未知登记不会自动过期，入口关闭也不停止写屏障；出现增长时保持入口关闭，不按时间或 Pod 消失强清。当前窗口和未决根因沿本机 `Documents/Playground/package-termination-acceptance-20261019/production/RELEASE-OBSERVATION.md` 与 [PR #2623](https://github.com/world-sim-dev/sandai-data-smith/pull/2623) 查，不从本页推断最新数量或健康状态。
 - **Why:** 常规 Web Deploy 不会升级独立 generation Worker，而它也共享 HoloClient 的生命周期。**How to apply:** 核对各执行器的实际导入闭包与拥有者发布合同，沿 [生成工作区上线 runbook](https://github.com/world-sim-dev/sandai-data-smith/blob/main/sand-eval/docs/operations/video-generation-workspace-rollout.md) 在空闲时通过原生 `--generation-worker-only` 完成独立滚动，核验实际镜像和 Ready 稳定性；不要把 Web Gate 成功视作所有执行器已升级。
 - **Why:** 发布前后几个短采样窗口之间可能恰好遗漏错误峰值；新 Pod 恢复、Web 内存正常与连接池不饱和，也不能排除共享数据库的查询总内存超限。**How to apply:** 每轮核对 from/to 连续性并补查间隙，按请求 ID、数据库错误类别与时间归并真实影响；分别记录 DB 查询内存、Pod RSS、池等待及后台持久占用，未定位重查询前不把内存错误归因于新屏障或滚动退出。该次补查的请求与异常证据继续沿本机生产观测记录核验。
+
+
+## 2026-10-19：生产入口配置与 CI 证据口径
+
+- [入口开关配置 PR #2631](https://github.com/world-sim-dev/sandai-data-smith/pull/2631)、[配置 PR Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/39254950018) 与 [主干发布](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/39255185291) 是用户要求开放入口后的配置与生效核验入口；最新开关值和健康结论查本机生产观测记录，不把本页当运行状态。
+- **Why:** 开关来自进程启动环境，ConfigMap 已写或 PR 已合并不代表四个 Web 进程都已经生效；纯 release 配置的绿色 Gate 也可能按分类跳过应用测试。**How to apply:** 通过拥有者的配置 PR 与原生发布滚动，逐个回读实际 Web settings、镜像与就绪，再只读验证现有管理员资格和列表；报告实际执行的 CI jobs，把原功能完整验证与本次配置验证分开。用户明确开放入口不表示可以核销历史未知登记，也不意味着风险已解除。
