@@ -1,5 +1,7 @@
 # leslie_wiki 目录
 
+- 2026-10-19：[持续调优准入与恢复边界](domains/maxwell/pitfalls/evolve-continuous-admission-and-recovery.md) — 全事务期限、真实根归属、基线 Run 与许可原子提交及旧 Worker 隔离；整合与真实验收状态沿执行记录查询。
+
 - 2026-10-19：[Sand 包装送审的待定声明遗漏](domains/sandai-data-smith/pitfalls/sandeval-sand-wrapper-deferred-declaration.md) — 冻结子批次待定证据、包装读取断点、SPACE_QC 覆盖缺口；测试 PR #2637、main PR #2641、合并后自动发布核验及影响复审入口。
 
 - 2026-10-19：[数据包终止性能与身份取证](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-19数据库资源与入口身份取证) — Hologres 聚合口径、SQL 文本绑定、计划与运行证据边界，以及员工空间与显式平台管理员的区别。
