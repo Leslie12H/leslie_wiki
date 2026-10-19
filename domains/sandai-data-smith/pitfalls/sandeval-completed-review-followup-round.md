@@ -70,3 +70,10 @@ links: [sandeval-inspector-rework-round-list-and-editability, sandeval-review-pe
 **How to apply:** 版本不同时，仅沿原 Sand 冻结子批次自身的 previous_submission_id 链接续；要求末端整改执行已完成且 resolved，每条前驱边有完成记录，逐级核验受控范围迁移声明、质量规则和固定题目集合。当前来源分区、精确原退回题目、当前质检和负责人报告、权限与交接写入校验全部保留。缺失、未完成、驳回或来自其他送审的末端不能放行；无需改原报告或历史答案。新增回归应真实完成单批回交、Sand 复验与验收，并验证失败前无交接写入。
 
 - 代码与回归指针：[PR #2610](https://github.com/world-sim-dev/sandai-data-smith/pull/2610)，`AggregationService._completed_batch_continuation`、`test_migrated_batch_handoff.py`。合并、部署与真实存量恢复状态以[本机交付报告](/Users/leslie/Documents/Playground/output/quality-all-cases-20261019/report.md)和原生审计为准。
+
+
+## 执行快照与真实派单投影（2026-10-19）
+
+**Why:** 恢复后执行表快照可能仍是 awaiting_assignment，而原生 `_assigned_execution` 已从实际检查组投影出 rechecking；单看快照会误判未派单。整包已经退回后，原报告停止也会让再次对旧包直接调用私有冻结预检失败，这不等于原退回未完成。
+
+**How to apply:** 独立回读正式交接回执、原生执行投影、真实 review_task 的组、关卡、处理人与状态，再判断是否需要恢复。原生自动派单发现已有检查组而返回 false 是避免重复的正常结果。已有整包退回决定用 `PackageSelfCheckService.detail`、同请求回执和页面自查任务核验，不把创建新决定的私有 `_freeze` 当成已退回事项的状态接口。运行证据查同页本机交付报告及 `eight-runtime-final.json`、`kemeng-production-real-return-readonly.json`。
