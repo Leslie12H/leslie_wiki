@@ -119,3 +119,10 @@ links: [sandeval-package-transition-lock-regression-20261017]
 
 - **Why:** 共享测试分支缺少已在生产的模块时，强行同步主线会扩大冲突范围；这也不意味着必须停下所有验收。**How to apply:** 先读拥有者的 [独立测试环境 runbook](https://github.com/world-sim-dev/sandai-data-smith/blob/main/sand-eval/docs/operations/isolated-test-environment.md) 与原生工作流，使用支持的固定候选分支入口，校验 expected SHA、代码树、完整测试、构建和部署 digest；不修改冲突模块，不将test历史带入开发/main，不以候选模块注入替代实际安装类。验收及私有对象清理后，重新核对共享分支和并发发布，通过同一原生流程恢复最新已批准测试版本。候选验收、main Gate、生产发布与健康观察分别取证。
 - 发布及实现审查入口为 [main修复 PR #2652](https://github.com/world-sim-dev/sandai-data-smith/pull/2652)；动态性能、遗留未知登记和尚待审计的取消来源沿本机生产观测记录查，不把PR已合并当作峰值容量或根因全部闭环。
+
+## 2026-10-20：发布后的稳态、混合分位数与业务拒绝
+
+- 最新修复发布从 [PR #2652](https://github.com/world-sim-dev/sandai-data-smith/pull/2652) 与 [main部署](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/39291937752) 查；绝对窗口、实际镜像、历史未知与当前待查请求继续沿本机 `Documents/Playground/package-termination-acceptance-20261019/production/REVIEW-ROUND2.md` 顶部及观测记录，不从本页推导当前健康或容量。
+- **Why:** 路由总体p95会同时受401/200比例和每请求数据库调用数分布影响；主要分组回落也不能掩盖少数分组的尾部上升。**How to apply:** 先保留完整窗口/样本与路由总体，再匹配成功状态、规模、calls及可见角色/缓存维度；保留未能解释的尾部，不平均分位数，不把自然请求量下降当容量下降，也不将同calls当完全同负载。
+- **Why:** 没有5xx、未知占用停止增长，不等于正常写入成功；业务422可能已经执行大量校验读取，状态码本身不能证明是合法校验还是回归。**How to apply:** 对写入口分别统计2xx及各类拒绝，关联request ID、原始响应错误码和版本；只读证据不足时保留缺口，不重放生产写请求、不修改真实草稿来证明猜想。历史未知保护仍单独保留。
+- **Why:** SLS提供OTel ID不代表trace可读；即使ARMS root和依赖span存在，仍可能没有业务错误码或完整应用分段。**How to apply:** 沿 [ARMS只读GetTrace](https://www.alibabacloud.com/help/en/arms/application-monitoring/developer-reference/api-arms-2019-08-08-gettrace-apps) 与 [拥有者观测指引](https://github.com/world-sim-dev/sandai-data-smith/blob/main/sand-eval/.agents/skills/sand-eval-api-performance/references/sls-dashboard.md) 验证实际命中，输出白名单字段/哈希，避开SQL正文、参数和完整URL；区分客户端累计SQL、并发墙钟、池等待与尚未覆盖的时间，不凭相减虚构CPU或服务端SQL根因。

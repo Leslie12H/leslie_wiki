@@ -1,5 +1,7 @@
 # leslie_wiki 目录
 
+- 2026-10-20：[稳态与业务拒绝取证](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-20发布后的稳态混合分位数与业务拒绝) — 修复发布指针、成功状态与calls匹配、尾部分组保留、422与5xx分开判断，以及ARMS命中后的分段缺口。
+
 - 2026-10-20：[完整候选与共享测试恢复](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-20完整候选验收与共享测试恢复) — 原生精确候选入口、安装类验证、保留测试历史边界、恢复最新共享版本及main修复PR指针。
 
 - 2026-10-20：[持续调优准入与恢复](domains/maxwell/pitfalls/evolve-continuous-admission-and-recovery.md) — 原件复用与回收协调、人工决策收尾、精确调优目标与StrictMode验收；当前代码与未完成Gate查执行记录。
