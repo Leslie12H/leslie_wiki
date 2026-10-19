@@ -100,3 +100,10 @@ links: [sandeval-package-transition-lock-regression-20261017]
 
 - **Why:** 同一明确用户取消可能以 ORCA 表缓存 0A000 包装出现，而同为 57014 的语句超时具有不同预算含义；只按异常大类重试会扩大失败成本。**How to apply:** 沿 [最终测试 PR #2649](https://github.com/world-sim-dev/sandai-data-smith/pull/2649) 检查 SQLSTATE 与完整驱动主消息、真实查询样本和反例；仅对有证据的用户取消形式恢复，语句超时不重复整个时限。取消来源的跨账号审计与客户端有界恢复分别闭环，实际发布状态查本机生产观测记录。
 - **Why:** GitHub run/check 字段与已完成 job 日志、实际部署可能矛盾，不能据 queued 就推断无 runner，也不能以完成日志替代仓库强制检查。**How to apply:** 固定 PR head/base/tree，交叉核对汇总任务需要的各检查结果、错误/取消/清理标志和实际镜像源码；普通合并若仍被 required checks 拒绝，保留证据请求 Actions 回写排障，不使用管理员绕过、不修改保护或伪造 check，不把早一版已安装镜像冒充最终补丁验收。动态状态沿上述 PR 及本机 `Documents/Playground/package-termination-acceptance-20261019/production/RELEASE-OBSERVATION.md` 查。
+
+
+## 2026-10-20：轮询失败隔离与大批次占用
+
+- **Why:** 逐包轮询遇到一个损坏登记或退役失败就退出，会饿死后续正常包的排空确认；单包锁独立不足以证明轮询也独立。**How to apply:** 沿 [轮询修复与回归](https://github.com/world-sim-dev/sandai-data-smith/blob/codex/package-termination-risk-repair/sand-eval/platform/backend/app/infra/package_control.py) 核对单包与状态批次分别隔离，其他包继续，末尾仍报告原错误，失败占用不核销；分别验证A缺失、A退役失败、跨批次读取失败及取消仍传播。不把模型复现当生产已发生。
+- **Why:** Hologres客户端SQL模板很短，绑定大JSON参与表达式拼接时仍可能在服务端展开超过查询派发上限；这种XX000不等同于用户取消，增加重试无法修复。**How to apply:** 沿 [占用CAS修复](https://github.com/world-sim-dev/sandai-data-smith/blob/codex/package-termination-risk-repair/sand-eval/platform/backend/quality/infrastructure/persistence/inspection_work_claim.py) 对比真实错误与隔离私有表原生复现；若使用已读payload整体替换，必须保留其他元数据、相同版本条件、冲突重读和整批原子性，不拆成半批占用。额外评估完整owners的序列化/传输成本，不能宣称无新增SQL即零性能成本。
+- **Why:** 测试集成可能缺少生产已有模块；只加入一个未被调用的新文件、或只跑其单元测试，会制造业务链路已验收的错觉。**How to apply:** 同时核对模块、实际调用方、夹具和镜像安装哈希；delete/modify冲突先查主线是否存在真实模块，不直接复活测试分支刻意删除的功能，也不将test历史带回main。具体复现、两项修复及动态门禁状态查本机 `Documents/Playground/package-termination-acceptance-20261019/production/REVIEW-ROUND2.md`。
