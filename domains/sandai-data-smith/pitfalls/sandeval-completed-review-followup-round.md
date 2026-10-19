@@ -50,4 +50,14 @@ links: [sandeval-inspector-rework-round-list-and-editability, sandeval-review-pe
 
 **Why:** 整包退回需要预留尚未派检的 Sand 编号以阻止并发派检，但编号尚未对应真实送审，不能直接展开其责任谱系。另一方面，整包汇总接入有效分区后，退回路径若仍用所有历史批次比较，会拒绝新生成的合法包。正式代改分属并行批次时，来源版本可解释也不代表一份旧报告拥有全部新版本的资格。
 
-**How to apply:** 分别保留全量派检围栏和真实送审责任链；真实报告缺失、未结整改仍严格阻断。分区改动必须连同整包提交、单批回交、整包退回、再质检与成果导出逐一检查，并对每个有效成员保留实际报告所属批次。不能用跨批次代改存在性替代报告资格。可梦原问题修复指针：[PR #2607](https://github.com/world-sim-dev/sandai-data-smith/pull/2607)；尚未闭环的消费者与并行代改分区以[2026-10-19 review 证据](/Users/leslie/Documents/Playground/output/quality-all-cases-20261019/review-20261019.md)及后续原生回读为准。
+**How to apply:** 分别保留全量派检围栏和真实送审责任链；真实报告缺失、未结整改仍严格阻断。分区改动必须连同整包提交、单批回交、整包退回、再质检与成果导出逐一检查，并对每个有效成员保留实际报告所属批次。不能用跨批次代改存在性替代报告资格。可梦原问题修复指针：[PR #2607](https://github.com/world-sim-dev/sandai-data-smith/pull/2607)；消费者与并行代改分区的取证、修复及验收以[2026-10-19 review 证据](/Users/leslie/Documents/Playground/output/quality-all-cases-20261019/review-20261019.md)及后续原生回读为准。
+
+
+## 并行代改保留各自报告归属（2026-10-19）
+
+**Why:** 一个完整整改批次转给新作者后，原作者范围可能消失；当前答案的正式代改还可能分别属于原整改批次和并行普通批次。只核验原整改成员的后继会漏掉并行批次的有效成员；直接承认所有跨批次代改又会错误借用报告资格。整包退回也不能把全部历史批次重新当成当前包。
+
+**How to apply:** 先沿已完成整改的精确 source/target 边解释作者变化，再按每个冻结成员自身的正式代改 ledger 寻找当前版本的唯一归属。只有缺口完整覆盖且无歧义时才接续子集，各被选批次仍须分别通过当前质检、负责人验收与完整来源校验；其他重叠历史批次有未结责任时拒绝。退回冻结同一有效分区和完整本地批次版本，准入只重读本地快照拒绝并发漂移，保留尚未落地编号的派检围栏。验收必须覆盖退回、原请求重试、标注修订、复验、负责人验收、整包重交、所有 Sand 批次重新检查及成果资格。
+
+- 实现指针：`quality/application/management/parallel_amendment_partition.py`、`SubmissionService.live_annotator_partition`、`PackageSelfCheckService._freeze/_admit`。
+- 回归指针：`tests/quality/application/management/test_parallel_amendment_partition.py` 与 `test_package_return_admission.py`。交付及当前运行态查 [PR #2607](https://github.com/world-sim-dev/sandai-data-smith/pull/2607) 和[本机交付报告](/Users/leslie/Documents/Playground/output/quality-all-cases-20261019/report.md)。
