@@ -26,3 +26,11 @@ links: [sandeval-saved-version-vs-browser-display]
 
 - [修复与最终 Gate](https://github.com/world-sim-dev/sandai-data-smith/pull/2616)：当前调度契约为 `sand-eval/docs/subsystems/list-summary-refresh.md`，既有工程决定为 `.agents/notes/implemented/architecture/2026-09-24-qc-summary-business-priority.md`；真实 SQL 生命周期用例为 `test_qc_summary_lifecycle.py`。部署与生产恢复必须另行读回，不能将只读候选排序或 SQLite 模型视为已发布摘要。
 - [根因及修复探针](/Users/leslie/Documents/Playground/output/inspector-summary-status-20261019/report.md#后续根因与修复验证2026-10-19-17031709)：队列、实际顺序、worker 有界日志、修复后真实 SQL 的 Hologres 只读 EXPLAIN 与候选结果。动态数值和当前状态沿脚本重新读取。
+
+## 2026-10-19 摘要容量与多余工作
+
+**Why:** 三类任务轮转可以保障处理机会，却不能把到期周期变成完成时限。周期调度仍可能反复校准已经隐藏的历史任务；如果先读取来源计数、再判断历史不可见，就会浪费来源预算。同次消费同时包含整包和局部提示，也会重复标脏和读取配置。
+
+**How to apply:** 先做实时授权及原生当前轮次判断，仅对可见任务读批次/检查项统计，历史任务继续校准可见性。消费批次内去掉相同提示，并让整包提示覆盖本包局部提示，保留其他包和没有整包提示的局部范围。用读取次数、权限撤销和范围保留做回归；不要永久停掉历史校准、在 GET 同步重算，或未测量就扩大数据库并发。新旧 SQL 延迟须同连接交替采样，小样本不能充作 p95；公平和减少多余工作不能代替容量验收。
+
+- [性能 review 原件与验证边界](/Users/leslie/Documents/Playground/output/inspector-summary-status-20261019/report.md#性能-review额外工作量与容量边界)：有效配置白名单、历史不可见占比、旧/新领取计划与小样本、旧实现回放以及直接用例；实际部署及最新完整 Gate 沿 [PR #2616](https://github.com/world-sim-dev/sandai-data-smith/pull/2616)核验。
