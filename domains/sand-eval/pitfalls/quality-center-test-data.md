@@ -2,7 +2,7 @@
 name: sand-eval-quality-center-test-data
 type: pitfall
 created: 2026-09-17
-updated: 2026-10-12
+updated: 2026-10-19
 tags: [sand-eval, testing, quality-center]
 links: []
 ---
@@ -42,3 +42,6 @@ links: []
 2026-10-12 鸿鑫 10 题包核验指针：`/Users/leslie/.codex/visualizations/2026/10/10/01a12599-2842-7070-9644-92cfca89cfb3/hongxin-20261012/report.md`。**Why:** 管理页逐题进度为 1/1、零不合格，并不证明质检报告已正式提交或负责人已验收；不能按“验收丢失”直接修状态。**How to apply:** 先从完整包名和来源任务定位，检查 review_task 的 status/result/submitted_at、review_item 的封存字段及 vendor_review，再用质检员实时身份只读核对 submit 动作和阻断。需要区分点击未发出与服务端成功记录时，查询限定包和时间窗的实际保存/提交/验收请求；SLS 的 content 可能是 Nginx 文本而非 JSON，先确认格式，再解析 method/path/status。若只有已保存判断且正常开放提交入口，由原质检员正式提交、负责人验收，Agent 不补造报告或代验收。当前结果属于报告日期快照，后续需重新读取。
 
 2026-10-12 历史标注退回修复的 main 交付指针：[PR #2364](https://github.com/world-sim-dev/sandai-data-smith/pull/2364)，关联测试 PR #2332。**Why:** 单包受控恢复、原开发分支 Gate 和 main PR 验证分别证明不同边界，不能把其中一项写成平台已上线。**How to apply:** 从 main PR 查看当前 base/head、提交范围、完整 Gate、合并和部署结果；本次沿用只含五个原始开发提交的干净任务分支，未带入测试分支历史。鸿鑫“逐题已保存但报告未提交”的只读排查没有代码改动，不属于该修复的验收用例。
+
+
+2026-10-19 两包同显“整包交接受阻”的只读排查指针：`/Users/leslie/Documents/Playground/output/package-submit-two-20261019/findings.md`。**Why:** 同一页面标签可对应冻结批次工作项重叠，也可对应冻结指定接收人的权限限制；当前来源数量不重复，不代表旧冻结范围不重复。正式提交人也不等于当前标注批次主人。**How to apply:** 按稳定工作项比较每份参与汇总的冻结成员与当前来源完整应交集合，不能只比较 scope_key/version 或 UI 的 5+4+1；再以原生 DTO 分别核对真实操作账号和包内冻结接收人。完整包生成、可提交动作与 QHANDOFF 分开留证。该次只读报告含独立实例回读、精确四项重复和两种真实身份的动作差异，具体人员与当前资格以重新回读为准，不在本页保存会变的运行态。
