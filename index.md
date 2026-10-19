@@ -1,5 +1,7 @@
 # leslie_wiki 目录
 
+- 2026-10-19：[候选验证与正式决策衔接](domains/maxwell/pitfalls/evolve-candidate-loop-decision-boundaries.md) — 独立验证 Work、Runner 无候选基线、原生指标待定语义、采纳可比性与回归门禁的审查指针。
+
 - 2026-10-19：[EVOLVE 目录、关联与取消清理修复](domains/maxwell/pitfalls/evolve-catalog-projection-and-external-adoption.md#2026-10-19-main-发布与浏览器接续) — 统一 main 发布、499 与租约误报、NAS 跨节点文件锁失效、现有 Chrome 接续及真实验收入口。
 
 - 2026-10-19：[Sand Eval 已检完却显示新一轮零进度](domains/sandai-data-smith/pitfalls/sandeval-completed-review-followup-round.md) — 同版本正式报告与上下层整改衔接、审计恢复、单批/批量 SQL 一致性及独立回读。
