@@ -42,3 +42,12 @@ links: [evolve-native-routing-vs-candidate-runner, evolve-inline-metrics-catalog
 **How to apply:** 先检查现有窗口的目标域名、业务空间与账号，再检查 `CGSessionCopyCurrentDictionary` 的 `CGSSessionScreenIsLocked`；已锁屏时只要求解锁，不要求重新登录，也不尝试绕过锁屏或复制认证。自动化安全设置的变更与复用已有会话是两种授权，需按实际审批边界处理。
 
 统一交付已走 [PR #367](https://github.com/world-sim-dev/maxwell-ai/pull/367) → main → [dev 发布 39196828107](https://github.com/world-sim-dev/maxwell-ai/actions/runs/39196828107)；CI、迁移和部署以这两个外部回执核对。后续归档、十题与报警结论查 [本轮独立读回记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-six-fixes-1019/final-acceptance.json)，不能以发布成功代替业务验收完成。
+
+
+## 2026-10-19 取消错误分类需贯穿监控输出
+
+**Why:** HTTP/API 层将请求取消分类为 499/WARN 后，通用监控完成事实仍可能按所有 4xx 写入 failed，物理日志 Sink 又将 failed 输出为 ERROR，造成同一取消请求同时有正确分类与误报。只核对 API error 日志会漏掉第二条输出。
+
+**How to apply:** 沿 `foundation/observability/httpaccess` 的正式完成事实和 `platform/monitoring/slog` 的落地日志一起回归；只有 HTTP 499 且请求 context 确实已取消时分类为 canceled，保留请求关联与延迟，不把正常取消伪装为成功。真实 5xx 即使伴随断连也仍是 failed，原因不明的 499 和其他 4xx 不一并降级。回归覆盖 Gin → 校验 Recorder → 真实日志 Sink，部署成功与真实取消/SLS 报警解除仍分别验收。
+
+最小补丁、CI 与 main 合并查 [PR #369](https://github.com/world-sim-dev/maxwell-ai/pull/369)，实际 dev 发布查 [39198987832](https://github.com/world-sim-dev/maxwell-ai/actions/runs/39198987832)；运行、归档与真实取消结论继续查本页上方的独立读回记录。
