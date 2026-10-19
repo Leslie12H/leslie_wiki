@@ -943,3 +943,5 @@
 - 2026-10-19：[Claude 本机聊天加密归档与清理](global/refs/claude-history-encrypted-archive-20261019.md) — 用户选择公开仓库内仅保存加密分卷，恢复密钥外置；本地会话与普通 Chat 缓存的范围、校验和清理回执入口。
 
 - [Sand Eval 列表摘要与详情实时状态](domains/sandai-data-smith/pitfalls/sandeval-inspector-summary-vs-live-status.md) — 状态待确认不是人工确认节点；核对摘要发布、任务版本与实时复验状态；同类型调度公平、持续变更重新排队、隐藏历史计数减负与通知去重，PR #2616 的容量及验收边界（2026-10-19）。
+
+- 2026-10-19：[Sand Eval 数据包终止隔离与验收](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md) — 原生表形状、富文本交互、独立会话容量、生成器生命周期、未知结果对账与连接池取证入口。
