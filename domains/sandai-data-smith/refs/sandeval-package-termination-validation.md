@@ -48,3 +48,8 @@ links: [sandeval-package-transition-lock-regression-20261017]
 - **Why:** 只补页面入口会遗漏后台持久意图恢复；更新 main 时，新业务写口可能在原审查后出现。**How to apply:** 沿 Quality runtime 的实际组合检查新增命令，换版复验需同时覆盖 submit、prepared.submission 身份的恢复及直接换版退回；测试应检查真实安装的声明列表，不能只单独验证绑定器。
 - **Why:** 读取已完成回执虽然不创建包，也可能绕开原有的权限和读一致性合同。**How to apply:** 主任务恢复在包写准入前读取固定回执时，保留 Leader、执行器租约和发起人当前权限校验，再将未完成的后续写入包在同一参与登记内。
 - **Why:** 同一新版本的正常/混合负载只回答“终止是否额外干扰”，不回答“新屏障相对旧版本增加多少开销”。**How to apply:** 单列版本对照、热/冷包、多执行器、大包和时长维度；入口关闭仍运行既有屏障，不能称为无后端影响。真实测量的 SHA、规模、时长与尚未覆盖范围放 PR/验收记录，避免把小包单 Pod 短测写成生产容量承诺。
+
+## 2026-10-19：包可交付与主任务汇总分开核验
+
+- **Why:** 终止控制按执行包隔离，主任务的完成率与交付范围却是不同读取路径；正常包可交付不能推导主任务统计会自动完成。**How to apply:** 同时检查 [MasterProgressReader](https://github.com/world-sim-dev/sandai-data-smith/blob/codex/package-termination/sand-eval/platform/backend/app/repositories/master_progress.py)、主任务状态 reducer 与交付排除规则；统计分母和展示语义沿 [终止协议](https://github.com/world-sim-dev/sandai-data-smith/blob/codex/package-termination/sand-eval/docs/subsystems/package-termination.md) 核对，不把历史总量静默改成有效范围。
+- **Why:** 停用数据库账号不一定令已缓存的旧会话立即失效。**How to apply:** 临时身份清理先核对状态及会话版本，再在 JWT 尚未过期时验证真实 HTTP 拒绝；鉴权正缓存 TTL 和失效路径沿 [AuthService](https://github.com/world-sim-dev/sandai-data-smith/blob/codex/package-termination/sand-eval/platform/backend/app/services/facts/auth.py) 复核，不用自然 JWT 到期冒充撤销成功。
