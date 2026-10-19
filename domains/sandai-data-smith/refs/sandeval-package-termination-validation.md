@@ -55,3 +55,9 @@ links: [sandeval-package-transition-lock-regression-20261017]
 - **Why:** 停用数据库账号不一定令已缓存的旧会话立即失效。**How to apply:** 临时身份清理先核对状态及会话版本，再在 JWT 尚未过期时验证真实 HTTP 拒绝；鉴权正缓存 TTL 和失效路径沿 [AuthService](https://github.com/world-sim-dev/sandai-data-smith/blob/codex/package-termination/sand-eval/platform/backend/app/services/facts/auth.py) 复核，不用自然 JWT 到期冒充撤销成功。
 
 - **Why:** 多人集中在少数包的短间隔压测会保持热登记，可能漏掉真实人工长时间作答后的反复冷登记。**How to apply:** 沿 [PackageControl 的空闲退役与登记路径](https://github.com/world-sim-dev/sandai-data-smith/blob/codex/package-termination/sand-eval/platform/backend/app/infra/package_control.py) 对照作答间隔，分别测试多包低频提交、热包与初次冷启动；不能只按服务启动时的一次性成本解释登记开销。
+
+## 2026-10-19：生产迁移与持续观测入口
+
+- [生产合并与评审 #2623](https://github.com/world-sim-dev/sandai-data-smith/pull/2623) 和 [合并树 Gate / 生产发布](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/39248630799) 是实际发布状态入口；合并、镜像构建、执行器就绪和业务健康分别核验。
+- **Why:** 发布 schema gate 只读，不会自动补建控制表；旧生产镜像也可能不认识新迁移。**How to apply:** 先按已审核迁移及固定候选镜像的原生 allowlist CLI 应用唯一迁移，使用无生产 Service 标签的临时执行环境；保存 SQL 内容哈希和目标核对，另一个生产连接回读列、主键和初始行数，完成后清理临时资源。超时或部分结果先独立查库，不通过重跑全部迁移或修改旧 Pod 应用源码来解决。
+- **Why:** 发布前已经存在的慢请求或 5xx，以及同期其他 main 修复，会影响上线后的因果判断。**How to apply:** 发布前冻结完整 SLS 时间窗，按真实 SHA、路由和方法保留样本数及分位数；发布后确认每个写执行器版本，再比较相近窗口和负载。保留低样本与滚动期间的限制，并继续检查控制表未知占用和正常包成功流转。具体查询契约见 [性能观测](https://github.com/world-sim-dev/sandai-data-smith/blob/main/sand-eval/docs/subsystems/performance-observability.md)。
