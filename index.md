@@ -1,5 +1,6 @@
 # leslie_wiki 目录
 
+- 2026-10-19：[原生历史运行与工作台逐题差异](domains/maxwell/pitfalls/evolve-nextplay-archive-navigation-parity.md#2026-10-19-原生历史记录逐题配对取证入口) — 原生 Runs/Batch/Snapshot 配对、媒体阶段 SP 与 Skill 内容、三个模型角色、实际回复分支、初态/评分版本及最新运行状态边界。
 - 2026-10-18：[EVOLVE 查询耗时与隐藏基线调优](domains/maxwell/pitfalls/evolve-query-latency-and-tuning-visibility.md) — 重复请求/串行读取、鉴权与 SQL 分层取证、锁采样边界、隐藏集与资源读取授权；PR #365 和真实调优/发布验收指针。
 
 - 2026-10-18：[EVOLVE 与 Nextplay 原 Judge 取证一致性](domains/maxwell/pitfalls/evolve-nextplay-archive-navigation-parity.md) — runtime/persisted 归档导航、原工具正文校验、模拟用户上下文对齐与旧分数证据边界；附两仓库发布、冻结版本升级、媒体 SP、原判适用性、AskUser/goal 停止条件、冻结输入展示及原 Judge bundleHash 复验入口；另含模拟用户模型/采样差异及单侧实验比较边界。

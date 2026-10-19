@@ -2,7 +2,7 @@
 name: evolve-nextplay-archive-navigation-parity
 type: pitfall
 created: 2026-10-18
-updated: 2026-10-18
+updated: 2026-10-19
 tags: [maxwell, evolve, nextplay, evidence, judge, parity]
 links: [evolve-native-routing-vs-candidate-runner, nextplay-independent-benchmark-entry]
 ---
@@ -51,3 +51,14 @@ Nextplay 修复工作树为 `/Users/leslie/.codex/worktrees/nextplay-evidence-pa
 **How to apply:** 分开核对执行 Agent、模拟用户、Judge 三种角色的实际模型与参数，并定位真实发生 AskUser 的题目；无 AskUser 的媒体题不能由回复模型差异解释。比较实际 SP、Skill 内容和阶段授权，再比轨迹与关键条款。原生 direct 模式虽捕获 Snapshot，随后仍执行源 Preset；不要将有快照自动解释为隔离执行。只拿到单侧原件时，明确记录未确认最新 Run、缺少原生配对记录及不可量化的因果边界。
 
 本次只读分析、实际原件统计、部署提交与代码入口查 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-nextplay-gap-analysis-20261018.md`，逐题证据摘要查同目录 `evolve-nextplay-gap-evidence-20261018.json`。这是单侧诊断指针，不是新的评测、评分或修复发布回执。
+
+
+## 2026-10-19 原生历史记录逐题配对取证入口
+
+**Why:** 原 Judge 输入/分数转换一致不代表被测 Agent 相同。原生历史十题混合多个 Preset 和 SP/Skills 版本；独立创作 Preset 的文字阶段限制与完整媒体题的交付目标冲突。仅比较名称、终态或总分，容易把阶段授权、模型角色、交互分支、初始状态及评分版本差异误归为工作台执行器故障。
+
+**How to apply:** 从 nextplay-eval 的原生 Runs 追到关联 Batch、Snapshot 和 before/after；独立核对执行 Agent、模拟用户、Judge 三种模型，区分“关联快照”与“实际 model.request 正文”。direct 模式捕获快照后仍运行源 Preset，不能假定隔离执行。Skills 应比对内容与 CLI 文件，不能只看同名。无 AskUser 的媒体任务不能由回复模型差异解释；maxReplies 也不是普通 COMPLETED 后主动续聊预算。历史 run.json 未归档完整 continuation 时保留未知。
+
+本次原生配对报告、逐题模型/配置表、附件哈希与实时 dev 回执统一查 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-native-paired-20261019/report.md`；机读表为同目录 `comparison.json`、`comparison.csv`。原生权威入口为 [Runs](https://j0yswlgboxz.feishu.cn/base/JFF7b76mLa2JqzsH0vzcrMK2nse?table=tblYqwX9WKsqcDfe)、[Snapshots](https://j0yswlgboxz.feishu.cn/base/JFF7b76mLa2JqzsH0vzcrMK2nse?table=tbluNW4ngn4fPMp0)、[Batches](https://j0yswlgboxz.feishu.cn/base/JFF7b76mLa2JqzsH0vzcrMK2nse?table=tblFL6FMRLjOXKwp)。动态 Run 状态和逐题分数只存回执指针，不从本页日期推断当前状态。
+
+已验证的归因边界：原生封面真实出图、工作台已完成轮只交付 prompt，必须结合实际阶段 SP；大纲实际模拟用户选择不同视角/画风，后续需求分叉；修改剧集初始时间线和评分 prompt 版本不同，不能直接比较总分。其余九题有效评分配置在规范化默认字段后相同。原生缺完整评分的主记录与较早有分/补评记录分别列出，不填零、不挑高分。原生旧 Snapshot 存在 ZIP 容器登记哈希不符但逐文件哈希通过的例外；最新请求正文私有 offload 未读取，均保留证据限制。
