@@ -89,3 +89,8 @@ links: [sandeval-package-transition-lock-regression-20261017]
 - **Why:** 最后一条带旧版本条件的进度更新遭遇明确数据库取消时，后台下一轮业务恢复成功并不能自动结清原屏障登记；直接重放整个业务流程又会扩大副作用。**How to apply:** 沿 [测试修复 PR #2645](https://github.com/world-sim-dev/sandai-data-smith/pull/2645) 检查只重试单条原版本 CAS 的边界、次数上限与原有冲突重读；覆盖更新生效前后、终止交错、兄弟包在退避期间完成，以及通信失败/任务取消/显式事务不重试。不要从一次取消推断所有内部错误可重试，不自动清理旧占用，实际合并与发布状态仍查观测记录。
 - **Why:** Hologres 可能以 57014 或主消息明确为用户取消的 XX000 报告取消；客户端错误类型与数据库原始错误应交叉核验。普通 Python 构造 asyncpg 异常会留下 `.message=None`，把 `str(exc)` 当作真实驱动字段会让分类测试失真。**How to apply:** 错误分类夹具用驱动 `PostgresError.new` 从 SQLSTATE/主消息恢复真实字段，同时测试相似文本但不同含义的内部错误保持原保护。源代码与测试入口沿上述 PR，不在本页复制实现。
 - **Why:** 取消自有空闲连接未必影响下一条语句；取消诊断 SELECT 后 CAS 成功，也不等于已复现业务 UPDATE 取消来源。非管理员查询日志看不到其他账号操作，空结果不能排除外部取消。**How to apply:** 原生实验仅用隔离库私有表和本轮自有连接，记录源代码哈希、实际错误和清理回读；明确故障发生在哪一步，生产取消发起方另用有权限的审计证据定位。当前样本只沿本机观测记录查。
+
+## 2026-10-19：被恢复逻辑捕获的嵌套写与测试选择口径
+
+- **Why:** 嵌套写借用外层准入，只监视外层最终是否抛异常，会漏掉被业务恢复捕获的通信失败或取消，进而错误确认排空；外层记录 blocked 或正常返回不证明内层写已结束。**How to apply:** 沿 [联合测试 PR #2647](https://github.com/world-sim-dev/sandai-data-smith/pull/2647) 核对外层 token 保留首个嵌套未知结果、后续成功或业务拒绝不可覆盖、嵌套错误不会无限产生 token；保留独立子任务和正常兄弟包的隔离。以修复前失败、真实 AdvancementService 包装和原生私有控制表验收分别取证，不把本页当上线状态。
+- **Why:** 仅改测试文件时，direct import 选择可能运行它的 importers，却没有收集该测试文件本身；绿色返回和总 passed 数不能代替新断言确实执行。**How to apply:** 对照选择器输出中的实际命令与 collected/具名用例，先用具名最小回归证明原行为失败；实现变更后再按正常选择器验证，并由最终完整 Gate 覆盖。具体实现沿 [选择器](https://github.com/world-sim-dev/sandai-data-smith/blob/main/sand-eval/platform/scripts/select_tests.py) 查，避免为补证据扩成无界全量本地测试。

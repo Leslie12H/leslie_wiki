@@ -3,6 +3,7 @@
 - 2026-10-19：[持续调优准入与恢复边界](domains/maxwell/pitfalls/evolve-continuous-admission-and-recovery.md) — 全事务期限、真实根归属、基线 Run 与许可原子提交及旧 Worker 隔离；整合与真实验收状态沿执行记录查询。
 
 - 2026-10-19：[Sand 包装送审的待定声明遗漏](domains/sandai-data-smith/pitfalls/sandeval-sand-wrapper-deferred-declaration.md) — 冻结子批次待定证据、包装读取断点、SPACE_QC 覆盖缺口；测试 PR #2637、main PR #2641、合并后自动发布核验及影响复审入口。
+- 2026-10-19：[嵌套写恢复与具名回归](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-19被恢复逻辑捕获的嵌套写与测试选择口径) — 外层捕获不能抹去未知结果、令牌上界及 direct 选择不等于新增断言执行。
 - 2026-10-19：[进度 CAS 取消与真实错误夹具](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-19明确取消后的进度-cas-与错误夹具) — 有界版本重试、兄弟包并发、57014/XX000、驱动字段与原生取消/审计范围核验。
 - 2026-10-19：[后台推进准备与未知写入](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-19后台准备与未知写入取证) — 写准入边界、异常分类、control 池与 SQL 取消因果核验，修复和测试 PR 指针。
 
