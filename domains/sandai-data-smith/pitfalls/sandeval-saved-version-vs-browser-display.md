@@ -58,3 +58,13 @@ links: [sandeval-workbench-context-404-evidence, sandeval-correction-evidence-an
 
 - 上线后的两条精确任务、石羽宁负责人页面和逐题只读证据：[生产验收记录](/Users/leslie/Documents/Playground/output/two-inspection-postrelease-20261019/report.md)。运行态事实沿该记录重读。
 - 只读入口补漏及最终 CI 指针：[main PR #2622](https://github.com/world-sim-dev/sandai-data-smith/pull/2622)。本地真实组件夹具验收、生产页面验收和实际换版写入分别记录，不相互替代。
+
+
+## 2026-10-19 换版复验的只读来源与标注编辑权限
+
+**Why:** 负责人能核对最新版，不代表实际提交使用了同一权限路径。完整复验准备若复用只限当前标注持有人的答案整改解析器，会在停止旧轮次前报“标注整改不存在”；只测替身来源会漏掉这层真实权限边界。当前整改责任人、历史答案作者和实际执行维护操作的人也必须分别记录。
+
+**How to apply:** 负责人换版准备使用已限定精确工作项的质检只读正式答案来源，保留负责人资格、版本比对、完整范围、待定、交接和原生恢复协议。普通标注整改继续检查当前持有人。回归要让持有人编辑解析器明确拒绝负责人，验证换版仍走只读来源，并验证准备期间来源再变化时写入前阻断。预检成功后仍须真实提交并独立读取旧轮次、合法后继和完成回执；失败先确认意图是否已落盘，重试沿用原冻结计划和请求身份。列出未整改题时按稳定工作项追当前持有人及正式处置，不能从历史作者反推接收人；若整改处于复验中，须先由当前质检员正式退回。
+
+- [源修复、原生回归和受控 CLI 的 main PR #2624](https://github.com/world-sim-dev/sandai-data-smith/pull/2624)。实现沿 `LatestAnswerReinspectionService`、`SubmissionService.resolve_items` 的 `review_refresh` 与 `app.cli.latest_answer_reinspection` 查，普通标注编辑解析接口权限未放宽。
+- [本次精确操作与逐题责任证据](/Users/leslie/Documents/Playground/output/latest-reinspection-apply-20261019/report.md)：实际结果、代码指纹、环境、冻结计划、原请求及独立回读沿记录核验；本页不保存现时执行成功或待办状态。
