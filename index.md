@@ -930,3 +930,5 @@
 - 2026-10-19：[EVOLVE 目录投影与外部评分采用](domains/maxwell/pitfalls/evolve-catalog-projection-and-external-adoption.md) — 逻辑对象归并及路径故障展示、原子采用与未知写恢复、目录归档、嵌套阅读及独立限时取消/未启动任务终态；统一 main PR #367 与验收指针。
 
 - 2026-10-19：[整改分区展示与实际抽样](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md) — 版本集合相等仍可能跳过冻结成员计数投影；冗余来源待分配误标、预估计数与实际逐题下发分别核验。
+
+- 2026-10-19：[整改分配投影修复](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md) — 列表、首开与只选一批确认统一冻结分区，补齐局部来源后严格证明完整性；PR #2607 与review/CI交付入口。

@@ -27,3 +27,6 @@ links: [sandeval-handoff-duplicate-scope, sandeval-remediation-scope-change-stal
 
 
 2026-10-19 分配展示与真实逐题下发复核见[展示口径与下发回读报告](/Users/leslie/Documents/Playground/output/paper-allocation-projection-20261019/report.md)。**Why:** 负责人列表可把冗余普通来源标成待分配，弹窗却正确排除该来源；剩余整改批次仍沿用当前作者计数，导致预览数量与正式冻结抽样范围不同。仅比较 `(scope_key, scope_version)` 集合无法发现相同版本下的成员数变化，可能跳过已有整改分区投影。**How to apply:** 同时核对原始来源选项、正式交接成员、投影入口触发条件、直接投影结果及真实 review_item 引用；抽样预估、分配单计数和真实任务明细分开验收。冗余来源不应独立标为待分配，原整改批次应按有效冻结成员展示；纯函数抽样通过仍不能替代真实下发回读。实际任务、部署SHA、题数与当前进度只保留在报告，不固化为持续状态。本轮仅完成只读诊断和真实新分配验收，未修改业务代码或生产数据。
+
+
+2026-10-19 修复实现与 review/CI 入口见用户指定的 [PR #2607](https://github.com/world-sim-dev/sandai-data-smith/pull/2607)及[修复交付报告](/Users/leslie/Documents/Playground/output/paper-allocation-projection-20261019/fix-delivery.md)。**Why:** 仅修弹窗首开仍不完整，批量确认为了优化会只读取所选作者行，重新投影时若拿局部行做整包完整性判定，可能又退回旧计数。**How to apply:** 已修订批次即使范围版本集合相同也进入原有严格分区核验；所选来源是局部时先补齐完整来源，再投影有效冻结分区。列表、首开、单批确认、实际样本及原请求重试一起覆盖；无效或未闭环整改仍保留当前来源，未修订普通批次保持快速路径。合入指定PR与PR本身合并、生产部署是不同动作；远程review服务错误也不能当作clean review，最终head和验收状态从交付记录重新读取。
