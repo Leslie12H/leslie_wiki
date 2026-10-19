@@ -61,3 +61,12 @@ links: [sandeval-inspector-rework-round-list-and-editability, sandeval-review-pe
 
 - 实现指针：`quality/application/management/parallel_amendment_partition.py`、`SubmissionService.live_annotator_partition`、`PackageSelfCheckService._freeze/_admit`。
 - 回归指针：`tests/quality/application/management/test_parallel_amendment_partition.py` 与 `test_package_return_admission.py`。交付及当前运行态查 [PR #2607](https://github.com/world-sim-dev/sandai-data-smith/pull/2607) 和[本机交付报告](/Users/leslie/Documents/Playground/output/quality-all-cases-20261019/report.md)。
+
+
+## 已完成范围迁移与单批回交（2026-10-19）
+
+**Why:** 整改把原批次的部分答案转给新作者后，合法的新批次可有不同范围版本，同时仍包含原退回的全部固定题目。直接比较原 Sand 批次与当前批次的 scope_version 会把已通过复检、验收的正规整改误判成额外业务漂移，导致上层责任已闭环而单批回交停住。普通范围版本相等和题目集合相等也不是可以互换的资格凭据。
+
+**How to apply:** 版本不同时，仅沿原 Sand 冻结子批次自身的 previous_submission_id 链接续；要求末端整改执行已完成且 resolved，每条前驱边有完成记录，逐级核验受控范围迁移声明、质量规则和固定题目集合。当前来源分区、精确原退回题目、当前质检和负责人报告、权限与交接写入校验全部保留。缺失、未完成、驳回或来自其他送审的末端不能放行；无需改原报告或历史答案。新增回归应真实完成单批回交、Sand 复验与验收，并验证失败前无交接写入。
+
+- 代码与回归指针：[PR #2610](https://github.com/world-sim-dev/sandai-data-smith/pull/2610)，`AggregationService._completed_batch_continuation`、`test_migrated_batch_handoff.py`。合并、部署与真实存量恢复状态以[本机交付报告](/Users/leslie/Documents/Playground/output/quality-all-cases-20261019/report.md)和原生审计为准。
