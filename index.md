@@ -1,6 +1,6 @@
 # leslie_wiki 目录
 
-- 2026-10-19：[Benchmark 子集评测与调优方案](domains/maxwell/projects/evolve-benchmark-run-subset.md) — LangSmith Split 协议、常用子集首版管理、实际范围与历史修订、完整接口及结构清单；待用户确认。
+- 2026-10-19：[Benchmark 子集评测与调优方案](domains/maxwell/projects/evolve-benchmark-run-subset.md) — 过度设计复审与精简清单、CaseSet 首版常用子集管理、运行来源及 Runner 固定输入；待确认。
 
 - 2026-10-19：[运行发现与实验趋势分工](domains/maxwell/pitfalls/evolve-catalog-projection-and-external-adoption.md#2026-10-19-运行发现监控与实验趋势分工) — 业务内目录与跨业务进度、执行/评分区分、Benchmark 与候选曲线、官方产品研究指针；当前为建议。
 

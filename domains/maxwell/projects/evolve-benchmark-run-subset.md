@@ -26,3 +26,11 @@ LangSmith 官方资料入口：
 代码核对入口均在 Maxwell 的 services/evolve-server/internal/modules/evolve/application 下：commands/direct_run.go、run.go、candidate_validation.go、runner_tuning_run.go、benchmark_result.go；对应来源、计划绑定、基线复用和正式结果门禁。HTTP 路由见 internal/app/transport/http/business_runs.go。后续实施先重读当前源码，不将本页当作已上线事实。
 
 接口与结构变更仍待用户确认。正式 SPEC 配置指向的 /Users/shatang/Project/nexus-os/doc-hub 在本机不可用，本地方案不替代该处正式执行包。
+
+## 2026-10-19 过度设计复审
+
+用户要求继续 review，强调清晰、简洁和有效。本轮沿现有 CaseSet 修订、冻结 Run、材料采用与 Runner 策略存储核对，发现独立范围身份、重复关系投影及自动兼容修订选择增加了不必要成本。当前推荐以[精简复审与替代清单](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-benchmark-subset-plan-20261019/review.md)为准，原 proposal.md 保留为审查输入，两版均未获得实施确认。
+
+**Why:** 现有 CaseSet 已保存成员及版本，Run 已固定实际题集与评分产物；新增身份系统不能替代必要的来源关联。
+
+**How to apply:** 常用子集的创建、成员修改、历史与归档保留首版；复用 CaseSet 和既有 Work.policy_json，来源字段与迁移清单查精简方案。特别核对选中根的材料采用及 Runner 准备更新是否保留固定输入，不能只减少表就宣称链路闭环。具体审查位置、接口及结构取舍存复审文件，不在知识库复制易变清单。
