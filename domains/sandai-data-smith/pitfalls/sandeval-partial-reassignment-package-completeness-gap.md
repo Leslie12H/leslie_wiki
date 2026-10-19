@@ -2,7 +2,7 @@
 name: sandeval-partial-reassignment-package-completeness-gap
 type: pitfall
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-19
 tags: [sand-eval, quality, package, reassignment, scope]
 links: [sandeval-handoff-duplicate-scope, sandeval-remediation-scope-change-stale-handoff, sandeval-reassignment-scope-and-batch-responsibility]
 ---
@@ -22,3 +22,5 @@ links: [sandeval-handoff-duplicate-scope, sandeval-remediation-scope-change-stal
 2026-10-15 生产调查仍限只读，代码 PR 不代表已合并或已部署；未修复生产数据、未触发推进或提交 Sand。单案候选规则验证、最终 CI 和 code review 证据见上述本地排查目录的 `candidate-readonly.json`、`review-findings.json` 及 PR。review 后的修复复验见同目录 `review-fix-verification.json`。Gate 通过不能替代回交范围和必检预览的单独复现；是否可合并以 PR 的最终提交、检查和未决项为准。
 
 成员子集引入后，所有再次封存的交接类型都须携带同一选择，单批回交还须核对原退回工作项，不能自动扩大或缩小。必检数量也须按所选固定成员统计，并对照实际抽样验证普通及批量预览；仅把最终数量夹到题数上限会掩盖被移走题目仍参与必检计数的问题。
+
+2026-10-19 同版本、已完成整改的扩展案例见[整改冻结分区与当前作者批次重叠](sandeval-remediation-frozen-overlap-same-scope-version.md)及[PR #2602](https://github.com/world-sim-dev/sandai-data-smith/pull/2602)。新分支从 main 复用本页 PR #2488 的原始提交，补充已闭环整改边与承接范围证明；不能将 test 历史带回开发或发布分支。旧普通转派能力和该新分支都应以最终代码、Gate、统一部署与业务回读判断是否生效。

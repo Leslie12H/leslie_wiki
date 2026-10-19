@@ -2,7 +2,7 @@
 name: sandeval-remediation-frozen-overlap-same-scope-version
 type: pitfall
 created: 2026-10-16
-updated: 2026-10-18
+updated: 2026-10-19
 tags: [sand-eval, quality, remediation, package, scope, duplicate]
 links: [sandeval-handoff-duplicate-scope, sandeval-remediation-scope-change-stale-handoff, sandeval-partial-reassignment-package-completeness-gap]
 ---
@@ -20,3 +20,5 @@ links: [sandeval-handoff-duplicate-scope, sandeval-remediation-scope-change-stal
 2026-10-16 发布后核验见[合并后生产核验](/Users/leslie/Documents/Playground/sandeval-linke-package-block-20261016/post-merge-verification.md)。**Why:** 新版本当前范围已完整时，旧推进记录和正式整包可能仍在不同阶段；仅无重复不足以证明提交入口恢复。**How to apply:** 同时核对实际部署SHA、正式完整包的冻结集合/摘要、指定负责人原生 `blocking_reasons` 和 `submit_to_sand`，再将真实交接回执及Sand后继任务作为独立完成事实。该次检查仅只读核验可提交状态，未代为正式提交。
 
 2026-10-18 分配阶段复核见[临科智华 20261010_03 分配只读报告](/Users/leslie/Documents/Playground/output/paper-allocation-20261018/report.md)。**Why:** 同一包的旧错误截图、当前普通来源行数和正式整改冻结成员数属于不同证据；普通作者选项显示一题，不代表原整改批次的另一道冻结题目丢失。**How to apply:** 以当次线上原生弹窗准备结果、正式交接子批次和完整冻结成员校验核对可分范围；明确区分当前前置通过、实际下发回执与质检员待办。旧截图原请求未获 trace 时，不推断其时间或归因于当前部署。批次、题数、SHA 和读取时间仅在报告中保存，使用前重新核验；本次没有执行实际派发或业务写入。
+
+2026-10-19 新分支见[两包恢复与根因报告](/Users/leslie/Documents/Playground/output/package-submit-two-20261019/recovery-and-root-cause.md)和[修复 PR #2602](https://github.com/world-sim-dev/sandai-data-smith/pull/2602)。**Why:** 已部署的重复排除规则仍可能正确拒绝新批次：两边冻结答案相同，不代表后来只绑定新批成员的正式代改也属于旧整改成员；直接放宽当前答案相同会丢失修订归属。**How to apply:** 分别核验当前答案对两个冻结成员的正式继承证明；只一边成立时，保留该侧批次及报告，把旧整改批次当前仍有效的成员子集封存进交接证据。整改子集还须有精确已闭环 source/target 边、实际作者变化和当前正式批次对移出题的覆盖，不能把未完成整改或任意旧修订裁短。网页与 worker 统一支持新证据之前，不应仅在单个临时 CLI 写新格式整包；候选预检、发布、真实交接和 Sand 分配分开验收。报告也包含另一包沿原指定负责人完成原生交接、服务器审计及独立回读的证据指针；运行状态使用前重读。
