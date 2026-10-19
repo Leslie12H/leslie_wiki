@@ -24,3 +24,11 @@ links: [sandeval-handoff-duplicate-scope, sandeval-remediation-scope-change-stal
 成员子集引入后，所有再次封存的交接类型都须携带同一选择，单批回交还须核对原退回工作项，不能自动扩大或缩小。必检数量也须按所选固定成员统计，并对照实际抽样验证普通及批量预览；仅把最终数量夹到题数上限会掩盖被移走题目仍参与必检计数的问题。
 
 2026-10-19 同版本、已完成整改的扩展案例见[整改冻结分区与当前作者批次重叠](sandeval-remediation-frozen-overlap-same-scope-version.md)及[PR #2602](https://github.com/world-sim-dev/sandai-data-smith/pull/2602)。新分支从 main 复用本页 PR #2488 的原始提交，补充已闭环整改边与承接范围证明；不能将 test 历史带回开发或发布分支。旧普通转派能力和该新分支都应以最终代码、Gate、统一部署与业务回读判断是否生效。
+
+## 2026-10-19：冻结子集已正确，详情与后台摘要仍使用旧范围
+
+**Why:** 正式包已封存有效成员子集时，详情再次展开旧批次全量成员，会把转出工作项重复计入，并误报完整应交范围不足。包级分配入口只检查权限，后台摘要又未沿用派检的有效分区证明，因此实际全部通过却可能显示可分配或整改。快照的 submitted 状态也不等于正式交接 Sand；后者要核对 QHANDOFF 或真实 Sand 任务。
+
+**How to apply:** 分别核对原始成员、冻结子集、执行叶子，逐项列出 missing/outside/duplicate。详情和摘要复用有效分区证明，保留缺题、新答案、未通过及未结处置的阻断；普通包不增加来源或成员读取，接续证明仅在单次计算内共享。人工恢复限明确授权的包，固定包和报告版本，先只读计划，再用 owning CLI 显式 apply 调用原生 submit_package，独立读回正式回执和 Sand 可分配范围。不得手工修改摘要数字；旧 worker 仍可能重算覆盖展示，长期修复须正式发布。
+
+三个具体包的授权、精确版本、审计和跨副本读回见[独立恢复报告](/Users/leslie/Documents/Playground/output/three-package-handoff-20261019/report.md)。代码及最终 CI 指针为 [main PR #2616](https://github.com/world-sim-dev/sandai-data-smith/pull/2616)，运行态和发布状态沿报告及 PR 实时核对。
