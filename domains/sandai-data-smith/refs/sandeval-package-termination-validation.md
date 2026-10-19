@@ -64,7 +64,7 @@ links: [sandeval-package-transition-lock-regression-20261017]
 
 ## 2026-10-19：HTTP 健康与持久占用增长分开判断
 
-- **Why:** 后台恢复会收拢部分异常，前台没有 5xx、延迟回落，也不能证明新的持久准入占用没有持续累积；旧质检阻塞与新的控制层未知结果可以同时存在。**How to apply:** 联查操作类型、执行器实例、登记数/未决操作数、增长速率与保护上限，再按原业务回执区分旧阻塞和新增控制层影响。未知登记不会自动过期，入口关闭也不停止写屏障；出现增长时保持入口关闭，不按时间或 Pod 消失强清。当前窗口和未决根因沿本机 `Documents/Playground/package-termination-acceptance-20261019/production/RELEASE-OBSERVATION.md` 与 [PR #2623](https://github.com/world-sim-dev/sandai-data-smith/pull/2623) 查，不从本页推断最新数量或健康状态。
+- **Why:** 后台恢复会收拢部分异常，前台没有 5xx、延迟回落，也不能证明新的持久准入占用没有持续累积；旧质检阻塞与新的控制层未知结果可以同时存在。**How to apply:** 联查操作类型、执行器实例、登记数/未决操作数、增长速率与保护上限，再按原业务回执区分旧阻塞和新增控制层影响。未知登记不会自动过期，入口关闭也不停止写屏障；尚未开放时保持入口关闭，已获用户授权开放则只读告警并交由其决策，不自动改开关，也不按时间或 Pod 消失强清。当前窗口和未决根因沿本机 `Documents/Playground/package-termination-acceptance-20261019/production/RELEASE-OBSERVATION.md` 与 [PR #2623](https://github.com/world-sim-dev/sandai-data-smith/pull/2623) 查，不从本页推断最新数量或健康状态。
 - **Why:** 常规 Web Deploy 不会升级独立 generation Worker，而它也共享 HoloClient 的生命周期。**How to apply:** 核对各执行器的实际导入闭包与拥有者发布合同，沿 [生成工作区上线 runbook](https://github.com/world-sim-dev/sandai-data-smith/blob/main/sand-eval/docs/operations/video-generation-workspace-rollout.md) 在空闲时通过原生 `--generation-worker-only` 完成独立滚动，核验实际镜像和 Ready 稳定性；不要把 Web Gate 成功视作所有执行器已升级。
 - **Why:** 发布前后几个短采样窗口之间可能恰好遗漏错误峰值；新 Pod 恢复、Web 内存正常与连接池不饱和，也不能排除共享数据库的查询总内存超限。**How to apply:** 每轮核对 from/to 连续性并补查间隙，按请求 ID、数据库错误类别与时间归并真实影响；分别记录 DB 查询内存、Pod RSS、池等待及后台持久占用，未定位重查询前不把内存错误归因于新屏障或滚动退出。该次补查的请求与异常证据继续沿本机生产观测记录核验。
 
@@ -83,3 +83,9 @@ links: [sandeval-package-transition-lock-regression-20261017]
 
 - **Why:** 将只读记录读取和包锁等待也包进写参与登记，会让准备失败或等待取消产生不必要的永久占用；真正写入结果未知又必须继续保护。**How to apply:** 沿 [修复 PR #2644](https://github.com/world-sim-dev/sandai-data-smith/pull/2644) 与 [仅用于测试的集成 #2640](https://github.com/world-sim-dev/sandai-data-smith/pull/2640) 检查 `_attempt` 准入边界，覆盖反复读取失败、等待取消、等待期间终止、真实写失败和兄弟包可写；不把该边界修复当作全部生产取消根因已解决。
 - **Why:** SQL 取消日志与未知登记的时间相邻不等于客户端异常来源已明确；只看 main 池也会遗漏 leader/control 池。**How to apply:** 按源码 SQL 哈希、实际异常类型/SQLSTATE、执行器和原业务回执核对，按进程分别读 control/main 池；SQL 样本或 JSON 截断时在服务端提取固定字段，不以解析失败认定无异常。原生 CAS 简单成功/冲突场景不替代生产负载或取消路径。动态证据沿本机 `Documents/Playground/package-termination-acceptance-20261019/production/RELEASE-OBSERVATION.md` 查。
+
+## 2026-10-19：明确取消后的进度 CAS 与错误夹具
+
+- **Why:** 最后一条带旧版本条件的进度更新遭遇明确数据库取消时，后台下一轮业务恢复成功并不能自动结清原屏障登记；直接重放整个业务流程又会扩大副作用。**How to apply:** 沿 [测试修复 PR #2645](https://github.com/world-sim-dev/sandai-data-smith/pull/2645) 检查只重试单条原版本 CAS 的边界、次数上限与原有冲突重读；覆盖更新生效前后、终止交错、兄弟包在退避期间完成，以及通信失败/任务取消/显式事务不重试。不要从一次取消推断所有内部错误可重试，不自动清理旧占用，实际合并与发布状态仍查观测记录。
+- **Why:** Hologres 可能以 57014 或主消息明确为用户取消的 XX000 报告取消；客户端错误类型与数据库原始错误应交叉核验。普通 Python 构造 asyncpg 异常会留下 `.message=None`，把 `str(exc)` 当作真实驱动字段会让分类测试失真。**How to apply:** 错误分类夹具用驱动 `PostgresError.new` 从 SQLSTATE/主消息恢复真实字段，同时测试相似文本但不同含义的内部错误保持原保护。源代码与测试入口沿上述 PR，不在本页复制实现。
+- **Why:** 取消自有空闲连接未必影响下一条语句；取消诊断 SELECT 后 CAS 成功，也不等于已复现业务 UPDATE 取消来源。非管理员查询日志看不到其他账号操作，空结果不能排除外部取消。**How to apply:** 原生实验仅用隔离库私有表和本轮自有连接，记录源代码哈希、实际错误和清理回读；明确故障发生在哪一步，生产取消发起方另用有权限的审计证据定位。当前样本只沿本机观测记录查。
