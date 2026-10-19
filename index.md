@@ -1,5 +1,7 @@
 # leslie_wiki 目录
 
+- 2026-10-19：[Sand Eval 已检完却显示新一轮零进度](domains/sandai-data-smith/pitfalls/sandeval-completed-review-followup-round.md) — 同版本正式报告、自动追加复验、责任衔接与摘要待确认的区分。
+
 - 2026-10-19：[原生历史运行与工作台逐题差异](domains/maxwell/pitfalls/evolve-nextplay-archive-navigation-parity.md#2026-10-19-原生历史记录逐题配对取证入口) — 原生 Runs/Batch/Snapshot 配对、媒体阶段 SP 与 Skill 内容、三个模型角色、实际回复分支、初态/评分版本及最新运行状态边界。
 - 2026-10-18：[EVOLVE 查询耗时与隐藏基线调优](domains/maxwell/pitfalls/evolve-query-latency-and-tuning-visibility.md) — 重复请求/串行读取、鉴权与 SQL 分层取证、锁采样边界、隐藏集与资源读取授权；PR #365 和真实调优/发布验收指针。
 
