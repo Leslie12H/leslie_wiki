@@ -38,3 +38,16 @@ links: [sandeval-inspector-rework-round-list-and-editability, sandeval-review-pe
 
 - 实现指针：`quality/application/resolution/completed_report_reuse.py`、`quality/infrastructure/persistence/review_task_repository.py::for_submission/for_submissions` 与 `app/cli/completed_report_recovery.py`。
 - 交付指针：[PR #2603](https://github.com/world-sim-dev/sandai-data-smith/pull/2603)、[生产验收补充 PR #2604](https://github.com/world-sim-dev/sandai-data-smith/pull/2604)。状态及个案数量以本机交付报告和在线原生事实为准。
+
+
+## 来源凭证与最后一次慢读取（2026-10-19）
+
+**Why:** 在读取当前有效分区之前续取来源凭证，后续分区展开仍可能耗尽凭证时限，导致每次重试在同一落库点失败。只挪动过期检查的位置也不能替代重新核验当前人员、精确冻结成员与权限。
+
+**How to apply:** 在最后一次慢来源/分区读取之后、写事务之前，沿原生验证器对同一 actor 和成员重新取证；保留 TTL，权限撤销或范围变化仍拒绝。写事务继续复核正式批次身份、报告组与阻断。实现与定向时钟测试指针：[PR #2605](https://github.com/world-sim-dev/sandai-data-smith/pull/2605)。
+
+## 预留编号与有效分区的后续消费者（2026-10-19）
+
+**Why:** 整包退回需要预留尚未派检的 Sand 编号以阻止并发派检，但编号尚未对应真实送审，不能直接展开其责任谱系。另一方面，整包汇总接入有效分区后，退回路径若仍用所有历史批次比较，会拒绝新生成的合法包。正式代改分属并行批次时，来源版本可解释也不代表一份旧报告拥有全部新版本的资格。
+
+**How to apply:** 分别保留全量派检围栏和真实送审责任链；真实报告缺失、未结整改仍严格阻断。分区改动必须连同整包提交、单批回交、整包退回、再质检与成果导出逐一检查，并对每个有效成员保留实际报告所属批次。不能用跨批次代改存在性替代报告资格。可梦原问题修复指针：[PR #2607](https://github.com/world-sim-dev/sandai-data-smith/pull/2607)；尚未闭环的消费者与并行代改分区以[2026-10-19 review 证据](/Users/leslie/Documents/Playground/output/quality-all-cases-20261019/review-20261019.md)及后续原生回读为准。

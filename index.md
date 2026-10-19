@@ -6,7 +6,7 @@
 
 - 2026-10-19：[EVOLVE 目录、关联与取消清理修复](domains/maxwell/pitfalls/evolve-catalog-projection-and-external-adoption.md#2026-10-19-main-发布与浏览器接续) — 统一 main 发布、499 与租约误报、NAS 跨节点文件锁失效、现有 Chrome 接续及真实验收入口。
 
-- 2026-10-19：[Sand Eval 已检完却显示新一轮零进度](domains/sandai-data-smith/pitfalls/sandeval-completed-review-followup-round.md) — 同版本正式报告与上下层整改衔接、审计恢复、单批/批量 SQL 一致性及独立回读。
+- 2026-10-19：[Sand Eval 已检完却显示新一轮零进度](domains/sandai-data-smith/pitfalls/sandeval-completed-review-followup-round.md) — 同版本报告与整改衔接、审计恢复、SQL 一致性、慢读取后的凭证续取，以及有效分区与整包退回消费者核查。
 
 - 2026-10-19：[原生历史运行与工作台逐题差异](domains/maxwell/pitfalls/evolve-nextplay-archive-navigation-parity.md#2026-10-19-原生历史记录逐题配对取证入口) — 原生 Runs/Batch/Snapshot 配对、媒体阶段 SP 与 Skill 内容、三个模型角色、实际回复分支、初态/评分版本及最新运行状态边界。
 - 2026-10-18：[EVOLVE 查询耗时与隐藏基线调优](domains/maxwell/pitfalls/evolve-query-latency-and-tuning-visibility.md) — 重复请求/串行读取、鉴权与 SQL 分层取证、锁采样边界、隐藏集与资源读取授权；PR #365 和真实调优/发布验收指针。
