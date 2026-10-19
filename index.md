@@ -936,3 +936,5 @@
 - 2026-10-19：[后续版本提示与本轮正式代改](domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md#2026-10-19-后续版本提示与本轮正式代改) — 区分本轮前已纳入的答案、同轮正式代改与原设备旧提示；当前双接口和未决页面证据入口。
 
 - 2026-10-19：[截图题号校准与跨批次代改](domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md#2026-10-19-截图题号校准与跨批次正式代改) — 链接第1题不能外推截图第3题；按工作项追踪其它送审正式代改，区分原快照重检与整改重交换版。
+
+- 2026-10-19：[跨人员批次的质检复发预防](domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md#2026-10-19-复发预防边界) — 人员scope占用与稳定工作项责任唯一性区分；转派接续、换版判断绑定和历史冲突验收，当前为建议。
