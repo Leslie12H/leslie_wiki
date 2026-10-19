@@ -1,5 +1,7 @@
 # leslie_wiki 目录
 
+- 2026-10-19：[Sand 包装送审的待定声明遗漏](domains/sandai-data-smith/pitfalls/sandeval-sand-wrapper-deferred-declaration.md) — 冻结子批次待定证据、包装与复验读取断点、SPACE_QC 回归覆盖缺口及受控恢复验证。
+
 - 2026-10-19：[数据包终止性能与身份取证](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-19数据库资源与入口身份取证) — Hologres 聚合口径、SQL 文本绑定、计划与运行证据边界，以及员工空间与显式平台管理员的区别。
 
 - 2026-10-19：[Sand Eval 换版复验提交权限](domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md#2026-10-19-换版复验的只读来源与标注编辑权限) — 负责人只读来源与标注编辑权限分离、旧冻结计划历史责任接续、实际提交回读和未整改题当前责任链。
