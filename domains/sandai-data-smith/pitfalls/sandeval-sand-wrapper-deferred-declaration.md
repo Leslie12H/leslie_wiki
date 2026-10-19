@@ -37,3 +37,4 @@ links: [sandeval-completed-review-followup-round]
 
 - 修复与 Review 指针：[测试 PR #2637](https://github.com/world-sim-dev/sandai-data-smith/pull/2637)、[开发分支直接向 main 的 PR #2641](https://github.com/world-sim-dev/sandai-data-smith/pull/2641)、[本机影响 Review 与验证入口](/Users/leslie/Documents/Playground/sandeval-reinspection-20261019/review.md)。main PR 于 2026-10-19 按明确要求发起，测试环境未验收的事实已写入正文；最终代码、Gate、可合并性和发布状态分别实时核验。
 - 测试集成分支与 main 有无关分歧时，任务分支仍来自 main，只将本任务原始提交送入测试 PR；独立完整 Gate 不能代替最终测试合并树的 Gate 和环境验收。
+- 合并及发布证据：[main PR Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/39266161042)、[合并后的 main 自动发布](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/39267219345)。2026-10-19 按用户明确指令合并；流水线结果、生产部署版本与业务验收仍须独立实时读取，不能从 merged 状态推断上线完成。
