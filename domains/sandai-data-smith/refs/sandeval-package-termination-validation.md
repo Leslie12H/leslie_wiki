@@ -61,3 +61,8 @@ links: [sandeval-package-transition-lock-regression-20261017]
 - [生产合并与评审 #2623](https://github.com/world-sim-dev/sandai-data-smith/pull/2623) 和 [合并树 Gate / 生产发布](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/39248630799) 是实际发布状态入口；合并、镜像构建、执行器就绪和业务健康分别核验。
 - **Why:** 发布 schema gate 只读，不会自动补建控制表；旧生产镜像也可能不认识新迁移。**How to apply:** 先按已审核迁移及固定候选镜像的原生 allowlist CLI 应用唯一迁移，使用无生产 Service 标签的临时执行环境；保存 SQL 内容哈希和目标核对，另一个生产连接回读列、主键和初始行数，完成后清理临时资源。超时或部分结果先独立查库，不通过重跑全部迁移或修改旧 Pod 应用源码来解决。
 - **Why:** 发布前已经存在的慢请求或 5xx，以及同期其他 main 修复，会影响上线后的因果判断。**How to apply:** 发布前冻结完整 SLS 时间窗，按真实 SHA、路由和方法保留样本数及分位数；发布后确认每个写执行器版本，再比较相近窗口和负载。保留低样本与滚动期间的限制，并继续检查控制表未知占用和正常包成功流转。具体查询契约见 [性能观测](https://github.com/world-sim-dev/sandai-data-smith/blob/main/sand-eval/docs/subsystems/performance-observability.md)。
+
+## 2026-10-19：HTTP 健康与持久占用增长分开判断
+
+- **Why:** 后台恢复会收拢部分异常，前台没有 5xx、延迟回落，也不能证明新的持久准入占用没有持续累积；旧质检阻塞与新的控制层未知结果可以同时存在。**How to apply:** 联查操作类型、执行器实例、登记数/未决操作数、增长速率与保护上限，再按原业务回执区分旧阻塞和新增控制层影响。未知登记不会自动过期，入口关闭也不停止写屏障；出现增长时保持入口关闭，不按时间或 Pod 消失强清。当前窗口和未决根因沿本机 `Documents/Playground/package-termination-acceptance-20261019/production/RELEASE-OBSERVATION.md` 与 [PR #2623](https://github.com/world-sim-dev/sandai-data-smith/pull/2623) 查，不从本页推断最新数量或健康状态。
+- **Why:** 常规 Web Deploy 不会升级独立 generation Worker，而它也共享 HoloClient 的生命周期。**How to apply:** 核对各执行器的实际导入闭包与拥有者发布合同，沿 [生成工作区上线 runbook](https://github.com/world-sim-dev/sandai-data-smith/blob/main/sand-eval/docs/operations/video-generation-workspace-rollout.md) 在空闲时通过原生 `--generation-worker-only` 完成独立滚动，核验实际镜像和 Ready 稳定性；不要把 Web Gate 成功视作所有执行器已升级。
