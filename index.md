@@ -808,7 +808,7 @@
 
 - 2026-10-16：[单题抽样与原题号](domains/sandai-data-smith/pitfalls/sandeval-two-stage-sampling-scope.md#2026-10-16-单题抽样显示原第-2-题) — 核对冻结应检集合、实际批次比例和原题号；只抽中题目二、整批仍有两题的双 Pod 只读核查入口。
 
-- [整改冻结分区与当前作者批次重叠](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md) — 2026-10-16：范围版本匹配仍可能同时选中原整改分区和新作者批次；完整性缺项与重复分开，双 Pod 只读单案、PR #2510 及 2026-10-19 独立正式代改归属要求精确成员子集的 PR #2602 留报告指针。
+- [整改冻结分区与当前作者批次重叠](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md) — 2026-10-16：范围版本匹配仍可能同时选中原整改分区和新作者批次；完整性缺项与重复分开，双 Pod 只读单案、PR #2510 及 2026-10-19 独立正式代改归属要求精确成员子集修复及统一 main PR #2603 留报告指针。
 
 - [整改转交后历史标注的提交误报](domains/sandai-data-smith/pitfalls/sandeval-transferred-legacy-batch-submit-qc-mismatch.md) — 2026-10-16：个人 legacy 批次、普通 wave 送审范围与整改历史回执的区别；先证实已交整改和后继复验，再解释普通提交 404。
 - 2026-10-16：[石东亮整改转交占用](domains/sandai-data-smith/pitfalls/sandeval-work-handoff-unsettled-occupancy.md#2026-10-16-石东亮整改转交的独立实例) — 区分同类不同任务、原请求延后结束；经本单独立授权和冻结计划结案，保留七卡责任与审计，附恢复报告和长期修复入口。
