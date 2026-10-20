@@ -2,7 +2,7 @@
 
 - 2026-10-20：[数据包终止的状态轮询与取消归因](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-20-状态轮询与取消归因) — metadata-only 授权、局部基准边界与请求/数据库连接关联指针；取消来源和发布状态沿 PR 核验。
 
-- 2026-10-20：[转派后旧质检仍留待办](domains/sandai-data-smith/pitfalls/sandeval-reassigned-answer-frozen-review-conflict.md#2026-10-20有效交付已排除旧批次旧检查仍留在待办) — 整批重叠、另一整改链已通过并交 Sand、有效分区排重与旧任务退役的区别，及原生换版阻断、单例撤回与第二实例/真实待办验收指针。
+- 2026-10-20：[转派后旧质检仍留待办](domains/sandai-data-smith/pitfalls/sandeval-reassigned-answer-frozen-review-conflict.md#2026-10-20有效交付已排除旧批次旧检查仍留在待办) — 整批重叠、另一整改链已通过并交 Sand、有效分区排重与旧任务退役的区别，及原生换版阻断、单例撤回、真实待办验收及同类只读盘点清单指针。
 
 - 2026-10-20：[稳态与业务拒绝取证](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-20发布后的稳态混合分位数与业务拒绝) — 修复发布指针、成功状态与calls匹配、尾部分组保留、422与5xx分开判断，以及ARMS命中后的分段缺口。
 

@@ -50,3 +50,12 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-cross-stage-fr
 **How to apply:** 显式单例授权后，先封存完整覆盖、正式通过、当前版本、已交接、无草稿/已保存判断/后继及下游依赖的计划，再用已有重复撤回标记与任务 CAS 收起空旧检查，并写正式审计回执。必须从另一实例和真实待办列表读回；旧历史详情的通用 stopped 文案不代表仍在待办。仅复用本案方法边界，其他范围重新生成计划。
 
 - [同案报告的手动处理与验收](/Users/leslie/.codex/visualizations/2026/10/19/01a1544d-7a4e-75d2-86c4-7fdd7aa21cb2/sandeval-case-20261020/report.md)：审计CLI、dry-run/显式apply、固定摘要、正式回执、第二Pod与浏览器验收指针；实际业务状态沿该证据独立读回。
+
+
+### 2026-10-20 同类待办盘点口径
+
+**Why:** active存储记录、跨人员工作项重叠、真实待办、整批合格报告、逐题合格与正式Sand交接分别成立；不能用一层数量替代另一层，更不能把盘点视为批量撤回授权。
+
+**How to apply:** 先在本案相同的空间质检范围发现候选，再验证原生当前组/批次投影、完整冻结范围、当前有效分区、合格报告组、当前答案与正式交接。部分重叠、未交接、未抽样题单独列出；未抽样不等于逐题通过。没有经过逐条写前预检，不自动撤回。
+
+- [同日只读盘点与确认/候选CSV清单](/Users/leslie/.codex/visualizations/2026/10/19/01a1544d-7a4e-75d2-86c4-7fdd7aa21cb2/sandeval-duplicate-audit-20261020/report.md)：数量、时间窗、范围、SQL、原生服务与第二Pod核验均在原始证据核对；本页不存可变计数。
