@@ -1029,3 +1029,5 @@
 - 2026-10-20：[看板终止筛选与数据包终止的对象边界](domains/sandai-data-smith/pitfalls/sandeval-dashboard-package-termination-scope.md) — 主任务状态与执行包控制状态分别核对，列表/汇总范围及具体终止回执的证据边界。
 
 - 2026-10-20：[看板终止统计的生产证据](domains/sandai-data-smith/pitfalls/sandeval-dashboard-package-termination-scope.md#2026-10-20-生产证据接续) — 按最近终止时间发现对象、对齐两次截图 GET、精确复现及只读排除差额，区分 stopping 与 terminated。
+
+- 2026-10-20：[看板按数据包排除终止的实施入口](domains/sandai-data-smith/pitfalls/sandeval-dashboard-package-termination-scope.md#2026-10-20-包级排除的实施入口) — 用户确认后的代码/文档/合成回归、测试冲突及独立分支 Gate 指针；不等同部署或浏览器验收。
