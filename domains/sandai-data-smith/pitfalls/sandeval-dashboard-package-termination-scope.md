@@ -39,3 +39,12 @@ links: [sandeval-package-termination-validation]
 **How to apply:** 沿 PR 的当前契约与回归核对剩余包投影、全部包终止后的主任务隐藏、未下发草稿、同执行项筛选、缺失进度和分页前排序。测试分支历史冲突独立处理，不把 test 合入功能分支来取得验证；生产是否已生效沿正式 main 发布链核对，不从此页推定。
 
 最终提交与 CI 采用情况查 PR 最新 head 和上述独立 Gate，不复用首轮失败回执。首轮结算测试的 loading 按钮名称竞态采用具名测试等待修正，参照[Ant Design 加载退场](../../../disciplines/testing/antd-loading-accessible-name-race.md)；不修改结算产品行为，也不以具名文件本地通过冒充完整 CI。
+
+## 2026-10-20 默认关闭路径的执行计划审查
+
+**Why:** 新筛选只在开启时提前分页，公共列表重写却也影响关闭筛选的默认路径；SQL 值正确与扫描范围受控需要分别审查。Gate 的合成回归可以通过，但不能证明 Hologres 会把分页下推到复用 CTE。
+
+**How to apply:** 对同一主任务列表入口分别捕获开关开/关与普通/指标排序的真实仓储 SQL，使用只读 `EXPLAIN` 对照原基线。检查共享执行项 CTE 的构造范围是否已经受当前页约束，不把计划估计行数或 cost 当作真实扫描量、耗时或生产影响实测。
+
+- 审查对象和结果沿[PR #2689](https://github.com/world-sim-dev/sandai-data-smith/pull/2689)的对应提交核对；本机证据入口为 `/Users/leslie/Documents/Playground/output/sandeval-dashboard-termination-20261020/review-9cbfdde1e/review.json`，相邻文件保存四份 Hologres 计划及捕获的 SQL。
+- 该轮审查只读，报告默认关闭路径的分页前中间集合扩大风险，未在本轮修改业务代码，也未实测响应耗时；是否已经修复，继续核对 PR 后续提交与执行计划。

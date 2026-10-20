@@ -1033,3 +1033,5 @@
 - 2026-10-20：[看板按数据包排除终止的实施入口](domains/sandai-data-smith/pitfalls/sandeval-dashboard-package-termination-scope.md#2026-10-20-包级排除的实施入口) — 用户确认后的代码/文档/合成回归、测试冲突及独立分支 Gate 指针；不等同部署或浏览器验收。
 
 - 2026-10-20：[看板包级终止最终提交核对](domains/sandai-data-smith/pitfalls/sandeval-dashboard-package-termination-scope.md#2026-10-20-包级排除的实施入口) — 更新最终 head 的独立 Gate 指针，保留结算按钮等待竞态与测试集成冲突的验证边界。
+
+- 2026-10-20：[看板终止筛选的默认关闭路径审查](domains/sandai-data-smith/pitfalls/sandeval-dashboard-package-termination-scope.md#2026-10-20-默认关闭路径的执行计划审查) — 原基线/新代码四份只读 Hologres EXPLAIN，默认路径共享批次集合扩大及计划/实测边界。
