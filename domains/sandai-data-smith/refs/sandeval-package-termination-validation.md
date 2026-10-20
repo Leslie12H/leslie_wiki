@@ -126,3 +126,8 @@ links: [sandeval-package-transition-lock-regression-20261017]
 - **Why:** 路由总体p95会同时受401/200比例和每请求数据库调用数分布影响；主要分组回落也不能掩盖少数分组的尾部上升。**How to apply:** 先保留完整窗口/样本与路由总体，再匹配成功状态、规模、calls及可见角色/缓存维度；保留未能解释的尾部，不平均分位数，不把自然请求量下降当容量下降，也不将同calls当完全同负载。
 - **Why:** 没有5xx、未知占用停止增长，不等于正常写入成功；业务422可能已经执行大量校验读取，状态码本身不能证明是合法校验还是回归。**How to apply:** 对写入口分别统计2xx及各类拒绝，关联request ID、原始响应错误码和版本；只读证据不足时保留缺口，不重放生产写请求、不修改真实草稿来证明猜想。历史未知保护仍单独保留。
 - **Why:** SLS提供OTel ID不代表trace可读；即使ARMS root和依赖span存在，仍可能没有业务错误码或完整应用分段。**How to apply:** 沿 [ARMS只读GetTrace](https://www.alibabacloud.com/help/en/arms/application-monitoring/developer-reference/api-arms-2019-08-08-gettrace-apps) 与 [拥有者观测指引](https://github.com/world-sim-dev/sandai-data-smith/blob/main/sand-eval/.agents/skills/sand-eval-api-performance/references/sls-dashboard.md) 验证实际命中，输出白名单字段/哈希，避开SQL正文、参数和完整URL；区分客户端累计SQL、并发墙钟、池等待与尚未覆盖的时间，不凭相减虚构CPU或服务端SQL根因。
+
+## 2026-10-20 状态轮询与取消归因
+
+- [修复 PR #2658](https://github.com/world-sim-dev/sandai-data-smith/pull/2658)：查询终止状态时复用实时 metadata-only 授权，避免枚举完整题目、投放与范围摘要；权限撤销、跨空间拒绝、终止原因隐藏、并发及兄弟包隔离回归沿此 PR 核验。合成范围基准只证明局部机制，生产性能与合并状态以 PR、部署和观测证据为准。
+- 数据库日志中的明确 user-request cancellation 只能确认取消分类，不能确认发起者。沿 PR 中的失败诊断字段关联请求、应用进程、数据库连接与 SQL 指纹，再核对数据库审计；不从低耗时、无重试告警或未知占用不增推定取消已恢复，也不通过放宽投放归属校验来消除作答 404。
