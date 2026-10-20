@@ -2,7 +2,7 @@
 name: sandeval-reassigned-answer-frozen-review-conflict
 type: pitfall
 created: 2026-10-12
-updated: 2026-10-12
+updated: 2026-10-20
 tags: [sand-eval, quality, reassignment, frozen-answer, submission]
 links: [sandeval-transferred-correction-task-visibility, sandeval-cross-stage-frozen-answer-superseded, sandeval-amendment-lookup-recovery]
 ---
@@ -31,3 +31,13 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-cross-stage-fr
 **Why:** 冻结约束须跟随 Sand Eval 的稳定答题卡，同一张卡不能因换持有人而在另一范围重复送审。该约束不能泛化到其他来源的工作项复用规则。
 
 **How to apply:** 回归验证已冻结卡转派、当前持有人正式整改、未送审卡、旧部署无准入记录、重叠批次并发、同范围中断重试和多质检员；实际 Hologres 写入语义和容量在测试环境验收，不能以只读 EXPLAIN 或 SQLite 契约测试替代。测试分支只接收开发改动，遇到生成资料冲突时不得将测试历史反向并入开发分支。
+
+
+## 2026-10-20：有效交付已排除旧批次，旧检查仍留在待办
+
+**Why:** 纸面 _11 的只读核验确认，转派后的普通人员批次与原作者固定整改批次存在整批重叠；整改后继已经产生正式代改、通过报告并交给 Sand，另一条无继承关系的普通检查仍 active。有效交付分区排除重复批次，不等于历史检查自动退出待办；同一质检员也不等于可以跨独立检查链共享代改。界面因此正确保护旧冻结版本，却让人继续面对已被另一条正式流程覆盖的待办。
+
+**How to apply:** 对照旧批次全部 work_unit_id、整改后继全集、原生 live_annotator_partition、正式交接回执和两条检查的实际样本，确认是否完整覆盖而非仅一个抽样项重叠。用负责人身份只读调用最新版复验 preview；若返回 PACKAGE_ALREADY_SUBMITTED，不能从旧任务重送，也不能直接把旧任务记作通过。先核对整批下游依赖，再设计显式退役/衔接；不改历史冻结成员。不得把本类跨人员旧待办误归因于 Sand 包装待定声明遗漏。
+
+- [2026-10-20 纸面旧检查只读报告与第二 Pod 核验](/Users/leslie/.codex/visualizations/2026/10/19/01a1544d-7a4e-75d2-86c4-7fdd7aa21cb2/sandeval-case-20261020/report.md)：原链接、精确对象、北京时间线、正式回执、当前部署及本次仅只读的边界。任务当前状态会变，沿报告重新查询。
+- 当前源码指针：quality/application/inspection/answer_amendment_service.py::visible_amendments 与 quality/application/resolution/latest_answer_reinspection.py::_assert_no_foreign_handoff；复用前按当前部署 SHA 验证。

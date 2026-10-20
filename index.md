@@ -1,5 +1,7 @@
 # leslie_wiki 目录
 
+- 2026-10-20：[转派后旧质检仍留待办](domains/sandai-data-smith/pitfalls/sandeval-reassigned-answer-frozen-review-conflict.md#2026-10-20有效交付已排除旧批次旧检查仍留在待办) — 整批重叠、另一整改链已通过并交 Sand、有效分区排重与旧任务退役的区别，及原生换版阻断核验指针。
+
 - 2026-10-20：[稳态与业务拒绝取证](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-20发布后的稳态混合分位数与业务拒绝) — 修复发布指针、成功状态与calls匹配、尾部分组保留、422与5xx分开判断，以及ARMS命中后的分段缺口。
 
 - 2026-10-20：[完整候选与共享测试恢复](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-20完整候选验收与共享测试恢复) — 原生精确候选入口、安装类验证、保留测试历史边界、恢复最新共享版本及main修复PR指针。
