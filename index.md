@@ -5,7 +5,7 @@
 
 - 2026-10-20：[恢复线程关停与未知保留](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-20-恢复线程关停与未知结果保留) — 主线引入与测试来源区分、detached/恢复排空缺口、持久回执与未知保护的取证指针。
 
-- 2026-10-20：[整包退回接管未结复验方案复审](domains/sandai-data-smith/projects/sandeval-package-return-takeover-review.md) — 候选接管已完成隔离测试 API 验收；含连续退回责任继承、精确旧执行围栏、恢复公平性、原备注图片、不同包并发与权限撤销证据；未合 main，浏览器截图待授权。
+- 2026-10-20：[整包退回接管未结复验方案复审](domains/sandai-data-smith/projects/sandeval-package-return-takeover-review.md) — 候选正常角色 API 流程已验收；追加复审确认原操作者失效导致恢复/责任收口依赖、active 转派后上游读取被拒 3 个缺口，待修复；当前状态沿复现记录核对，未合 main。
 
 - 2026-10-20：[付费候选恢复与权限核对](domains/maxwell/pitfalls/evolve-continuous-admission-and-recovery.md#2026-10-20-付费候选原件与权限落库核对) — 调用前有限原件预留、双 Hash 留存、停止后收敛、部分 Put 与实际 Key 权限读回的证据边界。
 

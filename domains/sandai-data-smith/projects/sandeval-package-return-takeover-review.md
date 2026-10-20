@@ -9,7 +9,7 @@ links: [sandeval-completed-review-followup-round, sandeval-sand-wrapper-deferred
 
 # 整包退回接管未结复验的方案复审
 
-状态：2026-10-20 候选实现已完成隔离测试环境真实 API 流程与不同包并发验收，未合 main、未发布生产。浏览器截图等待飞书重新授权。以下保留方案复审背景；当前证据以文末 PR、CI 与验收记录为准。
+状态：2026-10-20 候选已通过既定正常角色的真实 API 流程与并发验收；追加权限复审又确认 3 个需修复缺口，当前不能据此视作可发布。未合 main、未发布生产。当前证据以文末复审、PR、CI 与验收记录为准。
 
 **Why:** 停止旧 Sand 复验并不自动转移旧整改责任。旧责任继续阻断新流程可能形成循环等待，强行关闭又可能制造通过结论；持久化接管字段还会影响旧 worker 的解析和恢复。
 
@@ -59,3 +59,12 @@ links: [sandeval-completed-review-followup-round, sandeval-sand-wrapper-deferred
 - 代码核验入口：`quality/application/management/package_takeover.py`、`package_self_check_service.py`、`batch_allocation_service.py`，`app/infra/package_transition.py` 和 `quality/infrastructure/runtime.py`，均位于 `sand-eval/platform/backend/`。
 - 页面与 API 验收要使用实际承接人身份：反馈只向授权质检员投影，管理员元数据视角缺少反馈字段不能直接认定继承失败。API 流程通过不替代浏览器截图；本次后者因飞书重新授权被自动审批拦截，未绕过。
 - main 和生产发布需另行决定；测试开关启用和全部执行器同版本是本次真实验证的前提，不把代码默认关闭状态当作生产已启用。
+
+
+## 追加权限与责任复审（2026-10-20）
+
+**Why:** 正常角色稳定时的整包流程通过，不能证明发起人停用、换空间及新自查 active 后转派时仍可恢复、读取原问题并关闭责任。历史责任归属与当前执行权限是两种事实，不能互相替代。
+
+**How to apply:** 沿 [权限与责任复审及三项最小复现](/Users/leslie/.codex/visualizations/2026/10/20/01a15791-b458-7e83-a099-1620fc10895e/package-return-permission-review.md) 核对精确候选。已生效决定的恢复及正式验收后的责任收口，需要独立于原账号继续在职的机制，并允许当前合格人员带审计接管原 intent；当前报告的正式转派链则应授权接手人只读取对应范围的上游备注/图片，保留历史责任，不授予无关整包管理权。
+
+本次三个缺口使用实际应用方法及既有合成 fixture 在内存复现，没有写入真实环境。原负责人失效与全部质检员不可用的接收能力组合还需补端到端验收；不要把上一轮三包真实通过扩大解释为所有权限变化已验证。
