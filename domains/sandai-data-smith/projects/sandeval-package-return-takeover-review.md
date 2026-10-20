@@ -20,3 +20,10 @@ links: [sandeval-completed-review-followup-round, sandeval-sand-wrapper-deferred
 - [2026-10-20 完整复审与验收清单](/Users/leslie/.codex/visualizations/2026/10/20/01a15791-b458-7e83-a099-1620fc10895e/package-return-review.md)。源码基线和全部发现以该记录为准，后续实施时重新核对。
 - 代码入口：`quality/application/management/package_self_check_service.py`、`package_decision.py`、`aggregation_service.py`；`quality/application/resolution/resolution_service.py`；`quality/infrastructure/persistence/unit_of_work.py`、`resolution_execution_repository.py`，均位于 `sand-eval/platform/backend/`。
 - 已核验的现有机制与个案边界：[已检完与后继轮次](../pitfalls/sandeval-completed-review-followup-round.md)。
+
+
+## 第二轮补充复审（2026-10-20）
+
+**Why:** 原复审还需区分预览与执行授权、决定已落地与实际派出自查、报告写入与答案代改写入。连续整包退回及撤销若无明确语义，也可能使责任链丢失或旧轮次被重启。
+
+**How to apply:** 沿同一完整复审清单核验权限绑定、可接手负责人及失资格质检员的重新分派、旧页面和延迟代改写入守卫、跨代接管关系与旧问题覆盖，以及关闭弹窗/发布回滚/业务撤销的区别。上述均为待实施方案约束，不当作已确认生产漏洞；首版建议不开放一键撤销。
