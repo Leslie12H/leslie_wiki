@@ -45,3 +45,11 @@ links: [evolve-benchmark-run-subset]
 **Why:** 需要让实施方只沿一个范围执行，避免把历史版本中的 Subject 表、版本目录或任意快照恢复混入首期。已有接口与存储可复用，但准备状态、配置生效和业务展示仍需分别完成。
 
 **How to apply:** 从最终方案查看对象/preset/执行连接关系、split 与 CaseSet 修订、Adapter 物化职责、API/DDL 清单和验收顺序。HTTP /runs 当前已使用 202；工具 stop 的现有路由与公开 OpenAPI 需一并核对。先对齐契约，再依次整合 split、可靠准备、双端 preset/模型执行、可视化及联合验收。方案定稿不构成代码、DDL、发布或真实运行授权。
+
+## 2026-10-20 Split 可编辑与历史冻结
+
+用户追问 LangSmith split 是否可变，以及本方案是否禁止修订。最终方案 Split 规则已澄清：split 可编辑并保存新修订，同一身份不变；不可原地改写的是历史修订及运行已采用的题集。未修改业务代码或接口。
+
+**Why:** 将“历史修订不可变”简称为“split 不可变”会造成禁止维护题组的误解。题组维护与历史成绩可复核需要同时满足。
+
+**How to apply:** 产品编辑继续复用 CaseSet 修订；沿最终方案的 10 题变 12 题示例核对，旧 Run 不随新 split 成员变化。LangSmith 当前行为请沿官方 [UI split 管理](https://docs.langchain.com/langsmith/manage-datasets-in-application#create-and-manage-dataset-splits)、[update_dataset_splits](https://reference.langchain.com/python/langsmith/client/Client/update_dataset_splits) 与 [数据集版本](https://docs.langchain.com/langsmith/manage-datasets#version-a-dataset) 核对；不要由此推断其内部存储与 Maxwell 相同。运行默认选最新还是要求精确修订属于独立的 API 选择策略，不等于 split 能否修改。

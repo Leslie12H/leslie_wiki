@@ -1869,3 +1869,5 @@
 2026-10-20 | ingest | 补充 Benchmark 必要性与可行性复审入口：保留 split，区分配置描述与可重放快照，明确双端准备/替换/展示验收边界。
 
 2026-10-20 | ingest | 记录 Benchmark 补齐最终方案统一入口，旧方案标注历史；保留 split，整合 API/DDL 与实施验收顺序，未授权实施。
+
+2026-10-20 | ingest | 澄清 Benchmark split 可编辑可修订，历史修订/Run 题集不可原地改写；补充 LangSmith 官方对照指针，未实施。

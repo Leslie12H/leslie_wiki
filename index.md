@@ -2,6 +2,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-20：[Split 可编辑与历史冻结](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-20-split-可编辑与历史冻结) — LangSmith 官方 split 编辑指针；澄清 split 可修订、已采用题集不追溯变化；仅修正文案。
+
 - 2026-10-20：[Benchmark 补齐最终方案](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-20-最终方案入口) — 统一 split、对象/preset/执行器与 Adapter 职责、接口/数据库清单及实施验收顺序；仅定稿，未实施。
 
 - 2026-10-20：[Benchmark 必要性与落地门槛复审](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-20-必要性与落地门槛复审) — 保留 split；核对普通评测准备、双端模型替换与真实业务展示，版本目录及任意历史恢复后移；未实施。
