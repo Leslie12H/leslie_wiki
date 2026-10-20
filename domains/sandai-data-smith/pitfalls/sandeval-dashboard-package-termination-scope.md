@@ -32,8 +32,10 @@ links: [sandeval-package-termination-validation]
 
 ## 2026-10-20 包级排除的实施入口
 
-用户明确要求将终止排除改为数据包维度。实现与验收状态沿[测试 PR #2689](https://github.com/world-sim-dev/sandai-data-smith/pull/2689)核对；[独立任务分支 Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/39438962540)只验证该任务提交，不等于测试分支集成、部署或浏览器验收。
+用户明确要求将终止排除改为数据包维度。实现与验收状态沿[测试 PR #2689](https://github.com/world-sim-dev/sandai-data-smith/pull/2689)核对；[独立任务分支 Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/39439681747)只验证该任务提交，不等于测试分支集成、部署或浏览器验收。
 
 **Why:** 修改汇总而保留整行的原进度和质检分母，会造成排序与页面数字不一致；修改主任务状态又会误伤正常兄弟包。
 
 **How to apply:** 沿 PR 的当前契约与回归核对剩余包投影、全部包终止后的主任务隐藏、未下发草稿、同执行项筛选、缺失进度和分页前排序。测试分支历史冲突独立处理，不把 test 合入功能分支来取得验证；生产是否已生效沿正式 main 发布链核对，不从此页推定。
+
+最终提交与 CI 采用情况查 PR 最新 head 和上述独立 Gate，不复用首轮失败回执。首轮结算测试的 loading 按钮名称竞态采用具名测试等待修正，参照[Ant Design 加载退场](../../../disciplines/testing/antd-loading-accessible-name-race.md)；不修改结算产品行为，也不以具名文件本地通过冒充完整 CI。
