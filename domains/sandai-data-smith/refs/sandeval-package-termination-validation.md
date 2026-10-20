@@ -157,3 +157,10 @@ links: [sandeval-package-transition-lock-regression-20261017]
 **How to apply:** 沿[后台恢复首次主线引入 #1143](https://github.com/world-sim-dev/sandai-data-smith/pull/1143)、[提交后任务排空 #1897](https://github.com/world-sim-dev/sandai-data-smith/pull/1897)和[持久包屏障 #2623](https://github.com/world-sim-dev/sandai-data-smith/pull/2623)区分历史来源；测试PR与main合并日期分别核对。沿质量runtime.stop、恢复job/逐包循环、router lifespan、容器preStop及进程宽限追踪可达退出链路。不能把detached集合的等待当成恢复线程已排空，也不能把Killing到异常的时间差直接当业务排空时长。
 
 修复先关闭新恢复准入，再让在途命令到达原持久化回执/进度检查点；核对业务、连接及总关停预算。未发出写入、已确认完成和写回执不明必须区分，未知保护不按时间、Pod缺席或异常名称直接清除。准确事故对象、动态计数及本轮源码隔离复现沿本机受控目录 `Documents/Playground/package-termination-acceptance-20261019/production/SHUTDOWN-ROOT-20261020.md` 查；这条链路不能外推成全部历史取消的共同根因。
+
+
+## 2026-10-20 存量对账的身份缺口与优先级
+
+**Why:** 持久准入token是随机保护身份，不是原业务幂等键。登记只有操作名/账号引用/时间时，同包存在成功回执或当前没有pending，仍不能证明原未知操作完成；进程已消失也不能补出历史SQL回执。大量历史命令和投影刷新记录会让逐条导出达到边界，截断不能解释成已核清。
+
+**How to apply:** 沿[恢复关停修复 #2666](https://github.com/world-sim-dev/sandai-data-smith/pull/2666)分别验收新版本和存量，不把滚动期旧SHA事件归给新镜像。原冻结批次与后续新增单列；每登记固定task/owner/revision/内容hash。先用有count及行上限校验的包级业务聚合排序核对，再按原request/intent、报告版本、整改轮次和正式回执精确关联；包级状态不能代替操作结果。当前无pending只列优先补证，不自动成为可核销项。保持open的逐owner核销仍须原代际隔离、历史SQL排空、原子审计及独立回读，不能为了套用stopping工具停掉正常包。本轮动态数目、真实对象及证据缺口只存本机受控`Documents/Playground/package-termination-acceptance-20261019/production/STOCK-RECONCILIATION-20261020.md`与逐登记ledger，本页不复制生产身份或回执。
