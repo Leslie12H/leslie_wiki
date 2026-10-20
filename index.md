@@ -2,6 +2,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-20：[Benchmark 补齐最终方案](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-20-最终方案入口) — 统一 split、对象/preset/执行器与 Adapter 职责、接口/数据库清单及实施验收顺序；仅定稿，未实施。
+
 - 2026-10-20：[Benchmark 必要性与落地门槛复审](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-20-必要性与落地门槛复审) — 保留 split；核对普通评测准备、双端模型替换与真实业务展示，版本目录及任意历史恢复后移；未实施。
 
 - 2026-10-20：[整包退回的全量质检口径](domains/sandai-data-smith/projects/sandeval-package-return-takeover-review.md#最终口径仅整包退回触发供应商全量质检2026-10-20) — 供应商逐条全检、无旧报告首次任务、旧轮次恢复身份与普通抽检不变；验证与发布状态沿 PR #2671 核对。

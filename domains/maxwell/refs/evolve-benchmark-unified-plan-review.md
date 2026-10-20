@@ -9,6 +9,8 @@ links: [evolve-benchmark-run-subset]
 
 # Benchmark 补齐方案专项复审入口
 
+当前统一入口为 [Benchmark 补齐最终方案](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-benchmark-unified-plan-20261020/final-proposal.md)。下文此前方案与复审记录为历史来源，实施范围以最终方案为准。
+
 2026-10-20 用户要求复审可视化通用性、split 逻辑和 Subject/Executor/Adapter 职责。本轮只修订方案，未实施。
 
 **Why:** 共享 Adapter 可以服务多个被测对象；当前连接关联不能代替历史业务身份。平台 Work 停止不等于远端准备已取消；业务展示需要独立的数据 schema、展示器版本和受控读取规则。
@@ -35,3 +37,11 @@ links: [evolve-benchmark-run-subset]
 **Why:** 复用表和接口不等于已经具备运行能力。普通接入 Variant 可以只记录注册描述；现有 Runner 准备有调优来源门禁，模型候选与历史快照执行也要核对两端实现。不能把参数透传或已有快照文件当成配置生效与可重放的证明。
 
 **How to apply:** 先沿 EVOLVE direct_run.go、commands/runner_preparation.go、execution/runner_binding.go 与 Nextplay maxwell-runtime 的 request.py、candidate.py、runner.py、materializer/service.py 重查当前代码。split 复用 CaseSet 修订，保留明确产品/API 语义；普通评测准备、模型替换与通用/业务产物阅读按闭环验收。版本目录和任意历史恢复单独立项，不作为运行选 preset 的隐含前提；精确接口/结构和阶段以复审文档为准，本次未实施。
+
+## 2026-10-20 最终方案入口
+
+用户要求将几轮结论整合成一版最终方案，明确保留 split、列清接口/数据库和实施顺序，先不实施。文档已落在上方统一入口，旧方案文件已标注历史状态。
+
+**Why:** 需要让实施方只沿一个范围执行，避免把历史版本中的 Subject 表、版本目录或任意快照恢复混入首期。已有接口与存储可复用，但准备状态、配置生效和业务展示仍需分别完成。
+
+**How to apply:** 从最终方案查看对象/preset/执行连接关系、split 与 CaseSet 修订、Adapter 物化职责、API/DDL 清单和验收顺序。HTTP /runs 当前已使用 202；工具 stop 的现有路由与公开 OpenAPI 需一并核对。先对齐契约，再依次整合 split、可靠准备、双端 preset/模型执行、可视化及联合验收。方案定稿不构成代码、DDL、发布或真实运行授权。
