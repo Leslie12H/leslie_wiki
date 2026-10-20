@@ -2,7 +2,7 @@
 name: sandeval-completed-review-followup-round
 type: pitfall
 created: 2026-10-19
-updated: 2026-10-19
+updated: 2026-10-20
 tags: [sand-eval, quality, reinspection, direct-return, progress]
 links: [sandeval-inspector-rework-round-list-and-editability, sandeval-review-performance]
 ---
@@ -77,3 +77,10 @@ links: [sandeval-inspector-rework-round-list-and-editability, sandeval-review-pe
 **Why:** 恢复后执行表快照可能仍是 awaiting_assignment，而原生 `_assigned_execution` 已从实际检查组投影出 rechecking；单看快照会误判未派单。整包已经退回后，原报告停止也会让再次对旧包直接调用私有冻结预检失败，这不等于原退回未完成。
 
 **How to apply:** 独立回读正式交接回执、原生执行投影、真实 review_task 的组、关卡、处理人与状态，再判断是否需要恢复。原生自动派单发现已有检查组而返回 false 是避免重复的正常结果。已有整包退回决定用 `PackageSelfCheckService.detail`、同请求回执和页面自查任务核验，不把创建新决定的私有 `_freeze` 当成已退回事项的状态接口。运行证据查同页本机交付报告及 `eight-runtime-final.json`、`kemeng-production-real-return-readonly.json`。
+
+
+## 整包退回的停止提示与未结责任（2026-10-20）
+
+**Why:** 弹窗声明会停止原 Sand 检查，但正式停止在整包退回决定落地之后。若原范围仍有未结退回，准入会先拒绝，原复验不会被接管；供应商整改子责任已完成也不能替代原 Sand 退回闭环。前端对未启动的预检失败统一提示刷新，不能据此归因为页面缓存。
+
+**How to apply:** 对照实际部署的 `PackageSelfCheckService._freeze/_admit/_publish` 与 `AggregationService._unblocked`，读取错误的 `disposition_ids`，沿父子责任和原生执行投影找到真实活动复验。先独立确认是否已有整包决定，再解释哪些任务仍继续。对未结责任的整包接管需要明确状态迁移及历史保全，不能删除阻塞或强改 resolved。可梦-50 的只读复现、唯一责任与真实复验入口见 [2026-10-20 本机核验](/Users/leslie/Documents/Playground/output/package-return-20261020/report.md)；人员、进度、版本和部署 SHA 都以当次证据及后续实时回读为准。

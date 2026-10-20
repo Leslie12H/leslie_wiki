@@ -1,5 +1,7 @@
 # leslie_wiki 目录
 
+- 2026-10-20：[整包退回的停止提示与未结责任](domains/sandai-data-smith/pitfalls/sandeval-completed-review-followup-round.md#整包退回的停止提示与未结责任2026-10-20) — 预检阻塞、父子整改闭环、真实复验与统一刷新提示的取证边界。
+
 - 2026-10-20：[Hologres迟到取消与历史未知核对](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-20-查询完成边缘的取消隔离与历史核对) — 精确连接淘汰、正常连接复用、原生完成竞争证据与保持open的逐owner审计边界。
 
 - 2026-10-20：[数据包终止的状态轮询与取消归因](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-20-状态轮询与取消归因) — metadata-only 授权、局部基准边界与请求/数据库连接关联指针；取消来源和发布状态沿 PR 核验。
