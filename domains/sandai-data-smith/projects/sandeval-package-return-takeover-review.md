@@ -9,7 +9,7 @@ links: [sandeval-completed-review-followup-round, sandeval-sand-wrapper-deferred
 
 # 整包退回接管未结复验的方案复审
 
-状态：2026-10-20 追加权限复审发现的三个缺口已修复，并完成原发起人停用、继任恢复、active 转派、连续整包退回及独立正常包的真实 API 回归；已按用户授权提交 main PR，未合并或发布生产。当前 Gate、部署和验收证据以文末链接为准；浏览器截图仍待补齐。
+状态：2026-10-20 追加权限复审发现的三个缺口已修复，并完成原发起人停用、继任恢复、active 转派、连续整包退回及独立正常包的真实 API 回归；已按用户授权提交 main PR，后由用户账号在 GitHub 外部合并；本会话未执行合并或生产部署。当前 Gate、部署和验收证据以文末链接为准；浏览器截图仍待补齐。
 
 **Why:** 停止旧 Sand 复验并不自动转移旧整改责任。旧责任继续阻断新流程可能形成循环等待，强行关闭又可能制造通过结论；持久化接管字段还会影响旧 worker 的解析和恢复。
 
@@ -80,3 +80,13 @@ links: [sandeval-completed-review-followup-round, sandeval-sand-wrapper-deferred
 - [完整候选测试及测试环境部署](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/39390366801)。最终 PR 之后只校正使用文档按钮名称，精确代码/镜像关系见验收记录。
 - [权限修复真实验收与边界](/Users/leslie/.codex/visualizations/2026/10/20/01a15791-b458-7e83-a099-1620fc10895e/package-return-permission-fixes-acceptance.md)：中断、原发起人失效、继任审计、active 正式转派、原备注图片、连续退回、正常保存提交并发及临时身份撤权；仅隔离小包，不当作生产压测。
 - 发布需要所有写入执行器同版本后再启用默认关闭的接管开关；已有业务包不会自动退回。浏览器截图因飞书重新授权被自动审批拒绝，未绕过，仍是合并/启用前待补项。
+
+
+## 生成契约与外部合并边界（2026-10-20）
+
+**Why:** 业务 API 流程和单元矩阵通过，仍可能遗漏共享导入闭包声明或源码坐标派生物；外部合并又可能发生在 Gate 尚未结束时。不能据 PR 已合并断言 Gate 已绿或生产已启用。
+
+**How to apply:** 新增共享 Holo 导入模块时同步 generation worker 的真实闭包注释并运行 owning contract；源码行号变化后运行性能画像 owning generator，禁止手改生成结果或调松契约。已合并后发现派生物漂移，从实际最新 main 建干净补充分支，继续通过 PR，不直接推 main。读取 PR merge actor/time、实际合并提交及 CI 发布记录，区分操作者行为与 Agent 行为。
+
+- [纯性能画像生成物补充 PR #2670](https://github.com/world-sim-dev/sandai-data-smith/pull/2670)：没有业务代码或配置变更，修复生成新鲜度阻断；最终 Gate 沿 PR 核对。
+- [外部合并后的 main Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/39392774333)：模型调用/闭包契约已通过，性能画像过期阻断记录在此；部署是否发生不能从镜像已构建推断。
