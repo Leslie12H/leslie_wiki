@@ -2,6 +2,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-20：[对话调优灵活性完整检查](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md) — 历史基线复用分类、资料与动作授权、实际题集一致性、方法/验收政策与必要安全边界，以及完整审查与性能矩阵入口。
+
 - 2026-10-20：[Split 默认当前修订的已确认方案](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-20-split-默认当前修订的已确认方案) — revision 可选、首次接纳冻结、同键恢复原版本；接口清单和验收条件已同步，仅方案。
 
 - 2026-10-20：[Split 可编辑与历史冻结](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-20-split-可编辑与历史冻结) — LangSmith 官方 split 编辑指针；澄清 split 可修订、已采用题集不追溯变化；仅修正文案。
