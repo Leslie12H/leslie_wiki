@@ -1,6 +1,8 @@
 - 2026-10-20：[存量对账身份与优先级](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-20-存量对账的身份缺口与优先级) — 随机准入token与业务幂等键分开、聚合完整性、无pending仅优先补证及保持open核销门槛。
 # leslie_wiki 目录
 
+- 2026-10-20：[判卷续跑测试的确定性中断](domains/maxwell/pitfalls/evolve-latest-main-integration-boundaries.md#2026-10-20恢复测试用事件控制中断而非赌毫秒级进度) — 用真实调用事件和既有租约时钟边界替代毫秒级进度假设，保留已完成记录与实际超时回归。
+
 - 2026-10-20：[Sand撤销后重退的手动闭环](domains/sandai-data-smith/refs/sandeval-inspection-note-draft.md#2026-10-20-撤销后再次退回的端到端验收) — 固定退回编号、空复检授权与历史执行投影、逐题反馈及3图真实加载的单例验收入口；未发布代码。
 
 - 2026-10-20：[候选提交回包与额度交接](domains/maxwell/pitfalls/evolve-continuous-admission-and-recovery.md#2026-10-20-结果提交回包丢失与原件额度交接复审) — 提交未知不丢已知响应、临时预留与正式逻辑额度只交接一次；隔离故障证据及未完成 Gate 沿审查记录核对。

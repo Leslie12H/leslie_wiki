@@ -2,7 +2,7 @@
 name: evolve-latest-main-integration-boundaries
 type: pitfall
 created: 2026-10-14
-updated: 2026-10-17
+updated: 2026-10-20
 tags: [maxwell, evolve, nextplay, integration, review]
 links: [evolve-original-evidence-and-report-recovery]
 ---
@@ -38,3 +38,12 @@ links: [evolve-original-evidence-and-report-recovery]
 **Why:** 将空输入立即转成 Number 会把用户尚未完成的编辑变为零；仅判断数值能否解析还会放过超范围次数。表单原生校验会对每个无效控件发事件，隐藏分区逐个切换容易争抢焦点。
 
 **How to apply:** 把未完成文本放进同账号/业务的编辑草稿，整数和范围通过后再写入业务值；跨分区、恢复草稿和未知写入锁定都保留此边界。一次校验只定位首个无效字段，并区分模拟事件回归与真实浏览器证据；依赖目录暂不可用时保留原内容，不用原始 JSON 切换充当正常表单。
+
+
+## 2026-10-20：恢复测试用事件控制中断，而非赌毫秒级进度
+
+**Why:** 用短时父 Context 同时断言“已经完成第一题，又进入第二次判卷”会把 CI 的调度速度当成业务顺序；处理正确也可能因第一题尚未登记就超时而失败。本机通过不能证明这种测试设置稳定，不能靠反复重跑或放宽生产期限掩盖。
+
+**How to apply:** 在测试替身真正进入指定后续调用时触发中断，保持正式判卷、落库与已完成记录的原断言；租约到期使用既有内存 Repository 的显式 now，分别核对到期前拒绝和到期后接管，避免等待墙钟。保留单独的真实 DeadlineExceeded 测试，区分调度窗口/关停退出与题目评分错误。以低并发重复执行和 race 检查验证测试稳定性，再按 CI 独立模块命令跑全包；不以测试替身证明真实模型质量。
+
+对应测试、具体失败和修复后的远端状态查 [PR #372](https://github.com/world-sim-dev/maxwell-ai/pull/372) 与 `services/evolve-server/internal/modules/evolve/application/evaluation/processor_resume_test.go`；此处不保存易变的 CI 结论或次数。
