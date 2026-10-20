@@ -148,3 +148,12 @@ links: [sandeval-package-transition-lock-regression-20261017]
 **How to apply:** 沿 [修复 PR #2662](https://github.com/world-sim-dev/sandai-data-smith/pull/2662) 核对具体 review 资源下的状态读取、实时来源与记录可见性、共享只读请求头和撤销授权测试。不要给通用包管理接口补宽泛权限。通知入口先依有效空间投影启用；服务端拒绝后核对一次身份并停止重复轮询，切号或空间变化取消旧请求并重建收件箱。5xx 与权限拒绝分开处理。
 
 先用请求/trace/部署版本定位实际失败的仓库或服务层，再用原生只读授权链复现；缺执行人绑定时不能把全部拒绝计数归为同因。测试超时需要固定进入业务体之后取消的同步点，避免 CI 负载令准备阶段先超时。合并、完整 Gate、实际部署及新稳态窗口分别查 PR 和本机观测记录，不以入口修复证明取消来源或历史未知结果已核清。
+
+
+## 2026-10-20 恢复线程关停与未知结果保留
+
+**Why:** 数据库连接的迟到取消隔离不拥有后台业务任务的生命周期。旧恢复线程退出时直接取消当前命令，与持久准入屏障组合后，原本仅凭pending恢复的中断会成为不能自动遗忘的未知结果。保留未知是安全机制；漏掉在途恢复任务的排空才是需要补齐的生命周期集成。
+
+**How to apply:** 沿[后台恢复首次主线引入 #1143](https://github.com/world-sim-dev/sandai-data-smith/pull/1143)、[提交后任务排空 #1897](https://github.com/world-sim-dev/sandai-data-smith/pull/1897)和[持久包屏障 #2623](https://github.com/world-sim-dev/sandai-data-smith/pull/2623)区分历史来源；测试PR与main合并日期分别核对。沿质量runtime.stop、恢复job/逐包循环、router lifespan、容器preStop及进程宽限追踪可达退出链路。不能把detached集合的等待当成恢复线程已排空，也不能把Killing到异常的时间差直接当业务排空时长。
+
+修复先关闭新恢复准入，再让在途命令到达原持久化回执/进度检查点；核对业务、连接及总关停预算。未发出写入、已确认完成和写回执不明必须区分，未知保护不按时间、Pod缺席或异常名称直接清除。准确事故对象、动态计数及本轮源码隔离复现沿本机受控目录 `Documents/Playground/package-termination-acceptance-20261019/production/SHUTDOWN-ROOT-20261020.md` 查；这条链路不能外推成全部历史取消的共同根因。
