@@ -2,6 +2,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-20：[Benchmark 必要性与落地门槛复审](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-20-必要性与落地门槛复审) — 保留 split；核对普通评测准备、双端模型替换与真实业务展示，版本目录及任意历史恢复后移；未实施。
+
 - 2026-10-20：[整包退回的全量质检口径](domains/sandai-data-smith/projects/sandeval-package-return-takeover-review.md#最终口径仅整包退回触发供应商全量质检2026-10-20) — 供应商逐条全检、无旧报告首次任务、旧轮次恢复身份与普通抽检不变；验证与发布状态沿 PR #2671 核对。
 - 2026-10-20：[EVOLVE 服务与工具目录发布分层](domains/maxwell/pitfalls/evolve-latest-main-integration-boundaries.md#2026-10-20服务发布与-agent-工具目录同步分别核验) — MCP 目录同步、Skill 目标协议、真实预算与外部维护围栏的核对指针。
 
