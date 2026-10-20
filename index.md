@@ -1,7 +1,9 @@
 - 2026-10-20：[存量对账身份与优先级](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-20-存量对账的身份缺口与优先级) — 随机准入token与业务幂等键分开、聚合完整性、无pending仅优先补证及保持open核销门槛。
+
 # leslie_wiki 目录
 
 - 2026-10-20：[整包退回的全量质检口径](domains/sandai-data-smith/projects/sandeval-package-return-takeover-review.md#最终口径仅整包退回触发供应商全量质检2026-10-20) — 供应商逐条全检、无旧报告首次任务、旧轮次恢复身份与普通抽检不变；验证与发布状态沿 PR #2671 核对。
+- 2026-10-20：[EVOLVE 服务与工具目录发布分层](domains/maxwell/pitfalls/evolve-latest-main-integration-boundaries.md#2026-10-20服务发布与-agent-工具目录同步分别核验) — MCP 目录同步、Skill 目标协议、真实预算与外部维护围栏的核对指针。
 
 - 2026-10-20：[Benchmark 补齐方案精简复审](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-20-三表必要性复审与精简替代) — 撤销 Subject 三表与独立目录，复用接入对象、Work.target_ref、Variant/membership，列明最小接口与结构；未实施。
 - 2026-10-20：[真实基线与发布探针容量边界](domains/maxwell/pitfalls/evolve-latest-main-integration-boundaries.md#2026-10-20整包-skill-响应与退出中-pod-的实际边界) — 区分读权限与整包响应超限，限制聚合快照及编码/元数据，发布探针排除退出中的旧 Pod。

@@ -56,3 +56,12 @@ links: [evolve-original-evidence-and-report-recovery]
 **How to apply:** 先以本轮工具回执和目标元数据区分权限错误、单响应超限及聚合超限，不删减正式 Skill 伪造完整基线。容量只在资源读取路径单独有界，并对整份快照的编码后正文、路径/元数据和数量累计；保留普通请求限制、不可变 Hash 和大正文的 CAS 引用，不把内容回灌到热历史 JSON。对原件、传输容量及工作预算分别验证，超限不能返回部分基线。发布校验排除带 deletionTimestamp 的 Pod，保留镜像/就绪/实际探针独立验证；一次重跑成功不能替代消除选择竞态。
 
 代码、边界测试和当前交付状态查 [PR #376](https://github.com/world-sim-dev/maxwell-ai/pull/376)；本轮真实故障及试跑证据指向 Maxwell 仓库忽略目录 `output/evolve-unified-20261019/dev-tuning-20261020.md`。本文不保存易变的权限、部署或质量结论。
+
+
+## 2026-10-20：服务发布与 Agent 工具目录同步分别核验
+
+**Why:** EVOLVE 服务端 MCP schema 已更新，不代表 Agent Server 持久化的工具目录也已同步；旧目录可能仍可调用旧功能，却没有持续授权等新字段。Skill 示例字段过期也会生成可阅读但没有实际判定规则的目标草稿，界面确认不能替代执行契约审阅。
+
+**How to apply:** 对照部署 SHA、MCP tools/list、工具目录的精确 definition.inputSchema 和 Agent 实际可见能力；只读输出同步时间及字段存在性，不导出凭据。通过现有 Provider 同步入口更新既有定义，再核对实际会话契约；不手工写库、扩大权限或用内部调用指令引导模型通过。目标按当前 ObjectiveSpec 机器字段和冻结指标身份审阅，持续额度须查真实人类授权和根用量，不能将目标文字、手动 search 预算或报账当作全程硬限。独立检查 Native API/Worker 副本与就绪；外部维护将 Runtime 缩为零时，不把旧运行画面当执行事实，也不擅自覆盖未知维护围栏。
+
+代码入口为 tools/catalog/management_config.go、tools/transport/http/mcp_remote_client.go、EVOLVE mcp/schemas.go 与 domain/objective/objective.go；Skill 沿 agent-resources/skills/target-recon/references/artifact-contracts.md 和 optimization-loop/SKILL.md 核对。本轮证据和未完成项见 Maxwell 的 output/evolve-unified-20261019/dev-tuning-20261020.md，Wiki 不固定易变目录日期、副本数或验收结论。
