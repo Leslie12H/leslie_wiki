@@ -41,3 +41,12 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-cross-stage-fr
 
 - [2026-10-20 纸面旧检查只读报告与第二 Pod 核验](/Users/leslie/.codex/visualizations/2026/10/19/01a1544d-7a4e-75d2-86c4-7fdd7aa21cb2/sandeval-case-20261020/report.md)：原链接、精确对象、北京时间线、正式回执、当前部署及本次仅只读的边界。任务当前状态会变，沿报告重新查询。
 - 当前源码指针：quality/application/inspection/answer_amendment_service.py::visible_amendments 与 quality/application/resolution/latest_answer_reinspection.py::_assert_no_foreign_handoff；复用前按当前部署 SHA 验证。
+
+
+### 2026-10-20 单例撤回验证入口
+
+**Why:** 历史重叠普通批次不能强行套用只支持同送审链重复复验的 completed_report_recovery；撤回也不能改变原已通过报告或被解释成新一次合格判断。
+
+**How to apply:** 显式单例授权后，先封存完整覆盖、正式通过、当前版本、已交接、无草稿/已保存判断/后继及下游依赖的计划，再用已有重复撤回标记与任务 CAS 收起空旧检查，并写正式审计回执。必须从另一实例和真实待办列表读回；旧历史详情的通用 stopped 文案不代表仍在待办。仅复用本案方法边界，其他范围重新生成计划。
+
+- [同案报告的手动处理与验收](/Users/leslie/.codex/visualizations/2026/10/19/01a1544d-7a4e-75d2-86c4-7fdd7aa21cb2/sandeval-case-20261020/report.md)：审计CLI、dry-run/显式apply、固定摘要、正式回执、第二Pod与浏览器验收指针；实际业务状态沿该证据独立读回。
