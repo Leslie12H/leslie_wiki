@@ -1,5 +1,7 @@
 # leslie_wiki 目录
 
+- 2026-10-20：[Hologres迟到取消与历史未知核对](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-20-查询完成边缘的取消隔离与历史核对) — 精确连接淘汰、正常连接复用、原生完成竞争证据与保持open的逐owner审计边界。
+
 - 2026-10-20：[数据包终止的状态轮询与取消归因](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-20-状态轮询与取消归因) — metadata-only 授权、局部基准边界与请求/数据库连接关联指针；取消来源和发布状态沿 PR 核验。
 
 - 2026-10-20：[转派后旧质检仍留待办](domains/sandai-data-smith/pitfalls/sandeval-reassigned-answer-frozen-review-conflict.md#2026-10-20有效交付已排除旧批次旧检查仍留在待办) — 整批重叠、另一整改链已通过并交 Sand、有效分区排重与旧任务退役的区别，及原生换版阻断、单例撤回、真实待办验收及同类只读盘点清单指针。
