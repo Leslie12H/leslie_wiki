@@ -47,3 +47,12 @@ links: [evolve-original-evidence-and-report-recovery]
 **How to apply:** 在测试替身真正进入指定后续调用时触发中断，保持正式判卷、落库与已完成记录的原断言；租约到期使用既有内存 Repository 的显式 now，分别核对到期前拒绝和到期后接管，避免等待墙钟。保留单独的真实 DeadlineExceeded 测试，区分调度窗口/关停退出与题目评分错误。以低并发重复执行和 race 检查验证测试稳定性，再按 CI 独立模块命令跑全包；不以测试替身证明真实模型质量。
 
 对应测试、具体失败和修复后的远端状态查 [PR #372](https://github.com/world-sim-dev/maxwell-ai/pull/372) 与 `services/evolve-server/internal/modules/evolve/application/evaluation/processor_resume_test.go`；此处不保存易变的 CI 结论或次数。
+
+
+## 2026-10-20：整包 Skill 响应与退出中 Pod 的实际边界
+
+**Why:** 调优基线读取的 Skill 详情包含整包文件，普通管理响应的通用容量不等于合法 Skill 的容量；读取权限补齐后，仍可能因响应边界而无法建立完整基线。只放宽单次响应会把多个 Skill 的聚合占用成倍放大。另一方面，rollout 成功后旧 Pod 仍可能短暂显示 Running/Ready，探针按第一个 Ready Pod 执行会撞上其容器退出。
+
+**How to apply:** 先以本轮工具回执和目标元数据区分权限错误、单响应超限及聚合超限，不删减正式 Skill 伪造完整基线。容量只在资源读取路径单独有界，并对整份快照的编码后正文、路径/元数据和数量累计；保留普通请求限制、不可变 Hash 和大正文的 CAS 引用，不把内容回灌到热历史 JSON。对原件、传输容量及工作预算分别验证，超限不能返回部分基线。发布校验排除带 deletionTimestamp 的 Pod，保留镜像/就绪/实际探针独立验证；一次重跑成功不能替代消除选择竞态。
+
+代码、边界测试和当前交付状态查 [PR #376](https://github.com/world-sim-dev/maxwell-ai/pull/376)；本轮真实故障及试跑证据指向 Maxwell 仓库忽略目录 `output/evolve-unified-20261019/dev-tuning-20261020.md`。本文不保存易变的权限、部署或质量结论。

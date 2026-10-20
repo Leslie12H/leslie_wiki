@@ -2,6 +2,7 @@
 # leslie_wiki 目录
 
 - 2026-10-20：[Benchmark 补齐方案精简复审](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-20-三表必要性复审与精简替代) — 撤销 Subject 三表与独立目录，复用接入对象、Work.target_ref、Variant/membership，列明最小接口与结构；未实施。
+- 2026-10-20：[真实基线与发布探针容量边界](domains/maxwell/pitfalls/evolve-latest-main-integration-boundaries.md#2026-10-20整包-skill-响应与退出中-pod-的实际边界) — 区分读权限与整包响应超限，限制聚合快照及编码/元数据，发布探针排除退出中的旧 Pod。
 
 - 2026-10-20：[判卷续跑测试的确定性中断](domains/maxwell/pitfalls/evolve-latest-main-integration-boundaries.md#2026-10-20恢复测试用事件控制中断而非赌毫秒级进度) — 用真实调用事件和既有租约时钟边界替代毫秒级进度假设，保留已完成记录与实际超时回归。
 
