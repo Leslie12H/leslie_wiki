@@ -48,3 +48,15 @@ links: [sandeval-package-termination-validation]
 
 - 审查对象和结果沿[PR #2689](https://github.com/world-sim-dev/sandai-data-smith/pull/2689)的对应提交核对；本机证据入口为 `/Users/leslie/Documents/Playground/output/sandeval-dashboard-termination-20261020/review-9cbfdde1e/review.json`，相邻文件保存四份 Hologres 计划及捕获的 SQL。
 - 该轮审查只读，报告默认关闭路径的分页前中间集合扩大风险，未在本轮修改业务代码，也未实测响应耗时；是否已经修复，继续核对 PR 后续提交与执行计划。
+
+
+## 2026-10-20 main 发布与修复复核
+
+**Why:** 包级筛选影响关闭开关时共用的列表路径；分页边界修复必须随最终发布提交一起验证，不能复用修复前 Gate 或把测试分支冲突当作功能失败。
+
+**How to apply:** 普通排序在两种开关状态下都先分页；关闭筛选的完成率排序使用原缓存先分页；开启后的完成率与质检排序按剩余包指标确定顺序。沿 [main PR #2692](https://github.com/world-sim-dev/sandai-data-smith/pull/2692)、[最终 PR Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/39443431868)及[main 发布工作流](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/39444035183)逐层核对，生产结论读取本机验收回执，不从合并状态推断。
+
+- 干净 main 分支只挑入本任务原始提交及 review 修复；测试 PR #2689 已被 main PR 替代，不把测试分支历史带入开发或发布。
+- P2 修复后的只读计划入口：`/Users/leslie/Documents/Playground/output/sandeval-dashboard-termination-20261020/main-fix-explain.jsonl`；持久验收证据目录：`/Users/leslie/Documents/Playground/output/sandeval-dashboard-termination-20261020/`。核对共享执行项集合构造前的分页节点；计划验证不代表真实延迟压测。
+
+- 正式仓储验收入口：证据目录下 `acceptance-checks.json`、`postdeploy-acceptance.jsonl` 与 `predeploy-summary.jsonl`。验收比较同一筛选范围的新旧读数，同时单独核对关闭开关的完整历史范围；旧开关也会排除整条终止主任务，因此不能把“关闭→开启”的全部差额都归给新增的包级过滤。验收字段通过 API 使用的正式验收仓储补齐后再解释，不能把摘要仓储占位零值当成事实。
