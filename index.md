@@ -1,5 +1,7 @@
 # leslie_wiki 目录
 
+- 2026-10-20：[Sand质检误退回与原设备备注恢复](domains/sandai-data-smith/refs/sandeval-inspection-note-draft.md#2026-10-20-误退回与原设备草稿核对入口) — 整批说明、逐题正式记录与本机草稿分层；同轮受控撤销条件及独立读回证据入口。
+
 - 2026-10-20：[恢复线程关停与未知保留](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-20-恢复线程关停与未知结果保留) — 主线引入与测试来源区分、detached/恢复排空缺口、持久回执与未知保护的取证指针。
 
 - 2026-10-20：[整包退回接管未结复验方案复审](domains/sandai-data-smith/projects/sandeval-package-return-takeover-review.md) — 循环阻断、精确责任范围、并发恢复、旧问题必检、版本兼容，并补充授权、接收能力、旧页写入、多代责任与撤销边界；为待实施建议；补充终止与退回区别、会话仅聚焦整包退回、源码锁约束及7项离线回归指针。
