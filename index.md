@@ -1037,3 +1037,5 @@
 - 2026-10-20：[看板终止筛选的默认关闭路径审查](domains/sandai-data-smith/pitfalls/sandeval-dashboard-package-termination-scope.md#2026-10-20-默认关闭路径的执行计划审查) — 原基线/新代码四份只读 Hologres EXPLAIN，默认路径共享批次集合扩大及计划/实测边界。
 
 - 2026-10-20：[包级终止看板 main 发布与修复复核](domains/sandai-data-smith/pitfalls/sandeval-dashboard-package-termination-scope.md#2026-10-20-main-发布与修复复核) — 干净 main PR、最终 Gate、正常发布及生产验收回执入口，普通排序分页边界随最终提交复核。
+
+- 2026-10-20：[终止管理搜索的状态范围](domains/sandai-data-smith/pitfalls/sandeval-dashboard-package-termination-scope.md#2026-10-20-终止管理搜索的状态范围) — 名称与管理状态同时筛选，默认正常会隐藏终止历史，空结果先核对状态。

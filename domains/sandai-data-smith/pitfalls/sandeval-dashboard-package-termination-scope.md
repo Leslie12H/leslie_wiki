@@ -60,3 +60,10 @@ links: [sandeval-package-termination-validation]
 - P2 修复后的只读计划入口：`/Users/leslie/Documents/Playground/output/sandeval-dashboard-termination-20261020/main-fix-explain.jsonl`；持久验收证据目录：`/Users/leslie/Documents/Playground/output/sandeval-dashboard-termination-20261020/`。核对共享执行项集合构造前的分页节点；计划验证不代表真实延迟压测。
 
 - 正式仓储验收入口：证据目录下 `acceptance-checks.json`、`postdeploy-acceptance.jsonl` 与 `predeploy-summary.jsonl`。验收比较同一筛选范围的新旧读数，同时单独核对关闭开关的完整历史范围；旧开关也会排除整条终止主任务，因此不能把“关闭→开启”的全部差额都归给新增的包级过滤。验收字段通过 API 使用的正式验收仓储补齐后再解释，不能把摘要仓储占位零值当成事实。
+
+
+## 2026-10-20 终止管理搜索的状态范围
+
+**Why:** 终止管理默认筛选“正常”，名称搜索与管理状态同时生效。已终止包即使名称完全匹配，也会在正常范围内返回空结果，容易被误认为搜索失效或数据丢失。
+
+**How to apply:** 先核对搜索框右侧的管理状态；找终止历史时切换“已终止”，找未收敛操作时切换“终止处理中”，或清除管理状态查看全部。源码入口为 `sand-eval/platform/frontend/src/pages/quality/termination/PackageTermination.tsx` 的 `status` 初值与 `filters`。同词切换状态的生产页面证据为本机 `/Users/leslie/Documents/Playground/output/sandeval-dashboard-termination-20261020/terminated-package-search-found.jpg` 及同名 `.txt`；具体包状态以重新查询为准。
