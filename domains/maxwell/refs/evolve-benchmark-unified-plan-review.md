@@ -61,3 +61,14 @@ links: [evolve-benchmark-run-subset]
 **Why:** 默认使用可维护的当前 split，同时保留历史分数可追溯；不能因客户端重试、排队或后台恢复而重新解释“当前”。
 
 **How to apply:** 沿最终方案的请求意图/解析计划分离、接纳并发、响应精确引用、调优继承和验收条件核对。首次接纳持久化已解析修订，同键重试恢复它；新键省略 revision 才读取当前头部，历史新运行显式给 revision。请求可选不代表响应/冻结引用也可省略，客户端不能把解析结果回填成原键的新请求。数据库结构清单未因本次选择策略增加，接口契约与业务代码尚未实施。
+
+
+## 2026-10-20 实施授权与资产独立归属修正
+
+用户在确认 split 默认当前修订并冻结后明确“开始”，随后两次强调资产和 Benchmark 不归属于 Work。本条覆盖此前精简方案中将新配置资产继续放入 Work membership 的解释：资产独立版本化，Benchmark 冻结组合，Work 只引用资产并编排准备/执行；旧数据保留兼容不等于为新资产建立 Work 归属。
+
+**Why:** 若配置资产必须依赖源 Work 才能保存、读取或复用，就会把业务资产生命周期错误地绑定到一次执行。仓储放开空 work_id 仍不充分，查询投影、批量读取和引用校验也可能残留归属判断，需要一起核对。
+
+**How to apply:** 当前实现与验收范围沿 [本地实施记录](/Users/leslie/.codex/worktrees/benchmark-split-execution/maxwell-ai/docs/verification/2026-10-20-benchmark-split-execution.md) 核验；其中列出 Maxwell/Nextplay 隔离分支、契约、迁移与验证证据。重点查 commands/configuration_assets.go、queries/service.go、两种仓储的 artifact_read 与引用校验，确认新配置资产无 WorkID、按业务与可见性授权；执行结果仍保留自己的运行上下文。
+
+用户另行书面同意仅修改 evolve_artifacts 的两个既有 CHECK，使 target_profile、variant_manifest、resource_content 可不带 work_id；无新表/列/索引、不改写旧数据，仅编写迁移文件。迁移清单登记、环境 DDL、业务代码发布与真实评测须分别核对授权和回执，不可由本地测试推断上线。旧 v1/v2 保持兼容；v3 模型物化、原件保留和可选展示声明仍需真实业务验收，任意历史源环境恢复不在首期。

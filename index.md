@@ -2,6 +2,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-20：[Benchmark 实施与资产独立归属](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-20-实施授权与资产独立归属修正) — 用户授权实施并确认资产不属于 Work；最小约束迁移及本地验证指针，发布与真实验收分别核对。
+
 - 2026-10-20：[对话调优灵活性完整检查](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md) — 历史基线复用分类、资料与动作授权、实际题集一致性、方法/验收政策与必要安全边界，以及完整审查与性能矩阵入口。
 
 - 2026-10-20：[Split 默认当前修订的已确认方案](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-20-split-默认当前修订的已确认方案) — revision 可选、首次接纳冻结、同键恢复原版本；接口清单和验收条件已同步，仅方案。
