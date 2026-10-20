@@ -1,7 +1,7 @@
 - 2026-10-20：[存量对账身份与优先级](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-20-存量对账的身份缺口与优先级) — 随机准入token与业务幂等键分开、聚合完整性、无pending仅优先补证及保持open核销门槛。
 # leslie_wiki 目录
 
-- 2026-10-20：[Benchmark 补齐方案专项复审](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md) — 多对多连接、两端职责、split 冻结、展示分层和准备取消的方案指针；待确认，未实施。
+- 2026-10-20：[Benchmark 补齐方案精简复审](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-20-三表必要性复审与精简替代) — 撤销 Subject 三表与独立目录，复用接入对象、Work.target_ref、Variant/membership，列明最小接口与结构；未实施。
 
 - 2026-10-20：[判卷续跑测试的确定性中断](domains/maxwell/pitfalls/evolve-latest-main-integration-boundaries.md#2026-10-20恢复测试用事件控制中断而非赌毫秒级进度) — 用真实调用事件和既有租约时钟边界替代毫秒级进度假设，保留已完成记录与实际超时回归。
 
