@@ -53,3 +53,11 @@ links: [evolve-benchmark-run-subset]
 **Why:** 将“历史修订不可变”简称为“split 不可变”会造成禁止维护题组的误解。题组维护与历史成绩可复核需要同时满足。
 
 **How to apply:** 产品编辑继续复用 CaseSet 修订；沿最终方案的 10 题变 12 题示例核对，旧 Run 不随新 split 成员变化。LangSmith 当前行为请沿官方 [UI split 管理](https://docs.langchain.com/langsmith/manage-datasets-in-application#create-and-manage-dataset-splits)、[update_dataset_splits](https://reference.langchain.com/python/langsmith/client/Client/update_dataset_splits) 与 [数据集版本](https://docs.langchain.com/langsmith/manage-datasets#version-a-dataset) 核对；不要由此推断其内部存储与 Maxwell 相同。运行默认选最新还是要求精确修订属于独立的 API 选择策略，不等于 split 能否修改。
+
+## 2026-10-20 Split 默认当前修订的已确认方案
+
+用户明确要求调整最终方案：split 可编辑；运行默认取当前修订并冻结；revision 可选，选择历史题组时再指定；同步接口清单，先不实施。规则与示例已合并到 [最终方案](/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-benchmark-unified-plan-20261020/final-proposal.md)。
+
+**Why:** 默认使用可维护的当前 split，同时保留历史分数可追溯；不能因客户端重试、排队或后台恢复而重新解释“当前”。
+
+**How to apply:** 沿最终方案的请求意图/解析计划分离、接纳并发、响应精确引用、调优继承和验收条件核对。首次接纳持久化已解析修订，同键重试恢复它；新键省略 revision 才读取当前头部，历史新运行显式给 revision。请求可选不代表响应/冻结引用也可省略，客户端不能把解析结果回填成原键的新请求。数据库结构清单未因本次选择策略增加，接口契约与业务代码尚未实施。
