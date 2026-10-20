@@ -1,5 +1,7 @@
 # leslie_wiki 目录
 
+- 2026-10-20：[整包退回接管未结复验方案复审](domains/sandai-data-smith/projects/sandeval-package-return-takeover-review.md) — 循环阻断、精确责任范围、并发围栏、分阶段恢复、旧问题必检及混合版本兼容；为待实施建议。
+
 - 2026-10-20：[来源引用与完整采纳证明](domains/maxwell/pitfalls/evolve-continuous-admission-and-recovery.md#2026-10-20-来源消息目标消费与完整采纳证明) — 冻结目标实际消费、来源水位、持久事件核对、跨路由派发及完整独立验证的取证边界。
 
 - 2026-10-20：[整包退回的停止提示与未结责任](domains/sandai-data-smith/pitfalls/sandeval-completed-review-followup-round.md#整包退回的停止提示与未结责任2026-10-20) — 预检阻塞、父子整改闭环、真实复验与统一刷新提示的取证边界。
