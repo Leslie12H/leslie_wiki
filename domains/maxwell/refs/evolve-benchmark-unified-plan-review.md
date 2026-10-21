@@ -142,3 +142,11 @@ links: [evolve-benchmark-run-subset]
 **Why:** 小范围 split 的真实准备暴露 A2A 文件容量不一致：平台按最大可能请求判断远端能力，测试桩又跟随该常量，遗漏实际 Agent 的较小容量。准备接纳、派发确认、Run、评分和业务视图仍是不同证据层；缺少远端身份的未知请求不能自动重新执行。dev 还可能有其他发布同时推进，页面读取失败不能直接归因于本次实现。
 
 **How to apply:** 沿 [修复 PR #382](https://github.com/world-sim-dev/maxwell-ai/pull/382) 和其中 `docs/verification/2026-10-21-benchmark-json-file-negotiation.md` 核对协商实际文件容量、两端上限、超限零派发及真实依赖一致性测试；沿远端 PR/工作流查当前合并和部署状态。真实验收的凭据、导出包、原请求和页面证据仅保留本地 `.tmp/benchmark-release-20261021/`，不要提交或在知识库复制回执正文。验证需要核对实际 Preset/模型回读、split 已冻结修订、封存原件和最终评分；未知准备、连接检查通过或技术测试通过都不构成业务闭环通过。
+
+### 2026-10-21 补丁发布与受阻准备的接续
+
+容量协商补丁和实际 dev rollout 沿 [PR #382](https://github.com/world-sim-dev/maxwell-ai/pull/382) 及 [工作流 39562288696](https://github.com/world-sim-dev/maxwell-ai/actions/runs/39562288696) 核对。本轮事实、前后 SHA、真实技术 Thread、split r2/旧请求 r1 的回读以及未完成项，沿本地工作区 `.tmp/benchmark-release-20261021/report.md` 与 `release-verification.json` 接续；这些文件含真实运行身份，不复制到知识库或 PR。
+
+**Why:** 远端配置捕获 ready 仍需平台逐份读取并校验原件，才能建立正式 Run；包装 Agent 所用模型也不能替代被测模型生效证明。本轮平台原件读入与授权可用性受阻，尚无正式 Run/分数，不能因为修复已发布或准备任务完成而宣布业务闭环通过。
+
+**How to apply:** 先保留原请求、冻结 split 和已捕获资源，定位授权服务及具体资源读取错误，再恢复同一准备。不要重新派发未知 v4 请求，或把不同 Benchmark/Case 修订的独立试验作正式 A/B。最终模型、原件封存、清理、分数与业务视图须分别取得真实回执。
