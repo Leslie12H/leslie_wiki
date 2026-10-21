@@ -107,3 +107,12 @@ links: [evolve-benchmark-run-subset]
 **Why:** 冻结预算内的选择/优化审计来源不改变实际测量条件，但规范化预算也不能替代题目、Judge 和 Variant 应用证明。工作分支整合到最新 main、提交后 CI、合并、环境迁移和真实双端验收是不同的证据层。
 
 **How to apply:** 核对 `queries/compare_runs.go` 与共享比较 gate 是否都使用 `evaluation.MeasuringBudget`，并沿 `case_selection_test.go` 的完整查询回归验证：审计差异无误报，真实预算/题目/Judge 差异仍保留限制，缺少应用证明仍不可正式比较，冻结原文不被改写。再对照实施记录的两仓库基线和实际检查，不把任务分支对齐当成已发布；迁移清单登记仍沿独立授权处理，真实数据库/模型应用/浏览器验收须另行取得证据。
+
+
+## 2026-10-21 整合后候选交接与再次运行复审
+
+用户要求继续审查遗漏项。完整范围、两项候选交接 P1、一项再次运行 P2、合成复现及现有测试边界，沿 [实施记录最新复审节](/Users/leslie/.codex/worktrees/benchmark-split-execution/maxwell-ai/docs/verification/2026-10-20-benchmark-split-execution.md#2026-10-21-整合后完整复审与新增遗漏) 核验；本轮未修改业务实现，不由此前局部检查通过推断可合并。
+
+**Why:** 冻结 Variant.resources 的 SP/Skill 改动必须真正进入 Adapter 的 typed Candidate；把新的 variantHash 回显到 receipt 不能代替实际资源生效。Runner 执行中物化与平台 ResourceProvider 预准备是不同协议。准备状态退出到编辑态，也必须重新触发能力核对，不能只清空 Store。
+
+**How to apply:** 联查 EVOLVE `commands/optimization_candidate_run.go`、`optimization_candidate.go`、`run_target_state.go` 与 Nextplay `request.py`、`candidate.py` 的资源组包，再核对实际物化哈希及回执。前端沿 `DirectRunStore.startAgain` 和 `DirectBenchmarkRun` 的 inspect effect 检查 ready/failed/canceled 三类终态后的同执行器再次运行。后续回归必须越过“候选已创建”的边界；最小查询投影、Store 或合成组包测试不替代真实双端与浏览器验收。当前缺陷是否已修及迁移授权/CI 边界，以实施记录最新节和代码为准。
