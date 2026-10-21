@@ -1071,3 +1071,5 @@
 - 2026-10-20：[终止管理搜索的状态范围](domains/sandai-data-smith/pitfalls/sandeval-dashboard-package-termination-scope.md#2026-10-20-终止管理搜索的状态范围) — 名称与管理状态同时筛选，默认正常会隐藏终止历史，空结果先核对状态。
 
 - 2026-10-21：[独立 Sand 批次保存的分区依赖](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md#2026-10-21-独立-sand-批次保存与全包分区依赖) — 未变来源普通批次与依赖合法整改漂移分开；并发首版占用、保存范围隔离和完整 Gate 联合审查入口。
+
+- 2026-10-21：[pytest 分片下的同名模块冲突](disciplines/testing/pytest-module-basename-collision.md) — 两个具名路径共同收集复现、按职责重命名和最终分片 Gate 的验证边界。

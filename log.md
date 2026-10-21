@@ -1935,3 +1935,5 @@
 - 2026-10-21 ingest：记录独立 Sand 保存被兄弟批次整改分区扩散阻断的 Why/How，以及合法来源漂移需保留完整接续证据的回归边界；动态提交、Gate 与线上状态沿联合审查记录核验。
 
 2026-10-21 | ingest | sandeval-package-termination-validation | 追加明确授权后的旧包终止恢复方法与本地独立验收回执指针，保留未知结果及CLI检查输出格式边界。
+
+- 2026-10-21 ingest：记录 pytest 同名模块在分片重分配后暴露 import mismatch 的根因、最小收集复现和职责命名修复方法。
