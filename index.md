@@ -18,6 +18,7 @@
 # leslie_wiki 目录
 
 - 2026-10-21：[共同题集比较与来源展示](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-共同题集比较与来源展示入口) — 冻结行为/评分与同样本差值、全局 selection 投影及设计/真实验收边界的接续指针。
+- 2026-10-21：[被测系统变化与比较口径分开](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#被测系统变化与比较口径分开) — 用户澄清 Tool/Skill/Prompt/模型/Preset 变化属于评测维度；实际执行溯源、历史基线复用与比较口径分别处理，尚非修复完成声明。
 
 - 2026-10-21：[Benchmark 集中闭环与编排大正文](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-集中闭环与编排大正文排查) — 同分支统一验收、Temporal 命令/回执大正文、A2A 错误 MIME 与精确 Attempt/Trace 取证入口。
 
