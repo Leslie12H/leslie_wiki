@@ -6,6 +6,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-21：[旧 PR 覆盖核查](disciplines/dev/pr-supersession-evidence.md) — 祖先、补丁和当前源码三层证据，移植提交逐项复核及关闭前身份校验。
+
 - 2026-10-21：[Benchmark 最终复审与配套 PR](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-最终复审与配套-pr-入口) — 迁移清单补充授权、Maxwell #381 与 Adapter #24、最终检查和发布验收边界指针。
 
 - 2026-10-21：[Benchmark 候选交接修复](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-候选交接与再次运行修复入口) — 冻结正文与实际回读、只读来源元数据、Runner 准备与历史恢复、再次运行及验证边界的核对指针。
