@@ -17,6 +17,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-21：[生成原件预留与准备读取范围](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#生成原件预留与准备读取范围) — 输出预算与原件保存空间闭合、纯错误历史的复用判断、Case轻量投影及未知工具目录边界。
+
 - 2026-10-21：[Preset 原生模式与冻结资产恢复](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#preset-原生模式与冻结资产恢复) — Adapter 不发明模式、独立配置证据、无本地草稿目标的全生命周期及自然验收边界。
 
 - 2026-10-21：[Benchmark PR 后复审与生命周期补测](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-pr-后复审与生命周期补测入口) — 已接纳大回执与后续删除、检查器点击/焦点、隔离 PostgreSQL 和真实取分边界指针。
