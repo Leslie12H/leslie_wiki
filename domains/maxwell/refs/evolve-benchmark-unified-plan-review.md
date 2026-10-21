@@ -182,3 +182,12 @@ links: [evolve-benchmark-run-subset]
 **Why:** 完整Benchmark与Split的整体均值覆盖不同样本，不能直接显示改善差值；缺失与错误样本也不能补零。来源元数据若未进入全局列表的查询投影，已有Benchmark子集可能被误标为独立评测，前端增加标签不足以修复。
 
 **How to apply:** 沿 EVOLVE `queries/run_intersection.go` 核对稳定资产身份、行为指纹、冻结评分定义、逐Run授权与每侧自身Variant证明；核对同指标有效样本集合后才显示差值。原strict与候选采用保持独立。沿 PostgreSQL `run_overview.go` 及Studio来源读取核对selection过滤/投影，保持分页前授权与计数。页面设计沿本机 `benchmark-closure-design-20261021/design-spec.md` 及用户选定记录，不把预览占位当真实评分，也不重复另一会话负责的Preset工作。
+
+
+## 2026-10-21 统一 PR 与正式组件验证入口
+
+集中实现与交付沿 [Maxwell PR #387](https://github.com/world-sim-dev/maxwell-ai/pull/387) 及其中 `docs/verification/2026-10-21-benchmark-runtime-closure.md` 的最终复审矩阵、技术截图和真实验收边界查证。用户选择 B 总体布局加 C 业务评分/平台采集分区，并授权后续自主决策、统一准备 PR；不得由本页推断已合并、部署或取得新评分。
+
+**Why:** 指标来源（业务评分/平台采集）与运行范围（完整/Split/临时选题）是两条独立维度，只换名称无法提供可读成员与比较。生成题集保存输入生产 Method provenance，手工子集投影可能没有同一来源；这不等于共同题的实际评分方法改变。异步名称映射还需要视图订阅，任务摘要不能替代原始需求。
+
+**How to apply:** 核对 Split 目录/冻结成员/修订检查器、当前与历史修订运行传递、来源查询在分页前的过滤和授权。共同题集仅在共同 Case 行为、有效评分 binding/Outcome 及每侧自身执行证明一致后归一临时输入生产来源；严格整集和候选门禁保持各自语义。沿 PR 里的真实生产组件合成 fixture 证据核对窄屏、加载/失败、冻结规则和门槛编辑，但单题、Split、完整基线、模型生效与业务产物仍需独立真实验收。Preset/Adapter 灵活性由用户指定的另一会话处理，接续时先查其成果，避免重复配置或覆盖共享 dev。

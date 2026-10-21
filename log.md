@@ -1957,3 +1957,5 @@
 - 2026-10-21：补充 Benchmark/Split 共同题集比较、全局来源投影与视觉预览/真实验收边界的代码和记录指针；保留 Preset/Adapter 跨会话职责。
 
 - 2026-10-21: EVOLVE 用户澄清：被测系统变化是评测维度，配置溯源与比较口径分开；修正工具一致性阻断方向 domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md
+
+- 2026-10-21：补充 Benchmark 统一 PR #387、正式组件技术验收及生成题集→手工子集 provenance 比较边界指针，保留真实运行与另一会话职责边界。
