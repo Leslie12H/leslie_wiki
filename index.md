@@ -2,6 +2,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-21：[Sand Eval 视频加载通用链路](domains/sandai-data-smith/refs/sandeval-video-loading-path.md) — 地址签发、预热限制、媒体传输与首帧解码的分段排查入口；源码机制与线上根因分开。
+
 - 2026-10-21：[Benchmark 比较修复与整合](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-比较修复与整合核对入口) — 完整查询的预算审计误报回归、两仓库 main 整合及 CI/迁移/真实验收分层核对指针。
 
 - 2026-10-21：[Benchmark 三条链路与比较残留](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-三条链路梳理与比较残留) — split、可视化和模型覆盖的源码入口；完整 Budget 比较误含选择审计的复现与补测指针。
