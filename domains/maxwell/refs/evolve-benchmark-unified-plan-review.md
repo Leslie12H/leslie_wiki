@@ -173,3 +173,12 @@ links: [evolve-benchmark-run-subset]
 **Why:** 配置准备完成、正式 Run 创建和题目实际执行是不同边界。真实单题暴露了 JSON 附件进入 Runtime 命令后的 Temporal/gRPC 大小限制；Task 命令内重复携带消息会进一步放大正文。同时 A2A REST SDK 对 JSON MIME 的兼容遗漏会将服务端失败压成笼统错误，数据库里的短错误不足以定位根因。共享 Benchmark 草稿和 React 延迟 updater 还会让独立编辑、变更预览出现错误，但不能据此推断已保存的 CaseSet 成员被改写。
 
 **How to apply:** 从验收记录核对 HTTP Trace、同 Pod 时间窗、精确 Attempt 的只读回查及真实模型/分数/业务产物；先确认错误发生在哪个传输和接纳边界，再修复。沿 Runtime `application/task_commands.go`、`durable_commands.go`、`infrastructure/temporalruntime/client.go` 查命令及回执两方向的大正文，保持原始 user.action、接纳事务、幂等与 Worker 恢复；不要只抬传输上限或将仅供 Inbox 的附件规范化前移后覆盖历史原件。沿 EVOLVE `integration/a2a/registry.go` 与 SDK REST 错误解码核对 MIME、分类和禁重派，不直接展示未经脱敏的错误原文。单题、10 题 Split、完整基线依次验收，Preset/模型执行回执仍需与实际 Provider 请求分开核对。
+
+
+## 2026-10-21 共同题集比较与来源展示入口
+
+用户确认最小可选交集比较扩展，并将 Preset/Adapter 灵活性交由另一会话处理。接口、实现、真实数据与未验收项沿上述集中验收记录的「共同题集比较与来源投影」及「闭环验收清单」接续；不要根据知识库推断分支已发布或已经取得65/10题评分。
+
+**Why:** 完整Benchmark与Split的整体均值覆盖不同样本，不能直接显示改善差值；缺失与错误样本也不能补零。来源元数据若未进入全局列表的查询投影，已有Benchmark子集可能被误标为独立评测，前端增加标签不足以修复。
+
+**How to apply:** 沿 EVOLVE `queries/run_intersection.go` 核对稳定资产身份、行为指纹、冻结评分定义、逐Run授权与每侧自身Variant证明；核对同指标有效样本集合后才显示差值。原strict与候选采用保持独立。沿 PostgreSQL `run_overview.go` 及Studio来源读取核对selection过滤/投影，保持分页前授权与计数。页面设计沿本机 `benchmark-closure-design-20261021/design-spec.md` 及用户选定记录，不把预览占位当真实评分，也不重复另一会话负责的Preset工作。
