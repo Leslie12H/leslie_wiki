@@ -134,3 +134,11 @@ links: [evolve-benchmark-run-subset]
 **Why:** 仅保存迁移文件与登记后续部署执行清单是不同的授权范围；同意发起 PR 也不等于同意环境 DDL、部署或合并。内部 v3 两端需要共同核验，单独发布平台代码不能证明目标端已支持模型或 SP/Skill 应用。
 
 **How to apply:** 复查 0045 SQL 只放宽两个已有 CHECK，以及部署 action 和迁移 Job 各一行登记；实际迁移前另核验环境和授权。复审或接续时同时读取两个 PR 的具体提交与检查，确认 v3 显式启用、模型/资源实际回读和原件封存完成时序；真实 Postgres、双端部署与普通用户浏览器验收分别记录，不把技术测试、PR 创建或 mergeable 当作业务发布完成。
+
+## 2026-10-21 合并、dev 发布与 JSON 文件协商验收
+
+用户明确授权合并、部署并开始验证。两端来源沿 [Maxwell #381](https://github.com/world-sim-dev/maxwell-ai/pull/381) 与 [Nextplay #24](https://github.com/world-sim-dev/nextplay-eval/pull/24)；首次 dev Web、EVOLVE API/Worker 和 0045 的真实发布回执沿 [工作流 39557759118](https://github.com/world-sim-dev/maxwell-ai/actions/runs/39557759118)。0045 回执与已应用迁移分别核对，不能将迁移清单登记当作环境执行证明。Adapter 必须同步实际在线 Skill/SP，保留原 runtime.env，不部署无关 eval-service。
+
+**Why:** 小范围 split 的真实准备暴露 A2A 文件容量不一致：平台按最大可能请求判断远端能力，测试桩又跟随该常量，遗漏实际 Agent 的较小容量。准备接纳、派发确认、Run、评分和业务视图仍是不同证据层；缺少远端身份的未知请求不能自动重新执行。dev 还可能有其他发布同时推进，页面读取失败不能直接归因于本次实现。
+
+**How to apply:** 沿 [修复 PR #382](https://github.com/world-sim-dev/maxwell-ai/pull/382) 和其中 `docs/verification/2026-10-21-benchmark-json-file-negotiation.md` 核对协商实际文件容量、两端上限、超限零派发及真实依赖一致性测试；沿远端 PR/工作流查当前合并和部署状态。真实验收的凭据、导出包、原请求和页面证据仅保留本地 `.tmp/benchmark-release-20261021/`，不要提交或在知识库复制回执正文。验证需要核对实际 Preset/模型回读、split 已冻结修订、封存原件和最终评分；未知准备、连接检查通过或技术测试通过都不构成业务闭环通过。
