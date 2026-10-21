@@ -2,6 +2,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-21：[Benchmark 审查问题修复](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-专项审查修复入口) — 三项修复、封存失败恢复和测试证据沿实施记录核验；迁移登记及真实验收边界保留。
+
 - 2026-10-21：[Benchmark 实施分支复审](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-实施分支契约与完成时序复审) — 独立资源读写契约、证据封存与终态、轮询阅读连续性的源码及补测指针；仅审查。
 
 - 2026-10-20：[Benchmark 实施与资产独立归属](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-20-实施授权与资产独立归属修正) — 用户授权实施并确认资产不属于 Work；最小约束迁移及本地验证指针，发布与真实验收分别核对。

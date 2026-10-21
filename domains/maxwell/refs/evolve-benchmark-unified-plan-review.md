@@ -82,3 +82,11 @@ links: [evolve-benchmark-run-subset]
 - Maxwell 工作区与实施边界沿 [实施记录](/Users/leslie/.codex/worktrees/benchmark-split-execution/maxwell-ai/docs/verification/2026-10-20-benchmark-split-execution.md)。核对 `commands/configuration_assets.go` 的资源 schema 与 `application/resourcecontent/content.go` 的 Metadata/ValidateReference，以及查询和候选冻结调用方，保留独立资产、旧私有资产的授权边界。
 - Nextplay 分支位于上述工作区 `.tmp/nextplay-adapter`。核对 `maxwell-runtime/src/nextplay_runtime/cli.py` 的 run→封存顺序、`runner.py` 的 result/trial-evidence 写入和 status 查询；再对照 EVOLVE `integration/a2a/runtime_result.go` 的 v3 正式原件要求。终态应与封存成功一致，中断恢复不能重新执行题目。
 - 可视化核对 Studio `TrialPresentation.tsx` 的 effect 依赖、`PresentationStore.close`，以及 `v3/catalog/RecordsPage.tsx`、`RunRecordStore.refresh` 的详情更新。应按不可变证据身份管理生命周期，不能因同内容的新响应对象清空阅读状态。
+
+## 2026-10-21 专项审查修复入口
+
+用户授权修复本页前述三个发现。实际修复、测试函数、回归结果及未验证项以 [实施记录的专项审查修复节](/Users/leslie/.codex/worktrees/benchmark-split-execution/maxwell-ai/docs/verification/2026-10-20-benchmark-split-execution.md#2026-10-21-专项审查修复) 为准；代码仍在两仓库独立分支，不能由本条推断已提交或发布。
+
+**Why:** 修复读写契约需要同步生产者和共享消费者；将完成状态推迟到原件封存后，也必须覆盖封存前后异常、检查点后的状态写入失败和重复恢复。可视化应围绕不可变证据身份管理生命周期。
+
+**How to apply:** 沿实施记录核对独立资源读取与候选冻结、同字节旧私有资产隔离、v3 原请求摘要和仅封存恢复、完成恢复不重写原件块，以及模块/资源身份的刷新连续性。数据库清单登记沿既有独立授权边界；真实数据库、双端运行和浏览器验收仍需单独取得证据。
