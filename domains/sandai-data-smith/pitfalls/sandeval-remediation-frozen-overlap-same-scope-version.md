@@ -2,7 +2,7 @@
 name: sandeval-remediation-frozen-overlap-same-scope-version
 type: pitfall
 created: 2026-10-16
-updated: 2026-10-19
+updated: 2026-10-21
 tags: [sand-eval, quality, remediation, package, scope, duplicate]
 links: [sandeval-handoff-duplicate-scope, sandeval-remediation-scope-change-stale-handoff, sandeval-partial-reassignment-package-completeness-gap]
 ---
@@ -30,3 +30,10 @@ links: [sandeval-handoff-duplicate-scope, sandeval-remediation-scope-change-stal
 
 
 2026-10-19 修复实现与 review/CI 入口见用户指定的 [PR #2607](https://github.com/world-sim-dev/sandai-data-smith/pull/2607)及[修复交付报告](/Users/leslie/Documents/Playground/output/paper-allocation-projection-20261019/fix-delivery.md)。**Why:** 仅修弹窗首开仍不完整，批量确认为了优化会只读取所选作者行，重新投影时若拿局部行做整包完整性判定，可能又退回旧计数。**How to apply:** 已修订批次即使范围版本集合相同也进入原有严格分区核验；所选来源是局部时先补齐完整来源，再投影有效冻结分区。列表、首开、单批确认、实际样本及原请求重试一起覆盖；无效或未闭环整改仍保留当前来源，未修订普通批次保持快速路径。合入指定PR与PR本身合并、生产部署是不同动作；远程review服务错误也不能当作clean review，最终head和验收状态从交付记录重新读取。
+
+
+## 2026-10-21 独立 Sand 批次保存与全包分区依赖
+
+**Why:** 整包另一批的真实未结整改可能使历史冻结分区无法重建，但当前完整普通批次仍具有独立有效的原交接和通过报告。保存若依赖重建整个包，会把局部阻断扩散到无关执行；反过来，普通批次也可能依赖已完成整改来解释来源漂移，不能只凭“普通完整”就丢掉其跨批次依据。该情形与同 scope_key/revision_no 的并发首版分叉不同。
+
+**How to apply:** 先核对自己的当前正式链、精确来源范围版本、冻结成员、原报告和实际退回责任。仅对来源仍匹配的完整普通批次收窄校验；来源漂移、整改后继和有效成员子集仍沿用原严格分区。不得删除真实未结责任或改写历史成员来清错。定向文件通过后仍看完整 Gate 的整改与代改接续回归；线上候选只读通过、代码合并、部署及真实保存分开验收。动态对象、修复审查和 #2594 联合核对沿[联合审查记录](/Users/leslie/Documents/Playground/output/sand35029-repair-20261021/joint-review-2594.md)及[原故障记录](/Users/leslie/Documents/Playground/output/sand35029-repair-20261021/report.md)查询。
