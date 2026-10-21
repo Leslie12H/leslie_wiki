@@ -2,7 +2,7 @@
 name: sandeval-work-handoff-unsettled-occupancy
 type: pitfall
 created: 2026-10-16
-updated: 2026-10-16
+updated: 2026-10-21
 tags: [sand-eval, handoff, assignment, hologres, locks, recovery]
 links: [sandeval-sql-lock-diagnosis, sandeval-reassignment-scope-and-batch-responsibility]
 ---
@@ -38,3 +38,12 @@ links: [sandeval-sql-lock-diagnosis, sandeval-reassignment-scope-and-batch-respo
 
 
 2026-10-16 部署后验收入口：[原单只读验收报告](/Users/leslie/Documents/Playground/output/correction-two-errors-20261016/postdeploy-report.txt)。报告独立保存 PR Gate、生产合并 SHA、全部副本、实际下发前端资源及多 Pod 原生查询；同时区分占用解除、列表状态、真实整包与正式提交，不能把源码或候选计算通过等同于业务交接完成。后续状态须实时读取。
+
+
+## 2026-10-21 整批退回修复遇到质检转交占用
+
+**Why:** 持有人分裂的一张卡接回方案可以预览通过，实际改派仍可能被同来源任务的质检转交占用拦住。事务占用的冻结记录可能只有任务号，缺少原转交的具体业务计划；不能把它自动归因于最近一条普通改派审计，也不能只凭 HTTP 409 或租约不存在结案。
+
+**How to apply:** 先按生产 SHA 追溯所有创建该类事务占用的入口；本次从操作者身份形式和宿主适配定位到 work-handoffs，再用质量任务号、原 Pod 和精确时间窗获取 HTTP request_id。应用失败日志的 SQL 原文 SHA256 可与 Hologres 查询历史精确匹配，再取真实 session_id、trans_id、绑定参数及事务内完整语句。应用 backend_pid 与数据库历史 pid 可能不相同，不能只按前者查不到便认定没有数据库证据。若原事务在业务写入前的读取阶段失败，仍须结合原会话结束、原责任人/分配/历史未变和成功回执缺失来核验结果。按原生事务结案协议保存 rolled_back 回执后，重新验证原卡片计划，独立检查目标与非目标卡、答案历史、冻结送审和质检意见，并以真实质检员权限只读核验唯一整改接收人。
+
+本次完整查证、原事务结案、唯一卡片接回及跨 Pod 独立回读见[处理报告](/Users/leslie/Documents/Playground/output/qc-holder-20261021/report.md)。该报告区分旧转交回滚结案、持有人统一与正式整批退回三个结果；现场状态和执行脚本仅供对应个案审计，复用前必须重新取证。
