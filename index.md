@@ -2,6 +2,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-21：[Benchmark 三条链路与比较残留](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-三条链路梳理与比较残留) — split、可视化和模型覆盖的源码入口；完整 Budget 比较误含选择审计的复现与补测指针。
+
 - 2026-10-21：[Benchmark 审查问题修复](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-专项审查修复入口) — 三项修复、封存失败恢复和测试证据沿实施记录核验；迁移登记及真实验收边界保留。
 
 - 2026-10-21：[Benchmark 实施分支复审](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-实施分支契约与完成时序复审) — 独立资源读写契约、证据封存与终态、轮询阅读连续性的源码及补测指针；仅审查。

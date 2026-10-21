@@ -90,3 +90,11 @@ links: [evolve-benchmark-run-subset]
 **Why:** 修复读写契约需要同步生产者和共享消费者；将完成状态推迟到原件封存后，也必须覆盖封存前后异常、检查点后的状态写入失败和重复恢复。可视化应围绕不可变证据身份管理生命周期。
 
 **How to apply:** 沿实施记录核对独立资源读取与候选冻结、同字节旧私有资产隔离、v3 原请求摘要和仅封存恢复、完成恢复不重写原件块，以及模块/资源身份的刷新连续性。数据库清单登记沿既有独立授权边界；真实数据库、双端运行和浏览器验收仍需单独取得证据。
+
+## 2026-10-21 三条链路梳理与比较残留
+
+用户要求按当前实现梳理 split 维护/单独运行/结果比较、业务可视化、preset 与模型替换。产品路径、实现边界沿 [实施记录](/Users/leslie/.codex/worktrees/benchmark-split-execution/maxwell-ai/docs/verification/2026-10-20-benchmark-split-execution.md) 及其链路梳理追加节核验，不由本条推断已部署。
+
+**Why:** 共享比较 gate 使用规范化的测量预算，并不保证外层查询也沿用同一语义。选择来源审计和执行政策共用 JSON 字段时，比较整个 JSON 会把默认/显式修订或临时/命名选题的差异误作执行预算变化。本次通过临时 Go overlay 复现同实际题目、同 Judge、同测量预算仍出现预算差异警告；未修业务代码。
+
+**How to apply:** 沿 EVOLVE `queries/compare_runs.go`、`application/comparison/gate.go` 和 `domain/evaluation/optimization_context.go` 核对所有消费方；补测不同选题入口解析到相同实际范围的完整查询结果，不能只检查共享 gate 或“接口无错误”。具体证据和当前待修项见实施记录；可视化专用范围与模型覆盖支持边界以当前前后端和 Adapter 源码为准。
