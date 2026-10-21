@@ -2,7 +2,7 @@
 name: evolve-benchmark-unified-plan-review
 type: reference
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-21
 tags: [maxwell, evolve, benchmark, split, subject, executor, adapter, visualization]
 links: [evolve-benchmark-run-subset]
 ---
@@ -72,3 +72,13 @@ links: [evolve-benchmark-run-subset]
 **How to apply:** 当前实现与验收范围沿 [本地实施记录](/Users/leslie/.codex/worktrees/benchmark-split-execution/maxwell-ai/docs/verification/2026-10-20-benchmark-split-execution.md) 核验；其中列出 Maxwell/Nextplay 隔离分支、契约、迁移与验证证据。重点查 commands/configuration_assets.go、queries/service.go、两种仓储的 artifact_read 与引用校验，确认新配置资产无 WorkID、按业务与可见性授权；执行结果仍保留自己的运行上下文。
 
 用户另行书面同意仅修改 evolve_artifacts 的两个既有 CHECK，使 target_profile、variant_manifest、resource_content 可不带 work_id；无新表/列/索引、不改写旧数据，仅编写迁移文件。迁移清单登记、环境 DDL、业务代码发布与真实评测须分别核对授权和回执，不可由本地测试推断上线。旧 v1/v2 保持兼容；v3 模型物化、原件保留和可选展示声明仍需真实业务验收，任意历史源环境恢复不在首期。
+
+## 2026-10-21 实施分支契约与完成时序复审
+
+**Why:** 独立资产的仓储权限调整不能代替共享资源读取契约核对；执行完成也不能先于正式证据封存。Store 测试通过不能证明轮询期间 React 视图保持可读。本次仅审查与本地复现，未修业务代码或执行环境变更。
+
+**How to apply:** 沿下列实现指针重查最新分支，不把本页当作当前修复状态。补测真实资源读取/候选冻结、延迟或中断封存时的并发状态查询，以及相同证据刷新后的视图保留；静态和本地技术测试不替代真实双端验收。
+
+- Maxwell 工作区与实施边界沿 [实施记录](/Users/leslie/.codex/worktrees/benchmark-split-execution/maxwell-ai/docs/verification/2026-10-20-benchmark-split-execution.md)。核对 `commands/configuration_assets.go` 的资源 schema 与 `application/resourcecontent/content.go` 的 Metadata/ValidateReference，以及查询和候选冻结调用方，保留独立资产、旧私有资产的授权边界。
+- Nextplay 分支位于上述工作区 `.tmp/nextplay-adapter`。核对 `maxwell-runtime/src/nextplay_runtime/cli.py` 的 run→封存顺序、`runner.py` 的 result/trial-evidence 写入和 status 查询；再对照 EVOLVE `integration/a2a/runtime_result.go` 的 v3 正式原件要求。终态应与封存成功一致，中断恢复不能重新执行题目。
+- 可视化核对 Studio `TrialPresentation.tsx` 的 effect 依赖、`PresentationStore.close`，以及 `v3/catalog/RecordsPage.tsx`、`RunRecordStore.refresh` 的详情更新。应按不可变证据身份管理生命周期，不能因同内容的新响应对象清空阅读状态。

@@ -2,6 +2,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-21：[Benchmark 实施分支复审](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-实施分支契约与完成时序复审) — 独立资源读写契约、证据封存与终态、轮询阅读连续性的源码及补测指针；仅审查。
+
 - 2026-10-20：[Benchmark 实施与资产独立归属](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-20-实施授权与资产独立归属修正) — 用户授权实施并确认资产不属于 Work；最小约束迁移及本地验证指针，发布与真实验收分别核对。
 
 - 2026-10-20：[对话调优灵活性完整检查](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md) — 历史基线复用分类、资料与动作授权、实际题集一致性、方法/验收政策与必要安全边界，以及完整审查与性能矩阵入口。
