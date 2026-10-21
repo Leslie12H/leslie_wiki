@@ -1101,3 +1101,5 @@
 
 - 2026-10-21：[半屏抖动修复入口](domains/sandai-data-smith/refs/sandeval-caption-review-scroll.md#2026-10-21-修复与验证入口) — PR #2736、稳定滚动条占位的四行修复、非滚动题型排除和本机验证指针；发布状态沿 PR 查证。
 - 2026-10-21：[JSON 持久准入与有效工具一致性](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#json-持久准入与有效工具一致性) — 重复 Raw 传输和旧失效引用的定位入口。
+
+- 2026-10-21：[调优调用意图与配置回读复查](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#调用意图与真实配置回读的独立复查) — 模型调用前校验、真实宿主往返、别名冲突及零版本/约束状态的源码与验收边界指针。
