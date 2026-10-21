@@ -1,3 +1,5 @@
+- 2026-10-21：[旧包终止恢复回执](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-21-明确授权后的旧包终止恢复) — 明确授权、数据库原身份排空、原生逐登记核销、未知结果保留、全字段摘要与独立管理列表回读；实际状态沿本地回执核验。
+
 - 2026-10-20：[存量对账身份与优先级](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-20-存量对账的身份缺口与优先级) — 随机准入token与业务幂等键分开、聚合完整性、无pending仅优先补证及保持open核销门槛。
 
 - 2026-10-21：[Benchmark 配置准备恢复与 Split 入口](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-配置准备恢复与-split-可见入口) — 逐份原件接续、重复正文引用、Split 可发现性与授权超时取证；当前发布/验收状态沿 PR #383 查证。

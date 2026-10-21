@@ -175,3 +175,12 @@ links: [sandeval-package-transition-lock-regression-20261017]
 - 主列表与单次结果表的核对指针：[PackageTermination.tsx](https://github.com/world-sim-dev/sandai-data-smith/blob/main/sand-eval/platform/frontend/src/pages/quality/termination/PackageTermination.tsx)。比较主列表是否消费 needs_review/review_reason，以及单次结果表的人工核对提示；本次仅查明，没有产品代码修复。
 - 自动收敛与人工核对边界：[package_control.py](https://github.com/world-sim-dev/sandai-data-smith/blob/main/sand-eval/platform/backend/app/infra/package_control.py)、[owning runbook](https://github.com/world-sim-dev/sandai-data-smith/blob/main/sand-eval/docs/operations/package-termination.md)。新版本防复发与历史登记恢复分别验收。
 - 取消消息只能证明数据库取消分类。历史缺少原请求/物理连接关联时，保留发起方未知；同期间曾复现的迟到取消机制不自动等同于每一条历史异常的根因。
+
+## 2026-10-21 明确授权后的旧包终止恢复
+
+**Why:** 撤销失效执行器的登记与重试原业务命令是两件事。旧结果仍可能未知；终止恢复应保留原登记及所有未决操作的审计，不能把核销解释成原质检成功。只读检查输出的格式错误也不构成扩大写入范围的理由。
+
+**How to apply:** 固定原请求、原因、归属、owner、revision及内容摘要，先核对历史数据库身份，再证明旧Pod已退出且该身份的旧连接排空。对历史业务全字段生成摘要，动态列表投影另行观察。逐owner使用原生CLI先dry-run后显式apply，按冻结版本链执行，遇到变化停止；独立实例回读登记审计、业务摘要、拒写边界及管理列表。原报告结果与是否已终止分别陈述。
+
+- 2026-10-21 两个可梦旧包恢复的授权、冻结、逐步执行与独立验证指针：[本地恢复回执](/Users/leslie/Documents/Playground/output/package-termination-recovery-20261021/receipt.md)；真实对象、数量、最终状态和审计仅在该本地受控目录，不复制进知识库。实际核销路径仍沿 [package-stop-barrier](https://github.com/world-sim-dev/sandai-data-smith/blob/main/sand-eval/platform/backend/app/cli/package_controls.py) 和 owning runbook 核验。
+- 只读 inspect 的原始控制记录可能含 datetime，须验证 CLI 能否序列化后再作为证据。本次输出格式异常的复现及同服务只读取证替代路径见恢复回执；生产 CLI 未在此轮修复，核销写口未被替换。
