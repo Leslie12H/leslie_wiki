@@ -1075,3 +1075,5 @@
 - 2026-10-21：[pytest 分片下的同名模块冲突](disciplines/testing/pytest-module-basename-collision.md) — 两个具名路径共同收集复现、按职责重命名和最终分片 Gate 的验证边界。
 
 - 2026-10-21：[EVOLVE 审阅对象与冻结身份](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#审阅对象映射冻结身份与主线整合) — 对象/基线草稿映射、独立审阅、精确内容身份、新main配置兼容与恢复时钟的核验方法。
+
+- 2026-10-21：[已交接整改子集执行隔离](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md#2026-10-21-已交接整改子集的执行隔离) — 交接边界、精确代改归属和子集不得扩大；同包全部活动批次与未结责任联合验收。
