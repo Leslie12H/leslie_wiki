@@ -17,6 +17,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-21：[Preset 原生模式与冻结资产恢复](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#preset-原生模式与冻结资产恢复) — Adapter 不发明模式、独立配置证据、无本地草稿目标的全生命周期及自然验收边界。
+
 - 2026-10-21：[Benchmark PR 后复审与生命周期补测](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-pr-后复审与生命周期补测入口) — 已接纳大回执与后续删除、检查器点击/焦点、隔离 PostgreSQL 和真实取分边界指针。
 - 2026-10-21：[Benchmark 统一 PR 与正式组件验证](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-统一-pr-与正式组件验证入口) — PR #387、指标来源/运行范围两轴、输入生产 provenance 与评分方法边界、技术截图与真实验收指针。
 
