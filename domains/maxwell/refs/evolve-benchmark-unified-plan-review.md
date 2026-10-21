@@ -98,3 +98,12 @@ links: [evolve-benchmark-run-subset]
 **Why:** 共享比较 gate 使用规范化的测量预算，并不保证外层查询也沿用同一语义。选择来源审计和执行政策共用 JSON 字段时，比较整个 JSON 会把默认/显式修订或临时/命名选题的差异误作执行预算变化。本次通过临时 Go overlay 复现同实际题目、同 Judge、同测量预算仍出现预算差异警告；未修业务代码。
 
 **How to apply:** 沿 EVOLVE `queries/compare_runs.go`、`application/comparison/gate.go` 和 `domain/evaluation/optimization_context.go` 核对所有消费方；补测不同选题入口解析到相同实际范围的完整查询结果，不能只检查共享 gate 或“接口无错误”。具体证据和当前待修项见实施记录；可视化专用范围与模型覆盖支持边界以当前前后端和 Adapter 源码为准。
+
+
+## 2026-10-21 比较修复与整合核对入口
+
+用户授权“修复 整合”，前节比较残留已进入修复与回归。最新代码基线、恢复依据和各项检查退出结果沿 [实施记录的整合节](/Users/leslie/.codex/worktrees/benchmark-split-execution/maxwell-ai/docs/verification/2026-10-20-benchmark-split-execution.md#2026-10-21-比较修复与最新-main-整合) 核验；本页历史条目的“未修”仅描述当次取证状态，不作为当前状态。
+
+**Why:** 冻结预算内的选择/优化审计来源不改变实际测量条件，但规范化预算也不能替代题目、Judge 和 Variant 应用证明。工作分支整合到最新 main、提交后 CI、合并、环境迁移和真实双端验收是不同的证据层。
+
+**How to apply:** 核对 `queries/compare_runs.go` 与共享比较 gate 是否都使用 `evaluation.MeasuringBudget`，并沿 `case_selection_test.go` 的完整查询回归验证：审计差异无误报，真实预算/题目/Judge 差异仍保留限制，缺少应用证明仍不可正式比较，冻结原文不被改写。再对照实施记录的两仓库基线和实际检查，不把任务分支对齐当成已发布；迁移清单登记仍沿独立授权处理，真实数据库/模型应用/浏览器验收须另行取得证据。
