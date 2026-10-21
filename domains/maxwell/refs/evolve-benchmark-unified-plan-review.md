@@ -165,3 +165,11 @@ links: [evolve-benchmark-run-subset]
 - **Why:** 用户反馈 Split 入口应直接查看和编辑成员，不能仅移植运行表单及名称列表。
 - **How to apply:** 核对分支 `codex/benchmark-split-members` 及 `docs/verification/2026-10-21-benchmark-split-members.md`；查看成员、新建选题、增删题目、历史修订和运行传递须分别验证。界面合成预览不代表真实 Run 或业务验收通过，发布状态沿 PR 查证。
 - **参考入口:** [LangSmith 官方 Split UI](https://docs.langchain.com/langsmith/manage-datasets-in-application#create-and-manage-dataset-splits)。业务原件读取沿 Maxwell 的 `a2a/runtime_result.go` 和 Agent Runtime `application/thread_files.go` 核对；排障用 Workbench 上传与业务文件通道分开取证。
+
+## 2026-10-21 集中闭环与编排大正文排查
+
+用户要求停止逐个症状向 main 合并，先在同一分支查清完整链路并完成真实验收，再统一 PR。当前证据、代码和未完成项沿分支 `codex/benchmark-runtime-closure` 的 [集中验收记录](/Users/leslie/Downloads/sandai-code/maxwell-ai/.tmp/auth-account-pool-observation-20261021/docs/verification/2026-10-21-benchmark-runtime-closure.md) 接续，不由历史 PR 的合并或诊断发布推断已闭环。
+
+**Why:** 配置准备完成、正式 Run 创建和题目实际执行是不同边界。真实单题暴露了 JSON 附件进入 Runtime 命令后的 Temporal/gRPC 大小限制；Task 命令内重复携带消息会进一步放大正文。同时 A2A REST SDK 对 JSON MIME 的兼容遗漏会将服务端失败压成笼统错误，数据库里的短错误不足以定位根因。共享 Benchmark 草稿和 React 延迟 updater 还会让独立编辑、变更预览出现错误，但不能据此推断已保存的 CaseSet 成员被改写。
+
+**How to apply:** 从验收记录核对 HTTP Trace、同 Pod 时间窗、精确 Attempt 的只读回查及真实模型/分数/业务产物；先确认错误发生在哪个传输和接纳边界，再修复。沿 Runtime `application/task_commands.go`、`durable_commands.go`、`infrastructure/temporalruntime/client.go` 查命令及回执两方向的大正文，保持原始 user.action、接纳事务、幂等与 Worker 恢复；不要只抬传输上限或将仅供 Inbox 的附件规范化前移后覆盖历史原件。沿 EVOLVE `integration/a2a/registry.go` 与 SDK REST 错误解码核对 MIME、分类和禁重派，不直接展示未经脱敏的错误原文。单题、10 题 Split、完整基线依次验收，Preset/模型执行回执仍需与实际 Provider 请求分开核对。
