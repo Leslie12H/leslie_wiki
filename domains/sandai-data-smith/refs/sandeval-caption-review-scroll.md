@@ -26,3 +26,8 @@ links: [sandeval-review-layout-and-account-picker]
 - 当次证据与当前实施状态：[2026-10-21 本机根因报告](/Users/leslie/Documents/Playground/output/half-window-jitter-20261021/root-cause.md)。同目录 scrollbar.png、boundary-measurements.json、causal-measurements.json 包含画面、阈值扫描和单因素结果。代码/发布状态须沿后续实现记录重新核验。
 - 源码入口：frontend/src/pages/quality/inspection/inspection.css 的 .quality-answer-workspace .question-face__media；共享 QuestionFace.tsx、captionPlayback.css、mediaVideo.css、MediaVideo.tsx。不要以全屏稳定推断视频内容有问题，也不要将局部 CSS 原因转成业务摘要重算。
 - 数据边界：当完整生产快照的本地导出不被允许时，可在获准范围内只输出条数与长度等非正文布局统计，复现使用合成文字和合成视频；不能通过换工具或拼接数据绕过完整导出限制。
+
+### 2026-10-21 修复与验证入口
+
+- [修复 PR #2736](https://github.com/world-sim-dev/sandai-data-smith/pull/2736)：可滚动素材栏稳定占位，contained-media 不受影响；仅 4 行 CSS。最终 Gate、合并和部署状态沿 PR/工作流实时核验，不能把本地浏览器验证视为线上恢复。
+- [本机修复验证报告](/Users/leslie/Documents/Playground/output/half-window-jitter-20261021/fix-report.md)：改前复现、分支实际 CSS 的多宽高/播放/暂停、参考正文滚动及类型/相关测试证据入口。测试分支与 main 分叉时不把测试历史带进开发分支；本次跳过测试分支的授权及分支范围以实施记录为准。
