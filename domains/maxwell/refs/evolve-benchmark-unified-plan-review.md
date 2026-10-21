@@ -199,3 +199,11 @@ links: [evolve-benchmark-run-subset]
 **Why:** 接纳成功后的大回执读取若再次依赖活跃 Thread，后续删除可能把成功误报为失败；私有正文引用自身携带的 Business 也不能充当授权。检查器的静态截图可读，不代表长列表或堆叠布局下点击后看得见、焦点能回来。内存替身不能证明 JSONB 原文字节及实际 CAS 行为。
 
 **How to apply:** 沿 Runtime `durable_commands.go` 核对接纳前真实归属快照、临时读取恢复、跨业务引用拒绝和无 Thread 的 inline 清理；命令接纳与已提交回执采用各自正确的生命周期边界。沿 Studio 三处检查器核对挂载聚焦、离屏滚动、同项重复点击和关闭返回。实际 PostgreSQL 验证使用隔离临时数据库，检查 JSONB/TOAST、响应丢失、并发 CAS 和重建；正式组件点击使用全新浏览器技术 fixture，不能将这些证据替代真实模型、评分或业务产物验收。
+
+## 2026-10-21 一句话合并说明与 dev 验收入口
+
+用户明确要求 PR 描述和合并说明均只有一句话；实际 PR、squash 提交和后续发布沿 [PR #387](https://github.com/world-sim-dev/maxwell-ai/pull/387)、[合并提交](https://github.com/world-sim-dev/maxwell-ai/commit/8e54238dccf3e5dd64855a28750e00f73579aa96) 与 [dev 发布](https://github.com/world-sim-dev/maxwell-ai/actions/runs/39623189428) 核对，浏览器回读及未验收项在本地 `.tmp/pr387-merge-acceptance-20261021.md` 接续。
+
+**Why:** squash 的默认正文可能拼接分支所有提交说明；PR 描述压缩不能自动保证合并通知同样简短。合并与部署又是不同动作，不能把 main 已包含代码当作用户页面已更新。
+
+**How to apply:** 先压缩 PR body，再以 expected head SHA 合并，用一句话 commit title 和显式空 commit message，独立读取最终提交全文确认没有自动追加正文；测试详情保留在现有验收记录。发布锁定实际 main SHA，沿标准 Worker→API→Evolve→Web 顺序且按本轮范围关闭迁移，分别核对真实 poller、镜像和 Web build ID，再检查 Split 成员/修订、指标来源和目录行为。保留原十题 Split 和历史请求，用独立资产做编辑验收；真实模型、取分与大批量运行仍需各自证据。
