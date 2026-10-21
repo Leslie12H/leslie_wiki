@@ -47,3 +47,12 @@ links: [sandeval-sql-lock-diagnosis, sandeval-reassignment-scope-and-batch-respo
 **How to apply:** 先按生产 SHA 追溯所有创建该类事务占用的入口；本次从操作者身份形式和宿主适配定位到 work-handoffs，再用质量任务号、原 Pod 和精确时间窗获取 HTTP request_id。应用失败日志的 SQL 原文 SHA256 可与 Hologres 查询历史精确匹配，再取真实 session_id、trans_id、绑定参数及事务内完整语句。应用 backend_pid 与数据库历史 pid 可能不相同，不能只按前者查不到便认定没有数据库证据。若原事务在业务写入前的读取阶段失败，仍须结合原会话结束、原责任人/分配/历史未变和成功回执缺失来核验结果。按原生事务结案协议保存 rolled_back 回执后，重新验证原卡片计划，独立检查目标与非目标卡、答案历史、冻结送审和质检意见，并以真实质检员权限只读核验唯一整改接收人。
 
 本次完整查证、原事务结案、唯一卡片接回及跨 Pod 独立回读见[处理报告](/Users/leslie/Documents/Playground/output/qc-holder-20261021/report.md)。该报告区分旧转交回滚结案、持有人统一与正式整批退回三个结果；现场状态和执行脚本仅供对应个案审计，复用前必须重新取证。
+
+
+## 2026-10-21 只读转交失败与过早冻结的工程边界
+
+**Why:** 事务包装器若对所有 execute 都冻结业务意图，初始化 SET 就会制造“可能已写入”的记录。随后只读校验超时且清理回执不完整，也会被保留为需要人工核对。同时，active 质检并不使用待重检的后继组，但统一加载仍在事务内查询它，扩大读取和锁暴露。
+
+**How to apply:** 只让完整匹配的单条事务控制命令绕过业务意图冻结和变更通知；真正业务 DML 尝试前仍必须冻结。测试要分别覆盖未尝试写入的读取失败、实际写入后回滚确认、提交/回滚确认丢失及复合 SQL 不能绕过保护；不能把安全释放只读失败扩展成未知写结果自动清锁。按状态缩小读取时保留 current-group、版本、保存完成和待重检后继准备的守卫。没有历史 owner/waiter 图时，不将 statement timeout 或 mixed-DML 锁语义当成已证明具体阻塞事务或死锁。
+
+修复与验证入口：[测试 PR #2718](https://github.com/world-sim-dev/sandai-data-smith/pull/2718)、[根因与验证报告](/Users/leslie/Documents/Playground/output/qc-holder-20261021/handoff-timeout-root-cause.md)。报告保留精确 SQL 指纹/绑定参数、同一真实批次的新旧只读对照、CI 和测试分支冲突；代码、合并、环境发布及真实转交分别核验。
