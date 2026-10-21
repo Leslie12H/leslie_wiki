@@ -1090,3 +1090,4 @@
 - 2026-10-21：[Caption 半屏抖动根因](domains/sandai-data-smith/refs/sandeval-caption-review-scroll.md#2026-10-21-半屏抖动的临界布局循环) — max-height、自动滚动条占宽和视频等比高度形成的临界循环；真实组件阈值扫描、撤销干预复现及非正文布局统计边界。
 
 - 2026-10-21：[半屏抖动修复入口](domains/sandai-data-smith/refs/sandeval-caption-review-scroll.md#2026-10-21-修复与验证入口) — PR #2736、稳定滚动条占位的四行修复、非滚动题型排除和本机验证指针；发布状态沿 PR 查证。
+- 2026-10-21：[JSON 持久准入与有效工具一致性](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#json-持久准入与有效工具一致性) — 重复 Raw 传输和旧失效引用的定位入口。

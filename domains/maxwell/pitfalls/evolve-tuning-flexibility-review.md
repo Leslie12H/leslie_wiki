@@ -80,3 +80,12 @@ links: [evolve-boolean-rate-goal-direction, evolve-conversation-tuning-workspace
 **Why:** 本地 API 使用 filesystem 而真实 Sandbox 挂载 NAS 时，文件工具的成功可来自本机副本，命令执行却看不到同一附件或 Skill。重试、删 Skill 或扩业务权限都不能修正存储拓扑；更换内部文件服务凭据还会改变开发机持有的存储读写能力。
 
 **How to apply:** 核对文件驱动、存储根、File Server 与 Sandbox 实际挂载，以及同一文件路径和哈希；复用现有服务前确认精确环境和凭据范围。没有原授权时先列清凭据、目的地、可读写路径和恢复方式，不暗中选择其它 Key。缺少正式回执的准备任务保留原任务观察，终态失败单独记录；技术前置、自然对话、质量验证分别验收，不把模型完成或生命周期 completed 记为有效评分。
+
+
+## JSON 持久准入与有效工具一致性
+
+2026-10-21 的大 JSON 修复、真实容量验证及工具物化失败证据查 Maxwell output/evolve-unified-20261019/json-durable-admission-review-20261021.md 和 flexibility-final-review-20261021.md；结果与恢复状态沿记录核对。
+
+**Why:** 文件物化前把 Raw JSON 重复写入 durable Input 和 Message，会放大 Temporal 请求；旧 Preset 的失效工具引用被复制入口清理后，Runner 逐字比较 tools 又会误认为有效能力改变。
+
+**How to apply:** 在业务授权后、durable 提交前完成现有文件物化和回读，只传资源身份并去除重复消息；覆盖大 JSON、存储失败不提交和重放不重复物化。区分保存配置与实际生效工具，失效引用留审计，真实工具、权限及参数变化仍阻断；不能直接关闭完整性检查，也不能将拟议规范化称为已实现或质量验收通过。
