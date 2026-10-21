@@ -17,6 +17,7 @@
 
 # leslie_wiki 目录
 
+- 2026-10-21：[Benchmark PR 后复审与生命周期补测](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-pr-后复审与生命周期补测入口) — 已接纳大回执与后续删除、检查器点击/焦点、隔离 PostgreSQL 和真实取分边界指针。
 - 2026-10-21：[Benchmark 统一 PR 与正式组件验证](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-统一-pr-与正式组件验证入口) — PR #387、指标来源/运行范围两轴、输入生产 provenance 与评分方法边界、技术截图与真实验收指针。
 
 - 2026-10-21：[共同题集比较与来源展示](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-共同题集比较与来源展示入口) — 冻结行为/评分与同样本差值、全局 selection 投影及设计/真实验收边界的接续指针。
