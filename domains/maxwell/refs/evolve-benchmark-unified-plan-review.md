@@ -116,3 +116,12 @@ links: [evolve-benchmark-run-subset]
 **Why:** 冻结 Variant.resources 的 SP/Skill 改动必须真正进入 Adapter 的 typed Candidate；把新的 variantHash 回显到 receipt 不能代替实际资源生效。Runner 执行中物化与平台 ResourceProvider 预准备是不同协议。准备状态退出到编辑态，也必须重新触发能力核对，不能只清空 Store。
 
 **How to apply:** 联查 EVOLVE `commands/optimization_candidate_run.go`、`optimization_candidate.go`、`run_target_state.go` 与 Nextplay `request.py`、`candidate.py` 的资源组包，再核对实际物化哈希及回执。前端沿 `DirectRunStore.startAgain` 和 `DirectBenchmarkRun` 的 inspect effect 检查 ready/failed/canceled 三类终态后的同执行器再次运行。后续回归必须越过“候选已创建”的边界；最小查询投影、Store 或合成组包测试不替代真实双端与浏览器验收。当前缺陷是否已修及迁移授权/CI 边界，以实施记录最新节和代码为准。
+
+
+## 2026-10-21 候选交接与再次运行修复入口
+
+用户授权修复前节的两项 P1 和一项 P2。实际实现、内部 v3 增量、最终测试与未完成边界沿 [实施记录最新修复节](/Users/leslie/.codex/worktrees/benchmark-split-execution/maxwell-ai/docs/verification/2026-10-20-benchmark-split-execution.md#2026-10-21-候选交接与再次运行修复) 核验；前节为修复前审查，不作为当前未修状态。
+
+**Why:** 冻结资源正文必须经授权和哈希校验送入 Adapter，实际回读证明不能来自请求回显。来源配置和复制时会重生成的 Skill 管理元数据需要保留原件，但不能混作可执行资源或要求临时元数据逐字相同。修正新请求的准备职责时，也要保留历史 Run 的原始恢复策略。
+
+**How to apply:** 联查 EVOLVE `evaluation/runner_resources.go`、`execution/contract.go`、`runner_result.go`、`commands/optimization_candidate_run.go` 与 Nextplay `configuration_resources.py`、materializer 的实际 Prompt/Skill 回读。验证正文不改冻结 Variant、总大小限制、缺件/篡改/裸 CAS 拒绝、只读元数据、源配置不改、临时资源清理，以及准备 ready/failed/canceled 后的同执行器再次运行。内部 v3 增量需双端部署；本地合成依赖测试、远程 CI、环境 DDL 和真实业务闭环仍分别核验，不把知识库录入当作发布。

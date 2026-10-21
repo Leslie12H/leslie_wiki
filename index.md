@@ -2,6 +2,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-21：[Benchmark 候选交接修复](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-候选交接与再次运行修复入口) — 冻结正文与实际回读、只读来源元数据、Runner 准备与历史恢复、再次运行及验证边界的核对指针。
+
 - 2026-10-21：[Benchmark 整合后遗漏复审](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-整合后候选交接与再次运行复审) — v3 候选资源组包与预准备职责、准备终态再次运行的复现入口；仅审查，当前状态沿实施记录核验。
 
 - 2026-10-21：[Sand Eval 视频加载通用链路](domains/sandai-data-smith/refs/sandeval-video-loading-path.md) — 地址签发、预热限制、媒体传输与首帧解码的分段排查入口；源码机制与线上根因分开。
