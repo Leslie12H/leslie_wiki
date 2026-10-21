@@ -124,3 +124,12 @@ links: [evolve-boolean-rate-goal-direction, evolve-conversation-tuning-workspace
 **Why:** 预算意图若早于完整输入校验落库，本地容量错误会伪装成付费调用结果未知；仅测试预留本身不能覆盖真实Method组包后的转义与目标开销。原件哈希也不能证明全部配置已生效：宿主会补响应字段、保留不可变Backend，别名或双份模型配置可能相互覆盖。零草稿版本的字段省略及空主指标下已填约束同样需要跨准备、恢复和实际提交检查，不能靠默认值或静默丢弃通过。
 
 **How to apply:** 所有无副作用输入校验完成后，在实际外部调用紧前做单次短事务预留；确定性方法在完整结果验证后预留保存空间，空结果不登记调用。测试真实Method与持久控制记录的联动，确认零调用失败不改变Action、Revision或用量。配置比较只规范化已证明的响应字段，保留实际内容、未知字段及不可变字段的差异；统一入口先核对别名和重复声明冲突，fake按真实宿主深复制与回读，正例之外覆盖被忽略/覆盖的变更。前端显式区分无本地草稿与零版本，已填写约束要保留、提示或由用户取消；无指标仍可进入对话。完整技术回归不能替代真实候选、原Judge及双轮测量证据。
+
+
+## 自动候选授权范围与诊断意图的准备边界
+
+2026-10-21 的后续独立复查、技术回归与实际验收状态沿 Maxwell output/evolve-unified-20261019/flexibility-final-review-20261021.md 查证；源码入口为 EVOLVE application/queries/resource_scope.go、application/commands/optimization_resource_candidate.go、application/search/continuous.go、methods/diagnose/attribute.go 与 methods/optimization/proposals.go。
+
+**Why:** 仅在候选落库时检查授权路径，会让模型先读取不允许编辑的资源并付费，再在创建时必然失败。完整 Runner manifest 与资源服务 replacement overlay 的省略语义不同，不能用同一个等长资源检查。诊断若先记录 planning intent，再检查本地请求或冻结策略，零调用错误也会被误判为未知付费结果；配置正文的 JSON 对象校验若放在模型之后，同样会产生无效消耗。
+
+**How to apply:** 自动模式在任何正文读取和生成前使用不可变授权中的精确路径筛选，保留创建时最终权限复核；手工/对话提案沿原有授权处理。资源服务覆盖先在短锁外核对精确冻结 inventory，保留父候选已继承替换，只允许本轮授权的真实变化。完整请求、所有诊断分组和源配置本地预检在意图之前，实际外部调用前仍须持久登记；仅有证据证明从未调用的状态允许恢复，真实未知结果不能重放或退款。配置对象需拒绝 JSON null；模型从多资源中自行选择时只提供可合法编辑的源。回归同时核对零模型、零意图、原 Phase/Action/Usage 不变和正常路径恰好一次意图，不能以恢复成功取代真实质量测量。

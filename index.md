@@ -1,3 +1,5 @@
+- 2026-10-21：[自动候选授权与诊断准备边界](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#自动候选授权范围与诊断意图的准备边界) — 精确路径提前筛选、replacement overlay、零调用恢复及配置 JSON 预检；当前执行结果沿验收记录核对。
+
 - 2026-10-21：[旧包终止恢复回执](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-21-明确授权后的旧包终止恢复) — 明确授权、数据库原身份排空、原生逐登记核销、未知结果保留、全字段摘要与独立管理列表回读；实际状态沿本地回执核验。
 
 - 2026-10-20：[存量对账身份与优先级](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-20-存量对账的身份缺口与优先级) — 随机准入token与业务幂等键分开、聚合完整性、无pending仅优先补证及保持open核销门槛。
