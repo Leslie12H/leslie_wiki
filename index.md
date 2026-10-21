@@ -1080,3 +1080,5 @@
 - 2026-10-21：[EVOLVE 审阅对象与冻结身份](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#审阅对象映射冻结身份与主线整合) — 对象/基线草稿映射、独立审阅、精确内容身份、新main配置兼容与恢复时钟的核验方法。
 
 - 2026-10-21：[已交接整改子集执行隔离](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md#2026-10-21-已交接整改子集的执行隔离) — 交接边界、精确代改归属和子集不得扩大；同包全部活动批次与未结责任联合验收。
+
+- 2026-10-21：[Sand Eval 跨空间退回批次可见性](domains/sandai-data-smith/pitfalls/sandeval-cross-space-returned-list-visibility.md) — 候选准入早于业务筛选、真实身份核对、实时/摘要/计数一致性和停止轮次写保护。
