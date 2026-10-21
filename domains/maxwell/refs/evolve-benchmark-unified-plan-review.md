@@ -125,3 +125,12 @@ links: [evolve-benchmark-run-subset]
 **Why:** 冻结资源正文必须经授权和哈希校验送入 Adapter，实际回读证明不能来自请求回显。来源配置和复制时会重生成的 Skill 管理元数据需要保留原件，但不能混作可执行资源或要求临时元数据逐字相同。修正新请求的准备职责时，也要保留历史 Run 的原始恢复策略。
 
 **How to apply:** 联查 EVOLVE `evaluation/runner_resources.go`、`execution/contract.go`、`runner_result.go`、`commands/optimization_candidate_run.go` 与 Nextplay `configuration_resources.py`、materializer 的实际 Prompt/Skill 回读。验证正文不改冻结 Variant、总大小限制、缺件/篡改/裸 CAS 拒绝、只读元数据、源配置不改、临时资源清理，以及准备 ready/failed/canceled 后的同执行器再次运行。内部 v3 增量需双端部署；本地合成依赖测试、远程 CI、环境 DDL 和真实业务闭环仍分别核验，不把知识库录入当作发布。
+
+
+## 2026-10-21 最终复审与配套 PR 入口
+
+用户要求继续复审、无问题后发起 PR，并明确同意“仅登记清单并发起 PR，不执行迁移或部署”。本轮评审入口为 [Maxwell PR #381](https://github.com/world-sim-dev/maxwell-ai/pull/381) 与 [Nextplay Adapter PR #24](https://github.com/world-sim-dev/nextplay-eval/pull/24)；最新代码、CI 和合并状态沿 PR 核验。最终影响面矩阵及本地测试证据见 Maxwell PR 中的 `docs/verification/2026-10-20-benchmark-split-execution.md` 最新节。
+
+**Why:** 仅保存迁移文件与登记后续部署执行清单是不同的授权范围；同意发起 PR 也不等于同意环境 DDL、部署或合并。内部 v3 两端需要共同核验，单独发布平台代码不能证明目标端已支持模型或 SP/Skill 应用。
+
+**How to apply:** 复查 0045 SQL 只放宽两个已有 CHECK，以及部署 action 和迁移 Job 各一行登记；实际迁移前另核验环境和授权。复审或接续时同时读取两个 PR 的具体提交与检查，确认 v3 显式启用、模型/资源实际回读和原件封存完成时序；真实 Postgres、双端部署与普通用户浏览器验收分别记录，不把技术测试、PR 创建或 mergeable 当作业务发布完成。
