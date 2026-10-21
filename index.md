@@ -2,6 +2,9 @@
 
 - 2026-10-20：[存量对账身份与优先级](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-20-存量对账的身份缺口与优先级) — 随机准入token与业务幂等键分开、聚合完整性、无pending仅优先补证及保持open核销门槛。
 
+- 2026-10-21：[Split 成员管理交互修正](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-split-成员管理交互修正) — 直接成员查看、选题修订、运行传递及业务文件与诊断上传的边界指针。
+
+
 - 2026-10-21：[Benchmark 配置准备恢复与 Split 入口](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-配置准备恢复与-split-可见入口) — 逐份原件接续、重复正文引用、Split 可发现性与授权超时取证；当前发布/验收状态沿 PR #383 查证。
 
 - 2026-10-21：[数据包历史待核对与处理中展示](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-21-历史待核对与终止处理中展示) — 原操作与终止时间、持久登记/业务任务区分、SQL候选关联与原回执边界、主列表遗漏核对状态及只读证据入口。

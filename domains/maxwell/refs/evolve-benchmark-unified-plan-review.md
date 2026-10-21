@@ -159,3 +159,9 @@ links: [evolve-benchmark-run-subset]
 **Why:** 远端捕获完成后，平台仍需独立读入每份原件。单步骤截止与整包从头重试叠加会阻碍真实大配置完成；不同文件正文相同时，内容寻址去重也要求父引用去重。准备状态页代替原运行表单后，藏在运行表单内的 split 入口不易发现。
 
 **How to apply:** 沿 `commands/direct_preparation.go` 核对独立回执固定、紧凑资源引用 checkpoint、分步接续和原任务零重发；保持现有 JSON 大小、权限、完整性、租约和取消边界。沿 `direct_run.go` 核对重复正文保留所有路径但去重父引用。沿 Benchmark 的 Split 页签与 CaseSelectionStore 生命周期核对当前/历史修订维护和运行冻结展示。授权错误需要关联实时账号查询和调用方截止，不将上下文取消直接认定为底层数据库根因，也不以放宽鉴权掩盖故障。真实模型回读、最终评分、原件/业务视图和清理仍须取得端到端证据。
+
+## 2026-10-21 Split 成员管理交互修正
+
+- **Why:** 用户反馈 Split 入口应直接查看和编辑成员，不能仅移植运行表单及名称列表。
+- **How to apply:** 核对分支 `codex/benchmark-split-members` 及 `docs/verification/2026-10-21-benchmark-split-members.md`；查看成员、新建选题、增删题目、历史修订和运行传递须分别验证。界面合成预览不代表真实 Run 或业务验收通过，发布状态沿 PR 查证。
+- **参考入口:** [LangSmith 官方 Split UI](https://docs.langchain.com/langsmith/manage-datasets-in-application#create-and-manage-dataset-splits)。业务原件读取沿 Maxwell 的 `a2a/runtime_result.go` 和 Agent Runtime `application/thread_files.go` 核对；排障用 Workbench 上传与业务文件通道分开取证。
