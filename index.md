@@ -1,7 +1,7 @@
 - 2026-10-20：[存量对账身份与优先级](domains/sandai-data-smith/refs/sandeval-package-termination-validation.md#2026-10-20-存量对账的身份缺口与优先级) — 随机准入token与业务幂等键分开、聚合完整性、无pending仅优先补证及保持open核销门槛。
 
 - 2026-10-21：[Benchmark dev 发布与容量协商验收](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-合并dev-发布与-json-文件协商验收) — 两仓库合并、首次迁移发布、在线 Adapter 回读和真实准备暴露的协商阻断；补丁与最终验收状态沿 PR/工作流查证。
-- 2026-10-21：[调优原件读取与确认门禁](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#原件读取确认门禁与受限模型诊断) — 隔离 Skill 文件缺失、业务权限误报、确认/冻结一致性、准备阶段转换及受限模型诊断的核查指针；实际候选与发布状态沿验收记录核对。
+- 2026-10-21：[调优原件读取与确认门禁](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#原件读取确认门禁与受限模型诊断) — 隔离 Skill 文件缺失、业务权限误报、确认/冻结一致性、准备阶段转换及受限模型诊断的核查指针；补充隔离预设后端、完整基线及旧草稿权威边界，实际候选与发布状态沿验收记录核对。
 
 
 
