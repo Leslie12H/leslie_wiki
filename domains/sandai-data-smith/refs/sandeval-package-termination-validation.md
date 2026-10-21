@@ -2,7 +2,7 @@
 name: sandeval-package-termination-validation
 type: reference
 created: 2026-10-19
-updated: 2026-10-20
+updated: 2026-10-21
 tags: [sand-eval, package-termination, concurrency, validation]
 links: [sandeval-package-transition-lock-regression-20261017]
 ---
@@ -164,3 +164,14 @@ links: [sandeval-package-transition-lock-regression-20261017]
 **Why:** 持久准入token是随机保护身份，不是原业务幂等键。登记只有操作名/账号引用/时间时，同包存在成功回执或当前没有pending，仍不能证明原未知操作完成；进程已消失也不能补出历史SQL回执。大量历史命令和投影刷新记录会让逐条导出达到边界，截断不能解释成已核清。
 
 **How to apply:** 沿[恢复关停修复 #2666](https://github.com/world-sim-dev/sandai-data-smith/pull/2666)分别验收新版本和存量，不把滚动期旧SHA事件归给新镜像。原冻结批次与后续新增单列；每登记固定task/owner/revision/内容hash。先用有count及行上限校验的包级业务聚合排序核对，再按原request/intent、报告版本、整改轮次和正式回执精确关联；包级状态不能代替操作结果。当前无pending只列优先补证，不自动成为可核销项。保持open的逐owner核销仍须原代际隔离、历史SQL排空、原子审计及独立回读，不能为了套用stopping工具停掉正常包。本轮动态数目、真实对象及证据缺口只存本机受控`Documents/Playground/package-termination-acceptance-20261019/production/STOCK-RECONCILIATION-20261020.md`与逐登记ledger，本页不复制生产身份或回执。
+
+## 2026-10-21 历史待核对与“终止处理中”展示
+
+**Why:** 终止已经受理，不代表仍在执行排空。历史未知结果的持久登记可跨部署保留；只展示 stopping 会掩盖后端已经投影的 needs_review。原进度取消也不能推出正式报告未保存。
+
+**How to apply:** 优先读取完整控制记录，区分操作时间与终止时间、登记数与业务任务数。按原 task/owner/Pod/时间联查日志与数据库错误；只有时间和 SQL 指纹相近时标为候选关联，不能冒充原业务回执。跨午夜窗口覆盖全部可能的 query_date 分区。随后按 owning runbook 证明退出、SQL 排空与原业务结果，保持原 revision 和审计执行核对；不按等待时长自动释放。
+
+- 2026-10-21 两个可梦执行包的只读根因报告与原件入口：[本地核查报告](/Users/leslie/Documents/Playground/output/package-termination-inspect-20261021/root-cause.md)。实时数量、状态与部署沿该证据目录重新查询，不从本页推定当前已恢复。
+- 主列表与单次结果表的核对指针：[PackageTermination.tsx](https://github.com/world-sim-dev/sandai-data-smith/blob/main/sand-eval/platform/frontend/src/pages/quality/termination/PackageTermination.tsx)。比较主列表是否消费 needs_review/review_reason，以及单次结果表的人工核对提示；本次仅查明，没有产品代码修复。
+- 自动收敛与人工核对边界：[package_control.py](https://github.com/world-sim-dev/sandai-data-smith/blob/main/sand-eval/platform/backend/app/infra/package_control.py)、[owning runbook](https://github.com/world-sim-dev/sandai-data-smith/blob/main/sand-eval/docs/operations/package-termination.md)。新版本防复发与历史登记恢复分别验收。
+- 取消消息只能证明数据库取消分类。历史缺少原请求/物理连接关联时，保留发起方未知；同期间曾复现的迟到取消机制不自动等同于每一条历史异常的根因。
