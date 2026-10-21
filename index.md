@@ -1084,3 +1084,5 @@
 - 2026-10-21：[已交接整改子集执行隔离](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md#2026-10-21-已交接整改子集的执行隔离) — 交接边界、精确代改归属和子集不得扩大；同包全部活动批次与未结责任联合验收。
 
 - 2026-10-21：[Sand Eval 跨空间退回批次可见性](domains/sandai-data-smith/pitfalls/sandeval-cross-space-returned-list-visibility.md) — 候选准入早于业务筛选、真实身份核对、实时/摘要/计数一致性和停止轮次写保护。
+
+- 2026-10-21：[Caption 半屏抖动根因](domains/sandai-data-smith/refs/sandeval-caption-review-scroll.md#2026-10-21-半屏抖动的临界布局循环) — max-height、自动滚动条占宽和视频等比高度形成的临界循环；真实组件阈值扫描、撤销干预复现及非正文布局统计边界。
