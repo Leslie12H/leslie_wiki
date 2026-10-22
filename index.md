@@ -1,3 +1,6 @@
+- 2026-10-22：[自动调优阻塞与有效授权](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-22-自动调优阻塞与有效授权不能混为一谈) — 自动阶段与公共预算记账职责分开，显式合法候选、运行与证据恢复不被一并封死；修复与真实评分沿验收记录核对。
+- 2026-10-22：[Skill 增量文件更新与凭据保留](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-22-skill-源码更新只发送变动文件) — 复用现有 dirty 文件补丁与原字节替换，未变环境文件省略；首次完整安装与源码增量更新分别核验。
+
 - 2026-10-22：[整包接管预览与后台恢复版本](domains/sandai-data-smith/projects/sandeval-package-return-takeover-review.md#2026-10-22-预览凭证不能绑定后台恢复尝试版本) — 人工范围凭证与执行 CAS 版本分离、跨恢复轮询确认回归及测试集成/发布边界指针。
 
 - 2026-10-22：[整包退回修复与生产接管开关](domains/sandai-data-smith/projects/sandeval-package-return-takeover-review.md#2026-10-22-用户授权后的生产开关启用验收) — 配置遗漏归因、用户授权后的 CAS 启用、逐执行器回读和真实配置预检；配置启用与具体业务退回分别验收。

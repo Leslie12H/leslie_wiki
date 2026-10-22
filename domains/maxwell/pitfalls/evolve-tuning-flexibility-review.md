@@ -9,6 +9,22 @@ links: [evolve-boolean-rate-goal-direction, evolve-conversation-tuning-workspace
 
 # 对话调优需要按动作证明而非固定步骤放行
 
+## 2026-10-22 自动调优阻塞与有效授权不能混为一谈
+
+源码与真实出分状态沿 Maxwell `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 核对；实现入口为 EVOLVE domain/optimizationcontrol 与 postgres/optimization_budget 的公共 `consume`，并联查普通候选、显式运行和证据入账调用方。本节记录已确认的职责边界，不代表本轮修复、真实评分或发布已完成。
+
+**Why:** 自动调优进入 `blocked` 只表示当前自动编排无法继续，不等于用户撤销了仍有效的 Grant。若公共预算账本直接按自动阶段拒绝所有入账，显式授权且合法的候选、运行或已取得证据也会被一并封死；只在上层放开按钮无法修复底层拒绝。
+
+**How to apply:** 自动调度的阶段检查放在自动推进职责内；公共记账和显式动作按本次真实授权、权限、目标与资源范围、同根用量、幂等及必要时的短事务证明核验。自动阻塞不应要求新建任务、伪造阶段或重置计数才能继续；它也不是放宽授权、期限或范围的理由。复查所有共用 `consume` 的入口，用自动继续拒绝、显式合法动作可达、越权与额度不足仍拒绝、旧回执免费恢复的相邻回归分开证明；真实评分、比较与提分继续沿验收原件核对。
+
+## 2026-10-22 Skill 源码更新只发送变动文件
+
+当前源码与实际更新证据沿同一 Maxwell 验收记录查证；代码入口为 Studio pages/skills 的 SkillEditModal、SkillFileWorkspace 与 utils，复用既有 Skill 文件 patch。知识库不保存环境文件正文、凭据或临时业务身份。
+
+**Why:** 为替换脚本或运行 ZIP 而重新上传完整 Skill 包，会把未变化的环境凭据带进源码更新通道，扩大读取、传输及误覆盖范围；只支持文本编辑又无法更新二进制依赖。首次安装所需的完整目录，与已有 Skill 的增量更新是不同动作。
+
+**How to apply:** 已加载文件初始标记未改，保存时仅发送 dirty 文件的既有 `put`/删除补丁，未变动环境文件保持省略；替换二进制及原始文本字节复用 `contentBase64`，手动修改文本后再按新文本序列化。只更新既有路径并防止异步读取结果落到已切换的草稿。先审查实际待发送路径与文件类型，再验证保存回读及运行依赖；不得为了源码更新打包或重传凭据。首次安装仍须验证获准包的脚本、资源和配置目录完整，不能把增量更新规则误作允许缺依赖。
+
 ## 2026-10-22 来源快照与本次运行配置不能混作同一门禁
 
 真实复现、源码修复及实际出分边界沿 Maxwell `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 核对；代码入口为 nextplay_runtime/runner、resource_manifest、materializer 以及 EVOLVE execution/runner_result、runner_applied。连接声明的关联修复沿 commands/executors 与 executor_declaration_patch_test 核对；不保存临时配置、凭据或发布结论。
