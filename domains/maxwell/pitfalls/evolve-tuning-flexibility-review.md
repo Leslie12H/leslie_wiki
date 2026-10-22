@@ -2,12 +2,22 @@
 name: evolve-tuning-flexibility-review
 type: pitfall
 created: 2026-10-20
-updated: 2026-10-21
+updated: 2026-10-22
 tags: [maxwell, evolve, agent, review, performance]
 links: [evolve-boolean-rate-goal-direction, evolve-conversation-tuning-workspace-plan, evolve-candidate-loop-decision-boundaries]
 ---
 
 # 对话调优需要按动作证明而非固定步骤放行
+
+## 2026-10-22 续期准入、进度事件与实际配置字节
+
+本轮源码、首轮失败、主线整合、聚焦回归与真实执行边界见 Maxwell `output/evolve-unified-20261019/flexibility-acceptance-20261022.md`；暂时配置和业务原件不进入知识库。
+
+**Why:** 已过期的新执行请求如果在资产物化后才被拒绝，会留下不必要的新资源；反之，先拒绝全部过期请求又会切断已提交回执的精确恢复。Run 版本和完成数不变时，排队转远端执行仍可能没有事件通知。配置文件重序列化后的大小与实际 UTF-8 字节也不同，嵌套凭据键若漏检，会在真正运行前就进入候选原件。
+
+**How to apply:** 无回执的新请求在物化前检查有效期，保留已提交精确回执及并发晚提交的二次回读；不以续期重置已消耗的同根预算。沿既有有界聚合维护内部阶段指纹，触发已有事件刷新而不增加全历史轮询或公开实施字段。配置入口按原始字节校验、保留正文及哈希，递归拒绝已知凭据键并测试普通 token 额度字段不被误判；不要用词表声称可识别未来所有秘密。整合主线已有通用大载荷传输时，删除重复补丁并重跑协议兼容回归。
+
+性能实验的单 SQL、预算接纳和普通读取门禁分别报告；同机对照也失败只能说明尚不能归因于新增 SQL，不能据此写成全部性能通过。自然对话产出说明稿不等于生成可确认的 Case；必须同时核对实际绑定 Prompt/Skill 版本、持久草稿结构和最终用户产物，保留模型纠错过程，不能靠放宽确认保护掩盖失败。
 
 ## 隔离复验的配置生效与旧草稿权威
 

@@ -19,6 +19,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-22：[灵活调优的续期、阶段刷新与文件字节边界](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-22-续期准入进度事件与实际配置字节) — 物化前新授权检查、精确回执恢复、内部事件指纹、实际 UTF-8 限额及技术回归与真实产物分层取证。
+
 - 2026-10-21：[一句话合并说明与 dev 验收](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-21-一句话合并说明与-dev-验收入口) — PR #387、expected-head squash、空正文回读，以及 Worker→API→Evolve→Web 和独立 Split 验收指针。
 - 2026-10-21：[生成原件预留与准备读取范围](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#生成原件预留与准备读取范围) — 输出预算与原件保存空间闭合、纯错误历史的复用判断、Case轻量投影及未知工具目录边界。
 
