@@ -24,3 +24,13 @@ links: [sandeval-package-termination-validation, sandeval-dashboard-package-term
 ## 证据边界
 
 原生核销撤销已排空执行器的参与登记，不是业务命令重试，不清除答案/质检历史。新出现的事务超时、内存不足或数据库内部错误仍应按其原命令另行查证，不能因终止列表清零宣布异常源已永久修复。未提交终止的开放包不属于该次 stopping 恢复范围。
+
+## 2026-10-22 只读准备过早登记执行器
+
+**Why:** 恢复命令在读取详情、历史或已有回执之前就登记持久写执行器，读失败会被保守地归为未知写入；之后部署新代码并不会自动清除旧登记。已经确认成功的请求冻结步骤，也不应因后续独立只读准备失败被重新判为未知。
+
+**How to apply:** 先用异常时间、命令、Pod/进程和 SQL 指纹定位是否已进入写步骤。将有证据的只读准备移到写准入之前，在首个可能变更的入口重新检查终止与接管屏障，并保留原版本条件、幂等身份和真实未知写入保护。不要把事务取消/OOM 一概认定为无写入，也不要重放整个业务命令。准备与终止交错、冻结请求后读失败、真正写入丢回执、兄弟包隔离都需回归。
+
+- 修复与 Gate/部署入口：[main PR #2773](https://github.com/world-sim-dev/sandai-data-smith/pull/2773)；当前上线状态沿 PR、Actions 和生产镜像核对，不从本页推断。
+- 查询扫描优化入口：[#2770](https://github.com/world-sim-dev/sandai-data-smith/pull/2770)，与写执行器准入边界是不同层面的修复。
+- 私有诊断及验收指针：`/Users/leslie/Documents/Playground/output/package-termination-recovery-20261022/root-cause.md`、同目录 `deployment-receipt.md`。包含精确匹配的 SQL 指纹、未唯一反解的 OOM 查询及仍须保留保护的写事务取消边界。
