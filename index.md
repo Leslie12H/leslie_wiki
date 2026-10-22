@@ -1,5 +1,7 @@
 - 2026-10-22：[PR #388 复审与旧回归遗漏](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-22-pr-388-完整复审与旧回归遗漏) — 生命周期语义变更后的相邻断言、模块回归与 CI 证据边界指针；仅 review。
 
+- 2026-10-22：[已派答题卡完成率与整包应交范围](domains/sandai-data-smith/pitfalls/sandeval-assigned-progress-vs-package-coverage.md) — 已派卡完成率、完整题包覆盖和部分派题告警的范围差异；原生完整性与未派工作项逐项核验入口。
+
 - 2026-10-22：[新副作用授权与零调用恢复](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#新副作用授权与零调用恢复的边界) — 派发/付费与结果回收分离、成功中间态恢复、可信零调用与原预留复用，以及受限候选各入口统一核对。
 
 - 2026-10-22：[Benchmark 目录与 Split 运行入口](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-22-目录恢复与-split-来源版本运行) — 归档隐藏、后台草稿、一键来源版本与精确修订定位；PR 和本地/真实验收边界指针。
