@@ -1114,3 +1114,5 @@
 - 2026-10-21：[JSON 持久准入与有效工具一致性](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#json-持久准入与有效工具一致性) — 重复 Raw 传输和旧失效引用的定位入口。
 
 - 2026-10-21：[调优调用意图与配置回读复查](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#调用意图与真实配置回读的独立复查) — 模型调用前校验、真实宿主往返、别名冲突及零版本/约束状态的源码与验收边界指针。
+
+- 2026-10-22：[委派质检责任再次退回的父链遗漏](domains/sandai-data-smith/pitfalls/sandeval-repeated-correction-ancestor-blocker.md#2026-10-22-委派质检责任在再次退回时遗漏) — 正式委派父执行与已完成答案整改的共用证明、单案恢复、修复兼容、PR/Gate及测试分支冲突边界指针。

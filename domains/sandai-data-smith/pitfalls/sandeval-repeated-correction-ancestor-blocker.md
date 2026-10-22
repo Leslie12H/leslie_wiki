@@ -2,7 +2,7 @@
 name: sandeval-repeated-correction-ancestor-blocker
 type: pitfall
 created: 2026-09-30
-updated: 2026-10-16
+updated: 2026-10-22
 tags: [sand-eval, quality-center, remediation, reinspection, responsibility, release]
 links: [sandeval-transferred-correction-task-visibility, sandeval-roles-and-workflow]
 ---
@@ -72,3 +72,14 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-roles-and-work
 **How to apply:** 保留强制只读计划和完整 before-image，证明每条版本差值全部来自正式同批转交回执，排除活跃/已验收依赖、当前单提交意图与现接收人可复用旧命令，再用未修改的原生联合门禁验证内存候选。在任务级占用、本人写锁和正式管理转交使用的混合 DML 事务内重算冻结摘要，按旧版本、旧证据、接收人及未关闭状态精确 CAS，保存不可变审计；提交后另开只读连接与另一 Pod 核对正文、全部历史判断、送审版本、旧许可/执行/命令、本人真实工作台和联合祖先门禁。普通 Hologres autocommit 的 rollback 不作为保证。授权阻断解除与本人实际提交/后续质检仍分别验收。
 
 - [刘钬本批手动修复及独立验收](/Users/leslie/Documents/Playground/output/liuhuo-correction-20261016/data-repair-report.md)：明确批准、精确三行变更、冻结计划与正文备份、不可变审计、任务占用结案和跨副本本人投影的证据入口；没有替标注员提交或改动判断结论。具体版本、ID 和 SHA 只保留在报告。
+
+
+## 2026-10-22 委派质检责任在再次退回时遗漏
+
+**Why:** 已完成答案整改的真实上级可能来自 `review_rejected` 委派，而不是负责人 `manual_return`。只回查手动退回会漏掉已由正式执行与 v2 permit 授权的责任，造成答案准备度通过、完整提交责任校验失败。联合关联单遍历与委派责任类型解析是不同问题。
+
+**How to apply:** 核对上一轮 completed/resolved 执行、准确祖先版本、来源整改单的父执行、连续报告与送审、原始成员集合及 v2 permit。复用同一父执行校验处理当前授权和已完成整改继承，保留上级独立验收；历史修复审计也必须回到正式已完成执行证明，不能仅凭标记放行。单案数据恢复、通用代码验证、测试分支整合及生产发布分别验收。
+
+- [岳凡翔单案排查、具体批准、父关联恢复与独立生产回读](/Users/leslie/Documents/Playground/output/yuefanxiang-correction-20261022/report.md)：当次对象、版本、计划摘要及修复回执只沿报告查，不将本页作为运行态证明。
+- [通用修复测试 PR #2750](https://github.com/world-sim-dev/sandai-data-smith/pull/2750)与[任务分支完整 Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/39721311592)：源码、最新检查/整合与发布状态沿链接重新核验。测试分支冲突不允许把 test 历史带进开发分支；独立 Gate 不替代测试环境整合验收。
+- 共享校验与回归入口：`quality/application/resolution/reinspection_authorization_service.py::annotation_execution_parents / completed_annotation_parent`、`resolution_service.py::_ancestors`、`tests/quality/application/resolution/test_completed_delegated_correction_parent.py`。性能代码索引通过 owning generator 更新。
