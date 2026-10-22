@@ -46,3 +46,10 @@ links: [sandeval-init-warehouse-latency-20261010]
 - **How to apply:** 排除滚动发布窗口，按相同长度比较 CloudMonitor 计算组 CPU 与 SELECT QPS，再核对 SLS 请求量、慢请求、错误和真实部署 SHA。hg_query_log 用查询形状与扫描量证明优化路径生效，诊断应用名单独排除；Fixed Plan 的零计数不可解释成零成本，不把分钟 p95 平均成窗口 p95。五分钟非受控观察只能说明初步缓解，不能把全部降幅归因于单一提交或宣称 OOM 已闭环。
 
 - 质检自身 CPU 归属见 `perf-fix/quality-cpu.md`：按应用名及读写表集合统计 CPU 核秒，再用同期 CloudMonitor `warehouse_total_cores` 换算平均核数与容量比例。历史文档规格不可直接作分母；只读账号缺全量统计权限、Fixed Plan 缺失 CPU 计数及通用 SQL 未归因时，已识别 CPU 比例不能冒充整实例精确占比。
+
+
+## 2026-10-22 质检剩余热点优化入口
+
+- 后续实现、review 与发布沿 [PR #2770](https://github.com/world-sim-dev/sandai-data-smith/pull/2770) 查；CPU/digest/源码映射、HTTP 基线、同参数对照和 19 组候选结果核验见本地证据目录 `quality-scan-optimization/report.md`。
+- **Why:** 行存 extension 的非主键范围加 JSON 过滤可能使少量结果承担百万行宽读取；没有主表退回候选的摘要仍可能扫描转交、验收流水。
+- **How to apply:** 先取得任务与类型范围的窄主键集合，再让原 payload 查询显式限定这些主键并保留所有原判据；空摘要候选只用于安全提前返回，非空继续完整转交与父子责任规则。先证明同参数结果、顺序、跨任务隔离和当前状态一致，再比较成本；候选覆盖的历史 CPU 份额不能当成预期节省率。近期并行 rollout 可删除诊断所在 Pod，必须核对新 SHA/Ready 状态并重新完成结果验证。

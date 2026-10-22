@@ -36,6 +36,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-22：[质检剩余 SQL 热点优化](domains/sandai-data-smith/refs/sandeval-db-pressure-20261022.md#2026-10-22-质检剩余热点优化入口) — 窄主键后宽读取、空候选跳过流水、19 组结果对照与 PR #2770 指针。
+
 - 2026-10-22：[Sand Eval 上线后 CPU 复核](domains/sandai-data-smith/refs/sandeval-db-pressure-20261022.md#2026-10-22-上线后-cpu-验证入口) — 等长窗口、质检 CPU 核秒归属、同期容量核验、查询日志补齐和短窗口因果边界。
 - 2026-10-22：[EVOLVE 采集边界与评分草稿一致性](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-22-流式采集异常与已发布任务原件) — 真实 HTTP 异常、精确任务交付原件、后采诊断及新内容配置声明校验的证据与实现入口。
 
