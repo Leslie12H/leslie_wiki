@@ -9,6 +9,22 @@ links: [evolve-boolean-rate-goal-direction, evolve-conversation-tuning-workspace
 
 # 对话调优需要按动作证明而非固定步骤放行
 
+## 2026-10-22 长任务等待、工具目录与当前状态的证据
+
+具体代码、自然失败、真实异步回流和未完成的质量验收，沿 Maxwell `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 查证；SDK 入口为 nextplay_runtime 的 cli/runner/supervision，平台入口为 MCP provider refresh 与 Studio threads/traceModel。不保存临时 Preset、线程、模型额度或发布结论。
+
+**Why:** 外层 Agent 定时轮询长任务会持续消耗模型调用次数，内层尚未结束时外层即可耗尽；脱离父执行的进程又可能继续占用远端资源。服务进程加载新工具说明不等于模型使用了新目录，持久 MCP 工具快照可能仍旧。完成后的历史 async interrupt 也不等于当前 Run 仍在等待。
+
+**How to apply:** 复用宿主托管异步执行承接长等待，并在同一次有界等待中监督实际任务；按精确任务身份、原请求和进程出生标记处理恢复、截止和 owner 消失，不能依赖本机互斥锁证明跨节点唯一。比较模型实际请求中的工具说明与当前服务目录，必要时通过原业务管理入口预览差异并同步，不轮换凭据或修改共享 endpoint 绕过缓存。Trace 当前等待取真实 Run 状态，历史中断、唤醒与回流保留事件证据。短命令和冷启动真实异步通过，只证明传输与回流，不证明完整候选、取消或评分质量。
+
+## 2026-10-22 性能对照必须区分物理对象与代码版本
+
+探针、原始失败、采样顺序修正和后续测量状态，沿同一验收记录及本轮 `.tmp/sse-progress-review` 证据核对；不在知识库保存临时延迟数字或通过状态。
+
+**Why:** 同一代码下两个不同 Work 的延迟比例，不能归因为分支相对 main 的开销；先排序再切批会破坏真实批次。并行编译、运行任务以及不均衡的执行顺序也会污染对照。
+
+**How to apply:** 保留每次原始失败；分别对照 main/current 与同一物理对象，固定代码和探针哈希，预编译后在无编译竞争时测量。采样按采集顺序分批，分位数排序使用副本；平衡条件顺序及前序影响。源码变化后重新冻结，不能复用旧二进制证明最终改动性能；对象差异与代码差异分别报告。
+
 ## 2026-10-22 冻结资源编辑与运行包完整同步
 
 真实技术编辑、确认、登记与尚未完成的执行边界，沿 Maxwell `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 查证。源码入口为 EVOLVE resourcecontent/source_runner、commands/resource_edit/runner_wire，以及 nextplay-a2a Skill 和 scripts/run.py；不保存临时资源身份、用量或发布状态。
