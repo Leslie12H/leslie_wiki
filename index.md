@@ -23,6 +23,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-22：[EVOLVE 条件字段与原件贯通](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-22-模型条件字段与原件生产消费贯通) — 生成投影可选参数、原始信封到严格评分消费者、源退役证明与候选选择分离及真实阶段展示的核对指针。
+
 - 2026-10-22：[调优大输入与中断原件链路](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-22-大输入接纳执行期限与中断原件) — 接纳/轮询、原请求期限、失败轨迹消费者及精确选题修订的核对指针；真实质量与发布状态沿验收记录查证。
 
 - 2026-10-22：[灵活调优的续期、阶段刷新与文件字节边界](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-22-续期准入进度事件与实际配置字节) — 物化前新授权检查、精确回执恢复、内部事件指纹、实际 UTF-8 限额及技术回归与真实产物分层取证。

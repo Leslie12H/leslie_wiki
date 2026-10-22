@@ -9,6 +9,14 @@ links: [evolve-boolean-rate-goal-direction, evolve-conversation-tuning-workspace
 
 # 对话调优需要按动作证明而非固定步骤放行
 
+## 2026-10-22 模型条件字段与原件生产消费贯通
+
+复现、修复和实际验收状态沿 Maxwell `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 查证；源码入口为 model/openaicompat/tool_schema、nextplay_runtime/evidence_bundle，以及原 evidence_pull/grading_evidence 消费者，不在本页固化动态调用数或发布结论。
+
+**Why:** 将多动作工具的条件字段合并到生成用根对象后，仅保留必填说明，会让其它动作的可选字段看似处处可传，而原闭合执行契约仍会拒绝。原件写入成功、结构测试通过，也不代表原评分消费者能解析：展示压缩前若保存了错误层级，严格 receipt/status 校验会拦住真实结果。源配置的退役证明与候选的预期新增工具选择若混为一份清单，也会误拒合法变化。
+
+**How to apply:** 只在模型副本保留每个闭合动作全部允许字段及条件，稳定输出且不改执行校验；不要用新的任意容量门槛将原本可投影工具回退到模型不支持的协议。使用真实生产者连接原严格消费者、原 Judge 导航，并保留篡改负例；原始信封先封存，展示结果随后压缩，不能靠放松消费者通过。源的完整退役证据与本次候选声明分开核对，实际配置须等于本次意图扣除仅被证明退役的源项，新增工具丢失或未声明变化仍拒绝。并行 Run 槽位、单 Run Trial 上限与执行器额度分别核验；多数排队阶段的单标签不能代表无人执行，页面应同时显示真实阶段计数。当前是否已真实提分仍沿验收原件核对。
+
 ## 2026-10-22 大输入接纳、执行期限与中断原件
 
 完整复现与技术/真实验收分界沿 Maxwell `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 查证。源码入口为 EVOLVE A2A Registry、Native Runtime Task 投影，以及 nextplay-eval 的 CLI、event_archive、grading_evidence 和 archived_maxwell_events；当前发布与质量结论不保存在本页。
