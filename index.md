@@ -1156,3 +1156,5 @@
 - [Sand Eval 2026-10-22 数据库压力取证](domains/sandai-data-smith/refs/sandeval-db-pressure-20261022.md) — 资源组内存、启动等待、既有摘要/修订扫描与本次新增调用的证据边界。
 
 - 2026-10-22：[整改承接读取性能修复](domains/sandai-data-smith/refs/sandeval-db-pressure-20261022.md#2026-10-22-后续最小性能修复) — 先物化窄 lookup IDs、单次计算复用正式证明；PR #2767 与只读前后证据。
+
+- 2026-10-22：[终止处理中全量恢复与历史登记](domains/sandai-data-smith/pitfalls/sandeval-termination-historical-writer-recovery.md) — 前次局部范围与新增终止区分、存量/当日异常分类、原生核销和独立管理列表验收指针。
