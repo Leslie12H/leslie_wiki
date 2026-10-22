@@ -1160,3 +1160,4 @@
 
 - 2026-10-22：[终止处理中全量恢复与历史登记](domains/sandai-data-smith/pitfalls/sandeval-termination-historical-writer-recovery.md) — 前次局部范围与新增终止区分、存量/当日异常分类、原生核销和独立管理列表验收指针。
 - 2026-10-22：[终止屏障的只读准备边界](domains/sandai-data-smith/pitfalls/sandeval-termination-historical-writer-recovery.md#2026-10-22-只读准备过早登记执行器) — main PR #2773、读失败误登记与真实未知写入的区分及上线验收指针。
+- 2026-10-22：[授权准备中的条件写入](domains/sandai-data-smith/pitfalls/sandeval-termination-historical-writer-recovery.md#2026-10-22-只读准备过早登记执行器) — #2774 补齐初始范围自动校准的独立终止屏障。

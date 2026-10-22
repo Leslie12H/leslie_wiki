@@ -34,3 +34,4 @@ links: [sandeval-package-termination-validation, sandeval-dashboard-package-term
 - 修复与 Gate/部署入口：[main PR #2773](https://github.com/world-sim-dev/sandai-data-smith/pull/2773)；当前上线状态沿 PR、Actions 和生产镜像核对，不从本页推断。
 - 查询扫描优化入口：[#2770](https://github.com/world-sim-dev/sandai-data-smith/pull/2770)，与写执行器准入边界是不同层面的修复。
 - 私有诊断及验收指针：`/Users/leslie/Documents/Playground/output/package-termination-recovery-20261022/root-cause.md`、同目录 `deployment-receipt.md`。包含精确匹配的 SQL 指纹、未唯一反解的 OOM 查询及仍须保留保护的写事务取消边界。
+- 发布前补充：[main PR #2774](https://github.com/world-sim-dev/sandai-data-smith/pull/2774)。权限准备也可能通过 `BatchAllocationService.authorize` 的范围变化回退调用 `tasks.rebind_initial_scope`；拆出准备阶段时必须追到这种条件写入，给其独立写入口加屏障并用真实授权回退路径验证，不能仅依赖方法名推断只读。
