@@ -36,6 +36,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-22：[Sand Eval 上线后 CPU 复核](domains/sandai-data-smith/refs/sandeval-db-pressure-20261022.md#2026-10-22-上线后-cpu-验证入口) — 等长窗口、真实利用率与 QPS、查询日志补齐和短窗口因果边界。
+
 - 2026-10-22：[EVOLVE 显式基线路径与证据终态分类](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-22-逻辑对象归组不能隐藏显式基线执行路径) — 逻辑目录归组、已接纳子运行回读，以及原件 hash 错误不按临时网络故障重试的源码核对入口。
 
 - 2026-10-22：[整包进度降级与派题状态](domains/sandai-data-smith/pitfalls/sandeval-assigned-progress-vs-package-coverage.md#2026-10-22-进度降级与操作状态独立核验) — 未知分母不应抹掉已知操作状态，真实仓储到页面的历史任务回归入口。
