@@ -132,3 +132,13 @@ links: [sandeval-completed-review-followup-round, sandeval-sand-wrapper-deferred
 **How to apply:** 冻结 ConfigMap 与相关 Deployment，先 server dry-run，再用 resourceVersion CAS 只修改指定键和触发滚动的注解。完成后逐副本回读实际配置、协议和镜像，核对旧副本退出、服务健康与当前包原生详情和预检。验证下一次正常清单 apply 是否保留该运行开关；有持久转换待处理时不可简单关回。保留生产变更回执，实际业务退回仍由正式预览与确认流程产生。
 
 - [2026-10-22 用户授权后启用与验收记录](/Users/leslie/Documents/Playground/output/sandeval-package-return-20261022/activation.md)：关联最终回执、逐执行器读回、ConfigMap/spec 精确差异、真实配置下的原生预检和正常发布清单保留开关的 dry-run。现场数值与当前业务状态沿记录或重新查询核对；此记录明确区分配置启用与具体数据包退回执行。
+
+
+## 2026-10-22 预览凭证不能绑定后台恢复尝试版本
+
+**Why:** 执行记录的 CAS 版本同时保护业务推进和恢复计数；后台无范围变化的尝试也会递增它。把这个版本直接作为人工接管预览的范围凭证，会让同一题目、责任、报告和授权在确认时误报“接管范围已变化”。同一进程短时间重复预检通过，不能覆盖跨后台恢复轮询的确认。
+
+**How to apply:** 预览单独冻结真实业务范围、阶段、参与人、报告与授权依据，排除尝试次数、时间和恢复诊断等记账字段；正式意图仍取最新 CAS 版本，准入与停止旧执行保持严格版本校验。两条接管路径都做“预览 → 后台恢复尝试 → 原预览确认”回归，并验证目标、报告、工作项或权限真实变化仍被拒绝。保留旧已保存意图的序列化和恢复身份；代码 Gate、测试集成、生产发布及具体退回仍分别验收。
+
+- [预览一致性诊断与修复报告](/Users/leslie/Documents/Playground/output/sandeval-package-return-20261022/preview-validation.md)：原生跨 Pod 字段对比、真实浏览器只读预览、候选回归和未发布边界。
+- [修复测试 PR #2759](https://github.com/world-sim-dev/sandai-data-smith/pull/2759) 与[干净开发分支完整 Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/39762128747)：当前结果以最新 head/run 为准；测试分支集成冲突不能用独立 Gate 替代，更不能把测试历史合入开发分支。

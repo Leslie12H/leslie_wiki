@@ -1996,3 +1996,5 @@
 - 2026-10-22｜Ingest｜补充用户授权后的生产整包接管开关启用验收指针，记录 ConfigMap/CAS、执行器滚动与逐进程回读、正常清单保留开关及正式业务退回的边界。见 domains/sandai-data-smith/projects/sandeval-package-return-takeover-review.md。
 - 2026-10-22：补充历史来源快照误作活体运行门禁、SDK与平台回执联合核验、连接声明清理顺序和远端终态保留的根因与应用方法；真实出分和发布仍沿验收记录核对。
 - 2026-10-22：复审 Sand Eval 整包进度，记录进度未知与派题状态须独立投影、历史任务夹具需对齐真实仓储响应的经验；状态沿 PR #2757 查证。
+
+- 2026-10-22｜Ingest｜记录整包接管预览误含后台恢复尝试版本的根因与业务快照修复边界，补充跨恢复轮询回归、真实范围变化反例及测试 PR/Gate 指针。见 domains/sandai-data-smith/projects/sandeval-package-return-takeover-review.md。
