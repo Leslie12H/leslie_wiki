@@ -36,6 +36,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-22：[EVOLVE 从零准备与评分出站策略](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-22-从零准备日期接续与评分出站策略) — 无历史配置准备、日期接续身份、执行与评分计数及确定性网络拒绝的复核指针。
+
 - 2026-10-22：[质检剩余 SQL 热点优化](domains/sandai-data-smith/refs/sandeval-db-pressure-20261022.md#2026-10-22-质检剩余热点优化入口) — 窄主键后宽读取、空候选跳过流水、19 组结果对照与 PR #2770 指针。
 - 2026-10-22：[调优候选协议与确认边界](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-22-候选准备由执行协议决定) — Runner/资源 Provider 分流、旧回执恢复、评分纯编译和嵌套观察组件的复现与验收指针。
 
