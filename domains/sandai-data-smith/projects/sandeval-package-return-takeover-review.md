@@ -142,3 +142,13 @@ links: [sandeval-completed-review-followup-round, sandeval-sand-wrapper-deferred
 
 - [预览一致性诊断与修复报告](/Users/leslie/Documents/Playground/output/sandeval-package-return-20261022/preview-validation.md)：原生跨 Pod 字段对比、真实浏览器只读预览、候选回归和未发布边界。
 - [修复测试 PR #2759](https://github.com/world-sim-dev/sandai-data-smith/pull/2759) 与[干净开发分支完整 Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/39762128747)：当前结果以最新 head/run 为准；测试分支集成冲突不能用独立 Gate 替代，更不能把测试历史合入开发分支。
+
+
+## 2026-10-22 用户授权的 main 合并与生产复验
+
+**Why:** 用户另行明确要求发往 main、合并并验证后，交付必须覆盖自动发布和真实运行态。PR Gate、合并回执、生产 SHA 与真实后台恢复后的原预览校验是不同证据；仅看任一状态不足以确认修复已生效。
+
+**How to apply:** 冻结从 main 创建的干净开发 head，确认完整 Gate 与可合并状态，按精确 head 约束合并。跟随该合并 SHA 的自动发布，等前序发布释放队列，独立回读公网、服务端点及各执行器的版本与开关。保留原预览等待真实后台恢复计数递增，再校验原预览与最新写入版本；只读验证必须在持久转换开始写入前截停，不能据此声称已替用户执行具体整包退回。
+
+- [main PR #2760](https://github.com/world-sim-dev/sandai-data-smith/pull/2760) 与[自动发布 run](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/39763255606)：合并、发布及未来运行态沿各自原件回读。原测试 PR #2759 已由本次用户授权的 main PR 替代。
+- [2026-10-22 生产验收报告](/Users/leslie/Documents/Playground/output/sandeval-package-return-20261022/release-verification.md)：最终回执、全部运行容器与端点、真实恢复版本递增后原凭证仍有效及写入前截停的可复核证据；具体业务退回没有在只读验收中执行。

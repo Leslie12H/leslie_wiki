@@ -1999,3 +1999,5 @@
 
 - 2026-10-22｜Ingest｜记录整包接管预览误含后台恢复尝试版本的根因与业务快照修复边界，补充跨恢复轮询回归、真实范围变化反例及测试 PR/Gate 指针。见 domains/sandai-data-smith/projects/sandeval-package-return-takeover-review.md。
 - 2026-10-22｜Ingest｜补充自动调优 blocked 与有效 Grant、公共预算入账职责的边界，以及 Skill 源码更新仅发 dirty 文件、保留未变环境配置的应用方法；本轮修复、真实评分与发布状态沿 Maxwell 验收记录查证。
+
+- 2026-10-22｜Ingest｜补充用户授权的整包接管预览修复 main PR #2760 合并、自动发布与生产复验指针，记录逐执行器/端点读回、真实恢复后原凭证有效及确认前只读截停的边界。见 domains/sandai-data-smith/projects/sandeval-package-return-takeover-review.md。
