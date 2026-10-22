@@ -1990,3 +1990,5 @@
 - 2026-10-22｜Ingest｜记录已派答题卡全部完成但整包应交范围缺失的口径差异，补充原生完整性、未派工作项逐项映射、部分派题提示及详情应交数文案的核对指针。见 domains/sandai-data-smith/pitfalls/sandeval-assigned-progress-vs-package-coverage.md。
 
 - 2026-10-22｜Ingest｜补充整包退回修复已发布与生产接管开关启用的不同边界，记录运行装配、父子责任、隔离只读预检及持久围栏启停的核验指针。见 domains/sandai-data-smith/projects/sandeval-package-return-takeover-review.md。
+
+- 2026-10-22｜Ingest｜补充整包进度 main PR #2757 的实现与验收指针，记录未知完整范围显示待核对、补派告警与入口同时核对任务和包控制状态；Gate、合并和发布分别回查。见 domains/sandai-data-smith/pitfalls/sandeval-assigned-progress-vs-package-coverage.md。
