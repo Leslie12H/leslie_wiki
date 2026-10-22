@@ -2,7 +2,7 @@
 name: evolve-benchmark-unified-plan-review
 type: reference
 created: 2026-10-20
-updated: 2026-10-21
+updated: 2026-10-22
 tags: [maxwell, evolve, benchmark, split, subject, executor, adapter, visualization]
 links: [evolve-benchmark-run-subset]
 ---
@@ -207,3 +207,12 @@ links: [evolve-benchmark-run-subset]
 **Why:** squash 的默认正文可能拼接分支所有提交说明；PR 描述压缩不能自动保证合并通知同样简短。合并与部署又是不同动作，不能把 main 已包含代码当作用户页面已更新。
 
 **How to apply:** 先压缩 PR body，再以 expected head SHA 合并，用一句话 commit title 和显式空 commit message，独立读取最终提交全文确认没有自动追加正文；测试详情保留在现有验收记录。发布锁定实际 main SHA，沿标准 Worker→API→Evolve→Web 顺序且按本轮范围关闭迁移，分别核对真实 poller、镜像和 Web build ID，再检查 Split 成员/修订、指标来源和目录行为。保留原十题 Split 和历史请求，用独立资产做编辑验收；真实模型、取分与大批量运行仍需各自证据。
+
+
+## 2026-10-22 目录恢复与 Split 来源版本运行
+
+本轮代码、测试与边界沿 [PR #388](https://github.com/world-sim-dev/maxwell-ai/pull/388) 及 `docs/verification/2026-10-22-benchmark-entry-recovery.md` 核验；真实完整题集的目录恢复与浏览器证据仅在同工作树 `.tmp/benchmark-entry-acceptance-20261022.md` 接续。合并、部署和评分完成均须从实际状态独立确认。
+
+**Why:** 详情可读不等于默认目录可发现：目录可能隐藏已归档对象。草稿恢复也不应隐含打开编辑器；跨版本展示的 Split 若主入口只禁用，会把来源版本切换成本留给用户。真实登录回调还可能固定返回已部署站点，不能由企业登录成功推断本机分支已验收。
+
+**How to apply:** 先核对业务、筛选与目录状态，经现有精确恢复/CAS入口处理，保留题目与历史。编辑内容在后台恢复，显式编辑/限定目标的一次性管理返回才打开。Split 主入口明确切到来源版本，带精确资产与可选历史修订；分页外仍读现有资产 head 核归档状态，非法历史定位拒绝降级，未知运行请求不覆盖。技术合成组件、真实目录操作和实际运行取分分别验收；不为可发现性追加全表扫描或逐行下载正文。
