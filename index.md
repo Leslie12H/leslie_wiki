@@ -23,6 +23,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-22：[冻结资源编辑与运行包完整同步](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-22-冻结资源编辑与运行包完整同步) — 历史画像与授权分离、不可变原件引用、编码下界与完整信封、Skill 缺包复现及真实质量边界指针。
+
 - 2026-10-22：[EVOLVE 条件字段与原件贯通](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-22-模型条件字段与原件生产消费贯通) — 生成投影可选参数、原始信封到严格评分消费者、源退役证明与候选选择分离及真实阶段展示的核对指针。
 
 - 2026-10-22：[调优大输入与中断原件链路](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-22-大输入接纳执行期限与中断原件) — 接纳/轮询、原请求期限、失败轨迹消费者及精确选题修订的核对指针；真实质量与发布状态沿验收记录查证。

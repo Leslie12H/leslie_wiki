@@ -9,6 +9,14 @@ links: [evolve-boolean-rate-goal-direction, evolve-conversation-tuning-workspace
 
 # 对话调优需要按动作证明而非固定步骤放行
 
+## 2026-10-22 冻结资源编辑与运行包完整同步
+
+真实技术编辑、确认、登记与尚未完成的执行边界，沿 Maxwell `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 查证。源码入口为 EVOLVE resourcecontent/source_runner、commands/resource_edit/runner_wire，以及 nextplay-a2a Skill 和 scripts/run.py；不保存临时资源身份、用量或发布状态。
+
+**Why:** Work 的历史 executor/profile 和内层业务投影不等于当前资源授权；新增相等门禁会拒绝已经批准、合法可运行的 A2A 候选。模型回传整份原件既昂贵又易损坏字节。另一方面，Skill 说明可见不代表 Sandbox 已同步全部运行依赖，只复制脚本和环境文件会使 ZIP 中的 Python 模块不可导入。
+
+**How to apply:** 复用已有冻结资产可见性、业务隔离、精确引用、哈希及当前活动 Runner 通道校验，不能凭旧画像增加顺序或配置相等要求。对实际可编辑的 UTF-8 prompt/skill_file 按窗口阅读、唯一匹配修改，由平台存储完整不可变原件并返回小型引用；只读库存不能覆盖已生效的同维度替换。扣额前可用元数据检查编码资源的严格下界，仍须保留完整信封上限；每次读取整份单资源不应称为存储 Range。Skill 的 scripts、assets/runtime.zip 和 runtime.env 必须来自同一包并保持目录关系；入口缺包给出可操作错误，用仅脚本的负例和完整包无 PYTHONPATH 的启动验证。完整复制后仍出现同类报错须继续取证，不能用已解释的首次缺包覆盖未知原因。原件成功、确认及候选登记仍不代表实际配置已应用或质量提升。
+
 ## 2026-10-22 模型条件字段与原件生产消费贯通
 
 复现、修复和实际验收状态沿 Maxwell `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 查证；源码入口为 model/openaicompat/tool_schema、nextplay_runtime/evidence_bundle，以及原 evidence_pull/grading_evidence 消费者，不在本页固化动态调用数或发布结论。
