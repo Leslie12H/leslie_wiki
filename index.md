@@ -1149,3 +1149,5 @@
 - 2026-10-22：[纸面整改批次归属与分配阻断](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md) — 待定精确移出、多轮整改及并行代改归属、原生复验恢复、分配前工作项占用保护；个案状态与 Gate 仅存证据指针。
 
 - [Sand Eval 2026-10-22 数据库压力取证](domains/sandai-data-smith/refs/sandeval-db-pressure-20261022.md) — 资源组内存、启动等待、既有摘要/修订扫描与本次新增调用的证据边界。
+
+- 2026-10-22：[整改承接读取性能修复](domains/sandai-data-smith/refs/sandeval-db-pressure-20261022.md#2026-10-22-后续最小性能修复) — 先物化窄 lookup IDs、单次计算复用正式证明；PR #2767 与只读前后证据。
