@@ -9,6 +9,14 @@ links: [evolve-boolean-rate-goal-direction, evolve-conversation-tuning-workspace
 
 # 对话调优需要按动作证明而非固定步骤放行
 
+## 2026-10-22 可读资产目录不等于任务事件历史
+
+当前源码与真实页面回读沿 Maxwell `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 查证；定位入口为 EVOLVE postgres 的 `ListArtifactsByAccess`、Studio 的 `loadSelectedAssets` 与 Ledger 的 `buildArtifactEntries`。本节不保存业务身份、临时事实数量或验收通过结论。
+
+**Why:** 业务内独立配置原件可以出现在某个 Work 的可读资产目录中，供引用和编辑；可读不证明该 Work 创建、冻结或采用了这些原件。若把整个目录按原冻结时间直接混入任务对话，新任务会显示旧资源的系统事实；这类投影错误与会话串线或越权读取需分别取证。历史导入或采用的合法原件也可能早于 Work 创建，不能靠时间截断修复。
+
+**How to apply:** 保留原件目录、引用入口及既有读取授权，只在任务时间线按精确 Work 归属投影。原件成员关系不代表采用事件：保留其真实冻结时间与哈希，使用中性的正式资产说明，不捏造“本任务冻结/采用成功”或当前时间。当前任务的草稿确认、候选和运行记录继续按自身真实事件展示，可从完整目录解析精确原件回执。回归同时覆盖独立资源排除、其它 Work 排除、历史成员原件保留、当前草稿引用独立原件以及切换任务首帧；实际页面与真实评分仍分别核验。
+
 ## 2026-10-22 自动调优阻塞与有效授权不能混为一谈
 
 源码与真实出分状态沿 Maxwell `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 核对；实现入口为 EVOLVE domain/optimizationcontrol 与 postgres/optimization_budget 的公共 `consume`，并联查普通候选、显式运行和证据入账调用方。本节记录已确认的职责边界，不代表本轮修复、真实评分或发布已完成。

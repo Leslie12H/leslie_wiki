@@ -1,3 +1,4 @@
+- 2026-10-22：[可读资产目录与任务事件投影](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-22-可读资产目录不等于任务事件历史) — 精确 Work 归属与可读原件池分开，保留历史成员原件，不用创建时间截断或捏造采用事件；页面与真实评分沿验收记录分别核对。
 - 2026-10-22：[自动调优阻塞与有效授权](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-22-自动调优阻塞与有效授权不能混为一谈) — 自动阶段与公共预算记账职责分开，显式合法候选、运行与证据恢复不被一并封死；修复与真实评分沿验收记录核对。
 - 2026-10-22：[Skill 增量文件更新与凭据保留](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-22-skill-源码更新只发送变动文件) — 复用现有 dirty 文件补丁与原字节替换，未变环境文件省略；首次完整安装与源码增量更新分别核验。
 
