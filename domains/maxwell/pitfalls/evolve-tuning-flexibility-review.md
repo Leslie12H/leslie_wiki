@@ -9,6 +9,30 @@ links: [evolve-boolean-rate-goal-direction, evolve-conversation-tuning-workspace
 
 # 对话调优需要按动作证明而非固定步骤放行
 
+## 2026-10-22 候选准备由执行协议决定
+
+当前实现、已接纳回执、性能与真实评分边界沿 Maxwell `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 核对；源码入口为 commands/optimization_verification、candidate_validation 与 Studio PreparedRunCardStore。不保存临时 Run 身份或通过结论。
+
+**Why:** 候选存在不表示它必须经过平台外部资源 Provider；自包含 A2A Runner 在 Adapter 内物化，而资源协议候选依赖 Provider。前端按候选存在强制准备，会让合法 Runner 被错误的可信绑定要求拦截。首次计划按协议规范标志后，已接纳回执恢复又必须保留原选择，否则同键请求摘要会冲突。
+
+**How to apply:** 新计划先按原业务、Work、可见性与精确 Variant 哈希读取冻结执行协议，在计算计划摘要前规范准备标志；只读准备不调用外部 Provider 或模型。正式提交继续执行原资源应用与预算准入。已接纳同键恢复按精确身份和原 preparedRef 还原，不重新解释旧请求或放松摘要校验；覆盖首次、接受后重开、错误作用域及两种协议的相邻路径。共享 Agent 不因验收而增加外部绑定。
+
+## 2026-10-22 可编辑评分配置与执行编译边界
+
+实际自然对话、校验修复和入库/评分结果沿同一验收记录查证；源码入口为 measurement.ValidateLLMConfig、methods 注册表和 commands 的 Case/草稿/新 Run 消费点。
+
+**Why:** 模型即使阅读到真实方法描述，仍可能把旧 Judge spec 的字段填进新的逐题原生方法配置；草稿保存成功不证明评分可执行。若只在付费 Trial 后编译，用户会到运行阶段才发现这一错误；反过来要求所有草稿立即可执行又会阻止正常编辑。
+
+**How to apply:** 草稿保持可编辑，在确认、物化和新执行消费点复用实际方法的纯编译校验，保留已接受精确回执优先恢复；未知、版本化和外部 opaque 方法继续遵从自身契约。方法资产按授权精确引用读取，缓存有界且在预算锁外，不为校验调用模型。把错误反馈交给 Agent 修订，再用干净自然会话验证真实可保存产物，不能把技术测试或说明稿算作自然场景成功。
+
+## 2026-10-22 嵌套观察组件与已授权显式执行
+
+源码和页面复现入口为 PreparedRunCard、PreparedRunCardStore 及 agent-resources 的调优 Prompt/optimization-strategy；当前发布、实际调用与提分状态沿验收记录核对。
+
+**Why:** 命名函数内部与 observer 导出同名时，递归 JSX 可能解析为未观察的原函数，异步状态虽更新，嵌套审核却不出现。通用说明若仍声称每个 Run 都必须再次人类确认，也会把已由服务端验证的 Work-bound Grant 误述为不可用，制造额外流程卡点。
+
+**How to apply:** 递归渲染引用被观察的导出组件，并用真实可观察状态更新测试嵌套对话。对已尝试提交但响应未知的动作，仅按同业务、Work、key 和请求摘要恢复已有回执，避免新键重派。首次授权及独立隐藏验收保留人类审核；已有匹配 Grant 的显式动作按现有服务端范围执行，不因自动编排阻塞重复索要许可。源文件、隔离 Preset 持久回读和新会话实际生效分别取证。
+
 ## 2026-10-22 可读资产目录不等于任务事件历史
 
 当前源码与真实页面回读沿 Maxwell `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 查证；定位入口为 EVOLVE postgres 的 `ListArtifactsByAccess`、Studio 的 `loadSelectedAssets` 与 Ledger 的 `buildArtifactEntries`。本节不保存业务身份、临时事实数量或验收通过结论。
