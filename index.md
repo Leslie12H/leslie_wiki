@@ -30,6 +30,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-22：[整包进度降级与派题状态](domains/sandai-data-smith/pitfalls/sandeval-assigned-progress-vs-package-coverage.md#2026-10-22-进度降级与操作状态独立核验) — 未知分母不应抹掉已知操作状态，真实仓储到页面的历史任务回归入口。
+
 - 2026-10-22：[Caption 标注草稿与机标回退取证](domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md#2026-10-22-caption-标注草稿与机标回退取证) — 规范化机标基线、保存前本机输入、结构操作before/after与两Pod原生读取分开；原浏览器定向备份及未确认根因指针。
 - 2026-10-22：[EVOLVE 取消占位、证据与目标版本复核](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#取消占位证据缺失与目标版本的复核边界) — 原子容量、取消公平性、权威缺失证明、实际候选路径与精确目标恢复；真实提分与发布沿验收记录核对。
 

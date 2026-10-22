@@ -28,3 +28,9 @@ links: [sandeval-space-membership-and-personal-distribution, sandeval-overview-h
 - [main PR #2757](https://github.com/world-sim-dev/sandai-data-smith/pull/2757)：整包标注口径、未知范围展示、列表和详情补派引导的实现及回归入口。完整 Platform Gate、合并与部署分别沿 PR 和发布回执核验；提出 PR 不代表 Gate 通过或已经上线。
 
 相关：[个人派题核验](sandeval-space-membership-and-personal-distribution.md)、[概览与交接范围](sandeval-overview-handoff-scope-mismatch.md)。
+
+## 2026-10-22 进度降级与操作状态独立核验
+
+**Why:** 完整应交范围未知，只能推出进度不可计算，不能推出来源任务不可派题。将两种投影绑在同一成功分支，会让仍允许派题的历史任务同时失去未派题提醒与入口。
+
+**How to apply:** 完整进度与任务/包控制状态分别投影；保留未知分母提示，同时用可核实的控制状态和权限决定原有操作。回归至少包含进度未知但来源开放的组合，并从真实仓储响应串到页面；不能只在前端夹具中手填后端不会返回的 active 字段。当前实现与修复状态沿 [PR #2757](https://github.com/world-sim-dev/sandai-data-smith/pull/2757) 查证。
