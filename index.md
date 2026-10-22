@@ -4,6 +4,7 @@
 
 - 2026-10-22：[已派答题卡完成率与整包应交范围](domains/sandai-data-smith/pitfalls/sandeval-assigned-progress-vs-package-coverage.md) — 已派卡与整包覆盖口径、未知范围及任务/包控制的补派准入；原生完整性核验与 main PR #2757 实现、Gate 和发布回查入口。
 
+- 2026-10-22：[来源快照与本次运行配置](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-22-来源快照与本次运行配置不能混作同一门禁) — 历史来源、实际配置与原件应用证明分开；连接声明清理顺序、远端终态保留与真实出分的核验指针。
 - 2026-10-22：[新副作用授权与零调用恢复](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#新副作用授权与零调用恢复的边界) — 派发/付费与结果回收分离、成功中间态恢复、可信零调用与原预留复用，以及受限候选各入口统一核对。
 
 - 2026-10-22：[Benchmark 目录与 Split 运行入口](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-22-目录恢复与-split-来源版本运行) — 归档隐藏、后台草稿、一键来源版本与精确修订定位；PR 和本地/真实验收边界指针。

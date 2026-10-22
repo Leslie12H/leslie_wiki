@@ -9,6 +9,14 @@ links: [evolve-boolean-rate-goal-direction, evolve-conversation-tuning-workspace
 
 # 对话调优需要按动作证明而非固定步骤放行
 
+## 2026-10-22 来源快照与本次运行配置不能混作同一门禁
+
+真实复现、源码修复及实际出分边界沿 Maxwell `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 核对；代码入口为 nextplay_runtime/runner、resource_manifest、materializer 以及 EVOLVE execution/runner_result、runner_applied。连接声明的关联修复沿 commands/executors 与 executor_declaration_patch_test 核对；不保存临时配置、凭据或发布结论。
+
+**Why:** 历史来源只冻结部分 Prompt/Skill 原件时，不足以声称保留了完整旧 Preset；每条用例重新捕获活体 Preset 后再要求等于旧整体快照，会使正常新增工具等变化阻止执行。仅放宽 SDK 而不修平台回执等值要求，还会在结果回收再次拒绝。连接更新若在应用显式新声明之后清空旧 Card，也会把同次请求携带的新能力声明误删；健康探测未必能重建平台专用声明。
+
+**How to apply:** 分开保存历史来源、本次实际隔离配置和逐项原件应用证明；复用当前已授权执行配置构建隔离实例，实际回读请求的资源与配置，记录真实 snapshot，不能把新身份伪装成旧快照。当前捕获与服务端复制之间的短期竞态校验仍负责防串配置，不应扩成跨 Run 的永久等值要求。历史结果比较依题集与评分口径，不强制重新构建任务或让 Agent 按固定顺序执行。更新连接先清旧连接状态，再应用本次显式声明；未提供声明时不跨连接继承旧能力。已确认远端终态的错误保留原失败，不再重复取消；取消状态核对避免附带大输入历史。技术回归通过后仍须真实执行、采集、评分和比较，不把接纳或结束当作质量验证。
+
 ## 2026-10-22 长任务等待、工具目录与当前状态的证据
 
 具体代码、自然失败、真实异步回流和未完成的质量验收，沿 Maxwell `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 查证；SDK 入口为 nextplay_runtime 的 cli/runner/supervision，平台入口为 MCP provider refresh 与 Studio threads/traceModel。不保存临时 Preset、线程、模型额度或发布结论。
