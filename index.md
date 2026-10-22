@@ -1143,3 +1143,5 @@
 - 2026-10-22：[委派质检责任再次退回的父链遗漏](domains/sandai-data-smith/pitfalls/sandeval-repeated-correction-ancestor-blocker.md#2026-10-22-委派质检责任在再次退回时遗漏) — 正式委派父执行与已完成答案整改的共用证明、单案恢复、修复兼容、PR/Gate及测试分支冲突边界指针。
 
 - 2026-10-22：[已关闭父责任的历史查询与正式提交](domains/sandai-data-smith/pitfalls/sandeval-repeated-correction-ancestor-blocker.md#2026-10-22-已关闭父责任的历史查询与正式提交) — review发现的关闭后继承误报、严格默认状态门禁与main PR/审查/发布取证入口。
+
+- 2026-10-22：[纸面整改批次归属与分配阻断](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md) — 待定精确移出、多轮整改及并行代改归属、原生复验恢复、分配前工作项占用保护；个案状态与 Gate 仅存证据指针。
