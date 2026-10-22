@@ -24,6 +24,7 @@
 # leslie_wiki 目录
 
 - 2026-10-22：[Caption 标注草稿与机标回退取证](domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md#2026-10-22-caption-标注草稿与机标回退取证) — 规范化机标基线、保存前本机输入、结构操作before/after与两Pod原生读取分开；原浏览器定向备份及未确认根因指针。
+- 2026-10-22：[EVOLVE 取消占位、证据与目标版本复核](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#取消占位证据缺失与目标版本的复核边界) — 原子容量、取消公平性、权威缺失证明、实际候选路径与精确目标恢复；真实提分与发布沿验收记录核对。
 
 - 2026-10-22：[调优长任务与工具目录证据](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-22-长任务等待工具目录与当前状态的证据) — 托管异步等待、模型实际工具目录、历史中断与当前状态，以及性能对照采样的核对入口。
 
