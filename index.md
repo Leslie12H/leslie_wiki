@@ -36,6 +36,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-22：[EVOLVE 显式基线路径与证据终态分类](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-22-逻辑对象归组不能隐藏显式基线执行路径) — 逻辑目录归组、已接纳子运行回读，以及原件 hash 错误不按临时网络故障重试的源码核对入口。
+
 - 2026-10-22：[整包进度降级与派题状态](domains/sandai-data-smith/pitfalls/sandeval-assigned-progress-vs-package-coverage.md#2026-10-22-进度降级与操作状态独立核验) — 未知分母不应抹掉已知操作状态，真实仓储到页面的历史任务回归入口。
 
 - 2026-10-22：[Caption 标注草稿与机标回退取证](domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md#2026-10-22-caption-标注草稿与机标回退取证) — 规范化机标基线、保存前本机输入、结构操作before/after与两Pod原生读取分开；原浏览器定向备份及未确认根因指针。
