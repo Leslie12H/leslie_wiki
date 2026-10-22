@@ -123,3 +123,12 @@ links: [sandeval-completed-review-followup-round, sandeval-sand-wrapper-deferred
 - 同目录的 `read_only_probe.py`、`flag-off.log`、`isolated-flag-on-readonly.log`、`configmap-readback.json`、`live-flag-after.log` 是复验入口。涉及已有决定时，核对其只读详情和恢复状态，不能将新决定的冻结预检当作已完成事项查询。
 - 源码沿 [PR #2671](https://github.com/world-sim-dev/sandai-data-smith/pull/2671)、`app/config.py`、`app/infra/holo.py`、`quality/infrastructure/runtime.py`、`quality/application/management/package_self_check_service.py`、`package_inspection_takeover.py` 与前端 `quality/management/PackageSelfCheck.tsx` 查配置装配、`takeover_available`、精确接管范围及页面授权；后端同时检查操作者资格，部署配置与运行进程也要分别回读。
 - 启用前必须确认全部写入和恢复执行器兼容持久围栏；已有 pending transition 时不能简单关闭开关。开关启用、界面出现接管预览、用户确认具体退回、新自查派出及最终 Sand 收口是独立验收点，不把任一项代替其余项。当前生产处置与后续发布结果沿诊断报告核对。
+
+
+## 2026-10-22 用户授权后的生产开关启用验收
+
+**Why:** 配置写入成功不能证明现存进程已采用新值。由 envFrom 提供的开关需要相关执行器完成滚动，并逐进程确认运行装配；业务预检通过和正式退回决定生效也应分别确认。
+
+**How to apply:** 冻结 ConfigMap 与相关 Deployment，先 server dry-run，再用 resourceVersion CAS 只修改指定键和触发滚动的注解。完成后逐副本回读实际配置、协议和镜像，核对旧副本退出、服务健康与当前包原生详情和预检。验证下一次正常清单 apply 是否保留该运行开关；有持久转换待处理时不可简单关回。保留生产变更回执，实际业务退回仍由正式预览与确认流程产生。
+
+- [2026-10-22 用户授权后启用与验收记录](/Users/leslie/Documents/Playground/output/sandeval-package-return-20261022/activation.md)：关联最终回执、逐执行器读回、ConfigMap/spec 精确差异、真实配置下的原生预检和正常发布清单保留开关的 dry-run。现场数值与当前业务状态沿记录或重新查询核对；此记录明确区分配置启用与具体数据包退回执行。

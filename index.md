@@ -1,4 +1,4 @@
-- 2026-10-22：[整包退回修复与生产接管开关](domains/sandai-data-smith/projects/sandeval-package-return-takeover-review.md#2026-10-22-修复已发布但接管开关未启用) — 部署版本、运行装配、父子责任及只读开关对照的核验方法；持久围栏启用与业务退回分别验收。
+- 2026-10-22：[整包退回修复与生产接管开关](domains/sandai-data-smith/projects/sandeval-package-return-takeover-review.md#2026-10-22-用户授权后的生产开关启用验收) — 配置遗漏归因、用户授权后的 CAS 启用、逐执行器回读和真实配置预检；配置启用与具体业务退回分别验收。
 
 - 2026-10-22：[PR #388 复审与旧回归遗漏](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-22-pr-388-完整复审与旧回归遗漏) — 生命周期语义变更后的相邻断言、模块回归与 CI 证据边界指针；仅 review。
 

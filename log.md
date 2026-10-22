@@ -1992,3 +1992,5 @@
 - 2026-10-22｜Ingest｜补充整包退回修复已发布与生产接管开关启用的不同边界，记录运行装配、父子责任、隔离只读预检及持久围栏启停的核验指针。见 domains/sandai-data-smith/projects/sandeval-package-return-takeover-review.md。
 
 - 2026-10-22｜Ingest｜补充整包进度 main PR #2757 的实现与验收指针，记录未知完整范围显示待核对、补派告警与入口同时核对任务和包控制状态；Gate、合并和发布分别回查。见 domains/sandai-data-smith/pitfalls/sandeval-assigned-progress-vs-package-coverage.md。
+
+- 2026-10-22｜Ingest｜补充用户授权后的生产整包接管开关启用验收指针，记录 ConfigMap/CAS、执行器滚动与逐进程回读、正常清单保留开关及正式业务退回的边界。见 domains/sandai-data-smith/projects/sandeval-package-return-takeover-review.md。
