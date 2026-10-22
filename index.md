@@ -1,3 +1,5 @@
+- 2026-10-22：[PR #388 复审与旧回归遗漏](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-22-pr-388-完整复审与旧回归遗漏) — 生命周期语义变更后的相邻断言、模块回归与 CI 证据边界指针；仅 review。
+
 - 2026-10-22：[Benchmark 目录与 Split 运行入口](domains/maxwell/refs/evolve-benchmark-unified-plan-review.md#2026-10-22-目录恢复与-split-来源版本运行) — 归档隐藏、后台草稿、一键来源版本与精确修订定位；PR 和本地/真实验收边界指针。
 
 - 2026-10-21：[自动候选授权与诊断准备边界](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#自动候选授权范围与诊断意图的准备边界) — 精确路径提前筛选、replacement overlay、零调用恢复及配置 JSON 预检；当前执行结果沿验收记录核对。
