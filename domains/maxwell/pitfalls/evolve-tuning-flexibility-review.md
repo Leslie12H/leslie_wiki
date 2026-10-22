@@ -9,6 +9,14 @@ links: [evolve-boolean-rate-goal-direction, evolve-conversation-tuning-workspace
 
 # 对话调优需要按动作证明而非固定步骤放行
 
+## 2026-10-22 大输入接纳、执行期限与中断原件
+
+完整复现与技术/真实验收分界沿 Maxwell `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 查证。源码入口为 EVOLVE A2A Registry、Native Runtime Task 投影，以及 nextplay-eval 的 CLI、event_archive、grading_evidence 和 archived_maxwell_events；当前发布与质量结论不保存在本页。
+
+**Why:** 只缩短状态轮询仍会遗漏异步接纳响应对大输入的回显，响应丢失后也不能重派付费任务。调用方已经给出期限，但规范化或后台子进程若丢弃它，既可能提前中止合法长任务，也可能越过短期限。中断时的已观测事件尚未形成完成 Turn；只测试生产者封存成功，会漏掉原 Judge 对尾部槽位及 Run 集合的拒绝，或清理线程后永久丢失诊断。准备与确认间仅核对题数，也挡不住同题数换成员。
+
+**How to apply:** 独立结果通道在接纳与轮询均使用已有零历史能力，通用 peer 保留原有历史语义；核对原输入、身份、问答和最终证据，不能把合成字节缩小推论成线上数据库 SLA。期限从已有原始请求取值，显式上限只能缩短，子进程重算绝对剩余时间；已过期不得发新执行，已有封存检查点仍须可恢复。失败轨迹不伪造成完成 Turn，原件成功持久化前不得清理，封存异常或容量超限保留恢复租约；生产者、消费者和实际 Judge 解析需一起测，保留原绑定、哈希、失败状态及公开协议。准备计划固定已解析选题修订并绑定摘要，旧未固定卡片明确要求重新准备；不靠读取最新版本或相同题数替代精确审阅。
+
 ## 2026-10-22 续期准入、进度事件与实际配置字节
 
 本轮源码、首轮失败、主线整合、聚焦回归与真实执行边界见 Maxwell `output/evolve-unified-20261019/flexibility-acceptance-20261022.md`；暂时配置和业务原件不进入知识库。
