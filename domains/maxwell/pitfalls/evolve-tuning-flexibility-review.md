@@ -251,3 +251,19 @@ links: [evolve-boolean-rate-goal-direction, evolve-conversation-tuning-workspace
 **Why:** 原件存储已经返回明确的 chunk 或完整文件 hash 不匹配，但上层若原样返回普通 error，执行观察器可能把已确认终态的坏证据当成临时故障，持续轮询到整段执行时限。延长超时不能修复证据完整性，也会掩盖真正卡点。
 
 **How to apply:** 在拥有上下文的消费边界，仅将明确 typed integrity sentinel 转为固定脱敏的 invalid_evidence；网络、磁盘或上游临时故障仍按原恢复机制处理。保留精确 Task/Context 绑定与终态事实，坏证据不伪造成低分，也不重派付费执行或重复取消。用真实 archive 的 chunk/whole hash 负例、临时故障恢复及单派发零误取消一起验证；源码修复与已加载进程分开记录。
+
+## 2026-10-22 流式采集异常与已发布任务原件
+
+实际失败、修复包、精确回读、原消费者测试及尚未完成的真实出分沿 Maxwell `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 查证；SDK 入口为 maxwell_client 的流式 download_to、nextplay_runtime/executor、task_artifacts、recapture 与原 grading_evidence/Judge bundle 准备。
+
+**Why:** 普通客户端把 HTTP 异常转换为结构化错误，而流式下载直接泄漏 urllib 异常时，同一个确定的文件缺席会被采集器误判成传输未知；只注入理想结构化异常的测试发现不了真实边界。业务子任务也可能已经将实际交付文件复制到父 Run 的隐藏原件目录，固定五个 JSON 或跳过全部隐藏路径会漏掉交付。目标各轮完成不等于平台取得有效评分。
+
+**How to apply:** 以真实 HTTP 客户端错误链回归流式和普通调用的一致性；仅在完整授权目录与精确文件不存在响应共同成立时记录缺席，权限拒绝、未知 404、列出后消失、中断及容量错误继续保留失败。从同 Thread/Run 的完整任务回执和内容身份获取已发布原件，不扫描任意隐藏目录或跟随跨对象链接。把 SDK 产物接到原严格消费者与原 Judge 文件导航，核对原字节并覆盖篡改负例。后采诊断独立记录时间和完整执行原件身份，不重新执行，不覆盖原终态，也不能伪称原时间内容或新 Trial。
+
+## 2026-10-22 评分配置声明与草稿确认的一致性
+
+实现与自然草稿证据仍沿同一验收记录核对；代码入口为 EVOLVE commands/provider_case、confirmed_draft、case、case_assets，以及通用 case-design/judge-design 资源。不在本页固化临时目录版本、模型表现或通过状态。
+
+**Why:** 模型可读到评分方向不等于已构造符合服务声明的配置；把逐题规则误放进 method.config 会使现有摘要 Builder 未被选择，确认入口若又不校验已发布配置 Schema，就会保存之后无法评分的材料。反过来，对历史原件或精确重放套用最新目录要求，会重新引入不必要卡点。
+
+**How to apply:** 新内容采用服务已有 configuration.schema/default 与逐题规则位置，由平台已有 Builder 产生输入身份，不能要求用户手算哈希或选择技术协议。草稿允许继续编辑；确认和新写入复用现有声明校验，并在请求内缓存目录与相同配置验证。精确历史重放先按业务、来源、权限及内容身份验证，不依赖活体目录可用性；保留原冻结版本。应核对模型实际看到的工具回执是否包含完整契约，而非以数据库存在代替可读证明；普通用户只需说明业务目标与约束。
