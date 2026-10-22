@@ -1120,3 +1120,5 @@
 - 2026-10-21：[调优调用意图与配置回读复查](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#调用意图与真实配置回读的独立复查) — 模型调用前校验、真实宿主往返、别名冲突及零版本/约束状态的源码与验收边界指针。
 
 - 2026-10-22：[委派质检责任再次退回的父链遗漏](domains/sandai-data-smith/pitfalls/sandeval-repeated-correction-ancestor-blocker.md#2026-10-22-委派质检责任在再次退回时遗漏) — 正式委派父执行与已完成答案整改的共用证明、单案恢复、修复兼容、PR/Gate及测试分支冲突边界指针。
+
+- 2026-10-22：[已关闭父责任的历史查询与正式提交](domains/sandai-data-smith/pitfalls/sandeval-repeated-correction-ancestor-blocker.md#2026-10-22-已关闭父责任的历史查询与正式提交) — review发现的关闭后继承误报、严格默认状态门禁与main PR/审查/发布取证入口。

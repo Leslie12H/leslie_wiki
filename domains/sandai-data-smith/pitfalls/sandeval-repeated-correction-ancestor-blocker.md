@@ -83,3 +83,13 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-roles-and-work
 - [岳凡翔单案排查、具体批准、父关联恢复与独立生产回读](/Users/leslie/Documents/Playground/output/yuefanxiang-correction-20261022/report.md)：当次对象、版本、计划摘要及修复回执只沿报告查，不将本页作为运行态证明。
 - [通用修复测试 PR #2750](https://github.com/world-sim-dev/sandai-data-smith/pull/2750)与[任务分支完整 Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/39721311592)：源码、最新检查/整合与发布状态沿链接重新核验。测试分支冲突不允许把 test 历史带进开发分支；独立 Gate 不替代测试环境整合验收。
 - 共享校验与回归入口：`quality/application/resolution/reinspection_authorization_service.py::annotation_execution_parents / completed_annotation_parent`、`resolution_service.py::_ancestors`、`tests/quality/application/resolution/test_completed_delegated_correction_parent.py`。性能代码索引通过 owning generator 更新。
+
+
+## 2026-10-22 已关闭父责任的历史查询与正式提交
+
+**Why:** 共享父执行校验如果只允许 processing，会让已完成整改的历史继承查询在上级正式验收后报错。历史查询应识别真实关闭并停止继承；正式提交仍不得复活已关闭责任，两条用途不能共用相同的状态许可。
+
+**How to apply:** 在同一校验owner复用谱系证明；默认严格，仅历史查询可识别真实return、冻结版本的连续关闭版本、关闭依据与时间。随后核对已完成执行的祖先版本，并停止继承已关闭父责任。增加关闭后不继承、错版本/缺关闭依据或时间/recall拒绝、普通发布门禁仍拒绝关闭责任的回归。
+
+- [main PR #2751](https://github.com/world-sim-dev/sandai-data-smith/pull/2751)与[最终head对应Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/39725534860)：用户要求review、直接main PR及通过后合并；最新审查、提交和发布状态沿链接重新核验，不能由本页推断。
+- [本次review与发布回执](/Users/leslie/Documents/Playground/output/yuefanxiang-correction-20261022/review-main-release.md)：人工审查发现、修复、精确head、Codex审查新鲜度与合并/发布独立证据。
