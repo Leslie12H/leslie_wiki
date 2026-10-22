@@ -2,7 +2,7 @@
 name: sandeval-package-return-takeover-review
 type: project
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-22
 tags: [sand-eval, quality, package-return, review, concurrency]
 links: [sandeval-completed-review-followup-round, sandeval-sand-wrapper-deferred-declaration]
 ---
@@ -111,3 +111,15 @@ links: [sandeval-completed-review-followup-round, sandeval-sand-wrapper-deferred
 
 - [实现与验证入口 PR #2671](https://github.com/world-sim-dev/sandai-data-smith/pull/2671)：包括原联合整改父责任修复；当前提交、完整 Gate、测试环境 API 闭环与并发回执以 PR 为准，不能由本页推断已合并或生产已启用。
 - 生产启用仍需所有 Web 与恢复执行器兼容版本发布完成后，再开启既有接管开关；本次实现与测试授权不包含修改生产业务包。
+
+
+## 2026-10-22 修复已发布但接管开关未启用
+
+**Why:** 整包退回的新代码与“接管尚未结束的 Sand 复验”是两个生效条件。接管开关关闭时，运行装配不注入持久执行围栏，详情接口也不会声明可接管，前端因此没有相应勾选和预览。此时供应商子责任即使已完成，尚未提交的 Sand 复验仍会让父责任保持未结，普通整包退回继续报 `REVIEW_BLOCKED`。刷新页面不会改变服务端开关或正式责任状态；也不能为了消除阻断而提前关闭旧责任。
+
+**How to apply:** 先对齐 Web、派发与恢复执行器的实际 SHA 和健康副本，再读取进程中的 `package_return_takeover_enabled`、环境注入及运行装配结果；只看 main、PR 合并或镜像版本不足以证明启用。沿真实父子责任、当前 Sand 报告与原生执行投影确认阻断对象。必要时在独立诊断进程中用只读连接执行原生冻结预检，对照开关关闭与仅该进程开启、显式请求接管时的结果，并核对前后决定与责任版本没有变化；此预检通过只证明候选范围可接管，不是生产开关已启用或业务退回已执行。
+
+- [2026-10-22 只读诊断报告](/Users/leslie/Documents/Playground/output/sandeval-package-return-20261022/diagnosis.md)：保存截图对象、部署与配置证据、精确责任链、两组原生预检和独立回读。现场 SHA、人员、数量及业务状态以报告和重新查询为准。
+- 同目录的 `read_only_probe.py`、`flag-off.log`、`isolated-flag-on-readonly.log`、`configmap-readback.json`、`live-flag-after.log` 是复验入口。涉及已有决定时，核对其只读详情和恢复状态，不能将新决定的冻结预检当作已完成事项查询。
+- 源码沿 [PR #2671](https://github.com/world-sim-dev/sandai-data-smith/pull/2671)、`app/config.py`、`app/infra/holo.py`、`quality/infrastructure/runtime.py`、`quality/application/management/package_self_check_service.py`、`package_inspection_takeover.py` 与前端 `quality/management/PackageSelfCheck.tsx` 查配置装配、`takeover_available`、精确接管范围及页面授权；后端同时检查操作者资格，部署配置与运行进程也要分别回读。
+- 启用前必须确认全部写入和恢复执行器兼容持久围栏；已有 pending transition 时不能简单关闭开关。开关启用、界面出现接管预览、用户确认具体退回、新自查派出及最终 Sand 收口是独立验收点，不把任一项代替其余项。当前生产处置与后续发布结果沿诊断报告核对。

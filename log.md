@@ -1988,3 +1988,5 @@
 - 2026-10-22：补充EVOLVE新副作用的当前授权、已完成证据恢复、可信零调用与原预留复用，以及受限候选旁路复核方法；运行和发布沿验收记录核对。
 
 - 2026-10-22｜Ingest｜记录已派答题卡全部完成但整包应交范围缺失的口径差异，补充原生完整性、未派工作项逐项映射、部分派题提示及详情应交数文案的核对指针。见 domains/sandai-data-smith/pitfalls/sandeval-assigned-progress-vs-package-coverage.md。
+
+- 2026-10-22｜Ingest｜补充整包退回修复已发布与生产接管开关启用的不同边界，记录运行装配、父子责任、隔离只读预检及持久围栏启停的核验指针。见 domains/sandai-data-smith/projects/sandeval-package-return-takeover-review.md。
