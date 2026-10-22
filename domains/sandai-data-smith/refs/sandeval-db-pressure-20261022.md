@@ -44,3 +44,5 @@ links: [sandeval-init-warehouse-latency-20261010]
 - 指标与版本时间对齐、等长窗口结果及原始聚合证据见上述目录 `perf-fix/cpu-impact.md` 和 `perf-fix/cpu-summary.json`；发布结果沿 PR #2767 的 main 工作流回查。
 - **Why:** 单成员 SQL 的成本降低不等于整个共享计算组压力消失；流量和其他作业同样会改变 CPU，查询日志近期分钟还可能未完全入库。
 - **How to apply:** 排除滚动发布窗口，按相同长度比较 CloudMonitor 计算组 CPU 与 SELECT QPS，再核对 SLS 请求量、慢请求、错误和真实部署 SHA。hg_query_log 用查询形状与扫描量证明优化路径生效，诊断应用名单独排除；Fixed Plan 的零计数不可解释成零成本，不把分钟 p95 平均成窗口 p95。五分钟非受控观察只能说明初步缓解，不能把全部降幅归因于单一提交或宣称 OOM 已闭环。
+
+- 质检自身 CPU 归属见 `perf-fix/quality-cpu.md`：按应用名及读写表集合统计 CPU 核秒，再用同期 CloudMonitor `warehouse_total_cores` 换算平均核数与容量比例。历史文档规格不可直接作分母；只读账号缺全量统计权限、Fixed Plan 缺失 CPU 计数及通用 SQL 未归因时，已识别 CPU 比例不能冒充整实例精确占比。
