@@ -2,7 +2,7 @@
 name: sandeval-saved-version-vs-browser-display
 type: pitfall
 created: 2026-10-17
-updated: 2026-10-19
+updated: 2026-10-22
 tags: [sand-eval, inspection, amendment, browser, draft, evidence]
 links: [sandeval-workbench-context-404-evidence, sandeval-correction-evidence-and-deferred-lineage]
 ---
@@ -78,3 +78,12 @@ links: [sandeval-workbench-context-404-evidence, sandeval-correction-evidence-an
 
 - [main PR #2625](https://github.com/world-sim-dev/sandai-data-smith/pull/2625)：`LatestAnswerReinspectionService._resubmit_request`、原生回执及直接回归；代码、CI和合并发布状态沿PR查。
 - 精确任务的新轮次、4张旧整改单、冻结请求、实际操作代码及逐题回读，查[维护交付记录](/Users/leslie/Documents/Playground/output/latest-reinspection-apply-20261019/report.md)。不在wiki复制现时成功状态。
+
+## 2026-10-22 Caption 标注草稿与机标回退取证
+
+**Why:** “全部变回机标”可能涉及正式版本、首次保存前的本机输入、另一题或原文显示模式。服务端两个版本未发生回滚，只能排除这两个保存点之间的正式回滚，不能据此认定用户没有输入。直接比较原始Caption JSON还会把地点/场景/主体的结构迁移误算为文字修改。
+
+**How to apply:** 先固定本人账号、整改冻结工作项、题号和答题卡；以当次部署的规范化`payload.baseline.caption`逐字段比较正式版本，并分开统计帧对齐与文字。核对执行回执、结构操作before/after和原生返修编辑入口、execution.fields的精确正文；跨Pod只读一致仍不等于本人页面一致。原设备草稿按当次源码键读取localStorage、当前标签页sessionStorage和大记录IndexedDB；仅读指定任务/账号/答题卡，不新建缺失数据库、不清理存储、不请求保存或提交。先导出备份，再决定任何恢复动作。
+
+- [吴安银本次只读排查与定向浏览器导出方法](/Users/leslie/Documents/Playground/output/wuanyin-caption-revert-20261022/report.md)：保存链、规范化差异、切点操作核对、两个实例原生读取及未决浏览器现场。该记录未确认回退触发根因，当前保存/恢复状态沿报告脚本核验。
+- 当前实现指针：`useAnswerAutosave.ts`、`autosaveStorage.ts`、`largeDraftStorage.ts`、`largeBrowserRecords.ts`、`Answering.tsx`及`AnswerExecutionService.snapshot`。日常本机草稿与业务动作正式回执的边界按部署SHA复核，不把管理员观察页当作本机草稿。
