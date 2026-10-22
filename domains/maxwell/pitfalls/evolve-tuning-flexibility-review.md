@@ -2,7 +2,7 @@
 name: evolve-tuning-flexibility-review
 type: pitfall
 created: 2026-10-20
-updated: 2026-10-22
+updated: 2026-10-23
 tags: [maxwell, evolve, agent, review, performance]
 links: [evolve-boolean-rate-goal-direction, evolve-conversation-tuning-workspace-plan, evolve-candidate-loop-decision-boundaries]
 ---
@@ -299,3 +299,28 @@ links: [evolve-boolean-rate-goal-direction, evolve-conversation-tuning-workspace
 **Why:** 从零建立用例与对象配置时没有历史基线关系，不能无条件套历史调优门禁。只延期的人工授权也不能替换原冻结测量范围身份，否则旧验证结果与采纳会被新身份拒绝。执行结束与评分完成分别计数；原评分服务健康并不能证明隔离客户端实际发出了请求，出站策略的确定拒绝可能被通用重试隐藏到整个评分超时。
 
 **How to apply:** 新配置准备复用既有 A2A 能力与不可变原件，用私有意图和精确键恢复，未知派发不重发，不伪造历史 Run。日期接续只变期限和当前修订，保留原测量范围身份，新确认留独立审计并继续 CAS；不能以放宽版本校验处理并发。已收原件和正在判卷计入执行结束，仅有效判定计入评分。启动隔离环境前核对全部已获准依赖的精确出站目的地；遇 typed 本地策略拒绝快速脱敏报错，保留已有远端任务的清理义务，其余临时网络故障继续原恢复。源码回归、真实接纳、质量评分和双轮提升分别取证。
+
+
+## 2026-10-23 长程执行让出、有效评分与原规则准入
+
+当前源码、运行加载版本、原始事件耗时及真实验收沿 Maxwell `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 回查；源码入口为 evaluation/live、processing_window、PG Run claim、公用 scored predicate 与 judgeprovider。此处不固化临时 Run、计数、域名或通过结论。
+
+**Why:** 等待长程任务可能耗尽 Worker 槽，若回收优先级仍按原排队时间，旧 Run 会反复抢占；但在未持久化的付费应答者仍运行时让出，又可能重复调用。执行已结束、保存错误 envelope 和取得真实指标值是三件事。外部评分已返回 HTTP 错误也不等于服务故障：派生输入和逐题规则可以是新版，而逐题 binding 仍覆盖为旧版配置。
+
+**How to apply:** 只在持久边界协作让出，存在任何未消费的应答调用时保留槽，远端硬期限不变；按最近处理时间公平恢复已有任务，不换键重派。评分进度按有效 measured 值计数，包含合法零、false 和尚无总体 verdict 的有效测量，不把错误或未测当已评分。逐层核对原 Case、实际 HTTP 请求和同版本原规则校验器，纯配置验证与真实接纳/出分分开；修正派生用例留新修订，不改原十题、原 Judge、旧 Run 或给历史补写分数。运行耗时应沿事件拆开被测子任务、模型、采集和判卷，不能都归咎于平台等待。
+
+## 2026-10-23 性能门禁与诊断样本不能互相替代
+
+回查同一验收记录及其关联的原始样本、固定主线 SHA、源码清单和性能产物；实现入口为预算事务、普通 GetWork 读取和 SSE 进度查询。
+
+**Why:** 总准入耗时不是纯锁等待，固定门禁采样与连续诊断采样也不是同一个统计量。门禁通过不能抹掉诊断里较慢的结果；反过来，诊断窗口变化也不能单凭比值认定某条业务代码造成回归。
+
+**How to apply:** 固定版本、测试次序、阈值、数据与单次有效采样窗，保留失败和未使用构建；不重复取样挑最好结果。分开报告门禁与诊断，结合逐样本 SQL 次数、同一物理行、锁/池等待、分配和实际调用源码定位绝对增量；没有独立证据不把数据库/套接字/调度耗时全归为 tracer。工具未采集的分位数不能推算成已测结果。
+
+## 2026-10-23 Agent 可读契约和隔离资源发布
+
+回查 agent-resources 的主说明、target-recon/artifact-contracts、optimization-strategy 与 Studio Skill SaveAs/绑定路径；具体加载内容和自然/技术验收边界沿同一验收记录核对。
+
+**Why:** 字段形状正确不代表引用种类正确；目标 materials 只接纳已授权知识来源，运行资产应在 Run 中精确绑定。首屏无条件要求每次人审又与有效 Grant 的显式运行相矛盾，会使 Agent 反复停下。仅更新主 Prompt 而保留已绑定旧 Skill，仍可能让旧固定流程继续生效；按 slug 导入还可能覆盖共享原件。
+
+**How to apply:** 可选资料无需求时允许省略，但保留目标约束及真实运行资产；说明必须和既有种类、哈希、Work 授权校验一致，不伪造知识包通过。首次或未匹配授权仍由人类审核，已有有效授权按实际服务端回执执行。只在已拥有的隔离配置中用另存为生成新身份、保留 canonical Slug、同步正文与可读 metadata，再精确替换绑定并读回文件哈希；不能同时绑定同 slug 的旧新两份。提示过内部字段的会话仅计技术诊断，修复后用未受提示的新自然会话复验。
