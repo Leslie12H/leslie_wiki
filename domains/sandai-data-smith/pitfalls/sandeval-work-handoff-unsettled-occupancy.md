@@ -56,3 +56,13 @@ links: [sandeval-sql-lock-diagnosis, sandeval-reassignment-scope-and-batch-respo
 **How to apply:** 只让完整匹配的单条事务控制命令绕过业务意图冻结和变更通知；真正业务 DML 尝试前仍必须冻结。测试要分别覆盖未尝试写入的读取失败、实际写入后回滚确认、提交/回滚确认丢失及复合 SQL 不能绕过保护；不能把安全释放只读失败扩展成未知写结果自动清锁。按状态缩小读取时保留 current-group、版本、保存完成和待重检后继准备的守卫。没有历史 owner/waiter 图时，不将 statement timeout 或 mixed-DML 锁语义当成已证明具体阻塞事务或死锁。
 
 修复与验证入口：[测试 PR #2718](https://github.com/world-sim-dev/sandai-data-smith/pull/2718)、[根因与验证报告](/Users/leslie/Documents/Playground/output/qc-holder-20261021/handoff-timeout-root-cause.md)。报告保留精确 SQL 指纹/绑定参数、同一真实批次的新旧只读对照、CI 和测试分支冲突；代码、合并、环境发布及真实转交分别核验。
+
+
+## 2026-10-23 正式待定排除后的整改转交范围冲突
+
+**Why:** 同一批次多轮整改仍未闭环时，转交服务可能同时读取早期完整成员与后续排除正式待定题后的成员。即使当前责任人唯一、旧执行均完成且没有任务级操作占用，逐轮完整成员相等校验仍会返回 HANDOFF_SCOPE_CONFLICT，不能沿用本页前述“占用待结案”的恢复方案。
+
+**How to apply:** 对齐 scope 下所有 active dispositions、每条原 submission 的完整 work_unit 集、正式 policy_snapshot.annotation_deferred_work_unit_ids 与 execution 状态，再在强制只读数据库连接和 observation_readonly 下调用原生转交 options。区分成员缺失、合法待定排除、责任人分歧和真实执行中；按冻结的生产 SHA 查 WorkHandoffService._load 的成员比较。修复需保留旧冻结提交和责任链，识别被正式证明的范围缩减；不直接删历史、不改旧快照、不无条件放宽集合保护。
+
+- [2026-10-23 双生产副本只读诊断](/Users/leslie/Documents/Playground/output/li-renxuan-handoff-20261023/report.md)：保存同一批次 5→4 的正式待定差异、原生 options 精确拦截、部署源码及未执行生产写入的边界。当前状态须重新读取。
+- [冻结转交源码](https://github.com/world-sim-dev/sandai-data-smith/blob/dbc99d80ad6b28c0fcc61ac08e982a3348b2bc38/sand-eval/platform/backend/quality/application/management/work_handoff_service.py#L49)：多条未结整改逐份读取成员，在第 71–72 行比较完整集合；同一 scope 与同一责任人不代表每轮冻结集合相同。

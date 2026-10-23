@@ -1,3 +1,4 @@
+- 2026-10-23：[正式待定排除后的整改转交范围冲突](domains/sandai-data-smith/pitfalls/sandeval-work-handoff-unsettled-occupancy.md#2026-10-23-正式待定排除后的整改转交范围冲突) — 同 scope 历史5条与当前4条触发成员一致性保护；双副本原生只读预检、责任唯一与无占用证据分开核验。
 - 2026-10-23：[测试分支重建前置 Gate 与 Caption 路径忽略](domains/sandai-data-smith/pitfalls/sandeval-test-branch-recreation.md#2026-10-23-caption-提交与重建前置校验) — 同提交必需检查、隔离分支验证和生产 dispatch 的区别；主线检查失败时保留旧 test。
 - 2026-10-23：[手动退回已登记但重检未生成](domains/sand-eval/pitfalls/quality-center-test-data.md#2026-10-23-手动退回已登记但重检未生成) — 旧通过报告、未结责任、真实后继检查与当前接收人资格分别核对；当前资格不能倒推历史初次失败原因。
 - 2026-10-23：[EVOLVE 长程恢复、评分准入与性能证据](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-23-长程执行让出有效评分与原规则准入) — 持久边界让出与应答幂等、有效测量计数、新旧评分配置核验、固定性能门禁及隔离技能发布的回查方法。
