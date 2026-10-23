@@ -1,3 +1,4 @@
+- 2026-10-23：[手动退回已登记但重检未生成](domains/sand-eval/pitfalls/quality-center-test-data.md#2026-10-23-手动退回已登记但重检未生成) — 旧通过报告、未结责任、真实后继检查与当前接收人资格分别核对；当前资格不能倒推历史初次失败原因。
 - 2026-10-23：[EVOLVE 长程恢复、评分准入与性能证据](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-23-长程执行让出有效评分与原规则准入) — 持久边界让出与应答幂等、有效测量计数、新旧评分配置核验、固定性能门禁及隔离技能发布的回查方法。
 - 2026-10-22：[可读资产目录与任务事件投影](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-22-可读资产目录不等于任务事件历史) — 精确 Work 归属与可读原件池分开，保留历史成员原件，不用创建时间截断或捏造采用事件；页面与真实评分沿验收记录分别核对。
 - 2026-10-22：[自动调优阻塞与有效授权](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-22-自动调优阻塞与有效授权不能混为一谈) — 自动阶段与公共预算记账职责分开，显式合法候选、运行与证据恢复不被一并封死；修复与真实评分沿验收记录核对。

@@ -2,7 +2,7 @@
 name: sand-eval-quality-center-test-data
 type: pitfall
 created: 2026-09-17
-updated: 2026-10-19
+updated: 2026-10-23
 tags: [sand-eval, testing, quality-center]
 links: []
 ---
@@ -45,3 +45,12 @@ links: []
 
 
 2026-10-19 两包同显“整包交接受阻”的只读排查指针：`/Users/leslie/Documents/Playground/output/package-submit-two-20261019/findings.md`。**Why:** 同一页面标签可对应冻结批次工作项重叠，也可对应冻结指定接收人的权限限制；当前来源数量不重复，不代表旧冻结范围不重复。正式提交人也不等于当前标注批次主人。**How to apply:** 按稳定工作项比较每份参与汇总的冻结成员与当前来源完整应交集合，不能只比较 scope_key/version 或 UI 的 5+4+1；再以原生 DTO 分别核对真实操作账号和包内冻结接收人。完整包生成、可提交动作与 QHANDOFF 分开留证。该次只读报告含独立实例回读、精确四项重复和两种真实身份的动作差异，具体人员与当前资格以重新回读为准，不在本页保存会变的运行态。
+
+
+## 2026-10-23 手动退回已登记但重检未生成
+
+**Why:** 已提交通过的旧报告可以保留，同时新的手动退回责任仍未闭环；若重检接收人当前失去检查资格，后台恢复也无法创建后继检查。旧报告的通过标签不能当成退回后已复验的证据。
+
+**How to apply:** 从 `inspection_advancement` 的真实阻断进入，逐条对齐未结 `manual_return`、原报告、确定性的后继 group 和退回命令回执；核对 `reinspection_ready` 与后继检查是否实际存在。再用 `ReviewerFacts` 的账号/空间状态、`qualified_stages` 和 `ReviewerService.validate_candidates` 区分账号禁用、空间异常与检查资格缺失。账号有效不等于有质检资格；需要转交时保留原责任链并走原生流程，不直接关单。当前资格失败只能解释当前恢复被阻断，不能倒推出初次请求当时的失败原因。
+
+可梦25道包的生产只读核验入口：`/Users/leslie/Documents/Playground/output/kemeng25-blocker-20261023/findings.md`，原件在同目录的 `discover.json`、`detail.json`、`preflight.json` 和 `qualification.json`。对象/人员当前状态与部署身份均沿证据重新读取；本次未恢复或写入生产。
