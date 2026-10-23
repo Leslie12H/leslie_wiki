@@ -35,3 +35,14 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 
 - 源码入口：`application/commands/rescore.go`、`infrastructure/postgres/human_rescore.go`、`application/ports/human_rescore.go`、`application/evaluation/evidence_owner.go`（均在EVOLVE模块）；引用读取与详情分别检查`judge_references.go`及`application/queries/evidence.go`。
 - 回归及真实结果指针：本轮验收记录与集成工作区`.tmp/rescore-root-cause-review-20261023.md`、`.tmp/rescore-review-freeze-20261023.json`。源码已测、Judge真实出分、完整十题和双轮提升分别查证，不把首题出分当验收完成。
+
+
+## 2026-10-23 评分等待与数据库 JSON 往返
+
+**Why:** 处理slice退出后继续保留心跳续租，会让已完成的评分空等剩余租约；大JSON进入MySQL队列filesort会耗尽排序内存；MySQL JSON数值规范化还可能让封存报告与数据库回读值出现末位差异，被严格原件比对当作修改。评分任务completed因此不代表平台已拿到可用报告。
+
+**How to apply:** 先分别定位执行、判卷、报告回收和平台提交时间。让出处理槽时，在处理与心跳全部停止后，以精确旧deadline/owner/业务/Run释放租约，验证同worker新claim也不能被旧claim释放。队列只排序锁定任务身份，再按主键读取正文；不要长期靠提高排序内存掩盖整份JSON排序。数值恢复不得引入容差或修改评分：仅在数据库自身JSON规范化证明整份封存响应等于持久化结果后读取封存原精度，继续核对所有归属、文件摘要和内容；测试实际MySQL及被篡改响应拒绝。
+
+- Maxwell代码入口：`internal/app/worker/worker.go`、`infrastructure/postgres/release_run_lease.go`及相邻公平轮转测试（EVOLVE）。
+- Nextplay代码入口：`eval-service/src/eval_service/grading_repository.py`、`grading_reports.py`及`tests/test_repository_mysql_integration.py`。
+- 真实恢复、源副本的基础设施补丁、完整十题与双轮提分边界，继续沿上述本轮验收记录及`original-judge-transport-patch-20261023.json`核对；评分内核不变不等于整体服务源码逐字未变。
