@@ -2,7 +2,7 @@
 name: evolve-runtime-payload-and-terminal-recovery
 type: pitfall
 created: 2026-10-23
-updated: 2026-10-23
+updated: 2026-10-24
 tags: [maxwell, evolve, runtime, recovery, performance]
 links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navigation-parity]
 ---
@@ -46,3 +46,12 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 - Maxwell代码入口：`internal/app/worker/worker.go`、`infrastructure/postgres/release_run_lease.go`及相邻公平轮转测试（EVOLVE）。
 - Nextplay代码入口：`eval-service/src/eval_service/grading_repository.py`、`grading_reports.py`及`tests/test_repository_mysql_integration.py`。
 - 真实恢复、源副本的基础设施补丁、完整十题与双轮提分边界，继续沿上述本轮验收记录及`original-judge-transport-patch-20261023.json`核对；评分内核不变不等于整体服务源码逐字未变。
+
+## 2026-10-24 长目录不能用局部片段代表当前任务
+
+**Why:** 运行列表中的配置正文会使一个业务页超过模型可见窗口。业务分页结束、工具归档已完整保存、模型读完某个搜索片段，是三个不同事实；模型可能只见旧记录而漏掉最新候选，还凭相邻位置猜测原基线。
+
+**How to apply:** 先按用户问题确定范围，利用现有小页与游标读取目录；结果归档的 hasMore/nextOffset 另行续读，搜索未命中不代表后续记录不存在。用时间和正式来源关联定位，再读所需统计；不把全部证据正文灌入上下文。部分读取就明确范围与未知项。修复后用无内部提示的新会话复验，保留原始遗漏表现。
+
+- 通用说明入口：Maxwell `agent-resources/prompts/evolve-tuning-agent.md`、`agent-resources/skills/evidence-diagnosis/SKILL.md`。
+- 原始自然场景、结果字节、修复后回读与验收状态：上文同一验收记录的2026-10-24章节；代码修改和隔离资源更新不等于自然复验通过或共享部署。
