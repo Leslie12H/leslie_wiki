@@ -30,3 +30,13 @@ A2A发送应先返回已接纳任务编号，再持久化跟踪长任务；短HT
 
 - 回查 `application/commands/optimization_manual_decision.go`、`optimization_decision.go`、`runtime_metrics.go` 与 `application/comparison/execution_source.go`；当前测试和真实结果继续查上面的验收记录，不把本页作为发布完成证明。
 - 对话确认表单的长选项标题与输入框不能在不可换行的单行中争用宽度；真实窄工作区核对 `apps/studio/src/pages/chat/AskUserCard.tsx`，看见textbox语义不代表它拥有可操作的宽度。
+
+## 2026-10-23 System-wide tuning and recovery consistency
+
+**Why:** The tuning Agent prompt, MCP, Skills, admission preparation, transactional commit and result UI form one product. A prompt workaround cannot repair contradictory prepare/commit state rules. Viewing old results must not hide a still-running candidate measurement.
+
+**How to apply:** The user explicitly authorizes changing the tuning Agent SP, MCP tools and Skills for EVOLVE as a whole. Share recovery rules between preparation and commit, and recheck pending dispatch, unresolved actions and cumulative usage under the root lock. Preserve selected score identity separately from original execution identity. Select latest measurements deliberately, never count rescoring as another execution. Show score coverage beside rates, and derive candidate activity from run metadata independently of the selected historical detail.
+
+- Inspect `infrastructure/postgres/optimization_reused_baseline.go` and its integration tests; recursive comparison/adoption queries should project needed metadata rather than historical JSON bodies.
+- Inspect `CandidateResultsStore.ts`, `v3/ledger/LedgerLineage.tsx` and `v3/lineage/LineageNodeDetail.tsx` with both completed and running measurements.
+- Changed Skill/MCP source is not proof of runtime activation. Read back effective tools and Skill content, then verify a fresh unguided conversation.

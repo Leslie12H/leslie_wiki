@@ -1182,3 +1182,5 @@
 - 2026-10-22：[授权准备中的条件写入](domains/sandai-data-smith/pitfalls/sandeval-termination-historical-writer-recovery.md#2026-10-22-只读准备过早登记执行器) — #2774 补齐初始范围自动校准的独立终止屏障。
 
 - 2026-10-23：[历史评分基线与异步接纳](domains/maxwell/pitfalls/evolve-historical-baseline-and-async-acceptance.md) 补充测量/执行来源分离、重评独立执行去重、事务准入与采纳同根因审查、长选项输入框可操作性；真实完成情况沿验收指针核对。
+
+- 2026-10-23: [EVOLVE system-wide tuning](domains/maxwell/pitfalls/evolve-historical-baseline-and-async-acceptance.md#2026-10-23-system-wide-tuning-and-recovery-consistency): Agent/MCP/Skill scope, renewal consistency and visible score coverage.

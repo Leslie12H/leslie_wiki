@@ -2052,3 +2052,4 @@
 - 2026-10-23 ingest：补充EVOLVE历史评分与重评的执行来源、独立验证去重和长选项输入布局坑；结果保留在验收记录。
 
 - 2026-10-23：纸面09再次提交受阻只读核验；补充旧批次通过、当前来源扩大及精确报告回读的区分，附本地证据入口。
+- 2026-10-23: Added EVOLVE system-wide Agent/MCP/Skill scope, prepare/commit renewal consistency, selected score identity and visible coverage pointers.
