@@ -63,3 +63,11 @@ A2A发送应先返回已接纳任务编号，再持久化跟踪长任务；短HT
 **How to apply:** 默认从经授权的历史执行来源解析执行器，明确选择不覆盖，冻结Grant重放用自身绑定。额度调整后核对累计用量与独立验证预留；停止空闲旧许可并创建新许可不等于原地续期，准备轮计数仍须独立回读。精确MCP选择可复用现有Provider范围读取，同时保留未选择的configRef owner、即时权限/禁用检查和错误传播；旧别名与混合选择继续完整读取，不能靠跨请求缓存忽略撤权。测试通过后仍需实际Runtime加载与延迟对照。
 
 - 指针：`application/commands/optimization_start.go`及`optimization_executor_default_test.go`；Agent Server `internal/modules/tools/catalog/service.go`与`selected_configs_test.go`。真实候选、评分及发布状态继续查验收记录，不能以草稿冻结或Run接纳代替真实应用和质量提升。
+
+## 2026-10-24 工作区趋势与候选目录的同源读取
+
+**Why:** 主Work运行清单不含独立验证子Work；只绘主清单会让十题验收消失。反过来为补趋势展开全部目录和Trial会增加读取负担。轮询清空当前选择还会让同口径曲线短暂变成另一组数据。
+
+**How to apply:** 复用候选检查器已授权读取的精确Run与历史基线，统计按每条Run实际Work读取；目录元数据不自动全量展开。测量趋势可以展示同评分口径的重评分，但必须标注，不能计成独立执行。选择变化立即清空并隔离晚响应，同一选择轮询保留旧结果及加载状态，重叠请求合并。绘图失败不能当零，比较结果和统计失败分开。到期/搜索结束也不能代替候选或验收完成；核对真实Run状态。
+
+- 核验指针：`CandidateResultsStore.ts`、`v3/ledger/taskReading.ts`、`TaskOptimizationView.tsx`、`BenchmarkMetricsOverview.tsx`和相邻测试；实际样本与布局截图结论查验收记录。

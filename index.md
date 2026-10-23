@@ -1190,3 +1190,5 @@
 - 2026-10-23：[转派批次误报待分配](domains/sandai-data-smith/pitfalls/sandeval-reassigned-batch-false-allocation-pending.md) — 稳定工作项准入、全部转出后人员范围消失、原链恢复预检、自动复验扫描公平、PR #2807 与摘要升级后单包重排和生产验收边界。
 
 - 2026-10-24：[历史评分基线与异步接纳](domains/maxwell/pitfalls/evolve-historical-baseline-and-async-acceptance.md) 补充执行器默认来源、存储许可续接计数，以及有界Provider读取与即时撤权的核验方法。
+
+- 2026-10-24：[历史评分基线与异步接纳](domains/maxwell/pitfalls/evolve-historical-baseline-and-async-acceptance.md) 增补子Work趋势复用精确读取、轮询选择隔离与重评分计数边界。
