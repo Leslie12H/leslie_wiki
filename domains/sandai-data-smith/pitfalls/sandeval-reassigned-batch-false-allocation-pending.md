@@ -17,4 +17,6 @@ links: [sandeval-reassigned-answer-frozen-review-conflict, sand-eval-quality-cen
 
 自动复验发现页也要与普通整改恢复分开：pending 执行可在已有后继检查任务后继续等待归档；若复用 mutable updated_at 的前 N 条，已派轮次与反复更新会挤占新目标。按实际目标反查后继、以不可变身份游标有界扫描，资格失败仍保留原责任；具体实现与测试沿 PR 查证。
 
+整批全部转出时，原人员 scope 可能从来源清单消失。按“当前 scope 集合”查不到旧送审记录，不证明从未质检；仍应核对历史分配及稳定工作项准入。验收需组合部分／全部转派和是否含真正新题，既拒绝重复首送，也保留新题正常分配。
+
 代码复核入口：`quality/application/management/batch_allocation_service.py::options_many` 的稳定工作项准入，`package_progress_query.py` 的候选计数，`leader_query_service.py::batch_options` 的供应商状态，`frontend/src/pages/quality/management/PackageDetail.tsx` 的空状态回退。按部署 SHA 阅读，不从本地旧分支推断线上。
