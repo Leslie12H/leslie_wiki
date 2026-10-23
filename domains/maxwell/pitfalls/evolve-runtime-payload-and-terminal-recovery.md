@@ -26,3 +26,12 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 **Why:** 2026-10-23 真实验收发现，评分接纳202、任务查询200仍可能只表示评分任务已失败。使用本地EVOLVE运行、共享dev Judge的混合拓扑时，Judge固定回取共享EVOLVE，无法访问本地任务及原件；继续等待或重发执行不会修复这个归属错位。
 
 **How to apply:** 同时核对执行结果所在地、评分服务配置的证据来源、任务归属及评分返回体；通过原任务只读回取复现，不只看HTTP状态。隔离验收应使用相同证据域内的原评分副本或已有被授权的传输拓扑，保留原评分版本和模型，不关闭鉴权、不把失败算零分、不迁移或覆盖旧终态。库初始化及新增凭据目的地按既有确认规则处理。具体回执与恢复计划见本轮验收记录及`output/evolve-unified-20261019/isolated-original-judge-20261023.md`；本页不声明恢复已完成。
+
+## 2026-10-23 重评沿用原执行证据
+
+**Why:** 一个Run完成执行后，新建重评Work并不等于重新执行候选。持续调优根若把重评套入候选准入，会误报版本冲突；即使接纳成功，用新Work对照仍绑定原Trial的文件，也会误报证据无权访问。只验证同Work的mock会遗漏这个跨Work生命周期。
+
+**How to apply:** 检查现有重评命令、根计数事务、运行期权限、原件解析、外部Judge拉取和详情下载整条链。真实用户身份从服务端注入；重复提交沿用同键，根用量不清零，自动阶段/租约不因重评改变。已授权的冻结EvidenceSet按完整引用、Case和执行次数核验原Trial，再由原解析器验证原Attempt及文件hash；不要给新Trial伪造旧文件绑定，也不要用platform身份跳过归属。测试应跨Work、跨Run、隐藏题和实际authorizer，并区分有效质量失败与基础设施失败。
+
+- 源码入口：`application/commands/rescore.go`、`infrastructure/postgres/human_rescore.go`、`application/ports/human_rescore.go`、`application/evaluation/evidence_owner.go`（均在EVOLVE模块）；引用读取与详情分别检查`judge_references.go`及`application/queries/evidence.go`。
+- 回归及真实结果指针：本轮验收记录与集成工作区`.tmp/rescore-root-cause-review-20261023.md`、`.tmp/rescore-review-freeze-20261023.json`。源码已测、Judge真实出分、完整十题和双轮提升分别查证，不把首题出分当验收完成。
