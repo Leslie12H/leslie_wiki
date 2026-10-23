@@ -2,7 +2,7 @@
 name: sandeval-repeated-correction-ancestor-blocker
 type: pitfall
 created: 2026-09-30
-updated: 2026-10-22
+updated: 2026-10-23
 tags: [sand-eval, quality-center, remediation, reinspection, responsibility, release]
 links: [sandeval-transferred-correction-task-visibility, sandeval-roles-and-workflow]
 ---
@@ -93,3 +93,14 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-roles-and-work
 
 - [main PR #2751](https://github.com/world-sim-dev/sandai-data-smith/pull/2751)与[最终head对应Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/39725534860)：用户要求review、直接main PR及通过后合并；最新审查、提交和发布状态沿链接重新核验，不能由本页推断。
 - [本次review与发布回执](/Users/leslie/Documents/Playground/output/yuefanxiang-correction-20261022/review-main-release.md)：人工审查发现、修复、精确head、Codex审查新鲜度与合并/发布独立证据。
+
+
+## 2026-10-23 多轮标注退回的联合关闭责任遗漏
+
+**Why:** 连续标注退回会把更早的中断责任加入后续执行的固定 `related_disposition_versions`。之后发生质检退回并最终由负责人验收时，只匹配紧邻来源报告会漏掉联合集合中的旧责任，导致所有批次已验收但整包仍报 `REVIEW_BLOCKED`。固定联合关闭责任与仅授予复验权限的 ancestor 集合不能混为一谈。
+
+**How to apply:** 同时核对原质检退回冻结的 disposition refs / v2 permit hash、原执行的 related 精确版本、最终已完成子执行的祖先版本、当前正式质检报告和负责人封存验收。只有完整闭环证据才允许原生关闭；ancestor-only 不得借此自动关闭。历史恢复沿 owning CLI `inherited_annotation_return_recovery`，先 hash-bound dry-run，再 CAS、审计与跨 Pod 回读。关闭责任后还要核验原验收推进是否保留旧失败；如需重放，仅恢复其原持久推进，不能制造新验收或代替负责人提交 Sand。
+
+- [本次两个包的诊断、精确恢复与独立回读](/Users/leslie/.codex/visualizations/2026/10/22/01a16320-cb2a-7231-b0af-61d168d28c51/package-submit-20261023/report.md)：对象、版本、审计 hash 和当时的可提交资格仅以报告及新鲜回读为准。
+- [共用闭环修复 PR #2804](https://github.com/world-sim-dev/sandai-data-smith/pull/2804)：最新 head、审查、Gate、合并和生产发布状态沿 PR / workflow 查证；独立恢复进程加载候选逻辑不代表线上 Web 服务已发布。
+- 回归应组合多轮退回发生在负责人退回之前和之后，并检查仅 ancestor 授权、陈旧版本、缺许可和未完成执行仍拒绝。
