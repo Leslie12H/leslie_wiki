@@ -38,6 +38,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-23：[EVOLVE 大输入与终态恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md) — 私有命令传输放大、远端终态先读、新会话计划与实际执行器继承；源码/真实验证及兼容回滚边界指针。
+
 - 2026-10-22：[EVOLVE 从零准备与评分出站策略](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-22-从零准备日期接续与评分出站策略) — 无历史配置准备、日期接续身份、执行与评分计数及确定性网络拒绝的复核指针。
 
 - 2026-10-22：[质检剩余 SQL 热点优化](domains/sandai-data-smith/refs/sandeval-db-pressure-20261022.md#2026-10-22-质检剩余热点优化入口) — 窄主键后宽读取、空候选跳过流水、19 组结果对照与 PR #2770 指针。
