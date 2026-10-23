@@ -48,7 +48,7 @@
 
 - 2026-10-23：[联合退回闭环与当前送审范围](domains/sandai-data-smith/pitfalls/sandeval-repeated-correction-ancestor-blocker.md#2026-10-23-多轮标注退回的联合关闭责任遗漏) — 固定 related 责任与 ancestor 授权区分、封存验收恢复、旧推进重放，以及未覆盖范围不得隐藏当前复验；PR #2804 / #2806 与现场证据指针。
 
-- 2026-10-23：[历史评分基线与异步接纳](domains/maxwell/pitfalls/evolve-historical-baseline-and-async-acceptance.md) — 复用历史评分、同口径仅运行候选、长任务接纳与执行时限分离及旧回执验证指针。
+- 2026-10-23：[历史评分基线与异步接纳](domains/maxwell/pitfalls/evolve-historical-baseline-and-async-acceptance.md) — 历史测量与新配置分离、Agent/SP/Skill/MCP 声明一致性、异步接纳与真实回执、界面版本及时序核验指针。
 
 
 - 2026-10-23：[EVOLVE 重评的跨任务证据归属](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-23-重评沿用原执行证据) — 候选准入与重新评分分离、累计预算与原Trial文件绑定、真实authorizer跨Work回归及逐题出分边界。

@@ -40,3 +40,12 @@ A2A发送应先返回已接纳任务编号，再持久化跟踪长任务；短HT
 - Inspect `infrastructure/postgres/optimization_reused_baseline.go` and its integration tests; recursive comparison/adoption queries should project needed metadata rather than historical JSON bodies.
 - Inspect `CandidateResultsStore.ts`, `v3/ledger/LedgerLineage.tsx` and `v3/lineage/LineageNodeDetail.tsx` with both completed and running measurements.
 - Changed Skill/MCP source is not proof of runtime activation. Read back effective tools and Skill content, then verify a fresh unguided conversation.
+
+## 2026-10-23 声明、配置选择与观测一致性
+
+**Why:** 后端已支持授权内运行，MCP 描述仍称永不执行，会与 SP/Skill 相互矛盾。不能仅凭页面说明推断目录过期，应比对源码、持久目录与真实模型请求。历史来源包含冻结 Preset，也不意味着后续调优必须使用同一 Preset。
+
+**How to apply:** 默认继承原配置，显式选择新配置时保留历史测量身份并单独准备新执行；覆盖创建、准备检查、幂等重放及同 key 改参拒绝。工具声明与实际调用路径共同回归，发布后再次核对模型实际收到的说明。界面合并同一 Run 的详情和目录时按服务端版本选新记录；混合 UTC 与带时区时间应比较实际时间，不能用字符串排序。
+
+- 核对 `application/commands/tuning_baseline.go`、`tuning_preflight.go`、`direct_preparation_test.go`，以及 `internal/app/transport/mcp/schemas.go`、`agent-resources/tests/evolve-orchestration.test.mjs`。
+- 状态与时序回归位于 `apps/studio/src/products/evolve/CandidateResultsStore.test.mjs` 和 `conversationInterleave.test.ts`；真实运行及发布状态仍查验收指针。
