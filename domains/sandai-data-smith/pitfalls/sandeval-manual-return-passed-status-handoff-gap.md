@@ -2,7 +2,7 @@
 name: sandeval-manual-return-passed-status-handoff-gap
 type: pitfall
 created: 2026-10-16
-updated: 2026-10-16
+updated: 2026-10-23
 tags: [sand-eval, manual-return, reinspection, handoff, state]
 links: [sandeval-work-handoff-unsettled-occupancy]
 ---
@@ -20,3 +20,12 @@ links: [sandeval-work-handoff-unsettled-occupancy]
 - 2026-10-16 后续原生只读预检补齐深层原因证据：同目录 `recovery/qualification.json`、`preflight-details.json` 和 `recovery-contracts.json` 分别固定接收人当时角色、九批准备校验及实际部署契约。具体资格与状态会变化，重试前重新读取；初版报告中的“原因未核实”仅对应较早取证阶段。
 - [待重检责任转交修复 PR #2522](https://github.com/world-sim-dev/sandai-data-smith/pull/2522) 保存实现、测试、Gate、合并与发布状态入口。原单未做成员角色变更，也未代选接手成员；发布、按钮可操作及真正转交是独立验收层。
 - [另一个转交故障机制](sandeval-work-handoff-unsettled-occupancy.md) 是任务级待核对占用。不能因为都表现为“转不了”就直接清占用或复用另一单的恢复授权。
+
+## 2026-10-23 恢复与代码复查入口
+
+**Why:** 退回与后继创建有独立边界，写入退回前应核验目标质检员资格；历史报告通过不能覆盖未结退回，列表和包详情的摘要缓存也必须失效重算。
+
+**How to apply:** 原人员合格时保留原责任，资格变更才按明确授权换人。超时后先独立确认事务结果和执行器是否结束，再复用冻结请求继续；验收必须同时核对唯一后继、实际和计划接收人、本人待办与原报告不变，已停止的后继不算恢复成功。
+
+- [本次恢复与复查报告](/Users/leslie/Documents/Playground/output/kemeng25-blocker-20261023/recovery-result.md) 指向两实例回读、原生冻结计划和持久审计；生产状态会变化，继续操作前重新读取。
+- [根因与展示修复 PR #2781](https://github.com/world-sim-dev/sandai-data-smith/pull/2781) 是当前代码、使用文档及 Gate 状态入口；PR、合并、部署和业务重检完成仍需分别核验。
