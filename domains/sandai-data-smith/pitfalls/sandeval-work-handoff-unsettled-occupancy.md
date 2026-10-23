@@ -66,3 +66,13 @@ links: [sandeval-sql-lock-diagnosis, sandeval-reassignment-scope-and-batch-respo
 
 - [2026-10-23 双生产副本只读诊断](/Users/leslie/Documents/Playground/output/li-renxuan-handoff-20261023/report.md)：保存同一批次 5→4 的正式待定差异、原生 options 精确拦截、部署源码及未执行生产写入的边界。当前状态须重新读取。
 - [冻结转交源码](https://github.com/world-sim-dev/sandai-data-smith/blob/dbc99d80ad6b28c0fcc61ac08e982a3348b2bc38/sand-eval/platform/backend/quality/application/management/work_handoff_service.py#L49)：多条未结整改逐份读取成员，在第 71–72 行比较完整集合；同一 scope 与同一责任人不代表每轮冻结集合相同。
+
+
+### 同日修复与隔离验证入口
+
+**Why:** 本案正式数据的待定排除与不可变提交链完整，不应为了绕过旧校验改写历史成员或强制结案祖先整改。解卡所需的是转交读取沿正式链承接当前有效范围。
+
+**How to apply:** 转交范围不同时复用 `remediation_batch_scope.validate_remediation_edge`，逐段验证前置、轮次、策略迁移和准确待定差额；以最新正式成员转交当前持卡，原事务统一迁移未结责任并留审计。保持原成员一致性保护对非法变更有效，保留候选资格、执行中阻断和提交前重查。
+
+- [根因修复 main PR #2788](https://github.com/world-sim-dev/sandai-data-smith/pull/2788)：用户明确要求直接向 main 提 PR；合并与上线状态沿 PR 和关联发布实时核对。
+- [修复验证记录](/Users/leslie/Documents/Playground/output/li-renxuan-handoff-20261023/repair-verification.md)：合成六轮回归、真实原单双副本隔离只读候选验证和持卡核对。候选源码通过不等于生产服务已更新，不能声称已替用户完成转交。
