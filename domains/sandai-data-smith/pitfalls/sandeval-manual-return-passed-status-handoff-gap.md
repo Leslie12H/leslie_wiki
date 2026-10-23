@@ -27,5 +27,6 @@ links: [sandeval-work-handoff-unsettled-occupancy]
 
 **How to apply:** 原人员合格时保留原责任，资格变更才按明确授权换人。超时后先独立确认事务结果和执行器是否结束，再复用冻结请求继续；验收必须同时核对唯一后继、实际和计划接收人、本人待办与原报告不变，已停止的后继不算恢复成功。
 
+- 权限复查应区分沿原人员重检与更换人员：原负责人退回只需保留既有验收权限并核验原质检资格，不能额外要求派检权限；更换质检员才要求派检权限。用真实 ReviewerService 覆盖只有 review 而没有 assign_reviews 的负责人。
 - [本次恢复与复查报告](/Users/leslie/Documents/Playground/output/kemeng25-blocker-20261023/recovery-result.md) 指向两实例回读、原生冻结计划和持久审计；生产状态会变化，继续操作前重新读取。
 - [根因与展示修复 PR #2781](https://github.com/world-sim-dev/sandai-data-smith/pull/2781) 是当前代码、使用文档及 Gate 状态入口；PR、合并、部署和业务重检完成仍需分别核验。
