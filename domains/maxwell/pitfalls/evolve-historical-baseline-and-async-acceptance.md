@@ -2,7 +2,7 @@
 name: evolve-historical-baseline-and-async-acceptance
 type: pitfall
 created: 2026-10-23
-updated: 2026-10-23
+updated: 2026-10-24
 tags: [maxwell, evolve, a2a, comparison, recovery]
 links: [evolve-runtime-payload-and-terminal-recovery]
 ---
@@ -55,3 +55,11 @@ A2A发送应先返回已接纳任务编号，再持久化跟踪长任务；短HT
 **Why:** 候选目录可通过来源链显示重评分所属候选，但原始 Run 详情仍没有直接 candidateId；前端若再次只按直接字段筛选，会把服务端已授权的合法评分丢掉。目录元数据和原执行记录表达的是不同事实。
 
 **How to apply:** 保留重评分自身的身份、sourceRunRef 和 evidence_only，用已有候选目录或有界来源链确认关联；比较按原执行绑定的基线与当前所选评分发起，不把重评分复制成新执行。分页外的明确选择只追踪该来源，覆盖错候选、循环和旧版本覆盖，避免扫描全部历史。回归与真实页面证据查 CandidateResultsStore 及上面的验收记录。
+
+## 2026-10-24 执行器默认值、存储续接与目录读取
+
+**Why:** Work旧画像不等于历史Run的实际执行器；省略选择时退回画像会拒绝合法续接。产物存储额度与Trial额度分别耗用，增加运行次数并不能解除大文件存储阻塞。工具每次调用全量读取所有Provider的schema还会掩盖真正的MCP耗时。
+
+**How to apply:** 默认从经授权的历史执行来源解析执行器，明确选择不覆盖，冻结Grant重放用自身绑定。额度调整后核对累计用量与独立验证预留；停止空闲旧许可并创建新许可不等于原地续期，准备轮计数仍须独立回读。精确MCP选择可复用现有Provider范围读取，同时保留未选择的configRef owner、即时权限/禁用检查和错误传播；旧别名与混合选择继续完整读取，不能靠跨请求缓存忽略撤权。测试通过后仍需实际Runtime加载与延迟对照。
+
+- 指针：`application/commands/optimization_start.go`及`optimization_executor_default_test.go`；Agent Server `internal/modules/tools/catalog/service.go`与`selected_configs_test.go`。真实候选、评分及发布状态继续查验收记录，不能以草稿冻结或Run接纳代替真实应用和质量提升。
