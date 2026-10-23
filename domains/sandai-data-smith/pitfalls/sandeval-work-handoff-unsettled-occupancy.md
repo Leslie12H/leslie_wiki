@@ -76,3 +76,12 @@ links: [sandeval-sql-lock-diagnosis, sandeval-reassignment-scope-and-batch-respo
 
 - [根因修复 main PR #2788](https://github.com/world-sim-dev/sandai-data-smith/pull/2788)：用户明确要求直接向 main 提 PR；合并与上线状态沿 PR 和关联发布实时核对。
 - [修复验证记录](/Users/leslie/Documents/Playground/output/li-renxuan-handoff-20261023/repair-verification.md)：合成六轮回归、真实原单双副本隔离只读候选验证和持卡核对。候选源码通过不等于生产服务已更新，不能声称已替用户完成转交。
+
+
+### 同日性能复审：先数核心SQL再解释延迟
+
+**Why:** 低频转交也会在事务前和事务内重复校验历史；每轮单独查同一任务执行索引会放大 SQL，缓存完整历史成员引用也没有必要。单次核心读取的时延不能冒充整个弹窗、P95 或并发容量。
+
+**How to apply:** 先核对调用方是否进入列表轮询，再统计同一对象、同一范围与版本的核心读取。优先复用提交 get_many 与执行 for_dispositions 的已有分块接口，只保留成员身份；保留原版本重查、执行中阻断和事务审计。已关闭的链中间版本仍需精确补读，不用取消合法性核验来换速度；记录长链与大批次尚未压测的边界。
+
+- [性能补充 main PR #2790](https://github.com/world-sim-dev/sandai-data-smith/pull/2790) 与[复审和只读性能记录](/Users/leslie/Documents/Playground/output/li-renxuan-handoff-20261023/review-performance.md)：保存同单SQL计数、相同成员/版本、候选源码摘要与直接回归。数字属于当次单次对照，不能作为永久性能指标；当前合并、Gate、部署与原单恢复沿对应PR/报告实时查证。

@@ -1,3 +1,4 @@
+- 2026-10-23：[整改转交的SQL与内存复审](domains/sandai-data-smith/pitfalls/sandeval-work-handoff-unsettled-occupancy.md#同日性能复审先数核心sql再解释延迟) — 批量读取执行历史、仅缓存成员身份、长链补读成本与单次观测/P95边界；性能补充PR #2790。
 - 2026-10-23：[整改转交的合法待定范围接续修复](domains/sandai-data-smith/pitfalls/sandeval-work-handoff-unsettled-occupancy.md#同日修复与隔离验证入口) — 复用正式整改版本链校验，保留历史和原事务责任审计；main PR #2788 与隔离验证入口。
 - 2026-10-23：[正式待定排除后的整改转交范围冲突](domains/sandai-data-smith/pitfalls/sandeval-work-handoff-unsettled-occupancy.md#2026-10-23-正式待定排除后的整改转交范围冲突) — 同 scope 历史5条与当前4条触发成员一致性保护；双副本原生只读预检、责任唯一与无占用证据分开核验。
 - 2026-10-23：[测试分支重建前置 Gate 与 Caption 路径忽略](domains/sandai-data-smith/pitfalls/sandeval-test-branch-recreation.md#2026-10-23-caption-提交与重建前置校验) — 同提交必需检查、隔离分支验证和生产 dispatch 的区别；主线检查失败时保留旧 test。
