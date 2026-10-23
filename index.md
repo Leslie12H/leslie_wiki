@@ -1197,3 +1197,5 @@
 - 2026-10-24：[历史评分基线与异步接纳](domains/maxwell/pitfalls/evolve-historical-baseline-and-async-acceptance.md) 增补子Work趋势复用精确读取、轮询选择隔离与重评分计数边界。
 
 - 2026-10-24：[EVOLVE 事务故障测试的真实触达](domains/maxwell/pitfalls/evolve-historical-baseline-and-async-acceptance.md#2026-10-24-事务故障测试的真实触达) — 内部证明缺失造成的负例假通过、真实 COPY 错误封装及回滚回读边界。
+
+- 2026-10-24：[EVOLVE 人工答复与候选原件恢复](domains/maxwell/pitfalls/evolve-historical-baseline-and-async-acceptance.md#2026-10-24-人工答复后的会话恢复与候选原件复核) — waiting 续接、终态正文补读、微秒顺序与候选说明/真实资源差异核对。

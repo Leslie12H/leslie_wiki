@@ -87,3 +87,14 @@ A2A发送应先返回已接纳任务编号，再持久化跟踪长任务；短HT
 **How to apply:** 给成功与故障夹具都提供当前合法的内部授权证明；对注入错误核对真实故障来源，再回读累计计数、执行状态与幂等回执。完整存储包在独立临时 schema 上运行，保留失败日志；不能通过放松生产校验来迁就缺证明的测试，也不能把 mocked 成功称为实际候选质量通过。
 
 - 指针：`optimization_consent_integration_test.go`、`optimization_control_integration_test.go`及验收记录中的完整PostgreSQL回归；候选实际应用与评分结果分开核验，具体状态仍沿原验收记录查询。
+
+
+## 2026-10-24 人工答复后的会话恢复与候选原件复核
+
+**Why:** AskUser 答复被接纳时，客户端可能仍停留在旧 waiting checkpoint；若只在 running 状态补读，就会漏掉后续回复。终态状态更新也不能代替持久化正文。候选方面，说明声称移除限制不代表资源真的改变；将未确认资源的 hash 配回旧冻结 Variant，会造成可恢复的精确编辑错误。
+
+**How to apply:** 在接纳用户答复后保留同步目标，旧等待状态不能提前解除；收到终态后补读有界历史，使用服务端时间与微秒排序，保留会话切换隔离，异步工具等待不要反复加载正文。对候选逐段核对实际 diff、所属冻结版本和每个资源 hash，出错时从已授权原件恢复，不能重复询问业务方向或放松完整性验证。
+
+- 前端指针：`EvolveAgentConversation.tsx`、`conversationRecovery.ts` 与相邻测试；实际复现和修复后验收状态沿主验收记录查询，不能仅凭单测宣称真实 AskUser 路径通过。
+- 原件指针：`application/resourcecontent/source.go`、`edits.go` 及 `commands/resource_edit_test.go`；错误中的正确 hash 只能在原有授权检查通过后返回，不返回正文或替用户自动接受新内容。
+- Agent 指针：`agent-resources/prompts/evolve-tuning-agent.md`、`skills/optimization-strategy/SKILL.md`；源码更新与隔离/共享运行时加载要分开核对。
