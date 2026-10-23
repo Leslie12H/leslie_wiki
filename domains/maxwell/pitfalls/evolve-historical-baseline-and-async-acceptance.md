@@ -49,3 +49,9 @@ A2A发送应先返回已接纳任务编号，再持久化跟踪长任务；短HT
 
 - 核对 `application/commands/tuning_baseline.go`、`tuning_preflight.go`、`direct_preparation_test.go`，以及 `internal/app/transport/mcp/schemas.go`、`agent-resources/tests/evolve-orchestration.test.mjs`。
 - 状态与时序回归位于 `apps/studio/src/products/evolve/CandidateResultsStore.test.mjs` 和 `conversationInterleave.test.ts`；真实运行及发布状态仍查验收指针。
+
+## 2026-10-23 候选目录与重评分详情的关联投影
+
+**Why:** 候选目录可通过来源链显示重评分所属候选，但原始 Run 详情仍没有直接 candidateId；前端若再次只按直接字段筛选，会把服务端已授权的合法评分丢掉。目录元数据和原执行记录表达的是不同事实。
+
+**How to apply:** 保留重评分自身的身份、sourceRunRef 和 evidence_only，用已有候选目录或有界来源链确认关联；比较按原执行绑定的基线与当前所选评分发起，不把重评分复制成新执行。分页外的明确选择只追踪该来源，覆盖错候选、循环和旧版本覆盖，避免扫描全部历史。回归与真实页面证据查 CandidateResultsStore 及上面的验收记录。
