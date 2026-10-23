@@ -98,3 +98,13 @@ A2A发送应先返回已接纳任务编号，再持久化跟踪长任务；短HT
 - 前端指针：`EvolveAgentConversation.tsx`、`conversationRecovery.ts` 与相邻测试；实际复现和修复后验收状态沿主验收记录查询，不能仅凭单测宣称真实 AskUser 路径通过。
 - 原件指针：`application/resourcecontent/source.go`、`edits.go` 及 `commands/resource_edit_test.go`；错误中的正确 hash 只能在原有授权检查通过后返回，不返回正文或替用户自动接受新内容。
 - Agent 指针：`agent-resources/prompts/evolve-tuning-agent.md`、`skills/optimization-strategy/SKILL.md`；源码更新与隔离/共享运行时加载要分开核对。
+
+
+## 2026-10-24 参数错误分类与固定脚本的交互终点
+
+**Why:** MCP 只传普通错误文本时，Runtime 可能建议换工具，而资源 hash 或唯一文本不匹配需要的是修正参数。另一条真实失败表明，固定对话脚本中的 AskUser 被包装为执行故障，导致原 Judge 无法评价必要澄清和未交付内容；普通 wait 把等待输入视为可返回状态，清理复用它又会在异步停止真正落地之前误报清理失败。
+
+**How to apply:** 通过窄的类型标记向既有 MCP error 结构传递 invalid_input，不按错误文案猜测，也不放松授权和 hash 校验。固定脚本没有续答授权就保存真实问题并结束观测，不编答案、不把下一条脚本当回答；执行目标仍为 waiting_for_user、任务未完成，测量采集成功与目标质量分别表达。清理在自身有界等待中只接受真正终态，普通交互等待保持可返回输入/授权请求；采集失败、无法停止或无问题证据仍保留错误和资源。
+
+- Maxwell 指针：`internal/app/transport/mcp/handler.go`、`application/resourcecontent/edits.go`、`resource_errors_test.go`；Runtime 原有 invalid_argument → correct_arguments。
+- SDK 指针：`maxwell-runtime/src/nextplay_runtime/executor.py`、`runner.py`、`maxwell-cli/src/maxwell_cli/services/runs.py`及 `test_standalone.py`；原始失败、已加载版本、实际评分与最终闭环仍查本页主验收记录。新单元回归通过不能覆盖原有失败，也不能证明质量提升。
