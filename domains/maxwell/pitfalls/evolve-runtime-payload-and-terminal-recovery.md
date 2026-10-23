@@ -55,3 +55,12 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 
 - 通用说明入口：Maxwell `agent-resources/prompts/evolve-tuning-agent.md`、`agent-resources/skills/evidence-diagnosis/SKILL.md`。
 - 原始自然场景、结果字节、修复后回读与验收状态：上文同一验收记录的2026-10-24章节；代码修改和隔离资源更新不等于自然复验通过或共享部署。
+
+## 2026-10-24 比较口径兼容不等于已证明结果变化
+
+**Why:** 自然汇总即使已真实消费新SP，仍可能把比较接口的comparable理解为两边均分可以直接作差；当原基线仅部分样本有效、候选完整出分时，这会制造不存在的提升或退步。只检查资源已保存，或者只继续堆叠SP，无法证明工具语义已被正确理解。
+
+**How to apply:** 分别核对模型请求实际消费的Prompt/Skill、工具调用及结果。测量口径兼容、逐题共同有效样本、目标门槛判断是三层证据；使用现有比较的交集/覆盖信息和正式目标结果，缺失时明确不可判断，不用两次Run各自的均分补结论。工具描述与Skill应贴近返回字段说明这些边界，避免要求固定调用顺序；说明改动后须加载实际MCP并在未引导新会话复验，旧失败保留。候选真实应用及评分通过，也不能替代自然汇总可信或双轮质量改善。
+
+- 源码入口：Maxwell `services/evolve-server/internal/app/transport/mcp/schemas.go` 中 `evolve_evidence_query/compare_runs`，以及 `agent-resources/skills/evidence-diagnosis/SKILL.md`；当前字段及默认值应沿源码核对。
+- 实际模型请求、自然汇总03失败、候选C6在途和修复加载边界，沿本轮验收记录2026-10-24 06:20章节查证；本页不声明修复已通过真实复验或正式发布。
