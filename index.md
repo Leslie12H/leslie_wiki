@@ -1,4 +1,6 @@
 - 2026-10-23：[短期发布凭证与恢复判据](domains/sandai-data-smith/pitfalls/sandeval-work-handoff-unsettled-occupancy.md#同日发布判据短期凭证与服务恢复分开核验) — 对齐签发、TTL与回滚时间线，独立核验服务健康，保留首次异常；过期候选不冒充发布根因。
+
+- 2026-10-23：[旧批次通过与当前来源扩大](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md#2026-10-23-旧批次通过与当前来源扩大的区别) — 当前题数、历史通过与真实未完成复验分开核对；差集、正式代改和负责人报告的只读证据入口。
 - 2026-10-23：[整改转交的SQL与内存复审](domains/sandai-data-smith/pitfalls/sandeval-work-handoff-unsettled-occupancy.md#同日性能复审先数核心sql再解释延迟) — 批量读取执行历史、仅缓存成员身份、长链补读成本与单次观测/P95边界；性能补充PR #2790。
 - 2026-10-23：[评分等待与MySQL原件往返](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-23-评分等待与数据库-json-往返) — 精确租约让出、大JSON队列排序、封存分数精度恢复及真实验收边界。
 - 2026-10-23：[整改转交的合法待定范围接续修复](domains/sandai-data-smith/pitfalls/sandeval-work-handoff-unsettled-occupancy.md#同日修复与隔离验证入口) — 复用正式整改版本链校验，保留历史和原事务责任审计；main PR #2788 与隔离验证入口。

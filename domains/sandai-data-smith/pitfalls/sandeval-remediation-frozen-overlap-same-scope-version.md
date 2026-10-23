@@ -2,7 +2,7 @@
 name: sandeval-remediation-frozen-overlap-same-scope-version
 type: pitfall
 created: 2026-10-16
-updated: 2026-10-22
+updated: 2026-10-23
 tags: [sand-eval, quality, remediation, package, scope, duplicate]
 links: [sandeval-handoff-duplicate-scope, sandeval-remediation-scope-change-stale-handoff, sandeval-partial-reassignment-package-completeness-gap]
 ---
@@ -46,3 +46,10 @@ links: [sandeval-handoff-duplicate-scope, sandeval-remediation-scope-change-stal
 **How to apply:** 先核验当前正式版本与原交接摘要，以交接封存的其他分区界定本批执行范围，再复用正式代改归属与已闭环作者变化证明，要求精确等于本批封存选择；同时检查被排除成员是否重新归本批，发生扩大就拒绝复用旧子集。原报告轮次、权限和本批处置保护继续执行；整包分区默认严格规则不变，不能借执行隔离删除另一批未结责任。只传批次来源选项，避免整包选项重复计入。验收至少同时覆盖同包全部活动Sand批次、已停止但有未结责任的批次，以及连续两次正式保存；单链接只读通过不能扩大成整包全部可用。原生事实、候选回读与[补修PR #2726](https://github.com/world-sim-dev/sandai-data-smith/pull/2726)的当前交付状态沿[本次报告](/Users/leslie/Documents/Playground/output/sand35029-second-review-20261021/report.md)核验。
 
 2026-10-22 纸面五包排查、一次原生复验恢复及通用修复见[本地证据报告](/Users/leslie/Documents/Playground/output/paper-quality-20261022/report.md)和[main PR #2762](https://github.com/world-sim-dev/sandai-data-smith/pull/2762)。**Why:** 合法待定移出会使整改父子成员集缩小；历史普通批次可能对应多轮整改中的中间答案；并行代改即使一侧仍命中当前范围版本，也可能需要分别保留精确成员。另一方面，转派后的新作者分组不代表工作项脱离原质检/整改责任，分配单存在也不等于报告已生成。**How to apply:** 用冻结声明证明精确移出差分；沿完整已完成整改链证明历史答案，当前代改仍需绑定自身冻结成员；逐题检查唯一归属并保留同批未变原题。新分配在冻结前复用正式工作项占用保护，旧失败详情直接展示原任务接续原因。已有新答案但无正式代改或复验时，使用拥有者的原生预览/计划哈希/apply 恢复复验，再从独立实例验证旧记录完整；不要替标注员提交尚未完成的自查，或把新复验 active 当成通过。任务身份、恢复哈希、部署 SHA、Gate、目标分支冲突和剩余业务条件仅保留在报告及 PR，使用前重新读取。
+
+
+## 2026-10-23 旧批次通过与当前来源扩大的区别
+
+**Why:** 作者当前范围扩大后，页面可能把当前题数与旧正式批次的通过状态并排展示；隐藏在历史作者 scope 下的当前复验又未出现在同一来源列表。所有可见行通过，仍不能证明当前完整来源已正式送审、复验并验收。原题有合法代改证明，也不能自动覆盖新增工作项。
+
+**How to apply:** 分别读取当前来源、全部正式送审历史、有效分区、最新报告聚合及负责人报告；用 work_unit_id 求完整差集，再核验缺失项是否有历史冻结身份和正式代改。精确报告回读优先于可能滞后的列表摘要，已完成项不再列为待办；不要用新建重复派单、代填判断或放宽完整性保护解除表面阻断。个案事实、部署和可操作入口沿[纸面09复查报告](/Users/leslie/.codex/visualizations/2026/10/22/01a16320-cb2a-7231-b0af-61d168d28c51/paper09-recheck-20261023/report.md)重新核验；本次为只读诊断，不代表数据恢复或代码修复。
