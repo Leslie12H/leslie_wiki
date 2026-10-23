@@ -19,4 +19,8 @@ links: [sandeval-reassigned-answer-frozen-review-conflict, sand-eval-quality-cen
 
 整批全部转出时，原人员 scope 可能从来源清单消失。按“当前 scope 集合”查不到旧送审记录，不证明从未质检；仍应核对历史分配及稳定工作项准入。验收需组合部分／全部转派和是否含真正新题，既拒绝重复首送，也保留新题正常分配。
 
+发布验收还要区分实时详情和持久摘要：schema 升级会让旧摘要进入计算中，Worker Ready 不代表指定包已发布新版。先核对目标／已发布 schema、调度代数和队列进展；只有需要恢复指定包时，按 [摘要运维入口](https://github.com/world-sim-dev/sandai-data-smith/blob/main/sand-eval/docs/operations/quality-package-summaries.md) 用精确 quality-task-id 预览，再 retry --apply 重新排队；不重放分配或修改判断。正式质检分区可能合并来源人员行，须比对稳定成员集合而非要求旧行数不变。
+
+2026-10-23 的合并、生产版本、双 Pod 回读、单包摘要重排和浏览器最终截图，沿[修复与发布记录](/Users/leslie/Documents/Playground/sandeval-paper14-20261023/repair-report.md)核对；不将本次指定包通过外推为所有积压摘要已追平，或所有后续自动派检均已验收。
+
 代码复核入口：`quality/application/management/batch_allocation_service.py::options_many` 的稳定工作项准入，`package_progress_query.py` 的候选计数，`leader_query_service.py::batch_options` 的供应商状态，`frontend/src/pages/quality/management/PackageDetail.tsx` 的空状态回退。按部署 SHA 阅读，不从本地旧分支推断线上。
