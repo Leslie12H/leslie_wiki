@@ -44,6 +44,9 @@
 
 # leslie_wiki 目录
 
+- 2026-10-23：[历史评分基线与异步接纳](domains/maxwell/pitfalls/evolve-historical-baseline-and-async-acceptance.md) — 复用历史评分、同口径仅运行候选、长任务接纳与执行时限分离及旧回执验证指针。
+
+
 - 2026-10-23：[EVOLVE 重评的跨任务证据归属](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-23-重评沿用原执行证据) — 候选准入与重新评分分离、累计预算与原Trial文件绑定、真实authorizer跨Work回归及逐题出分边界。
 
 - 2026-10-23：[EVOLVE 大输入与终态恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md) — 私有命令传输放大、远端终态先读、新会话计划与实际执行器继承；源码/真实验证及兼容回滚边界指针；含隔离Judge证据来源错位与200失败回执核对。
