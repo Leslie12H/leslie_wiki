@@ -85,3 +85,12 @@ links: [sandeval-sql-lock-diagnosis, sandeval-reassignment-scope-and-batch-respo
 **How to apply:** 先核对调用方是否进入列表轮询，再统计同一对象、同一范围与版本的核心读取。优先复用提交 get_many 与执行 for_dispositions 的已有分块接口，只保留成员身份；保留原版本重查、执行中阻断和事务审计。已关闭的链中间版本仍需精确补读，不用取消合法性核验来换速度；记录长链与大批次尚未压测的边界。
 
 - [性能补充 main PR #2790](https://github.com/world-sim-dev/sandai-data-smith/pull/2790) 与[复审和只读性能记录](/Users/leslie/Documents/Playground/output/li-renxuan-handoff-20261023/review-performance.md)：保存同单SQL计数、相同成员/版本、候选源码摘要与直接回归。数字属于当次单次对照，不能作为永久性能指标；当前合并、Gate、部署与原单恢复沿对应PR/报告实时查证。
+
+
+### 同日发布判据：短期凭证与服务恢复分开核验
+
+**Why:** 发布和回滚校验若复用发布前签发的短期媒体材料，耗时超过材料有效期后，校验失败可能来自凭证过期。部署包装器若覆盖最初异常，仅凭“rollback did not recover”不能区分服务异常与校验材料失效；也不能把 Ready 当成业务已修复。
+
+**How to apply:** 对齐材料签发窗口、TTL、rollout、切流及回滚校验的时间线，独立读取当前部署SHA、Ready和实际健康响应；保留第一次探测失败细节。原始失败原因缺失时，将过期列为候选，不宣称已证明首次发布失败根因，也不通过关闭校验完成上线。
+
+- [2026-10-23 发布失败与独立回滚核验](/Users/leslie/Documents/Playground/output/li-renxuan-handoff-20261023/review-performance.md)：包含发布任务链接、材料生命周期源码入口与证据限制。线上SHA、健康和原单恢复均需实时重查。
