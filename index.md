@@ -1184,3 +1184,4 @@
 - 2026-10-23：[历史评分基线与异步接纳](domains/maxwell/pitfalls/evolve-historical-baseline-and-async-acceptance.md) 补充测量/执行来源分离、重评独立执行去重、事务准入与采纳同根因审查、长选项输入框可操作性；真实完成情况沿验收指针核对。
 
 - 2026-10-23: [EVOLVE system-wide tuning](domains/maxwell/pitfalls/evolve-historical-baseline-and-async-acceptance.md#2026-10-23-system-wide-tuning-and-recovery-consistency): Agent/MCP/Skill scope, renewal consistency and visible score coverage.
+- 2026-10-23：[转派批次误报待分配](domains/sandai-data-smith/pitfalls/sandeval-reassigned-batch-false-allocation-pending.md) — 稳定工作项准入与人员批次汇总差异、原链恢复预检、自动复验扫描公平及 PR #2807 的发布边界。

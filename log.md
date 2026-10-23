@@ -2053,3 +2053,4 @@
 
 - 2026-10-23：纸面09再次提交受阻只读核验；补充旧批次通过、当前来源扩大及精确报告回读的区分，附本地证据入口。
 - 2026-10-23: Added EVOLVE system-wide Agent/MCP/Skill scope, prepare/commit renewal consistency, selected score identity and visible coverage pointers.
+- 2026-10-23：记录 Sand Eval 转派后批次误报待首次分配、原链恢复预检和独立复验扫描公平；纸面 14 包证据及 PR #2807 仅存指针。
