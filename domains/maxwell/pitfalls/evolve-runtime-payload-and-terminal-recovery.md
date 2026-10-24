@@ -128,3 +128,11 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 
 - 源码：EVOLVE `application/commands/optimization_manual_decision.go` 及相邻测试；共同题目比较的运行聚合策略边界见 `application/queries/run_intersection.go`。Studio `v3/ledger/LedgerPage.tsx`、`benchmarks/BenchmarkMetricsOverview.tsx`。
 - 真实运行、先红后绿日志、页面回读、加载和发布状态沿 `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 的2026-10-25章节核实；源码修复不是已取得提升或已发布的证明。
+
+## 2026-10-25 历史基线复用与最后一次统计失败
+
+**Why:** 比较端已区分运行验收策略和评分身份，不代表历史基线复用入口也同步遵守；只修比较会留下同题同评分仍被阻止复用的入口。SSE只发布变化，终态最后一次统计请求失败后，Run修订可能不再改变，不能等待下一次事件来恢复。
+
+**How to apply:** 沿计划准备、历史授权、测量比较逐层核对同一身份边界；只在临时测量视图对齐无关运行门槛，原记录与新运行授权不改。前端将统计失败和其修订一起保留，采用已有退避读重试，成功后停止兜底，权限拒绝不自动重试。用终态且没有后续SSE的502恢复负例验证，不把源码修复当作原页面所有断连故障已经定位。
+
+- 源码：EVOLVE `application/commands/optimization_reuse.go`、`rescore_test.go`；Studio `EvolveWorkspaceStore.ts` 和相邻恢复测试。加载版本、原页面观察及未证实的连接丢失起因见原验收记录2026-10-25 00:39章节。
