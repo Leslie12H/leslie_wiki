@@ -182,3 +182,11 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 **How to apply:** 新摘要使用新投影版本，旧检查点按原版本和原片段续接；仅进行有界的旧身份查找，不扫描历史或重发已完成摘要。资源分页明确返回游标为唯一顺序续读位置；错误给出字符起始或所需最小字节数，通过既有correct_arguments信号恢复，不能静默跳字节或泄露正文。自然会话采用单次大窗口读取不等于已验证多窗口续读；技术拼接测试与实际读取分别记录。
 
 - 源码指针：Agent Runtime `extensions/summarization/preflight.go`、相邻恢复测试；EVOLVE `application/resourcecontent/content.go`、`transport/mcp/schemas.go` 和 `resource_errors_test.go`。加载、真实续读与原件对照沿主验收记录2026-10-25章节核验，不把构建成功当成延迟改善。
+
+## 2026-10-25 工具联合类型与可修正输入
+
+**Why:** 联合schema的根级oneOf错误会遮住真正出错的字段；已授权资源的引用笔误若又被归为永久服务故障，Agent容易放弃或转向不相关工具。手动搜索计划与累计执行许可也不能只因都含“预算”而混用。
+
+**How to apply:** 保持原完整输入校验，仅失败时利用唯一显式discriminator分支补充字段诊断，保留根约束、oneOf歧义和本地引用；不要以重验分支取代完整校验。只对明确的可修正输入给correct_arguments，不按错误文案推断，不将权限/缺失来源/原件损坏当参数笔误。工具说明应明确各计划是否具有授权能力。技术原参数回放与自然Agent能否自纠正分别记录；有错误提示或提出文字计划均不算真实计划准备完成。
+
+- 指针：Agent Server `modules/tools/contract/input_diagnostics.go`及测试；EVOLVE `app/toolcaller.go`、`app/transport/mcp/handler.go`和`schemas.go`。真实失败参数、回归、运行加载及自然16结果沿主验收记录2026-10-25章节与集成工作区input-diagnostic/tool-input-classification日志核验。
