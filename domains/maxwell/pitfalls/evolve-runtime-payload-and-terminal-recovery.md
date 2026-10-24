@@ -136,3 +136,13 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 **How to apply:** 沿计划准备、历史授权、测量比较逐层核对同一身份边界；只在临时测量视图对齐无关运行门槛，原记录与新运行授权不改。前端将统计失败和其修订一起保留，采用已有退避读重试，成功后停止兜底，权限拒绝不自动重试。用终态且没有后续SSE的502恢复负例验证，不把源码修复当作原页面所有断连故障已经定位。
 
 - 源码：EVOLVE `application/commands/optimization_reuse.go`、`rescore_test.go`；Studio `EvolveWorkspaceStore.ts` 和相邻恢复测试。加载版本、原页面观察及未证实的连接丢失起因见原验收记录2026-10-25 00:39章节。
+
+
+## 2026-10-25 终态单次页恢复与逐题质量解释
+
+**Why:** 工作区和单次运行页各自管理统计请求，只修工作区会留下终态单次页永久停在旧分数的同根缺陷。另一个结果解释错误是把 Error→Pass 和 Fail→Pass 都称为质量改善；前者没有旧的有效分数，只能证明恢复可评分。
+
+**How to apply:** 沿所有消费相同终态的 Store/视图检查最后一次请求失败，退避重试到统计成功，403停止；不依赖终态之后仍有新事件。对照报告同时保留每题判定、评分覆盖和原错误，区分可评分性变化与有效质量变化；同为Pass或Fail也只说明该判定未变，不能替代分项分数。用未引导新会话及逐题独立回查验证，模型自我修正的工具错误保留原记录，不能用一次通过覆盖之前失败。
+
+- 源码指针：Studio `RunRecordStore.ts`、`RecordsPage.tsx` 及相邻统计恢复回归；调优资源 `agent-resources/skills/evidence-diagnosis/SKILL.md` 与 `references/outcome-decision-tree.md`。
+- 真实复验、加载哈希、自然对话与独立SQL证据沿原验收记录2026-10-25 01:03/01:28章节查证；具体分数、在途状态和PR状态不在本页复制。

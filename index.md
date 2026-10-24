@@ -1,3 +1,5 @@
+- 2026-10-25：[EVOLVE 终态统计恢复与逐题质量解释](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-25-终态单次页恢复与逐题质量解释) — 单次页与工作区相邻恢复、可评分性与质量分开、自然结果和逐题回查指针。
+
 - 2026-10-23：[短期发布凭证与恢复判据](domains/sandai-data-smith/pitfalls/sandeval-work-handoff-unsettled-occupancy.md#同日发布判据短期凭证与服务恢复分开核验) — 对齐签发、TTL与回滚时间线，独立核验服务健康，保留首次异常；过期候选不冒充发布根因。
 - 2026-10-23：[批次新增漏送审答案的补检边界](domains/sandai-data-smith/pitfalls/sandeval-unsubmitted-scope-expansion.md) — 历史通过只覆盖冻结成员、正式代改与完全未送审的区别、真实全量补检和断点重试；PR #2820 与受限证据指针。
 
