@@ -98,3 +98,13 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 **How to apply:** 原执行截止保持精确，不靠增加授权时长补救；传输预估按协议允许的最大时间格式计量，测试序列化重放、秒尾与容量边界。权限链先关联真实 trace 的各段延迟，再用只读 EXPLAIN 区分数据库执行与调用往返；重复读取同一命名空间时复用现有批量读取，保留缺失关闭、损坏失败和每次重新授权，不用缓存或放宽超时掩盖。源码测试通过与运行期已加载必须分别核对。
 
 - EVOLVE 入口：`application/execution/contract.go`、`request_size.go` 及对应测试；Agent Server 入口：`internal/modules/studio/businessfeature/application/service.go` 与 `internal/app/integration/studio/businessfeature/adapters.go`。具体实际耗时、回归、隔离运行与加载边界沿上述验收记录 2026-10-24 20:56 章节回查。
+
+
+## 2026-10-24 评分覆盖与实际应用回执分母
+
+**Why:** 终态 Run 可能同时含有效评分和执行错误；EvidenceSet 证明的是实际收集的执行，而比较若把全部计划 Trial 都称为“已评分题”，会在已有分题回执完整时误报缺回执。模型又可能将两边不同有效样本的均分解释为退步，接口告警与解释层必须分别验证。
+
+**How to apply:** 评分覆盖、候选应用证明和质量方向分开核对。实际测量题必须逐条核对原执行回执；无分错误题明确记覆盖不足，不能过滤后凑齐验收或补零。重评分按有分题定位原执行，即使原执行当时无分，也不能省略其回执。完整计划仍进入正式决策，有效样本不足不产生改善/退步结论；在未引导的新会话复验解释行为，正确基线ID或工具调用不等于最终报告可信。
+
+- 代码指针：Maxwell `services/evolve-server/internal/modules/evolve/application/comparison/metric_request.go`、`application/commands/candidate_assessment_test.go`，页面说明在 `apps/studio/src/products/evolve/candidates/comparisonWarnings.ts` 与 `v3/ledger/taskReading.ts`。
+- 原错误、先红后绿回归、实际加载与自然复验边界沿本页原验收记录2026-10-24 21:40章节查；本页不声明业务验收或正式发布完成。

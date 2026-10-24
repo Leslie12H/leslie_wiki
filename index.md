@@ -213,6 +213,8 @@
 > 全库入口。每个 session 先读本文件,再按任务相关性 Read 具体 page。
 > 维护规矩见 [CLAUDE.md](./CLAUDE.md)。
 
+- 2026-10-24：[评分覆盖与应用回执分母](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-24-评分覆盖与实际应用回执分母) — 有分题回执、全计划覆盖与不同有效样本比较分开，重评分仍追溯原执行，验收状态沿记录核对。
+
 ## Domains(业务系统)
 
 ### vidmuse — [业务全景](domains/vidmuse/README.md)
