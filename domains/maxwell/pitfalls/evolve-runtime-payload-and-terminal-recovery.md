@@ -174,3 +174,11 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 **How to apply:** 去重只在模型请求投影内做精确数值语义比较，保留原始证据与已版本化读取器；数组顺序、缺键/null、字符串/数字、注释和媒体不得误合并。数值长度和指数计算有界，超界保留副本而不拒绝结果。用实际请求回放比较体积和CPU开销，同时验证历史读取位置不变；请求减小不等于真实模型延迟已经改善，仍需加载后真实复验。
 
 - 源码指针：Agent Runtime `toolprotocol/json_equivalence.go`、`result.go` 的 ModelRequestView/ModelViewV1，以及 `model/multimodal.go`；测试覆盖精度、极端指数、原件不变与旧读取视图。实际回放、回归、运行期加载和提交/发布状态沿主验收记录2026-10-25 03:43章节及集成目录number-dedup日志核对。
+
+## 2026-10-25 摘要投影恢复与资源续读
+
+**Why:** 摘要也会消费重复的工具结果，但直接替换既有摘要输入会改变已保存分片的字节位置；资源窗口按换行或UTF-8边界提前结束时，下一段位置也不能用offset加limit推算。把这类参数错误归为Provider永久失败，会让Agent放弃本来可修正的读取。
+
+**How to apply:** 新摘要使用新投影版本，旧检查点按原版本和原片段续接；仅进行有界的旧身份查找，不扫描历史或重发已完成摘要。资源分页明确返回游标为唯一顺序续读位置；错误给出字符起始或所需最小字节数，通过既有correct_arguments信号恢复，不能静默跳字节或泄露正文。自然会话采用单次大窗口读取不等于已验证多窗口续读；技术拼接测试与实际读取分别记录。
+
+- 源码指针：Agent Runtime `extensions/summarization/preflight.go`、相邻恢复测试；EVOLVE `application/resourcecontent/content.go`、`transport/mcp/schemas.go` 和 `resource_errors_test.go`。加载、真实续读与原件对照沿主验收记录2026-10-25章节核验，不把构建成功当成延迟改善。

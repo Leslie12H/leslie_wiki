@@ -1226,3 +1226,4 @@
 - 2026-10-25：[历史基线复用与统计恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-25-历史基线复用与最后一次统计失败) — 运行验收策略与评分身份分离；终态最后统计失败的独立重试与权限边界。
 
 - 2026-10-25：[工具密集会话首屏恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-25-工具密集会话的首屏恢复) — 有界消息补读、事件游标保留与上下文压缩等待分层取证。
+- 2026-10-25：[EVOLVE 摘要与资源续读恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-25-摘要投影恢复与资源续读) — 版本化摘要检查点、精确字节游标及可修正参数错误；自然与技术验证边界。
