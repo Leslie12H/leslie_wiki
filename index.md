@@ -50,6 +50,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-25：[MCP 数值副本与历史读取兼容](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-25-mcp-数值等价副本与版本化读取) — 精确数值投影去重、原件与历史字节位置保留、真实请求回放和运行期生效分层核查。
+
 - 2026-10-24：[EVOLVE 测量策略与预算预留边界](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-24-运行验收策略与指标比较预算预留与测量权限分离) — 区分运行验收门槛、指标身份、容量预留和人工单次测量；同根用量与真实采纳的核验入口。
 
 - 2026-10-24：[EVOLVE 截止精度与权限往返](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-24-剩余截止精度与权限读取往返) — 精确授权时间、保守传输计量、权限链串行读放大与无缓存批量读取的验证边界。

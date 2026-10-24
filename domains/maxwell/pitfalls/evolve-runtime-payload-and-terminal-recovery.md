@@ -165,3 +165,12 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 
 - 代码入口：Studio `products/evolve/EvolveConversationHistoryStore.ts`、`EvolveAgentConversation.tsx`、`v3/sessions/sessionSummary.ts`。实际复现、回归与页面重入证据见主验收记录2026-10-25章节及 `conversation-window-*-20261025` 文件；合并/发布状态沿分支与PR另查。
 - 诊断等待应分段：大量原件读入后可能触发上下文压缩；从 `runtime_context_compaction_terminal` 的 duration、模型调用数和压缩后输入检查，而不能直接归为远端评测挂起。正确压缩不证明分析已完成，模型能否继续读资源正文和给出有据结论须另验。
+
+
+## 2026-10-25 MCP 数值等价副本与版本化读取
+
+**Why:** 同一工具可以同时返回 JSON 文本和 structuredContent，1.0 与1的数值拼写不同会使字面深比较漏掉重复内容；大量评分正文因而重复进入模型。用float64比较又会把大整数或高精度小数误判相同。直接改已有model_view版本则可能改变历史分页的字节位置。
+
+**How to apply:** 去重只在模型请求投影内做精确数值语义比较，保留原始证据与已版本化读取器；数组顺序、缺键/null、字符串/数字、注释和媒体不得误合并。数值长度和指数计算有界，超界保留副本而不拒绝结果。用实际请求回放比较体积和CPU开销，同时验证历史读取位置不变；请求减小不等于真实模型延迟已经改善，仍需加载后真实复验。
+
+- 源码指针：Agent Runtime `toolprotocol/json_equivalence.go`、`result.go` 的 ModelRequestView/ModelViewV1，以及 `model/multimodal.go`；测试覆盖精度、极端指数、原件不变与旧读取视图。实际回放、回归、运行期加载和提交/发布状态沿主验收记录2026-10-25 03:43章节及集成目录number-dedup日志核对。
