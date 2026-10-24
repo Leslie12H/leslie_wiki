@@ -155,3 +155,13 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 **How to apply:** 页面按 Run ID 合并已读取记录并明确范围，不为显示总数向所有候选扇出查询；覆盖重叠、互不相交及尚未打开的候选。模型诊断同时核对请求与完成事件中的实际用量/模型回执、相同资源哈希及未引导回答；参数对照后恢复原隔离配置，不用已启用推理替代业务正确性证据。
 
 - 源码指针：Studio `v3/ledger/LedgerLineage.tsx`、`v3/lineage/historyRendering.test.mjs`；运行证据沿主验收记录2026-10-25及集成工作区 `.tmp/natural13-model-completed-20261025.json`、`.tmp/candidate-read-count-browser-20261025.txt` 回查，具体状态不在本页保存。
+
+
+## 2026-10-25 工具密集会话的首屏恢复
+
+**Why:** 最近 N 条事件不等于最近 N 条对话；一个长工具回合可以把已保存的用户消息和回答全部挤出首屏。此时检查点仍显示运行中，看起来像对话丢失，但持久消息可能完整。
+
+**How to apply:** 同时核对持久消息和首屏事件类型；有更多历史时补取有界的消息事件，合并去重并按原序列还原。工具历史分页与 SSE 续接仍使用原事件页游标，不能用消息筛选游标替换。覆盖工具占满窗口、交叠去重、补读失败、晚到消息顺序、离开/重新进入及会话摘要；不扫描全部历史、不重发消息。
+
+- 代码入口：Studio `products/evolve/EvolveConversationHistoryStore.ts`、`EvolveAgentConversation.tsx`、`v3/sessions/sessionSummary.ts`。实际复现、回归与页面重入证据见主验收记录2026-10-25章节及 `conversation-window-*-20261025` 文件；合并/发布状态沿分支与PR另查。
+- 诊断等待应分段：大量原件读入后可能触发上下文压缩；从 `runtime_context_compaction_terminal` 的 duration、模型调用数和压缩后输入检查，而不能直接归为远端评测挂起。正确压缩不证明分析已完成，模型能否继续读资源正文和给出有据结论须另验。

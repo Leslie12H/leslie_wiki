@@ -1222,3 +1222,5 @@
 
 - 2026-10-25：[EVOLVE 混合测量与会话时序](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-25-混合测量范围与会话事件时序) — 正式验收按实际范围取证，普通测量不误阻断；持久卡片真实时间与趋势定位的回归入口。
 - 2026-10-25：[历史基线复用与统计恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-25-历史基线复用与最后一次统计失败) — 运行验收策略与评分身份分离；终态最后统计失败的独立重试与权限边界。
+
+- 2026-10-25：[工具密集会话首屏恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-25-工具密集会话的首屏恢复) — 有界消息补读、事件游标保留与上下文压缩等待分层取证。
