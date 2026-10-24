@@ -146,3 +146,12 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 
 - 源码指针：Studio `RunRecordStore.ts`、`RecordsPage.tsx` 及相邻统计恢复回归；调优资源 `agent-resources/skills/evidence-diagnosis/SKILL.md` 与 `references/outcome-decision-tree.md`。
 - 真实复验、加载哈希、自然对话与独立SQL证据沿原验收记录2026-10-25 01:03/01:28章节查证；具体分数、在途状态和PR状态不在本页复制。
+
+
+## 2026-10-25 局部目录计数与模型参数实效
+
+**Why:** 根任务和候选目录可能分别加载同一 Run 或不同子任务的 Run；取两侧数量最大值既不能去重求并集，也不能证明历史总数。模型请求声明了推理参数也只证明参数已发送，不能据此认定服务实际执行该参数或结果解释已经正确。
+
+**How to apply:** 页面按 Run ID 合并已读取记录并明确范围，不为显示总数向所有候选扇出查询；覆盖重叠、互不相交及尚未打开的候选。模型诊断同时核对请求与完成事件中的实际用量/模型回执、相同资源哈希及未引导回答；参数对照后恢复原隔离配置，不用已启用推理替代业务正确性证据。
+
+- 源码指针：Studio `v3/ledger/LedgerLineage.tsx`、`v3/lineage/historyRendering.test.mjs`；运行证据沿主验收记录2026-10-25及集成工作区 `.tmp/natural13-model-completed-20261025.json`、`.tmp/candidate-read-count-browser-20261025.txt` 回查，具体状态不在本页保存。
