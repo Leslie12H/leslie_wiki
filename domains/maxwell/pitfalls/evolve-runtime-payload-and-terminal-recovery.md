@@ -74,3 +74,19 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 - Maxwell源码指针：`internal/app/run_catalog.go`、`internal/app/transport/http/handler.go`、`internal/modules/evolve/application/queries/tuning_baseline.go`（均在services/evolve-server下）。对应路由、隐藏来源、缺旧绑定和禁止加载历史的回归随源码查证。
 - nextplay-eval源码指针：`maxwell-runtime/src/nextplay_runtime/cli.py`和`maxwell-runtime/tests/test_cli_action_checkpoints.py`。当前打包/上传与真实使用版本须沿验收记录核实，不能以单测通过声称远端已更新。
 - 真实自然汇总、原候选失败与独立复验、精确日志和发布状态继续沿本页的验收记录指针回查；仅内层运行完成而无最终证据包，不构成评分完成。
+
+## 2026-10-24 远端执行寿命与本地观察解耦
+
+**Why:** 两小时以上的远端任务如果只靠本地轮询续十分钟空闲租约，控制链暂时中断就会丢失仍在执行的Sandbox。内层任务完成、外层进程存活、NAS证据封存必须分别核实；不能仅凭等待时间把原因归为电脑休眠。
+
+**How to apply:** 执行前按实际获准时限预留远端租约并持久化，预留失败不派发；后续短轮询/文件操作不缩短已有长租约。保留独立任务取消和终态校验，未知接纳不重放。验证同时检查云端实际expiresAt、同一实例的观察恢复和命令结果；短命令使用三小时参数只证明参数/租约机制，不能称三小时实跑通过。
+
+- 源码：Agent Server `internal/modules/backend/execution_tasks.go`、`aliyun_sandbox.go`及相邻测试；本轮实际版本、租约与原失败回执见验收记录2026-10-24 18:32章节。
+
+## 2026-10-24 请求体读取截止误取消业务处理
+
+**Why:** 鉴权预读JSON并替换Body后，net/http后台断连读取已经启动；Huma再次设置BodyReadTimeout且不清除，会在请求体已读完后取消仍正常保存/索引的handler。文件已经写入而页面报失败，不能只延长超时或认定未保存。普通Recorder没有真实TCP截止时间，无法覆盖这个故障。
+
+**How to apply:** 在统一HTTP适配层将截止时间限定于读取阶段，读取完成/关闭或multipart解析完成后清除；保留慢上传拒绝、请求主动取消、原长度与权限验证。使用真实HTTP连接分别覆盖预读后慢handler、慢上传、客户端取消，并从原页面复验保存及独立文件哈希。涉及后处理失败时先回读，不重复派发业务任务或覆盖历史。
+
+- 源码：Agent Server `internal/foundation/httpapi/humagin/adapter.go`、`body_deadline_test.go`；原代码复现、修复回归、实际13秒保存200及发布边界见验收记录2026-10-24 18:59章节。
