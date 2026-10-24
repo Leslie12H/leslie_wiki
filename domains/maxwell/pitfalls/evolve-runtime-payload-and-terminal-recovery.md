@@ -90,3 +90,11 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 **How to apply:** 在统一HTTP适配层将截止时间限定于读取阶段，读取完成/关闭或multipart解析完成后清除；保留慢上传拒绝、请求主动取消、原长度与权限验证。使用真实HTTP连接分别覆盖预读后慢handler、慢上传、客户端取消，并从原页面复验保存及独立文件哈希。涉及后处理失败时先回读，不重复派发业务任务或覆盖历史。
 
 - 源码：Agent Server `internal/foundation/httpapi/humagin/adapter.go`、`body_deadline_test.go`；原代码复现、修复回归、实际13秒保存200及发布边界见验收记录2026-10-24 18:59章节。
+
+## 2026-10-24 剩余截止精度与权限读取往返
+
+**Why:** 将授权截止向下取整到秒，会把秒尾仍有效的短窗口变成已过期；仅保留纳秒而不调整请求大小预估，又会让边界传输多出字节。另一个相似的超时表象来自权限读取：业务详情装饰层逐个读取同一命名空间，在已有账号/权限调用后叠加串行往返，即使数据库执行计划很快也可能超过上游截止。
+
+**How to apply:** 原执行截止保持精确，不靠增加授权时长补救；传输预估按协议允许的最大时间格式计量，测试序列化重放、秒尾与容量边界。权限链先关联真实 trace 的各段延迟，再用只读 EXPLAIN 区分数据库执行与调用往返；重复读取同一命名空间时复用现有批量读取，保留缺失关闭、损坏失败和每次重新授权，不用缓存或放宽超时掩盖。源码测试通过与运行期已加载必须分别核对。
+
+- EVOLVE 入口：`application/execution/contract.go`、`request_size.go` 及对应测试；Agent Server 入口：`internal/modules/studio/businessfeature/application/service.go` 与 `internal/app/integration/studio/businessfeature/adapters.go`。具体实际耗时、回归、隔离运行与加载边界沿上述验收记录 2026-10-24 20:56 章节回查。
