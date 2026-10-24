@@ -47,6 +47,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-24：[EVOLVE 测量策略与预算预留边界](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-24-运行验收策略与指标比较预算预留与测量权限分离) — 区分运行验收门槛、指标身份、容量预留和人工单次测量；同根用量与真实采纳的核验入口。
+
 - 2026-10-24：[EVOLVE 截止精度与权限往返](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-24-剩余截止精度与权限读取往返) — 精确授权时间、保守传输计量、权限链串行读放大与无缓存批量读取的验证边界。
 - 2026-10-24：[EVOLVE 长任务租约与请求体截止](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-24-远端执行寿命与本地观察解耦) — 远端执行寿命预留、观察中断与已写入却保存失败的真实TCP复现和回查入口。
 

@@ -108,3 +108,13 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 
 - 代码指针：Maxwell `services/evolve-server/internal/modules/evolve/application/comparison/metric_request.go`、`application/commands/candidate_assessment_test.go`，页面说明在 `apps/studio/src/products/evolve/candidates/comparisonWarnings.ts` 与 `v3/ledger/taskReading.ts`。
 - 原错误、先红后绿回归、实际加载与自然复验边界沿本页原验收记录2026-10-24 21:40章节查；本页不声明业务验收或正式发布完成。
+
+
+## 2026-10-24 运行验收策略与指标比较、预算预留与测量权限分离
+
+**Why:** 同一题和评分标准的两次运行，运行级最少成功题数等验收策略可能不同；将整份运行策略当作原生指标比较的必要身份，会把真实可比结果挡住。独立验收容量预留也不是所有人工评测的总次数上限；预留耗尽而总额度仍有余量时，自动按题目相同套入预留路径，会造成笼统预算超限。
+
+**How to apply:** 分别核对运行级判定与原始指标/逐题判定所依赖的身份。原生指标比较排除与其计算无关的运行验收门槛，原历史数据不改；整体运行比较仍保留其语义。人工单次测量复用绑定精确范围的服务端回执，保留同根累计用量、总额度、当前权限和不可变原件，不能靠新Work或清零计数恢复。预算分区不应决定真实证据能否参与比较/采纳，但后者仍须校验范围、独立执行次数、完整有效样本及逐轮目标，禁止把重评分或不足样本当提升。
+
+- 源码指针：EVOLVE `application/comparison/gate.go`、`application/commands/optimization_verification.go`、`optimization_manual_decision.go`、`infrastructure/postgres/optimization_verification.go`及对应PG/命令回归。
+- 实际双轮结果、报告哈希、剩余额度回查和部署状态：`output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 的2026-10-24晚间章节；完整执行到评分、指标改善、正式采纳与发布分别核实，不以其中一个替代其余。
