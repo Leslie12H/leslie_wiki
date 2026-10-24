@@ -2,7 +2,7 @@
 name: evolve-runtime-payload-and-terminal-recovery
 type: pitfall
 created: 2026-10-23
-updated: 2026-10-24
+updated: 2026-10-25
 tags: [maxwell, evolve, runtime, recovery, performance]
 links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navigation-parity]
 ---
@@ -118,3 +118,13 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 
 - 源码指针：EVOLVE `application/comparison/gate.go`、`application/commands/optimization_verification.go`、`optimization_manual_decision.go`、`infrastructure/postgres/optimization_verification.go`及对应PG/命令回归。
 - 实际双轮结果、报告哈希、剩余额度回查和部署状态：`output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 的2026-10-24晚间章节；完整执行到评分、指标改善、正式采纳与发布分别核实，不以其中一个替代其余。
+
+
+## 2026-10-25 混合测量范围与会话事件时序
+
+**Why:** 同一候选可以在不同题集和评分标准上普通评测；若正式采纳先对所有运行检查终态，再检查验证范围，就会被无关的在途测量阻断。旧同任务基线目录也有相同风险。另一个展示问题是把持久草稿卡的时间写成渲染时刻，每次刷新会把历史卡片挤到最新进度后面。
+
+**How to apply:** 先校验服务端回执归属，再按实际冻结题目/评分范围选择验证证据；不匹配的普通测量不计数也不阻断，声称使用验证预留的回执仍须准确匹配。范围过滤须同时覆盖候选目录和旧基线发现，并保留缺轮、伪造回执、重评分不增加执行次数等负例。会话里持久事件使用真实修订/确认时间；趋势定位只在范围/选中变化时更新，不因普通进度刷新抢走手动滚动位置。
+
+- 源码：EVOLVE `application/commands/optimization_manual_decision.go` 及相邻测试；共同题目比较的运行聚合策略边界见 `application/queries/run_intersection.go`。Studio `v3/ledger/LedgerPage.tsx`、`benchmarks/BenchmarkMetricsOverview.tsx`。
+- 真实运行、先红后绿日志、页面回读、加载和发布状态沿 `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 的2026-10-25章节核实；源码修复不是已取得提升或已发布的证明。

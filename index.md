@@ -1216,3 +1216,5 @@
 - 2026-10-24：[EVOLVE 目录、正式基线与派发回执](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-24-目录投影正式基线与派发身份) — 共享HTTP/MCP返回形态、对话任务基线提前失败和SDK持久化接线的源码/验收指针。
 
 - 2026-10-24：[登录草稿恢复与代登录联合验收](domains/sandai-data-smith/pitfalls/sandeval-session-recovery-impersonation.md) — 授权切回、顺序草稿、冲突副本和意见保留的复查入口。
+
+- 2026-10-25：[EVOLVE 混合测量与会话时序](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-25-混合测量范围与会话事件时序) — 正式验收按实际范围取证，普通测量不误阻断；持久卡片真实时间与趋势定位的回归入口。
