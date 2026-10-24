@@ -1229,3 +1229,5 @@
 
 - 2026-10-25：[工具密集会话首屏恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-25-工具密集会话的首屏恢复) — 有界消息补读、事件游标保留与上下文压缩等待分层取证。
 - 2026-10-25：[EVOLVE 摘要与资源续读恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-25-摘要投影恢复与资源续读) — 版本化摘要检查点、精确字节游标及可修正参数错误；自然与技术验证边界。
+
+- 2026-10-25：[EVOLVE 授权调整与实时进度分离](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-25-授权调整与实时进度分离) — 授权身份与动态用量、短凭证、持久工具目录及StrictMode确认恢复分别核验。

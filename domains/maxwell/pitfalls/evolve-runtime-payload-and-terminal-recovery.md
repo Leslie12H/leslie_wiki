@@ -190,3 +190,12 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 **How to apply:** 保持原完整输入校验，仅失败时利用唯一显式discriminator分支补充字段诊断，保留根约束、oneOf歧义和本地引用；不要以重验分支取代完整校验。只对明确的可修正输入给correct_arguments，不按错误文案推断，不将权限/缺失来源/原件损坏当参数笔误。工具说明应明确各计划是否具有授权能力。技术原参数回放与自然Agent能否自纠正分别记录；有错误提示或提出文字计划均不算真实计划准备完成。
 
 - 指针：Agent Server `modules/tools/contract/input_diagnostics.go`及测试；EVOLVE `app/toolcaller.go`、`app/transport/mcp/handler.go`和`schemas.go`。真实失败参数、回归、运行加载及自然16结果沿主验收记录2026-10-25章节与集成工作区input-diagnostic/tool-input-classification日志核验。
+
+
+## 2026-10-25 授权调整与实时进度分离
+
+**Why:** 已接纳评测会在用户阅读确认卡期间继续写入证据与用量；把这些观察值放进授权计划身份会产生无意义冲突。旧会话的短MCP凭证也不等于当前登录用户的授权有效期。API更新后，持久化工具目录可能仍向模型提供旧契约；React StrictMode的effect重放则可能把仍在显示的Store永久标成已销毁，让真实失败看起来一直等待。
+
+**How to apply:** 局部额度调整服务端沿用原Grant，只允许明确字段单调增加，计划绑定原权限范围和请求；提交读取最新计数并以原根锁/CAS保护，不重置Run、用量、预留或已接纳回执。区分当前鉴权、原会话撤销与短token有效期，不绕过现有权限。发布MCP变更后经现有服务接入流程同步目录，并检查下一次真实model.request的schema；单独重启API不算生效。effect setup/cleanup须可重入，覆盖失败后可重试、回执成功后回读失败及响应丢失。
+
+- 源码指针：EVOLVE `application/commands/optimization_authorization_update.go`、`infrastructure/postgres/optimization_authorization_renewal.go`，Studio `executor/AuthorizationUpdateCardStore.ts`与`AuthorizationUpdateCard.tsx`。首次自然失败、同步目录、红绿回归、真实PG及UI/数据库独立回读沿主验收记录2026-10-25 05:58及后续章节查证；具体授权值、实时分数和PR状态不在本页复制。
