@@ -1205,3 +1205,5 @@
 - 2026-10-24：[EVOLVE 人工答复与候选原件恢复](domains/maxwell/pitfalls/evolve-historical-baseline-and-async-acceptance.md#2026-10-24-人工答复后的会话恢复与候选原件复核) — waiting 续接、终态正文补读、微秒顺序与候选说明/真实资源差异核对。
 
 - 2026-10-24：[EVOLVE 参数恢复与交互观测终点](domains/maxwell/pitfalls/evolve-historical-baseline-and-async-acceptance.md#2026-10-24-参数错误分类与固定脚本的交互终点) — 可修正参数错误与 Provider 错误分开，固定脚本提问证据、测量完成和清理终态分别核对。
+
+- 2026-10-24：[EVOLVE 目录、正式基线与派发回执](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-24-目录投影正式基线与派发身份) — 共享HTTP/MCP返回形态、对话任务基线提前失败和SDK持久化接线的源码/验收指针。

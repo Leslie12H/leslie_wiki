@@ -64,3 +64,13 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 
 - 源码入口：Maxwell `services/evolve-server/internal/app/transport/mcp/schemas.go` 中 `evolve_evidence_query/compare_runs`，以及 `agent-resources/skills/evidence-diagnosis/SKILL.md`；当前字段及默认值应沿源码核对。
 - 实际模型请求、自然汇总03失败、候选C6在途和修复加载边界，沿本轮验收记录2026-10-24 06:20章节查证；本页不声明修复已通过真实复验或正式发布。
+
+## 2026-10-24 目录投影、正式基线与派发身份
+
+**Why:** 同一个工具网关可能被模型和HTTP页面同时消费，缩小模型目录返回值会破坏仍依赖完整字段的页面。对话创建的调优任务不一定有“从历史Run创建”的旧绑定，不能在读取正式Search前因旧绑定缺失而提前失败。SDK中定义了checkpoint回调，也不等于实际包装入口已经接上持久化。
+
+**How to apply:** 改目录投影前追踪所有调用方，HTTP契约显式保持完整形态并做路由回归。正式基线优先读取业务/Work限定的有界OptimizationSnapshot身份，避免加载整个Search历史JSON；原件权限检查保持。命令行在真正派发前保存action身份与请求摘要，接纳后另存真实Run身份，只保存小回执；进程中断后先追查原执行，不能把回执当成完成或重复派发许可。
+
+- Maxwell源码指针：`internal/app/run_catalog.go`、`internal/app/transport/http/handler.go`、`internal/modules/evolve/application/queries/tuning_baseline.go`（均在services/evolve-server下）。对应路由、隐藏来源、缺旧绑定和禁止加载历史的回归随源码查证。
+- nextplay-eval源码指针：`maxwell-runtime/src/nextplay_runtime/cli.py`和`maxwell-runtime/tests/test_cli_action_checkpoints.py`。当前打包/上传与真实使用版本须沿验收记录核实，不能以单测通过声称远端已更新。
+- 真实自然汇总、原候选失败与独立复验、精确日志和发布状态继续沿本页的验收记录指针回查；仅内层运行完成而无最终证据包，不构成评分完成。
