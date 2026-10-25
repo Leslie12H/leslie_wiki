@@ -2,7 +2,7 @@
 name: sandeval-package-return-uncertain-writer
 type: pitfall
 created: 2026-10-25
-updated: 2026-10-25
+updated: 2026-10-26
 tags: [sand-eval, package-return, recovery, audit]
 links: [sandeval-termination-historical-writer-recovery]
 ---
@@ -19,3 +19,11 @@ links: [sandeval-termination-historical-writer-recovery]
 - 部署源码核对基线：`5ce4c8fa8ddb4ee355d8d7b9180ed6ee2b6ab7f8`。前端 `PackageSelfCheck.tsx` 的提示与 `resumeReturn`；后端 `package_self_check_service.py` 的 `detail`、`resume_return`、`_return_with_barrier`、`resume_committed`。
 - 协调机制与原生恢复约束：`backend/app/infra/package_transition.py`、`backend/app/infra/package_control.py`、`backend/app/cli/package_controls.py`。核对调用对象究竟是来源屏障还是协调记录，不能仅按 quality_task_id 视为同一对象。
 - [历史执行器恢复与证据边界](sandeval-termination-historical-writer-recovery.md)。SQLSTATE XX000 只是内部错误分类，不据此推断具体 OOM 或其他数据库故障。
+
+## 2026-10-26 明确授权后的单条恢复
+
+**Why:** 原生核销只撤销已证明排空的执行器参与登记，不应被当作整包退回已完成；恢复服务仍需发布正式决定并逐批生成新任务。
+
+**How to apply:** 保存 dry-run、固定 revision 的 apply 与 reconciliation 审计；观察同一请求的自动恢复，避免重复调度。在不同生产副本回读完成回执、协调记录开放、原报告/逐项意见保全，以及实际质检员列表和详情权限后，再报告恢复完成。进行中计数不能替代最终验收。
+
+- 本次授权、冻结计划、dry-run、apply 及独立复验的归档入口：`/Users/leslie/Documents/Playground/output/sandeval-return-warning-20261025/repair-receipt.md`；个案最新状态沿该回执和生产重新查证。

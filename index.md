@@ -1239,3 +1239,5 @@
 - 2026-10-25：[EVOLVE 部分证据与依赖恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-25部分证据恢复与权限依赖超时) — 子集重评不等于完整独立执行；权限502的数据库与装饰依赖、回环转发恢复和有界超时验证边界。
 
 - 2026-10-25：[整包退回待恢复与历史未知写入](domains/sandai-data-smith/pitfalls/sandeval-package-return-uncertain-writer.md) — 区分轮次协调记录、历史异常占用与正式退回决定；恢复前核对结果及 SQL 排空，个案证据只存指针。
+
+- 2026-10-26：[整包退回单条恢复的最终验收](domains/sandai-data-smith/pitfalls/sandeval-package-return-uncertain-writer.md#2026-10-26-明确授权后的单条恢复) — 核销与退回完成分开确认，同请求后台接续、历史保全和真实角色读接口验收指针。
