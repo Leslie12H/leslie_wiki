@@ -309,3 +309,12 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 **How to apply:** 复用只读错误映射，按响应状态显示安全的登录、权限、限流提示，其他故障使用通用文案，不显示原始后端正文。矩阵只汇总本页失败原因并去重，详情与汇总保留显式重试；失败数据不能补零或进入可比结论。技术回归覆盖恢复与迟到响应，真实正常页面单独核对；提示修复不代表底层鉴权延迟已消除。
 
 - 指针：Maxwell `apps/studio/src/products/evolve/RunComparisonStore.ts`、`benchmarks/BenchmarkMetricsOverview.tsx`、`RunComparisonWorkspace.tsx`、`v3/matrix/MetricVersionMatrix.tsx` 及相邻恢复测试；当前验证与发布边界沿主验收记录2026-10-26后续条目查证。
+
+
+## 2026-10-26：明确引用和自动选择应分别验收
+
+**Why:** 普通评测、候选执行和重评使用相同目录标签时，用户和Agent都容易把不同来源混淆；只有分钟的时间也难以识别邻近记录。明确选择来源后分析成功，不能证明Agent能在模糊历史描述中自动找到正确原版。
+
+**How to apply:** 来源选择器复用已有来源字段区分记录类型，并保留精确时间和固定修订号；不能额外逐行加载报告来完成分类。对自然引用场景分别核对UI选择、消息公开引用、复制件来源/版本及实际工具读取，再判断最终解释；只读分析不替代执行、评分或采纳，analysis_only也不表示原Run评分失效。保留自动选择失败原记录，分开报告两条路径。
+
+- 指针：Maxwell `apps/studio/src/products/evolve/sources/CatalogSourcePickerStore.ts`、`RuntimeSourcePicker.tsx`、`sourceMessageProjection.ts`及 `application/commands/source_catalog.go`；实际自然引用、原始回合和尚缺验收沿主记录2026-10-26 07:12及 natural27 证据核验。
