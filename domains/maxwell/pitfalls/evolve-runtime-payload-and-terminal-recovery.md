@@ -291,3 +291,12 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 
 - 源码指针：Maxwell `services/evolve-server/internal/modules/evolve/application/queries/run_intersection.go` 与相邻测试、`apps/studio/src/products/evolve/benchmarks/RunIntersectionPanel.tsx`；兼容字段以 OpenAPI 和生成客户端为准。
 - 真实评分独立核算、页面与自然解释是否复验、当前部署及完整验收状态，沿本轮 `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 的2026-10-26章节查证；本地评分投影通过不代表新执行或完整产品链路通过。
+
+
+## 2026-10-26：配对投影必须同步系统提示词与真实视图
+
+**Why:** 后端增加共同有效子集投影、Skill补充字段含义后，旧系统提示词若仍笼统要求“不可比就不能描述变化”，模型可能忽略有效的局部证据；反过来仅凭失败总数减少，也可能把Fail→Error误说成失败已消除。字段、保存回执和单元测试都不足以证明最终解释正确。长版本标识还可能在对话分栏中把比较表撑宽，让用户只能看到一侧数值。
+
+**How to apply:** 同时检查SP、Skill与实际工具返回的结论范围，明确正式整轮决策与同一有效子集观察相互关联但不能替代。保留错误题并核对逐题转移；更新后使用全新自然会话，记录是否明确给出日期或版本，不用指定历史成功覆盖无日期选择失败。页面用真实长标识核对分栏及展开两种宽度；表头视觉省略仍保留完整可访问文本，不改变比较数据或权限。
+
+- 指针：Maxwell `agent-resources/prompts/evolve-tuning-agent.md`、`skills/evidence-diagnosis/SKILL.md`、`RunIntersectionPanel.tsx`与`RunComparisonWorkspace.css`；当前实际加载、自然25/26、页面宽度、失败记录及尚缺验收沿主记录2026-10-26 06:20之后条目核查。

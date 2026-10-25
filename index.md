@@ -56,6 +56,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-26：[配对投影与调优解释同步](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26配对投影必须同步系统提示词与真实视图) — SP、Skill、正式整轮决策与共同有效子集的范围对齐，日期明确与自动选择分别验收，长标识分栏布局的真实核查。
+
 - 2026-10-26：[EVOLVE 配对重算与比较开销](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26配对数量不能代替配对重算) — 共同有效子集、原始覆盖保留、每题身份复用及真实验证边界。
 
 - 2026-10-25：[工具输入诊断与执行授权区分](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-25-工具联合类型与可修正输入) — 联合schema字段诊断、可修正错误分类与自然计划验收边界。
