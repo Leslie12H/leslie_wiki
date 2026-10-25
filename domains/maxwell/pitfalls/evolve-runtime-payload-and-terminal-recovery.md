@@ -209,3 +209,12 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 
 - 源码指针：EVOLVE `internal/app/integration/maxwellauth/resolver.go`，Agent Server `internal/modules/identity/business/transport/http/controller.go` 与 `internal/app/api/http/studio_api.go`，重评契约及证据完整性沿现有Run入口追踪。
 - 实际恢复结果、范围与临时配置恢复项见同一验收记录 `flexibility-acceptance-20261022.md` 的2026-10-25 22:12条目；此处不固化易变运行状态、分数或连接配置。
+
+
+## 2026-10-25：重评子记录的发现和比较必须沿同一来源
+
+**Why:** 正式重评分可能归属独立 Work。页面通过来源查到它，不代表绑定原任务的 Agent 目录也能发现；只放宽目录而未补详情、统计及比较，会形成下一处断点。评分副本的 `evidence_only` 描述判卷方式，不能代替原执行器的执行模式，否则同题同标准的交集会被误判不可比。
+
+**How to apply:** 只读发现、详情、统计、逐题、失败聚类和比较沿不可变 `sourceRunRef` 有界解析，逐层验证业务、输入权限和来源一致性；过滤在分页之前，保留实际 Work 及评分身份，写操作仍验证实际归属。交集保留所选评分记录的题目、标准和分数，仅从原执行读取执行条件和生效回执；缺失、无权限或漂移仍阻断。必须同时测试完整集合与部分交集，不能把重评当新执行或把四题通过推广到五题。
+
+- 源码：`application/queries/work_measurements.go`、`queries/run_intersection.go`、`comparison/execution_source.go`、`infrastructure/postgres/catalog.go`及相邻回归；实际自然会话、SQL性能与发布状态沿主验收记录本日22:20之后条目核验。
