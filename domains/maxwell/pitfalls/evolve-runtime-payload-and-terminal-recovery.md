@@ -2,7 +2,7 @@
 name: evolve-runtime-payload-and-terminal-recovery
 type: pitfall
 created: 2026-10-23
-updated: 2026-10-25
+updated: 2026-10-26
 tags: [maxwell, evolve, runtime, recovery, performance]
 links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navigation-parity]
 ---
@@ -218,3 +218,13 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 **How to apply:** 只读发现、详情、统计、逐题、失败聚类和比较沿不可变 `sourceRunRef` 有界解析，逐层验证业务、输入权限和来源一致性；过滤在分页之前，保留实际 Work 及评分身份，写操作仍验证实际归属。交集保留所选评分记录的题目、标准和分数，仅从原执行读取执行条件和生效回执；缺失、无权限或漂移仍阻断。必须同时测试完整集合与部分交集，不能把重评当新执行或把四题通过推广到五题。
 
 - 源码：`application/queries/work_measurements.go`、`queries/run_intersection.go`、`comparison/execution_source.go`、`infrastructure/postgres/catalog.go`及相邻回归；实际自然会话、SQL性能与发布状态沿主验收记录本日22:20之后条目核验。
+
+
+## 2026-10-26：独立 CLI 与服务执行的证据采集接线
+
+**Why:** 服务执行器传入了持久化轨迹回调，不代表独立 A2A CLI 也传入。SSE 里存在各阶段终态仍不足以证明工具正文完整；工具结果可能只是引用回执，目标资源被清理后无法补回正文。
+
+**How to apply:** 沿 CLI→Runner→轨迹采集→原件归档→清理逐段核对实际接线。在清理前按原 Thread/Run 分页读取持久化事件，精确解析缺失 resultRef 所有者；保留原事件身份，正文流入归档，热 JSON 仅留索引。采集失败时保留资源及原始失败，不能补造正文或把重评算独立执行。用未修改的原 Judge 做多阶段、缺正文引用与归档契约验证，再通过真实执行证明修复。安装包装器时从既有安装回执确认包装器业务，不能假定与被测业务相同。
+
+- 源码指针：nextplay-eval `maxwell-runtime/src/nextplay_runtime/cli.py`、`trajectory.py`、`event_archive.py`与`runner.py`；消费者 `eval-runner/src/nextplay_eval/evaluation/archived_maxwell_events.py`。
+- 当前版本、测试、隔离安装摘要与实际分数沿 Maxwell 主验收记录 `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 的2026-10-26章节核验；合成契约测试不等于真实候选或双轮十题通过。
