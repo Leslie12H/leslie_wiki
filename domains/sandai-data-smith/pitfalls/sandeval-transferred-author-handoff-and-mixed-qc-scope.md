@@ -2,7 +2,7 @@
 name: sandeval-transferred-author-handoff-and-mixed-qc-scope
 type: pitfall
 created: 2026-10-25
-updated: 2026-10-25
+updated: 2026-10-26
 tags: [sand-eval, quality, reassignment, author, handoff, scope]
 links: [sandeval-reassigned-answer-frozen-review-conflict, sandeval-partial-reassignment-package-completeness-gap]
 ---
@@ -16,3 +16,10 @@ links: [sandeval-reassigned-answer-frozen-review-conflict, sandeval-partial-reas
 2026-10-25 梁旋、杨心月、文希三个具体形状、双生产副本只读核对、精确SHA、逐卡版本和待确认方案见[现场报告](/Users/leslie/Documents/Playground/output/qc-batch-blocker-20261025/report.md)。本次只读排查，没有生产恢复、代码PR或部署；当前状态和后续结果从报告及新回读查证，不能将本页当作已修复声明。
 
 源码回查：个人看板 `app/repositories/my_tasks.py::annotation_tasks`、`app/services/facts/my_tasks.py::list_my_annotation_batches`；来源作者分组和本人交接 `app/services/facts/task_assignments.py::_submission_scopes_with_manifests`、`submit_annotation_batch_for_qc`；首次分配守卫 `quality/application/management/batch_allocation_service.py::batch_options` 和 `quality/infrastructure/persistence/inspection_work_claim.py`；接续展示 `quality/application/management/leader_query_service.py::_batch_options`、`frontend/src/pages/quality/management/PackageDetail.tsx`。复用时先按DEPLOY_SHA核实坐标和行为。
+
+
+## 2026-10-26 原作者确认入口方案
+
+用户明确选择保留当前标注员接手，恢复原作者本人对已保存作答的确认提交入口。**Why:** 不能为补交接入口擅自回退持卡归属，也不能让当前标注员的批次提交覆盖另一名作者的责任。**How to apply:** 原作者入口只使用当前仍属本人的最新答案范围，确认绑定scope版本和答案manifest；读取失败明确提示，成员或答案变化后重新确认，原有编辑权限不扩大。
+
+实现坐标为 `app/services/facts/authored_annotation_handoffs.py`、`app/api/my_tasks.py::get_authored_annotation_handoffs_reader` 和 `frontend/src/pages/myTasks/AnnotationBatchList.tsx`；版本、测试PR与Gate、只读生产候选回查、虚构数据浏览器截图及测试分支冲突边界见[实施记录](/Users/leslie/Documents/Playground/output/qc-batch-blocker-20261025/implementation-status.md)和[PR #2839](https://github.com/world-sim-dev/sandai-data-smith/pull/2839)。入口代码验证、测试环境验收、生产上线和本人实际提交是四个独立状态，复用时分别查证。混合批次范围问题仍沿本页原调查报告核验，不能由此入口的修复外推已解决。
