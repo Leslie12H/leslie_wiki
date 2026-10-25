@@ -1,4 +1,6 @@
 - 2026-10-25：[EVOLVE 局部目录计数与模型参数实效](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-25-局部目录计数与模型参数实效) — 已读取 Run 并集与总数分开，模型请求参数、完成用量和自然结果分别核验。
+
+- 2026-10-25：[转派后原作者提交入口与混合质检范围](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md) — 当前持卡/最新作者/明确交接/冻结原单分开核验，混合范围不可只靠原任务导航；三个案例和双副本只读证据指针。
 - 2026-10-25：[EVOLVE 终态统计恢复与逐题质量解释](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-25-终态单次页恢复与逐题质量解释) — 单次页与工作区相邻恢复、可评分性与质量分开、自然结果和逐题回查指针。
 
 - 2026-10-23：[短期发布凭证与恢复判据](domains/sandai-data-smith/pitfalls/sandeval-work-handoff-unsettled-occupancy.md#同日发布判据短期凭证与服务恢复分开核验) — 对齐签发、TTL与回滚时间线，独立核验服务健康，保留首次异常；过期候选不冒充发布根因。
