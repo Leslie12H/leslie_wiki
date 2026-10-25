@@ -246,3 +246,12 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 **How to apply:** 保留后端发布的分数和指标分母，在同一趋势点与候选详情中明确整轮次数、异常、取消、判不出和待处理数量。历史统计与新结果投影都要覆盖；用真实部分失败Run验证页面，并确认异常没有变成零分或完整验收通过。后台页恢复后的首次旧状态应等待正常轮询核对，不能直接判为永久不刷新。
 
 - 源码：Studio `products/evolve/panels/runRates.ts`、`benchmarks/benchmarkResultTrend.ts`、`v3/lineage/evolutionModel.ts`与`LineageNodeDetail.tsx`。真实页面和检查证据沿主验收记录2026-10-26 03:40之后条目回查。
+
+
+## 2026-10-26：共同样本数量不等于配对聚合值
+
+**Why:** 比较结果中存在共同样本数量，并不代表左右均值已经仅按共同样本重算。有效样本不一致时，直接用各自均值声称“局部改善”仍会产生错误结论；只比较成功运行耗时还会出现幸存者偏差。接口拒绝正式采纳不代表 Agent 的自然解释不会误报提升。
+
+**How to apply:** 同时读取指标各自有效范围、共同样本数和比较状态；若返回值仍是各自独立聚合，应明确说明，不能把 overlap 数量当作配对均值。可继续读取同 Case、同重复序号的真实逐题结果形成有限结论，不强迫重跑。提示词与 Skill 维护通用证据解释规则，接口保持原始数值、权限和门禁；用不含预期答案的新自然会话验证，而非只检查单测或提示词已保存。耗时和成本同样核对有效样本身份。
+
+- 源码指针：Maxwell `application/queries/run_intersection.go`、`agent-resources/prompts/evolve-tuning-agent.md`及`agent-resources/skills/evidence-diagnosis/SKILL.md`；实际加载摘要、自然解释失败与修复后复验，沿主验收记录2026-10-26 04:02之后条目核验。

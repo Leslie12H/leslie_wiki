@@ -1248,3 +1248,5 @@
 - 2026-10-26：[EVOLVE 证据采集与模型拒绝的分层定位](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26证据修复成功不等于目标执行成功) — 原生错误码、恢复语义、部分评分及禁止以重复派发掩盖失败的边界。
 
 - 2026-10-26：[EVOLVE 部分评分的样本范围展示](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26指标有效样本与整轮完整性分开展示) — 指标4/4与整轮5题分别呈现，异常不计零分，历史与新投影一致。
+
+- 2026-10-26：[EVOLVE 共同样本与独立聚合](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26共同样本数量不等于配对聚合值) — overlap数量不代表均值已重算，覆盖不同与耗时幸存者偏差须在自然解释中核验。
