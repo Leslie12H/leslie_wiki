@@ -300,3 +300,12 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 **How to apply:** 同时检查SP、Skill与实际工具返回的结论范围，明确正式整轮决策与同一有效子集观察相互关联但不能替代。保留错误题并核对逐题转移；更新后使用全新自然会话，记录是否明确给出日期或版本，不用指定历史成功覆盖无日期选择失败。页面用真实长标识核对分栏及展开两种宽度；表头视觉省略仍保留完整可访问文本，不改变比较数据或权限。
 
 - 指针：Maxwell `agent-resources/prompts/evolve-tuning-agent.md`、`skills/evidence-diagnosis/SKILL.md`、`RunIntersectionPanel.tsx`与`RunComparisonWorkspace.css`；当前实际加载、自然25/26、页面宽度、失败记录及尚缺验收沿主记录2026-10-26 06:20之后条目核查。
+
+
+## 2026-10-26：比较读取失败需要保留可操作原因
+
+**Why:** 只读比较同时读取列表、逐题证据与汇总；如果所有错误都变成“请重试”，登录失效、权限撤销和限流会被误认为同一种网络故障。Store 即使保存了错误，页面只展示失败数量也会再次丢失恢复信息。
+
+**How to apply:** 复用只读错误映射，按响应状态显示安全的登录、权限、限流提示，其他故障使用通用文案，不显示原始后端正文。矩阵只汇总本页失败原因并去重，详情与汇总保留显式重试；失败数据不能补零或进入可比结论。技术回归覆盖恢复与迟到响应，真实正常页面单独核对；提示修复不代表底层鉴权延迟已消除。
+
+- 指针：Maxwell `apps/studio/src/products/evolve/RunComparisonStore.ts`、`benchmarks/BenchmarkMetricsOverview.tsx`、`RunComparisonWorkspace.tsx`、`v3/matrix/MetricVersionMatrix.tsx` 及相邻恢复测试；当前验证与发布边界沿主验收记录2026-10-26后续条目查证。

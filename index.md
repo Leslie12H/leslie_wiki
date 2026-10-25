@@ -1260,3 +1260,5 @@
 - 2026-10-26：[EVOLVE 正式基线与历史对照选择](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26任务绑定基线与本次历史对照分开) — 正式绑定不替代用户的日期、版本和评分覆盖条件，既有只读比较不要求重绑或重跑。
 
 - 2026-10-26：[EVOLVE 运行目录身份表达](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26运行身份应在目录中直接表达) — 由现存候选/来源字段分类，重评来源优先，元数据生效与自然选择分开验收。
+
+- 2026-10-26：[评测比较读取失败的恢复原因](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26比较读取失败需要保留可操作原因) — 安全错误映射、分页原因展示和鉴权延迟修复的不同验证边界。
