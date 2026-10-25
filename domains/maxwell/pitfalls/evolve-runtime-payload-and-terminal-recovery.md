@@ -281,3 +281,13 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 **How to apply:** 在已有授权后的轻量目录投影中由现存候选与来源字段明确记录类型，重评优先保留来源链；不能为了分类额外读取每条完整报告。普通评测不是原版证明，仍须结合用户选择、实际配置及评分覆盖。元数据改善与 Agent 最终选择/解释分别验收，保存失败对话，不能以新字段已出现或单元测试通过替代自然场景。
 
 - 指针：Maxwell `internal/app/run_catalog.go`、`run_catalog_test.go`、MCP `runSchema` 和 `evidence-diagnosis`；真实目录消费、日期澄清与未完成项沿主验收记录2026-10-26 05:20之后条目及 natural24 证据核验。
+
+
+## 2026-10-26：配对数量不能代替配对重算
+
+**Why:** 共同题目不等于共同有效测量；两边分别忽略失败后得到的均值可能来自不同题目。只提供重合数及警告，仍容易使 Agent 或页面把独立汇总误读成局部提升。逐样本重复计算指标身份还会使大批次只读比较产生大量临时分配。
+
+**How to apply:** 在现有授权、冻结定义校验后的只读投影内，按同一题目和重复序号选择双方有效值，复用既有有界归约器；保留原始汇总与错误数量，新增配对值只解释明确子集，不放宽正式采纳条件。复用已验证的每题绑定身份，避免每次重复执行重新序列化和哈希；在最大既有 Run 规模测量新增 CPU 与分配，不把纯计算性能称作外部鉴权性能。
+
+- 源码指针：Maxwell `services/evolve-server/internal/modules/evolve/application/queries/run_intersection.go` 与相邻测试、`apps/studio/src/products/evolve/benchmarks/RunIntersectionPanel.tsx`；兼容字段以 OpenAPI 和生成客户端为准。
+- 真实评分独立核算、页面与自然解释是否复验、当前部署及完整验收状态，沿本轮 `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 的2026-10-26章节查证；本地评分投影通过不代表新执行或完整产品链路通过。
