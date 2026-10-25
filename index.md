@@ -1252,3 +1252,5 @@
 - 2026-10-26：[EVOLVE 共同样本与独立聚合](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26共同样本数量不等于配对聚合值) — overlap数量不代表均值已重算，覆盖不同与耗时幸存者偏差须在自然解释中核验。
 
 - 2026-10-26：[EVOLVE 成功耗时与单位解释](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26成功耗时的比较覆盖与单位解释) — 部分成功样本不自动形成P95提速结论，单位、基线选取与自然解释分别验收。
+
+- 2026-10-26：[EVOLVE 正式基线与历史对照选择](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26任务绑定基线与本次历史对照分开) — 正式绑定不替代用户的日期、版本和评分覆盖条件，既有只读比较不要求重绑或重跑。
