@@ -273,3 +273,11 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 **How to apply:** 保留正式绑定与权限，按本次需求核对目录、实际评分覆盖及配置/应用证据；没有候选标识也不足以证明是原配置。已授权历史记录可用既有只读比较入口，不因选择历史而自动重绑、重跑或修改结果；确有多个无法区分的记录时用日期与版本澄清，不让用户辨认内部ID。SP与隔离Skill同时核对实际加载版本，用原问题的新自然会话验证选择和结论，不能仅凭说明保存宣称通过。
 
 - 指针：Maxwell `application/queries/tuning_baseline.go`、`work_measurements.go`、`app/run_catalog.go`及Agent说明；当前绑定、真实目录、自然23与发布状态沿主验收记录2026-10-26 05:07之后条目核验。
+
+## 2026-10-26：运行身份应在目录中直接表达
+
+**Why:** 可访问目录里同时有普通评测、候选执行及重评；存在分数或终态不能证明它是原版。只在长说明里提醒来源核对，仍可能出现把候选的重评、或候选执行本身误作原版的真实回答。
+
+**How to apply:** 在已有授权后的轻量目录投影中由现存候选与来源字段明确记录类型，重评优先保留来源链；不能为了分类额外读取每条完整报告。普通评测不是原版证明，仍须结合用户选择、实际配置及评分覆盖。元数据改善与 Agent 最终选择/解释分别验收，保存失败对话，不能以新字段已出现或单元测试通过替代自然场景。
+
+- 指针：Maxwell `internal/app/run_catalog.go`、`run_catalog_test.go`、MCP `runSchema` 和 `evidence-diagnosis`；真实目录消费、日期澄清与未完成项沿主验收记录2026-10-26 05:20之后条目及 natural24 证据核验。

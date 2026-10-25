@@ -1254,3 +1254,5 @@
 - 2026-10-26：[EVOLVE 成功耗时与单位解释](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26成功耗时的比较覆盖与单位解释) — 部分成功样本不自动形成P95提速结论，单位、基线选取与自然解释分别验收。
 
 - 2026-10-26：[EVOLVE 正式基线与历史对照选择](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26任务绑定基线与本次历史对照分开) — 正式绑定不替代用户的日期、版本和评分覆盖条件，既有只读比较不要求重绑或重跑。
+
+- 2026-10-26：[EVOLVE 运行目录身份表达](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26运行身份应在目录中直接表达) — 由现存候选/来源字段分类，重评来源优先，元数据生效与自然选择分开验收。
