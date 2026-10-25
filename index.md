@@ -1233,3 +1233,5 @@
 - 2026-10-25：[EVOLVE 摘要与资源续读恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-25-摘要投影恢复与资源续读) — 版本化摘要检查点、精确字节游标及可修正参数错误；自然与技术验证边界。
 
 - 2026-10-25：[EVOLVE 授权调整与实时进度分离](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-25-授权调整与实时进度分离) — 授权身份与动态用量、短凭证、持久工具目录及StrictMode确认恢复分别核验。
+
+- 2026-10-25：[EVOLVE 部分证据与依赖恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-25部分证据恢复与权限依赖超时) — 子集重评不等于完整独立执行；权限502的数据库与装饰依赖、回环转发恢复和有界超时验证边界。

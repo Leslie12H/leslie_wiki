@@ -199,3 +199,13 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 **How to apply:** 局部额度调整服务端沿用原Grant，只允许明确字段单调增加，计划绑定原权限范围和请求；提交读取最新计数并以原根锁/CAS保护，不重置Run、用量、预留或已接纳回执。区分当前鉴权、原会话撤销与短token有效期，不绕过现有权限。发布MCP变更后经现有服务接入流程同步目录，并检查下一次真实model.request的schema；单独重启API不算生效。effect setup/cleanup须可重入，覆盖失败后可重试、回执成功后回读失败及响应丢失。
 
 - 源码指针：EVOLVE `application/commands/optimization_authorization_update.go`、`infrastructure/postgres/optimization_authorization_renewal.go`，Studio `executor/AuthorizationUpdateCardStore.ts`与`AuthorizationUpdateCard.tsx`。首次自然失败、同步目录、红绿回归、真实PG及UI/数据库独立回读沿主验收记录2026-10-25 05:58及后续章节查证；具体授权值、实时分数和PR状态不在本页复制。
+
+
+## 2026-10-25：部分证据恢复与权限依赖超时
+
+**Why:** 远端执行证据已经收回，不代表 Judge 的 Sandbox 网络可用；一次执行中的缺失样本，也不能由对其它样本重新评分补齐。EVOLVE 权限解析复用业务详情读取，账号查询、功能装饰和资源计数等任一依赖超时均可能表现为502，不应将其解释成登录失效或权限被撤销。
+
+**How to apply:** 先按原Run及Attempt确认终态和已归档证据，对有完整证据的明确子集通过正式重评入口恢复，保留原失败、范围及幂等回执；缺证据项须真实补跑。重新执行前核验既有File Server回环、同源码API/唯一Worker和无重复在途任务。依赖超时只用既有有界配置诊断并记录恢复值，不能靠延长超时宣称性能问题已修复或放宽权限；健康接口不能替代真实判卷结果。
+
+- 源码指针：EVOLVE `internal/app/integration/maxwellauth/resolver.go`，Agent Server `internal/modules/identity/business/transport/http/controller.go` 与 `internal/app/api/http/studio_api.go`，重评契约及证据完整性沿现有Run入口追踪。
+- 实际恢复结果、范围与临时配置恢复项见同一验收记录 `flexibility-acceptance-20261022.md` 的2026-10-25 22:12条目；此处不固化易变运行状态、分数或连接配置。
