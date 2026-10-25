@@ -237,3 +237,12 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 **How to apply:** 先按归档原 Thread/Run 核对失败事件，再区分采集故障、模型拒绝与质量不达标。现有错误摘要仅传递有界、校验过的协议错误码与恢复标识，不直接转发可能含凭据或请求正文的供应商细节；原事件继续归档。模型安全拒绝应保留终态和用量，不以自动重试、换模型或改原题绕过；部分通过不能算全量验收完成。
 
 - 诊断源码指针：nextplay-eval `maxwell-runtime/src/nextplay_runtime/runner.py`、`evidence.py`及`tests/test_baseline.py`；真实失败、评分与实际安装版本以 Maxwell 主验收记录2026-10-26 03:00之后条目为准。
+
+
+## 2026-10-26：指标有效样本与整轮完整性分开展示
+
+**Why:** 某指标的有效样本可以是4/4，而整轮五题中另有一题执行异常。只显示指标覆盖或判卷通过率会掩盖未进入评分的样本；直接把异常计零分又会改变原评分口径。
+
+**How to apply:** 保留后端发布的分数和指标分母，在同一趋势点与候选详情中明确整轮次数、异常、取消、判不出和待处理数量。历史统计与新结果投影都要覆盖；用真实部分失败Run验证页面，并确认异常没有变成零分或完整验收通过。后台页恢复后的首次旧状态应等待正常轮询核对，不能直接判为永久不刷新。
+
+- 源码：Studio `products/evolve/panels/runRates.ts`、`benchmarks/benchmarkResultTrend.ts`、`v3/lineage/evolutionModel.ts`与`LineageNodeDetail.tsx`。真实页面和检查证据沿主验收记录2026-10-26 03:40之后条目回查。

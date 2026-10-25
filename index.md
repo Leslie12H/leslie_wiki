@@ -1246,3 +1246,5 @@
 - 2026-10-26：[独立 A2A CLI 证据采集接线](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26独立-cli-与服务执行的证据采集接线) — 多阶段持久化事件、精确工具正文补采、清理前归档及真实验收指针。
 
 - 2026-10-26：[EVOLVE 证据采集与模型拒绝的分层定位](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26证据修复成功不等于目标执行成功) — 原生错误码、恢复语义、部分评分及禁止以重复派发掩盖失败的边界。
+
+- 2026-10-26：[EVOLVE 部分评分的样本范围展示](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26指标有效样本与整轮完整性分开展示) — 指标4/4与整轮5题分别呈现，异常不计零分，历史与新投影一致。
