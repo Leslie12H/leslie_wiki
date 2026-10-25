@@ -1244,3 +1244,5 @@
 
 - 2026-10-26：[整包退回单条恢复的最终验收](domains/sandai-data-smith/pitfalls/sandeval-package-return-uncertain-writer.md#2026-10-26-明确授权后的单条恢复) — 核销与退回完成分开确认，同请求后台接续、历史保全和真实角色读接口验收指针。
 - 2026-10-26：[独立 A2A CLI 证据采集接线](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26独立-cli-与服务执行的证据采集接线) — 多阶段持久化事件、精确工具正文补采、清理前归档及真实验收指针。
+
+- 2026-10-26：[EVOLVE 证据采集与模型拒绝的分层定位](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26证据修复成功不等于目标执行成功) — 原生错误码、恢复语义、部分评分及禁止以重复派发掩盖失败的边界。

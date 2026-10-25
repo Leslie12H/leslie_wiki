@@ -228,3 +228,12 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 
 - 源码指针：nextplay-eval `maxwell-runtime/src/nextplay_runtime/cli.py`、`trajectory.py`、`event_archive.py`与`runner.py`；消费者 `eval-runner/src/nextplay_eval/evaluation/archived_maxwell_events.py`。
 - 当前版本、测试、隔离安装摘要与实际分数沿 Maxwell 主验收记录 `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 的2026-10-26章节核验；合成契约测试不等于真实候选或双轮十题通过。
+
+
+## 2026-10-26：证据修复成功不等于目标执行成功
+
+**Why:** 同一评测可能同时有证据齐全且评分通过的样本，以及上游模型拒绝造成的执行失败。把原生失败统一压成 `TASK_STATE_FAILED` 会隐藏恢复语义，使人误判为 Adapter 丢证据并重复派发。
+
+**How to apply:** 先按归档原 Thread/Run 核对失败事件，再区分采集故障、模型拒绝与质量不达标。现有错误摘要仅传递有界、校验过的协议错误码与恢复标识，不直接转发可能含凭据或请求正文的供应商细节；原事件继续归档。模型安全拒绝应保留终态和用量，不以自动重试、换模型或改原题绕过；部分通过不能算全量验收完成。
+
+- 诊断源码指针：nextplay-eval `maxwell-runtime/src/nextplay_runtime/runner.py`、`evidence.py`及`tests/test_baseline.py`；真实失败、评分与实际安装版本以 Maxwell 主验收记录2026-10-26 03:00之后条目为准。
