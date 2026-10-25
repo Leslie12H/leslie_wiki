@@ -1250,3 +1250,5 @@
 - 2026-10-26：[EVOLVE 部分评分的样本范围展示](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26指标有效样本与整轮完整性分开展示) — 指标4/4与整轮5题分别呈现，异常不计零分，历史与新投影一致。
 
 - 2026-10-26：[EVOLVE 共同样本与独立聚合](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26共同样本数量不等于配对聚合值) — overlap数量不代表均值已重算，覆盖不同与耗时幸存者偏差须在自然解释中核验。
+
+- 2026-10-26：[EVOLVE 成功耗时与单位解释](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26成功耗时的比较覆盖与单位解释) — 部分成功样本不自动形成P95提速结论，单位、基线选取与自然解释分别验收。

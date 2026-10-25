@@ -255,3 +255,12 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 **How to apply:** 同时读取指标各自有效范围、共同样本数和比较状态；若返回值仍是各自独立聚合，应明确说明，不能把 overlap 数量当作配对均值。可继续读取同 Case、同重复序号的真实逐题结果形成有限结论，不强迫重跑。提示词与 Skill 维护通用证据解释规则，接口保持原始数值、权限和门禁；用不含预期答案的新自然会话验证，而非只检查单测或提示词已保存。耗时和成本同样核对有效样本身份。
 
 - 源码指针：Maxwell `application/queries/run_intersection.go`、`agent-resources/prompts/evolve-tuning-agent.md`及`agent-resources/skills/evidence-diagnosis/SKILL.md`；实际加载摘要、自然解释失败与修复后复验，沿主验收记录2026-10-26 04:02之后条目核验。
+
+
+## 2026-10-26：成功耗时的比较覆盖与单位解释
+
+**Why:** 两次运行的P95只覆盖各自成功样本时，即使成功数量相同，也不能由汇总确定是同一批题；错误地返回可比和差值会把幸存者偏差传给Agent。模型还可能把毫秒数量级当成秒，提示词保存成功也不证明自然解释正确。
+
+**How to apply:** 跨运行耗时比较先核对实际计时来源和样本覆盖；没有身份信息的部分汇总保留原P95与单位，不自动计算提速差值，完整完成率及其它独立计量继续可比，不阻断正常运行。按返回unit转换ms/秒/分钟；用真实工具正文与未给预期值的新自然会话共同验证。基线选取、数值解释、真实效果是独立验收项：单位修复通过不代表已选对原版记录或证明候选提升。
+
+- 源码指针：Maxwell `domain/runmetrics/compare.go`、`summary.go`、`application/queries/compare_runs.go`及Agent说明；实际生效摘要、保留失败和自然22证据沿主验收记录2026-10-26 04:50条目核验。
