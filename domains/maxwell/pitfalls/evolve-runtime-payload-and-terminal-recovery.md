@@ -452,3 +452,9 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 以已执行 turn 的原生 Run 身份建立根集合；只合并与明确根快照一致的重复记录，不混加父汇总和子账目。成本使用原始金额及币种，不估价。工具事件在原持久化轨迹流中按 Run/调用身份去重，完整遍历且调用均有终态才声明覆盖完整；缺失、冲突、容量超限保留未知。依次核对归档原件、协议消费、安装包哈希、新执行入库与页面展示，离线回放不冒充新 Run，旧结果不静默回填。
 
 - 源码指针：nextplay-eval 的 `maxwell-runtime/src/nextplay_runtime/runtime_metrics.py`、`event_archive.py`、`evidence.py`；Maxwell 的 `apps/studio/src/products/evolve/formatMetric.ts` 与 `panels/metricSummary.ts`。版本、测试和新运行消费状态见本页原验收记录的2026-10-26成本/工具指标章节。
+
+## 2026-10-26 历史验收副本必须保留证据依赖
+
+**Why:** 只复制历史 Run、Trial、评分及 Artifact 元数据，会出现总分可读但逐题报原件引用不匹配；执行回执及其内容寻址对象、证据包仍是验证来源身份和正文完整性的必需依赖。这类导入缺项不能用放宽产品权限或证据校验来修复。
+
+**How to apply:** 在明确的业务内容复制授权下，按精确 Run/Trial 读取原 Attempt；先验证隔离副本的原 Run/Trial 未改变，仅补缺失的原始记录。沿这些回执和冻结 EvidenceSet 复制引用的 CAS 与 Bundle manifest/chunk，逐项检查归属、摘要、大小及文件哈希，最后再封存 manifest。恢复后独立回读逐题和比较页，确认原分数未改、没有重评或新执行。汇总可读、逐题可读和自然 Agent 分析分别验收。当前精确范围、恢复脚本与哈希证据见主验收记录2026-10-26 21:37条目，不将隔离恢复误称线上数据修复或发布。
