@@ -368,3 +368,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 先授权分页及来源关系，再一次批量读取同业务、同可见范围的自动结果投影，只返回固定数量字段；待生成或过期的投影不返回零值冒充结果。不读逐行完整评分报告、指标正文或历史JSON。Trial数量不等于去重Case数量，completed也包含未知判定；真正比较仍需同Case和评分口径核对。用原自然问法、无内部ID/日期提示的新会话复验，同时检查实际模型请求、目录工具正文和最终选择；一次成功不等于模型普遍可靠。
 
 源码指针：EVOLVE `application/queries/work_measurements.go`、`application/ports/result_coverage.go`、`infrastructure/postgres/result_coverage.go`、`app/run_catalog.go`。技术回归、真实SQL计划与自然会话的当前结论沿主验收记录2026-10-26 11:36条目核查；局部比较正确不等于完整候选或双轮十题通过。
+
+
+## 2026-10-26 自然选择稳定性与说明层次
+
+**Why:** 目录包含完整评分覆盖、模型已消费最新说明、一次历史选择正确，仍不足以证明稳定；后续自然复验可能重新偏向任务正式绑定。Skill要求可读耗时而系统提示词强调沿用单位，也可能使展示要求不一致，不能只看保存回执就认定行为改变。
+
+**How to apply:** 分开验证输入不受内部提示污染、实际目录完整性、正式绑定详情、模型请求与最终选取；保留同一自然问法的成功与失败，不用成功样本覆盖失败。对展示要求先检查SP和Skill是否一致，再确认真实模型消费；可读单位换算正确不等于基线选对，基线选对也不等于整轮改善。避免靠盲目重试或固定工具顺序换取通过。
+
+指针：`agent-resources/prompts/evolve-tuning-agent.md`及`skills/evidence-diagnosis/SKILL.md`；模型输入、工具返回大小/截断状态、自然31/32表现及未完成范围沿主验收记录2026-10-26 12:00条目核验。
