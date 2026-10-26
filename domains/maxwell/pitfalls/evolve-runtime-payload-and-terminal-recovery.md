@@ -395,3 +395,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 检查模型实际请求中的说明、Skill和工具结果，而非猜测截断。把低频技术细则原文移到入口可发现的参考资源，验证打包、保存回读和实际模型消费；保留核心权限、证据与未知边界。明确条件场景和原模糊场景分别记录，禁止把不同输入的成功算成原问题已修复。
 
 指针：agent-resources/skills/evidence-diagnosis/SKILL.md及references/measurement-contracts.md；当前自然34输入、真实比较、用量和未完成事项沿主验收记录2026-10-26 13:10条目核查。
+
+
+## 2026-10-26 失败诊断必须有原件读取能力
+
+**Why:** 模型能看到失败类别和文件目录，不代表能读取归档中的失败事件；新版执行器错误说明不会改写旧封存回执。让Agent继续“更认真分析”或重评旧证据，都无法补上缺失的读取能力。重新评分也不等于重新执行。
+
+**How to apply:** 从实际工具结果核对文件目录与正文是否都可达，再对照工具schema与Studio原件下载职责。复用精确Run/Trial/Case权限、冻结绑定和hash校验，设计有界正文与归档读取，避免把大文件/Base64和历史JSON整体灌入模型。保留旧终态和模型拒绝，不靠重复派发补演示；自然诊断未读到根因时应标为未完成，不能把猜测当结论。
+
+指针：EVOLVE application/queries/evidence_files.go的OpenTrialEvidenceFile、app/transport/http/evidence_files.go和app/transport/mcp/schemas.go；Studio reviews/RescoreRunPanel.tsx区分重评与执行。当前能力缺口、自然35同会话追问与未完成事项沿主验收记录2026-10-26 14:12条目核查；本页不声明MCP原件读取已实现。

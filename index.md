@@ -1,5 +1,7 @@
 - 2026-10-26：[混合质检范围与失效确认](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#2026-10-26-混合范围与失效确认) — 固定分组跨来源证明与派检保持一致，旧确认须本人重交，原链换版与原看板门禁同时核验；滚动版本兼容、运行与发布状态查修复记录。
 
+- 2026-10-26：[EVOLVE 失败原件读取与重评边界](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-失败诊断必须有原件读取能力) — 文件目录可见不等于正文可读，MCP与Studio能力核对、有界读取及自然诊断未完成的证据指针。
+
 - 2026-10-26：[EVOLVE 历史目录评分覆盖](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-历史目录需要真实评分覆盖) — 授权后批量读取固定自动判定数量、过期摘要不冒充零值；自然选择与完整业务验收分别核对。
 
 - 2026-10-26：[EVOLVE 失败诊断与原尝试绑定](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-失败诊断展示必须绑定原尝试) — 外层完成与内层失败、固定安全提示与旧结果不追写；技术和真实验收分开查证。
