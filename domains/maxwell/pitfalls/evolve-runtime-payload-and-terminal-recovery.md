@@ -2,7 +2,7 @@
 name: evolve-runtime-payload-and-terminal-recovery
 type: pitfall
 created: 2026-10-23
-updated: 2026-10-26
+updated: 2026-10-27
 tags: [maxwell, evolve, runtime, recovery, performance]
 links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navigation-parity]
 ---
@@ -476,3 +476,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 以持久化的 Candidate 归属、冻结 Variant 和验证关系建立只读测量目录，保持实际 Run/Work 身份；沿原资产权限与 visible/hidden 校验，列表分页前过滤，状态、统计、逐题与文件使用同一授权映射。查询由 Work/候选索引驱动，不能先拉全业务历史再筛选；回归包含独立执行、重评后继、不重复分页、撤权、不相关 Work 和原精确写入边界。用新自然会话验证自主选择最新运行、消费真实账目，并单独检查旧轮缺数据的比较边界。
 
 - 源码指针：EVOLVE `application/queries/work_measurements.go`、`application/comparison/execution_source.go`、`infrastructure/postgres/catalog.go` 与其 memory 对等实现。原失败、修复加载、自然复验及查询性能见主验收记录2026-10-26 23:43之后条目；一次自然通过不表示普遍可靠或已发布。
+
+
+## 2026-10-27 归档索引上限与封装升级后的恢复
+
+**Why:** 事件正文写入流不代表索引也有界；结束后才检查索引大小，会在长轨迹下先累计过量内存。另一个独立边界是封装演进：为新结果增加可选统计字段后，若恢复程序按最新版重建旧原件，合法的旧哈希也会失配。
+
+**How to apply:** 流式计入索引条目的实际 UTF-8 字节及封装开销，在现有上限处停止继续读取，保留原观察和执行租约。用原封存的可选字段形状重建旧封装，仍要求完整原件哈希精确一致；新封装删字段不能降级通过，晚采诊断继续保留原失败，不能回填旧账目。分别覆盖有界终止、旧封装恢复、内容篡改拒绝和新封装降级拒绝。
+
+- 源码指针：nextplay-eval 的 `maxwell-runtime/src/nextplay_runtime/event_archive.py`、`recapture.py`、`evidence.py`、`evidence_bundle.py` 及相邻测试。测试失败到修复通过、四题已归档原件的字节等价回放与尚未安装的边界，见主验收记录2026-10-27章节；技术回放不算新的真实执行。

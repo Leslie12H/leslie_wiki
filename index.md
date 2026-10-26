@@ -1,3 +1,5 @@
+- 2026-10-27：[EVOLVE 归档容量与旧封装恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-归档索引上限与封装升级后的恢复) — 流式索引内存上限、可选统计字段兼容及原件精确核验；源码与验收边界指针。
+
 - 2026-10-26：[API 开放平台 Postman 工作区](domains/sandai-platform/refs/postman-interface-workspace.md) — 双认证集合、环境模板、接口索引、导入回读与 GET 副作用的查证入口；配置成功与业务联调分开。
 
 - 2026-10-26：[混合质检范围与失效确认](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#2026-10-26-混合范围与失效确认) — 固定分组跨来源证明与派检保持一致，旧确认须本人重交，原链换版与原看板门禁同时核验；滚动版本兼容、运行与发布状态查修复记录。
