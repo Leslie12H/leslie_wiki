@@ -69,6 +69,9 @@
 
 # leslie_wiki 目录
 
+- 2026-10-26：[Ant Design 重试按钮的加载名称竞态](disciplines/testing/antd-loading-accessible-name-race.md) — 等待最终精确按钮状态，保留原请求重试断言；修复 Gate 与重新部署的证据分别核验。
+
+
 - 2026-10-26：[原作者补交修复的完整差异 review](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#2026-10-26-完整差异-review-的边界) — 历史候选读取上限、逐任务错误隔离与滚动版本的旧写回/新恢复往返验证；审查证据沿 PR #2842 查证。
 
 - 2026-10-26：[数据包题目范围与下一步展示](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#2026-10-26-数据包展示的低风险边界) — 明确未送审范围和待办人；使用现有返回值、保留原任务导航、不额外展开历史查询。
