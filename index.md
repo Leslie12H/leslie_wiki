@@ -1315,3 +1315,5 @@
 - 2026-10-26：[历史验收副本的证据依赖](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-历史验收副本必须保留证据依赖) — Run/Trial/评分之外还需原Attempt与CAS/Bundle，精确复制和哈希恢复不能替代或放宽权限校验。
 
 - 2026-10-26：[模型审计的嵌套 JSON 脱敏](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-审计脱敏不得破坏嵌套证据-json) — 签名参数移除与转义闭合同时验证，审计副本不能替代实际模型请求。
+
+- 2026-10-26：[独立候选评测的任务发现范围](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-独立候选评测必须能从原调优任务发现) — 子 Work 的真实指标存在但 Agent 目录漏项；候选归属、只读授权、分页和自然复验的查证入口。

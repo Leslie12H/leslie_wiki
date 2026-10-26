@@ -467,3 +467,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 分别验证原 Provider 请求和脱敏审计，保证脱敏不改变发送内容；覆盖多层序列化、转义 ampersand 后的签名参数和相邻字段。保留字符串闭合需要的转义，仍删除全部敏感查询参数，不能简单在任意反斜线处停止匹配。不要修写旧审计或把技术回归称为自然诊断通过。
 
 - 源码指针：Agent Server `internal/modules/model/infrastructure/openaicompat/gateway.go` 的 `auditChatRequest` / `redactSignedAssetURLQueries` 及相邻网关测试。实际运行加载版本、自然诊断消费和剩余问题查本页验收记录指针；本页不声明修复已发布。
+
+
+## 2026-10-26 独立候选评测必须能从原调优任务发现
+
+**Why:** 界面能查看候选验证记录，不代表绑定原 Work 的 Agent 工具能发现它。普通评测保留自己的 Work，若任务目录仅包含直属 Run 与重评后继，新验证已完成且指标完整，Agent 仍可能只看见旧轮并据此误报“未采集”。这属于证据发现范围缺口，不能继续堆提示词或重跑评测修复。
+
+**How to apply:** 以持久化的 Candidate 归属、冻结 Variant 和验证关系建立只读测量目录，保持实际 Run/Work 身份；沿原资产权限与 visible/hidden 校验，列表分页前过滤，状态、统计、逐题与文件使用同一授权映射。查询由 Work/候选索引驱动，不能先拉全业务历史再筛选；回归包含独立执行、重评后继、不重复分页、撤权、不相关 Work 和原精确写入边界。用新自然会话验证自主选择最新运行、消费真实账目，并单独检查旧轮缺数据的比较边界。
+
+- 源码指针：EVOLVE `application/queries/work_measurements.go`、`application/comparison/execution_source.go`、`infrastructure/postgres/catalog.go` 与其 memory 对等实现。原失败、修复加载、自然复验及查询性能见主验收记录2026-10-26 23:43之后条目；一次自然通过不表示普遍可靠或已发布。
