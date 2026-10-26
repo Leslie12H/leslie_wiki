@@ -1,3 +1,5 @@
+- 2026-10-26：[混合质检范围与失效确认](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#2026-10-26-混合范围与失效确认) — 固定分组跨来源证明与派检保持一致，旧整批确认失效须本人绑定新清单，原质检按最新版复验；运行与发布状态查修复记录。
+
 - 2026-10-26：[EVOLVE 失败诊断与原尝试绑定](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-失败诊断展示必须绑定原尝试) — 外层完成与内层失败、固定安全提示与旧结果不追写；技术和真实验收分开查证。
 
 - 2026-10-26：[转派后原作者确认入口](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#2026-10-26-原作者确认入口方案) — 保留当前持卡、本人确认绑定范围和答案版本；实现、只读候选与浏览器验收、PR及测试冲突沿实施记录分别核对。

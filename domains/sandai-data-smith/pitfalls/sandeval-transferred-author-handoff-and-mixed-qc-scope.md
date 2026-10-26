@@ -22,4 +22,12 @@ links: [sandeval-reassigned-answer-frozen-review-conflict, sandeval-partial-reas
 
 用户明确选择保留当前标注员接手，恢复原作者本人对已保存作答的确认提交入口。**Why:** 不能为补交接入口擅自回退持卡归属，也不能让当前标注员的批次提交覆盖另一名作者的责任。**How to apply:** 原作者入口只使用当前仍属本人的最新答案范围，确认绑定scope版本和答案manifest；读取失败明确提示，成员或答案变化后重新确认，原有编辑权限不扩大。
 
-实现坐标为 `app/services/facts/authored_annotation_handoffs.py`、`app/api/my_tasks.py::get_authored_annotation_handoffs_reader` 和 `frontend/src/pages/myTasks/AnnotationBatchList.tsx`；版本、测试PR与Gate、只读生产候选回查、虚构数据浏览器截图及测试分支冲突边界见[实施记录](/Users/leslie/Documents/Playground/output/qc-batch-blocker-20261025/implementation-status.md)和[PR #2839](https://github.com/world-sim-dev/sandai-data-smith/pull/2839)。入口代码验证、测试环境验收、生产上线和本人实际提交是四个独立状态，复用时分别查证。混合批次范围问题仍沿本页原调查报告核验，不能由此入口的修复外推已解决。
+实现坐标为 `app/services/facts/authored_annotation_handoffs.py`、`app/api/my_tasks.py::get_authored_annotation_handoffs_reader` 和 `frontend/src/pages/myTasks/AnnotationBatchList.tsx`；版本、测试PR与Gate、只读生产候选回查、虚构数据浏览器截图及测试分支冲突边界见[实施记录](/Users/leslie/Documents/Playground/output/qc-batch-blocker-20261025/implementation-status.md)和[PR #2839](https://github.com/world-sim-dev/sandai-data-smith/pull/2839)。入口代码验证、测试环境验收、生产上线和本人实际提交是四个独立状态，复用时分别查证。混合批次的后续方案与验收边界见下节，不能由单一入口的修复外推线上已恢复。
+
+## 2026-10-26 混合范围与失效确认
+
+**Why:** 原整批确认绑定完整范围和答案；一题产生后续版本后，旧确认可能失效，即使其余未送审答案没有改变。只解除混合批次的展示禁用仍可能缺少真实来源范围证明，或让旧通过掩盖新答案。
+
+**How to apply:** 按稳定质检归属投影互不重复的固定成员分组，来源列举、版本读取、提交证明和派检共用同一标识。已有质检的题沿原责任链；新答案使用“核对答案版本 → 按最新版重新复验”，普通退回质检员不换版。原整批确认只有精确匹配当前完整成员和答案时才覆盖分组；失效确认由本人绑定新清单重交并追加回执，原历史不改写。验证须覆盖独立首送、原链复验、整包完整性及无重复成员，不能只验证按钮可点。
+
+实现从 `app/domain/annotation_inspection_partition.py`、`app/repositories/annotation_qc_allocation.py::inspection_owners`、`app/services/facts/task_assignments.py` 和 `quality/application/resolution/latest_answer_reinspection.py` 回查。转派操作人及无业务原因的审计边界、调查期间出现后续质检版本的核验、本人确认与质检候选、最终提交与Gate状态见[混合范围修复记录](/Users/leslie/Documents/Playground/output/qc-batch-blocker-20261025/mixed-fix-status.md)及[PR #2839](https://github.com/world-sim-dev/sandai-data-smith/pull/2839)。原作者、当前持卡人、各批验收人和整包最终提交人分别核验；整包尚未封存时不把回落规则说成已经指定了提交人。
