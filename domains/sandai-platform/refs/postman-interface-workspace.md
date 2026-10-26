@@ -26,4 +26,4 @@ links: [sandai-api-platform, sandai-api-platform-development-entrypoints]
 - GET 也可能有副作用：Stripe 票据下载会请求发邮件，支付/认证查询可能向供应商核对。按请求说明操作，不直接批量运行混合业务动作的集合。
 - 支付/认证/开票采用原参数与稳定幂等键恢复；生成 POST 不保证幂等，结果未知不能盲目重发。具体行为以当前源码为准。
 
-**How to apply:** 先查看本地 README 的导入回读与离线校验记录，再选择环境、补齐本人授权的本地凭据及对象ID。接口格式验证、Postman 导入、在线响应和业务完成分别取证；本次没有执行业务请求。
+**How to apply:** 先查看本地 README 的导入回读与离线校验记录，再选择环境、补齐本人授权的本地凭据及对象ID。接口格式验证、Postman 导入、在线响应和业务完成分别取证；初次配置时没有执行业务请求；后续在线测试见 [Dev Global 联调入口](global-api-acceptance-20261026.md)。

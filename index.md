@@ -69,6 +69,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-26：[API 开放平台 Dev Global 联调](domains/sandai-platform/refs/global-api-acceptance-20261026.md) — 正常可用接口、逐用例证据、fake 消费与清理的回查入口；区分参数拒绝、生成终态和真实业务验收。
+
 - 2026-10-26：[数据包题目范围与下一步展示](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#2026-10-26-数据包展示的低风险边界) — 明确未送审范围和待办人；使用现有返回值、保留原任务导航、不额外展开历史查询。
 
 - 2026-10-26：[配对投影与调优解释同步](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26配对投影必须同步系统提示词与真实视图) — SP、Skill、正式整轮决策与共同有效子集的范围对齐，日期明确与自动选择分别验收，长标识分栏布局的真实核查。
