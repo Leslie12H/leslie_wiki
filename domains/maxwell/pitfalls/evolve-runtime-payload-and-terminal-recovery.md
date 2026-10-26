@@ -494,3 +494,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 先保留精确的服务端不可变意图，再通过 Work 版本 CAS 获取唯一派发资格。存储失败不改变 Work；并发 CAS 失败留下的意图仅是元数据，不能触发派发。同键内容变化仍应冲突，远端确认不明确仍保持防重复边界。验证故障前后 Work 版本/内容不变、恢复后同键仅派发一次，并覆盖首次准备、已有 ready、并发和不可伪造意图；不要用直接改库解除状态。
 
 - 源码指针：EVOLVE `application/commands/runner_selection_preparation.go` 与相邻测试；真实 PostgreSQL 合成准备测试在 `infrastructure/postgres/runner_selection_configuration_integration_test.go`。失败复现、race 回归、隔离 API 加载与业务验收边界见主验收记录2026-10-27章节，技术回归不等于重新完成业务调优。
+
+
+## 2026-10-27 线上来源复制中的字符串化 JSON
+
+**Why:** Runtime 工具结果可能是 JSON 字符串中的 JSON；仅遍历外层对象键，会漏掉内层的凭据字段、签名地址或 modelContext。一般文本正则也不能覆盖带引号与转义的结构化字段，审计脱敏正确不代表来源复制路径同样正确。
+
+**How to apply:** 对完整、合法的内嵌 JSON 使用相同的字段规则、节点总量和深度预算递归处理；保留精确数字，未发生脱敏的字符串保持原字节，发生脱敏后仍保持原来的字符串封装层数与可解析性。复验多层编码、重复规范化和超限边界；用合成凭据复现，不能为了验证而导出实际凭据。旧不可变材料不静默重写，技术用例不证明历史泄漏已经发生或已清理。
+
+- 源码指针：Maxwell EVOLVE `domain/knowledge/source_material.go` 与相邻测试，调用方为 `application/commands/source_material.go`、`source_catalog.go`。失败复现、race 回归、构建及隔离加载状态见主验收记录2026-10-27章节。

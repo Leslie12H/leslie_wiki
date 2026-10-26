@@ -1,3 +1,4 @@
+- 2026-10-27：[EVOLVE 来源复制的嵌套 JSON 脱敏](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-线上来源复制中的字符串化-json) — 内嵌工具正文共用结构预算、精度及幂等规则；历史材料与技术验收边界。
 - 2026-10-27：[EVOLVE 配置准备原件失败恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-派发前原件失败不能锁死准备状态) — 不可变意图在 pending CAS 前保留，存储故障可恢复而未知派发仍防重。
 - 2026-10-27：[EVOLVE 归档容量与旧封装恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-归档索引上限与封装升级后的恢复) — 流式索引内存上限、可选统计字段兼容及原件精确核验；源码与验收边界指针。
 
