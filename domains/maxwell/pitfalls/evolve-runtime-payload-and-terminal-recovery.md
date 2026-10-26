@@ -403,4 +403,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 
 **How to apply:** 从实际工具结果核对文件目录与正文是否都可达，再对照工具schema与Studio原件下载职责。复用精确Run/Trial/Case权限、冻结绑定和hash校验，设计有界正文与归档读取，避免把大文件/Base64和历史JSON整体灌入模型。保留旧终态和模型拒绝，不靠重复派发补演示；自然诊断未读到根因时应标为未完成，不能把猜测当结论。
 
-指针：EVOLVE application/queries/evidence_files.go的OpenTrialEvidenceFile、app/transport/http/evidence_files.go和app/transport/mcp/schemas.go；Studio reviews/RescoreRunPanel.tsx区分重评与执行。当前能力缺口、自然35同会话追问与未完成事项沿主验收记录2026-10-26 14:12条目核查；本页不声明MCP原件读取已实现。
+指针：EVOLVE application/queries/evidence_files.go的OpenTrialEvidenceFile、app/transport/http/evidence_files.go和app/transport/mcp/schemas.go；Studio reviews/RescoreRunPanel.tsx区分重评与执行。能力缺口、自然35同会话追问与后续正文读取实现、真实消费，沿主验收记录2026-10-26 14:12及15:08条目核查；源码可用不代表发布或自然诊断通过。
+
+## 2026-10-26 原件可读与根因证实分别验收
+
+**Why:** 归档通常按多个执行阶段排列，首批目录和几个正文都可读，仍可能只覆盖较早成功阶段；从“留下产物但终态失败”直接推断状态机故障，会遗漏后续真实拒绝事件。读取能力通过技术测试不能保证Agent正确选择、续读及归因。
+
+**How to apply:** 原件读取复用既有精确授权和冻结绑定，提供有界UTF8字节窗口、归档成员序号、分页和名称筛选；不解包落盘、不跟随链接、不把整个大文件塞入历史JSON。独立核对实际读取成员所属Run/阶段、续读覆盖和最终因果表述；未读取对应失败事件时保留未知，不把局部证据推测成根因。验证运行、只读比较、采纳是不同动作，允许一次正常拒绝后继续独立验证，不代表允许采纳或绕过拒绝。
+
+指针：EVOLVE application/queries/evidence_text.go及evidence_files.go、app/transport/mcp/schemas.go。本次自然36读取范围、未成立的归因、双轮独立Run与不采纳边界，沿主验收记录2026-10-26 15:08条目核验。
