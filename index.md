@@ -69,6 +69,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-26：[OpenAPI 频率、并发与 TPM](domains/sandai-platform/refs/openapi-quota-entrypoints.md) — 既有组织配额、后台任务占位与管理员配置入口；区分请求/任务频率、token 预算及部署生效。
+
 - 2026-10-26：[API 开放平台 Dev Global 联调](domains/sandai-platform/refs/global-api-acceptance-20261026.md) — 正常可用接口、逐用例证据、fake 消费与清理的回查入口；区分参数拒绝、生成终态和真实业务验收。
 
 - 2026-10-26：[数据包题目范围与下一步展示](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#2026-10-26-数据包展示的低风险边界) — 明确未送审范围和待办人；使用现有返回值、保留原任务导航、不额外展开历史查询。
