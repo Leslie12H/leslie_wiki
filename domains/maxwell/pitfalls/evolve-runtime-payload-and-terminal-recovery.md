@@ -377,3 +377,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 分开验证输入不受内部提示污染、实际目录完整性、正式绑定详情、模型请求与最终选取；保留同一自然问法的成功与失败，不用成功样本覆盖失败。对展示要求先检查SP和Skill是否一致，再确认真实模型消费；可读单位换算正确不等于基线选对，基线选对也不等于整轮改善。避免靠盲目重试或固定工具顺序换取通过。
 
 指针：`agent-resources/prompts/evolve-tuning-agent.md`及`skills/evidence-diagnosis/SKILL.md`；模型输入、工具返回大小/截断状态、自然31/32表现及未完成范围沿主验收记录2026-10-26 12:00条目核验。
+
+
+## 2026-10-26 基线来源说明不能替代选取验证
+
+**Why:** 任务基线解析可能来自固定关系，也可能来自既有评测输入的回退查找；它并非按当前用户条件做历史搜索。即使工具结果附上正确来源说明并被模型实际消费，模型仍可能沿用不满足用户完整评分要求的记录。单次覆盖提高也不能证明系统稳定性改善。
+
+**How to apply:** 说明涵盖全部现有解析分支，保持旧字段、授权和分页，不为注释增加数据库读。独立核对model.request、实际比较Run及共同有效样本；无效选取保留失败，不把单位换算或参数合法当完整通过。后续围绕输入歧义、绑定显著性和观测值/因果结论区分诊断，不能用同输入盲试积累成功样本。
+
+指针：EVOLVE app/toolcaller.go 的baseline结果、app/transport/mcp/schemas.go 的status帮助、modules/evolve/application/queries/tuning_baseline.go 的既有解析分支；当前证据与边界沿主验收记录2026-10-26 12:42条目核查。

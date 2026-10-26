@@ -1280,3 +1280,5 @@
 - 2026-10-26：[EVOLVE 工具说明生效与自然选择](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-工具说明生效与自然选择分开验收) — 分别核对远端定义、持久化目录、实际模型请求与未引导历史选择，避免提示词修改假验收。
 
 - 2026-10-26：[EVOLVE 自然选择稳定性与说明层次](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-自然选择稳定性与说明层次) — 目录覆盖、实际提示消费、历史选择与可读表达分别验收，保留成功后的失败回退。
+
+- 2026-10-26：[基线来源与历史选取验收](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-基线来源说明不能替代选取验证) — 绑定/配置回退、模型消费与实际选取、单轮覆盖与稳定性结论分开核验。
