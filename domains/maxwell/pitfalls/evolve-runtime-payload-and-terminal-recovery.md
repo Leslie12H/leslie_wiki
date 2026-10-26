@@ -503,3 +503,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 对完整、合法的内嵌 JSON 使用相同的字段规则、节点总量和深度预算递归处理；保留精确数字，未发生脱敏的字符串保持原字节，发生脱敏后仍保持原来的字符串封装层数与可解析性。复验多层编码、重复规范化和超限边界；用合成凭据复现，不能为了验证而导出实际凭据。旧不可变材料不静默重写，技术用例不证明历史泄漏已经发生或已清理。
 
 - 源码指针：Maxwell EVOLVE `domain/knowledge/source_material.go` 与相邻测试，调用方为 `application/commands/source_material.go`、`source_catalog.go`。失败复现、race 回归、构建及隔离加载状态见主验收记录2026-10-27章节。
+
+
+## 2026-10-27 跨业务权限目录分页不能把变化范围当完整快照
+
+**Why:** 上游业务目录按 offset 分页；两页之间增删可访问业务时，后页的 total 可能变化，删除还可能使尚未读取的业务跨过 offset。仅以累计数大于等于最新 total 结束，会把混合范围及部分计数呈现成完整总览。重复 ID 检查只能覆盖一部分变化。
+
+**How to apply:** 在同一次有界遍历中记录首个 total，拒绝后续 total 漂移或累计项数超过声明总量，沿原不可用响应让用户重新读取，不返回部分授权范围。不额外授予权限或无限重试。覆盖稳定多页、增删、重复项和上游失败；注意这只是可检测变化保护，不能声称无快照协议的多次请求具有原子一致性。
+
+- 源码指针：EVOLVE `app/integration/maxwellauth/businesses.go` 及测试；Agent Server `identity/business/infrastructure/store/sql.go` 提供 offset 分页。红绿回归、隔离 PG 总览校验、构建和运行加载边界见主验收记录2026-10-27 02:12条目，不以合成故障代替实际权限变更验收。
