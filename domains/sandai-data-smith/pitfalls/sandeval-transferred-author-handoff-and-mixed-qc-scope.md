@@ -54,3 +54,12 @@ links: [sandeval-reassigned-answer-frozen-review-conflict, sandeval-partial-reas
 
 
 异构数据库替身也要验证参数语义。**Why:** PostgreSQL 的编号占位符按编号绑定，SQLite 的顺序实参按占位符首次出现绑定；CTE 优化移动参数后，旧用例可能交换作者与空间。**How to apply:** SQLite 复用 PostgreSQL SQL 时按占位符名称绑定，并保留真实结果断言；诊断与具名复验沿 review 修复记录回查，不能为测试适配改变生产的参数顺序。
+
+
+## 2026-10-26 批次通过与整包回交的边界
+
+**Why:** 数据包中的个人批次均通过供应商验收，仍可能存在旧整包退回、复检或冻结交接证据不覆盖当前整改结果的阻塞。原作者提交入口与混合首送范围修复不会替用户结清退回或重新交接；不能由行级“已通过”推断整包可提交，也不能把不同负责人阶段的展示混作一个状态。
+
+**How to apply:** 在同一生产版本下分别核对供应商和 Sand 负责人视角，确认整包实际阻塞原因、提交入口是否可用及剩余整改/复检。再按 disposition、父子执行与当前冻结证据定位接收人和下一步；没拿到具体记录前，不指派责任人、不直接关闭退回、不让用户重复提交已通过批次。本机 env 的目标缺失不证明生产对象不存在。
+
+纸面包的上线后只读验证、两种视角、确定事实和尚未定位的记录边界见[纸面包核对记录](/Users/leslie/Documents/Playground/output/qc-batch-blocker-20261025/paper-package-after-release.md)。发布是否完成沿[发布恢复记录](/Users/leslie/Documents/Playground/output/qc-batch-blocker-20261025/release-recovery-status.md)及目标生产 SHA 独立核验。

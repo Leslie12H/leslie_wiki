@@ -69,6 +69,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-26：[批次验收与整包回交边界](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#2026-10-26-批次通过与整包回交的边界) — 行级通过不证明旧退回已结清；分阶段核对当前交接证据，不因本机 env 缺失误判生产。
+
 - 2026-10-26：[Ant Design 重试按钮的加载名称竞态](disciplines/testing/antd-loading-accessible-name-race.md) — 等待最终精确按钮状态，保留原请求重试断言；修复 Gate 与重新部署的证据分别核验。
 
 
