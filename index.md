@@ -1266,3 +1266,5 @@
 - 2026-10-26：[评测比较读取失败的恢复原因](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26比较读取失败需要保留可操作原因) — 安全错误映射、分页原因展示和鉴权延迟修复的不同验证边界。
 
 - 2026-10-26：[EVOLVE 明确引用与自动选择分别验收](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26明确引用和自动选择应分别验收) — 来源目录身份、固定版本复制与自然比较结论的分层核对。
+
+- 2026-10-26: [EVOLVE connection acquisition diagnostics](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md) - Separate cold connect, driver health check, SQL and HTTP latency; instrumentation is not a performance fix.

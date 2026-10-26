@@ -327,3 +327,12 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 **How to apply:** 沿作用域匹配的原生事件、Runner结果、失败Attempt、冻结Assessment及页面投影逐层核对。已知诊断可以映射为固定安全文案；只接受有界、完整、状态一致的原记录，未知或截断内容保留通用说明。模型拒绝保持执行错误与无有效分数，不用重复执行来证明提示修复。旧包装器没有保留精确原因时不追写历史，也不能把合成诊断测试当真实评分闭环。
 
 - 指针：SDK `maxwell-runtime/src/nextplay_runtime/runner.py` 与 `tests/test_baseline.py`；Maxwell `application/evaluation/live.go`、`live_failed_evidence_test.go`、Studio `v3/matrix/trialReading.ts` 与 `TrialDetailPanel.tsx`。实际SDK安装版本、技术与浏览器验证、未解决事项沿主验收记录2026-10-26“模型拒绝的安全展示与失败绑定回归”核验。
+
+
+## 2026-10-26连接取得时间不等于连接池排队
+
+**Why:** database/sql 取连接还可能包含冷建连和驱动的复用健康检查；池等待计数为零、没有慢SQL，并不能证明数据库依赖无网络耗时。pgx QueryTracer 不覆盖其底层 PgConn 健康探测，实际驱动版本应按工作区解析结果核对。
+
+**How to apply:** 分别核对现存身份查询的共享池统计、建连、查询和完整HTTP时长；用独立有界只读探针区分冷/热取得、事务开始、查询及提交，并以同一后端PID确认复用。独立池测量不等于真实API性能验收，不移除健康检查、关闭TLS或加长超时掩盖原因。建连错误可能含敏感配置，只记录固定安全分类。
+
+源码指针：Agent Server `internal/foundation/database/observability.go`、`internal/modules/identity/auth/infrastructure/store/sql.go`，及实际pgx版本的 `stdlib/sql.go` ResetSession。当前证据沿本页验收记录指针回查；代码通过与加载到服务分别核实。

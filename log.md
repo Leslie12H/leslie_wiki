@@ -2137,3 +2137,5 @@
 - 2026-10-26：补充EVOLVE历史评测明确引用与自动选择分别验收的Why/How、目录类型和固定来源回读指针。
 
 - 2026-10-26 ingest：补充EVOLVE模型拒绝诊断的作用域、冻结尝试绑定、安全展示及不重试制造通过的验证边界。
+
+- 2026-10-26 ingest: Document pgx connection acquisition versus pool queue, safe connection tracing and diagnostic acceptance boundaries.
