@@ -79,3 +79,10 @@ links: [sandeval-reassigned-answer-frozen-review-conflict, sandeval-partial-reas
 **Why:** 已关闭的上层退回不应重新授予编辑、派检或再次验收权限，但同一组已通过报告及其正式验收可以为尚未结清的原整改执行提供有限收尾证据。简单把 resolved 当作 processing 会放宽普通操作，直接修改旧退回状态又会丢失关闭依据。
 
 **How to apply:** 只在关闭入口核对当前批次与完整报告组、负责人验收版本、冻结汇总、原执行授权及全部责任版本；保留未结子责任/召回门禁，用原关闭回执与 CAS 处理部分提交。验证包含失败反例、关闭中断后重试、整包汇总与实际交接分离，并对真实对象做纯读取预检。实现、16项回归、候选生产只读证明及最新CI/上线边界见[修复记录](/Users/leslie/Documents/Playground/output/paper25-rootcause-20261026/fix-status.md)和[PR #2864](https://github.com/world-sim-dev/sandai-data-smith/pull/2864)。
+
+
+### 2026-10-26 混合祖先的关闭补偿审查
+
+**Why:** 冻结祖先可能同时包含仍处理中的标注退回和已验收关闭的负责人退回。补偿只允许全部祖先属于已关闭负责人退回，会在真实多轮流程中重现原阻塞；从负责人退回开始的测试无法覆盖此前已有的标注责任。
+
+**How to apply:** 回归应在首次负责人退回前加入原生标注整改，再延迟末次执行收尾后完成负责人验收。分别校验仍处理祖先的原版本与授权，以及已验收祖先的受限关闭证据；不得忽略前者或擅自关闭全部祖先。复现、定位和修复状态沿[PR2864再次审查记录](/Users/leslie/Documents/Playground/output/paper25-rootcause-20261026/review-2864.md)回查。

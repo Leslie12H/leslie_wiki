@@ -1304,3 +1304,5 @@
 - 2026-10-26：[上层验收先关闭后的整改恢复闭环](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#2026-10-26-上层验收先关闭后的整改恢复闭环) — 下层执行未完成、上层已验收与历史补偿互相等待的生产只读证据及修复边界。
 
 - 2026-10-26：[已验收祖先的有限关闭证明](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#已验收祖先仅用于原整改收尾) — 精确报告/验收/冻结授权、CAS中断恢复与整包汇总验证；PR #2864证据入口。
+
+- 2026-10-26：[混合祖先的关闭补偿审查](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#2026-10-26-混合祖先的关闭补偿审查) — 先标注退回再负责人复查的原生链复现、分类型验证与未结责任保护。
