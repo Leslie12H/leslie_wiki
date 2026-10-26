@@ -1310,3 +1310,5 @@
 - 2026-10-26：[混合祖先双段恢复](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#2026-10-26-混合祖先的关闭补偿审查) — 原父链只读验证、最终复查组识别与完整整包汇总测试。
 
 - 2026-10-26：[负责人验收部分提交的恢复边界](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#2026-10-26-混合祖先的关闭补偿审查) — 多负责人祖先部分关闭的实际写入故障注入，以及两个恢复流程互等的证据指针。
+
+- 2026-10-26：[部分验收的冻结校验集合](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#2026-10-26-混合祖先的关闭补偿审查) — 仍处理负责人祖先及集合内子责任、真实写入故障和双恢复顺序验证。

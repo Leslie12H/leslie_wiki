@@ -92,3 +92,6 @@ links: [sandeval-reassigned-answer-frozen-review-conflict, sandeval-partial-reas
 
 
 **负责人验收的部分提交也必须覆盖。** Why: 本轮整改关闭的中断测试不能覆盖上层验收捕获的中断；多个负责人祖先可能同时存在 processing 与 resolved，若只接纳仍处理的标注祖先，两个恢复流程仍互相等待。How to apply: 在原生验收流程每条负责人关闭的实际持久化之后注入故障，再交替执行整改恢复与原验收恢复；保留已封存报告、连续版本与冻结许可，并检查最终整包而非仅一次恢复结果。2026-10-26实际第2条关闭后中断的证据、反例和修复状态沿[第二次复查记录](/Users/leslie/Documents/Playground/output/paper25-rootcause-20261026/review2-2864.md)回查。
+
+
+**部分验收的校验集合。** Why: 同一冻结责任链中的负责人祖先可以在故障后混合处理状态，其下仍处理的真实冻结子责任不能被当作未知阻塞，但也不能因此自动关闭祖先。How to apply: 允许本轮关闭前完整验证仍处理的负责人及标注祖先，集合必须与原冻结版本、真实父链和全部许可一致；集合外子责任继续阻断。对每条负责人关闭后的实际写入故障和两种恢复顺序验证最终汇总，剩余祖先沿原验收路径结清。2026-10-26的66项回归、最新提交和CI/部署边界见[部分验收修复记录](/Users/leslie/Documents/Playground/output/paper25-rootcause-20261026/partial-acceptance-fix-status.md)。
