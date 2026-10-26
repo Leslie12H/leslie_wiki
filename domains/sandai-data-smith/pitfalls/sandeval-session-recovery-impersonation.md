@@ -2,7 +2,7 @@
 name: sandeval-session-recovery-impersonation
 type: pitfall
 created: 2026-10-24
-updated: 2026-10-24
+updated: 2026-10-26
 tags: [sand-eval, authentication, impersonation, browser-draft]
 links: [sandeval-returnable-impersonation]
 ---
@@ -18,3 +18,14 @@ links: [sandeval-returnable-impersonation]
 联合验收应包含普通账号重登、管理员重登后显式切回目标、其他标签页切号、旧 Cookie 期限、先大后小写入、冲突副本在共享草稿删除后恢复、存储失败、质检恢复原答案保留意见。标注→供应商质检/验收→Sand→原生退回→整改→复验的正式链路，分别验证来源版本、历史意见、幂等回执和失败回滚。
 
 证据边界：隔离浏览器的真实组件搭配模拟认证、后端实际服务搭配隔离存储，可以验证代码路径，不能证明原设备历史输入已恢复或生产整链已验收。本机草稿不等于正式保存；尚未落入草稿的表单字段由离开确认保护，不能宣称确认放弃、清空浏览器或设备损坏后仍可恢复。
+
+
+## 2026-10-26 会话有效期与弹窗归因
+
+**Why:** Cookie 的保存期限不等于代登录 JWT 与服务端控制记录的可用期限；仅凭“登录状态需要恢复”截图，不能认定一定是定时过期，也不能由普通登录的配置推导切号时长。
+
+**How to apply:** 先核对 `platform/backend/app/services/facts/impersonation.py` 的 `DELEGATED_SESSION_SECONDS`、`start` 中原登录到期封顶，以及 `transition` 是否重算到期时间；再对照 `platform/backend/app/api/auth.py` 的 Cookie 写入和 `platform/k8s/configmap.yaml` 的普通登录/飞书会话策略。前端沿 `platform/frontend/src/contexts/AuthContext.tsx` 的 401、会话 revision/账号变化分支，以及 `contexts/SessionRecoveryDialog.tsx` 查触发条件。延长代登录必须区分“至多指定时长”和“从切号起完整指定时长”，后者还受原登录剩余时间约束；保留禁用、撤权和撤销检查。
+
+核验入口为 [main 代登录服务](https://github.com/world-sim-dev/sandai-data-smith/blob/main/sand-eval/platform/backend/app/services/facts/impersonation.py) 与 [main 会话配置](https://github.com/world-sim-dev/sandai-data-smith/blob/main/sand-eval/platform/k8s/configmap.yaml)。本次生产 Kubernetes 只读访问返回 Unauthorized，因此源码结论不能直接当成生产实例配置或截图个案根因；线上时长、部署版本和个案 401 原因须重新获取实时证据。
+
+实现与交付核验入口：[PR #2869](https://github.com/world-sim-dev/sandai-data-smith/pull/2869)、[任务分支 Platform Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/40312521851)。沿 PR 的最终差异与精确 head 检查代登录上限、原登录封顶、连续切号到期不变，以及内置管理员帮助。新签发会话和旧已签发会话分别验收，不能把本地回归、独立分支 Gate、可合并性、测试发布和生产生效视为同一结论；动态状态以 PR/Gate 和运行态为准。

@@ -2177,3 +2177,5 @@
 - 2026-10-26：补充 EVOLVE 候选子集跨 Work 内容去重、精确关联准入与 API/Worker 快照兼容的 Why/How 和验收指针。
 
 - 2026-10-26 ingest EVOLVE 独立在途评测与流程历史关联的导航边界，以及无 Benchmark 临时子集的空链接防护。
+
+- 2026-10-26 ingest：记录 Sand Eval 登录恢复弹窗与代登录期限的源码入口、生产 Unauthorized 边界，补充48h调整 PR #2869 与独立 Gate 的核验指针。
