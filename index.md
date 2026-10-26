@@ -1301,3 +1301,5 @@
 - 2026-10-26：[Skill 按需细则与自然场景分层](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-skill-细则按需加载与自然场景分层) — 参数帮助一致、参考文件真实可读、明确条件与模糊条件分别验收。
 
 - 2026-10-26：[EVOLVE 证据检索与历史投影](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-检索覆盖与历史结果投影分别核对) — 字节有界检索、自然归因边界、精确历史汇总补建与原始评分不变证明。
+
+- 2026-10-26：[EVOLVE 在途评测导航](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-流程历史关联与当前在途评测分开导航) — 历史关联不代表当前执行、无 Benchmark 临时选题导航及真实回读入口。

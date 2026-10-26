@@ -428,3 +428,9 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **Why:** 候选的选题预览可以通过，正式启动仍可能失败：内容寻址去重命中了另一 Work 的私有冻结子集，而“同一内容”没有自动建立当前 Work 的使用关系。只测首次生成和同 Work 重试会漏掉这种历史复用；API 能写入新选题快照，也不能证明旧 Worker 能读取。
 
 **How to apply:** 从授权冻结原件投影子集后，复用既有 Artifact 兼容重放建立精确 Work 关联，保留来源、成员摘要及根预算；正式 Run 同时核对所选 CaseSet 身份、Work 关联和成员内容，不改物理来源或放宽业务隔离。回归覆盖已存在的跨 Work 投影、零重复 Put、错误摘要、未关联及范围外 Case，并在实际 PostgreSQL 上验证。API 与消费 Worker 应采用同一兼容版本，排队回执与四题实际派发分别核验；失败恢复沿原幂等键，不另建 Run。源码入口是 EVOLVE 的 `application/commands/case_selection.go`、`infrastructure/postgres/runs.go` 及相邻回归；实际版本、运行和评分结果查上方验收记录，不把本页视为发布或提升证明。
+
+## 2026-10-26 流程历史关联与当前在途评测分开导航
+
+**Why:** 灵活调优中，Search 保留的关联 Run 可以是历史执行；新候选通过普通评测入口启动后，不能继续用该历史引用表达当前评测。临时选题也可能没有 Benchmark 身份。
+
+**How to apply:** 沿 Studio `optimization/OptimizationStatus.tsx` 核对当前 Work 在途 Run 与流程状态分开呈现，停止和恢复状态仍保留；沿 `v3/catalog/RecordsPage.tsx` 检查无 Benchmark 的选题只展示范围而不构造空详情链接。用真实在途页面与状态渲染回归分别验证；运行数、分数、发布状态回查上方验收记录及提交 `66794a17f`，不将导航修正当作执行或调优成功。
