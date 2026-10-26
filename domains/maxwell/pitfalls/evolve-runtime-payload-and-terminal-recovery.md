@@ -521,3 +521,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 真实运行前同时核对API/唯一同源Worker、Temporal协议健康及任务队列实际poller、Redis和原文件/评分依赖。发生故障先停止当前批次后续调度，保留错误与用量；只读核对Thread/Run与Temporal持久受理，再处理残留请求，恢复原依赖后重新验证。不要删除空线程、改写错误或把容器启动当业务成功。是否可重发必须依据原请求的持久化结果，而非单独HTTP超时。
 
 - 指针：Maxwell `runtime/infrastructure/temporalruntime/client.go` 的受理重试与进程生命周期；本次隔离环境中断、9空线程无Run、无新Temporal工作流、恢复后真实任务回执的分层证据见主验收记录2026-10-27 02:27章节。
+
+
+## 2026-10-27 评分 API 排队回执不证明消费者存活
+
+**Why:** 恢复数据库容器并不恢复因连接中断而退出的评分 Worker。评分 API 可以正常入队且持续返回 202；被测系统已完成、证据齐全，但队列任务始终没有 started_at/heartbeat，直到平台等待超时。这属于评分不可用，不能记成题目未通过或有效得分。
+
+**How to apply:** 依赖恢复清单应逐个覆盖执行与评分消费者；同时核对唯一进程、队列认领时间、持续心跳、原评分终态和平台测量入库。恢复原消费者前排除已有活跃 owner，消费原队列而非重复创建任务。已经超时取消的评分不改写历史；后续通过正式重评入口使用同一执行证据补齐，并明确重评不是新的独立执行。保留原模型和标准，不以延长等待时间掩盖没有消费者。
+
+- 指针：nextplay-eval 原评分 `eval-service/src/eval_service/grading_repository.py` 的队列/租约与 `grading_worker.py`；本轮隔离 launcher 和原 Worker MySQL 2013 退出日志、原队列无开始时间、恢复后实际得分见主验收记录2026-10-27 05:00后条目。隔离恢复操作不代表业务代码已发布。

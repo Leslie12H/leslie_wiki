@@ -73,6 +73,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-27：[评分队列与消费者恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-评分-api-排队回执不证明消费者存活) — API 202、Worker 认领/心跳与实际得分分别查证；超时原记录保留，正式重评不算独立执行。
+
 - 2026-10-27：[EVOLVE 关联测量进度与写入归属](domains/maxwell/pitfalls/evolve-linked-measurement-progress.md) — 独立验证目录、SSE 聚合和取消请求须分别核对；复用授权关联但不转移实际 Work。
 
 
