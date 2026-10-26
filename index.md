@@ -73,6 +73,9 @@
 
 # leslie_wiki 目录
 
+- 2026-10-27：[EVOLVE 关联测量进度与写入归属](domains/maxwell/pitfalls/evolve-linked-measurement-progress.md) — 独立验证目录、SSE 聚合和取消请求须分别核对；复用授权关联但不转移实际 Work。
+
+
 - 2026-10-27：[隔离 Runtime 依赖恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-本地-runtime-进程存活不代表依赖可消费) — 进程与协议健康分离、超时受理及取消后的迟到执行核查。
 
 - 2026-10-27：[EVOLVE 跨业务目录分页漂移](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-跨业务权限目录分页不能把变化范围当完整快照) — offset 遍历中的 total 变化、完整范围与部分结果边界及回归指针。
