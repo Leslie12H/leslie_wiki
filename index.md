@@ -1,3 +1,5 @@
+- 2026-10-26：[EVOLVE 失败诊断与原尝试绑定](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-失败诊断展示必须绑定原尝试) — 外层完成与内层失败、固定安全提示与旧结果不追写；技术和真实验收分开查证。
+
 - 2026-10-26：[转派后原作者确认入口](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#2026-10-26-原作者确认入口方案) — 保留当前持卡、本人确认绑定范围和答案版本；实现、只读候选与浏览器验收、PR及测试冲突沿实施记录分别核对。
 
 - 2026-10-25：[EVOLVE 局部目录计数与模型参数实效](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-25-局部目录计数与模型参数实效) — 已读取 Run 并集与总数分开，模型请求参数、完成用量和自然结果分别核验。

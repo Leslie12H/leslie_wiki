@@ -318,3 +318,12 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 **How to apply:** 来源选择器复用已有来源字段区分记录类型，并保留精确时间和固定修订号；不能额外逐行加载报告来完成分类。对自然引用场景分别核对UI选择、消息公开引用、复制件来源/版本及实际工具读取，再判断最终解释；只读分析不替代执行、评分或采纳，analysis_only也不表示原Run评分失效。保留自动选择失败原记录，分开报告两条路径。
 
 - 指针：Maxwell `apps/studio/src/products/evolve/sources/CatalogSourcePickerStore.ts`、`RuntimeSourcePicker.tsx`、`sourceMessageProjection.ts`及 `application/commands/source_catalog.go`；实际自然引用、原始回合和尚缺验收沿主记录2026-10-26 07:12及 natural27 证据核验。
+
+
+## 2026-10-26：失败诊断展示必须绑定原尝试
+
+**Why:** 包装器完成不代表内部被测执行完成；内部模型拒绝可能已随失败证据保存，但页面只读粗粒度错误类别时仍显示通用失败。直接显示提供方原文又可能暴露凭据或请求内容，拿最新尝试的诊断解释历史记录也会误归因。
+
+**How to apply:** 沿作用域匹配的原生事件、Runner结果、失败Attempt、冻结Assessment及页面投影逐层核对。已知诊断可以映射为固定安全文案；只接受有界、完整、状态一致的原记录，未知或截断内容保留通用说明。模型拒绝保持执行错误与无有效分数，不用重复执行来证明提示修复。旧包装器没有保留精确原因时不追写历史，也不能把合成诊断测试当真实评分闭环。
+
+- 指针：SDK `maxwell-runtime/src/nextplay_runtime/runner.py` 与 `tests/test_baseline.py`；Maxwell `application/evaluation/live.go`、`live_failed_evidence_test.go`、Studio `v3/matrix/trialReading.ts` 与 `TrialDetailPanel.tsx`。实际SDK安装版本、技术与浏览器验证、未解决事项沿主验收记录2026-10-26“模型拒绝的安全展示与失败绑定回归”核验。
