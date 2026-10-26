@@ -1300,3 +1300,5 @@
 - 2026-10-26：[基线来源与历史选取验收](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-基线来源说明不能替代选取验证) — 绑定/配置回退、模型消费与实际选取、单轮覆盖与稳定性结论分开核验。
 
 - 2026-10-26：[Skill 按需细则与自然场景分层](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-skill-细则按需加载与自然场景分层) — 参数帮助一致、参考文件真实可读、明确条件与模糊条件分别验收。
+
+- 2026-10-26：[上层验收先关闭后的整改恢复闭环](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#2026-10-26-上层验收先关闭后的整改恢复闭环) — 下层执行未完成、上层已验收与历史补偿互相等待的生产只读证据及修复边界。

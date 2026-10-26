@@ -63,3 +63,12 @@ links: [sandeval-reassigned-answer-frozen-review-conflict, sandeval-partial-reas
 **How to apply:** 在同一生产版本下分别核对供应商和 Sand 负责人视角，确认整包实际阻塞原因、提交入口是否可用及剩余整改/复检。再按 disposition、父子执行与当前冻结证据定位接收人和下一步；没拿到具体记录前，不指派责任人、不直接关闭退回、不让用户重复提交已通过批次。本机 env 的目标缺失不证明生产对象不存在。
 
 纸面包的上线后只读验证、两种视角、确定事实和尚未定位的记录边界见[纸面包核对记录](/Users/leslie/Documents/Playground/output/qc-batch-blocker-20261025/paper-package-after-release.md)。发布是否完成沿[发布恢复记录](/Users/leslie/Documents/Playground/output/qc-batch-blocker-20261025/release-recovery-status.md)及目标生产 SHA 独立核验。
+
+
+## 2026-10-26 上层验收先关闭后的整改恢复闭环
+
+**Why:** 多轮答案整改中插入负责人复查后，后继质检和负责人报告通过，不一定意味着原整改执行已经完成。若上层退回已关闭，而下层恢复仍要求上层保持原 processing 版本，同时历史补偿又只接受 completed/resolved 的整改执行，就会形成双方都无法继续的状态。行级已通过与整包未结退回可以同时是真实数据。
+
+**How to apply:** 将最终正式报告、验收回执、原标注退回集合、祖先版本及当前执行错误放在同一时间线上核验；用只读授权检查复现具体拒绝点，区分持久化错误与实际日志。修复应核验精确冻结证据并补齐收尾顺序，不绕过未结退回保护，不要求重复提交已验收内容。累计 attempts 不等于已取得同等条数的失败日志，也不要在缺乏历史调用证据时归因为并发竞态。
+
+本次纸面包的真实记录、北京时间线、已部署代码坐标、双实例回读与纯读取复现见[根因报告](/Users/leslie/Documents/Playground/output/paper25-rootcause-20261026/report.md)。本次仅排查；是否恢复须以后续操作回执和重新读取为准。
