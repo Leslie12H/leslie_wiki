@@ -485,3 +485,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 流式计入索引条目的实际 UTF-8 字节及封装开销，在现有上限处停止继续读取，保留原观察和执行租约。用原封存的可选字段形状重建旧封装，仍要求完整原件哈希精确一致；新封装删字段不能降级通过，晚采诊断继续保留原失败，不能回填旧账目。分别覆盖有界终止、旧封装恢复、内容篡改拒绝和新封装降级拒绝。
 
 - 源码指针：nextplay-eval 的 `maxwell-runtime/src/nextplay_runtime/event_archive.py`、`recapture.py`、`evidence.py`、`evidence_bundle.py` 及相邻测试。测试失败到修复通过、四题已归档原件的字节等价回放与尚未安装的边界，见主验收记录2026-10-27章节；技术回放不算新的真实执行。
+
+
+## 2026-10-27 派发前原件失败不能锁死准备状态
+
+**Why:** 配置准备先把 Work 写为 pending，再保存不可变派发意图时，原件存储故障会留下无法恢复的 pending：远端尚未收到请求，同键重试却因缺意图被拒绝，新键又被 pending 阻挡。首次准备和替换已有 ready 配置都会受影响。
+
+**How to apply:** 先保留精确的服务端不可变意图，再通过 Work 版本 CAS 获取唯一派发资格。存储失败不改变 Work；并发 CAS 失败留下的意图仅是元数据，不能触发派发。同键内容变化仍应冲突，远端确认不明确仍保持防重复边界。验证故障前后 Work 版本/内容不变、恢复后同键仅派发一次，并覆盖首次准备、已有 ready、并发和不可伪造意图；不要用直接改库解除状态。
+
+- 源码指针：EVOLVE `application/commands/runner_selection_preparation.go` 与相邻测试；真实 PostgreSQL 合成准备测试在 `infrastructure/postgres/runner_selection_configuration_integration_test.go`。失败复现、race 回归、隔离 API 加载与业务验收边界见主验收记录2026-10-27章节，技术回归不等于重新完成业务调优。

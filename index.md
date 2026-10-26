@@ -1,3 +1,4 @@
+- 2026-10-27：[EVOLVE 配置准备原件失败恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-派发前原件失败不能锁死准备状态) — 不可变意图在 pending CAS 前保留，存储故障可恢复而未知派发仍防重。
 - 2026-10-27：[EVOLVE 归档容量与旧封装恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-归档索引上限与封装升级后的恢复) — 流式索引内存上限、可选统计字段兼容及原件精确核验；源码与验收边界指针。
 
 - 2026-10-26：[API 开放平台 Postman 工作区](domains/sandai-platform/refs/postman-interface-workspace.md) — 双认证集合、环境模板、接口索引、导入回读与 GET 副作用的查证入口；配置成功与业务联调分开。
