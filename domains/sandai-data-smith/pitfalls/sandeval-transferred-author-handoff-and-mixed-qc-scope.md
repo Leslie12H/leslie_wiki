@@ -89,3 +89,6 @@ links: [sandeval-reassigned-answer-frozen-review-conflict, sandeval-partial-reas
 
 
 **混合链的双段恢复。** Why: 补齐本轮执行关闭后，历史责任查找仍可能把中途已停止的整改复验组误当成执行最终组，导致验收恢复再次拒绝。How to apply: 首段对精确验收的父责任只做局部只读历史验证，重跑原父链与冻结授权；次段在执行已经完整关闭后，只接受同批、同关卡、连续人工复查接续的实际最终封存组，由原验收恢复路径关闭历史标注责任。应测试最终整包汇总及中断后的重复验收，不能只断言本轮 execution completed。2026-10-26实现与40项具名回归、CI和发布边界见[混合祖先修复记录](/Users/leslie/Documents/Playground/output/paper25-rootcause-20261026/mixed-fix-status.md)。
+
+
+**负责人验收的部分提交也必须覆盖。** Why: 本轮整改关闭的中断测试不能覆盖上层验收捕获的中断；多个负责人祖先可能同时存在 processing 与 resolved，若只接纳仍处理的标注祖先，两个恢复流程仍互相等待。How to apply: 在原生验收流程每条负责人关闭的实际持久化之后注入故障，再交替执行整改恢复与原验收恢复；保留已封存报告、连续版本与冻结许可，并检查最终整包而非仅一次恢复结果。2026-10-26实际第2条关闭后中断的证据、反例和修复状态沿[第二次复查记录](/Users/leslie/Documents/Playground/output/paper25-rootcause-20261026/review2-2864.md)回查。
