@@ -72,3 +72,10 @@ links: [sandeval-reassigned-answer-frozen-review-conflict, sandeval-partial-reas
 **How to apply:** 将最终正式报告、验收回执、原标注退回集合、祖先版本及当前执行错误放在同一时间线上核验；用只读授权检查复现具体拒绝点，区分持久化错误与实际日志。修复应核验精确冻结证据并补齐收尾顺序，不绕过未结退回保护，不要求重复提交已验收内容。累计 attempts 不等于已取得同等条数的失败日志，也不要在缺乏历史调用证据时归因为并发竞态。
 
 本次纸面包的真实记录、北京时间线、已部署代码坐标、双实例回读与纯读取复现见[根因报告](/Users/leslie/Documents/Playground/output/paper25-rootcause-20261026/report.md)。本次仅排查；是否恢复须以后续操作回执和重新读取为准。
+
+
+### 已验收祖先仅用于原整改收尾
+
+**Why:** 已关闭的上层退回不应重新授予编辑、派检或再次验收权限，但同一组已通过报告及其正式验收可以为尚未结清的原整改执行提供有限收尾证据。简单把 resolved 当作 processing 会放宽普通操作，直接修改旧退回状态又会丢失关闭依据。
+
+**How to apply:** 只在关闭入口核对当前批次与完整报告组、负责人验收版本、冻结汇总、原执行授权及全部责任版本；保留未结子责任/召回门禁，用原关闭回执与 CAS 处理部分提交。验证包含失败反例、关闭中断后重试、整包汇总与实际交接分离，并对真实对象做纯读取预检。实现、16项回归、候选生产只读证明及最新CI/上线边界见[修复记录](/Users/leslie/Documents/Playground/output/paper25-rootcause-20261026/fix-status.md)和[PR #2864](https://github.com/world-sim-dev/sandai-data-smith/pull/2864)。

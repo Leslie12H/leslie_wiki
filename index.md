@@ -1302,3 +1302,5 @@
 - 2026-10-26：[Skill 按需细则与自然场景分层](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-skill-细则按需加载与自然场景分层) — 参数帮助一致、参考文件真实可读、明确条件与模糊条件分别验收。
 
 - 2026-10-26：[上层验收先关闭后的整改恢复闭环](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#2026-10-26-上层验收先关闭后的整改恢复闭环) — 下层执行未完成、上层已验收与历史补偿互相等待的生产只读证据及修复边界。
+
+- 2026-10-26：[已验收祖先的有限关闭证明](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#已验收祖先仅用于原整改收尾) — 精确报告/验收/冻结授权、CAS中断恢复与整包汇总验证；PR #2864证据入口。
