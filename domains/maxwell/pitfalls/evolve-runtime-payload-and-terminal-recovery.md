@@ -458,3 +458,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **Why:** 只复制历史 Run、Trial、评分及 Artifact 元数据，会出现总分可读但逐题报原件引用不匹配；执行回执及其内容寻址对象、证据包仍是验证来源身份和正文完整性的必需依赖。这类导入缺项不能用放宽产品权限或证据校验来修复。
 
 **How to apply:** 在明确的业务内容复制授权下，按精确 Run/Trial 读取原 Attempt；先验证隔离副本的原 Run/Trial 未改变，仅补缺失的原始记录。沿这些回执和冻结 EvidenceSet 复制引用的 CAS 与 Bundle manifest/chunk，逐项检查归属、摘要、大小及文件哈希，最后再封存 manifest。恢复后独立回读逐题和比较页，确认原分数未改、没有重评或新执行。汇总可读、逐题可读和自然 Agent 分析分别验收。当前精确范围、恢复脚本与哈希证据见主验收记录2026-10-26 21:37条目，不将隔离恢复误称线上数据修复或发布。
+
+
+## 2026-10-26 审计脱敏不得破坏嵌套证据 JSON
+
+**Why:** 工具正文可能是 JSON 字符串中再嵌套的 JSON。签名 URL 正则若把结束引号前的转义反斜线当成查询参数一起删除，审计副本就无法逐层解析；真实模型请求与审计副本走不同路径时，不能用审计损坏推断模型没有收到完整证据。
+
+**How to apply:** 分别验证原 Provider 请求和脱敏审计，保证脱敏不改变发送内容；覆盖多层序列化、转义 ampersand 后的签名参数和相邻字段。保留字符串闭合需要的转义，仍删除全部敏感查询参数，不能简单在任意反斜线处停止匹配。不要修写旧审计或把技术回归称为自然诊断通过。
+
+- 源码指针：Agent Server `internal/modules/model/infrastructure/openaicompat/gateway.go` 的 `auditChatRequest` / `redactSignedAssetURLQueries` 及相邻网关测试。实际运行加载版本、自然诊断消费和剩余问题查本页验收记录指针；本页不声明修复已发布。

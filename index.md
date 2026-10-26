@@ -1313,3 +1313,5 @@
 
 - 2026-10-26：[原分配续办与独立验收](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md) — 冻结计划、分段续办、真实质检员待办与正文验证，以及命令入口写屏障的只读边界。
 - 2026-10-26：[历史验收副本的证据依赖](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-历史验收副本必须保留证据依赖) — Run/Trial/评分之外还需原Attempt与CAS/Bundle，精确复制和哈希恢复不能替代或放宽权限校验。
+
+- 2026-10-26：[模型审计的嵌套 JSON 脱敏](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-审计脱敏不得破坏嵌套证据-json) — 签名参数移除与转义闭合同时验证，审计副本不能替代实际模型请求。
