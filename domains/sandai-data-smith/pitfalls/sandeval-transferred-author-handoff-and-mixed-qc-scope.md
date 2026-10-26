@@ -95,3 +95,12 @@ links: [sandeval-reassigned-answer-frozen-review-conflict, sandeval-partial-reas
 
 
 **部分验收的校验集合。** Why: 同一冻结责任链中的负责人祖先可以在故障后混合处理状态，其下仍处理的真实冻结子责任不能被当作未知阻塞，但也不能因此自动关闭祖先。How to apply: 允许本轮关闭前完整验证仍处理的负责人及标注祖先，集合必须与原冻结版本、真实父链和全部许可一致；集合外子责任继续阻断。对每条负责人关闭后的实际写入故障和两种恢复顺序验证最终汇总，剩余祖先沿原验收路径结清。2026-10-26的66项回归、最新提交和CI/部署边界见[部分验收修复记录](/Users/leslie/Documents/Playground/output/paper25-rootcause-20261026/partial-acceptance-fix-status.md)。
+
+
+## 2026-10-26 整改结清后的下游唤醒缺口
+
+**Why:** 关闭整改只重试已完成的空间质检推进，会被 completed 幂等短路；后续供应商负责人整包推进仍在全局队列等待。页面若继续投影上次失败原因，就会在正式复核和退回均完成后仍提示待复核或未结退回。
+
+**How to apply:** 分开证明当前正式复核、活跃退回、负责人推进记录、新整包及真实提交入口。沿 `ResolutionService` 关闭后回调、`AdvancementService.after_submit/recover` 和 `LeaderQueryService._package_generation_blockers` 核对；恢复应精准唤醒同包待推进记录并保留权限、范围、锁和幂等，不重做验收或直接改状态。全局队列候选窗口和记录排序须现场取证，不承诺固定恢复时间。
+
+纸面 1019_04 的已部署源码、只读实时阻塞校验、先复核后结清的时间线与队列证据见[专项诊断](/Users/leslie/Documents/Playground/output/paper25-rootcause-20261026/paper04-diagnosis.md)。本次是诊断发现；是否已实现修复或恢复，必须重新读取正式推进与提交入口，不能从本页推断。
