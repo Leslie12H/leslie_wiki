@@ -443,3 +443,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 沿已有共同题集查询核对相同内容、相同评分和两侧有效测量，只在共同样本上报告差值；另行保留单侧、拒绝和未评分项。与原始基线及上一候选分别比较，不把对较旧版本的提升称为最新一步的收益。用量转换沿原运行指标契约读取一份权威 turn 数组，明确账目身份及父子包含关系，冲突、未知和不完整保留标记，不能从没有回执推断零用量。跨语言合成回放、真实新 Run 消费和原冻结历史分开验收，不为展示完整追写旧分数或用量。
 
 指针：EVOLVE queries/run_intersection.go、domain/runmetrics/metrics.go、SDK maxwell-runtime/src/nextplay_runtime/evidence.py 与 runtime_metrics.py。当前比较原件、CPU有界测试、源码和安装状态统一查主验收记录2026-10-26 20:22条目，不将本页视为发布或全量提升证明。
+
+
+## 2026-10-26 多阶段账单与工具指标的采集完整性
+
+**Why:** 续答阶段的 byRun 可能累积携带前序执行账单；直接求和会重复计费，把所有额外身份视作子 Run 又会把真实完整数据判为缺失。界面无成本/工具错误也可能只是包装器未输出事实，不能填零。
+
+**How to apply:** 以已执行 turn 的原生 Run 身份建立根集合；只合并与明确根快照一致的重复记录，不混加父汇总和子账目。成本使用原始金额及币种，不估价。工具事件在原持久化轨迹流中按 Run/调用身份去重，完整遍历且调用均有终态才声明覆盖完整；缺失、冲突、容量超限保留未知。依次核对归档原件、协议消费、安装包哈希、新执行入库与页面展示，离线回放不冒充新 Run，旧结果不静默回填。
+
+- 源码指针：nextplay-eval 的 `maxwell-runtime/src/nextplay_runtime/runtime_metrics.py`、`event_archive.py`、`evidence.py`；Maxwell 的 `apps/studio/src/products/evolve/formatMetric.ts` 与 `panels/metricSummary.ts`。版本、测试和新运行消费状态见本页原验收记录的2026-10-26成本/工具指标章节。
