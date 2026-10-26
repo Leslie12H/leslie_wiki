@@ -33,3 +33,12 @@ links: [sandeval-reassigned-answer-frozen-review-conflict, sandeval-partial-reas
 实现从 `app/domain/annotation_inspection_partition.py`、`app/repositories/annotation_qc_allocation.py::inspection_owners`、`app/services/facts/task_assignments.py` 和 `quality/application/resolution/latest_answer_reinspection.py` 回查。转派操作人及无业务原因的审计边界、调查期间出现后续质检版本的核验、本人确认与质检候选、最终提交与Gate状态见[混合范围修复记录](/Users/leslie/Documents/Playground/output/qc-batch-blocker-20261025/mixed-fix-status.md)及[PR #2839](https://github.com/world-sim-dev/sandai-data-smith/pull/2839)。原作者、当前持卡人、各批验收人和整包最终提交人分别核验；整包尚未封存时不把回落规则说成已经指定了提交人。
 
 分组进入质检后还须反向约束原持卡批次。**Why:** 只更新质检队列，会让个人看板和普通修改仍按旧批次标识误判；滚动发布时，给旧领域对象直接增加序列化字段还可能令旧进程无法解码或在写回进度时丢掉门禁。**How to apply:** 来源提供父范围关联，贯穿预览和分配；准备中的分配也参与原批次门禁。兼容测试同时证明旧对象形状可读、旧进度写回不会丢失限制、真实数据库匹配父范围且拒绝其他范围。具体字段与存储实现沿修复记录和 `quality/infrastructure/persistence/batch_allocation_repository.py` 回查。
+
+
+## 2026-10-26 数据包展示的低风险边界
+
+**Why:** “原批次处理中”“部分题目”“重新确认”没有明确题目范围、待办人和下一步；为了补齐展示而额外展开历史任务查询，又会增加读取范围，并可能把旧答案的通过误当成当前答案已通过。
+
+**How to apply:** 先用现有接口返回的范围、作者、状态和操作引用，明确未送审份数、谁应提交质检及负责人何时可以派检。仅把确认入口改名为提交质检，不改变提交请求或权限；原任务详细状态通过现有详情入口核对，不以展示层推测覆盖关系。性能结论应限定为本轮没有新增请求或查询，不能外推其他功能的延迟不变。
+
+本轮实现从 `frontend/src/pages/quality/management/PackageBatchStatus.tsx`、`PackageDetail.tsx` 和 `frontend/src/pages/myTasks/AnnotationBatchList.tsx` 回查；没有增加后端读取。虚构数据浏览器证据、最终提交与 Gate、未部署边界见[展示修复记录](/Users/leslie/Documents/Playground/output/qc-batch-blocker-20261025/display-status.md)及[PR #2839](https://github.com/world-sim-dev/sandai-data-smith/pull/2839)。
