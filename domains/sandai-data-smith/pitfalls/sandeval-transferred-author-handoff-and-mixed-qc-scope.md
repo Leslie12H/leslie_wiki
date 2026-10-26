@@ -42,3 +42,12 @@ links: [sandeval-reassigned-answer-frozen-review-conflict, sandeval-partial-reas
 **How to apply:** 先用现有接口返回的范围、作者、状态和操作引用，明确未送审份数、谁应提交质检及负责人何时可以派检。仅把确认入口改名为提交质检，不改变提交请求或权限；原任务详细状态通过现有详情入口核对，不以展示层推测覆盖关系。性能结论应限定为本轮没有新增请求或查询，不能外推其他功能的延迟不变。
 
 本轮实现从 `frontend/src/pages/quality/management/PackageBatchStatus.tsx`、`PackageDetail.tsx` 和 `frontend/src/pages/myTasks/AnnotationBatchList.tsx` 回查；没有增加后端读取。虚构数据浏览器证据、最终提交与 Gate、未部署边界见[展示修复记录](/Users/leslie/Documents/Playground/output/qc-batch-blocker-20261025/display-status.md)及[PR #2839](https://github.com/world-sim-dev/sandai-data-smith/pull/2839)。
+
+
+## 2026-10-26 完整差异 review 的边界
+
+**Why:** 仅展示层无新增查询，不能外推整个修复的查询成本；保存不可变门禁元数据，也不代表滚动版本能完整恢复领域对象。全量 CI 通过仍可能遗漏历史任务规模、单任务失败隔离及旧写回后的新读取往返。
+
+**How to apply:** 本人待提交列表应限定有效待办并批量或有界读取，避免逐历史任务展开。错误必须带任务范围，只阻断不能证明完整性的任务；不能让单个历史异常抹掉其他健康入口。扩展记录兼容要实测旧进程替换 payload 后，新进程从保留的 owner_ref 恢复字段，并通过原命令幂等重试，不能只检查新写回 SQL 没有修改 owner_ref。
+
+本次逐提交说明、三个具名缺口、隔离脚本和证明范围见[main PR 复查记录](/Users/leslie/Documents/Playground/output/qc-batch-blocker-20261025/review-main-2842.md)及[PR #2842](https://github.com/world-sim-dev/sandai-data-smith/pull/2842)。修复采用同请求批量归属事实、按任务隔离失败、所有领域对象读取恢复不可变父范围；实现、隔离前后对照、页面证据和最新 Gate 以[review 修复记录](/Users/leslie/Documents/Playground/output/qc-batch-blocker-20261025/review-fixes-status.md)及该 PR 当前 head 为准，不将隔离调用预算等同于生产延迟。

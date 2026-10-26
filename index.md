@@ -64,6 +64,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-26：[原作者补交修复的完整差异 review](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#2026-10-26-完整差异-review-的边界) — 历史候选读取上限、逐任务错误隔离与滚动版本的旧写回/新恢复往返验证；审查证据沿 PR #2842 查证。
+
 - 2026-10-26：[数据包题目范围与下一步展示](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#2026-10-26-数据包展示的低风险边界) — 明确未送审范围和待办人；使用现有返回值、保留原任务导航、不额外展开历史查询。
 
 - 2026-10-26：[配对投影与调优解释同步](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26配对投影必须同步系统提示词与真实视图) — SP、Skill、正式整轮决策与共同有效子集的范围对齐，日期明确与自动选择分别验收，长标识分栏布局的真实核查。
