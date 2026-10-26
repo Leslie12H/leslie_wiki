@@ -386,3 +386,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 说明涵盖全部现有解析分支，保持旧字段、授权和分页，不为注释增加数据库读。独立核对model.request、实际比较Run及共同有效样本；无效选取保留失败，不把单位换算或参数合法当完整通过。后续围绕输入歧义、绑定显著性和观测值/因果结论区分诊断，不能用同输入盲试积累成功样本。
 
 指针：EVOLVE app/toolcaller.go 的baseline结果、app/transport/mcp/schemas.go 的status帮助、modules/evolve/application/queries/tuning_baseline.go 的既有解析分支；当前证据与边界沿主验收记录2026-10-26 12:42条目核查。
+
+
+## 2026-10-26 Skill 细则按需加载与自然场景分层
+
+**Why:** 工具 schema 与 Skill 的参数描述可能分叉；API帮助修正不等于旧Skill同步一致。完整评分等业务条件明确后选对记录，也不能覆盖之前模糊问法的失败，更不能把同时修改Skill后的成功归因为上下文精简。
+
+**How to apply:** 检查模型实际请求中的说明、Skill和工具结果，而非猜测截断。把低频技术细则原文移到入口可发现的参考资源，验证打包、保存回读和实际模型消费；保留核心权限、证据与未知边界。明确条件场景和原模糊场景分别记录，禁止把不同输入的成功算成原问题已修复。
+
+指针：agent-resources/skills/evidence-diagnosis/SKILL.md及references/measurement-contracts.md；当前自然34输入、真实比较、用量和未完成事项沿主验收记录2026-10-26 13:10条目核查。
