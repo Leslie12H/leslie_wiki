@@ -1270,3 +1270,5 @@
 - 2026-10-26: [EVOLVE connection acquisition diagnostics](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md) - Separate cold connect, driver health check, SQL and HTTP latency; instrumentation is not a performance fix.
 
 - 2026-10-26: [Full-detail authorization dependencies](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-full-detail-authorization-dependencies) - Separate permission checks from serial detail decorations and verify actual runtime tracing.
+
+- 2026-10-26: [Bounded Business detail counts](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-bounded-independent-detail-counts) - Two batches, cancellation and no partial response; original timeout/runtime verification.

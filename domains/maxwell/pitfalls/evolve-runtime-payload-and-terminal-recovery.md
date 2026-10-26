@@ -343,3 +343,12 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 **Why:** EVOLVE authorization uses the existing Business detail response, so post-authorization feature and asset-count decorations are still on its critical path. A slow dependency request is not necessarily a slow permission check.
 
 **How to apply:** Correlate the exact HTTP request with connection and SQL fingerprints before changing authorization. Map count queries back to their owning modules, retain full-response and immediate permission semantics, and measure bounded dependency cost. A later fast EXPLAIN is not proof of past server latency or a production fix. Current runtime/load evidence: main acceptance journal, 2026-10-26 09:00 entry. Code pointers: Agent Server app/api/http/studio_api.go businessHTTPController; EVOLVE app/integration/maxwellauth/resolver.go.
+
+
+## 2026-10-26 Bounded independent detail counts
+
+**Why:** Independent count reads on an already authorized Business response accumulate network round trips when serialized. Parallelizing per row would instead multiply database load and can turn a latency fix into pool pressure.
+
+**How to apply:** Coordinate the two existing batch reads in app/integration with exactly two operations per request, retain authorization and feature policy ordering, propagate cancellation, join both operations, and publish no partial counts after failure. Preserve the shared connection-pool limit and measure real requests separately from deterministic overlap tests. Revert temporary auth timeout overrides and verify the running process plus actual page reads before claiming the original timeout works; independent cold-connect failures remain separate.
+
+Pointers: Agent Server app/integration/studio/businessstats/counts.go and its race tests; app/api/http/studio_api.go. Actual load, original timeout restoration and remaining acceptance boundaries: main journal 2026-10-26 09:30 entry.
