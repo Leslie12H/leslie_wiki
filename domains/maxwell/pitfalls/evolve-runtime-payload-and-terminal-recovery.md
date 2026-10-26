@@ -421,3 +421,10 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 检索以实际字节、命中输出和总体成员上限约束工作量，保留续读与跳过覆盖说明，避免按无关的小成员数强制分页。查询匹配后仍核对Run身份和上下文，不能把关键词命中等同因果证据。历史汇总先只读核对原Run/Trial与投影job；缺失时使用明确业务和Run范围、默认dry-run的维护入口，仅幂等补建派生job，由正常Worker生成汇总。独立对照原记录摘要不变、Worker完成和UI回读；禁止在GET中全扫历史大JSON，禁止直接改分制造比较结果。
 
 指针：EVOLVE queries/evidence_text.go、cmd/evolve-standard-maintenance、infrastructure/postgres/result_maintenance.go。当前实现、原件技术检索与natural37未完成归因、旧基线投影恢复及真实分数，沿主验收记录2026-10-26 16:57及后续条目查证；不把这些技术修复当作候选提升或已发布证明。
+
+
+## 2026-10-26 候选子集复用与 Worker 兼容
+
+**Why:** 候选的选题预览可以通过，正式启动仍可能失败：内容寻址去重命中了另一 Work 的私有冻结子集，而“同一内容”没有自动建立当前 Work 的使用关系。只测首次生成和同 Work 重试会漏掉这种历史复用；API 能写入新选题快照，也不能证明旧 Worker 能读取。
+
+**How to apply:** 从授权冻结原件投影子集后，复用既有 Artifact 兼容重放建立精确 Work 关联，保留来源、成员摘要及根预算；正式 Run 同时核对所选 CaseSet 身份、Work 关联和成员内容，不改物理来源或放宽业务隔离。回归覆盖已存在的跨 Work 投影、零重复 Put、错误摘要、未关联及范围外 Case，并在实际 PostgreSQL 上验证。API 与消费 Worker 应采用同一兼容版本，排队回执与四题实际派发分别核验；失败恢复沿原幂等键，不另建 Run。源码入口是 EVOLVE 的 `application/commands/case_selection.go`、`infrastructure/postgres/runs.go` 及相邻回归；实际版本、运行和评分结果查上方验收记录，不把本页视为发布或提升证明。
