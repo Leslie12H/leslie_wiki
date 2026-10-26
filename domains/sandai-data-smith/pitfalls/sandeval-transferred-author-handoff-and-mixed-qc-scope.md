@@ -51,3 +51,6 @@ links: [sandeval-reassigned-answer-frozen-review-conflict, sandeval-partial-reas
 **How to apply:** 本人待提交列表应限定有效待办并批量或有界读取，避免逐历史任务展开。错误必须带任务范围，只阻断不能证明完整性的任务；不能让单个历史异常抹掉其他健康入口。扩展记录兼容要实测旧进程替换 payload 后，新进程从保留的 owner_ref 恢复字段，并通过原命令幂等重试，不能只检查新写回 SQL 没有修改 owner_ref。
 
 本次逐提交说明、三个具名缺口、隔离脚本和证明范围见[main PR 复查记录](/Users/leslie/Documents/Playground/output/qc-batch-blocker-20261025/review-main-2842.md)及[PR #2842](https://github.com/world-sim-dev/sandai-data-smith/pull/2842)。修复采用同请求批量归属事实、按任务隔离失败、所有领域对象读取恢复不可变父范围；实现、隔离前后对照、页面证据和最新 Gate 以[review 修复记录](/Users/leslie/Documents/Playground/output/qc-batch-blocker-20261025/review-fixes-status.md)及该 PR 当前 head 为准，不将隔离调用预算等同于生产延迟。
+
+
+异构数据库替身也要验证参数语义。**Why:** PostgreSQL 的编号占位符按编号绑定，SQLite 的顺序实参按占位符首次出现绑定；CTE 优化移动参数后，旧用例可能交换作者与空间。**How to apply:** SQLite 复用 PostgreSQL SQL 时按占位符名称绑定，并保留真实结果断言；诊断与具名复验沿 review 修复记录回查，不能为测试适配改变生产的参数顺序。
