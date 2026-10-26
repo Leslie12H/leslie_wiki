@@ -530,3 +530,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 依赖恢复清单应逐个覆盖执行与评分消费者；同时核对唯一进程、队列认领时间、持续心跳、原评分终态和平台测量入库。恢复原消费者前排除已有活跃 owner，消费原队列而非重复创建任务。已经超时取消的评分不改写历史；后续通过正式重评入口使用同一执行证据补齐，并明确重评不是新的独立执行。保留原模型和标准，不以延长等待时间掩盖没有消费者。
 
 - 指针：nextplay-eval 原评分 `eval-service/src/eval_service/grading_repository.py` 的队列/租约与 `grading_worker.py`；本轮隔离 launcher 和原 Worker MySQL 2013 退出日志、原队列无开始时间、恢复后实际得分见主验收记录2026-10-27 05:00后条目。隔离恢复操作不代表业务代码已发布。
+
+
+## 2026-10-27 不可完整比较不等于评分标准变化
+
+**Why:** 比较结果的通用否定状态可能来自缺测、执行超时、缺少应用回执，也可能来自评分定义不一致。若页面直接把该布尔值显示为“比较口径不一致”，会把同题同评分的执行失败错误解释为标准变化，掩盖真正需要恢复的环节。
+
+**How to apply:** 通用标签仅说明“暂不能完整比较”，详细原因沿服务端覆盖和身份检查展示。共同有效题的均值与历史相同子集比较，不能把缺测补零或直接比较不同样本总体；重评保持原证据和来源，不算新的独立执行。验证覆盖页面、服务端具体原因以及真实运行记录，不能只检查文案快照。
+
+- 指针：Maxwell `apps/studio/src/products/evolve/v3/lineage/LineageNodeDetail.tsx` 与 `candidates/comparisonWarnings.ts`；真实超时导致九项有效测量的共同样本分析、UI回读及聚焦回归见主验收记录2026-10-27 07:42条目。
