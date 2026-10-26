@@ -1304,4 +1304,4 @@
 
 - 2026-10-26：[EVOLVE 在途评测导航](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-流程历史关联与当前在途评测分开导航) — 历史关联不代表当前执行、无 Benchmark 临时选题导航及真实回读入口。
 
-- 2026-10-26：[登录恢复弹窗与代登录期限](domains/sandai-data-smith/pitfalls/sandeval-session-recovery-impersonation.md#2026-10-26-会话有效期与弹窗归因) — Cookie、代登录与原登录到期封顶分别查证；48h 调整与精确提交 Gate 沿 PR #2869 核验。
+- 2026-10-26：[登录恢复弹窗与代登录期限](domains/sandai-data-smith/pitfalls/sandeval-session-recovery-impersonation.md#2026-10-26-会话有效期与弹窗归因) — Cookie、代登录与原登录到期封顶分别查证；48h 调整、完整 Gate 和自动发布沿 main PR #2870 核验。
