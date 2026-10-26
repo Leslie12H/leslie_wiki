@@ -65,3 +65,6 @@ links: [sandeval-handoff-duplicate-scope, sandeval-remediation-scope-change-stal
 
 
 2026-10-26 新增来源 native 分区兼容缺口见[纸面分配只读诊断与修复报告](/Users/leslie/Documents/Playground/output/paper-allocation-20261026/report.md)和[main PR #2880](https://github.com/world-sim-dev/sandai-data-smith/pull/2880)。**Why:** 来源按历史质检责任拆分后，原作者父范围键可以消失，成员仍完整存在于显式声明 `parent_scope_key` 的多个子分区。旧整改接续仅精确匹配父键时，会将当前范围误算为空，导致本可沿完整整改谱系退出当前范围的旧普通重复批次再次触发保护；读取整包分区的无关单批 Sand 派发也可能被连带拒绝。**How to apply:** 从当次来源声明读取父子关系，按实际稳定工作项汇总子分区并拒绝相互重叠；保留完整已完成整改链、逐题正式代改和当前答案校验。不要按 scope 字符串猜父关系或直接删除旧批次。分配详情须区分已有 group 的成功批次和未生成任务的失败批次；修复发布后沿原分配续办，独立回读新增任务与原成功任务保持不变。报告包含引入提交、线上原生错误栈、候选只读预检和回归指针；PR创建、Gate、部署和实际恢复分别核验，不把前置通过当作已派发。
+
+
+2026-10-26 用户明确授权后的原单续办、分段回执、独立质检员待办与首题读取证据见[同一排查报告的续办章节](/Users/leslie/Documents/Playground/output/paper-allocation-20261026/report.md#用户明确授权后的原单续办)。**Why:** 分配已ready的应用服务内部可能直接返回，但宿主命令入口仍会先登记package-control参与者；因此在强制只读上下文调用resume并不能证明整个命令入口零写入。**How to apply:** 恢复用冻结计划、显式apply与原生续办；独立验收用纯读取的分配、实际任务、唯一检查组、样本、真实质检员待办和题目队列。保留已有group的成功批次；时间预算返回部分完成后，先读新版本，再仅续原单未完成批次。未完成判断产生的REVIEW_INCOMPLETE是提交条件，不能当作无法开始质检；结合save_items和正文可读性核验。
