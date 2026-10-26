@@ -86,3 +86,6 @@ links: [sandeval-reassigned-answer-frozen-review-conflict, sandeval-partial-reas
 **Why:** 冻结祖先可能同时包含仍处理中的标注退回和已验收关闭的负责人退回。补偿只允许全部祖先属于已关闭负责人退回，会在真实多轮流程中重现原阻塞；从负责人退回开始的测试无法覆盖此前已有的标注责任。
 
 **How to apply:** 回归应在首次负责人退回前加入原生标注整改，再延迟末次执行收尾后完成负责人验收。分别校验仍处理祖先的原版本与授权，以及已验收祖先的受限关闭证据；不得忽略前者或擅自关闭全部祖先。复现、定位和修复状态沿[PR2864再次审查记录](/Users/leslie/Documents/Playground/output/paper25-rootcause-20261026/review-2864.md)回查。
+
+
+**混合链的双段恢复。** Why: 补齐本轮执行关闭后，历史责任查找仍可能把中途已停止的整改复验组误当成执行最终组，导致验收恢复再次拒绝。How to apply: 首段对精确验收的父责任只做局部只读历史验证，重跑原父链与冻结授权；次段在执行已经完整关闭后，只接受同批、同关卡、连续人工复查接续的实际最终封存组，由原验收恢复路径关闭历史标注责任。应测试最终整包汇总及中断后的重复验收，不能只断言本轮 execution completed。2026-10-26实现与40项具名回归、CI和发布边界见[混合祖先修复记录](/Users/leslie/Documents/Playground/output/paper25-rootcause-20261026/mixed-fix-status.md)。
