@@ -1308,3 +1308,5 @@
 - 2026-10-26：[EVOLVE 共同题增益与执行用量](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-共同题增益与执行用量分别核验) — 历史范围对齐、上一候选差值、根账目去重及合成与真实消费边界。
 
 - 2026-10-26：[多阶段账单与工具指标](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-多阶段账单与工具指标的采集完整性) — 原生根账单去重、持久化工具轨迹覆盖、安装与真实入库分层核验。
+
+- 2026-10-26：[来源分区与历史整改接续](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md) — 显式父子范围、旧重复批次退休证明、Sand 分配部分成功与原单续办；main PR 和只读验证指针。

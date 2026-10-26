@@ -62,3 +62,6 @@ links: [sandeval-handoff-duplicate-scope, sandeval-remediation-scope-change-stal
 **How to apply:** 负责人只读投影应保留可证明的正式质检分区，再按稳定工作项差集展示未覆盖的来源范围，并避免重复计数。缺项行不得借用旧报告的 accepted；操作仍回到原任务。展示不能授予新分配或交接权限。复用请求内只读分区计算，普通未漂移包保留快速路径；性能数字必须注明样本与查询次数，不能从单次请求推断整体 CPU。
 
 - [页面修复 PR #2806](https://github.com/world-sim-dev/sandai-data-smith/pull/2806)与[现场证据及合成页面验收报告](/Users/leslie/.codex/visualizations/2026/10/22/01a16320-cb2a-7231-b0af-61d168d28c51/package-submit-20261023/report.md)：当前状态、缺项数量、发布和后续正式补交沿证据重新核验；显示准确不等于尚未检查的新增工作已通过。
+
+
+2026-10-26 新增来源 native 分区兼容缺口见[纸面分配只读诊断与修复报告](/Users/leslie/Documents/Playground/output/paper-allocation-20261026/report.md)和[main PR #2880](https://github.com/world-sim-dev/sandai-data-smith/pull/2880)。**Why:** 来源按历史质检责任拆分后，原作者父范围键可以消失，成员仍完整存在于显式声明 `parent_scope_key` 的多个子分区。旧整改接续仅精确匹配父键时，会将当前范围误算为空，导致本可沿完整整改谱系退出当前范围的旧普通重复批次再次触发保护；读取整包分区的无关单批 Sand 派发也可能被连带拒绝。**How to apply:** 从当次来源声明读取父子关系，按实际稳定工作项汇总子分区并拒绝相互重叠；保留完整已完成整改链、逐题正式代改和当前答案校验。不要按 scope 字符串猜父关系或直接删除旧批次。分配详情须区分已有 group 的成功批次和未生成任务的失败批次；修复发布后沿原分配续办，独立回读新增任务与原成功任务保持不变。报告包含引入提交、线上原生错误栈、候选只读预检和回归指针；PR创建、Gate、部署和实际恢复分别核验，不把前置通过当作已派发。
