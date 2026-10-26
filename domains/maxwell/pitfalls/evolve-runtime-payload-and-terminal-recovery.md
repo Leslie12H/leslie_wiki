@@ -434,3 +434,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **Why:** 灵活调优中，Search 保留的关联 Run 可以是历史执行；新候选通过普通评测入口启动后，不能继续用该历史引用表达当前评测。临时选题也可能没有 Benchmark 身份。
 
 **How to apply:** 沿 Studio `optimization/OptimizationStatus.tsx` 核对当前 Work 在途 Run 与流程状态分开呈现，停止和恢复状态仍保留；沿 `v3/catalog/RecordsPage.tsx` 检查无 Benchmark 的选题只展示范围而不构造空详情链接。用真实在途页面与状态渲染回归分别验证；运行数、分数、发布状态回查上方验收记录及提交 `66794a17f`，不将导航修正当作执行或调优成功。
+
+
+## 2026-10-26 共同题增益与执行用量分别核验
+
+**Why:** 历史五题与候选四题的整集通过率不能直接相减；排除一个拒绝案例也不构成稳定性改善。执行原件含嵌套 usage 并不表示平台运行指标已采集，根 Run 累计账目与子 Run 相加还会重复计费。
+
+**How to apply:** 沿已有共同题集查询核对相同内容、相同评分和两侧有效测量，只在共同样本上报告差值；另行保留单侧、拒绝和未评分项。与原始基线及上一候选分别比较，不把对较旧版本的提升称为最新一步的收益。用量转换沿原运行指标契约读取一份权威 turn 数组，明确账目身份及父子包含关系，冲突、未知和不完整保留标记，不能从没有回执推断零用量。跨语言合成回放、真实新 Run 消费和原冻结历史分开验收，不为展示完整追写旧分数或用量。
+
+指针：EVOLVE queries/run_intersection.go、domain/runmetrics/metrics.go、SDK maxwell-runtime/src/nextplay_runtime/evidence.py 与 runtime_metrics.py。当前比较原件、CPU有界测试、源码和安装状态统一查主验收记录2026-10-26 20:22条目，不将本页视为发布或全量提升证明。
