@@ -1272,3 +1272,5 @@
 - 2026-10-26: [Full-detail authorization dependencies](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-full-detail-authorization-dependencies) - Separate permission checks from serial detail decorations and verify actual runtime tracing.
 
 - 2026-10-26: [Bounded Business detail counts](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-bounded-independent-detail-counts) - Two batches, cancellation and no partial response; original timeout/runtime verification.
+
+- 2026-10-26：[EVOLVE 工具说明生效与自然选择](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-工具说明生效与自然选择分开验收) — 分别核对远端定义、持久化目录、实际模型请求与未引导历史选择，避免提示词修改假验收。

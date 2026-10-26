@@ -352,3 +352,10 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 **How to apply:** Coordinate the two existing batch reads in app/integration with exactly two operations per request, retain authorization and feature policy ordering, propagate cancellation, join both operations, and publish no partial counts after failure. Preserve the shared connection-pool limit and measure real requests separately from deterministic overlap tests. Revert temporary auth timeout overrides and verify the running process plus actual page reads before claiming the original timeout works; independent cold-connect failures remain separate.
 
 Pointers: Agent Server app/integration/studio/businessstats/counts.go and its race tests; app/api/http/studio_api.go. Actual load, original timeout restoration and remaining acceptance boundaries: main journal 2026-10-26 09:30 entry.
+
+
+## 2026-10-26 工具说明生效与自然选择分开验收
+
+**Why:** API重载只更新远端定义，持久化MCP目录仍可能把旧说明发送给模型；同步后的模型仍可能选择错误历史基线。目录已同步、模型已消费新说明、用户要求的历史记录已选对，是三个独立事实。重复添加SP说明不能替代真实选择证据。
+
+**How to apply:** 在已授权隔离目录通过现有连接、刷新、同步入口核对变更范围，然后独立检查实际model.request的工具说明和摘要。用未受日期、内部ID或预期答案提示的新会话复验；保留旧目录与新目录各自失败。选取问题继续沿任务绑定上下文、轻量目录信息和实际统计读取追踪；补充覆盖信息时复用有界授权投影，避免为每条目录读取完整Scorecard和历史JSON。具体状态只沿本页验收记录指针核查，不把本页视为修复完成或发布证明。

@@ -2143,3 +2143,5 @@
 - 2026-10-26 ingest: Add full-detail authorization dependency diagnosis and exact live-request verification pointers.
 
 - 2026-10-26 ingest: Bounded parallel Business statistics, original timeout restoration evidence and separate cold-connect failure boundary.
+
+- 2026-10-26：补充EVOLVE工具说明生效与历史选择验收边界；保留同步前后自然失败，状态沿真实验收记录核查。
