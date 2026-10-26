@@ -42,3 +42,33 @@ links: [sandeval-reassigned-answer-frozen-review-conflict, sandeval-partial-reas
 **How to apply:** 先用现有接口返回的范围、作者、状态和操作引用，明确未送审份数、谁应提交质检及负责人何时可以派检。仅把确认入口改名为提交质检，不改变提交请求或权限；原任务详细状态通过现有详情入口核对，不以展示层推测覆盖关系。性能结论应限定为本轮没有新增请求或查询，不能外推其他功能的延迟不变。
 
 本轮实现从 `frontend/src/pages/quality/management/PackageBatchStatus.tsx`、`PackageDetail.tsx` 和 `frontend/src/pages/myTasks/AnnotationBatchList.tsx` 回查；没有增加后端读取。虚构数据浏览器证据、最终提交与 Gate、未部署边界见[展示修复记录](/Users/leslie/Documents/Playground/output/qc-batch-blocker-20261025/display-status.md)及[PR #2839](https://github.com/world-sim-dev/sandai-data-smith/pull/2839)。
+
+
+## 2026-10-26 完整差异 review 的边界
+
+**Why:** 仅展示层无新增查询，不能外推整个修复的查询成本；保存不可变门禁元数据，也不代表滚动版本能完整恢复领域对象。全量 CI 通过仍可能遗漏历史任务规模、单任务失败隔离及旧写回后的新读取往返。
+
+**How to apply:** 本人待提交列表应限定有效待办并批量或有界读取，避免逐历史任务展开。错误必须带任务范围，只阻断不能证明完整性的任务；不能让单个历史异常抹掉其他健康入口。扩展记录兼容要实测旧进程替换 payload 后，新进程从保留的 owner_ref 恢复字段，并通过原命令幂等重试，不能只检查新写回 SQL 没有修改 owner_ref。
+
+本次逐提交说明、三个具名缺口、隔离脚本和证明范围见[main PR 复查记录](/Users/leslie/Documents/Playground/output/qc-batch-blocker-20261025/review-main-2842.md)及[PR #2842](https://github.com/world-sim-dev/sandai-data-smith/pull/2842)。修复采用同请求批量归属事实、按任务隔离失败、所有领域对象读取恢复不可变父范围；实现、隔离前后对照、页面证据和最新 Gate 以[review 修复记录](/Users/leslie/Documents/Playground/output/qc-batch-blocker-20261025/review-fixes-status.md)及该 PR 当前 head 为准，不将隔离调用预算等同于生产延迟。
+
+
+异构数据库替身也要验证参数语义。**Why:** PostgreSQL 的编号占位符按编号绑定，SQLite 的顺序实参按占位符首次出现绑定；CTE 优化移动参数后，旧用例可能交换作者与空间。**How to apply:** SQLite 复用 PostgreSQL SQL 时按占位符名称绑定，并保留真实结果断言；诊断与具名复验沿 review 修复记录回查，不能为测试适配改变生产的参数顺序。
+
+
+## 2026-10-26 批次通过与整包回交的边界
+
+**Why:** 数据包中的个人批次均通过供应商验收，仍可能存在旧整包退回、复检或冻结交接证据不覆盖当前整改结果的阻塞。原作者提交入口与混合首送范围修复不会替用户结清退回或重新交接；不能由行级“已通过”推断整包可提交，也不能把不同负责人阶段的展示混作一个状态。
+
+**How to apply:** 在同一生产版本下分别核对供应商和 Sand 负责人视角，确认整包实际阻塞原因、提交入口是否可用及剩余整改/复检。再按 disposition、父子执行与当前冻结证据定位接收人和下一步；没拿到具体记录前，不指派责任人、不直接关闭退回、不让用户重复提交已通过批次。本机 env 的目标缺失不证明生产对象不存在。
+
+纸面包的上线后只读验证、两种视角、确定事实和尚未定位的记录边界见[纸面包核对记录](/Users/leslie/Documents/Playground/output/qc-batch-blocker-20261025/paper-package-after-release.md)。发布是否完成沿[发布恢复记录](/Users/leslie/Documents/Playground/output/qc-batch-blocker-20261025/release-recovery-status.md)及目标生产 SHA 独立核验。
+
+
+## 2026-10-26 上层验收先关闭后的整改恢复闭环
+
+**Why:** 多轮答案整改中插入负责人复查后，后继质检和负责人报告通过，不一定意味着原整改执行已经完成。若上层退回已关闭，而下层恢复仍要求上层保持原 processing 版本，同时历史补偿又只接受 completed/resolved 的整改执行，就会形成双方都无法继续的状态。行级已通过与整包未结退回可以同时是真实数据。
+
+**How to apply:** 将最终正式报告、验收回执、原标注退回集合、祖先版本及当前执行错误放在同一时间线上核验；用只读授权检查复现具体拒绝点，区分持久化错误与实际日志。修复应核验精确冻结证据并补齐收尾顺序，不绕过未结退回保护，不要求重复提交已验收内容。累计 attempts 不等于已取得同等条数的失败日志，也不要在缺乏历史调用证据时归因为并发竞态。
+
+本次纸面包的真实记录、北京时间线、已部署代码坐标、双实例回读与纯读取复现见[根因报告](/Users/leslie/Documents/Playground/output/paper25-rootcause-20261026/report.md)。本次仅排查；是否恢复须以后续操作回执和重新读取为准。
