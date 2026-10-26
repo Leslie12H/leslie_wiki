@@ -69,6 +69,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-26：[v2 生成参数校验与 quota 权限](domains/sandai-platform/refs/v2-input-validation-entrypoints.md) — 漏传/非法值、同步报错与异步失败的专项证据；普通登录与配额管理员权限分开查证。
+
 - 2026-10-26：[OpenAPI 频率、并发与 TPM](domains/sandai-platform/refs/openapi-quota-entrypoints.md) — 既有组织配额、后台任务占位与管理员配置入口；附真实阈值/恢复与并发采样有效性的专项查证指针。
 
 - 2026-10-26：[API 开放平台 Dev Global 联调](domains/sandai-platform/refs/global-api-acceptance-20261026.md) — 正常可用接口、逐用例证据、fake 消费与清理的回查入口；区分参数拒绝、生成终态和真实业务验收。
