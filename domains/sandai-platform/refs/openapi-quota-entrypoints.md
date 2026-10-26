@@ -30,3 +30,10 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-global-
 - 2026-10-26 的本次工作仅只读分析和方案，未修改业务代码、配额或部署；当前线上生效情况需另查。
 
 **How to apply:** 先读取上述调度文档与真实配额回执，确认缺少的是配置启用、对用户展示、执行并发还是 token 计量。补 TPM 时明确预占 ID、重复请求、失败返还与窗口到期的语义，再用隔离环境验证多实例争抢、终态重复回调、未知受理和队列上限。
+
+## 2026-10-26 真实配额测试入口
+
+- 专项报告：`/Users/leslie/Documents/ChatGPT/Apipltform/postman/reports/quota-global-20261026/README.md`。阈值、窗口恢复、token TPM 检查范围、任务采样有效性、费用与待确认项以该报告及相邻 JSON/CLI 原件为准，不把默认配置当组织有效覆盖值。
+- 可复查脚本：项目 `postman/scripts/quota_acceptance.py`；probe / observe 为只读查询，concurrency 为会收费的 fake 任务创建。复查旧任务不重发创建请求。
+- **Why:** Postman CLI 退出码 0 只证明实际执行的断言通过；异步采样若未真正发出请求，空快照不能证明并发生效。
+- **How to apply:** 同时核对实际 HTTP 查询数、逐任务状态记录、样本完整性与断言数。没有队列/在途证据时保留未验证；修复采样先读已有任务，再依据当前授权决定是否增加付费样本。严格执行并发还需组织配额与内部 slot / 下游时间线。
