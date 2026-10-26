@@ -1268,3 +1268,5 @@
 - 2026-10-26：[EVOLVE 明确引用与自动选择分别验收](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26明确引用和自动选择应分别验收) — 来源目录身份、固定版本复制与自然比较结论的分层核对。
 
 - 2026-10-26: [EVOLVE connection acquisition diagnostics](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md) - Separate cold connect, driver health check, SQL and HTTP latency; instrumentation is not a performance fix.
+
+- 2026-10-26: [Full-detail authorization dependencies](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-full-detail-authorization-dependencies) - Separate permission checks from serial detail decorations and verify actual runtime tracing.

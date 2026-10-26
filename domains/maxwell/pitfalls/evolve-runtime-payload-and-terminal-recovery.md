@@ -336,3 +336,10 @@ links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navi
 **How to apply:** 分别核对现存身份查询的共享池统计、建连、查询和完整HTTP时长；用独立有界只读探针区分冷/热取得、事务开始、查询及提交，并以同一后端PID确认复用。独立池测量不等于真实API性能验收，不移除健康检查、关闭TLS或加长超时掩盖原因。建连错误可能含敏感配置，只记录固定安全分类。
 
 源码指针：Agent Server `internal/foundation/database/observability.go`、`internal/modules/identity/auth/infrastructure/store/sql.go`，及实际pgx版本的 `stdlib/sql.go` ResetSession。当前证据沿本页验收记录指针回查；代码通过与加载到服务分别核实。
+
+
+## 2026-10-26 Full-detail authorization dependencies
+
+**Why:** EVOLVE authorization uses the existing Business detail response, so post-authorization feature and asset-count decorations are still on its critical path. A slow dependency request is not necessarily a slow permission check.
+
+**How to apply:** Correlate the exact HTTP request with connection and SQL fingerprints before changing authorization. Map count queries back to their owning modules, retain full-response and immediate permission semantics, and measure bounded dependency cost. A later fast EXPLAIN is not proof of past server latency or a production fix. Current runtime/load evidence: main acceptance journal, 2026-10-26 09:00 entry. Code pointers: Agent Server app/api/http/studio_api.go businessHTTPController; EVOLVE app/integration/maxwellauth/resolver.go.
