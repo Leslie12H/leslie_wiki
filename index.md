@@ -1,4 +1,4 @@
-- 2026-10-26：[混合质检范围与失效确认](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#2026-10-26-混合范围与失效确认) — 固定分组跨来源证明与派检保持一致，旧整批确认失效须本人绑定新清单，原质检按最新版复验；运行与发布状态查修复记录。
+- 2026-10-26：[混合质检范围与失效确认](domains/sandai-data-smith/pitfalls/sandeval-transferred-author-handoff-and-mixed-qc-scope.md#2026-10-26-混合范围与失效确认) — 固定分组跨来源证明与派检保持一致，旧确认须本人重交，原链换版与原看板门禁同时核验；滚动版本兼容、运行与发布状态查修复记录。
 
 - 2026-10-26：[EVOLVE 历史目录评分覆盖](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-历史目录需要真实评分覆盖) — 授权后批量读取固定自动判定数量、过期摘要不冒充零值；自然选择与完整业务验收分别核对。
 

@@ -31,3 +31,5 @@ links: [sandeval-reassigned-answer-frozen-review-conflict, sandeval-partial-reas
 **How to apply:** 按稳定质检归属投影互不重复的固定成员分组，来源列举、版本读取、提交证明和派检共用同一标识。已有质检的题沿原责任链；新答案使用“核对答案版本 → 按最新版重新复验”，普通退回质检员不换版。原整批确认只有精确匹配当前完整成员和答案时才覆盖分组；失效确认由本人绑定新清单重交并追加回执，原历史不改写。验证须覆盖独立首送、原链复验、整包完整性及无重复成员，不能只验证按钮可点。
 
 实现从 `app/domain/annotation_inspection_partition.py`、`app/repositories/annotation_qc_allocation.py::inspection_owners`、`app/services/facts/task_assignments.py` 和 `quality/application/resolution/latest_answer_reinspection.py` 回查。转派操作人及无业务原因的审计边界、调查期间出现后续质检版本的核验、本人确认与质检候选、最终提交与Gate状态见[混合范围修复记录](/Users/leslie/Documents/Playground/output/qc-batch-blocker-20261025/mixed-fix-status.md)及[PR #2839](https://github.com/world-sim-dev/sandai-data-smith/pull/2839)。原作者、当前持卡人、各批验收人和整包最终提交人分别核验；整包尚未封存时不把回落规则说成已经指定了提交人。
+
+分组进入质检后还须反向约束原持卡批次。**Why:** 只更新质检队列，会让个人看板和普通修改仍按旧批次标识误判；滚动发布时，给旧领域对象直接增加序列化字段还可能令旧进程无法解码或在写回进度时丢掉门禁。**How to apply:** 来源提供父范围关联，贯穿预览和分配；准备中的分配也参与原批次门禁。兼容测试同时证明旧对象形状可读、旧进度写回不会丢失限制、真实数据库匹配父范围且拒绝其他范围。具体字段与存储实现沿修复记录和 `quality/infrastructure/persistence/batch_allocation_repository.py` 回查。
