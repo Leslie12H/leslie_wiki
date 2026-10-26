@@ -104,3 +104,5 @@ links: [sandeval-reassigned-answer-frozen-review-conflict, sandeval-partial-reas
 **How to apply:** 分开证明当前正式复核、活跃退回、负责人推进记录、新整包及真实提交入口。沿 `ResolutionService` 关闭后回调、`AdvancementService.after_submit/recover` 和 `LeaderQueryService._package_generation_blockers` 核对；恢复应精准唤醒同包待推进记录并保留权限、范围、锁和幂等，不重做验收或直接改状态。全局队列候选窗口和记录排序须现场取证，不承诺固定恢复时间。
 
 纸面 1019_04 的已部署源码、只读实时阻塞校验、先复核后结清的时间线与队列证据见[专项诊断](/Users/leslie/Documents/Playground/output/paper25-rootcause-20261026/paper04-diagnosis.md)。本次是诊断发现；是否已实现修复或恢复，必须重新读取正式推进与提交入口，不能从本页推断。
+
+**2026-10-26 唤醒回调的故障隔离。** Why: 整改关闭已经持久化后，上游重放失败仍可能中断后续整包唤醒；仅验证正常路径不能证明恢复闭环。How to apply: 将上游重放、同任务待推进读取和逐条负责人推进分别隔离，保留原身份、报告版本、锁与 CAS，失败由持久待推进记录兜底。对上游异常注入故障，证明新整包生成且原报告、实际交接均不被改写；页面仅在当前完整无分歧报告和真实退回校验通过后替换过期阻塞。实现、具名回归、CI 失败修复及发布边界沿 [PR #2871](https://github.com/world-sim-dev/sandai-data-smith/pull/2871) 和[本轮审查记录](/Users/leslie/Documents/Playground/output/paper25-rootcause-20261026/wakeup-fix-review.md)核对。
