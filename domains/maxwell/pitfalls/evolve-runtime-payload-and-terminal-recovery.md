@@ -512,3 +512,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 在同一次有界遍历中记录首个 total，拒绝后续 total 漂移或累计项数超过声明总量，沿原不可用响应让用户重新读取，不返回部分授权范围。不额外授予权限或无限重试。覆盖稳定多页、增删、重复项和上游失败；注意这只是可检测变化保护，不能声称无快照协议的多次请求具有原子一致性。
 
 - 源码指针：EVOLVE `app/integration/maxwellauth/businesses.go` 及测试；Agent Server `identity/business/infrastructure/store/sql.go` 提供 offset 分页。红绿回归、隔离 PG 总览校验、构建和运行加载边界见主验收记录2026-10-27 02:12条目，不以合成故障代替实际权限变更验收。
+
+
+## 2026-10-27 本地 Runtime 进程存活不代表依赖可消费
+
+**Why:** Docker停止后，本地API和Worker仍可存活，healthz与进程检查也可能通过，但Temporal/Redis已断开。A2A可先建空Thread，再等待持久受理；调用方超时不证明服务端请求已终止。直接恢复依赖可能让已取消批次的脱离调用方重试迟到执行。
+
+**How to apply:** 真实运行前同时核对API/唯一同源Worker、Temporal协议健康及任务队列实际poller、Redis和原文件/评分依赖。发生故障先停止当前批次后续调度，保留错误与用量；只读核对Thread/Run与Temporal持久受理，再处理残留请求，恢复原依赖后重新验证。不要删除空线程、改写错误或把容器启动当业务成功。是否可重发必须依据原请求的持久化结果，而非单独HTTP超时。
+
+- 指针：Maxwell `runtime/infrastructure/temporalruntime/client.go` 的受理重试与进程生命周期；本次隔离环境中断、9空线程无Run、无新Temporal工作流、恢复后真实任务回执的分层证据见主验收记录2026-10-27 02:27章节。
