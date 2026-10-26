@@ -1295,3 +1295,5 @@
 - 2026-10-26：[基线来源与历史选取验收](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-基线来源说明不能替代选取验证) — 绑定/配置回退、模型消费与实际选取、单轮覆盖与稳定性结论分开核验。
 
 - 2026-10-26：[Skill 按需细则与自然场景分层](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-skill-细则按需加载与自然场景分层) — 参数帮助一致、参考文件真实可读、明确条件与模糊条件分别验收。
+
+- 2026-10-26：[EVOLVE 证据检索与历史投影](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-检索覆盖与历史结果投影分别核对) — 字节有界检索、自然归因边界、精确历史汇总补建与原始评分不变证明。

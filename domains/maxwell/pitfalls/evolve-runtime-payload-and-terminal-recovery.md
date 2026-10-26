@@ -412,3 +412,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 原件读取复用既有精确授权和冻结绑定，提供有界UTF8字节窗口、归档成员序号、分页和名称筛选；不解包落盘、不跟随链接、不把整个大文件塞入历史JSON。独立核对实际读取成员所属Run/阶段、续读覆盖和最终因果表述；未读取对应失败事件时保留未知，不把局部证据推测成根因。验证运行、只读比较、采纳是不同动作，允许一次正常拒绝后继续独立验证，不代表允许采纳或绕过拒绝。
 
 指针：EVOLVE application/queries/evidence_text.go及evidence_files.go、app/transport/mcp/schemas.go。本次自然36读取范围、未成立的归因、双轮独立Run与不采纳边界，沿主验收记录2026-10-26 15:08条目核验。
+
+
+## 2026-10-26 检索覆盖与历史结果投影分别核对
+
+**Why:** 归档检索按过小的成员数量分页，会让不足一兆字节的多阶段证据也需要多次模型调用；工具能搜索不等于Agent已经覆盖失败阶段。另一方面，历史Run有原始评分但没有派生汇总job时，页面缺汇总不代表需要重新执行或重新评分。
+
+**How to apply:** 检索以实际字节、命中输出和总体成员上限约束工作量，保留续读与跳过覆盖说明，避免按无关的小成员数强制分页。查询匹配后仍核对Run身份和上下文，不能把关键词命中等同因果证据。历史汇总先只读核对原Run/Trial与投影job；缺失时使用明确业务和Run范围、默认dry-run的维护入口，仅幂等补建派生job，由正常Worker生成汇总。独立对照原记录摘要不变、Worker完成和UI回读；禁止在GET中全扫历史大JSON，禁止直接改分制造比较结果。
+
+指针：EVOLVE queries/evidence_text.go、cmd/evolve-standard-maintenance、infrastructure/postgres/result_maintenance.go。当前实现、原件技术检索与natural37未完成归因、旧基线投影恢复及真实分数，沿主验收记录2026-10-26 16:57及后续条目查证；不把这些技术修复当作候选提升或已发布证明。
