@@ -1366,3 +1366,5 @@
 - 2026-10-27：[原生评分保存与准入一致性](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md#2026-10-27原生评分的保存与运行准入必须一致) — 实际 Agent 人审稿不得被误要求编译记录；传统编译证明与实际测量校验分别保留。
 
 - 2026-10-27：[后续复验轮次退回标注员中断](domains/sandai-data-smith/pitfalls/sandeval-manual-return-partial-write.md#2026-10-27-后续复验轮次仍关联祖先整改执行) — 冻结执行仍指向合法祖先组时的严格接续证明、原意图恢复与本人可编辑分层验收；main PR #2894 和只读证据入口。
+
+- 2026-10-27：[独立诊断目标与执行授权](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md#2026-10-27诊断目标冻结与执行授权不是同一状态) — 从 MCP 会话绑定入口定位非并发版本冲突；区分草稿冻结、单次人审与长期自动授权，权限调整须沿正式确认。

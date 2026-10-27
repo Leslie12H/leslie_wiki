@@ -122,3 +122,12 @@ links: [evolve-runtime-payload-and-terminal-recovery]
 **How to apply:** 将真实草稿确认/冻结产物送入准入函数，核对无需伪造编译历史；实际评分方法、版本、业务权限和配置仍在测量准入检查。传统 Agent Judge 与 CaseSet 的编译依据要求保持。草稿静态通过和正式冻结不能替代实际计划受理。
 
 - 入口：EVOLVE `commands/service.go` 的 `invokeJudgeSpecMethod`、`commands/run.go` 的 `frozenRunMethods`、`native_draft_test.go`；红绿和完整回归沿 `.tmp/native-reviewed-admission-*-20261027.log`，真实计划恢复沿 natural60 验收记录。
+
+## 2026-10-27：诊断目标冻结与执行授权不是同一状态
+
+**Why:** MCP 的运行入口可能在只读 PrepareRun 前进入会话绑定的自动执行授权分支。通用 optimistic version conflict 也可能表示请求目标不同于授权目标，而不是并发、过期或资源损坏；反复准备不会解决这类拒绝。草稿已确认、内容已冻结，不等于既有自动授权已经纳入该目标。
+
+**How to apply:** 沿实际入口核对 StartBoundOptimizationRun、授权快照中的目标版本、会话身份/期限和单次人工测量边界。原版与候选同时失败时先检查共同权限条件。保留原错误类型和拒绝行为，给出准确原因；不能只删早期检查，因为后续测量授权、事务回执和重放仍需保持同一边界。若要支持独立目标，先明确单次人审和长期自动授权的区别，提交涉及准入语义的变更方案；确认草稿的授权不自动等于同意修改产品鉴权策略。
+
+- 源码入口：EVOLVE `application/commands/optimization_explicit_run.go`、`optimization_verification.go`、`application/ports/human_measurement.go`。实际边界以当前源码和人审记录为准。
+- 复现及证据入口：验收 journal 的 2026-10-27 目标授权冲突小节，`natural60-diagnostic-plan-20261027/goal-authorization-conflict-proof.jsonl`、`diagnostic-goal-authorization-{red,green,race}-20261027.log`，待审方案 `output/evolve-unified-20261019/diagnostic-goal-authorization-20261027.md`。未实现的方案不得记为已具备能力。
