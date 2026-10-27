@@ -77,6 +77,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-27：[管理员验收前查验题目入口](domains/sandai-data-smith/pitfalls/sandeval-manual-return-passed-status-handoff-gap.md#2026-10-27-管理员先看题再验收) — 待验收、质检内容只读查验与正式验收分开；实际账号权限、管理中心列表及分组独立核对。
+
 - 2026-10-27：[评分队列与消费者恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-评分-api-排队回执不证明消费者存活) — API 202、Worker 认领/心跳与实际得分分别查证；超时原记录保留，正式重评不算独立执行。
 
 - 2026-10-27：[EVOLVE 关联测量进度与写入归属](domains/maxwell/pitfalls/evolve-linked-measurement-progress.md) — 独立验证目录、SSE 聚合和取消请求须分别核对；复用授权关联但不转移实际 Work。
