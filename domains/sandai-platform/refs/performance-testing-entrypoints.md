@@ -41,3 +41,13 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why:** 监控应运行在团队的云端系统中；缺少登录或数据源不能默认为用户接受本地替代交付。
 
 **How to apply:** 先核对管理 Dev 的账号、地域、现有工作区编辑能力及数据源，再绑定和验证云上看板。业务代码可不改，但采集配置/组件仍需建设；采集器仅内网开放，逐实例采集进程计数。
+
+## 2026-10-27 CMS 原生看板与接入验收
+
+- 正式云端入口：[API 平台 Dev · 限流与调度](https://cms.console.aliyun.com/hybrid-monitor/dashboard2/custom/akpvcwp0891o2k374f6jfubgdd)。配置、当前接入状态及证据指针在工作区 `monitoring/aliyun/README.md` 和 `docs/observability-readiness.md`；不在知识库保存账号名额或实例数量等可变快照。
+- 云监控 CMS 原生模型与标准 Grafana 模型分开：原生备份 `cms-dashboard.native.json`，标准 Grafana 备份 `grafana-dashboard.json`。CMS 导入校验成功不等于组件可渲染，导入原生 JSON 会新建大盘；必须核对真实面板类型、表达式和刷新后的持久化。
+- 权限授权可能因工作区账号名额失败，申请提交不等于权限已生效；核对返回结果，不删除其他用户或自动购买升级。实例下拉无选项只是当前账号可见范围的结果。
+
+**Why:** 云端容器存在、组件渲染、数据源绑定、近期采样和业务健康是不同证据。看板为空不能被解释为指标正常。
+
+**How to apply:** 用原生 JSON Model 读回面板数与查询，再刷新验收。部署内网 exporter、逐实例抓取并绑定真实 Prometheus 实例后，用正常活动核对 up、心跳、新鲜度和计数变化；此后才能作为压测观测入口。
