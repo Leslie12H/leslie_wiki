@@ -81,6 +81,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-27：[管理后台 RPM 修改与恢复](domains/sandai-platform/refs/admin-rpm-change-verification-entrypoints.md) — 独立飞书登录、组织归属、继承语义、真实阈值/恢复与费用的查证入口。
+
 - 2026-10-27：[失败分配残留与已验收整改冲突](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md#2026-10-27-失败分配留下的送审批次与已验收整改冲突) — 无实际报告的重复普通送审记录仍参与分区；原复验验收、当前正式答案与整包交接分层核对，修复及回归沿 main PR #2892 查证；复审以正式占用代替可被重试覆盖的最近错误码。
 
 - 2026-10-27：[管理员验收前查验题目入口](domains/sandai-data-smith/pitfalls/sandeval-manual-return-passed-status-handoff-gap.md#2026-10-27-管理员先看题再验收) — 待验收、质检内容只读查验与正式验收分开；实际账号权限、管理中心列表及分组独立核对。
