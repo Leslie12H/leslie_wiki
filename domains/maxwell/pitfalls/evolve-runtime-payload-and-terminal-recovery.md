@@ -557,3 +557,20 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 沿冻结续答策略判断是否允许回答，不编造后续用户信息。真实问题、目标 INPUT_REQUIRED 与未完成执行状态必须保留；采集完整且原执行已停止才允许进入原评分流程，不能把采集完成当作题目通过。没有真实问题、续答耗尽或取消未确认仍保留失败。覆盖生产 Runner 的固定脚本/无续答对话两条路径，以及原事件离线回放；离线回放不是新模型执行或新评分，旧结果不可回写。
 
 - 指针：nextplay-eval `maxwell-runtime/src/nextplay_runtime/{runner,executor}.py`；Maxwell 主验收记录 2026-10-27 18:10 与 `.tmp/conversation-real-event-replay-20261027.json`。候选是否真的修改须比对资源哈希，名称/说明变化不能当作 Prompt 内容已更新。
+
+
+## 2026-10-27 冻结来源编辑与待审稿续改不是同一个操作
+
+**Why:** 资源编辑工具若以冻结 Variant 为完整输出模板，它返回的 profilePayload 不包含另一个待审稿的新资源。Agent 在待审稿哈希被拒绝后改从冻结来源重做单文件，再保存整个返回值，可能悄悄回退其它文件。单文件正文确实变了、工具成功或最终回答“其它未改”，都不足以证明方案完整性。
+
+**How to apply:** 同时比较输入待审稿、冻结来源及新稿的每份资源引用与实际字节，特别核对未编辑路径、execution 声明和最终说明。哈希拒绝不可放宽；先区分已有契约是否包含待审稿续改，再设计显式版本来源与原授权锚点，契约新增按项目规则书面审批。不要隐式选择最新稿、静默合并或自动冻结来绕开人审，也不能用辅助合并成功覆盖独立自然场景失败。
+
+- 指针：Maxwell `commands/resource_edit.go`、`resourcecontent/source_runner.go` 与 MCP schema；具体三方差异与自然失败见主验收记录2026-10-27 19:40及集成工作区 `.tmp/natural63-draft-content-review-20261027/`。拟议契约与批准/实施状态查 `output/evolve-unified-20261019/draft-resource-edit-contract-20261027.md`，不能把方案当已存在能力。
+
+## 2026-10-27 流重连等待也必须属于订阅生命周期
+
+**Why:** SSE握手失败后，网络请求可已清理，但延时重连仍在等待。只中止请求或比较Work ID不能识别隐藏后恢复、退出后重开同Work的旧等待；旧回调可能在后台重新连接或建立重复流。
+
+**How to apply:** 在拆除订阅时使整个生命周期失效，延时完成后核对订阅代次、页面可见性及目标。技术回归覆盖隐藏、隐藏后立即恢复、同Work重新订阅，不能只模拟不同Work导航。该缺陷修复不能自动解释所有线上进度延迟；真实服务阶段变化和浏览器自动更新仍应独立验收。
+
+- 指针：Studio `EvolveWorkspaceStore.ts` 与既有 `.test.mjs`；旧红/新绿和验证边界见主验收记录2026-10-27 19:40、`.tmp/work-events-retry-lifecycle-*`。

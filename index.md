@@ -1377,3 +1377,4 @@
 - 2026-10-27：[无续答对话的澄清采集](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-无续答对话的澄清也是可测量结果) — 输入结构一致性、目标未完成与采集完成分层、保留原评分及真实资源差异核验。
 
 - 2026-10-27：[冻结质检批次的受控退回恢复](domains/sandai-data-smith/pitfalls/sandeval-frozen-batch-return-after-duplicate-defer.md#2026-10-27-明确授权后的单案恢复) — 精确差集与原生退回审计、独立整改工作台验收，以及同视频不同Caption来源的去重裁定边界。
+- 2026-10-27：[EVOLVE 待审资源续改与订阅生命周期](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-冻结来源编辑与待审稿续改不是同一个操作) — 三方资源差异防回退、显式草稿来源契约边界，以及同Work重开时旧SSE重连失效的回归指针。
