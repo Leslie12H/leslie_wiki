@@ -40,3 +40,12 @@ links: [sandeval-returnable-impersonation]
 **How to apply:** 保留原浏览器、身份与页面；先按服务器授权的这两题作用域只读导出草稿、冲突副本、指针及待确认请求，再用准确整改链接定位服务端答案版本、内容与保存回执。管理员确认差异后定向恢复本机内容或处理已证实无效的残留，再重新核对；不清空站点存储，不在核对前重放保存/提交，也不由侧栏“未保存”要求用户重新做题。处理具体实例需要原整改链接和原设备证据，纯后台改状态不能证明本机副本已恢复。
 
 代码指针：`platform/frontend/src/pages/myTasks/correctionDraftGuard.ts::readScope/inspectCorrectionDraft`、`autosaveStorage.ts::inspectDraftRecord`、`largeDraftStorage.ts::inspectLargeDraftRecords`、`pendingAnswerAction.ts::inspectPendingAnswerActionRecords`，以及`pages/quality/resolution/AnswerCorrectionPanel.tsx`的草稿阻断标签。普通读取与保留异常记录的检查路径要分别核对，原始备份应先于可能触发草稿恢复/整理的交互。此次仅解释截图与核对源码，没有取得当事人的整改链接或读取原设备存储，未修复具体两题。
+
+
+### 2026-10-27 原设备不在现场时的交接
+
+**Why:** 另一台电脑的浏览器草稿无法由当前电脑或服务端直接读取；正式保存回执也不能证明随后没有本机修改。
+
+**How to apply:** 原设备先保留可见编辑文本，再由管理员在原整改页运行限定两题作用域的只读导出，保全Storage、IndexedDB、冲突副本和待确认记录；收到导出后再与正式答案核对，决定定向恢复或处理残留。不能将“换电脑继续提交”作为本机记录已保全的证据。
+
+本次具体链接、服务端保存回执、原设备交接步骤和只读脚本见本机证据目录 `/Users/leslie/Documents/Playground/output/draft-read-20261027/`，先读 `HANDOFF.md`，再用 `read.json`核对；脚本是 `export-original-browser-drafts.js`。脚本有5个隔离检查，但尚未在报错电脑执行，具体存储错误与恢复结果仍未知。此段补充前述仅截图阶段，不能理解为已恢复原设备。

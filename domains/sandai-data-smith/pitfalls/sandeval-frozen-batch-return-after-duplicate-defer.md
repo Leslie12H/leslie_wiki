@@ -34,3 +34,6 @@ links: [sandeval-caption-refine-skip-defer-handoff, sandeval-remediation-frozen-
 **How to apply:** 来源服务的 `annotation_correction_recipient` 使用包含待定成员的原任务义务，再校验真实账号、任务状态、题集、正常卡身份与唯一当前持有人；该内部选项不能扩展到普通送审或整改发布。后两者继续排除有效待定，全待定不能创建空复验；真正越界、缺卡、重复卡、多个持有人和无权限仍应阻断。实现与10个回归场景见[通用修复PR #2914](https://github.com/world-sim-dev/sandai-data-smith/pull/2914)；完整Gate、只读候选重放、同次清理的存量核查范围及发布状态见[通用修复证据](/Users/leslie/Documents/Playground/output/qc-return-scope-20261027/general-fix.md)。使用前重读PR和生产部署，完整Gate通过或单案已恢复均不代表通用代码已上线。
 
 代码指针：`app/services/facts/task_assignments.py` 的 `_quality_context`、`_quality_context_from_facts`、`_annotation_correction_context` 与 `annotation_correction_recipient`。题集/持有人等判断继续沿原来源事实，不增加运维标签白名单，也不删除待定或改写冻结历史。
+
+
+2026-10-27 用户另行要求向main发起PR，入口为 [PR #2916](https://github.com/world-sim-dev/sandai-data-smith/pull/2916)。检查、合并与部署状态以该PR和关联发布记录实时查询；提PR本身不代表已合并或部署。

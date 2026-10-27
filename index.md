@@ -1386,3 +1386,5 @@
 - 2026-10-27：[冻结批次待定退回的通用修复](domains/sandai-data-smith/pitfalls/sandeval-frozen-batch-return-after-duplicate-defer.md#2026-10-27-通用修复与复发边界) — 原任务义务与有效送审范围分离、负向保护回归及Gate/发布分层验收指针。
 
 - 2026-10-27：[整改本机草稿读取失败的处理顺序](domains/sandai-data-smith/pitfalls/sandeval-session-recovery-impersonation.md#2026-10-27-整改清单的本机草稿读取失败) — 未保存标签与正式答案分开核对，先保全原设备记录再恢复或处理残留；截图不替代具体存储异常证据。
+
+- 2026-10-27：[原设备不在现场的整改草稿交接](domains/sandai-data-smith/pitfalls/sandeval-session-recovery-impersonation.md#2026-10-27-原设备不在现场时的交接) — 限定两题的只读导出与正式保存回执分别核对，未执行原设备恢复；冻结批次退回修复main入口为PR #2916。
