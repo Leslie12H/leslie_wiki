@@ -87,3 +87,11 @@ links: [evolve-runtime-payload-and-terminal-recovery]
 **How to apply:** 分别提供评分服务契约和平台判定结构，明确公共绑定应用于每题、题内同名覆盖与指定指标判定的边界。将文档JSON交给真实解析器和判定函数校验，再检查实际 Provider 请求消费及最终持久化差异。模型承认一份草稿未修好，不能抵消它对另一份草稿可用性的失实判断；保留失败，不反复用相同请求重试。
 
 - 指针：Judge/Case Skill入口、EVOLVE application/evaluation/contracts.go 与 domain/evaluation/native_scores.go；主验收记录2026-10-27 13:09及集成工作区 .tmp/natural58-native-policy-20261027/assessment.json。文档与技术验证通过不表示自主修复或发布完成。
+
+## 2026-10-27：运行参数实验与产物分层判定
+
+**Why:** 信息完整送达后仍不修复结构，不能继续把失败归因于缺提示；请求缺省推理参数也不能证明供应商关闭了推理。一次显式参数实验可能修好了真实结构，同时仍误解用户措辞。模型调用次数与记录用量次数不一致时，完成状态不代表成本完整。
+
+**How to apply:** 从原UI与实际Provider请求核对当前参数，隔离预设单次受控修改、事后恢复并独立回读。对照持久化payload与冻结原件、实际公共绑定与outcome，再单独评价正文和最终回答。记录上下文差异，不能将一次结果当干净A/B或普遍可靠；对缺失用量保留已知合计和缺失数，不猜测收费或恢复原因。
+
+- 实验/恢复/结构比较与部分自然结论入口：Maxwell验收journal 2026-10-27 14:26及集成工作区 `.tmp/natural59-reasoning-control-20261027/`。最新运行参数必须重新查询，不从本文推定。
