@@ -69,3 +69,12 @@ links: [evolve-runtime-payload-and-terminal-recovery]
 **How to apply:** 核对实际工具回执和下一次模型请求。列表与单份读取在授权完成后提供一致的非阻塞反馈，整次列表共用有界检查预算，不追加写入或扩大权限。用户反馈采用独立有界展示预算，完整执行敏感内容排除后再按 UTF-8 边界截断，并明确提示截断；结构化原回执保持不变。分别验证格式失败、历史冻结、取消、空列表、超长说明和敏感词在截断点之后的情况。技术传输通过不等于 Agent 已修好跨资产语义。
 
 - 源码指针：EVOLVE `internal/app/toolcaller_draft_feedback.go`、`internal/app/transport/mcp/handler.go` 与对应测试。红绿及实际自然消费证据见主验收记录 2026-10-27 natural56 和集成工作区 `.tmp/natural56-paired-scoring-20261027/`；当前验收结论以该记录为准。
+
+
+## 2026-10-27：组合事实送达后仍须核验实际修复
+
+**Why:** 分别列出题内绑定与公共绑定，仍需模型自行推演组合关系。复用执行侧合并函数能提供确定的逐题继承事实，但即使完整预览进入实际 Provider 请求，Agent 也可能只改说明文字，误把新版本号或保存成功当成配置修复。
+
+**How to apply:** 组合预览必须明确是假设配套，限定同业务、同任务的可编辑草稿，不隐式选用、不重判历史；用真实 MergeBindings 计算同名覆盖与公共继承，不凭名称猜测评分。验收应定位至 providerRequest 中的具体消息，再比较前后保存 payload、修订归属和判定策略。若内容未变且原拒绝仍在，保留自然失败；不能反复增加反馈说明来宣称可靠性。
+
+- 源码：EVOLVE `application/commands/draft_check.go` 的 EditableDraftPairingNote、`domain/metric/binding.go`；技术边界测试与 natural57 真实结果见主验收记录及 `.tmp/natural57-pairing-repair-20261027/assessment.json`。
