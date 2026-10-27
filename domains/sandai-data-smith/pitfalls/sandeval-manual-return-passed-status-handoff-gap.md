@@ -2,7 +2,7 @@
 name: sandeval-manual-return-passed-status-handoff-gap
 type: pitfall
 created: 2026-10-16
-updated: 2026-10-23
+updated: 2026-10-27
 tags: [sand-eval, manual-return, reinspection, handoff, state]
 links: [sandeval-work-handoff-unsettled-occupancy]
 ---
@@ -30,3 +30,12 @@ links: [sandeval-work-handoff-unsettled-occupancy]
 - 权限复查应区分沿原人员重检与更换人员：原负责人退回只需保留既有验收权限并核验原质检资格，不能额外要求派检权限；更换质检员才要求派检权限。用真实 ReviewerService 覆盖只有 review 而没有 assign_reviews 的负责人。
 - [本次恢复与复查报告](/Users/leslie/Documents/Playground/output/kemeng25-blocker-20261023/recovery-result.md) 指向两实例回读、原生冻结计划和持久审计；生产状态会变化，继续操作前重新读取。
 - [根因与展示修复 PR #2781](https://github.com/world-sim-dev/sandai-data-smith/pull/2781) 是当前代码、使用文档及 Gate 状态入口；PR、合并、部署和业务重检完成仍需分别核验。
+
+
+## 2026-10-27 账号仍有质检权限，空间归属已改变
+
+**Why:** “原质检员当前无检查资格”由退回弹窗比较原报告assignee与当前关卡候选名单产生。供应商质检不仅要求账号/空间有效和quality_inspect，还要求当前人员空间与该包供应商空间一致；因此账号仍有效且角色未变，迁入其他空间后也可能无法接原供应商包的新重检。包列表的历史质检员姓名不能证明当前资格。
+
+**How to apply:** 按截图精确QT读取当前空间、ReviewerFacts、原生候选名单并逐人validate_candidates，区分账号停用、权限缺失和空间不一致。确需退回时，在“重检质检员”下拉明确选择当前合格接手人后填原因确认；仅需完成既有通过报告的交付时，应先走负责人验收，不能把“待验收”当作必须重检。缺少弹窗批次名时只报告已核验的候选范围，不臆断用户具体点击行。不得为消除提示直接扩大角色或移动人员。
+
+现场对象、逐人原因、候选与原生验证、部署SHA、8批待验收和操作说明见[临科资格提示只读报告](/Users/leslie/Documents/Playground/output/reviewer-qualification-20261027/report.md)。当前人员归属和任务状态会变化，使用前重新核验；本次未执行退回或变更成员。

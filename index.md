@@ -1353,3 +1353,5 @@
 - 2026-10-27：[组合评分事实与实际修复](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md) — 同任务草稿组合预览、Provider 请求消费证据与仅改正文的误报核验。
 
 - 2026-10-27：[外部评分配置与平台判定契约](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md#2026-10-27外部评分配置与平台判定契约分层) — 区分方法模板、公共绑定及整题判定；实际消费与配置修复分别验收。
+
+- 2026-10-27：[原质检员有权限但不在原空间](domains/sandai-data-smith/pitfalls/sandeval-manual-return-passed-status-handoff-gap.md#2026-10-27-账号仍有质检权限空间归属已改变) — 当前候选、供应商空间匹配、重检接手人选择与待验收分流；附只读现场证据。
