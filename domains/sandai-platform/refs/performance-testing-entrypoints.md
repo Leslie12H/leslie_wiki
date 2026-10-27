@@ -31,3 +31,13 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why:** 运维模板、累计快照和旧说明都容易被误作实时业务观测，导致压测通过而积压或补偿问题未被发现。
 
 **How to apply:** 先让运维给出目标环境大盘并用冒烟证明数据变化，再补业务队列/真实执行/费用只读采样；无法访问时明确保留未核实，不能断言不存在。
+
+## 2026-10-27 阿里云看板交付入口
+
+- 用户明确选择阿里云看板作为交付位置，暂停本地网页路线。配置入口为工作区 `monitoring/aliyun/README.md`，相邻 Grafana 导入文件、JSON exporter 映射与采集任务示例以原文件为准。
+- 现有业务 JSON 经独立 exporter 接入阿里云 Prometheus，再由托管 Grafana 展示；ARMS 已采集的基础指标优先复用，实际查询从目标应用面板获取。配置准备不等于已部署或已有实时数据。
+- 官方指针：[阿里云自定义可观测页面](https://help.aliyun.com/zh/arms/application-monitoring/use-cases/custom-observable-page)、[prometheus-community/json_exporter](https://github.com/prometheus-community/json_exporter)。
+
+**Why:** 监控应运行在团队的云端系统中；缺少登录或数据源不能默认为用户接受本地替代交付。
+
+**How to apply:** 先核对管理 Dev 的账号、地域、现有工作区编辑能力及数据源，再绑定和验证云上看板。业务代码可不改，但采集配置/组件仍需建设；采集器仅内网开放，逐实例采集进程计数。
