@@ -548,3 +548,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 用同一 Thread 的确认受理回执与原始观察补充内部采集身份，保持原失败和空完成轮次；不能编造完成状态或放松原事件身份、终态和分页校验。分别核对外层取消、内层原生 Run 终态、证据封存与资源清理，取消成功不代表资源已删除。测试须组合真实采集器与 Runner，在实际存储边界注入失败；原事件离线回放与新执行验收分别标记，旧结果不覆盖。
 
 - 指针：nextplay-eval `maxwell-runtime/src/nextplay_runtime/{runner,models,trajectory}.py` 及 `tests/test_standalone.py` 的中断+持久化采集组合；真实取消回执、93条原事件回放、独立下载包验证见主验收记录2026-10-27 08:15条目。
+
+
+## 2026-10-27 无续答对话的澄清也是可测量结果
+
+**Why:** 固定消息脚本与 continuation.mode=none 的单轮对话都没有合法自动续答；若只有前者把真实 AskUser 封存供评分，后者却映射成采集失败，会使同样的澄清行为因输入结构不同而丢失评分机会。调优 Agent 可能转而提出禁用澄清工具来适应这一采集缺陷。
+
+**How to apply:** 沿冻结续答策略判断是否允许回答，不编造后续用户信息。真实问题、目标 INPUT_REQUIRED 与未完成执行状态必须保留；采集完整且原执行已停止才允许进入原评分流程，不能把采集完成当作题目通过。没有真实问题、续答耗尽或取消未确认仍保留失败。覆盖生产 Runner 的固定脚本/无续答对话两条路径，以及原事件离线回放；离线回放不是新模型执行或新评分，旧结果不可回写。
+
+- 指针：nextplay-eval `maxwell-runtime/src/nextplay_runtime/{runner,executor}.py`；Maxwell 主验收记录 2026-10-27 18:10 与 `.tmp/conversation-real-event-replay-20261027.json`。候选是否真的修改须比对资源哈希，名称/说明变化不能当作 Prompt 内容已更新。
