@@ -51,3 +51,12 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why:** 云端容器存在、组件渲染、数据源绑定、近期采样和业务健康是不同证据。看板为空不能被解释为指标正常。
 
 **How to apply:** 用原生 JSON Model 读回面板数与查询，再刷新验收。部署内网 exporter、逐实例抓取并绑定真实 Prometheus 实例后，用正常活动核对 up、心跳、新鲜度和计数变化；此后才能作为压测观测入口。
+
+## 2026-10-27 Dev 采集实施清单
+
+- 可执行步骤与各阶段验收看工作区 `monitoring/aliyun/implementation-runbook.md`；目标身份以当前部署为准。Dev 环境从 Zeus `deployment/README.md` 回查，不能混用并存 overlay 的 namespace。
+- dispatcher 指标的提供条件从 OpenAPI `TaskDispatcherHealthController.java` 与有效配置核对，不能把普通 API Pod 上的 404 推断为整个环境没有指标。
+
+**Why:** 模板、运行角色与采集目标不一致，会产生空面板或误采其他环境；固定 Pod IP 在重建后也会失效。
+
+**How to apply:** 先验证各角色源 JSON，再验证 exporter 输出、自动发现、数据源查询和面板联动；这条链路与真实压测任务及费用确认分别验收。

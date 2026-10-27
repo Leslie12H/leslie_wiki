@@ -1,4 +1,4 @@
-- 2026-10-27：[API 平台阿里云看板入口](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-27-阿里云看板交付入口) — CMS 原生云看板、Grafana 权限、JSON 指标采集映射及云上验收边界。
+- 2026-10-27：[API 平台阿里云看板入口](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-27-阿里云看板交付入口) — CMS 原生云看板、Grafana 权限、JSON 采集实施清单及云上验收边界。
 
 - 2026-10-27：[EVOLVE 单次目标确认页](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md#2026-10-27单次目标与长期授权的确认页须分别核验) — 原授权快照与本次冻结目标分别核对，工具计划卡片不等于审核可用。
 - 2026-10-27：[EVOLVE 独立目标的单次人工许可](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md#2026-10-27独立目标须绑定单次人工运行回执) — 只读计划、已审目标、事务复核与精确回执，保留自动 Grant 和根预算。
