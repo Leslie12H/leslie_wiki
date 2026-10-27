@@ -1369,3 +1369,5 @@
 - 2026-10-27：[后续复验轮次退回标注员中断](domains/sandai-data-smith/pitfalls/sandeval-manual-return-partial-write.md#2026-10-27-后续复验轮次仍关联祖先整改执行) — 冻结执行仍指向合法祖先组时的严格接续证明、原意图恢复与本人可编辑分层验收；main PR #2894 和只读证据入口。
 
 - 2026-10-27：[独立诊断目标与执行授权](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md#2026-10-27诊断目标冻结与执行授权不是同一状态) — 从 MCP 会话绑定入口定位非并发版本冲突；区分草稿冻结、单次人审与长期自动授权，权限调整须沿正式确认。
+
+- 2026-10-27：[发布后旧推进恢复与队列窗口](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md#2026-10-27-上线后旧推进未恢复与失败分配仍显示待处理) — 有效分区、历史失败分配、后台候选入队与整包交接分层验收；退避上限不等于端到端恢复时限。
