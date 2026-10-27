@@ -60,3 +60,14 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why:** 模板、运行角色与采集目标不一致，会产生空面板或误采其他环境；固定 Pod IP 在重建后也会失效。
 
 **How to apply:** 先验证各角色源 JSON，再验证 exporter 输出、自动发现、数据源查询和面板联动；这条链路与真实压测任务及费用确认分别验收。
+
+## 2026-10-27 已授权后的实际接通验收入口
+
+- 持续变化的部署、任务、指标数量、新鲜度与面板保存结果，查工作区 `monitoring/aliyun/README.md`、`exporter.k8s.yaml`、`scrape-config.dev.json`，以及忽略目录 `.local/aliyun-dashboard/connection-test/`。飞书方案第 10 节同步接通状态，不在知识库复制运行快照。
+- 既有实例列表要等加载完成再判断缺失；CMS 原生面板的实例选择必须保存后刷新，并从 JSON Model 回读每个查询的 `clusterId`。在编辑器看到选中不等于配置已经持久化。
+- 官方 JSON exporter 的缺字段行为可能为 HTTP 200 且无样本，因此验收应同时检查预期指标存在、抓取 UP 和近期调度心跳；不能用 UP 单项代替完整性或业务健康。
+- 独立 namespace 创建被拒绝时，先判断现有授权命名空间能否容纳仅选中采集器的受限资源；不为监控主动授予角色或改业务 Deployment。实际清单与回退以工作区文件为准。
+
+**Why:** 采集组件 Ready、Prometheus UP、指标完整、近期心跳与面板持久化各自可能独立失败，单一绿灯会掩盖空面板。
+
+**How to apply:** 先逐源核对，再查完整指标与心跳，最后保存、刷新、逐图验收。真实压测仍需独立确认流量、预算、任务终态、HTTP 延迟和费用证据。

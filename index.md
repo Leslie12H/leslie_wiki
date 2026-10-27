@@ -1,3 +1,5 @@
+- 2026-10-27：[API Dev 采集接通与保存验收](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-27-已授权后的实际接通验收入口) — 既有实例复用、缺字段与 UP 区分、心跳新鲜度、CMS 保存后逐图回读及受限部署入口。
+
 - 2026-10-27：[API 平台阿里云看板入口](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-27-阿里云看板交付入口) — CMS 原生云看板、Grafana 权限、JSON 采集实施清单及云上验收边界。
 
 - 2026-10-27：[EVOLVE 单次目标确认页](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md#2026-10-27单次目标与长期授权的确认页须分别核验) — 原授权快照与本次冻结目标分别核对，工具计划卡片不等于审核可用。
