@@ -2,7 +2,7 @@
 name: evolve-usage-accounting
 type: reference
 created: 2026-09-15
-updated: 2026-09-15
+updated: 2026-10-27
 tags: [maxwell, evolve, 用量, 成本, 可观测]
 links: [maxwell, evolve-error-policy-fail-breach]
 ---
@@ -29,3 +29,12 @@ links: [maxwell, evolve-error-policy-fail-breach]
 **Why:** 把用量塞进每个 Method 的返回签名,等于让所有实现(包括业务自带的 grading provider)都要满足一个没有任何决策会读的会计字段;而错误路径恰恰是最该记账的路径(钱花了、结果没有)。
 
 **How to apply:** 新接一个会调模型的 Method:在它自己的重试循环里 `Observe` 进一个本地 accumulator,用 `defer usage.Report(ctx, acc.Record())` 保证所有返回路径都上报;有自己产物就顺带放一份 `usage,omitempty`。调用侧用 `appeval.InvokeWithUsage` + `RecordMethodUsage`。动到任何冻结产物的结构时,兼容测试要按仓库既有严格度做:`git archive HEAD services/evolve-server` 抽到临时目录,把同一个生成器编进旧代码跑一遍,确认 JSON 与 SHA-256 完全一致,这样钉的字面量才是锚点而不是快照。
+
+
+## 执行成本与覆盖核验入口（2026-10-27）
+
+旧段落描述 Method/判卷的用量通道；执行侧原生账单属于另一个来源，不按 token 自行估价。SDK 的实际字段与边界查 `maxwell-runtime/src/nextplay_runtime/runtime_metrics.py`，平台汇总查 Maxwell 的 runmetrics 与比较实现，真实核验记录查 `output/evolve-unified-20261019/flexibility-acceptance-20261022.md`。
+
+**Why:** 多阶段调用可以已有完整早期账单，后阶段却在形成完整 Turn 前中断。已留存账单逐项有效，不代表整个执行成本已收齐；反过来，只有文件采集或清理失败，也不应抹掉已经完整取得的账单。
+
+**How to apply:** 对“数值可信”和“覆盖完整”分别设断言，贯通实际执行封装到指标投影，覆盖后阶段中断、完整失败回执、采集失败、重复/冲突账单。保留已知金额与缺测标记，不补零、不估价、不重写历史冻结账目；下载包离线回归与新 Sandbox 执行分别记录。
