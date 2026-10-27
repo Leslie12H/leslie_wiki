@@ -1390,3 +1390,5 @@
 - 2026-10-27：[原设备不在现场的整改草稿交接](domains/sandai-data-smith/pitfalls/sandeval-session-recovery-impersonation.md#2026-10-27-原设备不在现场时的交接) — 限定两题的只读导出与正式保存回执分别核对，未执行原设备恢复；冻结批次退回修复main入口为PR #2916。
 
 - 2026-10-27：[原设备草稿导出为空的诊断边界](domains/sandai-data-smith/pitfalls/sandeval-session-recovery-impersonation.md#2026-10-27-原设备导出为空的诊断边界) — 无记录不等于页面打开数据库成功，继续取具体错误，缺库立即中止创建；不清理空键。
+
+- 2026-10-27：原设备整改草稿读取提示在保全两次空记录导出、确认数据库打开可达后，经用户普通刷新消失；证据和根因未知边界见[原设备导出诊断](domains/sandai-data-smith/pitfalls/sandeval-session-recovery-impersonation.md#2026-10-27-原设备导出为空的诊断边界)，恢复提示与正式送审分开验收。

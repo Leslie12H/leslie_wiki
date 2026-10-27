@@ -58,3 +58,6 @@ links: [sandeval-returnable-impersonation]
 **How to apply:** 用户确认原设备原标签后，保留导出及其哈希，核对正式保存和送审状态；不要清理并不存在的键。追加同页数据库打开探测，缺库触发upgrade时立即abort以避免创建，保存具体错误名/消息、阻塞或超时，并限定记录读取为readonly；再决定恢复或平台修复。不能仅从“数据库不存在”断言IndexedDB损坏或用户丢失草稿。
 
 本次原设备导出、逐题空记录分析、数据库探测脚本与6项隔离检查指针：`/Users/leslie/Documents/Playground/output/draft-read-20261027/original-export-analysis.json`、`probe-original-browser-storage.js`、`check-probe-script.cjs`。原始上传为 `/Users/leslie/Downloads/sandeval-original-drafts-6c608036.json`；没有执行清理、刷新、正式保存或整批提交。探测脚本尚待用户在原设备执行，具体异常仍未知。
+
+
+2026-10-27 后续证据：用户确认原设备原标签，第二份限定作用域探测仍无草稿/待确认记录，数据库打开到达创建阶段并由诊断脚本主动abort。这不支持当时发生权限拒绝或打开失败。保全证据后用户普通刷新一次，明确反馈黄色提示消失。完整结果与原始文件哈希见同目录 `storage-probe-analysis.json` 和 `current-conclusion.md`；最初页面的具体异常仍未知，刷新恢复不等于触发源已修复，也不等于整批整改已送审。
