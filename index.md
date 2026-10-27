@@ -1380,3 +1380,5 @@
 - 2026-10-27：[EVOLVE 待审资源续改与订阅生命周期](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-冻结来源编辑与待审稿续改不是同一个操作) — 三方资源差异防回退、显式草稿来源契约边界，以及同Work重开时旧SSE重连失效的回归指针。
 
 - 2026-10-27：[冻结批次待定退回的通用修复](domains/sandai-data-smith/pitfalls/sandeval-frozen-batch-return-after-duplicate-defer.md#2026-10-27-通用修复与复发边界) — 原任务义务与有效送审范围分离、负向保护回归及Gate/发布分层验收指针。
+
+- 2026-10-27：[整改本机草稿读取失败的处理顺序](domains/sandai-data-smith/pitfalls/sandeval-session-recovery-impersonation.md#2026-10-27-整改清单的本机草稿读取失败) — 未保存标签与正式答案分开核对，先保全原设备记录再恢复或处理残留；截图不替代具体存储异常证据。

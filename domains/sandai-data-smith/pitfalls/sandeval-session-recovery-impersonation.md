@@ -2,7 +2,7 @@
 name: sandeval-session-recovery-impersonation
 type: pitfall
 created: 2026-10-24
-updated: 2026-10-26
+updated: 2026-10-27
 tags: [sand-eval, authentication, impersonation, browser-draft]
 links: [sandeval-returnable-impersonation]
 ---
@@ -31,3 +31,12 @@ links: [sandeval-returnable-impersonation]
 实现与交付核验入口：[main PR #2870](https://github.com/world-sim-dev/sandai-data-smith/pull/2870)、[main PR 完整 Gate](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/40312872592)、[main 自动发布](https://github.com/world-sim-dev/sandai-data-smith/actions/runs/40313172770)。历史测试 PR #2869 及任务分支独立 Gate 仅作冲突处理背景；最终交付沿 main PR 与自动发布核验。沿 PR 的最终差异与精确 head 检查代登录上限、原登录封顶、连续切号到期不变，以及内置管理员帮助。新签发会话和旧已签发会话分别验收，不能把本地回归、独立分支 Gate、可合并性、测试发布和生产生效视为同一结论；动态状态以 PR/Gate 和运行态为准。
 
 生产无凭据只读核验可从 `https://eval.sandaii.cn/health` 的 `deploy_sha`、`deploy_image`、`deploy_version` 入手，并对照合并提交及发布流程的镜像/rollout 回执。健康返回成功不等于个案浏览器会话已经恢复；不要为证明期限而静默重登或恢复业务提交。
+
+
+## 2026-10-27 整改清单的本机草稿读取失败
+
+**Why:** 整改预检把“本机记录无法完整读取”归为unverified；侧栏也把此类阻断计入“未保存”，因此不能用该标签证明正式答案没保存。它与右侧“当前答案已更新”可以同时成立。统一错误文案可能覆盖Storage访问异常、格式错误、大草稿指针/正文不一致或待确认请求读取失败，截图不足以定位具体分支。
+
+**How to apply:** 保留原浏览器、身份与页面；先按服务器授权的这两题作用域只读导出草稿、冲突副本、指针及待确认请求，再用准确整改链接定位服务端答案版本、内容与保存回执。管理员确认差异后定向恢复本机内容或处理已证实无效的残留，再重新核对；不清空站点存储，不在核对前重放保存/提交，也不由侧栏“未保存”要求用户重新做题。处理具体实例需要原整改链接和原设备证据，纯后台改状态不能证明本机副本已恢复。
+
+代码指针：`platform/frontend/src/pages/myTasks/correctionDraftGuard.ts::readScope/inspectCorrectionDraft`、`autosaveStorage.ts::inspectDraftRecord`、`largeDraftStorage.ts::inspectLargeDraftRecords`、`pendingAnswerAction.ts::inspectPendingAnswerActionRecords`，以及`pages/quality/resolution/AnswerCorrectionPanel.tsx`的草稿阻断标签。普通读取与保留异常记录的检查路径要分别核对，原始备份应先于可能触发草稿恢复/整理的交互。此次仅解释截图与核对源码，没有取得当事人的整改链接或读取原设备存储，未修复具体两题。
