@@ -1372,3 +1372,5 @@
 - 2026-10-27：[独立诊断目标与执行授权](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md#2026-10-27诊断目标冻结与执行授权不是同一状态) — 从 MCP 会话绑定入口定位非并发版本冲突；区分草稿冻结、单次人审与长期自动授权，权限调整须沿正式确认。
 
 - 2026-10-27：[发布后旧推进恢复与队列窗口](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md#2026-10-27-上线后旧推进未恢复与失败分配仍显示待处理) — 有效分区、历史失败分配、后台候选入队与整包交接分层验收；退避上限不等于端到端恢复时限。
+
+- 2026-10-27：[原验收报告定向恢复](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md#2026-10-27-上线后旧推进未恢复与失败分配仍显示待处理) — 完整原报告集合预检、哈希apply、原生包锁/CAS、跨实例成员和提交资格回读；拥有者CLI/PR #2902 与单包审计指针。
