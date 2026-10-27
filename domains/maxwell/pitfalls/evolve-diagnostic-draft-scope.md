@@ -95,3 +95,21 @@ links: [evolve-runtime-payload-and-terminal-recovery]
 **How to apply:** 从原UI与实际Provider请求核对当前参数，隔离预设单次受控修改、事后恢复并独立回读。对照持久化payload与冻结原件、实际公共绑定与outcome，再单独评价正文和最终回答。记录上下文差异，不能将一次结果当干净A/B或普遍可靠；对缺失用量保留已知合计和缺失数，不猜测收费或恢复原因。
 
 - 实验/恢复/结构比较与部分自然结论入口：Maxwell验收journal 2026-10-27 14:26及集成工作区 `.tmp/natural59-reasoning-control-20261027/`。最新运行参数必须重新查询，不从本文推定。
+
+
+## 2026-10-27：重复审核相同内容与不可变来源
+
+**Why:** 内容寻址资产会复用相同正文，但不同草稿版本和确认人的来源记录不同。若把新的确认记录当作对旧资产元数据的重写，正常的再次确认会停在“已确认、等待保存”；简单放宽全局幂等比较又会丢失来源约束。
+
+**How to apply:** 仅在正式确认保存入口，核对同 Work、同对象、同规范化内容哈希的早期冻结草稿与精确资产关联，复用原资产的来源记录；新的审核人和版本保留在新草稿及审计中。仍通过原原子提交校验最新审核、内容、权限和引用；普通 freeze 不接受来源改写。验证应覆盖同内容新版本、不同确认人、原资产逐字段不变、未审核/变更内容拒绝，以及原 UI 失败后恢复和独立数据库回读。
+
+- 实现入口：EVOLVE `application/commands/freeze_draft.go` 与 `freeze_draft_test.go`；不可变元数据和最新确认围栏沿原 `artifactwrite` 与仓储事务核验。
+- 真实故障、红绿、回归与恢复证据：集成工作区 `.tmp/draft-repeat-confirm-*-20261027.log`、`.tmp/diagnostic-confirmation-proof-20261027.jsonl`、`.tmp/diagnostic-confirmation-case-hash-20261027.json`；验收记录 2026-10-27 本批确认恢复小节。草稿冻结不等于运行计划或质量验收通过。
+
+## 2026-10-27：恢复事件与缺失账单分别核验
+
+**Why:** 请求之后出现 runtime_continue 只能证明运行继续，不能单独证明供应商超时、Worker 崩溃或重复收费。失败的模型流可能经过既有持久重试恢复，但没有收到用量仍然是未知账目。
+
+**How to apply:** 关联原生 Run 的模型事件、唯一 Worker 的结构化错误和恢复日志、Temporal Activity 实际 attempt/typed failure；区分正常主模型重试、Worker 重放和用户取消。确认恢复成功也不推算缺失调用成本，不修改旧账单或延长超时冒充修复。
+
+- 入口：Agent Server `runtime/core/nodes/model_retry.go`、`runtime/infrastructure/temporalruntime`，以及本批 `.tmp/natural59-model-recovery-20261027.json`、`.tmp/natural59-temporal-history-20261027.json`、`.tmp/natural59-recovery-regression-20261027.log`。实际私有原件不复制进知识库。

@@ -1360,3 +1360,5 @@
 
 - 2026-10-27：[原质检员有权限但不在原空间](domains/sandai-data-smith/pitfalls/sandeval-manual-return-passed-status-handoff-gap.md#2026-10-27-账号仍有质检权限空间归属已改变) — 当前候选、供应商空间匹配、重检接手人选择与待验收分流；附只读现场证据。
 - 2026-10-27：[运行参数实验与产物分层判定](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md#2026-10-27运行参数实验与产物分层判定) — 原请求参数、独立恢复、结构修复与解释分别验收；已知用量不冒充完整成本。
+
+- 2026-10-27：[EVOLVE 重复确认与恢复账目边界](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md#2026-10-27重复审核相同内容与不可变来源) — 同内容新审核复用旧资产来源、原子确认围栏，以及模型流恢复和缺失账单的独立取证。
