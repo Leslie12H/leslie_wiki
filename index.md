@@ -1336,4 +1336,4 @@
 - 2026-10-27：[首阶段中断证据留存](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-首阶段中断没有完成轮次但仍有执行证据) — 已受理Run与完成Turn分开，真实采集回调必须纳入中断测试。
 
 - 2026-10-27：[EVOLVE 比较授权回退](domains/maxwell/pitfalls/evolve-query-latency-and-tuning-visibility.md#2026-10-27-比较回退不能绕过候选读取拒绝) — 统一读取拒绝后旧回退重新放行的根因、撤权与冻结摘要红绿回归及二阶审查。
-- 2026-10-27：[EVOLVE 独立诊断题与草稿真实性](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md) — 新题范围、旧题比对、成绩归属、评分方法配置混用及草稿保存与可执行性的分层核查入口。
+- 2026-10-27：[EVOLVE 独立诊断题与草稿真实性](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md) — 新题范围、成绩归属、评分配置混用、非阻塞静态反馈及草稿正文/结构一致性的分层核查入口。

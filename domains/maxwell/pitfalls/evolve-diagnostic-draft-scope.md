@@ -24,3 +24,13 @@ links: [evolve-runtime-payload-and-terminal-recovery]
 
 - 实际两次自然适配失败、按需说明安装与消费证据：上述验收记录的 natural50/51，以及集成工作区 `.tmp/natural50-diagnostic-contract-20261027/`、`.tmp/natural51-diagnostic-adaptation-20261027/`。
 - 只读代码核对入口：`application/commands/provider_case.go`、`confirmed_draft.go`、`internal/app/toolcaller.go` 的 draft put/get；当前可编辑保存与确认校验的边界以源码为准，不在本页固化运行状态。
+
+
+## 2026-10-27：保存与静态反馈分离
+
+**Why:** 强制草稿完整才允许保存会损失迭代空间；只回保存成功又容易让 Agent 错判兼容性。真实会话收到保存后的静态错误后，能修正外部评分配置和缺字段，但依然可能在格式错误后过早停止，或只更新结构化内容而留下过时说明。
+
+**How to apply:** 复用已有只读检查，为可编辑草稿提供有界、脱敏、非阻塞反馈；检查失败不回滚保存，依赖不可用不改成写入失败，历史冻结内容不按新目录重判。静态成功不能表示执行、评分或效果通过。独立核对落库 payload、正文和最终答复的一致性，分别保留首答失败与自然追问恢复；技术解析不能替代真实执行。
+
+- 源码入口：EVOLVE `application/commands/draft_check.go`、`internal/app/toolcaller_draft_feedback.go`、`internal/app/transport/mcp/handler.go`；原结构化回执与附加文本的边界以当前代码为准。
+- 红绿、实际模型消费、保存恢复及尚存正文不一致证据：上述验收记录的 natural52，以及集成工作区 `.tmp/natural52-draft-feedback-20261027/assessment.json`。本页不表示自然自主闭环已通过。
