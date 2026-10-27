@@ -1388,3 +1388,5 @@
 - 2026-10-27：[整改本机草稿读取失败的处理顺序](domains/sandai-data-smith/pitfalls/sandeval-session-recovery-impersonation.md#2026-10-27-整改清单的本机草稿读取失败) — 未保存标签与正式答案分开核对，先保全原设备记录再恢复或处理残留；截图不替代具体存储异常证据。
 
 - 2026-10-27：[原设备不在现场的整改草稿交接](domains/sandai-data-smith/pitfalls/sandeval-session-recovery-impersonation.md#2026-10-27-原设备不在现场时的交接) — 限定两题的只读导出与正式保存回执分别核对，未执行原设备恢复；冻结批次退回修复main入口为PR #2916。
+
+- 2026-10-27：[原设备草稿导出为空的诊断边界](domains/sandai-data-smith/pitfalls/sandeval-session-recovery-impersonation.md#2026-10-27-原设备导出为空的诊断边界) — 无记录不等于页面打开数据库成功，继续取具体错误，缺库立即中止创建；不清理空键。

@@ -49,3 +49,12 @@ links: [sandeval-returnable-impersonation]
 **How to apply:** 原设备先保留可见编辑文本，再由管理员在原整改页运行限定两题作用域的只读导出，保全Storage、IndexedDB、冲突副本和待确认记录；收到导出后再与正式答案核对，决定定向恢复或处理残留。不能将“换电脑继续提交”作为本机记录已保全的证据。
 
 本次具体链接、服务端保存回执、原设备交接步骤和只读脚本见本机证据目录 `/Users/leslie/Documents/Playground/output/draft-read-20261027/`，先读 `HANDOFF.md`，再用 `read.json`核对；脚本是 `export-original-browser-drafts.js`。脚本有5个隔离检查，但尚未在报错电脑执行，具体存储错误与恢复结果仍未知。此段补充前述仅截图阶段，不能理解为已恢复原设备。
+
+
+### 2026-10-27 原设备导出为空的诊断边界
+
+**Why:** 原设备限定作用域导出若Web Storage键均为空、IndexedDB数据库不存在，能说明该次导出没有取得草稿正文，不能重现页面调用 `indexedDB.open` 时的具体失败，也不能把“导出无错误”当成页面读链路正常。导出中的account_id是预设作用域，并非实时认证身份断言。
+
+**How to apply:** 用户确认原设备原标签后，保留导出及其哈希，核对正式保存和送审状态；不要清理并不存在的键。追加同页数据库打开探测，缺库触发upgrade时立即abort以避免创建，保存具体错误名/消息、阻塞或超时，并限定记录读取为readonly；再决定恢复或平台修复。不能仅从“数据库不存在”断言IndexedDB损坏或用户丢失草稿。
+
+本次原设备导出、逐题空记录分析、数据库探测脚本与6项隔离检查指针：`/Users/leslie/Documents/Playground/output/draft-read-20261027/original-export-analysis.json`、`probe-original-browser-storage.js`、`check-probe-script.cjs`。原始上传为 `/Users/leslie/Downloads/sandeval-original-drafts-6c608036.json`；没有执行清理、刷新、正式保存或整批提交。探测脚本尚待用户在原设备执行，具体异常仍未知。
