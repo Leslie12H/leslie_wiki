@@ -131,3 +131,12 @@ links: [evolve-runtime-payload-and-terminal-recovery]
 
 - 源码入口：EVOLVE `application/commands/optimization_explicit_run.go`、`optimization_verification.go`、`application/ports/human_measurement.go`。实际边界以当前源码和人审记录为准。
 - 复现及证据入口：验收 journal 的 2026-10-27 目标授权冲突小节，`natural60-diagnostic-plan-20261027/goal-authorization-conflict-proof.jsonl`、`diagnostic-goal-authorization-{red,green,race}-20261027.log`，待审方案 `output/evolve-unified-20261019/diagnostic-goal-authorization-20261027.md`。未实现的方案不得记为已具备能力。
+
+## 2026-10-27：独立目标须绑定单次人工运行回执
+
+**Why:** 人工已审核的新诊断目标可与原自动优化目标并存，但不能靠删除自动准入条件让 Agent 借用旧许可执行。只读计划、精确单次确认与长期自动授权需要分别验证。
+
+**How to apply:** 获得鉴权语义变更批准后，复用已有目标版本与 RunPlan：命令层读取同 Work 已冻结目标及资产权限，事务层再次核对审核记录和精确目标哈希，目标纳入请求与回执指纹。Agent 只能返回待确认计划；原授权人确认后从原根预算扣费，不能改变原 Search/Grant 或替代原验收目标。技术回归覆盖跨 Work/未冻结、普通 Agent 冒用、并发同键、预算、撤权及重放。真实页面核对两侧计划共用题集、评分和目标，并比较准备前后控制/用量指纹。
+
+- 入口：EVOLVE `optimization_explicit_run.go`、`optimization_verification.go`、`ports/human_measurement.go`、PostgreSQL `optimization_verification.go` 与 `human_measurement_integration_test.go`。
+- 本批获得书面批准后的实现与真实仅准备回执，查 `flexibility-acceptance-20261022.md` 2026-10-27 16:10、`diagnostic-admission-*-20261027.log` 和 `natural60-diagnostic-plan-20261027/diagnostic-plans-verified.json`。计划生成和完整回执可读，不等于执行/评分/质量通过；前序失败与辅助恢复仍分别保留。

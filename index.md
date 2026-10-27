@@ -1,3 +1,4 @@
+- 2026-10-27：[EVOLVE 独立目标的单次人工许可](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md#2026-10-27独立目标须绑定单次人工运行回执) — 只读计划、已审目标、事务复核与精确回执，保留自动 Grant 和根预算。
 - 2026-10-27：[API 平台压测观测与飞书方案](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-27-飞书方案与观测核查) — ARMS/JSON/Prometheus 证据分层、调度字段语义及失败退款口径的回查入口。
 
 - 2026-10-27：[API 平台压测方案入口](domains/sandai-platform/refs/performance-testing-entrypoints.md) — 配额、fake/真实模型、轮询放大、费用、故障恢复与压测准备清单的回查指针。
