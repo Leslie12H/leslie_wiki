@@ -25,3 +25,12 @@ links: [sandeval-caption-refine-skip-defer-handoff, sandeval-remediation-frozen-
 **How to apply:** 使用默认只读的 `app.cli.deferred_batch_return_recovery` 核对原检查版本、完整冻结清单与答案、题集、唯一持有人和唯一清理待定差集，冻结计划哈希。人明确授权后显式apply，先存完整before-image和恢复审计，再在独立进程限定接收人查询例外，调用原生带版本、幂等和终止历史的退回；不修改历史清单、答案或待定。另一个副本以真实接收人权限读detail/workspace/manifest/preview并对账全部答案及冻结成员，不替本人提交整改。当前生产状态、哈希、处置ID、14个保护测试及全部验收见[恢复与根因报告](/Users/leslie/Documents/Playground/output/qc-return-scope-20261027/report.md)。工具代码见[测试PR #2912](https://github.com/world-sim-dev/sandai-data-smith/pull/2912)，PR/Gate与生产单案结果分别核验；此次未部署通用平台修复。
 
 去重见证的两卡虽引用同一视频，其Caption来源、baseline与正文不同；这只能确认素材相同，不能自行裁定答案任务重复。原清理脚本与需求未找到时，保留该不确定性，也不由operator标签推断具体执行人。普通待定入口对已送审批次的原生保护及本次operator回执时间线见报告；后续清理应在写入前核查冻结质检范围，并把同视频去重与任务语义去重分开确认。
+
+
+## 2026-10-27 通用修复与复发边界
+
+**Why:** “仍属于原任务义务”与“本轮可交质检/复验”使用不同范围。待定应从后者排除，但它不能单独让原冻结批次失去可退回接收人。仅做单案恢复并不修复其他批次的通用入口。
+
+**How to apply:** 来源服务的 `annotation_correction_recipient` 使用包含待定成员的原任务义务，再校验真实账号、任务状态、题集、正常卡身份与唯一当前持有人；该内部选项不能扩展到普通送审或整改发布。后两者继续排除有效待定，全待定不能创建空复验；真正越界、缺卡、重复卡、多个持有人和无权限仍应阻断。实现与10个回归场景见[通用修复PR #2914](https://github.com/world-sim-dev/sandai-data-smith/pull/2914)；完整Gate、只读候选重放、同次清理的存量核查范围及发布状态见[通用修复证据](/Users/leslie/Documents/Playground/output/qc-return-scope-20261027/general-fix.md)。使用前重读PR和生产部署，完整Gate通过或单案已恢复均不代表通用代码已上线。
+
+代码指针：`app/services/facts/task_assignments.py` 的 `_quality_context`、`_quality_context_from_facts`、`_annotation_correction_context` 与 `annotation_correction_recipient`。题集/持有人等判断继续沿原来源事实，不增加运维标签白名单，也不删除待定或改写冻结历史。
