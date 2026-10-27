@@ -539,3 +539,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 通用标签仅说明“暂不能完整比较”，详细原因沿服务端覆盖和身份检查展示。共同有效题的均值与历史相同子集比较，不能把缺测补零或直接比较不同样本总体；重评保持原证据和来源，不算新的独立执行。验证覆盖页面、服务端具体原因以及真实运行记录，不能只检查文案快照。
 
 - 指针：Maxwell `apps/studio/src/products/evolve/v3/lineage/LineageNodeDetail.tsx` 与 `candidates/comparisonWarnings.ts`；真实超时导致九项有效测量的共同样本分析、UI回读及聚焦回归见主验收记录2026-10-27 07:42条目。
+
+
+## 2026-10-27 首阶段中断没有完成轮次但仍有执行证据
+
+**Why:** 已受理的原生 Run 在首阶段中断时，可能尚无完整 Turn。若持久化轨迹采集只从完成 Turn 推导 Run 身份，会错误拒绝真实部分证据，保全失败并保留临时资源。仅测试 Runner 的流式归档、没有接入 CLI 生产采集回调，会漏掉这类组合缺陷。
+
+**How to apply:** 用同一 Thread 的确认受理回执与原始观察补充内部采集身份，保持原失败和空完成轮次；不能编造完成状态或放松原事件身份、终态和分页校验。分别核对外层取消、内层原生 Run 终态、证据封存与资源清理，取消成功不代表资源已删除。测试须组合真实采集器与 Runner，在实际存储边界注入失败；原事件离线回放与新执行验收分别标记，旧结果不覆盖。
+
+- 指针：nextplay-eval `maxwell-runtime/src/nextplay_runtime/{runner,models,trajectory}.py` 及 `tests/test_standalone.py` 的中断+持久化采集组合；真实取消回执、93条原事件回放、独立下载包验证见主验收记录2026-10-27 08:15条目。

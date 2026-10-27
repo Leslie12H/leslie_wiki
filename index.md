@@ -1332,3 +1332,5 @@
 - 2026-10-26：[独立候选评测的任务发现范围](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-独立候选评测必须能从原调优任务发现) — 子 Work 的真实指标存在但 Agent 目录漏项；候选归属、只读授权、分页和自然复验的查证入口。
 
 - 2026-10-27：[不可完整比较与评分标准变化](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-不可完整比较不等于评分标准变化) — 通用比较否定状态不能替代缺测、超时或身份差异的具体原因，共同有效样本须同范围比较。
+
+- 2026-10-27：[首阶段中断证据留存](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-首阶段中断没有完成轮次但仍有执行证据) — 已受理Run与完成Turn分开，真实采集回调必须纳入中断测试。
