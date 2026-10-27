@@ -20,3 +20,14 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 - 既有测试原件：工作区 `postman/reports/` 的配额、联调和参数专项；历史配置与缺陷不可当作当前部署结果。
 
 **How to apply:** 先确认预测峰值、环境、有效配额、预算与观测，再分开验证配额正确性、fake 平台容量、真实模型吞吐和故障恢复。用到达速率与任务耗时估算执行并发，用在途任务量与轮询间隔估算查询量；创建与追踪分开编排，保留未知任务和费用证据。方案中的门槛为评审建议，只有执行报告才能证明容量。停止新增请求后仍需追到既有任务终态或明确未决状态，再对账与恢复配置。
+
+## 2026-10-27 飞书方案与观测核查
+
+- 飞书评审文档：[API 平台压测执行方案与观测清单](https://j0yswlgboxz.feishu.cn/docx/Q88sdPyI9oZ43xxuFtnc5QyXnPg)。本地核查指针：工作区 `docs/observability-readiness.md`。大盘链接、权限、环境和数据新鲜度随执行重新验证。
+- 指标存在与大盘可用分开：调度/配额 JSON 接口、ARMS overlay、Prometheus 示例分别沿源码回查；不能据此宣称业务指标已被采集或某环境大盘已有数据。
+- 核对调度字段语义：`TaskDispatcherRuntime.snapshot()` 的本地组织工作队列/耗时，与业务 WAITING/任务排队分开；`TaskDispatchWorker.maxSelectedWaitingAgeMillis` 为历史最大值，不能替代当前全队列最老等待。
+- 费用规则以 `TaskDispatchStateService`、`TaskFailureRefundPolicy`、`TaskCreditRefundService` 和当前部署有效开关/流水核验；旧调度说明中的失败退款描述可能落后于实现。验收覆盖应退、已退、待处理及重复退款。
+
+**Why:** 运维模板、累计快照和旧说明都容易被误作实时业务观测，导致压测通过而积压或补偿问题未被发现。
+
+**How to apply:** 先让运维给出目标环境大盘并用冒烟证明数据变化，再补业务队列/真实执行/费用只读采样；无法访问时明确保留未核实，不能断言不存在。

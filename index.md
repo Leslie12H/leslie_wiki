@@ -1,3 +1,5 @@
+- 2026-10-27：[API 平台压测观测与飞书方案](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-27-飞书方案与观测核查) — ARMS/JSON/Prometheus 证据分层、调度字段语义及失败退款口径的回查入口。
+
 - 2026-10-27：[API 平台压测方案入口](domains/sandai-platform/refs/performance-testing-entrypoints.md) — 配额、fake/真实模型、轮询放大、费用、故障恢复与压测准备清单的回查指针。
 
 - 2026-10-27：[EVOLVE 来源复制的嵌套 JSON 脱敏](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-线上来源复制中的字符串化-json) — 内嵌工具正文共用结构预算、精度及幂等规则；历史材料与技术验收边界。
