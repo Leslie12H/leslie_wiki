@@ -37,3 +37,6 @@ links: [sandeval-caption-refine-skip-defer-handoff, sandeval-remediation-frozen-
 
 
 2026-10-27 用户另行要求向main发起PR，入口为 [PR #2916](https://github.com/world-sim-dev/sandai-data-smith/pull/2916)。检查、合并与部署状态以该PR和关联发布记录实时查询；提PR本身不代表已合并或部署。
+
+
+2026-10-27 通用修复的人工审查范围与精确head核对入口：`/Users/leslie/Documents/Playground/output/qc-return-scope-20261027/pr-2916-review.md`，以及[main PR的Codex审查回执](https://github.com/world-sim-dev/sandai-data-smith/pull/2916#issuecomment-6442134324)。核对当前head、bot回执和线程状态再引用审查结果；顶层bot无发现回执不等于GitHub正式APPROVED，也不替代测试环境验收、发布或另一例浏览器草稿问题的根因修复。
