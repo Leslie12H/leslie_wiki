@@ -2,7 +2,7 @@
 name: sandeval-remediation-frozen-overlap-same-scope-version
 type: pitfall
 created: 2026-10-16
-updated: 2026-10-23
+updated: 2026-10-27
 tags: [sand-eval, quality, remediation, package, scope, duplicate]
 links: [sandeval-handoff-duplicate-scope, sandeval-remediation-scope-change-stale-handoff, sandeval-partial-reassignment-package-completeness-gap]
 ---
@@ -68,3 +68,12 @@ links: [sandeval-handoff-duplicate-scope, sandeval-remediation-scope-change-stal
 
 
 2026-10-26 用户明确授权后的原单续办、分段回执、独立质检员待办与首题读取证据见[同一排查报告的续办章节](/Users/leslie/Documents/Playground/output/paper-allocation-20261026/report.md#用户明确授权后的原单续办)。**Why:** 分配已ready的应用服务内部可能直接返回，但宿主命令入口仍会先登记package-control参与者；因此在强制只读上下文调用resume并不能证明整个命令入口零写入。**How to apply:** 恢复用冻结计划、显式apply与原生续办；独立验收用纯读取的分配、实际任务、唯一检查组、样本、真实质检员待办和题目队列。保留已有group的成功批次；时间预算返回部分完成后，先读新版本，再仅续原单未完成批次。未完成判断产生的REVIEW_INCOMPLETE是提交条件，不能当作无法开始质检；结合save_items和正文可读性核验。
+
+
+## 2026-10-27 失败分配留下的送审批次与已验收整改冲突
+
+**Why:** 新作者的重复分配可能先留下 submitted 送审批次，再被正式工作项占用保护拒绝创建质检报告。原整改后来已经复验和负责人验收，旧失败普通批次仍可能参与整包范围接续。若它包含整改前中间答案，既不命中整改父子冻结答案，也没有自身通过报告，会在重复分区保护中阻断整个包。该分支不能因报错文字相同就套用 native 子分区父键修复，也不能要求已经完成原轮的人重新检查。
+
+**How to apply:** 对照失败 QA 的 group_id、实际报告数量、正式占用、原整改 source/target 边、负责人验收与当前逐题答案继承。只有从未生成质检任务、没有独立未结责任且已由有效整改和当前正式答案完全覆盖的重复记录，才具备从有效分区排除的候选条件；需实现并验证，不能直接删历史或放宽真实待办保护。原任务 accepted 与整包可交接分别读回，分区正确、原生 submit_to_sand 可用、真实交接成功是三层证据。
+
+[纸面350 20261008_10只读报告](/Users/leslie/Documents/Playground/output/paper350-allocation-20261027/report.md)保存原分配与失败分配、三个实例、实际负责人读取、正式逐题继承和源码错误栈。本次仅完成诊断，未改代码、生产数据或创建PR；后续状态应实时核验。
