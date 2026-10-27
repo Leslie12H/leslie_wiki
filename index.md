@@ -1375,3 +1375,5 @@
 
 - 2026-10-27：[原验收报告定向恢复](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md#2026-10-27-上线后旧推进未恢复与失败分配仍显示待处理) — 完整原报告集合预检、哈希apply、原生包锁/CAS、跨实例成员和提交资格回读；拥有者CLI/PR #2902 与单包审计指针。
 - 2026-10-27：[无续答对话的澄清采集](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-无续答对话的澄清也是可测量结果) — 输入结构一致性、目标未完成与采集完成分层、保留原评分及真实资源差异核验。
+
+- 2026-10-27：[冻结质检批次的受控退回恢复](domains/sandai-data-smith/pitfalls/sandeval-frozen-batch-return-after-duplicate-defer.md#2026-10-27-明确授权后的单案恢复) — 精确差集与原生退回审计、独立整改工作台验收，以及同视频不同Caption来源的去重裁定边界。
