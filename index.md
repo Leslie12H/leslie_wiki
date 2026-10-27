@@ -1334,3 +1334,5 @@
 - 2026-10-27：[不可完整比较与评分标准变化](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-不可完整比较不等于评分标准变化) — 通用比较否定状态不能替代缺测、超时或身份差异的具体原因，共同有效样本须同范围比较。
 
 - 2026-10-27：[首阶段中断证据留存](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-首阶段中断没有完成轮次但仍有执行证据) — 已受理Run与完成Turn分开，真实采集回调必须纳入中断测试。
+
+- 2026-10-27：[EVOLVE 比较授权回退](domains/maxwell/pitfalls/evolve-query-latency-and-tuning-visibility.md#2026-10-27-比较回退不能绕过候选读取拒绝) — 统一读取拒绝后旧回退重新放行的根因、撤权与冻结摘要红绿回归及二阶审查。
