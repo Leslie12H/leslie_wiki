@@ -140,3 +140,11 @@ links: [evolve-runtime-payload-and-terminal-recovery]
 
 - 入口：EVOLVE `optimization_explicit_run.go`、`optimization_verification.go`、`ports/human_measurement.go`、PostgreSQL `optimization_verification.go` 与 `human_measurement_integration_test.go`。
 - 本批获得书面批准后的实现与真实仅准备回执，查 `flexibility-acceptance-20261022.md` 2026-10-27 16:10、`diagnostic-admission-*-20261027.log` 和 `natural60-diagnostic-plan-20261027/diagnostic-plans-verified.json`。计划生成和完整回执可读，不等于执行/评分/质量通过；前序失败与辅助恢复仍分别保留。
+
+## 2026-10-27：单次目标与长期授权的确认页须分别核验
+
+**Why:** 后端允许已审独立诊断目标后，前端仍把计划目标与原自动授权目标做相等判断，会让合法计划永久不能确认；只验证工具生成计划卡片会漏掉这个断点。若直接删除目标检查，又可能漏掉审核期间原授权变化。
+
+**How to apply:** 确认弹窗分别锁定原授权的 Search、目标版本和精确资产身份，以及本次选定的同 Work 冻结目标；原授权变化仍使旧审核失效。本次目标正文必须可见，不能只有题集与评分选择。沿真实页面只读打开核对弹窗可以验证目标展示和读取，不必提交或消费额度；完整运行仍须具体计划授权。回归同时覆盖同目标和独立目标、过期、撤权、未冻结、资产不符、晚到读取及重复提交。
+
+- 实现入口：Studio `products/evolve/executor/PreparedRunCardStore.ts`、`dialogs/StartRunDialog.tsx`；证据沿主验收记录 2026-10-27 确认卡片审查与 `.tmp/diagnostic-plan-card-*-20261027.*`。页面审核通过不代表真实运行、SSE阶段更新或自然Agent能力通过。
