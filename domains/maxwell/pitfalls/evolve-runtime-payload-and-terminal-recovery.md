@@ -574,3 +574,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 在拆除订阅时使整个生命周期失效，延时完成后核对订阅代次、页面可见性及目标。技术回归覆盖隐藏、隐藏后立即恢复、同Work重新订阅，不能只模拟不同Work导航。该缺陷修复不能自动解释所有线上进度延迟；真实服务阶段变化和浏览器自动更新仍应独立验收。
 
 - 指针：Studio `EvolveWorkspaceStore.ts` 与既有 `.test.mjs`；旧红/新绿和验证边界见主验收记录2026-10-27 19:40、`.tmp/work-events-retry-lifecycle-*`。
+
+## 2026-10-27 显式草稿续改与磁盘故障恢复
+
+**Why:** 多资源方案只接受冻结版本编辑时，Agent 回退旧来源会丢失另一份已修改文件；强制“只能最新草稿”又妨碍合理的历史分支。连续编译残留的可执行文件也可能挤满主机磁盘，使 Docker VM 停止而 API 进程仍存在。
+
+**How to apply:** 草稿续改明确选择已保存版本，冻结来源继续提供权限与目标基线；历史/冻结稿只读派生，保留其它资源和兼容运行设置，精确核对有效字节，不隐式选最新或合并并发保存。技术验证须覆盖失败不留产物、冻结状态不变和连续编辑；自然验证另核对完整资源与答复。环境故障追到 Docker backend 日志和 `df`，仅删除已确认 Git 忽略、无进程打开的可重建产物，保留当前/回滚二进制、证据和数据；引擎恢复后逐项核对原容器、Temporal poller 与评分消费者。
+
+- 代码指针：EVOLVE `application/commands/resource_edit.go`、`application/resourcecontent/source_draft.go`及 MCP schema；可选字段与当前语义沿源码核对。
+- 本次方案批准、红绿/race、磁盘错误、清理 SHA 清单与后续自然验收，见原工作区 `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 2026-10-27续改记录。技术通过不代表自主验收或质量提升。
