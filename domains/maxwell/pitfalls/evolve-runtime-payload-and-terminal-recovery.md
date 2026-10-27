@@ -583,3 +583,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 
 - 代码指针：EVOLVE `application/commands/resource_edit.go`、`application/resourcecontent/source_draft.go`及 MCP schema；可选字段与当前语义沿源码核对。
 - 本次方案批准、红绿/race、磁盘错误、清理 SHA 清单与后续自然验收，见原工作区 `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 2026-10-27续改记录。技术通过不代表自主验收或质量提升。
+
+
+## 2026-10-27 错误恢复建议与能力说明需要同源核对
+
+**Why:** natural65 的工具正文要求改用实际 Run 的执行器，但普通错误经 MCP 映射成 ProviderPermanent，再由 Runtime 给出 choose_another_tool。Agent 将可修正选择解释为平台不可用。同时已实现显式草稿快照续改，策略 Skill 却仍描述从冻结原版重新合并；新 schema 到达模型不代表全部资料一致。不能仅从模型停止推断能力不可用，也不能把这两处矛盾直接认定为全部自然失败的根因。
+
+**How to apply:** 对齐源头错误、MCP structured error、Runtime code/action 与实际 model.request，区别参数可修正、权限拒绝和真实服务故障；不要根据错误文案批量改分类。新增能力同时检查已启用 Skill 的旧限制，更新后独立回读全文和其它文件，实际消费及自然产物另行验证。错误语义变更按项目契约规则批准；禁止靠新提示、自动替换执行器或盲重试掩盖原失败。
+
+指针：Maxwell `application/resourcecontent/source_runner.go`、MCP `handler.go`、Agent tools `execution/native/builtin_tools.go` 与 `runtime/toolprotocol/result.go`；策略 `agent-resources/skills/optimization-strategy/SKILL.md`。实际版本、回执及待批准范围见工作区 `output/evolve-unified-20261019/resource-executor-error-contract-20261027.md` 和主验收日志；本页不代表该修复已实现或已发布。
