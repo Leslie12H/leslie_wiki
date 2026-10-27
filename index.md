@@ -1343,3 +1343,5 @@
 - 2026-10-27：[确认稿复用与诊断测量边界](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-27-确认稿物化后的复用与诊断测量边界) — 冻结资产来源冲突恢复、题内规则与总体测量登记、旧优化目标和新增诊断运行的分别验收。
 
 - 2026-10-27：[私有可见题集与评分登记](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md) — 精确成员授权、规则与测量分离、自然虚报的验收边界。
+
+- 2026-10-27：[静态修复与判定语义](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md) — 格式失败反馈、默认判定与公共指标合并的独立核验。

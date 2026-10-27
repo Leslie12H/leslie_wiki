@@ -51,3 +51,12 @@ links: [evolve-runtime-payload-and-terminal-recovery]
 **How to apply:** 非阻塞反馈列出每题实际登记的项，明确公共 Judge 和调优目标尚待核对，不把不同题的绑定并集当全覆盖。错误原版身份继续拒绝，只有授权检查通过后才给精确恢复引用。分别核对保存动作、payload、正文与计划，不以技术反馈替代自然验收；实际模型未选用正确新题引用时，应保留失败而非反复提示答案。
 
 - 指针：`application/commands/draft_check.go`、`optimization_candidate_scope.go` 及相邻测试；natural54 实际调用、新旧草稿和未消费反馈的边界见主验收记录。
+
+
+## 2026-10-27：删去非法字段可能改变判定语义
+
+**Why:** 格式错误修复后能够保存，不代表原规则被保留。模型可能为通过静态检查删去整题判定策略，从按指定业务指标判定切回默认策略；把不同题维度并成公共评分，也会让额外维度应用到每一题。错误草稿的格式问题若遮住评分项清单，会使这些独立缺项更难发现。
+
+**How to apply:** 在格式失败时仍提供有界的草稿声明说明，但明确未校验通过；取消或超时则不继续检查。反馈应解释实际公共绑定合并与省略字段的默认行为，不能替用户改策略。核对最终正文、结构、绑定合并结果及默认判定，不能因静态通过或“仍未运行”的免责声明就判自然修复成功。
+
+- 指针：`internal/app/toolcaller_draft_feedback.go`、`application/commands/draft_check.go`、`domain/metric/binding.go`、`domain/evaluation/native_scores.go`；natural55 的实际原始失败、三次保存尝试及最终结构风险见主验收记录。
