@@ -77,3 +77,6 @@ links: [sandeval-handoff-duplicate-scope, sandeval-remediation-scope-change-stal
 **How to apply:** 对照失败 QA 的 group_id、实际报告数量、正式占用、原整改 source/target 边、负责人验收与当前逐题答案继承。只有从未生成质检任务、没有独立未结责任且已由有效整改和当前正式答案完全覆盖的重复记录，才具备从有效分区排除的候选条件；需实现并验证，不能直接删历史或放宽真实待办保护。原任务 accepted 与整包可交接分别读回，分区正确、原生 submit_to_sand 可用、真实交接成功是三层证据。
 
 [纸面350 20261008_10只读报告](/Users/leslie/Documents/Playground/output/paper350-allocation-20261027/report.md)保存原分配与失败分配、三个实例、实际负责人读取、正式逐题继承和源码错误栈。本次仅完成诊断，未改代码、生产数据或创建PR；后续状态应实时核验。
+
+
+2026-10-27 上述失败分配残留分支的修复与验证见[main PR #2892](https://github.com/world-sim-dev/sandai-data-smith/pull/2892)及[同一排查报告的修复章节](/Users/leslie/Documents/Playground/output/paper350-allocation-20261027/report.md#修复实现与只读候选预检)。**Why:** 只允许有持久失败分配依据、无任何实际空间质检报告、全部关联分配均明确占用失败且未建组、冻结成员全部被已完成整改覆盖的旧普通记录退出有效分区；没有正式报告本身不能证明冗余。**How to apply:** 保留独立未结处置和当前答案的正式继承校验，覆盖另一分配已发布、存在活动或停止报告、其他错误码、未结退回及答案漂移等反例。只读候选分区通过后，旧推进回执仍会显示原失败；发布后核验后台恢复重新汇总、正式完整包和负责人交接入口，不能把候选预检或PR Gate当成生产业务恢复完成。当前head、CI和部署沿PR与报告实时核验。
