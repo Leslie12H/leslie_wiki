@@ -2,7 +2,7 @@
 name: evolve-tuning-flexibility-review
 type: pitfall
 created: 2026-10-20
-updated: 2026-10-23
+updated: 2026-10-27
 tags: [maxwell, evolve, agent, review, performance]
 links: [evolve-boolean-rate-goal-direction, evolve-conversation-tuning-workspace-plan, evolve-candidate-loop-decision-boundaries]
 ---
@@ -324,3 +324,12 @@ links: [evolve-boolean-rate-goal-direction, evolve-conversation-tuning-workspace
 **Why:** 字段形状正确不代表引用种类正确；目标 materials 只接纳已授权知识来源，运行资产应在 Run 中精确绑定。首屏无条件要求每次人审又与有效 Grant 的显式运行相矛盾，会使 Agent 反复停下。仅更新主 Prompt 而保留已绑定旧 Skill，仍可能让旧固定流程继续生效；按 slug 导入还可能覆盖共享原件。
 
 **How to apply:** 可选资料无需求时允许省略，但保留目标约束及真实运行资产；说明必须和既有种类、哈希、Work 授权校验一致，不伪造知识包通过。首次或未匹配授权仍由人类审核，已有有效授权按实际服务端回执执行。只在已拥有的隔离配置中用另存为生成新身份、保留 canonical Slug、同步正文与可读 metadata，再精确替换绑定并读回文件哈希；不能同时绑定同 slug 的旧新两份。提示过内部字段的会话仅计技术诊断，修复后用未受提示的新自然会话复验。
+
+
+## 2026-10-27 确认稿物化后的复用与诊断测量边界
+
+**Why:** 页面确认可能已物化正式题集。Agent再次从相同Case构造freeze却声明不同来源，会触发正确的不可变元数据冲突；只有通用幂等错误时，Agent可能重复尝试而忽略已读到的冻结引用。新题的rubric声明聚合分也不等于平台已登记该测量；把局部诊断题直接放入旧持续调优授权，可能因目标指标或原版身份不一致而无法准备计划。
+
+**How to apply:** 核对草稿状态、frozenRef、正式资产hash和精确成员后复用；冲突恢复提供已有资产定位，保留原来源与拒绝，不静默改写或新建重复资产。逐项区分题内评分规则、metricBindings、整题outcome和优化目标，部分维度不补零。诊断评测与最终优化判定分别验证，不能以读到资料或保存草稿称可执行，也不放松原版本/授权边界。自然选择失败与技术恢复验证分别留证。
+
+- 指针：Maxwell commands/{freeze_draft,service,run,optimization_explicit_run,optimization_candidate_scope,tuning_metric_inputs}.go、domain/evaluation/native_scores.go。真实确认与新题计划失败、不可变冲突红绿回归及加载边界见主验收记录2026-10-27 10:55条目；这里不保存临时Run或通过状态。

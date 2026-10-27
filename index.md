@@ -1337,3 +1337,5 @@
 
 - 2026-10-27：[EVOLVE 比较授权回退](domains/maxwell/pitfalls/evolve-query-latency-and-tuning-visibility.md#2026-10-27-比较回退不能绕过候选读取拒绝) — 统一读取拒绝后旧回退重新放行的根因、撤权与冻结摘要红绿回归及二阶审查。
 - 2026-10-27：[EVOLVE 独立诊断题与草稿真实性](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md) — 新题范围、成绩归属、评分配置混用、非阻塞静态反馈及草稿正文/结构一致性的分层核查入口。
+
+- 2026-10-27：[确认稿复用与诊断测量边界](domains/maxwell/pitfalls/evolve-tuning-flexibility-review.md#2026-10-27-确认稿物化后的复用与诊断测量边界) — 冻结资产来源冲突恢复、题内规则与总体测量登记、旧优化目标和新增诊断运行的分别验收。
