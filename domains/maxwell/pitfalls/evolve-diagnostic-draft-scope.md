@@ -15,3 +15,12 @@ links: [evolve-runtime-payload-and-terminal-recovery]
 
 - 说明与实现入口：Maxwell `agent-resources/skills/case-design/SKILL.md`、EVOLVE `application/commands/draft.go` / `confirmed_draft.go` / `case.go`；Agent Runtime `ports/tool_validation.go`。不改变原版本保护或权限来掩盖模型改写。
 - 自然场景、真实草稿逐字段差异、用量、隔离 Skill 更新与后续恢复状态：`output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 的 2026-10-27 natural49 记录，以及集成工作区 `.tmp/natural49-visible-coverage-20261027/`。本页不表示自然验收或发布完成。
+
+## 2026-10-27：评分方法配置混用
+
+**Why:** 新题范围正确仍不代表可执行。自然场景实际读取了完整外部评分目录和模板，却沿用旧草稿里的内置 llm-rubric 参数；精简并按需拆分 Skill 后，新会话仍可能照抄错误配置。不能把失败都归因于工具信息缺失，也不能仅因新提示词被消费就称修复有效。
+
+**How to apply:** 对照实际模型请求、工具回执和提交正文，分别核对方法身份、版本、配置形状、逐题规则与输入契约。保存不完整草稿与物化校验应分开；检查保存回执是否只报告写入成功，以及 Agent 有没有把它错误解释为结构兼容。说明优化的因果效果必须以独立自然产物验证，失败后不要循环堆提示词或重复相同输入。
+
+- 实际两次自然适配失败、按需说明安装与消费证据：上述验收记录的 natural50/51，以及集成工作区 `.tmp/natural50-diagnostic-contract-20261027/`、`.tmp/natural51-diagnostic-adaptation-20261027/`。
+- 只读代码核对入口：`application/commands/provider_case.go`、`confirmed_draft.go`、`internal/app/toolcaller.go` 的 draft put/get；当前可编辑保存与确认校验的边界以源码为准，不在本页固化运行状态。
