@@ -1362,3 +1362,5 @@
 - 2026-10-27：[运行参数实验与产物分层判定](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md#2026-10-27运行参数实验与产物分层判定) — 原请求参数、独立恢复、结构修复与解释分别验收；已知用量不冒充完整成本。
 
 - 2026-10-27：[EVOLVE 重复确认与恢复账目边界](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md#2026-10-27重复审核相同内容与不可变来源) — 同内容新审核复用旧资产来源、原子确认围栏，以及模型流恢复和缺失账单的独立取证。
+
+- 2026-10-27：[原生评分保存与准入一致性](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md#2026-10-27原生评分的保存与运行准入必须一致) — 实际 Agent 人审稿不得被误要求编译记录；传统编译证明与实际测量校验分别保留。

@@ -113,3 +113,12 @@ links: [evolve-runtime-payload-and-terminal-recovery]
 **How to apply:** 关联原生 Run 的模型事件、唯一 Worker 的结构化错误和恢复日志、Temporal Activity 实际 attempt/typed failure；区分正常主模型重试、Worker 重放和用户取消。确认恢复成功也不推算缺失调用成本，不修改旧账单或延长超时冒充修复。
 
 - 入口：Agent Server `runtime/core/nodes/model_retry.go`、`runtime/infrastructure/temporalruntime`，以及本批 `.tmp/natural59-model-recovery-20261027.json`、`.tmp/natural59-temporal-history-20261027.json`、`.tmp/natural59-recovery-regression-20261027.log`。实际私有原件不复制进知识库。
+
+
+## 2026-10-27：原生评分的保存与运行准入必须一致
+
+**Why:** 原生 Judge 是绑定声明，保存不执行评分方法；若运行入口仅按 producer=agent 要求编译调用记录，会拒绝合法的人审产物。用手工导入评分构造的测试可能漏掉这条真实 Agent 草稿链路。
+
+**How to apply:** 将真实草稿确认/冻结产物送入准入函数，核对无需伪造编译历史；实际评分方法、版本、业务权限和配置仍在测量准入检查。传统 Agent Judge 与 CaseSet 的编译依据要求保持。草稿静态通过和正式冻结不能替代实际计划受理。
+
+- 入口：EVOLVE `commands/service.go` 的 `invokeJudgeSpecMethod`、`commands/run.go` 的 `frozenRunMethods`、`native_draft_test.go`；红绿和完整回归沿 `.tmp/native-reviewed-admission-*-20261027.log`，真实计划恢复沿 natural60 验收记录。
