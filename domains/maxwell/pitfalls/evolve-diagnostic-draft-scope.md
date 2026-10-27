@@ -34,3 +34,20 @@ links: [evolve-runtime-payload-and-terminal-recovery]
 
 - 源码入口：EVOLVE `application/commands/draft_check.go`、`internal/app/toolcaller_draft_feedback.go`、`internal/app/transport/mcp/handler.go`；原结构化回执与附加文本的边界以当前代码为准。
 - 红绿、实际模型消费、保存恢复及尚存正文不一致证据：上述验收记录的 natural52，以及集成工作区 `.tmp/natural52-draft-feedback-20261027/assessment.json`。本页不表示自然自主闭环已通过。
+
+
+## 2026-10-27：私有可见题集不等于隐藏题集
+
+**Why:** 未发布为共享标准的 Work 私有题集，可能全部由本任务可见题组成。正文读取一律要求 hidden 权限会阻止 Agent 核对正确冻结成员；但元数据可见也不能直接放行所有正文。
+
+**How to apply:** 保留原资产与任务血缘授权，读取有界且哈希一致的冻结清单，逐批核对每个成员当前的业务、任务、可见性与精确摘要。隐藏、缺失、摘要不符或越权成员仍拒绝，不返回部分清单；覆盖跨页最后一项和元数据只读分支。UI 读取、模型实际读取与自然计划交付分别留证。
+
+- 指针：EVOLVE `application/queries/service.go`、`case_set_content_test.go`；红绿权限回归和自然54结果见主验收记录及 `.tmp/natural54-scoring-coverage-20261027/`。
+
+## 2026-10-27：规则总分不等于登记测量
+
+**Why:** rubric 的加权总分和通过条件，与平台 metricBindings 分属不同内容。Agent 只读规则就声称已补齐，可能没有修改或有效计划；新草稿即使保存成功，也可能混入不支持的规则字段。
+
+**How to apply:** 非阻塞反馈列出每题实际登记的项，明确公共 Judge 和调优目标尚待核对，不把不同题的绑定并集当全覆盖。错误原版身份继续拒绝，只有授权检查通过后才给精确恢复引用。分别核对保存动作、payload、正文与计划，不以技术反馈替代自然验收；实际模型未选用正确新题引用时，应保留失败而非反复提示答案。
+
+- 指针：`application/commands/draft_check.go`、`optimization_candidate_scope.go` 及相邻测试；natural54 实际调用、新旧草稿和未消费反馈的边界见主验收记录。
