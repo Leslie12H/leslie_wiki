@@ -2,7 +2,7 @@
 name: sandeval-manual-return-partial-write
 type: pitfall
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-27
 tags: [sand-eval, quality, rework, manual-return, autocommit]
 links: [sandeval-inspector-rework-round-list-and-editability, sandeval-direct-return-interrupted-by-leader]
 ---
@@ -19,3 +19,11 @@ links: [sandeval-inspector-rework-round-list-and-editability, sandeval-direct-re
 - 2026-10-15 用户授权此单恢复；精确预检 hash、现有业务服务执行、原轮次与父责任保全、本人列表 source_available 及完整整改清单的独立验收见 [恢复报告](/Users/leslie/Documents/Playground/output/wangzhen-rework-20261015/repair-report.md)。这仅证明个案已恢复为可处理状态，实际整改、复验与验收须另行读取。修复根因的代码见 [main PR #2470](https://github.com/world-sim-dev/sandai-data-smith/pull/2470)；[测试 PR #2468](https://github.com/world-sim-dev/sandai-data-smith/pull/2468) 保留测试分支集成入口。main PR 从最新 main 仅挑入本任务原始提交；是否可合并、Gate、业务验收及部署必须现场核验。
 - 恢复命令应在首个业务写入前保存完整不可变意图，绑定检查版本、原发起身份、接收人、原意见、精确执行上下文和责任版本；重放只能接续自己的已提交步骤。只有执行关联完成后才能发布给标注员；已发布后缺回执不得覆盖标注工作。只模拟事务回滚会掩盖真实的逐语句提交故障，回归应注入每个提交前缀的中断。实现位置查 PR 中的 manual_return_intent.py，不据知识页认定已上线。
 - 操作审计不能只 fsync 在临时 Pod：并行滚动发布可能销毁该文件，应实时输出并由操作者本机保存。写后对象比较还须区分数据库时间精度截断与业务字段漂移；出现校验失败先独立读取，不能盲目再次 apply。只读探针对大批参数化 SELECT 的解析预算不足时，可提高该探针进程的 parser token budget，但须保留并验证 DML 拒绝，不能据探针限制认定本人工作台失败。
+
+## 2026-10-27 后续复验轮次仍关联祖先整改执行
+
+**Why:** 合法手动复验可以建立后续检查轮次，而原整改执行的 followup 仍指向同批祖先组。退回标注员的捕获阶段若仅接受空指针或当前组，即使来源、接收人和父责任全部一致，也会在停止检查已提交之后拒绝。冻结退回意图存在但整改单尚未发布，列表可能回落为“待质检员整改／进入整改”，实际工作台因 stopped 无法修改。版本核对只检查后续正式答案，不能修复缺失的整改单。
+
+**How to apply:** 同时核对不可变退回意图、停止检查版本、原执行 followup 和正式 previous/attempt 继承链。只有 pending 执行指针仍与原意图一致，精确祖先组属于同批同关卡，且当前轮能沿正式链证明承接该组与原执行责任时，才接续原捕获；新 worker 指针、无关组、断链和跨批次仍拒绝。通过原有命令恢复保留逐题判断及历史，实际发布后还要独立核验原定标注员的整改待办、完整题目和提交动作。修改及正式提交由标注员完成，再交质检员复验；不能直接把 stopped 改成可编辑。
+
+实现、正反例及精确 CI 沿 [main PR #2894](https://github.com/world-sim-dev/sandai-data-smith/pull/2894) 查询；现场原意图、真实只读上下文、内存候选捕获和上线后验收项目见[纸面18整改报告](/Users/leslie/Documents/Playground/output/paper18-correction-20261027/report.md)。候选只读验证、PR 合并发布、后台重放、本人可编辑及实际完成整改是不同完成层，使用前重新核验。
