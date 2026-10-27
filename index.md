@@ -1351,3 +1351,5 @@
 - 2026-10-27：[草稿反馈的实际送达](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md) — 列表与单份读取一致性、日志预算误截断及真实模型消费核验。
 
 - 2026-10-27：[组合评分事实与实际修复](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md) — 同任务草稿组合预览、Provider 请求消费证据与仅改正文的误报核验。
+
+- 2026-10-27：[外部评分配置与平台判定契约](domains/maxwell/pitfalls/evolve-diagnostic-draft-scope.md#2026-10-27外部评分配置与平台判定契约分层) — 区分方法模板、公共绑定及整题判定；实际消费与配置修复分别验收。

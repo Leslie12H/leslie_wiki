@@ -78,3 +78,12 @@ links: [evolve-runtime-payload-and-terminal-recovery]
 **How to apply:** 组合预览必须明确是假设配套，限定同业务、同任务的可编辑草稿，不隐式选用、不重判历史；用真实 MergeBindings 计算同名覆盖与公共继承，不凭名称猜测评分。验收应定位至 providerRequest 中的具体消息，再比较前后保存 payload、修订归属和判定策略。若内容未变且原拒绝仍在，保留自然失败；不能反复增加反馈说明来宣称可靠性。
 
 - 源码：EVOLVE `application/commands/draft_check.go` 的 EditableDraftPairingNote、`domain/metric/binding.go`；技术边界测试与 natural57 真实结果见主验收记录及 `.tmp/natural57-pairing-repair-20261027/assessment.json`。
+
+
+## 2026-10-27：外部评分配置与平台判定契约分层
+
+**Why:** 外部 Provider 的配置和逐题规则模板不包含平台原生 Judge 的整题判定语法。只把 outcome 写成可选项、把公共绑定误当目录，会让模型猜测阈值字段或删掉策略；但补齐语法后，模型仍可能只改正文，说明文档缺口不是自然修复失败的充分解释。
+
+**How to apply:** 分别提供评分服务契约和平台判定结构，明确公共绑定应用于每题、题内同名覆盖与指定指标判定的边界。将文档JSON交给真实解析器和判定函数校验，再检查实际 Provider 请求消费及最终持久化差异。模型承认一份草稿未修好，不能抵消它对另一份草稿可用性的失实判断；保留失败，不反复用相同请求重试。
+
+- 指针：Judge/Case Skill入口、EVOLVE application/evaluation/contracts.go 与 domain/evaluation/native_scores.go；主验收记录2026-10-27 13:09及集成工作区 .tmp/natural58-native-policy-20261027/assessment.json。文档与技术验证通过不表示自主修复或发布完成。
