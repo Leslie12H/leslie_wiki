@@ -60,3 +60,12 @@ links: [evolve-runtime-payload-and-terminal-recovery]
 **How to apply:** 在格式失败时仍提供有界的草稿声明说明，但明确未校验通过；取消或超时则不继续检查。反馈应解释实际公共绑定合并与省略字段的默认行为，不能替用户改策略。核对最终正文、结构、绑定合并结果及默认判定，不能因静态通过或“仍未运行”的免责声明就判自然修复成功。
 
 - 指针：`internal/app/toolcaller_draft_feedback.go`、`application/commands/draft_check.go`、`domain/metric/binding.go`、`domain/evaluation/native_scores.go`；natural55 的实际原始失败、三次保存尝试及最终结构风险见主验收记录。
+
+
+## 2026-10-27：反馈生成不等于反馈完整送达
+
+**Why:** 草稿列表返回完整最新内容却没有单份读取的检查反馈，Agent 可能不再读取单份草稿，漏掉配套资产的错误。另一个独立缺口是把用户可读说明套用日志错误的短字节预算：源码生成了评分范围和默认判定解释，MCP 文本却可能在中途静默截断。只验证生成函数或某个关键词出现不足以证明模型收到了完整结论。
+
+**How to apply:** 核对实际工具回执和下一次模型请求。列表与单份读取在授权完成后提供一致的非阻塞反馈，整次列表共用有界检查预算，不追加写入或扩大权限。用户反馈采用独立有界展示预算，完整执行敏感内容排除后再按 UTF-8 边界截断，并明确提示截断；结构化原回执保持不变。分别验证格式失败、历史冻结、取消、空列表、超长说明和敏感词在截断点之后的情况。技术传输通过不等于 Agent 已修好跨资产语义。
+
+- 源码指针：EVOLVE `internal/app/toolcaller_draft_feedback.go`、`internal/app/transport/mcp/handler.go` 与对应测试。红绿及实际自然消费证据见主验收记录 2026-10-27 natural56 和集成工作区 `.tmp/natural56-paired-scoring-20261027/`；当前验收结论以该记录为准。
