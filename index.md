@@ -1419,3 +1419,5 @@
 - 2026-10-28 补充：[EVOLVE 候选资源声明与已存原件](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md)：读取状态、冻结引用校验、附件与候选分离及结构整理的规则保留。
 
 - 2026-10-28：[候选内部编辑与外部应用分开准入](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-28-候选内部编辑与外部应用分开准入) — 本地冻结原件编辑解除执行器通道耦合，权限/完整性保留，真实 Adapter 应用与自然编辑分别验收。
+
+- 2026-10-28：[复验换人后的冻结人员校验与单案恢复](domains/sandai-data-smith/pitfalls/sandeval-reinspection-original-reviewer-qualification.md) — 原生派单成功仍不可作答的原因、保留旧计划的新计划重绑及原生交接、跨副本验收与仅适用于未作答后继的边界。
