@@ -85,6 +85,8 @@
 
 # leslie_wiki 目录
 
+- 2026-10-28：[看答案的版本来源](domains/sandai-data-smith/refs/sandeval-view-answer-version.md) — 当前正文、原标注、质检保存与历史版本分层核对入口。
+
 - 2026-10-27：[管理后台 RPM 修改与恢复](domains/sandai-platform/refs/admin-rpm-change-verification-entrypoints.md) — 独立飞书登录、组织归属、继承语义、真实阈值/恢复与费用的查证入口。
 - 2026-10-27：[EVOLVE 显式草稿续改与磁盘恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-显式草稿续改与磁盘故障恢复) — 历史快照保留资源、自然验收及无损依赖恢复指针。
 
