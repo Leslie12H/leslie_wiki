@@ -118,3 +118,14 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why:** 登录、余额、公开模型和抓取成功可能同时成立，但生成准入、实际完成或当前看板仍不可用。把这些条件合并会导致用拒绝流量、过时零值或尚未审核的成功推断容量。
 
 **How to apply:** 在完整负载内先验证一轮，每个租户核对真实准入与单位费用；按范围停发，未知 POST 不重试。保留逐组织客户端原件，独立核对公开任务状态、唯一扣费交易、积压消退和临时准入回滚，再报告可持续容量与未验证的 GPU 边界。
+
+
+## 2026-10-28 云看板资源分母与短图例
+
+- 当前布局、原生配置与实际 CSV 验收入口在 API 工作区 `monitoring/aliyun/README.md`、`cms-dashboard.native.json`、`docs/dev-dashboard-metrics.md` 和忽略目录 `.local/dashboard-polish-20261028/`；可变面板数量和资源峰值只存实施记录。
+- 容器 CPU 核数沿 cAdvisor `container_cpu_usage_seconds_total`，工作集内存沿 `container_memory_working_set_bytes`；配额分母沿 kube-state-metrics `kube_pod_container_resource_limits`。核对 namespace、Pod、实际容器和资源单位，同 Pod 配对，重复采集取适当去重聚合；未设置 limit 不伪造百分比。JVM 堆、进程 CPU、容器总体资源与节点/GPU 分开命名。
+- CMS 原生 Prometheus 查询的图例输入保存字段是 `legendFormat`；仅写 `legend` 不保证界面使用短图例。配置更新后，核对正式图例是否仍退回整段 PromQL 或 Pod 标签。编辑器 JSON 文本框可能只暴露当前窗口内容，不能将片段当全量原生导出；沿控制台实际配置读取/保存链路核对，临时签名 URL 与安全字段不进入持久化原件。
+
+**Why:** CPU/内存图即使有数据，放得过深、分母含糊或图例充满内部标签，也难以用于压测定位；堆水位低并不代表容器整体内存低。
+
+**How to apply:** 先证明每个目标服务有资源序列与 limit，再把 CPU/内存水位前移，用核数/MiB 图解释绝对用量，单独保留 JVM 图。保存后全配置独立读回，并从正式面板逐图导出实际样本；保持同一看板链接，不用占位数据证明完成。

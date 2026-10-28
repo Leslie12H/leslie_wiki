@@ -1424,3 +1424,5 @@
 
 - 2026-10-28：[API 压测专用身份与指标迁移](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-28-专用测试身份真实准入与原生指标迁移) — 准入与余额分离、模拟认证范围回滚、部署版本依赖及实际性能/采集可信度的验收入口。
 - 2026-10-28：[显式草稿续改与冻结身份解耦](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-28-显式草稿续改不应重复要求冻结身份) — 保留所有原件授权、精确版本和旧来源失败关闭；自主保存与 A2A 应用、业务质量分层核验。
+
+- 2026-10-28：[API 看板资源口径与图例](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-28-云看板资源分母与短图例) — 容器 CPU/内存限额、JVM 分层、legendFormat 与逐图实采验收入口。
