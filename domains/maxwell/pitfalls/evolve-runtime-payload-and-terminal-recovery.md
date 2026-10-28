@@ -627,3 +627,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 先识别冻结来源协议。对获授权的本地 Runner 原件，只按原 Work/visible、冻结身份、内容摘要、可编辑种类及替换冲突检查派生文件；外部 resource-control 来源仍需执行器和库存核验。保存候选仍是显式步骤，实际应用继续经过原 A2A/Adapter 准入。参数可选性变更须按项目规则批准，覆盖旧调用兼容、无执行器查询、权限拒绝、篡改、其它资源保留和失败不落产物。新会话分别核验模型实际消费、保存字节、业务语义和最终表达，不把内部编辑成功当作应用或质量通过。
 
 指针：Maxwell `application/resourcecontent/source.go`、`source_runner.go`、`commands/resource_edit.go` 与 MCP `schemas.go`；批准清单在 `output/evolve-unified-20261019/internal-candidate-edit-contract-20261028.md`，红绿、race、原工具目录同步及独立自然73的逐字节结果见主验收日志和集成 `.tmp/natural73-internal-edit-20261028/`。C9 在途验证另追实际应用回执；本页不预判终态评分或发布。
+
+
+## 2026-10-28 显式草稿续改不应重复要求冻结身份
+
+**Why:** 本地草稿已经保存全部授权原件和精确资源哈希，继续修改仍要求另一个冻结 Variant 身份，会制造没有实际读取需求的依赖。自然验收出现模型正确读到最新稿，却捏造冻结身份、转为手写长正文及错误摘要的失败；目录或提示已消费也不能证明任务完成。
+
+**How to apply:** 仅对显式版本、同 Work 中已存在的本地资源路径提供草稿续改；所有保留引用仍核对可见权限、原件类型、哈希和大小，选中原文字节另作完整性检查。外部、未覆盖路径、内联或包覆盖保持原契约；显式错误来源不得失败后回退放行。返回不声明不存在的冻结来源，不自动保存、确认或授予 A2A 应用许可。验证分开核对 schema/Skill 实际消费、落库 payload、另一资源保留、最终说明以及 Adapter 应用；不以一次保存成功声称质量改善。
+
+指针：Maxwell `application/resourcecontent/source_draft.go`、`commands/resource_edit.go`、MCP schemas 与相邻测试（均在 services/evolve-server 内）；批准方案 `output/evolve-unified-20261019/draft-resource-edit-contract-20261028.md`。自然74原失败、自然75独立保存与 C9 实际应用证据沿主验收日志及集成工作区对应证据目录核查。

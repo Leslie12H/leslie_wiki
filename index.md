@@ -1423,3 +1423,4 @@
 - 2026-10-28：[复验换人后的冻结人员校验与单案恢复](domains/sandai-data-smith/pitfalls/sandeval-reinspection-original-reviewer-qualification.md) — 原生派单成功仍不可作答的原因、保留旧计划的新计划重绑及原生交接、跨副本验收与仅适用于未作答后继的边界。
 
 - 2026-10-28：[API 压测专用身份与指标迁移](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-28-专用测试身份真实准入与原生指标迁移) — 准入与余额分离、模拟认证范围回滚、部署版本依赖及实际性能/采集可信度的验收入口。
+- 2026-10-28：[显式草稿续改与冻结身份解耦](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-28-显式草稿续改不应重复要求冻结身份) — 保留所有原件授权、精确版本和旧来源失败关闭；自主保存与 A2A 应用、业务质量分层核验。
