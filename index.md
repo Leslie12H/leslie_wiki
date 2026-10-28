@@ -1415,3 +1415,5 @@
 - 2026-10-28：[EVOLVE 历史原文与多资源恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-28-历史声明导航不能替代原文恢复) — 有界父版本导航、待审资源既有读取能力、工具与 Skill 同步，以及自主恢复的独立证据。
 
 - 2026-10-28：[历史修订共享校验的影响范围](domains/sandai-data-smith/pitfalls/sandeval-repeated-correction-ancestor-blocker.md#2026-10-28-共享校验影响范围-review) — 只读解析进入写决策、答案显示与保存基线一致、不同关闭类型、前端错误重试与主动范围重置的边界。
+
+- 2026-10-28 补充：[EVOLVE 候选资源声明与已存原件](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md)：读取状态、冻结引用校验、附件与候选分离及结构整理的规则保留。

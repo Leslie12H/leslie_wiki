@@ -610,3 +610,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 历史导航只沿同 Work 已持久化父版本、限深度和时间，声明比较与正文、execution、实际应用明确分开；不能隐式合并或替模型选择版本。用真实只读请求验证既有资源引用能力及完整哈希，再同步工具目录和启用 Skill，独立重新打开全部文件核对保存。新自然会话另核验历史原文消费、保存资源实际字节与最终说法；辅助纠正后的局部改句不能覆盖原失败，也不能冒充恢复整份历史修改。
 
 指针：Maxwell `internal/app/toolcaller_profile_history.go`、`queries/resource_read.go`、`resourcecontent/content.go`、MCP schemas 和 optimization-strategy Skill；真实六份原件读取及自然67/68证据见集成工作区 `.tmp/natural67-profile-history-20261028/`、`.tmp/natural68-resource-read-20261028/` 与主验收日志2026-10-28。技术读取、实际消费、自主恢复和业务质量各自保留结论；本页不预判仍在进行的自然验收结果。
+
+
+## 2026-10-28 候选资源声明不等于已存原件
+
+**Why:** 自然候选编辑曾在没有创建资源原件的情况下保存一个格式正确的资源引用；前端只按声明显示“完整原件已保存”，直到真实读取才发现记录不存在。草稿可编辑性与不可变原件真实性是两项不同证据；另存到会话附件也不代表候选已更新。
+
+**How to apply:** 审核候选时核对具体资源身份、授权读取、完整字节与摘要，再比较 Prompt 和 Skill 是否都保留所需变更。UI 在读取前只陈述引用存在，成功和失败依实际回执表达；既有冻结校验继续验证引用，不为制造通过而补写缺失原件。结构整理也要逐字审视被删除的业务规则，不能以模型自述“仅整理”或 hash 改变代替语义验收。辅助纠正产生的可用稿不能覆盖独立自然场景的原失败。
+
+当前实现指针：`apps/studio/src/business-components/evolve/{ResourceContentReader,VariantResourcesView}.tsx`、`services/evolve-server/internal/modules/evolve/application/commands/service.go` 的冻结资源引用检查，以及 `application/resourcecontent/content.go`。实际版本、自然表现和应用证据沿本页验收记录指针查证；本页不声明质量或发布通过。
