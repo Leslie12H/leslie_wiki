@@ -619,3 +619,11 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 审核候选时核对具体资源身份、授权读取、完整字节与摘要，再比较 Prompt 和 Skill 是否都保留所需变更。UI 在读取前只陈述引用存在，成功和失败依实际回执表达；既有冻结校验继续验证引用，不为制造通过而补写缺失原件。结构整理也要逐字审视被删除的业务规则，不能以模型自述“仅整理”或 hash 改变代替语义验收。辅助纠正产生的可用稿不能覆盖独立自然场景的原失败。
 
 当前实现指针：`apps/studio/src/business-components/evolve/{ResourceContentReader,VariantResourcesView}.tsx`、`services/evolve-server/internal/modules/evolve/application/commands/service.go` 的冻结资源引用检查，以及 `application/resourcecontent/content.go`。实际版本、自然表现和应用证据沿本页验收记录指针查证；本页不声明质量或发布通过。
+
+## 2026-10-28 候选内部编辑与外部应用分开准入
+
+**Why:** 已获授权且字节完整的 EVOLVE 本地 Prompt/Skill 编辑曾依赖执行器是否暴露 Runner 结果通道。任务历史执行器与实际 A2A 执行器不同时，这个无关前置会阻塞内部编辑，并诱使模型手写长正文和摘要；资源哈希错误又导致保存失败。候选内部原件编辑和向真实 Adapter 应用并不是同一动作。
+
+**How to apply:** 先识别冻结来源协议。对获授权的本地 Runner 原件，只按原 Work/visible、冻结身份、内容摘要、可编辑种类及替换冲突检查派生文件；外部 resource-control 来源仍需执行器和库存核验。保存候选仍是显式步骤，实际应用继续经过原 A2A/Adapter 准入。参数可选性变更须按项目规则批准，覆盖旧调用兼容、无执行器查询、权限拒绝、篡改、其它资源保留和失败不落产物。新会话分别核验模型实际消费、保存字节、业务语义和最终表达，不把内部编辑成功当作应用或质量通过。
+
+指针：Maxwell `application/resourcecontent/source.go`、`source_runner.go`、`commands/resource_edit.go` 与 MCP `schemas.go`；批准清单在 `output/evolve-unified-20261019/internal-candidate-edit-contract-20261028.md`，红绿、race、原工具目录同步及独立自然73的逐字节结果见主验收日志和集成 `.tmp/natural73-internal-edit-20261028/`。C9 在途验证另追实际应用回执；本页不预判终态评分或发布。
