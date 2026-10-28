@@ -1,3 +1,5 @@
+- 2026-10-28：[API 延迟、积压与 GPU 观测口径](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-28-延迟积压与-gpu-补齐的查证口径) — 入队时间与重试更新时间、P95/P99 聚合、实际模型集群的采集边界。
+
 - 2026-10-27：[API Dev 采集接通与保存验收](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-27-已授权后的实际接通验收入口) — 既有实例复用、缺字段与 UP 区分、心跳新鲜度、CMS 保存后逐图回读及受限部署入口。
 
 - 2026-10-27：[API 平台阿里云看板入口](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-27-阿里云看板交付入口) — CMS 原生云看板、Grafana 权限、JSON 采集实施清单及云上验收边界。

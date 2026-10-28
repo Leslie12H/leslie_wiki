@@ -2,7 +2,7 @@
 name: sandai-api-platform-performance-testing-entrypoints
 type: reference
 created: 2026-10-27
-updated: 2026-10-27
+updated: 2026-10-28
 tags: [sandai, api-platform, performance, testing, quota]
 links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi-quota-entrypoints]
 ---
@@ -71,3 +71,13 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why:** 采集组件 Ready、Prometheus UP、指标完整、近期心跳与面板持久化各自可能独立失败，单一绿灯会掩盖空面板。
 
 **How to apply:** 先逐源核对，再查完整指标与心跳，最后保存、刷新、逐图验收。真实压测仍需独立确认流量、预算、任务终态、HTTP 延迟和费用证据。
+
+## 2026-10-28 延迟、积压与 GPU 补齐的查证口径
+
+- 排队时间回查 Zeus `TaskDispatchMapper.java` 的 enqueue/saveControl/touch：`dispatch_updated_at` 会被控制信息和重试触碰更新，不能直接作为首次入队时间。`TaskDispatchWorker.java` 当前按 createTime 计算的年龄是创建年龄；精确排队等待需沿真正入队时间或事件查证。
+- HTTP 分位数先核对实际 ARMS 应用及可用 quantile；官方指标说明不保证具备 0.95。跨实例总体分位数应沿原始耗时或可聚合直方图计算，不能平均各 Pod 的 P95/P99。官方入口：[ARMS 指标](https://help.aliyun.com/zh/arms/application-monitoring/developer-reference/application-monitoring-metrics)、[Micrometer 分位数与直方图](https://docs.micrometer.io/micrometer/reference/concepts/histogram-quantiles.html)。
+- 实际下游从 `TaskDispatchWorker` 的 AthenaDispatchClient 回查；GPU 监控归属以模型运行集群为准，不默认属于 API ACK。安装方式与限制查[ACK GPU 监控](https://help.aliyun.com/zh/ack/ack-managed-and-ack-dedicated/user-guide/enable-gpu-monitoring-for-a-cluster)。
+
+**Why:** 重试更新时间、已受理状态、API 所在集群与服务端分位数都可能被误作真实排队、执行或用户延迟证据。
+
+**How to apply:** 分开采集压测客户端耗时、服务端 HTTP 耗时、真实业务任务状态与模型执行资源。只读聚合先核对环境、API 来源、终态排除与查询成本；缺数据显式暴露采集失败，不补零。
