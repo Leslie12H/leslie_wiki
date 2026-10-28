@@ -2,7 +2,7 @@
 name: evolve-runtime-payload-and-terminal-recovery
 type: pitfall
 created: 2026-10-23
-updated: 2026-10-27
+updated: 2026-10-28
 tags: [maxwell, evolve, runtime, recovery, performance]
 links: [evolve-query-latency-and-tuning-visibility, evolve-nextplay-archive-navigation-parity]
 ---
@@ -592,3 +592,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 对齐源头错误、MCP structured error、Runtime code/action 与实际 model.request，区别参数可修正、权限拒绝和真实服务故障；不要根据错误文案批量改分类。新增能力同时检查已启用 Skill 的旧限制，更新后独立回读全文和其它文件，实际消费及自然产物另行验证。错误语义变更按项目契约规则批准；禁止靠新提示、自动替换执行器或盲重试掩盖原失败。
 
 指针：Maxwell `application/resourcecontent/source_runner.go`、MCP `handler.go`、Agent tools `execution/native/builtin_tools.go` 与 `runtime/toolprotocol/result.go`；策略 `agent-resources/skills/optimization-strategy/SKILL.md`。实际版本、回执及待批准范围见工作区 `output/evolve-unified-20261019/resource-executor-error-contract-20261027.md` 和主验收日志；本页不代表该修复已实现或已发布。
+
+
+## 2026-10-28 执行器选择错误应与永久故障分开
+
+**Why:** 已获资产授权、同业务且 active 的执行器未暴露所需 Runner 通道，是调用者可以修正的选择错误。仅在错误文字里建议更换参数，而结构化分类仍为永久供应方错误，会令 Runtime 给出错误恢复方向。修复此分类不证明 Agent 已能正确合并历史多资源稿；保存成功也不证明保留了用户要求的全部改动。
+
+**How to apply:** 在权限和精确冻结资产校验之后，对该有限输入错误复用 `ErrInvalidInput`，通过 MCP `invalid_input` 到 Runtime `correct_arguments`；保持 `retryable=false`，不自动选执行器或重复调用。跨业务、停用、撤权、缺失对象及外部故障保持原边界。分别核验源头/传输/Runtime映射和真实只读请求，再独立核对自然保存的资源哈希与历史版本，而非只看最终答复。
+
+源码指针：Maxwell `services/evolve-server/internal/modules/evolve/application/resourcecontent/source_runner.go`、MCP `resource_errors_test.go`、Runtime工具错误映射。批准与运行证据：工作区 `output/evolve-unified-20261019/resource-executor-error-contract-20261027.md`、验收日志2026-10-28条目及集成 `.tmp/natural66-executor-recovery-20261028/`。这些记录区分错误分类修复、正确执行器自然选择与尚未通过的自主合并，后续状态应读原记录。

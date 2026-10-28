@@ -1401,3 +1401,5 @@
 - 2026-10-27：[冻结批次待定退回修复审查入口](domains/sandai-data-smith/pitfalls/sandeval-frozen-batch-return-after-duplicate-defer.md#2026-10-27-通用修复与复发边界) — main PR #2916的精确head人工审查与Codex回执指针，区分bot结果、正式批准、测试环境和生产发布。
 
 - 2026-10-27：[错误恢复建议与能力说明一致性](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-错误恢复建议与能力说明需要同源核对) — 追源头错误到 Runtime action，核对新 schema 与启用 Skill 的旧约束，保存与实际消费分开验收。
+
+- 2026-10-28：[EVOLVE 执行器参数恢复分类](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-28-执行器选择错误应与永久故障分开) — 可修正选择错误、权限前置、真实调用与自主多资源合并的分层验收。
