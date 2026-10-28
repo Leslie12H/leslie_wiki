@@ -114,3 +114,12 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-roles-and-work
 
 - [两个批次的只读报告](/Users/leslie/Documents/Playground/output/qc-two-batches-20261028/report.md)：具体 QT/RT/RI、三条父责任版本、部署 SHA、另一副本本人读取及失败调用栈。当前未改业务代码、生产数据或部署；现场状态沿证据入口重新核验。
 - 可变代码入口：`ReviewQueryService.items_page`、`AnswerAmendmentService._sand_return_chains / _sand_return_basis`、`delegated_feedback.annotation_return_delegation`、`ReinspectionAuthorizationService.annotation_execution_parents(allow_resolved=True)`。
+
+
+### 2026-10-28 请求日志补证与修改边界
+
+**Why:** 单题加载失败会清空内容，但刷新若从内容对象取选中 ID，会丢掉仍在 URL 中的目标，发出默认队列请求并转到第一题。队列若附带第一题内容，单题历史链异常也会传成整页加载失败。访问日志可证明请求和 Referer 的变化，不能代替没有记录的点击事件或响应正文。
+
+**How to apply:** 固定 SLS 查询窗口并核对 Complete 与独立计数，按精确 RT、客户端及观察模式区分流量；沿失败题目、带 anchor 队列、无 anchor 队列及后续 Referer 对齐源码。选中 ID 与加载内容独立，失败重试保留目标，旧请求不得覆盖新选中项。后端同时核对 annotation_execution_parents 和 completed_annotation_parent 的历史版本假设，以正式下一轮执行证明合法增版，再以真实关闭执行校验当前版本、完整报告和关闭依据；已关闭责任仍停止继承。回归覆盖单题、历史、核对答案版本与首次队列附带内容，不能只验证详情 200。
+
+- 证据与精确修改建议仍见[两个批次只读报告](/Users/leslie/Documents/Playground/output/qc-two-batches-20261028/report.md)。代码入口补充：`ResolutionService.resubmit`、`ReinspectionAuthorizationService.completed_execution_permit / completed_annotation_parent`、`ReviewWorkspace.select / load`、`ReviewQueryService.queue_page`。本页不表示业务修复已实施。

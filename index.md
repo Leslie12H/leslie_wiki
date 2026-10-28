@@ -1406,4 +1406,4 @@
 
 - 2026-10-28：[EVOLVE 执行器参数恢复分类](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-28-执行器选择错误应与永久故障分开) — 可修正选择错误、权限前置、真实调用与自主多资源合并的分层验收。
 
-- 2026-10-28：[历史父整改关闭后的单题读取阻塞](domains/sandai-data-smith/pitfalls/sandeval-repeated-correction-ancestor-blocker.md#2026-10-28-历史父责任再次整改关闭后单题修订链读取失败) — 任务授权、真实题序和单题修订链分层核验；旧冻结版本与后续正式关闭执行的连续证明，跳题行为另验。
+- 2026-10-28：[历史父整改关闭后的单题读取阻塞](domains/sandai-data-smith/pitfalls/sandeval-repeated-correction-ancestor-blocker.md#2026-10-28-历史父责任再次整改关闭后单题修订链读取失败) — 任务授权、真实题序和单题修订链分层核验；旧冻结版本与后续正式关闭执行的连续证明；补充完整 SLS 请求链、失败刷新丢题目定位和双重版本校验修改边界。
