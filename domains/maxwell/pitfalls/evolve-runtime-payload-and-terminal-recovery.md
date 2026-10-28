@@ -601,3 +601,12 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 在权限和精确冻结资产校验之后，对该有限输入错误复用 `ErrInvalidInput`，通过 MCP `invalid_input` 到 Runtime `correct_arguments`；保持 `retryable=false`，不自动选执行器或重复调用。跨业务、停用、撤权、缺失对象及外部故障保持原边界。分别核验源头/传输/Runtime映射和真实只读请求，再独立核对自然保存的资源哈希与历史版本，而非只看最终答复。
 
 源码指针：Maxwell `services/evolve-server/internal/modules/evolve/application/resourcecontent/source_runner.go`、MCP `resource_errors_test.go`、Runtime工具错误映射。批准与运行证据：工作区 `output/evolve-unified-20261019/resource-executor-error-contract-20261027.md`、验收日志2026-10-28条目及集成 `.tmp/natural66-executor-recovery-20261028/`。这些记录区分错误分类修复、正确执行器自然选择与尚未通过的自主合并，后续状态应读原记录。
+
+
+## 2026-10-28 历史声明导航不能替代原文恢复
+
+**Why:** 草稿说明可能声称保留历史修改，但资源哈希证明其它文件已回退。提供父版本哈希差异能暴露回退，却不意味着 Agent 已读取原文或完成修复。另一个实际误导是工具帮助仅提冻结 Variant：已有资源引用读取本来支持获授权的历史待审资源，模型可能因此反复读旧冻结内容。
+
+**How to apply:** 历史导航只沿同 Work 已持久化父版本、限深度和时间，声明比较与正文、execution、实际应用明确分开；不能隐式合并或替模型选择版本。用真实只读请求验证既有资源引用能力及完整哈希，再同步工具目录和启用 Skill，独立重新打开全部文件核对保存。新自然会话另核验历史原文消费、保存资源实际字节与最终说法；辅助纠正后的局部改句不能覆盖原失败，也不能冒充恢复整份历史修改。
+
+指针：Maxwell `internal/app/toolcaller_profile_history.go`、`queries/resource_read.go`、`resourcecontent/content.go`、MCP schemas 和 optimization-strategy Skill；真实六份原件读取及自然67/68证据见集成工作区 `.tmp/natural67-profile-history-20261028/`、`.tmp/natural68-resource-read-20261028/` 与主验收日志2026-10-28。技术读取、实际消费、自主恢复和业务质量各自保留结论；本页不预判仍在进行的自然验收结果。
