@@ -2,7 +2,7 @@
 name: sandeval-repeated-correction-ancestor-blocker
 type: pitfall
 created: 2026-09-30
-updated: 2026-10-23
+updated: 2026-10-28
 tags: [sand-eval, quality-center, remediation, reinspection, responsibility, release]
 links: [sandeval-transferred-correction-task-visibility, sandeval-roles-and-workflow]
 ---
@@ -104,3 +104,13 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-roles-and-work
 - [本次两个包的诊断、精确恢复与独立回读](/Users/leslie/.codex/visualizations/2026/10/22/01a16320-cb2a-7231-b0af-61d168d28c51/package-submit-20261023/report.md)：对象、版本、审计 hash 和当时的可提交资格仅以报告及新鲜回读为准。
 - [共用闭环修复 PR #2804](https://github.com/world-sim-dev/sandai-data-smith/pull/2804)：最新 head、审查、Gate、合并和生产发布状态沿 PR / workflow 查证；独立恢复进程加载候选逻辑不代表线上 Web 服务已发布。
 - 回归应组合多轮退回发生在负责人退回之前和之后，并检查仅 ancestor 授权、陈旧版本、缺许可和未完成执行仍拒绝。
+
+
+## 2026-10-28 历史父责任再次整改关闭后，单题修订链读取失败
+
+**Why:** 当前任务的详情和编辑授权可正常，单题读取仍可能在追溯历史 Sand 修订时失败。旧执行冻结父责任版本，父责任随后经过正式下一轮整改并关闭，历史读取若只接受旧版本加一，就会把存在正式关闭记录的历史链判为不连续，并将异常传递到整题加载。报错文字含“或关闭依据”，不能据此推断关闭依据实际缺失。
+
+**How to apply:** 分别读取本人任务详情、真实题序和每个精确题目；沿失败调用栈定位版本比较，再对照旧执行、父责任当前版本、正式关闭执行及报告。真实题号按原生队列核对，不能按 RI 字典序猜。修复需证明中断、子整改、后续父执行和关闭之间的连续性，不能简单放宽为版本大于等于、回退责任版本或吞掉所有错误。只读重放能证明题目读取阻塞，不能单独证明浏览器跳题机制或真实保存成功。
+
+- [两个批次的只读报告](/Users/leslie/Documents/Playground/output/qc-two-batches-20261028/report.md)：具体 QT/RT/RI、三条父责任版本、部署 SHA、另一副本本人读取及失败调用栈。当前未改业务代码、生产数据或部署；现场状态沿证据入口重新核验。
+- 可变代码入口：`ReviewQueryService.items_page`、`AnswerAmendmentService._sand_return_chains / _sand_return_basis`、`delegated_feedback.annotation_return_delegation`、`ReinspectionAuthorizationService.annotation_execution_parents(allow_resolved=True)`。

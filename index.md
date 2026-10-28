@@ -1403,3 +1403,5 @@
 - 2026-10-27：[错误恢复建议与能力说明一致性](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-错误恢复建议与能力说明需要同源核对) — 追源头错误到 Runtime action，核对新 schema 与启用 Skill 的旧约束，保存与实际消费分开验收。
 
 - 2026-10-28：[EVOLVE 执行器参数恢复分类](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-28-执行器选择错误应与永久故障分开) — 可修正选择错误、权限前置、真实调用与自主多资源合并的分层验收。
+
+- 2026-10-28：[历史父整改关闭后的单题读取阻塞](domains/sandai-data-smith/pitfalls/sandeval-repeated-correction-ancestor-blocker.md#2026-10-28-历史父责任再次整改关闭后单题修订链读取失败) — 任务授权、真实题序和单题修订链分层核验；旧冻结版本与后续正式关闭执行的连续证明，跳题行为另验。
