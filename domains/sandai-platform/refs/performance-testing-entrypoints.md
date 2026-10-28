@@ -105,3 +105,16 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why:** 单租户配额、查询节流和采集空窗可能让低有效负载看起来稳定，或让任务完成发现延迟被误认成生成耗时。
 
 **How to apply:** 先锁定独立组织与模型/余额/配额，冻结逐组织到达速率和低频终态追踪；验证观测新鲜度后执行，报告实际负载、逐租户公平性和明确的采集缺口。先前单租户突发结果不能充当新的多租户场景验收。
+
+
+## 2026-10-28 专用测试身份、真实准入与原生指标迁移
+
+- 执行与回滚范围回查工作区 `docs/dev-multitenant-load-plan.md`、`postman/scripts/DevLoadTenantFixture.java`、`DevLoadIdentityFixture.java`、`DevMultiTenantLoad.java`、`DevLoadReadback.java` 及忽略目录中的固定身份清单和独立读回。当前结果、组织 ID、费用和授权状态只保存于该次原件，不复制到知识库。
+- 测试账号创建、组织余额、生成准入是不同条件。模型对所有组织开放仍可能因国内实名准入返回通用 permission_denied；沿 `DomesticAccessService`、`TaskDomainServiceImpl` 和实际认证状态核对，不先修改模型白名单。需要模拟认证时另行冻结并确认专用 Dev 身份、明确模拟标记和精确回滚，不复制真实用户认证、不请求真实提供商。
+- 独立构造旧专项脚本中的服务前，先核对实际部署 SHA 的构造器与依赖。沿真实 `SessionService` / `OrganizationAccessService` / MyBatis 状态读取接入新增校验，不把缺依赖导致的异常当业务故障，不注入跳过校验的替身。临时会话及 Key 只在内存，退出后删除并从独立入口读回。
+- 看板主视图按实际吞吐、成功请求尾延迟、业务积压、首次对外终态和恢复组织；源码指针为 `TaskMetrics` 与 `TaskModeration.publicStatusSql`。原始执行 Success 与审核后可交付 Success 分开。旧 JSON 采集随部署失效时，先验证当前原生指标和近期样本，再迁移查询；指标存在不能替代逐图导出数据验收。
+- 字典与云端当前口径回查工作区 `docs/dev-dashboard-metrics.md`。原生直方图分位数是桶内估计，粗桶不能提供虚假的时间精度；客户端分位数、云端服务端分位数和任务端到端延迟各自保留口径。
+
+**Why:** 登录、余额、公开模型和抓取成功可能同时成立，但生成准入、实际完成或当前看板仍不可用。把这些条件合并会导致用拒绝流量、过时零值或尚未审核的成功推断容量。
+
+**How to apply:** 在完整负载内先验证一轮，每个租户核对真实准入与单位费用；按范围停发，未知 POST 不重试。保留逐组织客户端原件，独立核对公开任务状态、唯一扣费交易、积压消退和临时准入回滚，再报告可持续容量与未验证的 GPU 边界。
