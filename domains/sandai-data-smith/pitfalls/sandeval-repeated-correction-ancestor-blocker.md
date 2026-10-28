@@ -123,3 +123,12 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-roles-and-work
 **How to apply:** 固定 SLS 查询窗口并核对 Complete 与独立计数，按精确 RT、客户端及观察模式区分流量；沿失败题目、带 anchor 队列、无 anchor 队列及后续 Referer 对齐源码。选中 ID 与加载内容独立，失败重试保留目标，旧请求不得覆盖新选中项。后端同时核对 annotation_execution_parents 和 completed_annotation_parent 的历史版本假设，以正式下一轮执行证明合法增版，再以真实关闭执行校验当前版本、完整报告和关闭依据；已关闭责任仍停止继承。回归覆盖单题、历史、核对答案版本与首次队列附带内容，不能只验证详情 200。
 
 - 证据与精确修改建议仍见[两个批次只读报告](/Users/leslie/Documents/Playground/output/qc-two-batches-20261028/report.md)。代码入口补充：`ResolutionService.resubmit`、`ReinspectionAuthorizationService.completed_execution_permit / completed_annotation_parent`、`ReviewWorkspace.select / load`、`ReviewQueryService.queue_page`。本页不表示业务修复已实施。
+
+
+### 2026-10-28 共享校验影响范围 review
+
+**Why:** `allow_resolved=True` 的历史委派解析同时被直接整改推进、退回阻挡和上游反馈权限复用；“函数只读”不等于“只影响展示”。历史修订还作为答案保存 prepare 的基线，单独放行 GET 会造成读写版本不一致。前端 load(undefined) 也承载检查范围变更后的主动重置，不能一律替换成保留旧题。
+
+**How to apply:** 按事实识别和当前授权区分调用用途，默认写门禁不变，历史证明不得变为活跃 parent/ancestor/related。展示和保存准备共享同成员的精确谱系，但 source.verify、版本、候选 binding_hash 和写权限仍独立严格校验。completed_execution_permit 的其他业务调用保持原语义；不同关闭类型分别识别，不能将子整改执行当成父责任自身的关闭执行。completed_annotation_parent 属于必须审查的间接写路径，不是本案 item_detail 栈上必改函数；若纳入需证明关闭后仍不继承。前端刷新重试与范围重置分开，目标 ID 不替代成功加载的 selected 内容，草稿和保存仍按精确题目及版本绑定。新证明沿请求内缓存复用，缓存区分用途，不跨请求缓存当前授权。
+
+- [调用方、风险与回归清单](/Users/leslie/Documents/Playground/output/qc-two-batches-20261028/report.md#2026-10-28-追加-review共享调用方与回归风险)：包括 direct_return/manual_return、答案 prepare、反馈权限、其他关闭类型及 changeScope 的源码位置。此轮为方案 review，未声称实现或测试通过。
