@@ -81,3 +81,15 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why:** 重试更新时间、已受理状态、API 所在集群与服务端分位数都可能被误作真实排队、执行或用户延迟证据。
 
 **How to apply:** 分开采集压测客户端耗时、服务端 HTTP 耗时、真实业务任务状态与模型执行资源。只读聚合先核对环境、API 来源、终态排除与查询成本；缺数据显式暴露采集失败，不补零。
+
+
+## 2026-10-28 Dev ARMS 与只读 SQL 采集入口
+
+- 当前实施与验收看工作区 `monitoring/aliyun/README.md`、`cms-dashboard.native.json`、`task-metrics.k8s.yaml`、`task-sql-collector.json`、`scrape-config.task.dev.json` 及原飞书方案第 11 节。数据库、应用 PID、面板数、样本值、数据源 ID 等可变状态只在实施记录保存，不复制到知识库。
+- ARMS 的指标存储来源与业务 ACK Prometheus 可以是两个不同实例。先按真实 Pod 的 ARMS 应用标识匹配实际数据源；兼容的 HTTP latency 指标可能混入 Scheduled rpc，按规范化 HTTP 路径过滤，并实查 quantile 是否存在。
+- SQL exporter 的连接入口是 dburl URL，不能直接拼原生驱动的 tcp() DSN；用户名和密码需 URL 编码，避免特殊字符及变量展开。配置检查只证明格式，不证明数据库可连或 SQL 返回指标。官方入口：[SQL exporter 源码](https://github.com/burningalchemist/sql_exporter/blob/master/sql.go)。
+- 控制台异步菜单可在关闭动画中保留旧 DOM 和宽度；菜单点击前检查实际可见性并等待前一个菜单完全关闭，保存后刷新逐项比对原有查询。复制面板和在编辑器看到新标题不构成持久化验收。
+
+**Why:** 相似的实例名、兼容指标、驱动格式以及残留菜单均可让“看似配置完成”偏离真实数据源或修改了错误面板。
+
+**How to apply:** 先锁定当前运行配置和来源，凭据只在集群内存中处理，以只读会话和受限查询采集；再验证预期指标、两层采集健康与快照年龄，最后从正式面板导出实际样本并比对保存前后的原有查询。任务创建年龄与精确排队、SUBMITTED 与 GPU 运行继续分别报告。

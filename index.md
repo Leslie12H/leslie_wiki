@@ -1,3 +1,5 @@
+- 2026-10-28：[API Dev ARMS 与只读 SQL 采集入口](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-28-dev-arms-与只读-sql-采集入口) — 双 Prometheus 来源、HTTP rpc 过滤、dburl 连接格式、快照健康与菜单持久化验收。
+
 - 2026-10-28：[API 延迟、积压与 GPU 观测口径](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-28-延迟积压与-gpu-补齐的查证口径) — 入队时间与重试更新时间、P95/P99 聚合、实际模型集群的采集边界。
 
 - 2026-10-27：[API Dev 采集接通与保存验收](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-27-已授权后的实际接通验收入口) — 既有实例复用、缺字段与 UP 区分、心跳新鲜度、CMS 保存后逐图回读及受限部署入口。
