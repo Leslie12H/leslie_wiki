@@ -1426,3 +1426,4 @@
 - 2026-10-28：[显式草稿续改与冻结身份解耦](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-28-显式草稿续改不应重复要求冻结身份) — 保留所有原件授权、精确版本和旧来源失败关闭；自主保存与 A2A 应用、业务质量分层核验。
 
 - 2026-10-28：[API 看板资源口径与图例](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-28-云看板资源分母与短图例) — 容器 CPU/内存限额、JVM 分层、legendFormat 与逐图实采验收入口。
+- 2026-10-28：[EVOLVE 进度流静默恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-28-进度流建立成功不代表持续有数据) — 心跳期限、取消与轮询恢复，区分真实停更、技术复现和自动更新验收。

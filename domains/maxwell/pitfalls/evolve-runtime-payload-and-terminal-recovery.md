@@ -636,3 +636,11 @@ Pointers: Agent Server app/integration/studio/businessstats/counts.go and its ra
 **How to apply:** 仅对显式版本、同 Work 中已存在的本地资源路径提供草稿续改；所有保留引用仍核对可见权限、原件类型、哈希和大小，选中原文字节另作完整性检查。外部、未覆盖路径、内联或包覆盖保持原契约；显式错误来源不得失败后回退放行。返回不声明不存在的冻结来源，不自动保存、确认或授予 A2A 应用许可。验证分开核对 schema/Skill 实际消费、落库 payload、另一资源保留、最终说明以及 Adapter 应用；不以一次保存成功声称质量改善。
 
 指针：Maxwell `application/resourcecontent/source_draft.go`、`commands/resource_edit.go`、MCP schemas 与相邻测试（均在 services/evolve-server 内）；批准方案 `output/evolve-unified-20261019/draft-resource-edit-contract-20261028.md`。自然74原失败、自然75独立保存与 C9 实际应用证据沿主验收日志及集成工作区对应证据目录核查。
+
+## 2026-10-28 进度流建立成功不代表持续有数据
+
+**Why:** 实际评测已结束、数据库的正式进度投影也返回完整判定，但页面仍停留旧状态。源码还存在独立可复现的恢复缺口：已建立的 SSE 若经代理后既不继续返回字节、也不关闭或报错，单靠握手失败重试永远不会恢复。观察到停更不能直接断定具体代理或网络原因。
+
+**How to apply:** 先保存原页面、查询原生产读取路径，区分数据库投影遗漏、数据流停滞和视图缓存。对已建立流按服务端既有心跳周期检测持续无字节，超界后取消该流并复用既有有限频率的事实轮询；任何心跳重置期限，隐藏、离开或订阅代际变化必须停止旧恢复。技术回归用真正的 ReadableStream 模拟“永不返回”以及心跳、取消和最后一次终态；手动选择或刷新读到结果不能冒充自动更新通过。
+
+实现与证据指针：Maxwell `apps/studio/src/products/evolve/{EvolveWorkspaceStore.ts,evolveWorkEvents.ts,EvolveWorkspaceStore.test.mjs}`；实际投影、红绿、Studio 检查和真实阶段观察分别记录在主验收日志2026-10-28及集成 `.tmp/work-sse-silence-*`、`.tmp/c9-progress-projection-20261028.json`。当前真实进度观察、Run 身份和发布结论只沿日志读取，不在本页固化状态。
