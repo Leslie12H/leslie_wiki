@@ -29,3 +29,12 @@ links: [sandai-api-platform-admin-rpm-change-verification-entrypoints, sandai-ap
 - 签名视频链接仅存报告指向的忽略目录，过期后重新 GET 刷新，不复制到知识库或提交。
 
 **How to apply:** 固定同域名、模型和参数，仅替换用户授权的 Key 来对照；先完成受理/终态再恢复原始数量目标。保留失败断言和旧 Key 对照记录，按最终 Key 的精确任务集合核算费用，不将不属于同一账号的余额混在一起。
+
+## 2026-10-29 另一账号二十任务入口
+
+**Why:** 用户随后明确提供另一账号的 Session / Key，要求一次完成二十个任务。不能继续使用前一账号的浏览器身份、余额或 Key ID 归属来验收新批次。
+
+- 精确账号匹配、初始余额、二十条创建回执、GET 终态及正式账单核对入口：工作区 `postman/reports/twenty-tasks-dev-cn-20261029-account2/README.md` 和相邻 JSON / CLI 原件。当前参数、余额和任务结果回到报告或线上重新查证，本页不固化运行时状态。
+- 可复用的受控入口是 `postman/scripts/generate_ten_dev.py --batch20-other-account`。Cookie Session 与 Bearer Key 分别隐藏输入并仅留在内存；先用 Session 读取用户和 Key 列表，确认掩码唯一匹配且启用，再固定该服务端 Key ID 核算本批消费。
+
+**How to apply:** 二十个创建请求属于同一集合，不额外创建烟测任务；以持久启动标记防重复提交，以真实受理 ID 集合对应仅 GET 查询和正式用量 taskId 集合。批次费用与余额变化分别核对，不用账号累计消费替代本批金额；保留所有失败或结果未知状态，不以 CLI 退出码单独宣称完成。
