@@ -89,7 +89,7 @@
 
 # leslie_wiki 目录
 
-- 2026-10-29：[新 Key 十视频验收](domains/sandai-platform/refs/ten-video-key-acceptance-entrypoints.md) — Dev CN 共用入口确认、Key 鉴权与创建 403 分层、账号归属和有界提交的回查指针。
+- 2026-10-29：[新 Key 十视频验收](domains/sandai-platform/refs/ten-video-key-acceptance-entrypoints.md) — Dev CN 共用入口、Key 鉴权与创建 403 分层；含旧/新 Key 同参对照及十个任务终态/账单验收的回查指针。
 
 - 2026-10-28：[看答案的版本来源](domains/sandai-data-smith/refs/sandeval-view-answer-version.md) — 当前正文、原标注、质检保存与历史版本分层核对入口。
 
