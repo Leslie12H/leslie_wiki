@@ -2,7 +2,7 @@
 name: sandai-api-platform-admin-rpm-change-verification-entrypoints
 type: reference
 created: 2026-10-27
-updated: 2026-10-27
+updated: 2026-10-29
 tags: [sandai, admin, quota, rpm, postman, testing]
 links: [sandai-api-platform-openapi-quota-entrypoints, sandai-api-platform-v2-input-validation-entrypoints]
 ---
@@ -28,3 +28,13 @@ links: [sandai-api-platform-openapi-quota-entrypoints, sandai-api-platform-v2-in
 6. 恢复前先确认没有其他人并行更改目标配额；恢复原始继承/覆盖值，刷新回读并再次验证，再核对余额和任务数。截图不得含完整 Key、Cookie 或未遮蔽联系资料。
 
 **How to apply:** 先沿报告查看本次实际阈值、恢复和费用，不以后台展示代替运行时证据。将只读查证、组织级配额修改、有效生成和恢复分别授权/留证，出现不确定结果先回读，不重复保存或重复创建。
+
+## 2026-10-29 RPM 与并发同时设六的验证边界
+
+**Why:** 用户将另一个目标账号的 RPM 与任务并发都设为六并要求验证。创建请求先被 RPM 拦截时，不能把第七次 429 当作并发槽位上限或排队证据。
+
+- 当次目标组织/Key 匹配、后台六/六展示、六次受理与第七次拒绝、并行 GET 快照、终态及正式费用回查：`/Users/leslie/Documents/ChatGPT/Apipltform/postman/reports/quota6-dev-cn-20261029/README.md` 和相邻 JSON / PNG / CLI 原件。受控入口 `postman/scripts/quota6_dev.py`，只读后台，不改用户配置。当前额度和状态回到线上或报告原件核验。
+- 六个已受理任务的公开 processing 快照可证明达到六个处理中的能力，不能独立证明第七个已受理任务一定排队；公开 processing 也不等于 GPU/物理 worker 占用。短窗口并行查询与原子内部槽位观测分别报告。
+- 真正验证“超过六则排队”需要七个以上已受理任务与重叠的执行时间，并排除创建 RPM 提前截断；测试设计应先拆开创建频率、受理队列、公开状态和真实槽位，保留配置/缓存传播的实际边界。
+
+**How to apply:** 固定准确用户/组织和 Key，先读配置，再记录真实请求数、窗口内受理/429、每次 GET 的时间范围与状态；把“达到六”与“严格封顶六”分别判定。未得到内部槽位或超额队列证据时明确未完整验证，不靠源码或展示值填补运行时证据。

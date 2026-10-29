@@ -93,7 +93,7 @@
 
 - 2026-10-28：[看答案的版本来源](domains/sandai-data-smith/refs/sandeval-view-answer-version.md) — 当前正文、原标注、质检保存与历史版本分层核对入口。
 
-- 2026-10-27：[管理后台 RPM 修改与恢复](domains/sandai-platform/refs/admin-rpm-change-verification-entrypoints.md) — 独立飞书登录、组织归属、继承语义、真实阈值/恢复与费用的查证入口。
+- 2026-10-27：[管理后台 RPM 修改与恢复](domains/sandai-platform/refs/admin-rpm-change-verification-entrypoints.md) — 独立飞书登录、组织归属、继承语义、真实阈值/恢复与费用；含 RPM 与并发同设六时的独立验收边界。
 - 2026-10-27：[EVOLVE 显式草稿续改与磁盘恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-27-显式草稿续改与磁盘故障恢复) — 历史快照保留资源、自然验收及无损依赖恢复指针。
 
 - 2026-10-27：[失败分配残留与已验收整改冲突](domains/sandai-data-smith/pitfalls/sandeval-remediation-frozen-overlap-same-scope-version.md#2026-10-27-失败分配留下的送审批次与已验收整改冲突) — 无实际报告的重复普通送审记录仍参与分区；原复验验收、当前正式答案与整包交接分层核对，修复及回归沿 main PR #2892 查证；复审以正式占用代替可被重试覆盖的最近错误码。
