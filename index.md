@@ -1430,4 +1430,4 @@
 - 2026-10-28：[API 看板资源口径与图例](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-28-云看板资源分母与短图例) — 容器 CPU/内存限额、JVM 分层、legendFormat 与逐图实采验收入口。
 - 2026-10-28：[EVOLVE 进度流静默恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-28-进度流建立成功不代表持续有数据) — 心跳期限、取消与轮询恢复，区分真实停更、技术复现和自动更新验收。
 
-- 2026-10-29：[负责人复验历史身份混写](domains/sandai-data-smith/pitfalls/sandeval-lead-reinspection-frozen-identity.md) — 已有验收单换人重试遮住历史作者不符、双层门禁与负责人变化回归的只读取证入口。
+- 2026-10-29：[负责人复验历史身份混写](domains/sandai-data-smith/pitfalls/sandeval-lead-reinspection-frozen-identity.md) — 历史作者与本轮负责人分离、新建修复不回填旧快照、空白活动计划的审计恢复及独立回读入口。
