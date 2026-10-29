@@ -16,3 +16,12 @@ links: [sandeval-saved-version-vs-browser-display, sandeval-reinspection-partial
 - [2026-10-29 纸面 260-04 诊断与手动恢复记录](/Users/leslie/Documents/Playground/output/qc-accept-conflict-20261029/report.md)：原始身份对照、全量预检、显式 apply 审计、独立副本回读、未恢复记录及 CI 证据。日志没有原始错误正文，不能把当前复现说成历史响应原文。初始阶段对新建代码状态的判断已更正，最终结论以该报告及准确源码为准。
 - 新建计划防复发修复沿 [PR #2982](https://github.com/world-sim-dev/sandai-data-smith/pull/2982) 查；它不自动回填旧错误快照。当前实现沿报告中的部署 SHA 查 `ReinspectionService._create/create_lead_verification`、`ReviewService.check_blockers`、`LeadReviewService.accept`、`ResolutionService.prepare_lead_verification`。同时看新建和重用计划两条路径。
 - 旧修复范围沿 [PR #2863](https://github.com/world-sim-dev/sandai-data-smith/pull/2863) 与 `test_pending_sand_feedback.py` 查验；复验重试保护沿 [PR #2590](https://github.com/world-sim-dev/sandai-data-smith/pull/2590) 与 `test_reinspection_retry_plan.py` 查验。是否已部署、是否覆盖某现场，必须用实际运行 SHA 和精确单据重新验证。
+
+## 当前操作者接续的验收口径
+
+**Why:** 只修正原报告作者但保留已冻结的本轮负责人，仍会阻断另一位合法负责人的重试。仅证明原负责人的 check_blockers 通过，不能宣布当前登录人的验收问题已解决。
+
+**How to apply:** 明确接收人和供应商空间，逐单验证当前权限、自验限制、空白活动状态、完整前镜像和整改授权。转交时保留旧创建者与旧快照，另存不可变接续回执；不把转交伪装成原指派，也不授予角色或代验收。写后在独立只读进程中，以实际接收人的身份验证原生计划重用至创建边界；若人已继续提交，应区分正常业务进展与恢复写入，不把任务版本倒回。
+
+- [2026-10-29 接续最终记录](/Users/leslie/Documents/Playground/output/qc-accept-conflict-20261029/report.md)：用户授权范围、分批接续、独立副本原生计划重用验证与后续实际通过报告。运行数据只存该证据指针。
+- 事务内某条 JOIN 读取曾报 Hologres `QueryExecutor not inited`；改为同一事务内父记录与成员的单表读取后完成。发生此类错误先依据独立回读划清已提交/未提交范围，不取消 mixed-DML 原子保护；实现和失败审计沿最终记录查阅，不能推论所有 JOIN 都不可用。
