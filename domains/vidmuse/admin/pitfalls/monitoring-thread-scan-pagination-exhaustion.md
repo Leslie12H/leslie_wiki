@@ -76,3 +76,12 @@ links: [monitoring-deploy-revokes-readonly-credentials, monitoring-report-vs-cha
 - 发布回执：[Maxwell Worker/API](https://github.com/world-sim-dev/maxwell-ai/actions/runs/41037923191)、[生产 Admin](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/41038684278)。当前部署状态须实时核对，不以历史流水线成功代替。
 - 对真实待处理事故可在新 Admin 调用只读 `_find_thread` 并观察 HTTP 请求数量：必须是一条完整身份过滤 GET、limit=2、无 cursor；随后另查持久化 Thread/Run、创建幂等键和正式报告。维护过程中恢复 pending 与重置历史 failed 是不同操作，不能借切换盲目批量补跑。
 - 就绪检查一次出现证据源 HTTP unready/degraded 后恢复，必须保留失败回执并复验；不能只挑成功样本宣称依赖永不波动。Run completed 也不能替代 Admin 报告合同验收。
+
+
+### 切换后独立分析失败：部署仓库不在证据目录
+
+**Why:** 部署 SHA 必须与实际仓库绑定。代码目录只有相近项目时，Agent 可能把独立服务的 SHA 和路径套到相似代码所在仓库，造成 GitHub 404，无法满足部署版本的源码证据门禁；这与 Thread 接管或 Job owner 识别是不同原因。
+
+**How to apply:** 对 `report_transport_invalid` 回读 canonical prepare 工具反馈，核对当前 code describe 目录、Deployment 镜像 SHA、GitHub commit 的真实归属和该 SHA 下的文件树。补仓库前需核验代码证据服务自身的 GitHub App 权限、最小路径范围和配置身份发布流程；不要放宽报告校验、引用别的仓库或用当前 main 冒充部署版本。
+
+- 2026-10-30 现场样本与精确事件指针见 production-switch 报告追加节及 analysis-failure-3595-evidence.json。实际代码归属 [music_analyzer 部署提交](https://github.com/world-sim-dev/music_analyzer/commit/dc113df28608aab9bb0ca14cd6cff4b1409ceba9)。本轮已定位配置覆盖缺口，未把新报警一个成功样本推断为全部分析恢复，额外 MCP 配置修复尚未实施。
