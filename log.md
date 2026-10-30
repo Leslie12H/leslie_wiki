@@ -2337,3 +2337,5 @@
 - 2026-10-30 ingest：记录现有 Runtime Thread 接口的事故身份精确筛选、GIN/唯一索引、创建回执恢复、跨层回放标记复审及 Maxwell #390 / Admin #950 发布依赖。
 
 - 2026-10-30：补充 Monitoring 索引前置操作目标定位、数据库验证回执、部署边界和认证参数脱敏经验；见 monitoring-thread-scan-pagination-exhaustion。
+
+- 2026-10-30 ingest mixed-clock-fixture-ordering：记录 EVOLVE 跨页取消测试混用模拟未来时间与真实清理时钟的原因、验证边界和源码指针。
