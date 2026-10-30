@@ -1431,3 +1431,5 @@
 - 2026-10-28：[EVOLVE 进度流静默恢复](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-28-进度流建立成功不代表持续有数据) — 心跳期限、取消与轮询恢复，区分真实停更、技术复现和自动更新验收。
 
 - 2026-10-29：[负责人复验历史身份混写](domains/sandai-data-smith/pitfalls/sandeval-lead-reinspection-frozen-identity.md) — 历史作者与本轮负责人分离、新建修复不回填旧快照、空白活动计划的审计恢复、明确接收人的负责人接续及实际操作者原生重用验证。
+
+- 2026-10-30：[监控历史会话扫描上限](domains/vidmuse/admin/pitfalls/monitoring-thread-scan-pagination-exhaustion.md) — 成功99页与失败100页对照、既有userId筛选兼容旧preset、Job owner证据误判及Admin PR #950修复入口。
