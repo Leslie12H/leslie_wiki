@@ -41,3 +41,15 @@ links: [monitoring-deploy-revokes-readonly-credentials, monitoring-report-vs-cha
 - 源码回查：Admin `_find_thread`、`deliver`、`claim_next_incident_event`；Maxwell `threadListInput` 和 `threadstore.SQLStore.List`。本次核对既有 q 只对title/id/user/creator/preset等字段搜索，不搜索clientMetadata.incidentKey；不能用标题关键词替代身份合同。
 - [PR #950 查询复审](https://github.com/world-sim-dev/vidmuse-admin/pull/950) 的待解决项：正常接管不依赖历史页数，恢复按完整事故身份及分析代次精确定位，保留旧代次与创建回执丢失保护。查询条件精确也不自动代表数据库高效，应核对实际索引与执行计划，不能未经EXPLAIN宣称已走索引。
 - 本次是查询路径复审，未修改业务代码、接口、数据库、PR状态或生产数据。查询修复仍有改进项；Job证据绑定修复的验证结果独立保留。
+
+## 2026-10-30 现有接口精确筛选、索引与创建回执恢复
+
+**Why:** userId 范围分页仍与历史规模线性相关；客户端先查再创建也不能消除并发和远端已提交但回执丢失的窗口。完整事故身份必须在存储层筛选，创建重试还需要数据库原子去重，两者职责不同。
+
+**How to apply:** 扩展既有 Thread 列表的 clientMetadata 筛选，在分页前按 business + source + incidentKey + fingerprint + alertSource + analysisGeneration 查询；limit=2 检测重复，不扫描历史。不把 preset/user 当事故身份。兼容旧代次缺省值；仅在服务端明确回显已应用筛选与幂等能力后允许创建。创建使用稳定身份派生的 business-scoped key，由唯一表达式索引保证同键同请求返回原 Thread；不同请求、已删除目标及身份歧义必须拒绝。
+
+- 实现与动态状态回查：[Maxwell PR #390](https://github.com/world-sim-dev/maxwell-ai/pull/390)、[Admin PR #950](https://github.com/world-sim-dev/vidmuse-admin/pull/950)。此前 userId 全量分页方案被此次精确筛选取代；不新增 URL。
+- 索引、兼容、暂停旧派发及发布/回滚操作入口：Maxwell `docs/operations/runtime-thread-identity.md`；Admin `docs/monitoring-runtime-identity.md`。先并发建索引并验证定义/有效性，再完整升级 Runtime，最后切换 Admin；避免新旧 keyless/keyed writer 混跑。先回滚 Admin，保留唯一索引和创建身份元数据。
+- 验证入口：Runtime `identity_integration_test.go` 使用隔离本机 PostgreSQL，实际 List SQL 的 EXPLAIN、并发创建、重建 store 回执恢复、墓碑/冲突/缺索引、两份并发索引操作重复执行；HTTP、adapter/application replay 测试和生成的 OpenAPI 客户端随 PR 保存。不能用本地毫秒数承诺线上 SLA。
+- 复审经验：回放标记必须跨存储 adapter 传给应用层，否则重试可能重复初始化资源；不要仅验证 Thread ID 相同。内部解析错误使用稳定公开文案，仍保留内部 cause。
+- Job Pod 证据绑定修复独立保留。事故恢复状态、已提交 prepared report、生产迁移/部署及补跑均沿实际回执核验，不能从本地测试或 PR 创建推断已恢复。
