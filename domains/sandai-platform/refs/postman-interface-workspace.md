@@ -38,3 +38,12 @@ links: [sandai-api-platform, sandai-api-platform-development-entrypoints]
 - 公开文档中的生产生成示例不能代表 Staging OpenAPI；没有明确 Staging 生成域名时保留空值并请求地址，不迁移 Dev Key / Cookie。
 
 **How to apply:** 在既有工作区与环境上更新，导入同 ID 环境时核对 Replace 结果和唯一环境条目；回读实际变量及当前选中环境。配置接口 GET 200 与登录、生成、扣费验收分开。现有 v2.1 导出 JSON 的格式校验与新版 CLI v3 lint 支持范围分别记录，不能把后缀/格式不支持报告为 lint 通过。
+
+### 2026-10-30 后续从实际 Ingress 确认生成入口
+
+**Why:** 用户明确要求自行查明 Staging 生成地址；前端公开文档仍显示生产示例，代码仓库未完整管理香港公网 Ingress，仅停在模板不足以定位。
+
+- 已从仓库工作流定位香港 ACK 目标，再在阿里云控制台只读查看 default 命名空间的实际 Staging 两条 Ingress，分别对应国内/海外 OpenAPI Service。精确域名、路径、后端映射与公开描述的 servers、v2 路径及无凭据鉴权响应证据，回查同一报告的 `ingress-proof.json` / `openapi-verification.json` 与最新 PNG。
+- 同一报告后续部分已取代初查“生成地址待确认”的状态；两套桌面环境与本地生成器均已补齐，凭据为空。当前运行时地址仍需沿真实路由与公开描述重新核验，不从域名命名规律猜测，不迁移其他环境 Key。
+
+**How to apply:** 查生成入口时优先将实际 Ingress 主机、OpenAPI Service、公开 schema.servers 和无凭据 v2 错误契约相互对应。只读发现路由不等于生成业务验收；无凭据查询不创建任务、不扣费。无需为找地址而读取 Secret、生成新 kubeconfig 或改集群。
