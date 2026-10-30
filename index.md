@@ -1437,3 +1437,5 @@
 - 2026-10-30：[模拟时钟导致快机器取消回归失败](disciplines/testing/mixed-clock-fixture-ordering.md) — 模拟开始、取消与清理统一时钟，区分云端原失败、本地未复现及修复后的 race 证据。 补充异步回执模拟与CI调度竞速的虚拟时钟回归。
 
 - 2026-10-30：[候选菜单鼠标目标位移](domains/maxwell/pitfalls/evolve-candidate-menu-hover-scroll.md) — 超高选项与悬停滚动、键盘反证、预览裁剪及折叠/展开验证边界。
+
+- 2026-10-30：[模型服务失败与质量边界](domains/maxwell/pitfalls/evolve-provider-failure-vs-quality.md) — 内外层403、封存先于外层失败、部分账目与无效样本分别保留，CI/部署不替代质量。
