@@ -2349,3 +2349,5 @@
 - 2026-10-30 ingest：记录 Staging 国内/海外控制台路由拆分与 Postman 桌面环境回读入口；区分旧初始化地址、当前前端部署、生产生成示例和未确认的 Staging OpenAPI。
 
 - 2026-10-30 ingest：补充自行通过实际 ACK Ingress、后端 Service、公开 OpenAPI servers 与 v2 鉴权响应查明 Staging 两地区生成入口；桌面与模板均补齐，取代初查待确认边界。
+
+2026-10-30｜ingest｜EVOLVE候选菜单鼠标位移根因、撤回未证实高亮补丁及实际验证指针。
