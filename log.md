@@ -2339,3 +2339,5 @@
 - 2026-10-30：补充 Monitoring 索引前置操作目标定位、数据库验证回执、部署边界和认证参数脱敏经验；见 monitoring-thread-scan-pagination-exhaustion。
 
 - 2026-10-30 ingest mixed-clock-fixture-ordering：记录 EVOLVE 跨页取消测试混用模拟未来时间与真实清理时钟的原因、验证边界和源码指针。
+
+- 2026-10-30：记录 Maxwell Worker/API 与生产 Admin 受控切换，保留报警入队的维护门禁、真实事件精确查找与接管回执及正式报告验收边界。

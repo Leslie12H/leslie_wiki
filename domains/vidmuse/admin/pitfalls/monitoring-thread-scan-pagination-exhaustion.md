@@ -64,3 +64,15 @@ links: [monitoring-deploy-revokes-readonly-credentials, monitoring-report-vs-cha
 - 实际合并、目标定位、备份范围、两索引验证、真实事故查询计划及未部署边界，见本地回执 `/Users/leslie/Downloads/sandai-code/vidmuse-admin/.codex-artifacts/monitoring-failures-20261030/index-rollout/report.md`。动态库名、版本、耗时以此带日期回执及实时环境核对；不将单次测量当 SLA。
 - Admin 主分支自动发布目标需回看 `.github/workflows/admin-cicd.yml`；[本次 dev 流水线](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/41032586159)。生产切换和历史补跑仍须独立验收。
 - 认证经验：libpq 的 PGDATABASE 环境变量不可直接当连接 URI 使用；连接错误可能回显该字段。应通过独立 PGHOST/PGPORT/PGUSER/PGPASSWORD/PGDATABASE 参数、受限文件或标准连接器传入，并在输出前脱敏；凭据意外进入工具日志须按真实暴露处理，清理本地副本不能撤回已输出内容。轮换应同步依赖服务，不能擅改运行中账号。
+
+
+## 2026-10-30 受控切换与派发门禁
+
+**Why:** `MAXWELL_INCIDENT_SYNC_ENABLED=false` 同时停止消费者和新 outbox 入队，不适合作为“持续收集报警、只暂停认领”的维护开关。代码合并、发布完成、精确查询成功、Thread/Run 接管和正式报告通过仍是不同验收层次。
+
+**How to apply:** 发布前检查 `monitoring_incident_outbox.py` 的入队条件、`monitoring_incident_dispatch.py` 在认领前的 readiness gate 及已接纳 Run 独立回收路径。维护期间保持入队，使用受审计的临时就绪门禁阻止新认领；保存原覆盖状态，确认全部旧写入者退出且租约恢复，不直接改事故状态。先 Runtime Worker/API，再生产 Admin；最后移除临时覆盖，逐副本验证真实依赖与通知开关，观察原 pending 自动恢复。
+
+- 本次切换事实、临时覆盖、双副本验收、真实事故单次查询、唯一 Thread/持久幂等键及终态边界见 `/Users/leslie/Downloads/sandai-code/vidmuse-admin/.codex-artifacts/monitoring-failures-20261030/production-switch/report.md`。
+- 发布回执：[Maxwell Worker/API](https://github.com/world-sim-dev/maxwell-ai/actions/runs/41037923191)、[生产 Admin](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/41038684278)。当前部署状态须实时核对，不以历史流水线成功代替。
+- 对真实待处理事故可在新 Admin 调用只读 `_find_thread` 并观察 HTTP 请求数量：必须是一条完整身份过滤 GET、limit=2、无 cursor；随后另查持久化 Thread/Run、创建幂等键和正式报告。维护过程中恢复 pending 与重置历史 failed 是不同操作，不能借切换盲目批量补跑。
+- 就绪检查一次出现证据源 HTTP unready/degraded 后恢复，必须保留失败回执并复验；不能只挑成功样本宣称依赖永不波动。Run completed 也不能替代 Admin 报告合同验收。
