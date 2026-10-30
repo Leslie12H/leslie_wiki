@@ -1434,4 +1434,4 @@
 
 - 2026-10-30：[监控历史会话扫描上限](domains/vidmuse/admin/pitfalls/monitoring-thread-scan-pagination-exhaustion.md) — 成功99页与失败100页对照、既有userId筛选兼容旧preset、Job owner证据误判及Admin PR #950修复入口；查询复审区分范围过滤、精确定位及回执丢失恢复。 精确筛选与创建幂等方案见 Maxwell #390 / Admin #950，含索引、跨层回放标记和发布顺序。 发布前置操作补充实际 Runtime→数据库定位、线上索引/执行计划回执及 dev/生产发布边界。 补充受控切换回执、保留入队的认领门禁、逐副本验收及真实事件恢复边界。 追加 music_analyzer 部署仓库缺少代码证据目录导致报告拒绝的独立根因。
 
-- 2026-10-30：[模拟时钟导致快机器取消回归失败](disciplines/testing/mixed-clock-fixture-ordering.md) — 模拟开始、取消与清理统一时钟，区分云端原失败、本地未复现及修复后的 race 证据。
+- 2026-10-30：[模拟时钟导致快机器取消回归失败](disciplines/testing/mixed-clock-fixture-ordering.md) — 模拟开始、取消与清理统一时钟，区分云端原失败、本地未复现及修复后的 race 证据。 补充异步回执模拟与CI调度竞速的虚拟时钟回归。

@@ -2343,3 +2343,5 @@
 - 2026-10-30：记录 Maxwell Worker/API 与生产 Admin 受控切换，保留报警入队的维护门禁、真实事件精确查找与接管回执及正式报告验收边界。
 
 - 2026-10-30：追加切换后独立分析失败取证：music_analyzer 的部署提交属于独立仓库，当前证据目录缺失导致错误仓库读取 404；未放宽报告校验或擅自发布额外配置。
+
+- 2026-10-30: Ingest async stop receipt test deadlines versus CI scheduling; virtual clock, original cancellation guards and separate runtime acceptance.
