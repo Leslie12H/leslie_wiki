@@ -2335,3 +2335,5 @@
 - 2026-10-30 ingest：复审报警查询，明确userId范围过滤仍线性扫描、逐请求超时不限制总耗时，以及本地映射与远端创建回执丢失的边界。
 
 - 2026-10-30 ingest：记录现有 Runtime Thread 接口的事故身份精确筛选、GIN/唯一索引、创建回执恢复、跨层回放标记复审及 Maxwell #390 / Admin #950 发布依赖。
+
+- 2026-10-30：补充 Monitoring 索引前置操作目标定位、数据库验证回执、部署边界和认证参数脱敏经验；见 monitoring-thread-scan-pagination-exhaustion。

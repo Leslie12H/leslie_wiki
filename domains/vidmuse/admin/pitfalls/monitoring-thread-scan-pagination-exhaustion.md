@@ -53,3 +53,14 @@ links: [monitoring-deploy-revokes-readonly-credentials, monitoring-report-vs-cha
 - 验证入口：Runtime `identity_integration_test.go` 使用隔离本机 PostgreSQL，实际 List SQL 的 EXPLAIN、并发创建、重建 store 回执恢复、墓碑/冲突/缺索引、两份并发索引操作重复执行；HTTP、adapter/application replay 测试和生成的 OpenAPI 客户端随 PR 保存。不能用本地毫秒数承诺线上 SLA。
 - 复审经验：回放标记必须跨存储 adapter 传给应用层，否则重试可能重复初始化资源；不要仅验证 Thread ID 相同。内部解析错误使用稳定公开文案，仍保留内部 cause。
 - Job Pod 证据绑定修复独立保留。事故恢复状态、已提交 prepared report、生产迁移/部署及补跑均沿实际回执核验，不能从本地测试或 PR 创建推断已恢复。
+
+
+## 2026-10-30 发布前置操作的目标定位
+
+**Why:** Admin 的 prod 环境可能配置指向 dev 命名的 Runtime；按环境名字猜数据库，可能把索引建到无关库。PR 合并、dev 自动发布、Runtime 发布及事故恢复是不同回执。并发建索引只改变结构，不能替代应用能力部署。
+
+**How to apply:** 每次发布沿 Admin 实际 MAXWELL_AGENT_API_BASE_URL → 实时 Ingress → Service → Deployment → 配置中的 database.dsn 确认目标，只记录非敏感身份信息，不保存 DSN。先备份本次受影响表与结构，确认键冲突/索引有效性，事务外并发建索引，再逐字比对 pg_get_indexdef 与合并迁移，并对真实稳定身份执行 EXPLAIN。切换版本才暂停/排空旧派发，待 Runtime 全副本能力确认后再上生产 Admin。
+
+- 实际合并、目标定位、备份范围、两索引验证、真实事故查询计划及未部署边界，见本地回执 `/Users/leslie/Downloads/sandai-code/vidmuse-admin/.codex-artifacts/monitoring-failures-20261030/index-rollout/report.md`。动态库名、版本、耗时以此带日期回执及实时环境核对；不将单次测量当 SLA。
+- Admin 主分支自动发布目标需回看 `.github/workflows/admin-cicd.yml`；[本次 dev 流水线](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/41032586159)。生产切换和历史补跑仍须独立验收。
+- 认证经验：libpq 的 PGDATABASE 环境变量不可直接当连接 URI 使用；连接错误可能回显该字段。应通过独立 PGHOST/PGPORT/PGUSER/PGPASSWORD/PGDATABASE 参数、受限文件或标准连接器传入，并在输出前脱敏；凭据意外进入工具日志须按真实暴露处理，清理本地副本不能撤回已输出内容。轮换应同步依赖服务，不能擅改运行中账号。
