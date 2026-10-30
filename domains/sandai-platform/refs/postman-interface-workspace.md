@@ -2,7 +2,7 @@
 name: sandai-api-platform-postman-entrypoints
 type: reference
 created: 2026-10-26
-updated: 2026-10-26
+updated: 2026-10-30
 tags: [sandai, api-platform, postman, api, testing]
 links: [sandai-api-platform, sandai-api-platform-development-entrypoints]
 ---
@@ -27,3 +27,14 @@ links: [sandai-api-platform, sandai-api-platform-development-entrypoints]
 - 支付/认证/开票采用原参数与稳定幂等键恢复；生成 POST 不保证幂等，结果未知不能盲目重发。具体行为以当前源码为准。
 
 **How to apply:** 先查看本地 README 的导入回读与离线校验记录，再选择环境、补齐本人授权的本地凭据及对象ID。接口格式验证、Postman 导入、在线响应和业务完成分别取证；初次配置时没有执行业务请求；后续在线测试见 [Dev Global 联调入口](global-api-acceptance-20261026.md)。
+
+## 2026-10-30 Staging 国内与海外路由拆分
+
+**Why:** 用户提供两个 Staging 平台要求配置 Postman。旧本地说明将 Staging 控制台 API 视为地区共用，当前在线两地区平台实际请求和前端远端 main 的地区解析已不同，不能以初始化快照覆盖部署事实。
+
+- 当前两地区控制台 API、前端 Origin、桌面导入与回读截图、无凭据系统配置 GET 结果和生成 API 待确认范围，查工作区 `postman/reports/staging-environments-20261030/README.md`、`origins.json`、PNG，以及 `postman/README.md`。
+- 对应环境是 `postman/environments/staging-{cn,global}.postman_environment.json`；生成入口 `postman/scripts/generate.py` 已保留地区差异，避免重新生成回退。配置当前值仍需现场核验，此页不复制运行时地址。
+- 前端部署路由来源查 `world-sim-dev/sandai-website` 的 `packages/site-config/src/index.ts` 与在线平台实际资源请求。远端引用刷新与本地 checkout 更新分别报告；本次未切换或覆盖业务仓库工作。
+- 公开文档中的生产生成示例不能代表 Staging OpenAPI；没有明确 Staging 生成域名时保留空值并请求地址，不迁移 Dev Key / Cookie。
+
+**How to apply:** 在既有工作区与环境上更新，导入同 ID 环境时核对 Replace 结果和唯一环境条目；回读实际变量及当前选中环境。配置接口 GET 200 与登录、生成、扣费验收分开。现有 v2.1 导出 JSON 的格式校验与新版 CLI v3 lint 支持范围分别记录，不能把后缀/格式不支持报告为 lint 通过。

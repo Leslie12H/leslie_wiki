@@ -2345,3 +2345,5 @@
 - 2026-10-30：追加切换后独立分析失败取证：music_analyzer 的部署提交属于独立仓库，当前证据目录缺失导致错误仓库读取 404；未放宽报告校验或擅自发布额外配置。
 
 - 2026-10-30: Ingest async stop receipt test deadlines versus CI scheduling; virtual clock, original cancellation guards and separate runtime acceptance.
+
+- 2026-10-30 ingest：记录 Staging 国内/海外控制台路由拆分与 Postman 桌面环境回读入口；区分旧初始化地址、当前前端部署、生产生成示例和未确认的 Staging OpenAPI。
