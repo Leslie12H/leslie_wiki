@@ -1432,4 +1432,4 @@
 
 - 2026-10-29：[负责人复验历史身份混写](domains/sandai-data-smith/pitfalls/sandeval-lead-reinspection-frozen-identity.md) — 历史作者与本轮负责人分离、新建修复不回填旧快照、空白活动计划的审计恢复、明确接收人的负责人接续及实际操作者原生重用验证。
 
-- 2026-10-30：[监控历史会话扫描上限](domains/vidmuse/admin/pitfalls/monitoring-thread-scan-pagination-exhaustion.md) — 成功99页与失败100页对照、既有userId筛选兼容旧preset、Job owner证据误判及Admin PR #950修复入口。
+- 2026-10-30：[监控历史会话扫描上限](domains/vidmuse/admin/pitfalls/monitoring-thread-scan-pagination-exhaustion.md) — 成功99页与失败100页对照、既有userId筛选兼容旧preset、Job owner证据误判及Admin PR #950修复入口；查询复审区分范围过滤、精确定位及回执丢失恢复。

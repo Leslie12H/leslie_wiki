@@ -31,3 +31,13 @@ links: [monitoring-deploy-revokes-readonly-credentials, monitoring-report-vs-cha
 - 原生userId是持久业务身份，不应为了索引便利临时改成事故ID。无hint方案仍随监控历史线性增长；未来身份迁移须兼容旧Thread引用。线上集合覆盖、绝对取证时间和测试回执保存在本地报告，不能当作永久规模承诺。
 - 分析失败另有独立原因：Job Pod的8位数字后缀也匹配Deployment命名正则，正确Job部署和代码被错判缺失。用主窗口canonical SLS记录的Pod UID，连接同namespace/Pod的已验证K8s记录，再读取真实controller Job owner；不能只凭Pod名称猜控制器类型，也不能接受UID变化后的重建Pod。
 - 原Run168个canonical事件及owner正文恢复后可离线复现。修复让原证据acquisition完整，但原Run没有成功prepared report，不能据此宣布历史正式报告恢复。修复发布和受影响事故补跑沿PR及后续实际回执核验。
+
+## 2026-10-30 查询路径复审：缩小扫描范围不等于精确定位
+
+**Why:** PR #950 head 71c793db59d2a5b282224ecbfaaba6b5990940c0 的 userId 过滤只隔离监控服务身份；缺少 threadId 时仍须读完该身份全部历史才能证明没有重复。逐请求 timeout 与续租不能约束整轮扫描耗时，移除固定页数后仍存在随历史增长的延迟和 worker 占用。将其称为完整精确查找修复不成立。
+
+**How to apply:** 分清已知 threadId 的直接读取、本地 incidentKey+analysisGeneration 到 threadId 的映射，以及远端创建成功但回执丢失的恢复窗口。前两者可复用 Admin 持久状态；仅靠本地映射不能发现第三种远端孤立创建。要使恢复不扫描历史，需要 Runtime 按业务+事故稳定身份筛选，或提供原子幂等创建；不一定新增 URL，也可扩展既有列表接口的筛选契约，但都属于 Runtime 能力/契约改动。
+
+- 源码回查：Admin `_find_thread`、`deliver`、`claim_next_incident_event`；Maxwell `threadListInput` 和 `threadstore.SQLStore.List`。本次核对既有 q 只对title/id/user/creator/preset等字段搜索，不搜索clientMetadata.incidentKey；不能用标题关键词替代身份合同。
+- [PR #950 查询复审](https://github.com/world-sim-dev/vidmuse-admin/pull/950) 的待解决项：正常接管不依赖历史页数，恢复按完整事故身份及分析代次精确定位，保留旧代次与创建回执丢失保护。查询条件精确也不自动代表数据库高效，应核对实际索引与执行计划，不能未经EXPLAIN宣称已走索引。
+- 本次是查询路径复审，未修改业务代码、接口、数据库、PR状态或生产数据。查询修复仍有改进项；Job证据绑定修复的验证结果独立保留。
