@@ -1,6 +1,6 @@
 - 2026-10-28：[多租户压测与数据可信度分层](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-28-多租户负载与采集可信度分层) — 独立组织负载、有效受理、查询节流与终态发现时间、采集空窗的结论边界。
 
-- 2026-11-03：[自述与真实编辑差异](domains/maxwell/pitfalls/evolve-self-authored-edit-claims.md) — 已读原件仍混淆父版本、复核搜索自写说明及未命中/重复匹配的恢复边界。
+- 2026-11-03：[自述与真实编辑差异](domains/maxwell/pitfalls/evolve-self-authored-edit-claims.md) — 已读原件仍混淆父版本、复核搜索自写说明及未命中/重复匹配的恢复边界。 补充持久化原件正文对照、继承/执行边界与判断和保存分层验收。
 
 - 2026-10-28：[API Dev ARMS 与只读 SQL 采集入口](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-28-dev-arms-与只读-sql-采集入口) — 双 Prometheus 来源、HTTP rpc 过滤、dburl 连接格式、快照健康与菜单持久化验收。
 

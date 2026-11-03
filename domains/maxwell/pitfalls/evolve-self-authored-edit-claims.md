@@ -14,3 +14,12 @@ links: [evolve-resource-content]
 **How to apply:** 沿实际提交参数、持久化 payload、冻结资源 hash 和完整 diff 定位错误发生在哪层；作者说明与原件分开取证。检查复核者究竟读取旧资源正文还是只搜索新说明。找不到待替换原句与原句不唯一需要不同恢复方向，保持原权限、哈希和唯一匹配校验，只区分现有错误说明。修复加载、实际反馈消费、自主修订与业务质量分别验证；辅助纠正不能覆盖初次失败，未经质量验收的稿不当作有效新候选。
 
 源码入口：Maxwell `services/evolve-server/internal/modules/evolve/application/resourcecontent/edits.go`、`application/commands/resource_edit.go` 与 `internal/app/transport/mcp/handler.go`。真实请求、全文差异及后续复核状态沿 `/Users/leslie/Downloads/sandai-code/maxwell-ai/.tmp/evolve-unified-1019/.tmp/autonomous-diagnosis-20261103/` 和根工作区 `output/evolve-unified-20261019/flexibility-acceptance-20261022.md` 的 2026-11-03 记录回查；不在本页固化易变分数、部署或验收结论。
+
+
+## 2026-11-03：原件差异作为证据，而不是新增行为限制
+
+**Why:** 全新上下文仍可能重复作者的错误版本对照；仅展示版本哈希，不能替代正文差异，完整资源已送达也不证明模型正确比较。另一方面，未冻结稿可能仍含不完整资源引用：诊断正确与最终保存可用必须分开验收。
+
+**How to apply:** 在现有草稿读取/保存回执中，以持久化父版本和本版本为明确比较边界，沿原资源权限与SHA校验生成有界正文对照；不要用说明稿计算差异，也不要把父版本关系自动当成当前候选关系。单侧声明不等于运行时文件删除，文件对照不代表执行覆盖。保留截断、未读取和依赖失败的未知状态；不增加保存门槛，不把缺少证据改写成无变化。沿实际providerRequest确认消费，再独立比较保存payload、Skill哈希与最终陈述；同一已知场景恢复通过不代表业务质量普遍改善。
+
+源码入口：Maxwell `services/evolve-server/internal/modules/evolve/application/queries/draft_resource_diff.go` 与 `internal/app/toolcaller_profile_history.go`；验收原件与后续结论沿 integration `.tmp/draft-original-diff-natural-20261103/` 和主 journal 回查。
