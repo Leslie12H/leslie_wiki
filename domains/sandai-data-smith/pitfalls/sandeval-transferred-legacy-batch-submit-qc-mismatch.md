@@ -2,7 +2,7 @@
 name: sandeval-transferred-legacy-batch-submit-qc-mismatch
 type: pitfall
 created: 2026-10-16
-updated: 2026-10-16
+updated: 2026-11-03
 tags: [sandeval, correction, reassignment, batch-key, handoff]
 links: [sandeval-transferred-correction-task-visibility, sandeval-reassignment-scope-and-batch-responsibility]
 ---
@@ -29,3 +29,11 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-reassignment-s
 
 
 2026-10-16 部署后验收入口：[原单只读验收报告](/Users/leslie/Documents/Playground/output/correction-two-errors-20261016/postdeploy-report.txt)。报告独立保存 PR Gate、生产合并 SHA、全部副本、实际下发前端资源及多 Pod 原生查询；同时区分占用解除、列表状态、真实整包与正式提交，不能把源码或候选计算通过等同于业务交接完成。后续状态须实时读取。
+
+## 2026-11-03 已进质检的卡普通转派后仍显示待提交
+
+**Why:** 个人标注列表按当前持卡人和派题 wave 分组，按新批次键查询送审回执和已分配时间。质检侧按稳定工作项保留既有检查责任，继续使用原冻结范围。新个人批次的卡全有正式答案时，列表可能显示「待提交质检」，但如果所有卡都已被原质检范围占用，普通提交服务就找不到新批次键并返回 404。转派后保存的最新版与原质检冻结版本需要单独核对。
+
+**How to apply:** 先用同一 task/batch_key 对照题单 GET 和 submit-qc POST，再查当前持卡范围、`inspection_owners`、带和不带质检分区的送审投影，以及冻结版本与最新版。按原批次分别核对仍在检查和已退回的分支。保留冻结记录，使用负责人核对答案版本或原退回整改入口处理后续；是否可继续须回读相应门禁。展示层应按实际送审资格决定按钮，并说明已在原质检流程中的题数。
+
+现场回查指针为质量任务 `QT-a532c0d7f4f65933b278c4231f28884f`、派题批次 `949b6c8e-3fe4-49a4-8fc0-9f4412d8eb40`、2026-11-03 22:24（北京时间）提交日志，以及生产版本 `3fb2d5cba36186041d24e727e339d06152825a3a`。代码入口为 `MyTasksService.list_my_annotation_batches`、`TaskAssignmentService._quality_projected_waves`、`AnnotationQcAllocationRepository.inspection_owners` 和 `AnnotationBatchList.tsx`。
