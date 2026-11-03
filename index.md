@@ -1453,3 +1453,5 @@
 - 2026-11-03：[恢复时序与终止原因](domains/maxwell/pitfalls/evolve-self-authored-edit-claims.md#2026-11-03完整时序会否定最先发现的错误归因) — 已恢复中间错误、过程消息控制属性与作者复盘锚定，完整时序更正早期因果判断。
 
 - 2026-11-03：[父子调用与推理对照](domains/maxwell/pitfalls/evolve-self-authored-edit-claims.md#2026-11-03父任务终态不能替代子调用结果) — 精确调用/返回关联、原模型配置恢复及导航未消费的验收边界。
+
+- 2026-11-03：[增量配置与首请求边界](domains/maxwell/pitfalls/evolve-self-authored-edit-claims.md) — 精确绑定、未列文件保留、请求装配与模型消费、额度失败及旧断言审查。

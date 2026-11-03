@@ -64,3 +64,11 @@ links: [evolve-resource-content]
 **How to apply:** 复用已有扫描窗口，用精确 runId 与 callId 关联原始调用和返回位置，不以相邻事件、同一父任务失败状态或描述相似建立因果。只提供原件位置，不复制参数、猜执行成败或扩大读取；乱序持久化、同调用名跨 Run、分页和预算耗尽同时验证。运行配置对照结束后恢复原值并回读，不能把单次差异解释为普遍能力提升；对未读取相关事件的诊断，应调查停止判断的依据而非继续添加相同导航。
 
 源码仍沿 `queries/evidence_event_navigation.go`；真实调用与返回关联回放、控制实验及后续自然结论分别在 integration `.tmp/event-call-link-real-replay-20261103.json`、`.tmp/diagnosis-reasoning-natural-20261103/`、`.tmp/event-call-links-natural-20261103/`、`.tmp/diagnosis-only-natural-20261103/`，总体状态见同一因果验收报告。
+
+## 2026-11-03：增量配置回读和首请求消费分开验收
+
+**Why:** 同一业务可能存在重复 Skill slug，增量包又可能只列部分参考文件；按名称覆盖整包会改错绑定对象或删除原有依赖。完整配置进入 assembled model.request 后，上游仍可能在首调用因额度耗尽返回403，不能把装配成功称为模型消费或新配置能力通过。
+
+**How to apply:** 先读实际 Preset 绑定的精确 Skill 身份，再逐文件更新包内清单、保持未列文件，独立全文回读并核对哈希、元数据描述及原模型配置。包内建议新增的独立 Preset 与现有 Skill 更新分别处理，审阅资料不默认安装。上游失败保留原错误和缺失用量，不补零、不盲重试或切模型；额度恢复后沿原会话进行环境恢复验证。旧措辞测试与真实契约覆盖需分别审查，不能为过旧断言重新堆规则，也不能把失败一律当过时测试忽略。
+
+配置清单、原件前后对照、实际请求及验收边界沿根工作区 `output/evolve-unified-20261019/v55-installation-validation-20261103.md` 和 integration `.tmp/tuning-agent-v55-20261103/` 回查；本页不固化活跃版本、额度或分数。
