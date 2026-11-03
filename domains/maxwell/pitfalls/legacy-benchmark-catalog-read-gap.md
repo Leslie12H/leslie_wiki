@@ -17,3 +17,11 @@ links: [evolve-benchmark-unified-plan-review]
 - 源码入口：集成工作区的 `apps/studio/src/products/evolve/benchmarks/BenchmarkContentsStore.ts` 与 `services/evolve-server/internal/modules/evolve/application/queries/benchmark_definition.go`。版本与部署状态以验收记录为准，不从本页推断已合并。
 - 题目隐藏属性已获用户批准取消，精确权限/兼容范围见 `output/evolve-unified-20261019/tuning-input-unification-20261103.md`；历史内容与哈希保持，旧题用于调优后按回归统计，不再称独立隐藏验收。匿名分享范围不能随业务读取权限放开。
 - 安装与消费仍分开：逐文件回读只能证明配置保存，原始 provider 请求才证明实际消费；模型额度失败应保留缺账与原失败，不能把读取成功称为自主修改或质量通过。
+
+## 同一 Preset 的线上与隔离调用不一定使用相同模型账户
+
+**Why:** 2026-11-03 用户线上同Preset正常回复，隔离调用却收到上游额度错误。只读核对发现实际网关和凭据不同；更换模型后先成功、后又被同一额度错误拒绝。普通Chat页面给共享EVOLVE Thread续接还会带入不同账号身份，触发现有绑定拒绝，不能混算为自主诊断失败。
+
+**How to apply:** 先核对精确Run、模型、实际网关和配置身份，凭据只在内存比较相等性，不输出或复制。区分单次上游错误、整个账户不可用和长请求预占假设；只记录已证实层级，不直接要求用户给另一个账户充值。模型切换需保留原实验条件；EVOLVE会话回到原工作区消息入口，不删除身份校验。旧网关的模型ID/能力目录可能不同，不能只换URL就宣称兼容。
+
+证据仍沿上述验收报告的“用户成功调用后的核对与换模”部分和 `.tmp/tuning-input-unified-20261103/model-endpoint-comparison.json` 回查；不在wiki固化额度、凭据或运行中状态。

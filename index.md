@@ -1461,3 +1461,4 @@
 - 2026-11-03：[谨慎归因与探索性修改的边界](domains/maxwell/pitfalls/evolve-self-authored-edit-claims.md#2026-11-03谨慎归因不应变成禁止探索) — 区分已证实修复与可控实验；展示缺陷先核对契约及读取覆盖；结构化错误样本过滤不扩张为通用分析禁令。
 
 - 2026-11-03：[旧 Benchmark 目录读取缺口](domains/maxwell/pitfalls/legacy-benchmark-catalog-read-gap.md) — 冻结原件与标准目录不是同一事实；复用精确读取、保持历史，以及取消隐藏题后的回归口径。
+- 2026-11-03：[同一Preset的模型网关与身份差异](domains/maxwell/pitfalls/legacy-benchmark-catalog-read-gap.md#同一-preset-的线上与隔离调用不一定使用相同模型账户) — 对齐线上成功与隔离限额错误的具体调用、配置身份；共享EVOLVE消息入口与普通Chat分开核验。
