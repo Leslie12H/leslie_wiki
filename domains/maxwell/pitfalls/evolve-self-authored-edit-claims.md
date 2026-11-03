@@ -47,3 +47,12 @@ links: [evolve-resource-content]
 **How to apply:** 对已有授权、有界读取的完整JSON事件提供真实位置，不自动选根因，不扩大读范围或改变查询匹配；原错误正文仍由原件读取。把已参评身份放在同一回执中，避免只依赖跨调用记忆。验收分别记录版本适用性、直接原因、次级因果、实际修改与质量；附注没有在实际窗口发出就记未覆盖，不能把离线回放当模型消费。恢复成当前候选原件的草稿不算新增质量候选，不为制造提升而重复评测或绕过原拒绝。
 
 源码入口为 `queries/evidence_event_navigation.go`、`app/toolcaller_evidence_navigation.go`；当前实际SP/Skill配置、原始请求、保存比对和后续质量状态沿根工作区 `output/evolve-unified-20261019/evidence-navigation-acceptance-20261103.md` 与 integration `.tmp/evidence-navigation-natural-20261103/` 回查。
+
+
+## 2026-11-03：完整时序会否定最先发现的错误归因
+
+**Why:** 继续独立检查同一历史归档后发现，较早的子任务错误后来已经恢复，父任务也真实读取了恢复产物；最终失败发生在后续父任务自己的模型调用。此前仅凭早期错误原文就称“直接原因已查明”不成立，上一节的历史初步判断不能替代这次完整时序。另一处误读把带 `modelFinishReason=tool_calls` 的过程消息当成最终答复。新自然会话还会从草稿作者复盘加最终状态重复该解释，甚至没有读取原始恢复与终止事件；因此不能泛称“全部相关证据都已读到但模型仍错”。
+
+**How to apply:** 以原运行、调用关联和时间串起被恢复的中间失败与实际终止事件，用后续动作检验初始解释。事件目录和字面命中旁保留原始时间、执行身份、工具调用及消息控制属性，不自动选根因、不复制参数或扩大授权。核验实际模型请求：工具能力存在、模型使用入口、读取对应事件、正确解释是不同验收项。若只是复述作者说明，应改进诊断方法及入口组织，而不是继续叠加相同禁令；精简方法的实际效果仍由新会话验证，不因安装成功而宣布有效。
+
+源码入口仍为 `queries/evidence_event_navigation.go` 与 `queries/evidence_text.go`；Skill 入口为 `agent-resources/skills/evidence-diagnosis/SKILL.md`。事件复建、两次原配置失败、新配置验收及未知边界沿 integration `.tmp/causality-natural-20261103/independent-chronology.json`、`.tmp/search-event-context-natural-20261103/`、`.tmp/diagnosis-entry-natural-20261103/` 和根工作区 `output/evolve-unified-20261019/causal-diagnosis-acceptance-20261103.md` 回查。

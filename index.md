@@ -1447,3 +1447,5 @@
 - 2026-11-03：[读取恢复后的归因边界](domains/maxwell/pitfalls/evolve-self-authored-edit-claims.md) — 历史版本误用、终止状态与原始拒绝、内联草稿恢复路径分别验证。
 
 - 2026-11-03：[版本纠错与修复方向分别验收](domains/maxwell/pitfalls/evolve-self-authored-edit-claims.md) — 同回执测量归属、有界错误位置、真实消费与次级因果边界。
+
+- 2026-11-03：[恢复时序与终止原因](domains/maxwell/pitfalls/evolve-self-authored-edit-claims.md#2026-11-03完整时序会否定最先发现的错误归因) — 已恢复中间错误、过程消息控制属性与作者复盘锚定，完整时序更正早期因果判断。
