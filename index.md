@@ -1441,3 +1441,5 @@
 - 2026-10-30：[候选菜单鼠标目标位移](domains/maxwell/pitfalls/evolve-candidate-menu-hover-scroll.md) — 超高选项与悬停滚动、键盘反证、预览裁剪及折叠/展开验证边界。
 
 - 2026-10-30：[模型服务失败与质量边界](domains/maxwell/pitfalls/evolve-provider-failure-vs-quality.md) — 内外层403、封存先于外层失败、部分账目与无效样本分别保留，CI/部署不替代质量。
+
+- 2026-11-03：[正文可读性与模型视图预算](domains/maxwell/pitfalls/evolve-self-authored-edit-claims.md#2026-11-03正文可读性先看模型视图预算) — MCP双份JSON、原件回放、预算顺序及真实模型消费的区分。
