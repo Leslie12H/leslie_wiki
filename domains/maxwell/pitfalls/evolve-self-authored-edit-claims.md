@@ -39,3 +39,11 @@ links: [evolve-resource-content]
 **How to apply:** 保存作者声明、实际工具选择、原件全文与终止事件，分别判断读取、正确归因、编辑、保存和质量。把错误归因的新稿保留未确认，不能用随后编辑成功覆盖失败。核对已消费的冻结身份与真正读取的事件；已有 Skill 已说明版本适用性和失败原因时，不再用追加相同规则解释问题。
 
 另一个工程边界：既有草稿续改分支仅允许授权原件引用，内联正文需要原有冻结来源路径；将内联拒绝误报为裸 CAS 会误导恢复。准确区分现有错误并提示原路径，无需增加许可或改变接受集合。源码 `resourcecontent/source_draft.go`，真实自然调用随后自行使用冻结来源成功；这仅证明原恢复能力存在。证据沿 integration `.tmp/model-view-budget-natural-20261103/{assessment,model-proof,persisted-proof,old-visible-failure-originals}.json` 和主 journal，不在知识页保存活跃身份或变动分数。
+
+## 2026-11-03：版本纠错与合理修复方向分别验收
+
+**Why:** 已完整扫描的归档可能仅返回字面匹配，导致终止状态可见而真正错误事件难以定位；另一次真实复验在相邻测量身份说明下纠正了旧候选归因，并恢复实际原件，但自然续问即便读到原始安全拒绝，仍把“文件存在而未交付”说成已证实的次级缺陷。找到直接错误不等于证明恢复交付或改派工提示合理。
+
+**How to apply:** 对已有授权、有界读取的完整JSON事件提供真实位置，不自动选根因，不扩大读范围或改变查询匹配；原错误正文仍由原件读取。把已参评身份放在同一回执中，避免只依赖跨调用记忆。验收分别记录版本适用性、直接原因、次级因果、实际修改与质量；附注没有在实际窗口发出就记未覆盖，不能把离线回放当模型消费。恢复成当前候选原件的草稿不算新增质量候选，不为制造提升而重复评测或绕过原拒绝。
+
+源码入口为 `queries/evidence_event_navigation.go`、`app/toolcaller_evidence_navigation.go`；当前实际SP/Skill配置、原始请求、保存比对和后续质量状态沿根工作区 `output/evolve-unified-20261019/evidence-navigation-acceptance-20261103.md` 与 integration `.tmp/evidence-navigation-natural-20261103/` 回查。

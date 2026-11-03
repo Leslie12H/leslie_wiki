@@ -1445,3 +1445,5 @@
 - 2026-11-03：[正文可读性与模型视图预算](domains/maxwell/pitfalls/evolve-self-authored-edit-claims.md#2026-11-03正文可读性先看模型视图预算) — MCP双份JSON、原件回放、预算顺序及真实模型消费的区分。
 
 - 2026-11-03：[读取恢复后的归因边界](domains/maxwell/pitfalls/evolve-self-authored-edit-claims.md) — 历史版本误用、终止状态与原始拒绝、内联草稿恢复路径分别验证。
+
+- 2026-11-03：[版本纠错与修复方向分别验收](domains/maxwell/pitfalls/evolve-self-authored-edit-claims.md) — 同回执测量归属、有界错误位置、真实消费与次级因果边界。
