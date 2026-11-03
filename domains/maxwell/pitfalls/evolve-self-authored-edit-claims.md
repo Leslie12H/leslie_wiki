@@ -31,3 +31,11 @@ links: [evolve-resource-content]
 **How to apply:** 沿原始事件→模型视图→实际providerRequest对齐字节预算；用原始事件离线回放精确复现。阈值只计算现有无损视图，不改变持久化原件、读取窗口版本、原始哈希或权限；独立说明和去重后仍超限的正文继续按原机制读取。再验证真实模型请求包含完整正文，功能恢复与任务总耗时改善分开统计。
 
 源码入口：Agent Runtime `toolprojection/projection.go`、`toolprotocol/result.go`、`model/multimodal.go`。证据沿 integration `.tmp/model-view-budget-replay-20261103.json`、`.tmp/model-view-budget-natural-20261103/` 和主 journal；无损转换、首次/历史消费及大结果回执须作为同一问题簇检查。
+
+## 2026-11-03：恢复了读取与保存，归因仍可能失败
+
+**Why:** 真实自然诊断已完整消费当前资源及新旧 Variant 身份，却仍从旧搜索状态的 activeRunRef 选取历史运行，未比较参评资源就用于当前候选。检索通用失败状态并读取 runtime.completed 只能证明停止，不能说明原因；归档里相邻的 runtime.failed 实际记载模型内容拒绝。存在文字文件也不能证明文件完整、可交付或可以绕过原拒绝。
+
+**How to apply:** 保存作者声明、实际工具选择、原件全文与终止事件，分别判断读取、正确归因、编辑、保存和质量。把错误归因的新稿保留未确认，不能用随后编辑成功覆盖失败。核对已消费的冻结身份与真正读取的事件；已有 Skill 已说明版本适用性和失败原因时，不再用追加相同规则解释问题。
+
+另一个工程边界：既有草稿续改分支仅允许授权原件引用，内联正文需要原有冻结来源路径；将内联拒绝误报为裸 CAS 会误导恢复。准确区分现有错误并提示原路径，无需增加许可或改变接受集合。源码 `resourcecontent/source_draft.go`，真实自然调用随后自行使用冻结来源成功；这仅证明原恢复能力存在。证据沿 integration `.tmp/model-view-budget-natural-20261103/{assessment,model-proof,persisted-proof,old-visible-failure-originals}.json` 和主 journal，不在知识页保存活跃身份或变动分数。

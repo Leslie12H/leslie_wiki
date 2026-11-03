@@ -1443,3 +1443,5 @@
 - 2026-10-30：[模型服务失败与质量边界](domains/maxwell/pitfalls/evolve-provider-failure-vs-quality.md) — 内外层403、封存先于外层失败、部分账目与无效样本分别保留，CI/部署不替代质量。
 
 - 2026-11-03：[正文可读性与模型视图预算](domains/maxwell/pitfalls/evolve-self-authored-edit-claims.md#2026-11-03正文可读性先看模型视图预算) — MCP双份JSON、原件回放、预算顺序及真实模型消费的区分。
+
+- 2026-11-03：[读取恢复后的归因边界](domains/maxwell/pitfalls/evolve-self-authored-edit-claims.md) — 历史版本误用、终止状态与原始拒绝、内联草稿恢复路径分别验证。
