@@ -1457,3 +1457,5 @@
 - 2026-11-03：[增量配置与首请求边界](domains/maxwell/pitfalls/evolve-self-authored-edit-claims.md) — 精确绑定、未列文件保留、请求装配与模型消费、额度失败及旧断言审查。
 
 - 2026-11-03：[额度恢复与因果错误](domains/maxwell/pitfalls/evolve-self-authored-edit-claims.md) — 依赖检查先于发送、环境污染单列及旧 finalText 与原始消息控制属性。
+
+- 2026-11-03：[谨慎归因与探索性修改的边界](domains/maxwell/pitfalls/evolve-self-authored-edit-claims.md#2026-11-03谨慎归因不应变成禁止探索) — 区分已证实修复与可控实验；展示缺陷先核对契约及读取覆盖；结构化错误样本过滤不扩张为通用分析禁令。
