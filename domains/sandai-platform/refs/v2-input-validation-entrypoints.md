@@ -2,7 +2,7 @@
 name: sandai-api-platform-v2-input-validation-entrypoints
 type: reference
 created: 2026-10-26
-updated: 2026-10-26
+updated: 2026-11-03
 tags: [sandai, openapi, v2, validation, testing, quota]
 links: [sandai-api-platform-openapi-quota-entrypoints, sandai-api-platform-global-acceptance-20261026]
 ---
@@ -30,3 +30,13 @@ links: [sandai-api-platform-openapi-quota-entrypoints, sandai-api-platform-globa
 - 如已在用户授权范围内创建独立临时 Key，`ApiKeyCreatedVo` 的创建回执含 orgId/userId，可用于解析目标归属；完整新 Key 不打印、不保存，随后删除并回读。不能为绕过 403 修改管理员白名单或改全局默认配置。
 
 **How to apply:** 先校验既有凭据与目标域名，冻结调用前的任务数和余额。逐项检查漏传、null、错误类型、非法枚举、鉴权与对象 ID，保存精确 code/message/details。断言口径偏严与真实输入校验漏洞分开裁定；保留原始失败，不改写记录。发现 202 意外受理就只读追到终态及消费；配额无权限时保留原值，等待有权限的会话。
+
+## 2026-11-03 余额不足与失败记录
+
+**Why**
+
+Staging 国内的 v2 创建请求曾返回 HTTP 400 `insufficient_credits`，同时在 `details.generation_id` 给出编号。用同一把 Key 查询该编号得到 HTTP 200，任务状态为 `failed`，错误码同为 `insufficient_credits`，且无产物。历史回执见 Codex 会话 `01a17716-5782-7573-be72-a6f73fd06b31` 中 2026-11-03 的 Staging 视频生成复测。
+
+**How to apply**
+
+复测时保留 POST 的 HTTP 状态、错误码及任务编号。若错误响应带编号，对同一环境和编号执行一次只读 GET，区分创建请求被拒、失败记录是否可查和任务是否受理执行。扣费或余额变化另查账本。代码回查入口为 Zeus 的 v2 `ApiErrors` 和 `/v2/generations/{id}` 查询路径，具体映射以当前部署验证为准。

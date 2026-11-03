@@ -1,3 +1,5 @@
+- 2026-11-03：[v2 余额不足与失败记录](domains/sandai-platform/refs/v2-input-validation-entrypoints.md#2026-11-03-余额不足与失败记录) — 创建错误也可能返回任务编号，区分请求拒绝、失败记录和正式账本。
+
 - 2026-10-28：[多租户压测与数据可信度分层](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-28-多租户负载与采集可信度分层) — 独立组织负载、有效受理、查询节流与终态发现时间、采集空窗的结论边界。
 
 - 2026-11-03：[自述与真实编辑差异](domains/maxwell/pitfalls/evolve-self-authored-edit-claims.md) — 已读原件仍混淆父版本、复核搜索自写说明及未命中/重复匹配的恢复边界。 补充持久化原件正文对照、继承/执行边界与判断和保存分层验收。
