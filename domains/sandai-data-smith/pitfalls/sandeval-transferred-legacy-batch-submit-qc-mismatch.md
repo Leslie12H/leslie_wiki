@@ -37,3 +37,11 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-reassignment-s
 **How to apply:** 先用同一 task/batch_key 对照题单 GET 和 submit-qc POST，再查当前持卡范围、`inspection_owners`、带和不带质检分区的送审投影，以及冻结版本与最新版。按原批次分别核对仍在检查和已退回的分支。保留冻结记录，使用负责人核对答案版本或原退回整改入口处理后续；是否可继续须回读相应门禁。展示层应按实际送审资格决定按钮，并说明已在原质检流程中的题数。
 
 现场回查指针为质量任务 `QT-a532c0d7f4f65933b278c4231f28884f`、派题批次 `949b6c8e-3fe4-49a4-8fc0-9f4412d8eb40`、2026-11-03 22:24（北京时间）提交日志，以及生产版本 `3fb2d5cba36186041d24e727e339d06152825a3a`。代码入口为 `MyTasksService.list_my_annotation_batches`、`TaskAssignmentService._quality_projected_waves`、`AnnotationQcAllocationRepository.inspection_owners` 和 `AnnotationBatchList.tsx`。
+
+### 2026-11-03 受控复验与原质检员兼持卡人的边界
+
+**Why:** 仍在检查的旧批次可由有权限的负责人按最新版发起复验，已停的标注退回轮次走原整改。原质检员兼任当前持卡人时，直接把原退回单转给他会触及角色冲突。普通转交整改也要求原整改人仍持有完整批次，不能用它补记已经发生的普通改派。
+
+**How to apply:** 用 `app.cli.latest_answer_reinspection` 按原 review ID 预览和执行，独立回读旧轮停用、新轮可保存、冻结引用与正式最新版相同。对停轮先按原退回类型验证转交入口及接收人校验，避免把原标注退回当作可转交的待重检责任。
+
+实际执行和逐批回执见[现场审计](/Users/leslie/Documents/Playground/output/sandeval-949b-qc-recovery-20261103/report.md)。
