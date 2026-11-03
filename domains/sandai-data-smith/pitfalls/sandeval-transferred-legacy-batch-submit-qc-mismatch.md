@@ -45,3 +45,9 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-reassignment-s
 **How to apply:** 用 `app.cli.latest_answer_reinspection` 按原 review ID 预览和执行，独立回读旧轮停用、新轮可保存、冻结引用与正式最新版相同。对停轮先按原退回类型验证转交入口及接收人校验，避免把原标注退回当作可转交的待重检责任。
 
 实际执行和逐批回执见[现场审计](/Users/leslie/Documents/Playground/output/sandeval-949b-qc-recovery-20261103/report.md)。
+
+### 2026-11-03 普通作答提交与整批送审的门禁差异
+
+**Why:** 普通作答写入的 `_correction_work_unit_if_fenced` 使用当前个人批次键查送审回执与质检分配。普通转派换了批次键，同一稳定卡的旧质检责任仍在，但此写入检查没有按卡查该责任。整批送审则按稳定卡上的既有检查责任投影，所以同一批可以保存新答案，却无法按新键送审。完成卡的暂缓入口已有额外的逐卡检查，不能用它代表普通作答提交路径。
+
+**How to apply:** 对同一卡分别核对普通 `submit` 执行回执、整批送审回执、旧冻结时间和新复验创建时间。用部署中的普通作答门禁做只读重跑，同时查任务是否允许自由修订、新批次键的分配与回执、按稳定卡查到的质检归属。不要通过实际写答复现门禁。现场坐标沿用上文，答案回执集中在 2026-11-03 22:04–22:06（北京时间）。只读重跑的部署 SHA 为 `47a14c6d65abd8ca7a7204067551b339b414f156`。
