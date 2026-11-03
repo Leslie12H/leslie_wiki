@@ -56,3 +56,11 @@ links: [evolve-resource-content]
 **How to apply:** 以原运行、调用关联和时间串起被恢复的中间失败与实际终止事件，用后续动作检验初始解释。事件目录和字面命中旁保留原始时间、执行身份、工具调用及消息控制属性，不自动选根因、不复制参数或扩大授权。核验实际模型请求：工具能力存在、模型使用入口、读取对应事件、正确解释是不同验收项。若只是复述作者说明，应改进诊断方法及入口组织，而不是继续叠加相同禁令；精简方法的实际效果仍由新会话验证，不因安装成功而宣布有效。
 
 源码入口仍为 `queries/evidence_event_navigation.go` 与 `queries/evidence_text.go`；Skill 入口为 `agent-resources/skills/evidence-diagnosis/SKILL.md`。事件复建、两次原配置失败、新配置验收及未知边界沿 integration `.tmp/causality-natural-20261103/independent-chronology.json`、`.tmp/search-event-context-natural-20261103/`、`.tmp/diagnosis-entry-natural-20261103/` 和根工作区 `output/evolve-unified-20261019/causal-diagnosis-acceptance-20261103.md` 回查。
+
+## 2026-11-03：父任务终态不能替代子调用结果
+
+**Why:** 一次只改变推理强度的真实对照读取了父任务模型错误，却把它归到此前的恢复子调用；同一原归档里该子调用实际成功。更强推理没有自动解决执行主体混淆。另一个默认配置会话甚至停在摘要，因此导航可用与模型采用导航仍要分开判断。
+
+**How to apply:** 复用已有扫描窗口，用精确 runId 与 callId 关联原始调用和返回位置，不以相邻事件、同一父任务失败状态或描述相似建立因果。只提供原件位置，不复制参数、猜执行成败或扩大读取；乱序持久化、同调用名跨 Run、分页和预算耗尽同时验证。运行配置对照结束后恢复原值并回读，不能把单次差异解释为普遍能力提升；对未读取相关事件的诊断，应调查停止判断的依据而非继续添加相同导航。
+
+源码仍沿 `queries/evidence_event_navigation.go`；真实调用与返回关联回放、控制实验及后续自然结论分别在 integration `.tmp/event-call-link-real-replay-20261103.json`、`.tmp/diagnosis-reasoning-natural-20261103/`、`.tmp/event-call-links-natural-20261103/`、`.tmp/diagnosis-only-natural-20261103/`，总体状态见同一因果验收报告。
