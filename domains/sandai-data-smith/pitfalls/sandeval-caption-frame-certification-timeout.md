@@ -19,3 +19,7 @@ links: [sandeval-video-loading-path, sandeval-frozen-media-frame-facts-mismatch]
 ## 2026-11-04 定向恢复验证
 
 按实际部署核对帧率来源和素材身份条件。写前重新读原对象与执行事实，已有正确帧率的题只验收；缺失的题以完整逐帧认证补齐，保留已冻结时长。提交后从独立副本同时核验认证网格和原答题卡的作答快照，并比较原作答基线。[恢复证据](/Users/leslie/Documents/Playground/output/sandeval-r2v-frame-rate-20261104/recovery.md)
+
+## 2026-11-04 开放题存量补录
+
+逐帧要求从当前部署题型的作答契约核定，严格要求与仅支持逐帧的旧题型分开。按开放任务的题包成员和实际投放取并集并去重，已分派候选优先。独立记录扫描、带原值保护的补录和回读结果，收尾用同一口径区分本轮存量与运行中新产生的候选。[批量审计](/Users/leslie/Documents/Playground/output/sandeval-caption-frame-stock-20261104/summary.json)

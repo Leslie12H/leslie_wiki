@@ -1468,3 +1468,5 @@
 - 2026-11-04：[Caption 逐帧认证超时导致标注页打不开](domains/sandai-data-smith/pitfalls/sandeval-caption-frame-certification-timeout.md) — 同一视频按线上预算和较长诊断预算对照，定位缺少可信帧率、区分执行事实和播放帧网格。
 
 - 2026-11-04：[Caption 帧率缺失的定向恢复](domains/sandai-data-smith/pitfalls/sandeval-caption-frame-certification-timeout.md#2026-11-04-定向恢复验证) — 预检识别已自动补齐项，按原对象补录认证信息并独立验收作答快照。
+
+- 2026-11-04：[Caption 开放题存量帧率补录](domains/sandai-data-smith/pitfalls/sandeval-caption-frame-certification-timeout.md#2026-11-04-开放题存量补录) — 从题型和开放成员核定范围，分离认证、补录与独立回读。
