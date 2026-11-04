@@ -1478,3 +1478,5 @@
 - 2026-11-04：[后阶段中断的输出归属](domains/maxwell/pitfalls/nextplay-interrupted-stage-output.md) — 空后阶段不能借用前阶段交付，生产异常观察与下载包验收分层。
 
 - 2026-11-04：[EVOLVE 并发断言与准入语义漂移](domains/maxwell/pitfalls/evolve-concurrency-test-contract-drift.md) — 确定性双顺序覆盖、内存/持久化语义对齐及 CI 证据边界。
+
+- 2026-11-04：[折叠列表与实际布局占位](domains/maxwell/pitfalls/evolve-collapsed-list-layout.md) — 列表/谱系布局职责、真实尺寸与异步切换回读，SSR 存在性不能替代可读性。
