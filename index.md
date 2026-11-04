@@ -1466,3 +1466,5 @@
 - 2026-11-03：[VidMuse 首页渲染巡检](domains/vidmuse/refs/homepage-render-check-ops.md) — 远程 cron 定位、暂停验证和单行恢复入口。
 
 - 2026-11-04：[Caption 逐帧认证超时导致标注页打不开](domains/sandai-data-smith/pitfalls/sandeval-caption-frame-certification-timeout.md) — 同一视频按线上预算和较长诊断预算对照，定位缺少可信帧率、区分执行事实和播放帧网格。
+
+- 2026-11-04：[Caption 帧率缺失的定向恢复](domains/sandai-data-smith/pitfalls/sandeval-caption-frame-certification-timeout.md#2026-11-04-定向恢复验证) — 预检识别已自动补齐项，按原对象补录认证信息并独立验收作答快照。

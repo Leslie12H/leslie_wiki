@@ -15,3 +15,7 @@ links: [sandeval-video-loading-path, sandeval-frozen-media-frame-facts-mismatch]
 
 - [2026-11-04 R2V 标注只读对照](/Users/leslie/Documents/Playground/output/sandeval-r2v-frame-rate-20261104/report.md) 记录请求、两种扫描预算、同题初始化和实际题包范围。
 - 源码入口 `sand-eval/platform/backend/app/services/facts/{navigation_frame_facts,video_frame_facts,question_media_facts}.py`。按实际部署 SHA 核对预算与持久化逻辑。
+
+## 2026-11-04 定向恢复验证
+
+按实际部署核对帧率来源和素材身份条件。写前重新读原对象与执行事实，已有正确帧率的题只验收；缺失的题以完整逐帧认证补齐，保留已冻结时长。提交后从独立副本同时核验认证网格和原答题卡的作答快照，并比较原作答基线。[恢复证据](/Users/leslie/Documents/Playground/output/sandeval-r2v-frame-rate-20261104/recovery.md)
