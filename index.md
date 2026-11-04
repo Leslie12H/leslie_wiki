@@ -95,6 +95,8 @@
 
 # leslie_wiki 目录
 
+- 2026-11-04：[路线复审粒度与等待放大](domains/maxwell/pitfalls/evolve-route-review-granularity.md) — 实际父子派工、微小片段复审与整批交付、共享资源版本证据、超时取消，以及并发测试同步边界。
+
 - 2026-10-29：[新 Key 十视频验收](domains/sandai-platform/refs/ten-video-key-acceptance-entrypoints.md) — Dev CN 共用入口、Key 鉴权与创建 403 分层；含旧/新 Key 同参对照、十视频及另一账号二十任务终态/账单验收的回查指针。
 
 - 2026-10-28：[看答案的版本来源](domains/sandai-data-smith/refs/sandeval-view-answer-version.md) — 当前正文、原标注、质检保存与历史版本分层核对入口。
