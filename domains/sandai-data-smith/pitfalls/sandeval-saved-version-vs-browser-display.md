@@ -96,3 +96,9 @@ links: [sandeval-workbench-context-404-evidence, sandeval-correction-evidence-an
 
 - [生产案例入口](https://eval.sandaii.cn/quality/management?package_query=1009&tab=tasks&task=QT-d7c79539b7325a678387e15cb3dff410&allocation=QA-298624c2a6d05a04ad13795b05005dce) 与[原 Sand 退回](https://eval.sandaii.cn/quality/resolution/QT-d7c79539b7325a678387e15cb3dff410/DISP-c6c736dbc5c754afa3f27fd88648db8d)。按当前生产重新查阅，稳定取证坐标为原 Sand 报告 RT-adc8c99e078a599ba1dec970e2c22edd、空间复验 RT-1b44900934de5d48a7a8725f9668142b 和负责人复核 RT-9cf33667f41a50ac84519c9187657ac5。
 - 源码入口为 `ReviewQueryService.queue_page`、`DispositionIssueService`、`LatestAnswerReinspectionService._assert_no_foreign_handoff` 与 `AdvancementService.status`。代改作者查 `ev3_response.authored_by_account_id`，版本前驱查 `client_meta.amended_from`。
+
+### 单批回交的原整包范围证明
+
+**Why:** 送审批次的历史应交范围摘要、当前来源分批和原整包实际交接子集可各自不同。已通过的供应商报告仍可验证，而当前整包筛选可能排除其来源批次。只保存一份含目标子集的单批回交记录会丢失原整包对同题跨批次的归属证明，Sand 派检仍可能失败。
+
+**How to apply:** 对照原交接回执和原 Sand 批次执行清单，确认目标稳定工作项与已封存的正式修订逐项一致。分别验证负责人报告、回交前批次选择、封存前范围复核和 Sand 派检的读取准入。单批回交须沿原处置重新证明同一子集，继续校验当前报告、来源版本和重复交接。测试与生产部署进度沿 [修复 PR](https://github.com/world-sim-dev/sandai-data-smith/pull/3142) 查证，实际回交与待办沿上节原退回单另行读回。

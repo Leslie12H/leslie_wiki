@@ -2417,3 +2417,5 @@
 
 - 2026-11-04：补充 Sand 整批退回下冻结题的逐题责任取证与批次回交判据。见 domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md。
 - 2026-11-04：补充来源窗口修复后的双层覆盖证明与 UTF-8 nextOffset 实际恢复经验；保留模型推理与质量验收边界。
+
+- 2026-11-04：补充直接整改单批回交须在封存和 Sand 派检共同重验原交接子集的边界，并登记测试 PR。见 domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md。
