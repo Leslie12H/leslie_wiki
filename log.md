@@ -2423,3 +2423,7 @@
 - 2026-11-04：补充 main PR #3144 复审中复现的无关范围扩张阻断，以及历史退回自动推进和新旧回执兼容的发布检查。见 domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md。
 
 - 2026-11-04：记录单批回交后再次退回的父级验证与离线复现。见 domains/sandai-data-smith/refs/sandeval-direct-remediation-and-batch-handoff.md。
+
+- 2026-11-04：记录 ACK 缩容后补副本受硬拓扑约束触发扩容、新节点 CNI 初始化告警的核验方法，见 global/pitfalls/ack-node-scale-down-topology-spread-cni.md。
+
+- 2026-11-04：补充 ACK Autoscaler 缩容阈值、候选时长、扩容后静默期与旧新 Pod 调度约束差异的核验入口。见 global/pitfalls/ack-node-scale-down-topology-spread-cni.md。
