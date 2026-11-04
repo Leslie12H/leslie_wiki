@@ -2429,3 +2429,5 @@
 - 2026-11-04：补充 ACK Autoscaler 缩容阈值、候选时长、扩容后静默期与旧新 Pod 调度约束差异的核验入口。见 global/pitfalls/ack-node-scale-down-topology-spread-cni.md。
 
 - 2026-11-04：补充冻结子集回交必须等待旧 Web 副本退出并绑定单案授权版本的边界。见 domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md。
+
+- 2026-11-04：记录冻结退回 CLI 预检与包级写准入分离，以及回交后按实际复验队列验收的方法。见 domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md。
