@@ -1464,3 +1464,5 @@
 - 2026-11-03：[同一Preset的模型网关与身份差异](domains/maxwell/pitfalls/legacy-benchmark-catalog-read-gap.md#同一-preset-的线上与隔离调用不一定使用相同模型账户) — 对齐线上成功与隔离限额错误的具体调用、配置身份；共享EVOLVE消息入口与普通Chat分开核验；额度错误先核对目标 dev 当前凭据，标准同步 API/唯一 Worker 后验真实调用。
 
 - 2026-11-03：[VidMuse 首页渲染巡检](domains/vidmuse/refs/homepage-render-check-ops.md) — 远程 cron 定位、暂停验证和单行恢复入口。
+
+- 2026-11-04：[Caption 逐帧认证超时导致标注页打不开](domains/sandai-data-smith/pitfalls/sandeval-caption-frame-certification-timeout.md) — 同一视频按线上预算和较长诊断预算对照，定位缺少可信帧率、区分执行事实和播放帧网格。
