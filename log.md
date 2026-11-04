@@ -2419,3 +2419,5 @@
 - 2026-11-04：补充来源窗口修复后的双层覆盖证明与 UTF-8 nextOffset 实际恢复经验；保留模型推理与质量验收边界。
 
 - 2026-11-04：补充直接整改单批回交须在封存和 Sand 派检共同重验原交接子集的边界，并登记测试 PR。见 domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md。
+
+- 2026-11-04：补充 main PR #3144 复审中复现的无关范围扩张阻断，以及历史退回自动推进和新旧回执兼容的发布检查。见 domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md。
