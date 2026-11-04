@@ -1,3 +1,5 @@
+- 2026-11-04：[媒体超时与工具配套](domains/maxwell/pitfalls/evolve-native-routing-vs-candidate-runner.md#2026-11-04-未生成的不同原因与工具配套) — 对齐冻结指令、源/生效工具和正式产物，区分未执行、已尝试超时与 Adapter 丢失。
+
 - 2026-11-03：[v2 余额不足与失败记录](domains/sandai-platform/refs/v2-input-validation-entrypoints.md#2026-11-03-余额不足与失败记录) — 创建错误也可能返回任务编号，区分请求拒绝、失败记录和正式账本。
 
 - 2026-10-28：[多租户压测与数据可信度分层](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-28-多租户负载与采集可信度分层) — 独立组织负载、有效受理、查询节流与终态发现时间、采集空窗的结论边界。

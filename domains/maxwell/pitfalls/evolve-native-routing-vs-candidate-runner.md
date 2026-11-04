@@ -2,7 +2,7 @@
 name: evolve-native-routing-vs-candidate-runner
 type: pitfall
 created: 2026-10-15
-updated: 2026-10-17
+updated: 2026-11-04
 tags: [maxwell, evolve, nextplay, a2a, candidate]
 links: [nextplay-independent-benchmark-entry, evolve-preset-evaluation-entry]
 ---
@@ -135,3 +135,12 @@ links: [nextplay-independent-benchmark-entry, evolve-preset-evaluation-entry]
 **How to apply:** 先读真实Benchmark终态，再按每次执行的原件统计轮次、AskUser实际回答和goalDecision；从对应首轮MODEL.REQUEST读取执行时系统约束，勿只看当前可变Preset。正文回复结束后继续工作须显式冻结目标策略，交付检查和原评分分别保留。先验证非媒体写回闭环，媒体题单独核对阶段授权与真实能力；新策略通过新Case/Benchmark版本验收，不改历史结果。
 
 本轮当前页面、原件统计和具体请求证据见 `/Users/leslie/Downloads/sandai-code/maxwell-ai/output/evolve-interaction-diagnosis-20261018/diagnosis.md`、`evidence-summary.json` 与 `live-policy-readback.txt`。它是只读诊断，没有重跑、追加Agent消息、变更Preset或评分。
+
+
+## 2026-11-04 未生成的不同原因与工具配套
+
+**Why:** 正式媒体文件没有变化，既可能是阶段限制，也可能是已经调用生成但进程超时。Skill 描述某个工具不代表源 Preset 实际启用了它；源配置与候选生效配置都缺少时，不能归咎于 Adapter 丢失。并行命令没有返回结果，也不能推断所有外部请求均未受理。
+
+**How to apply:** 对齐同一执行的冻结 SP、已加载 Skill 全文、源与生效工具目录、原工具调用/结果及正式项目 before/after；分别记录发起、受理未知、生成完成与保存。目录差异才能支撑应用丢失判断；父 Agent 缺工具不能直接推断所有子 Agent 都无替代路径。保留超时原失败，不为取分盲重试、不补造媒体或音色身份。
+
+真实 C15 取证指针：Maxwell integration 工作树 `.tmp/c15-assets-generation-timeout-20261104.json`、`.tmp/c15-voice-capability-visible-evidence-20261104.json`、`.tmp/c15-formal-state-diff-20261104.json`，完整状态查仓库 `output/evolve-unified-20261019/flexibility-acceptance-20261022.md`。这些证明调用、配置和保存事实，不替代原 Judge 的质量评分；未确认的外部生成受理及子 Agent 能力仍保留未知。
