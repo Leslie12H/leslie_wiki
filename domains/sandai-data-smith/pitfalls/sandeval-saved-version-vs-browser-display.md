@@ -2,7 +2,7 @@
 name: sandeval-saved-version-vs-browser-display
 type: pitfall
 created: 2026-10-17
-updated: 2026-10-22
+updated: 2026-11-04
 tags: [sand-eval, inspection, amendment, browser, draft, evidence]
 links: [sandeval-workbench-context-404-evidence, sandeval-correction-evidence-and-deferred-lineage]
 ---
@@ -87,3 +87,12 @@ links: [sandeval-workbench-context-404-evidence, sandeval-correction-evidence-an
 
 - [吴安银本次只读排查与定向浏览器导出方法](/Users/leslie/Documents/Playground/output/wuanyin-caption-revert-20261022/report.md)：保存链、规范化差异、切点操作核对、两个实例原生读取及未决浏览器现场。该记录未确认回退触发根因，当前保存/恢复状态沿报告脚本核验。
 - 当前实现指针：`useAnswerAutosave.ts`、`autosaveStorage.ts`、`largeDraftStorage.ts`、`largeBrowserRecords.ts`、`Answering.tsx`及`AnswerExecutionService.snapshot`。日常本机草稿与业务动作正式回执的边界按部署SHA复核，不把管理员观察页当作本机草稿。
+
+## 2026-11-04 Sand 整批退回中的冻结题是否需要整改
+
+**Why:** 整批退回记录保存批次范围，逐题意见保存本次要处理的问题，冻结提示只描述编辑基线。跨人员送审批次可以引用同一答题卡，因此另一批次的正式修订会锁住旧版代改入口。空间复验和负责人验收各自通过后，回交仍需满足当前批次的正式前置关系。
+
+**How to apply:** 用复验队列的题号定位 RI，经送审成员解析稳定 work_unit_id，逐条核对实际 Sand 退回来源报告、逐题判定和备注。再沿相同工作项追踪跨批次的正式判断、版本谱系和实际代改作者。单题整改要求按本次退回意见确认。批次推进另查负责人报告、advancement 和后继交接，验收通过本身不能证明已回交。旧批次提示“请沿 Sand 退回事项处理”时，从实际退回事项核对接收人和进度。
+
+- [生产案例入口](https://eval.sandaii.cn/quality/management?package_query=1009&tab=tasks&task=QT-d7c79539b7325a678387e15cb3dff410&allocation=QA-298624c2a6d05a04ad13795b05005dce) 与[原 Sand 退回](https://eval.sandaii.cn/quality/resolution/QT-d7c79539b7325a678387e15cb3dff410/DISP-c6c736dbc5c754afa3f27fd88648db8d)。按当前生产重新查阅，稳定取证坐标为原 Sand 报告 RT-adc8c99e078a599ba1dec970e2c22edd、空间复验 RT-1b44900934de5d48a7a8725f9668142b 和负责人复核 RT-9cf33667f41a50ac84519c9187657ac5。
+- 源码入口为 `ReviewQueryService.queue_page`、`DispositionIssueService`、`LatestAnswerReinspectionService._assert_no_foreign_handoff` 与 `AdvancementService.status`。代改作者查 `ev3_response.authored_by_account_id`，版本前驱查 `client_meta.amended_from`。
