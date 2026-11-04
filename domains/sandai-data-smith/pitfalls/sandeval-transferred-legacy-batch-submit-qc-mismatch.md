@@ -59,3 +59,11 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-reassignment-s
 **How to apply:** 用列表里的原批次键找到退回单和冻结送审，按稳定工作项核对当前持有人、派题波次和正式答案。以退回单接收人身份复跑整改摘要及来源读取，分别记录处置状态、来源错误和更新计数。处理前独立确认正式整改转交的准入，尤其是旧整改人已无持卡和候选人兼原质检员的情况。
 
 现场回查指针为质量任务 `QT-a532c0d7f4f65933b278c4231f28884f`、退回单 `DISP-f062bda3ae315612ba39cf3d03fb1d6e` 和[双副本只读回查](/Users/leslie/Documents/Playground/output/sandeval-r2v-correction-scope-20261104/independent-readback.json)。代码入口为 `AnswerCorrectionService.annotation_page`、`TaskAssignmentService._annotation_correction_context` 和 `AnnotationBatchList.tsx`。
+
+### 2026-11-04 精确归还原整改题卡
+
+**Why:** 普通转派按交出者和张数选择题卡，同一人还持有别的题时，相同张数可能命中完全不同的卡。整改入口恢复需要重新对齐原退回人与原冻结工作项的当前持有人。冻结答案内容、实际作者和退回历史仍沿用原事实。
+
+**How to apply:** 先比较原生预检的稳定题卡 ID 与冻结清单，确认同题没有其他份次、接收人有资格。标准命令不能准确命中时停止。经本单另行明确授权后，使用部署版本的原生转派写入和任务占用，按冻结 ID 限定写集合，并以独立副本对比题卡、原答案版本、退回记录、实际整改清单与平台审计。该例外仅限当次操作。
+
+[单案验收](/Users/leslie/Documents/Playground/output/sandeval-r2v-manual-restore-20261104/verified-summary.json)及同目录的计划和原生写入回执可回查本次精确范围与结果。
