@@ -2,7 +2,7 @@
 name: sandeval-transferred-legacy-batch-submit-qc-mismatch
 type: pitfall
 created: 2026-10-16
-updated: 2026-11-03
+updated: 2026-11-04
 tags: [sandeval, correction, reassignment, batch-key, handoff]
 links: [sandeval-transferred-correction-task-visibility, sandeval-reassignment-scope-and-batch-responsibility]
 ---
@@ -51,3 +51,11 @@ links: [sandeval-transferred-correction-task-visibility, sandeval-reassignment-s
 **Why:** 普通作答写入的 `_correction_work_unit_if_fenced` 使用当前个人批次键查送审回执与质检分配。普通转派换了批次键，同一稳定卡的旧质检责任仍在，但此写入检查没有按卡查该责任。整批送审则按稳定卡上的既有检查责任投影，所以同一批可以保存新答案，却无法按新键送审。完成卡的暂缓入口已有额外的逐卡检查，不能用它代表普通作答提交路径。
 
 **How to apply:** 对同一卡分别核对普通 `submit` 执行回执、整批送审回执、旧冻结时间和新复验创建时间。用部署中的普通作答门禁做只读重跑，同时查任务是否允许自由修订、新批次键的分配与回执、按稳定卡查到的质检归属。不要通过实际写答复现门禁。现场坐标沿用上文，答案回执集中在 2026-11-03 22:04–22:06（北京时间）。只读重跑的部署 SHA 为 `47a14c6d65abd8ca7a7204067551b339b414f156`。
+
+### 2026-11-04 历史批次整改显示范围暂不可用
+
+**Why:** 普通标注改派后，原退回单可能仍由原接收人处理，当前题卡则已归其他人。原接收人能看到历史退回，但读取冻结范围的最新答案时会被当前持有人校验拦住。列表此时同时隐藏整改入口和更新计数。正式答案是否存在、退回单是否开放、当前账号能否整改需要分别核对。
+
+**How to apply:** 用列表里的原批次键找到退回单和冻结送审，按稳定工作项核对当前持有人、派题波次和正式答案。以退回单接收人身份复跑整改摘要及来源读取，分别记录处置状态、来源错误和更新计数。处理前独立确认正式整改转交的准入，尤其是旧整改人已无持卡和候选人兼原质检员的情况。
+
+现场回查指针为质量任务 `QT-a532c0d7f4f65933b278c4231f28884f`、退回单 `DISP-f062bda3ae315612ba39cf3d03fb1d6e` 和[双副本只读回查](/Users/leslie/Documents/Playground/output/sandeval-r2v-correction-scope-20261104/independent-readback.json)。代码入口为 `AnswerCorrectionService.annotation_page`、`TaskAssignmentService._annotation_correction_context` 和 `AnnotationBatchList.tsx`。
