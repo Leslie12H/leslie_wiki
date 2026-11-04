@@ -1493,3 +1493,5 @@
 
 - 2026-11-04：[ACK 缩容后的补副本调度与新节点 CNI 告警](global/pitfalls/ack-node-scale-down-topology-spread-cni.md) — 用 SLS 串联节点缩容、补副本、触发扩容、节点 Ready 和 Pod Ready。
 - 2026-11-04：[隔离图片交付给远端模型失败](domains/maxwell/pitfalls/isolated-model-media-delivery.md) — Sandbox读取、签名地址与供应商下载分层；503原始原因、配置成组核对及SHA恢复证据。
+
+- 2026-11-04：[终态 Run 与遗留派发占位](domains/maxwell/pitfalls/evolve-terminal-run-orphan-dispatch.md) — 区分 Search/控制/Attempt，零在途不等于清理完成，窄恢复必须保留原证据与预算。
