@@ -2432,3 +2432,5 @@
 
 - 2026-11-04：记录冻结退回 CLI 预检与包级写准入分离，以及回交后按实际复验队列验收的方法。见 domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md。
 - 2026-11-04：记录隔离环境 loopback 图片签发导致远端供应商下载失败的排查与配置恢复边界，保留原失败和缺失用量。
+
+- 2026-11-04：补充 Sand 复验本人待办、工作台可操作性和封存代改有效版本的分层验收，见 domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md。
