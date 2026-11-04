@@ -2416,3 +2416,4 @@
 - 2026-11-04 ingest：来源复制成功但模型整包/窗口读取均失败的真实缺口，记录只读窗口复用边界与证据指针。
 
 - 2026-11-04：补充 Sand 整批退回下冻结题的逐题责任取证与批次回交判据。见 domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md。
+- 2026-11-04：补充来源窗口修复后的双层覆盖证明与 UTF-8 nextOffset 实际恢复经验；保留模型推理与质量验收边界。

@@ -1487,4 +1487,4 @@
 
 - 2026-11-04：[折叠列表与实际布局占位](domains/maxwell/pitfalls/evolve-collapsed-list-layout.md) — 列表/谱系布局职责、真实尺寸与异步切换回读，SSR 存在性不能替代可读性。
 
-- 2026-11-04：[EVOLVE 来源复制与模型读取覆盖](domains/maxwell/pitfalls/evolve-source-copy-read-coverage.md) — 复制、元数据和正文覆盖分开；资料窗口复用不得扩大候选写入/执行能力。
+- 2026-11-04：[EVOLVE 来源复制与模型读取覆盖](domains/maxwell/pitfalls/evolve-source-copy-read-coverage.md) — 复制、元数据、窗口重组和模型实际消费分开；UTF-8沿nextOffset续读，不扩大候选写入/执行能力。
