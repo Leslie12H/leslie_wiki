@@ -2,7 +2,7 @@
 name: sandeval-direct-remediation-and-batch-handoff
 type: reference
 created: 2026-09-27
-updated: 2026-09-28
+updated: 2026-11-04
 tags: [sandeval, quality, remediation, handoff]
 links: [sandeval-roles-and-workflow, sandeval-auto-reinspection-verification, sandeval-cross-stage-feedback, sandeval-cross-workbench-question-order, sandeval-whole-package-reinspection-wait, sandeval-return-route-and-handoff-hints, sandeval-qc-reject-threshold-not-enforced]
 ---
@@ -25,3 +25,11 @@ links: [sandeval-roles-and-workflow, sandeval-auto-reinspection-verification, sa
 
 - 2026-09-28 测试环境真实构造、逐条用例副本、最终 ZIP 与整包混合路线复核入口：`/Users/leslie/Documents/Playground/sandeval-direct-remediation-20260928/测试环境实测报告.md`。这是测试环境在当天的行为证据，不能覆盖上面 2026-09-27 只读分析的历史含义，也不能代表生产。核对同包中直接整改与默认负责人路线时，先看单批回交的 Sand 新轮次，再看整包提交门禁及最终 3/3；跨工作台题号陷阱见 [同批题目顺序](../pitfalls/sandeval-cross-workbench-question-order.md)。再次默认退回后的整包交接与自动派回复验须分开验证，本次测试环境的等待现象见 [整包交接后复验等待](../pitfalls/sandeval-whole-package-reinspection-wait.md)。
 - 同次测试的路线等待文案、短暂整包阻断提示和取消退回弹窗的判读见 [退回路线与整包交接提示](../pitfalls/sandeval-return-route-and-handoff-hints.md)；短暂提示不能据此判定交接失败，根因仍待现场证据。
+
+## 2026-11-04 连续退回时的单批交接父级
+
+**Why:** 从原整包拆出的单批回交成功后，下一轮 Sand 批次的直接父级会变成单批交接凭据。仅接受整包父级的恢复逻辑，在全包仍不可汇总时无法接续第二次退回，即使同一子集、答案和报告仍有效。
+
+**How to apply:** 用第一次单批回交生成的 Sand 批次作第二次退回目标，复用真实后继父级和同一范围，再分别核对交接、Sand 批次准备及执行证据。沿已验证回执核对原退回范围，避免跨责任或借用其他批次的报告。
+
+- Draft PR [#3144](https://github.com/world-sim-dev/sandai-data-smith/pull/3144) 的离线复现见 `/Users/leslie/Documents/Playground/output/paper350-recovery-plan-20261104/offline-change/pr3144-review-repro.py`。实际是否已修复需查看 PR 最新提交。
