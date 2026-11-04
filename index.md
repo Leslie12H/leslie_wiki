@@ -1472,3 +1472,5 @@
 - 2026-11-04：[Caption 开放题存量帧率补录](domains/sandai-data-smith/pitfalls/sandeval-caption-frame-certification-timeout.md#2026-11-04-开放题存量补录) — 从题型和开放成员核定范围，分离认证、补录与独立回读。
 
 - 2026-11-04：[Musi 首页巡检验收](domains/vidmuse/refs/homepage-render-check-ops.md#2026-11-04-musi-首页的验收入口) — 区分访客与已开放入口、可见角色范围、同机无告警冒烟与脚本回退。
+
+- 2026-11-04：[Musi 巡检正式调度日志](domains/vidmuse/refs/homepage-render-check-ops.md#正式调度的结果日志) — 恢复后的实际运行结果和日志回查入口。
