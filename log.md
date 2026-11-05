@@ -2446,3 +2446,6 @@
 - 2026-11-05：补充 EVOLVE 派工账目覆盖核验：主 Run 原账不等于子任务总账，保持旧原件与缺测，记录 SDK 修复和真实审计指针。
 
 - 2026-11-05: Added Maxwell invalid-image/transient-retry evidence boundary and source pointers.
+- 2026-11-05 ingest：补充 20 条 Dev 数美分层抽样的回查入口与逐条 trace 验证方法。
+
+- 2026-11-05：录入国内 Staging 生成与企业开票验收入口，记录模型配置差异、任务终态与账单归属及月度申请的取证边界。
