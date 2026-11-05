@@ -1,3 +1,5 @@
+- 2026-11-05：[MAGI-2 Base 拒答题导入](domains/sandai-platform/refs/v2-input-validation-entrypoints.md#2026-11-05-base-拒答题导入) — 实时字段语义、文本去重抽样与按记录 ID 回读入口。
+
 - 2026-11-05：[Dev 数美分层抽测](domains/sandai-platform/refs/v2-input-validation-entrypoints.md#2026-11-05-dev-数美分层抽测) — 拒答和非拒答按类别抽样、分批限流、请求 trace 与任务终态核对。
 
 - 2026-11-05：[国内 Staging 生成与企业开票验收](domains/sandai-platform/refs/staging-cn-generation-invoice-verification.md) — 区分公开模型示例与部署配置、成功任务与实扣、同账号回读与历史消费月份。
