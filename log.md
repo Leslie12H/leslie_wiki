@@ -2444,3 +2444,5 @@
 
 - 2026-11-05 ingest：补充 Dev 数美路由复测及按任务 trace 验证实际供应商的方法。
 - 2026-11-05：补充 EVOLVE 派工账目覆盖核验：主 Run 原账不等于子任务总账，保持旧原件与缺测，记录 SDK 修复和真实审计指针。
+
+- 2026-11-05: Added Maxwell invalid-image/transient-retry evidence boundary and source pointers.
