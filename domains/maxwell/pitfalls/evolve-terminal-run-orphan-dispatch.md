@@ -2,7 +2,7 @@
 name: evolve-terminal-run-orphan-dispatch
 type: pitfall
 created: 2026-11-04
-updated: 2026-11-04
+updated: 2026-11-05
 tags: [maxwell, evolve, cancellation, recovery, evidence]
 links: [evolve-source-copy-read-coverage]
 ---
@@ -19,3 +19,7 @@ links: [evolve-source-copy-read-coverage]
 - `services/evolve-server/internal/modules/evolve/infrastructure/postgres/optimization_control.go`、`optimization_reused_baseline.go`：新授权的控制与在途检查。
 - `output/evolve-unified-20261019/orphan-dispatch-reconciliation-20261104.md`：本次窄恢复提案、限制与批准状态。
 - `output/evolve-unified-20261019/flexibility-acceptance-20261022.md`：实际处理结果，以最新记录为准；本页不代表恢复已批准或执行。
+
+## 2026-11-05 精确恢复的核验边界
+
+用户书面批准后按上述计划执行，只收敛两条原占位，不据此补造远端取消或业务成功。**Why:** 单看更新行数不能证明无副作用，尤其要保留业务失败与累计支出。**How to apply:** 事务前后同时保留全 Run 行、Trial 指纹和根 usage，独立比较无变化后再进入新执行；新执行开始后不能按旧快照盲回滚。具体批准、SQL hash、回读结果与服务恢复身份以方案及 journal 的 2026-11-05 条目为准。

@@ -2435,3 +2435,5 @@
 
 - 2026-11-04：补充 Sand 复验本人待办、工作台可操作性和封存代改有效版本的分层验收，见 domains/sandai-data-smith/pitfalls/sandeval-saved-version-vs-browser-display.md。
 - 2026-11-04：记录终态 Run 遗留无任务身份 dispatching 的独立核对与窄恢复边界，未将待批准方案记为已修复。
+
+- 2026-11-05：补充 EVOLVE 两条历史派发占位批准后精确恢复的核验方法与审计指针，不将恢复包装为业务质量通过。

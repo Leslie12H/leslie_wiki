@@ -1495,3 +1495,5 @@
 - 2026-11-04：[隔离图片交付给远端模型失败](domains/maxwell/pitfalls/isolated-model-media-delivery.md) — Sandbox读取、签名地址与供应商下载分层；503原始原因、配置成组核对及SHA恢复证据。
 
 - 2026-11-04：[终态 Run 与遗留派发占位](domains/maxwell/pitfalls/evolve-terminal-run-orphan-dispatch.md) — 区分 Search/控制/Attempt，零在途不等于清理完成，窄恢复必须保留原证据与预算。
+
+- 2026-11-05：[EVOLVE 历史派发占位精确恢复](domains/maxwell/pitfalls/evolve-terminal-run-orphan-dispatch.md) — 批准后 CAS 收敛与全 Run、Trial、根 usage 独立不变核验，保留远端身份未知和新执行后的回滚边界。
