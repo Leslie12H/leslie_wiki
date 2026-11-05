@@ -1,3 +1,5 @@
+- 2026-11-05：[Dev 数美分层抽测](domains/sandai-platform/refs/v2-input-validation-entrypoints.md#2026-11-05-dev-数美分层抽测) — 拒答和非拒答按类别抽样、分批限流、请求 trace 与任务终态核对。
+
 - 2026-11-05：[Dev 数美路由复测](domains/sandai-platform/refs/v2-input-validation-entrypoints.md#2026-11-05-数美路由复测) — 固定同批样本，按任务 trace 确认实际供应商与终态。
 
 - 2026-11-05：[Dev 逐项审核记录与数美路由](domains/sandai-platform/refs/v2-input-validation-entrypoints.md#2026-11-05-逐项审核记录与数美路由) — 汇总与逐项状态区分、审核请求号和账号到组织的路由配置入口。
