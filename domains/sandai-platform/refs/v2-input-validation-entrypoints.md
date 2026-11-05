@@ -50,3 +50,15 @@ Staging 国内的 v2 创建请求曾返回 HTTP 400 `insufficient_credits`，同
 **How to apply**
 
 固定 Dev 环境、已授权测试 Key 和模型，从文本题列按类别随机抽取正负对照，用工作表名和单元格位置回查样本。创建阶段以 `content_policy_violation` 与 `details.field` 定位输入拒绝，对响应中的每个任务编号执行只读 GET，分开记录创建回执、终态和产物。代码沿 Zeus 的 `OpenApiGenerationService`、`TaskInputModeration` 与 `ApiErrors` 核查审核、派发和错误映射。按当前部署核实具体策略与白名单，按账本核实费用。
+
+## 2026-11-05 逐项审核记录与数美路由
+
+**Why**
+
+Zeus Dev 管理后台任务详情的总体审核状态 `PASS` 可覆盖逐项审核 `PASS` 和 `SKIPPED`。2026-11-05 复核年龄、职业与地域三个样本时，限定任务和组织的 Dev 只读查询显示，前两条的 `prompt` 均有逐项 `PASS` 和审核请求号，地域样本为 `REJECT` 且失败阶段为 `INPUT`。个案回执见同日「Dev 输入审核明细」会话。审核引擎给出通过和通过是否符合产品规则需要分别裁定。
+
+**How to apply**
+
+在香港 Dev 后台先用精确任务 ID 核对组织和总体状态。需要区分放行与豁免时，只读查对应 `task.moderation.inputTexts`，核对 `key`、`status`、`requestId` 和 `skipRule`，用被拦截样本对照。查询只取指定任务的审核投影，避免导出凭据或提示词原文。
+
+[审核策略页](https://zeus-admin-dev.sandaii.cn/platform/moderation) 的「指定账号使用数美」按账号 ID 配置，页面注明覆盖本人及名下组织的后续 OpenAPI 请求。通过原任务的组织归属定位所有者，再按精确账号 ID 保存与回读。名单、默认供应商和豁免是独立配置。传播时限以页面为准，保存回读和新请求实际路由分开验收。

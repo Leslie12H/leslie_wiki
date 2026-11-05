@@ -1,3 +1,5 @@
+- 2026-11-05：[Dev 逐项审核记录与数美路由](domains/sandai-platform/refs/v2-input-validation-entrypoints.md#2026-11-05-逐项审核记录与数美路由) — 汇总与逐项状态区分、审核请求号和账号到组织的路由配置入口。
+
 - 2026-11-05：[Dev v2 文本审核抽样](domains/sandai-platform/refs/v2-input-validation-entrypoints.md#2026-11-05-dev-文本审核抽样) — 正负对照、字段级拒绝和任务终态核对，题库标签与产品策略分别判断。
 
 - 2026-11-04：[媒体超时与工具配套](domains/maxwell/pitfalls/evolve-native-routing-vs-candidate-runner.md#2026-11-04-未生成的不同原因与工具配套) — 对齐冻结指令、源/生效工具和正式产物，区分未执行、已尝试超时与 Adapter 丢失。
