@@ -101,6 +101,8 @@
 
 # leslie_wiki 目录
 
+- 2026-11-05：[派工父账与整题覆盖](domains/maxwell/refs/evolve-usage-accounting.md#父-run-账单不能代替派工总账2026-11-05) — Native 子 Run 独立记账、父子身份核对、未知覆盖保留及原件不回填。
+
 - 2026-11-04：[路线复审粒度与等待放大](domains/maxwell/pitfalls/evolve-route-review-granularity.md) — 实际父子派工、微小片段复审与整批交付、共享资源版本证据、超时取消，以及并发测试同步边界。
 
 - 2026-10-29：[新 Key 十视频验收](domains/sandai-platform/refs/ten-video-key-acceptance-entrypoints.md) — Dev CN 共用入口、Key 鉴权与创建 403 分层；含旧/新 Key 同参对照、十视频及另一账号二十任务终态/账单验收的回查指针。

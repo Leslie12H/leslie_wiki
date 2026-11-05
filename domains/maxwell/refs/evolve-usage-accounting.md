@@ -2,7 +2,7 @@
 name: evolve-usage-accounting
 type: reference
 created: 2026-09-15
-updated: 2026-10-27
+updated: 2026-11-05
 tags: [maxwell, evolve, 用量, 成本, 可观测]
 links: [maxwell, evolve-error-policy-fail-breach]
 ---
@@ -38,3 +38,12 @@ links: [maxwell, evolve-error-policy-fail-breach]
 **Why:** 多阶段调用可以已有完整早期账单，后阶段却在形成完整 Turn 前中断。已留存账单逐项有效，不代表整个执行成本已收齐；反过来，只有文件采集或清理失败，也不应抹掉已经完整取得的账单。
 
 **How to apply:** 对“数值可信”和“覆盖完整”分别设断言，贯通实际执行封装到指标投影，覆盖后阶段中断、完整失败回执、采集失败、重复/冲突账单。保留已知金额与缺测标记，不补零、不估价、不重写历史冻结账目；下载包离线回归与新 Sandbox 执行分别记录。
+
+
+## 父 Run 账单不能代替派工总账（2026-11-05）
+
+**Why:** 本轮以真实已完成任务核对发现，Native 的 `RunUsage` 只记录当前 Run；子任务有独立用量，父 `task` 返回成功也不代表其费用已经并入父账。只把 SDK 投影按同一算法重建，只能证明投影一致，不能证明覆盖完整。历史“根快照已经包含子用量”的假设不成立。
+
+**How to apply:** 沿 Thread 的 `parentThreadId` 和原始 task 回执核对任务树；不要使用表示重试/续接的 Run 父字段替代。分别核对主 Run 原生账单、已知子账和采集覆盖，不能把未知子账补零或随意把不明来源快照相加。新 SDK 在捕获到派工但未采集子账时保留主账并标记 token/cost 不完整；工具计数仍只代表其明确采集的 Thread 范围。旧封存原件不回填、不重新解释；只读审计结果另存。
+
+实现与测试入口：nextplay-eval 的 `maxwell-runtime/src/nextplay_runtime/runtime_metrics.py`、`event_archive.py` 和 `tests/test_runtime_metrics.py`；修复与实际安装进度查 [PR26](https://github.com/world-sim-dev/nextplay-eval/pull/26)。真实任务树、原账和离线回放指针：Maxwell integration 的 `.tmp/c16-root-child-accounting-20261105.jsonl`、`.tmp/c16-accounting-scope-replay-20261105.json` 与验收 journal 2026-11-05 记录；本地测试或回放不等于安装生效。
