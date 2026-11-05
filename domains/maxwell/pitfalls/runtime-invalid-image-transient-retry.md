@@ -18,3 +18,9 @@ links: [evolve-runtime-payload-and-terminal-recovery, evolve-usage-accounting]
 - Agent transport diagnostics: `services/agent-server/internal/modules/model/infrastructure/openaicompat/gateway.go`, image diagnostic tests, Runtime `model/errors.go`, and `core/nodes/model_calls_test.go` in Maxwell PR #389. Verify current deployed SHA separately.
 - Integration evidence under `.tmp/evolve-unified-1019/.tmp/`: `c16-image-bytes-proof-20261105.json`, `c16-image-download-actions-20261105.json`, `invalid-image-classification-review-20261105.json`.
 - Full execution and release boundaries: `output/evolve-unified-20261019/flexibility-acceptance-20261022.md`. Source tests do not establish natural recovery or quality acceptance; do not repair historical files to make the old result pass.
+
+## Same-thread corrected-input recovery
+
+**Why:** Correctly classifying invalid image input is insufficient if the next user turn retains the rejected image. The normal multimodal projection intentionally retains the immediate previous task, so a newly uploaded valid image can still be sent alongside the old corrupt one. A successful new upload does not prove repair.
+
+**How to apply:** Read the actual provider request after the user changes input; correlate both media identities and the persisted failure classification. Reuse the existing fresh-effective-context path only for the exact, untruncated structured invalid-image diagnostic. Preserve visible historical messages, files, failed Runs and missing bills. Apply the same decision at immediate admission and queued activation; keep normal visual follow-ups and unknown/auth/quota errors unchanged. Evidence and deployed-versus-source status: integration `.tmp/dev-invalid-image-20261105/assessment.json`, `invalid-image-context-review-20261105.json`, and the dated EVOLVE journal. Do not infer actual recovery from green unit tests.

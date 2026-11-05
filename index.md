@@ -1511,3 +1511,6 @@
 - 2026-11-05：[EVOLVE 历史派发占位精确恢复](domains/maxwell/pitfalls/evolve-terminal-run-orphan-dispatch.md) — 批准后 CAS 收敛与全 Run、Trial、根 usage 独立不变核验，保留远端身份未知和新执行后的回滚边界。
 
 - 2026-11-05: [Invalid image input and transient retries](domains/maxwell/pitfalls/runtime-invalid-image-transient-retry.md) - Partial download, hosted byte identity, provider semantic classification and immutable evaluation evidence.
+
+- 2026-11-05：[Nextplay 业务题库对齐](domains/maxwell/refs/nextplay-business-dataset-alignment.md) — 官方默认/真实批次/冻结子集分开核对；业务 CLI 新结构与旧评分差异不由平台私改标准。
+- 2026-11-05：[图片纠正后的上下文恢复](domains/maxwell/pitfalls/runtime-invalid-image-transient-retry.md#same-thread-corrected-input-recovery) — 错误分类正确仍可能继承旧坏图；核对真实模型输入及即时/排队恢复边界。
