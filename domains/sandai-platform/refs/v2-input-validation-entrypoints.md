@@ -2,7 +2,7 @@
 name: sandai-api-platform-v2-input-validation-entrypoints
 type: reference
 created: 2026-10-26
-updated: 2026-11-03
+updated: 2026-11-05
 tags: [sandai, openapi, v2, validation, testing, quota]
 links: [sandai-api-platform-openapi-quota-entrypoints, sandai-api-platform-global-acceptance-20261026]
 ---
@@ -40,3 +40,13 @@ Staging 国内的 v2 创建请求曾返回 HTTP 400 `insufficient_credits`，同
 **How to apply**
 
 复测时保留 POST 的 HTTP 状态、错误码及任务编号。若错误响应带编号，对同一环境和编号执行一次只读 GET，区分创建请求被拒、失败记录是否可查和任务是否受理执行。扣费或余额变化另查账本。代码回查入口为 Zeus 的 v2 `ApiErrors` 和 `/v2/generations/{id}` 查询路径，具体映射以当前部署验证为准。
+
+## 2026-11-05 Dev 文本审核抽样
+
+**Why**
+
+题库的拒答标签与生成 API 的审核策略是两套判定。Dev v2 实测中，题库拒答样本同时出现了创建阶段的 `content_policy_violation` 和受理后生成成功。具体分类、行号、请求 ID 和任务终态见 2026-11-05 的「Dev 内容审核抽样」会话。一个被拦截的样本能证明该路径实际执行了拦截，题库标签差异是否属于漏拦需要按当前审核规则核实。
+
+**How to apply**
+
+固定 Dev 环境、已授权测试 Key 和模型，从文本题列按类别随机抽取正负对照，用工作表名和单元格位置回查样本。创建阶段以 `content_policy_violation` 与 `details.field` 定位输入拒绝，对响应中的每个任务编号执行只读 GET，分开记录创建回执、终态和产物。代码沿 Zeus 的 `OpenApiGenerationService`、`TaskInputModeration` 与 `ApiErrors` 核查审核、派发和错误映射。按当前部署核实具体策略与白名单，按账本核实费用。

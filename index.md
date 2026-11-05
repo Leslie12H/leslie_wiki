@@ -1,3 +1,5 @@
+- 2026-11-05：[Dev v2 文本审核抽样](domains/sandai-platform/refs/v2-input-validation-entrypoints.md#2026-11-05-dev-文本审核抽样) — 正负对照、字段级拒绝和任务终态核对，题库标签与产品策略分别判断。
+
 - 2026-11-04：[媒体超时与工具配套](domains/maxwell/pitfalls/evolve-native-routing-vs-candidate-runner.md#2026-11-04-未生成的不同原因与工具配套) — 对齐冻结指令、源/生效工具和正式产物，区分未执行、已尝试超时与 Adapter 丢失。
 
 - 2026-11-03：[v2 余额不足与失败记录](domains/sandai-platform/refs/v2-input-validation-entrypoints.md#2026-11-03-余额不足与失败记录) — 创建错误也可能返回任务编号，区分请求拒绝、失败记录和正式账本。
