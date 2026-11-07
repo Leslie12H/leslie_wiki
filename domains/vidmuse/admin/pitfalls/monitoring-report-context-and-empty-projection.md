@@ -30,4 +30,8 @@ links: [monitoring-report-vs-chat-output, monitoring-thread-scan-pagination-exha
 
 - 本地修复、基线、分支、回归日志和 14 条完整 Run 的离线回放结果：[验证报告](/Users/leslie/.codex/worktrees/monitoring-report-context-admin/vidmuse-admin/.codex-artifacts/monitoring-context-verification/report.md)。动态修复/发布状态只沿该报告和 Git 工作树核对。
 - 最终 MCP 实现指针：`/Users/leslie/Downloads/sandai-code/vidmuse-monitoring-context-1107/internal/server/report_preflight.go`、`server.go` 与 `report_preflight_test.go`；Runtime 工作树的旧协议兼容补丁已撤回，历史复现日志保留于其 `.tmp/monitoring-context-verification/`。Admin 空结论和错误分类修复保留，具体工作树见验证报告。
-- 本轮授权只到本地修复验证。业务代码未提交/推送/部署，生产历史记录未迁移/重跑，未发送消息。证据不足与 JSON 无效仍按原约束失败，不因协议适配而自动验收。
+- 用户随后授权先核实线上 Runtime 新协议，再分别提 PR、合并、部署 MCP 与 Admin。生产历史记录未迁移/重跑，未额外发送通知；证据不足与 JSON 无效仍按原约束失败，不因协议适配而自动验收。
+- 实际生产 Admin 路由、API/Worker 镜像和源代码协议核验：[runtime-live-proof.json](/Users/leslie/.codex/worktrees/monitoring-report-context-admin/vidmuse-admin/.codex-artifacts/monitoring-context-verification/runtime-live-proof.json)。核对 Admin 使用的 endpoint，再沿 Ingress → Service → Deployment/Pod 找执行方；不能凭域名含 dev 就推断与生产无关。
+- 发布指针：[MCP PR #73](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/pull/73)、[MCP 生产部署](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/42337201088)、[Admin PR #967](https://github.com/world-sim-dev/vidmuse-admin/pull/967)、[Admin 生产部署](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/42338436251)。当前状态与镜像仅沿 PR/Actions 和上述验证报告核对。
+- 不写数据的上线对照方法：从 canonical 原 Run 取精确 prepare 调用和参数，通过 MCP 的新协议 metadata 回放同一 business/thread/run/toolCall 身份，Admin 再从 canonical 事件核实身份与参数。部署前 context_missing、部署后进入具体验证拒绝可以证明传递链路已修复；不能据此把原报告判为成功，也不能算新的自然用户场景验收。
+- 上线检查要区分 Deployment Ready、证据源 readiness 与报告验收：曾观测单副本告警源 source_timeout，稍后恢复。保留瞬态与恢复时间，核对每个副本和配置指纹，不把一次绿色探针扩展为持续稳定性证明。

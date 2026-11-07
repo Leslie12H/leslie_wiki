@@ -1517,4 +1517,4 @@
 - 2026-11-05：[Nextplay 业务题库对齐](domains/maxwell/refs/nextplay-business-dataset-alignment.md) — 官方默认/真实批次/冻结子集分开核对；业务 CLI 新结构与旧评分差异不由平台私改标准。
 - 2026-11-05：[图片纠正后的上下文恢复](domains/maxwell/pitfalls/runtime-invalid-image-transient-retry.md#same-thread-corrected-input-recovery) — 错误分类正确仍可能继承旧坏图；核对真实模型输入及即时/排队恢复边界。
 
-- 2026-11-07：[监控报告上下文与空快照伪结论](domains/vidmuse/admin/pitfalls/monitoring-report-context-and-empty-projection.md) — 原始 Run 取证、PR #391 协议改名回归与 MCP 仅适配新协议验证、空投影及预检分类修复；区分叙述展示和正式验收。
+- 2026-11-07：[监控报告上下文与空快照伪结论](domains/vidmuse/admin/pitfalls/monitoring-report-context-and-empty-projection.md) — 原始 Run 取证、PR #391 协议改名回归、实际 Runtime 核验与 MCP/Admin 发布指针、只读预检回放；区分叙述展示和正式验收。
