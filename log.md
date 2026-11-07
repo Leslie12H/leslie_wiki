@@ -2466,3 +2466,5 @@
 - 2026-11-07：补充 Admin trace 识别修复 PR #968、CI/镜像/生产发布及原事故只读对照入口；明确不替换 canonical 调用、不改写历史的验收边界。
 
 - 2026-11-07：补充 monitoring-trace-context-correlation 的生成端规则缺口、实际模型请求审计、新 Run 验收与私有 Thread 预检 404 的证据入口；历史事故不回写。
+
+- 2026-11-07：补充报告生成验收中发现的 proof/acquisition 来源索引差异；完整验收须检查根因投影，不能止于 prepared 或卡片生成。

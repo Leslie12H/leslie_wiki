@@ -31,5 +31,13 @@ links: [monitoring-report-context-and-empty-projection, monitoring-report-vs-cha
 **How to apply:** 同时核对 model.request 中系统提示词、Admin 输入和激活的 Skill。明确 correlations 可空、locator 必须指向真实身份字段并精确 eq，同一 SLS project/logstore 的不同查询/分页/span 不算独立来源；删除无效关联时同步清理 supports，保留已验证事实。生成规则修复应通过新隔离 Run 自主产出报告验证，不把手工改稿或历史 Run 的事后 preflight 当成完整交付。
 
 - 源码入口：Admin `maxwell_runtime_gateway.py::_message_content`、`monitoring_incident_evidence_retry.py::evidence_retry_prompt` 和 `config_file/maxwell_skills/monitoring-incident-root-cause/SKILL.md`。共享线上 Skill 可能早于仓库版本；发布与消费状态沿实际 Run 和变更记录核对。
-- 原模型请求、双次错误 correlation、最小修复、真实新 Run、548 项回归以及完整链路边界：[生成端验证报告](/Users/leslie/.codex/worktrees/monitoring-report-context-admin/vidmuse-admin/.codex-artifacts/correlation-generation-verification/report.md)。动态完成/部署状态以该报告及源码为准。
+- 原模型请求、双次错误 correlation、最小修复、真实新 Run、相关回归以及完整链路边界：[生成端验证报告](/Users/leslie/.codex/worktrees/monitoring-report-context-admin/vidmuse-admin/.codex-artifacts/correlation-generation-verification/report.md)。动态完成/部署状态以该报告及源码为准。
 - Studio 账号创建的隔离测试 Thread 默认可能为 private，Admin 服务身份读取会被隐藏成 HTTP404，最终表现为 report_preflight_unavailable。先从服务日志核对，不推断为超时或放宽校验；测试创建时显式使用获授权的 business/read，只改新测试对象。原请求在共享范围修正后的只读 preflight 可作为环境诊断，完整验收仍须从正确配置的新 Run 开始。
+
+## 2026-11-07 补查证据与根因投影的验收边界
+
+**Why:** proofManifest 的记录级验证与 evidenceAcquisition 的固定检查清单不是同一个集合。合法补查结果可以通过当前 Run 的证据校验，却没有被固定检查列入 resultEventIds；若展示投影只按该清单寻找来源，就会把已验证支持丢弃，误投影为 incomplete。
+
+**How to apply:** 完整链路验收须继续检查接纳后的 rootCauseProof，而不能止于 MCP prepared、Run 完成或卡片生成。对照 proof 的 toolResultEventId 与采集清单逐项定位缺失，保留未验证/跨 Run 拒绝边界；不要通过删除真实证据或放宽 correlation 校验掩盖索引缺口。修复状态以实际代码和验证报告为准。
+
+- 实现入口：Admin `monitoring_incident_proof.py::project_root_cause_proof` 的 result_context 和 context 过滤；数据入口为 `monitoring_incident_report_validation_v2.py` 的 proof/acquisition 两类 manifest。隔离复现及投影缺口证据沿上面的生成端验证报告读取，不将该问题误称为历史报告修复失败。
