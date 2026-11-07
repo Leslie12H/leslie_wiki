@@ -26,8 +26,8 @@ links: [monitoring-report-vs-chat-output, monitoring-thread-scan-pagination-exha
 
 **Why:** 协议名称是外部服务共同依赖的 wire contract，去品牌化批量替换不能当作文案调整。Maxwell [PR #391](https://github.com/world-sim-dev/maxwell-ai/pull/391) / `259b51ec1db3af85d63ef5ece3540475d746f551` 将 execution-context 名称改为 ai.agent-platform，而监控 MCP 仍声明并读取 ai.maxwell；客户端按新名称协商后删除身份。HTTP 复现中，替换父提交的原始客户端/领域合同文件通过，替换该提交文件失败。此处确定代码回归，不断言未回读的生产部署批次。
 
-**How to apply:** 固定历史 wire 名称的测试必须独立于被改常量；同时覆盖旧/新/双声明、版本不匹配、无声明和会话复用。兼容只选择服务器同版本声明的一个名称，身份仍由当前 Runtime 产生，不能从模型参数补造。Admin 区分准备工具反馈与正式 prepared 报告，允许展示可追溯真实叙述但不发放验收；空对象和占位投影必须被拒绝。
+**How to apply:** 固定 wire 名称的测试必须独立于被改常量。2026-11-07 用户选择只适配新协议：在监控 MCP 同步修改 initialize 声明与 tools/call._meta 读取，不增加 Runtime 旧名称兼容。覆盖新名称准备成功、旧名称/缺失/错误版本拒绝；部署前确认调用方 Runtime 使用新协议。身份仍由当前 Runtime 产生，不能从模型参数补造。Admin 区分准备工具反馈与正式 prepared 报告，允许展示可追溯真实叙述但不发放验收；空对象和占位投影必须被拒绝。
 
 - 本地修复、基线、分支、回归日志和 14 条完整 Run 的离线回放结果：[验证报告](/Users/leslie/.codex/worktrees/monitoring-report-context-admin/vidmuse-admin/.codex-artifacts/monitoring-context-verification/report.md)。动态修复/发布状态只沿该报告和 Git 工作树核对。
-- Runtime 实现指针：`/Users/leslie/.codex/worktrees/monitoring-report-context-runtime/maxwell-ai/services/agent-server/internal/modules/tools/infrastructure/mcpclient/client.go`，对应 `execution_context_compat_test.go`；Admin 实现见报告内工作树的 `monitoring_incident_report_transport.py`、`monitoring_incident_degraded_conclusion.py` 与 `maxwell_runtime_gateway.py`。
-- 本轮授权只到本地修复验证。业务代码未提交/推送/部署，生产历史记录未迁移/重跑，未发送消息。证据不足与 JSON 无效仍按原约束失败，不因上下文兼容而自动验收。
+- 最终 MCP 实现指针：`/Users/leslie/Downloads/sandai-code/vidmuse-monitoring-context-1107/internal/server/report_preflight.go`、`server.go` 与 `report_preflight_test.go`；Runtime 工作树的旧协议兼容补丁已撤回，历史复现日志保留于其 `.tmp/monitoring-context-verification/`。Admin 空结论和错误分类修复保留，具体工作树见验证报告。
+- 本轮授权只到本地修复验证。业务代码未提交/推送/部署，生产历史记录未迁移/重跑，未发送消息。证据不足与 JSON 无效仍按原约束失败，不因协议适配而自动验收。
