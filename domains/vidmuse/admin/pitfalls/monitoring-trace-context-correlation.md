@@ -23,3 +23,13 @@ links: [monitoring-report-context-and-empty-projection, monitoring-report-vs-cha
 
 - [Admin PR #968](https://github.com/world-sim-dev/vidmuse-admin/pull/968)、[PR CI](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/42358131365)、[镜像构建](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/42359303833)、[生产部署](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/42359715175)。审查、合并、镜像与发布结果沿这些入口及验证报告核对。
 - 用户明确要求不改写历史。只读预检复用原 canonical toolCallId 与原参数；不得把更正草稿替换到原调用后宣称原 Run 已通过。部署前后比较事故状态、错误码、Run、更新时间、证据快照及活动记录；记录实际镜像、所有副本就绪与通知开关恢复。证据位于验证报告同目录的 deployment/。
+
+## 2026-11-07 报告生成约束与隔离验收入口
+
+**Why:** 生成端把“独立 record locator”说成抽象要求、只给 eq 示例而不解释身份字段和 producer 边界时，模型可能把同一日志库的文本 contains 拼成跨源 correlation。预检如果先因协议或读取权限失败，模型也拿不到可执行的字段纠正反馈。原始模型请求比当前仓库 Skill 模板更能证明当时实际消费了哪些规则。
+
+**How to apply:** 同时核对 model.request 中系统提示词、Admin 输入和激活的 Skill。明确 correlations 可空、locator 必须指向真实身份字段并精确 eq，同一 SLS project/logstore 的不同查询/分页/span 不算独立来源；删除无效关联时同步清理 supports，保留已验证事实。生成规则修复应通过新隔离 Run 自主产出报告验证，不把手工改稿或历史 Run 的事后 preflight 当成完整交付。
+
+- 源码入口：Admin `maxwell_runtime_gateway.py::_message_content`、`monitoring_incident_evidence_retry.py::evidence_retry_prompt` 和 `config_file/maxwell_skills/monitoring-incident-root-cause/SKILL.md`。共享线上 Skill 可能早于仓库版本；发布与消费状态沿实际 Run 和变更记录核对。
+- 原模型请求、双次错误 correlation、最小修复、真实新 Run、548 项回归以及完整链路边界：[生成端验证报告](/Users/leslie/.codex/worktrees/monitoring-report-context-admin/vidmuse-admin/.codex-artifacts/correlation-generation-verification/report.md)。动态完成/部署状态以该报告及源码为准。
+- Studio 账号创建的隔离测试 Thread 默认可能为 private，Admin 服务身份读取会被隐藏成 HTTP404，最终表现为 report_preflight_unavailable。先从服务日志核对，不推断为超时或放宽校验；测试创建时显式使用获授权的 business/read，只改新测试对象。原请求在共享范围修正后的只读 preflight 可作为环境诊断，完整验收仍须从正确配置的新 Run 开始。

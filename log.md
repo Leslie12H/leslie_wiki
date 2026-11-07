@@ -2464,3 +2464,5 @@
 - 2026-11-07：录入监控复合 trace 字段导致 evidence_not_incident_correlated 的复现、最小 Admin 适配与报告引用错误的分层验证指针；业务代码仅本地验证，未部署或改写历史。
 
 - 2026-11-07：补充 Admin trace 识别修复 PR #968、CI/镜像/生产发布及原事故只读对照入口；明确不替换 canonical 调用、不改写历史的验收边界。
+
+- 2026-11-07：补充 monitoring-trace-context-correlation 的生成端规则缺口、实际模型请求审计、新 Run 验收与私有 Thread 预检 404 的证据入口；历史事故不回写。
