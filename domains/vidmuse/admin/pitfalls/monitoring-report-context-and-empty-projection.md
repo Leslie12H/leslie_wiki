@@ -20,4 +20,14 @@ links: [monitoring-report-vs-chat-output, monitoring-thread-scan-pagination-exha
 - [MCP 上下文合同](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/blob/05ef7b31be3da98b2c878ab3f6b4cdaef221857c/internal/server/report_preflight.go)：检查 version/businessId/threadId/runId/toolCallId；报错本身不指出具体缺失字段。
 - [Admin 空快照来源](https://github.com/world-sim-dev/vidmuse-admin/blob/main/apps/admin/service/monitoring_incident_state.py)、[空对象投影](https://github.com/world-sim-dev/vidmuse-admin/blob/main/apps/admin/service/monitoring_incident_degraded_conclusion.py)、[正式报告选择](https://github.com/world-sim-dev/vidmuse-admin/blob/main/apps/admin/service/monitoring_incident_report_transport.py)。空 response 与空 fallback_report 的本地复现返回 summary/rootCause 为 {}，不能解释为模型真的输出了 {}。
 - 本次全部 report_transport_invalid 样本已完成事件分页；runtime_stalled/runtime_error 样本仍有部分历史，不能给出同等完整归因。当前 readiness 降级和再次查询超时独立记录，不用事后探针解释凌晨故障。
-- 未核实当时部署 SHA、具体丢失字段和引入回归的提交；当前源码可说明合同与复现，但不能直接证明发布因果。未修业务代码、部署、补跑或发送消息。
+- 初次只读取证未核实部署 SHA 或引入提交；后续源码定位与本地验证见下节。故障时生产 Worker 的镜像/SHA 仍待回读，不能把源码回归证明等同于具体发布批次证明。
+
+## 2026-11-07 修复与验证指针
+
+**Why:** 协议名称是外部服务共同依赖的 wire contract，去品牌化批量替换不能当作文案调整。Maxwell [PR #391](https://github.com/world-sim-dev/maxwell-ai/pull/391) / `259b51ec1db3af85d63ef5ece3540475d746f551` 将 execution-context 名称改为 ai.agent-platform，而监控 MCP 仍声明并读取 ai.maxwell；客户端按新名称协商后删除身份。HTTP 复现中，替换父提交的原始客户端/领域合同文件通过，替换该提交文件失败。此处确定代码回归，不断言未回读的生产部署批次。
+
+**How to apply:** 固定历史 wire 名称的测试必须独立于被改常量；同时覆盖旧/新/双声明、版本不匹配、无声明和会话复用。兼容只选择服务器同版本声明的一个名称，身份仍由当前 Runtime 产生，不能从模型参数补造。Admin 区分准备工具反馈与正式 prepared 报告，允许展示可追溯真实叙述但不发放验收；空对象和占位投影必须被拒绝。
+
+- 本地修复、基线、分支、回归日志和 14 条完整 Run 的离线回放结果：[验证报告](/Users/leslie/.codex/worktrees/monitoring-report-context-admin/vidmuse-admin/.codex-artifacts/monitoring-context-verification/report.md)。动态修复/发布状态只沿该报告和 Git 工作树核对。
+- Runtime 实现指针：`/Users/leslie/.codex/worktrees/monitoring-report-context-runtime/maxwell-ai/services/agent-server/internal/modules/tools/infrastructure/mcpclient/client.go`，对应 `execution_context_compat_test.go`；Admin 实现见报告内工作树的 `monitoring_incident_report_transport.py`、`monitoring_incident_degraded_conclusion.py` 与 `maxwell_runtime_gateway.py`。
+- 本轮授权只到本地修复验证。业务代码未提交/推送/部署，生产历史记录未迁移/重跑，未发送消息。证据不足与 JSON 无效仍按原约束失败，不因上下文兼容而自动验收。
