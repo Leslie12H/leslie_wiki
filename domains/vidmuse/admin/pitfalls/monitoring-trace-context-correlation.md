@@ -50,3 +50,8 @@ links: [monitoring-report-context-and-empty-projection, monitoring-report-vs-cha
 
 - [Admin PR #970](https://github.com/world-sim-dev/vidmuse-admin/pull/970)：生成约束、已验证补查来源索引、通知谓词及回归入口。审查、CI、合并、部署与历史保全状态以该 PR 和生成端验证报告末节为准。
 - 实现入口补充 `monitoring_incident_report_validation_v2.py::_index_validated_report_sources`、`monitoring_incident_notification.py::_validated_v2_report`；两类通知卡片须直接检查证明引用和降级提示，不能只检查摘要或标题。
+
+## 2026-11-07 补查索引发布复核入口
+
+- [PR #970 最终 CI](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/42367692505)、[镜像构建](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/42368886321)、[生产部署](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/42369311080)。实际镜像/副本、通知恢复、原报告与新报告预检、12 项历史字段对照，见生成端验证报告末节及 projection-fix/deployment/；不从静态 wiki 推断当前生产状态。
+- 部署就绪验收需区分 Pod Ready 和业务证据源 readiness。若短暂失败后恢复，保留失败快照与后续源级快照，不把重复读取恢复称作根因修复；具体失败源不在聚合响应内时保持未定位。历史保护限制不妨碍使用不可变 Run 的只读预检，但生产持久化和通知不能由隔离 SQLite/卡片验证冒充。
