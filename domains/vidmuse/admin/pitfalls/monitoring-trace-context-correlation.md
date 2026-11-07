@@ -41,3 +41,12 @@ links: [monitoring-report-context-and-empty-projection, monitoring-report-vs-cha
 **How to apply:** 完整链路验收须继续检查接纳后的 rootCauseProof，而不能止于 MCP prepared、Run 完成或卡片生成。对照 proof 的 toolResultEventId 与采集清单逐项定位缺失，保留未验证/跨 Run 拒绝边界；不要通过删除真实证据或放宽 correlation 校验掩盖索引缺口。修复状态以实际代码和验证报告为准。
 
 - 实现入口：Admin `monitoring_incident_proof.py::project_root_cause_proof` 的 result_context 和 context 过滤；数据入口为 `monitoring_incident_report_validation_v2.py` 的 proof/acquisition 两类 manifest。隔离复现及投影缺口证据沿上面的生成端验证报告读取，不将该问题误称为历史报告修复失败。
+
+## 2026-11-07 索引与通知谓词的修复入口
+
+**Why:** 已验证来源补索引只能修正根因快照；通知卡片还可能保留早期“probable 必须有 correlation”的独立谓词。摘要存在并不证明卡片采用了已验证报告，也可能来自降级叙事投影。
+
+**How to apply:** 仅在完整采集策略及记录级 proof 校验后索引实际引用的当前 Run 补查 call/result，不让补查替代必需检查。验收同时断言持久化 rootCauseProof、证明引用以及无降级说明；覆盖 directErrors/confirmedFacts 单独支持 probable 的两类卡片和失效 supports 负例。保留 supported 与跨源 verified 的强度区别。
+
+- [Admin PR #970](https://github.com/world-sim-dev/vidmuse-admin/pull/970)：生成约束、已验证补查来源索引、通知谓词及回归入口。审查、CI、合并、部署与历史保全状态以该 PR 和生成端验证报告末节为准。
+- 实现入口补充 `monitoring_incident_report_validation_v2.py::_index_validated_report_sources`、`monitoring_incident_notification.py::_validated_v2_report`；两类通知卡片须直接检查证明引用和降级提示，不能只检查摘要或标题。

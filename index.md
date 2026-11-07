@@ -1519,4 +1519,4 @@
 
 - 2026-11-07：[监控报告上下文与空快照伪结论](domains/vidmuse/admin/pitfalls/monitoring-report-context-and-empty-projection.md) — 原始 Run 取证、PR #391 协议改名回归、实际 Runtime 核验与 MCP/Admin 发布指针、只读预检回放；区分叙述展示和正式验收。
 
-- 2026-11-07：[复合 trace 与证据关联](domains/vidmuse/admin/pitfalls/monitoring-trace-context-correlation.md) — 同 trace 不同 span 的误拒绝、canonical 哈希不变的身份派生、报告关联格式与独立来源边界、离线草稿验证及 PR/生产发布只读复核入口；补充实际模型提示词、生成端修复、新 Run 完整链路和 private 会话预检 404，以及补查证据通过校验但未被根因投影索引的查证入口。
+- 2026-11-07：[复合 trace 与证据关联](domains/vidmuse/admin/pitfalls/monitoring-trace-context-correlation.md) — 同 trace 不同 span 的误拒绝、canonical 哈希不变的身份派生、报告关联格式与独立来源边界、离线草稿验证及 PR/生产发布只读复核入口；补充实际模型提示词、生成端修复、新 Run 完整链路和 private 会话预检 404，以及补查证据通过校验但未被根因投影索引、通知谓词不同步及 PR #970 修复的查证入口。
