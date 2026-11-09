@@ -1,3 +1,5 @@
+- 2026-11-09：[Maxwell 通用 A2A Adapter 与 Preset 生命周期](domains/maxwell/refs/evolve-maxwell-adapter-preset-lifecycle.md) — 普通执行、候选隔离、持久配置与入口切换的源码及授权边界。
+
 - 2026-11-09：[EVOLVE 使用手册与环境查证入口](domains/maxwell/refs/evolve-user-manual-entrypoints.md) — 首次建评测、单会话诊断、候选验证与 A2A 分流；按 Studio 实际构建和逐服务发布回执核对可用性。
 
 - 2026-11-09：[冻结评分版本失联与准备任务重试](domains/maxwell/pitfalls/evolve-frozen-judge-version-and-preparation-retries.md) — 区分 Benchmark 修订和实际评分绑定，含派发前缺版预检、接纳复检及确定缺版退出重试。
