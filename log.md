@@ -2508,3 +2508,5 @@
 - 2026-11-09：记录 Maxwell Agent 原生调优复用临时 Preset 的最小隔离、租约接口、兼容与验收方案。
 
 - 2026-11-09：记录用现有 Preset/Prompt/Skill 接口及 EVOLVE 持久租约实现试跑的最小方案与授权、恢复、回收边界。
+
+- 2026-11-09 | ingest | API Dev v2 图文连续升压与双口径对账 | [飞书实测报告](https://j0yswlgboxz.feishu.cn/docx/Hr4QdGt1XouDS1xkSFrcojCvnJy)
