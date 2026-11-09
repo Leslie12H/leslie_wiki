@@ -4,6 +4,8 @@
 
 - 2026-11-09：[冻结评分版本失联与准备任务重试](domains/maxwell/pitfalls/evolve-frozen-judge-version-and-preparation-retries.md) — 区分 Benchmark 修订和实际评分绑定，含派发前缺版预检、接纳复检及确定缺版退出重试。
 
+- 2026-11-09：[API Dev 生成入口 503 与发压超时分流](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-09-生成入口-503-与发压超时分流) — 按 OpenAPI 部署行号核对准备线程池拒绝、客户端超时及秒精度取数。
+
 - 2026-11-09：[API Dev 阶梯压测异常响应与账本对账](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-09-阶梯压测异常响应与账本对账) — 客户端回执、后台副作用、停止条件、资源归因及独立对账的实测回查。
 
 - 2026-11-05：[MAGI-2 Base 拒答题导入](domains/sandai-platform/refs/v2-input-validation-entrypoints.md#2026-11-05-base-拒答题导入) — 实时字段语义、文本去重抽样与按记录 ID 回读入口。

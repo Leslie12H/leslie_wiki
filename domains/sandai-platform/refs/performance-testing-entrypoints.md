@@ -140,3 +140,13 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why:** 请求返回、落库和扣费发生在不同时间。客户端全失败不能用来排除后台副作用，继续发压或补发会扩大影响。
 
 **How to apply:** 阶梯发压使用每组织独立节奏和总量门槛，触发停发条件后收齐在途结果、确认终态与账本并清理临时访问。报告实际发流时长及未执行档位，区分实测异常档和可持续容量。
+
+## 2026-11-09 生成入口 503 与发压超时分流
+
+- 对照 [500 组织档复测与归因报告](https://j0yswlgboxz.feishu.cn/docx/Q88sdPyI9oZ43xxuFtnc5QyXnPg#doxcnEZnQRPBbJsbICY1ydGd7Xc) 回查两档的客户端异常分类、OpenAPI 容器日志、任务终态、账本和监控截图。原件只保留报告与本地证据路径 `.local/dev-fake-capacity-20261109/followup500/`，容量和时间样本随运行变化。
+- 平台与 OpenAPI 是独立 Deployment。归因先读处理实际请求的 OpenAPI 镜像 SHA，再匹配 ACK 日志里的堆栈行号。准备线程池在 `GenerationPreparationConfig`，队列拒绝转 503、等待超时与落库/派发顺序在 `OpenApiGenerationService`。单看错误码 `service_unavailable` 或任务 `INPUT` 无法区分这些分支。
+- 客户端分别留存 HTTP 状态、受限错误码和传输异常类。ACK 只取末尾行时把计数标为样本。单笔 202 通过精确任务 ID 回查公开终态与结算，时间范围采样按数据库列精度对齐并单独验证边界。
+
+**Why:** 应用线程池拒绝、客户端等待到期和任务已成功可能在同一批流量中共存。毫秒查询边界还会漏掉同一秒写入的任务。
+
+**How to apply:** 先用一笔请求核验创建、终态、结算，冻结正式发流上限。压测后按客户端、容器日志与业务数据库三层复查，保持已验证的生成结果和账本，避免重复发出未知请求。
