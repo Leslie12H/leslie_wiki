@@ -2488,3 +2488,5 @@
 - 2026-11-09：记录 Maxwell 通用 A2A Adapter 的按次候选替换、持久 Preset 管理与入口切换查证边界。
 
 - 2026-11-09：补充 Nextplay A2A Candidate Runner 的 SP/Skill 换绑、证据保全和临时 Preset 软删除查证入口。
+
+- 2026-11-09：记录从 Nextplay 抽取 Maxwell Runner、显式 Skill 绑定、v3 摘要与候选回执的最小改造边界。
