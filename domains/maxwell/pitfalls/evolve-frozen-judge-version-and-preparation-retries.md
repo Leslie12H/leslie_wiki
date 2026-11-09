@@ -24,3 +24,8 @@ links: [evolve-nextplay-ten-case-acceptance-20261015, evolve-workspace-implement
 - Work 是平台在 Run 创建前保存准备状态、原件引用及幂等身份的载体。Work.version 是并发写入修订号。逐次评测的评分口径沿 JudgeSpec 和逐题有效绑定核对，独立于 Work.version。要用新标准重评旧执行时，先检查已有证据是否覆盖新要求，再保存独立的重评分记录。
 - Nextplay 的 `providerVersion` 来自评测服务构建 Git SHA。查 [版本自述实现](https://github.com/world-sim-dev/nextplay-eval/blob/cad5f5f8c563b7d2388c69fed03a319a46402792/eval-service/src/eval_service/api.py#L333-L343) 与 [实现差异](https://github.com/world-sim-dev/nextplay-eval/compare/afd04ce1ebfa8a5f437ca8eb1aa88d33ade38903...cad5f5f8c563b7d2388c69fed03a319a46402792)，将构建身份和影响得分的变化分开核验。2026-11-06 的 [Nextplay #27](https://github.com/world-sim-dev/nextplay-eval/pull/27) 记录了默认关闭的条件排除、条款分母和图片证据边界。确认该条款是否实际启用、证据是否齐备，再判断某个样本是否可比。
 - 停止自动重试的实现入口为 `services/evolve-server/internal/modules/evolve/application/commands/direct_preparation.go` 和相邻接纳回归。接纳错误可能合并多个原因，只有全部原因都是精确方法缺失时才落终态。回归分别检查封存资源与 Split、同请求幂等回读、目录恢复后仍不自动领取、暂时或混合错误可接续。发布状态查实际 Worker 和 Work 回执。
+
+## 2026-11-09 派发前评分版本预检
+
+- Benchmark 修订保存选题、评分引用与运行设置。修订号递增本身不更新 Provider 版本，按具体 Run 核对冻结 JudgeSpec、Evaluator 和逐题有效覆盖。旧式 Benchmark 省略版本走 `freezeCurrentBenchmark` 时会主动跟随当前绑定。新式评测方案采用新规则需新建修订。查 `direct_run.go`、`direct_run_current.go` 与 `measurements/current.go` 的实际分流。
+- 派发前检查放在 `direct_preparation.go` 的 pending 阶段，复用冻结 Split 选题、有效规则合并及业务评分目录，按精确方法和版本去重。确认缺版时用现有失败状态显示受影响用例，目录读取异常继续等待。进入准备和创建 Run 之间仍可能更换 Provider，接纳时要再校验。回归查 `direct_preparation_admission_test.go` 的零派发、逐题覆盖和暂时目录故障用例。实际生效范围查部署版本和 Work 回执。
