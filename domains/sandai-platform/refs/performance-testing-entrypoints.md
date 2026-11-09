@@ -150,3 +150,13 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why:** 应用线程池拒绝、客户端等待到期和任务已成功可能在同一批流量中共存。毫秒查询边界还会漏掉同一秒写入的任务。
 
 **How to apply:** 先用一笔请求核验创建、终态、结算，冻结正式发流上限。压测后按客户端、容器日志与业务数据库三层复查，保持已验证的生成结果和账本，避免重复发出未知请求。
+
+## 2026-11-09 三档报告与图文输入集
+
+- [香港 Dev API 压测报告｜200、400、500 组织档](https://j0yswlgboxz.feishu.cn/docx/RnH9dvHoTo8f2hxO2HacNWoonce) 保留三档数据和截图。带宽归属沿发压 Pod 实际连接 IP、域名 CNAME、ALB 实例与监控维度核对；独立物理专线只在链路证据能匹配时归入请求路径。历史阶段实发 QPS 与实时服务端窗口平均响应速率分别显示。
+- 图文输入集的设计在 API 工作区 `.local/dev-fake-capacity-20261109/mixed-input-retest/dataset-design.md`。外部平台的输入数量与时长分布先核实统计口径、联合分布和目标部署模型变体。v2 创建协议沿 Zeus `docs/openapi-v2-generations.md` 回查。
+- URL 首帧会增加 OpenAPI 到图片源站的流量，并进入图片导入和审核。组织内 assetId 引用适合作同图同文对照。两条路径分别保存实发、受理、终态与耗时。入口 ALB 与图片源站带宽分别核对。
+
+**Why:** 合并异构模型统计或使用无关专线曲线会误判负载及瓶颈。只按数量分布生成随机输入也会破坏图片、文字与时长的关联。
+
+**How to apply:** 冻结有来源和授权的图片与配套 prompt，用部署允许的组合归一分布并记录口径。按档使用同一分层与排序策略，给预检和各档确定独立账本与观测窗口。
