@@ -21,6 +21,11 @@ links: [vidmuse-aion, vidmuse-zeus, vidmuse-ai-frontend, free-canvas-generation-
 4. 素材存储回查 VidFlow 的 `_submit_video_generation` 和 `generation_utils.py::extract_saved_path`，再核对 `UserFileManager`、Manager/VidFlow/static-file-server 同一区域 overlay 的 PVC、subPath 及挂载点。原件、OSS 预览和浏览器 CDN 地址分开查证。浏览器路径转换看 `vidmuse.ai` 的 `convertFilePathToUrl.ts`。
 5. 结果回填先看 VidFlow 的 `_finish_thread_task` 及 `standalone` 分支，再核对 Manager 的 `service/agent_task.py::update_task_status`。网页 `draw-video` 从 `canvasTaskChangeFeed.ts` / `threadCanvasTaskGateway.ts` 读取任务，`canvasTaskSupervisor.ts` 合并节点版本，`threadCanvasRepository.ts` 保存文档。服务端托管生成另查 `service/mcp_async_task_v2.py` 和 `service/canvas_generation/projection.py`。用当前文档版本和文件可读性分别核验回填与播放。
 
+## Runner 启动边界
+
+- 核对点击生成是否依赖 Agent Runner，从 `trigger_draw_video` 和 VidFlow 的 `_run_remix_shot_video` 追实际派发。直接抽卡独立于 Agent Runner 的执行和生命周期。
+- 新建项目和发送 Agent 消息分别核对。空白画布创建检查 `service/agent_thread.py::_should_defer_blank_free_canvas_runner`、`LAZY_BLANK_FREE_CANVAS_RUNNER_ENABLED` 与 `blank_free_canvas_lazy_start`。首条消息、模板、初始 artifacts 或 App 启动可进入其他分支。画布 Agent 发消息看 `service/agent_thread_message_v2.py::queue_user_message_v2` 到 `check_or_reactive_thread`，用于核对 Runner 的复用或启动。开关有效值及单个项目的启动情况应查目标环境。
+
 ## 发布证据指针
 
 - 2026-11-09 以海外 `prod` 为核对范围。从 [Manager 发布回执](https://github.com/world-sim-dev/aion/actions/runs/42330870994) 和 [VidFlow 发布回执](https://github.com/world-sim-dev/aion/actions/runs/41636805777) 的日志查目标环境、实际 `ACR_EE_TAG` 和 rollout 结果。VidFlow 回执中的 workflow HEAD 与发布镜像 tag 不同。
