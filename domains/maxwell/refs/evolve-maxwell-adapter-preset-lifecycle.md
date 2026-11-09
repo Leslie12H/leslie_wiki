@@ -64,3 +64,11 @@ links: [evolve-user-manual-entrypoints]
 - 快照与授权：查 `maxwellpreset/client.go`、`baseline.go` 的托管 Key 与资源读取权限差异，以及逐份捕获一致性和 Skill 正文是否实际加载。可信服务应绑定 Business、Preset、冻结资源与执行身份。普通 Thread 元数据不授予候选应用权限。
 - 生效与隔离：查 Agent Server 的 `runtime/extensions/skillloader/middleware.go` 是否仍合入动态来源，及 `app/integration/runtime/storeadapter/runtime.go` 的 Preset 分区。验收需证明 Skill 解绑后实际目录/读取符合语义、同一业务普通会话看不到候选状态，并单独核对工具、子 Agent 和外部副作用。
 - 恢复与比较：查 EVOLVE `maxwellexecutor/adapter.go` 的 checkpoint、`application/comparison/receipts.go` 的候选证明与现有采纳门禁。续行、响应丢失、取消和切换后的历史重放按冻结执行身份；基线候选采用同一评测条件。生效、验证、持久应用和回滚各有独立证据。上述为方案缺口审查，未实施。
+
+## 2026-11-09 临时 Preset 原生试跑方案
+
+**Why:** Nextplay 的物化顺序可复用。新 Preset ID 隔离现有按 Preset 分区的状态，但原生复制也复制工具配置，且软删除不会自动清理 Store。统一原生入口需要额外的租约归属、执行权限与回收边界，才能对正常、异常和在途试跑作同一解释。
+
+**How to apply:** 只读锚点为 Maxwell `10ab8808f1aa5508d9f76341bd3523c0904f7b3c` 与 Nextplay `5408ebc5a264db463d4435743993c154bae0479c`。查 Nextplay `materializer/service.py`、`runner.py` 与 Maxwell 的 Preset Copy/SoftDelete、Runtime Thread 删除和 Store Binder。方案在 Maxwell Agent 的同一登记下保留普通评测，调优的每个基线/候选 Attempt 持有独立临时 Preset、私有 Thread 及资源。EVOLVE 管冻结输入、调度与证据，Agent Server 管受限物化、实验执行策略和精确回收；继承可写外部工具配置需阻断或使用获授权测试目标。
+
+待评审契约为 Agent Server `PUT/GET /api/internal/evolve/trial-environments/{invocationId}` 与 `POST .../release`，同业务托管执行身份用专用试跑权限，另提一张持久租约表保护物化和异常回收。原生调优复用 EVOLVE 现有登记与 Run 入口，增加读取侧 readiness 及 Skill 绑定提案能力；旧任务按原冻结路径，新任务冻结原生试跑协议版本。验收分别覆盖自然入口、SP/Skill 实际消费、状态与外部写入隔离、取消/重启/收证失败、旧 Nextplay A2A 恢复和历史读取。具体接口、权限和 DDL 须在实施前确认，本节不表示已修改或上线。
