@@ -2490,3 +2490,5 @@
 - 2026-11-09：补充 Nextplay A2A Candidate Runner 的 SP/Skill 换绑、证据保全和临时 Preset 软删除查证入口。
 
 - 2026-11-09：记录从 Nextplay 抽取 Maxwell Runner、显式 Skill 绑定、v3 摘要与候选回执的最小改造边界。
+
+- 2026-11-09：记录 API Dev 多组织阶梯发压中异常回执与后台任务、扣费分离的对账边界，附飞书报告和阿里云原图。

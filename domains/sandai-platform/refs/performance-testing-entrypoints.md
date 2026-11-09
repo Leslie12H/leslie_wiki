@@ -2,7 +2,7 @@
 name: sandai-api-platform-performance-testing-entrypoints
 type: reference
 created: 2026-10-27
-updated: 2026-10-28
+updated: 2026-11-09
 tags: [sandai, api-platform, performance, testing, quota]
 links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi-quota-entrypoints]
 ---
@@ -129,3 +129,14 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why:** CPU/内存图即使有数据，放得过深、分母含糊或图例充满内部标签，也难以用于压测定位；堆水位低并不代表容器整体内存低。
 
 **How to apply:** 先证明每个目标服务有资源序列与 limit，再把 CPU/内存水位前移，用核数/MiB 图解释绝对用量，单独保留 JVM 图。保存后全配置独立读回，并从正式面板逐图导出实际样本；保持同一看板链接，不用占位数据证明完成。
+
+## 2026-11-09 阶梯压测异常响应与账本对账
+
+- 香港 Dev 多组织阶梯执行结论、未执行档位、部署范围、费用与阿里云截图见[飞书实测章节](https://j0yswlgboxz.feishu.cn/docx/Q88sdPyI9oZ43xxuFtnc5QyXnPg#doxcnKIVPZo0D4Ncb2p40IIPTUg)。回查独立数据库终态、结算和 Key/认证清理的证据入口为工作区 `.local/dev-fake-capacity-20261109/`。
+- 发压端无 HTTP 响应或收到 5xx 时，服务端仍可能持久化并完成任务、产生扣费。沿冻结组织范围与数据库时钟起点核对当前公开终态映射、唯一扣费及退款。按状态分开记客户端收到的响应、云端服务端序列和数据库任务，未回执时只做范围对账，不猜逐请求映射。
+- 复用部署内 Spring 配置构造 Dev 临时会话时，按实际运行配置优先级读取 overlay，再读回会话所属用户与组织。预检和实际发流分开保留启动证据。同 Pod 发压时把发压器纳入资源解释，短时流量依赖客户端时间戳而非分钟聚合速率判定。
+- 看板的 API/调度抓取健康无法替代业务 SQL 快照有效性。等待、端到端延迟和数据新鲜度缺样本时明确列出，从限定范围的只读采样复查终态和停发后恢复。
+
+**Why:** 请求返回、落库和扣费发生在不同时间。客户端全失败不能用来排除后台副作用，继续发压或补发会扩大影响。
+
+**How to apply:** 阶梯发压使用每组织独立节奏和总量门槛，触发停发条件后收齐在途结果、确认终态与账本并清理临时访问。报告实际发流时长及未执行档位，区分实测异常档和可持续容量。
