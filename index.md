@@ -1,4 +1,4 @@
-- 2026-11-09：[Maxwell 通用 A2A Adapter 与 Preset 生命周期](domains/maxwell/refs/evolve-maxwell-adapter-preset-lifecycle.md) — 普通执行、候选隔离、持久配置与入口切换的源码及授权边界。
+- 2026-11-09：[Maxwell 通用 A2A Adapter 与 Preset 生命周期](domains/maxwell/refs/evolve-maxwell-adapter-preset-lifecycle.md) — 普通执行、候选隔离、持久配置与入口切换的源码及授权边界。 附 Nextplay 两层 Thread、真实资源物化与保全后清理查证入口。
 
 - 2026-11-09：[EVOLVE 使用手册与环境查证入口](domains/maxwell/refs/evolve-user-manual-entrypoints.md) — 首次建评测、单会话诊断、候选验证与 A2A 分流；按 Studio 实际构建和逐服务发布回执核对可用性。
 

@@ -2486,3 +2486,5 @@
 - 2026-11-09：记录自由画布独立环境部署的服务、状态、凭据和地址边界，附上海初始化、Inngest 注册和端到端验收入口。
 
 - 2026-11-09：记录 Maxwell 通用 A2A Adapter 的按次候选替换、持久 Preset 管理与入口切换查证边界。
+
+- 2026-11-09：补充 Nextplay A2A Candidate Runner 的 SP/Skill 换绑、证据保全和临时 Preset 软删除查证入口。
