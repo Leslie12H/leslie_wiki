@@ -80,3 +80,9 @@ links: [evolve-user-manual-entrypoints]
 **How to apply:** 首期推荐复用 Nextplay 调用的原生 CRUD，在 EVOLVE `maxwellexecutor/journal.go` 所在持久存储用同一业务与 invocation 身份记录写入意图、响应和逐资源清理进度，配合现有跨进程锁与新增受限巡检。核对 EVOLVE `composition.go` 和 Worker 卷在目标环境是否持久且共享。沿 Agent Server 的 Prompt `Save`、Skill `Import` transport 以及 Preset 活跃名称唯一索引核对恢复：Prompt 与新导入 Skill 由服务端分配 ID，不能假设客户端给 ID 或重发即幂等。发出前保存可回查归属标记；响应未知时通过同业务、精确标记及内容哈希查证，无法唯一归属则保持待核对。Thread 与消息分别复用已有创建幂等键和 actionId。
 
 试点须由业务授权独立 Key 的现有读写权限，并限制外部副作用。普通 CRUD 的业务级写范围、业务目录可见性和按 Preset 分区 Store 的回收，与新增服务端租约方案的强保证不同。不能以名称作为授权或删除依据，不能把 Preset 软删除回执称作 Store 全部回收；只有实测缺口需要服务端强制约束时再评审针对性接口或权限改动。此处是替代方案建议，未实施。
+
+## 2026-11-09 EVOLVE 平台系统身份
+
+**Why:** 用户希望原生 Maxwell Agent 默认面向全部业务，EVOLVE 由隐藏的系统身份执行，免逐业务创建或授权执行 Key。隐藏指普通业务成员和 Key 管理界面，建议保留运维及安全审计身份。全业务覆盖与一次任务的资源权限应分层。
+
+**How to apply:** 当前按业务发 Key 的路径查 Agent Server `studio_evolve_executor_key.go` 与 EVOLVE `commands/executors.go`。主线 Agent Server `auth_guard.go`、`business_access.go` 及 `sandbox_auth.go` 已有受限 Service principal、按 operation 的校验及业务绑定，可复用规则接入独立 EVOLVE 受信身份；现有 sandbox 凭据的签发范围不等于 EVOLVE 写权限。建议发起者按原权限批准具体任务，后台调用绑定同一 Business、Preset、Work/Attempt、允许动作和资源归属。临时资源归属要用服务端可验证标记，不能只靠客户端命名。可沿用现有资源 API，租约留在 EVOLVE，但服务鉴权与授权必须新增受限分支。旧任务沿原冻结执行身份恢复。身份覆盖是用户方向，令牌、归属和权限细节是建议，未实施。

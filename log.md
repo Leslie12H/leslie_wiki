@@ -2510,3 +2510,5 @@
 - 2026-11-09：记录用现有 Preset/Prompt/Skill 接口及 EVOLVE 持久租约实现试跑的最小方案与授权、恢复、回收边界。
 
 - 2026-11-09 | ingest | API Dev v2 图文连续升压与双口径对账 | [飞书实测报告](https://j0yswlgboxz.feishu.cn/docx/Hr4QdGt1XouDS1xkSFrcojCvnJy)
+
+- 2026-11-09：记录用户指定 EVOLVE 默认覆盖全部业务并使用隐藏系统身份，补受限服务鉴权与审计边界。
