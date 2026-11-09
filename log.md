@@ -2498,3 +2498,5 @@
 - 2026-11-09：记录通用 Adapter 的 Maxwell 源码归属、独立 Skill 部署与 Nextplay 三条构建消费路径。
 
 - 2026-11-09：记录 EVOLVE Preset Runner 的命名、同域源码与独立执行部署边界。
+
+- 2026-11-09：记录用户修正，Maxwell Agent 同一原生接入同时支持评测与调优，通用执行能力由 EVOLVE 托管。
