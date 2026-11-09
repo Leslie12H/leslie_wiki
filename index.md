@@ -1,4 +1,4 @@
-- 2026-11-09：[冻结评分版本失联与准备任务重试](domains/maxwell/pitfalls/evolve-frozen-judge-version-and-preparation-retries.md) — 精确版本、任务重试和真实评分分别取证，含停止高频重试与按原口径接续的边界。
+- 2026-11-09：[冻结评分版本失联与准备任务重试](domains/maxwell/pitfalls/evolve-frozen-judge-version-and-preparation-retries.md) — 区分 Work 修订、服务构建和评分口径，含确定缺版停止重试、混合故障接续及真实评分核验入口。
 
 - 2026-11-05：[MAGI-2 Base 拒答题导入](domains/sandai-platform/refs/v2-input-validation-entrypoints.md#2026-11-05-base-拒答题导入) — 实时字段语义、文本去重抽样与按记录 ID 回读入口。
 
