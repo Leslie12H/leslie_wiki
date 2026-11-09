@@ -72,3 +72,11 @@ links: [evolve-user-manual-entrypoints]
 **How to apply:** 只读锚点为 Maxwell `10ab8808f1aa5508d9f76341bd3523c0904f7b3c` 与 Nextplay `5408ebc5a264db463d4435743993c154bae0479c`。查 Nextplay `materializer/service.py`、`runner.py` 与 Maxwell 的 Preset Copy/SoftDelete、Runtime Thread 删除和 Store Binder。方案在 Maxwell Agent 的同一登记下保留普通评测，调优的每个基线/候选 Attempt 持有独立临时 Preset、私有 Thread 及资源。EVOLVE 管冻结输入、调度与证据，Agent Server 管受限物化、实验执行策略和精确回收；继承可写外部工具配置需阻断或使用获授权测试目标。
 
 待评审契约为 Agent Server `PUT/GET /api/internal/evolve/trial-environments/{invocationId}` 与 `POST .../release`，同业务托管执行身份用专用试跑权限，另提一张持久租约表保护物化和异常回收。原生调优复用 EVOLVE 现有登记与 Run 入口，增加读取侧 readiness 及 Skill 绑定提案能力；旧任务按原冻结路径，新任务冻结原生试跑协议版本。验收分别覆盖自然入口、SP/Skill 实际消费、状态与外部写入隔离、取消/重启/收证失败、旧 Nextplay A2A 恢复和历史读取。具体接口、权限和 DDL 须在实施前确认，本节不表示已修改或上线。
+
+## 2026-11-09 复用现有管理接口的 EVOLVE 试跑租约
+
+**Why:** 用户询问把租约、恢复与清理归 EVOLVE，避免给 Agent Server 新增租约 HTTP 和表。现有资源管理操作已能创建和回收已确认 ID 的临时资源；需要单独区分丢失创建回执、可见性、广域写权限与 Store 回收。
+
+**How to apply:** 首期推荐复用 Nextplay 调用的原生 CRUD，在 EVOLVE `maxwellexecutor/journal.go` 所在持久存储用同一业务与 invocation 身份记录写入意图、响应和逐资源清理进度，配合现有跨进程锁与新增受限巡检。核对 EVOLVE `composition.go` 和 Worker 卷在目标环境是否持久且共享。沿 Agent Server 的 Prompt `Save`、Skill `Import` transport 以及 Preset 活跃名称唯一索引核对恢复：Prompt 与新导入 Skill 由服务端分配 ID，不能假设客户端给 ID 或重发即幂等。发出前保存可回查归属标记；响应未知时通过同业务、精确标记及内容哈希查证，无法唯一归属则保持待核对。Thread 与消息分别复用已有创建幂等键和 actionId。
+
+试点须由业务授权独立 Key 的现有读写权限，并限制外部副作用。普通 CRUD 的业务级写范围、业务目录可见性和按 Preset 分区 Store 的回收，与新增服务端租约方案的强保证不同。不能以名称作为授权或删除依据，不能把 Preset 软删除回执称作 Store 全部回收；只有实测缺口需要服务端强制约束时再评审针对性接口或权限改动。此处是替代方案建议，未实施。
