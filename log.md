@@ -2512,3 +2512,5 @@
 - 2026-11-09 | ingest | API Dev v2 图文连续升压与双口径对账 | [飞书实测报告](https://j0yswlgboxz.feishu.cn/docx/Hr4QdGt1XouDS1xkSFrcojCvnJy)
 
 - 2026-11-09：记录用户指定 EVOLVE 默认覆盖全部业务并使用隐藏系统身份，补受限服务鉴权与审计边界。
+
+- 2026-11-09 | ingest | 补充 API Dev 503 实测日志分流与飞书翻译层重复显示的核查方式。
