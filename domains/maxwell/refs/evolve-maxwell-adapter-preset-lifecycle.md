@@ -53,3 +53,14 @@ links: [evolve-user-manual-entrypoints]
 **Why:** 用户明确要求所有 Maxwell Agent 使用同一个 Maxwell Agent 接入类型，评测和调优都是平台原生能力。独立登记 A2A 调优 Runner 的方案与这个产品入口冲突。
 
 **How to apply:** 沿 Maxwell 主线 `10ab8808f1aa5508d9f76341bd3523c0904f7b3c` 查 `maxwellexecutor/adapter.go` 的候选拒绝分支、`a2a/runner_preparation.go` 的 external_a2a 门槛与 Studio 的 `executorRouting.ts` 和 `ExecutorPathsPanel.tsx`。建议扩展现有原生执行器，在同一登记下处理当前 Preset 普通运行、同冻结基线与候选的隔离运行。复用 `maxwellpreset/baseline.go` 的资源读取及 Runtime 受信执行快照，补安全应用通道、实际回执、隔离范围和原生能力投影。普通调用身份保留既有权限边界；临时管理和正式采纳须分开。旧 A2A 路线与历史/在途证据按原冻结身份读取。此处是用户修正后的产品目标及实施建议，未改业务代码。
+
+## 2026-11-09 原生接入缺口复查
+
+**Why:** 统一入口并不能证明候选可运行、隔离或可比。冻结 Skill 的配置与运行可见目录不是同一集合，新 Thread 也不会隔离 Preset 分区状态。旧的 Nextplay 输入覆盖不能代表 Maxwell Agent 通用输入覆盖。
+
+**How to apply:** 以 Maxwell `10ab8808f1aa5508d9f76341bd3523c0904f7b3c` 为本次只读源码锚点，后续复核以下边界。
+
+- 通用输入与工作流：查 EVOLVE 的 `maxwellexecutor/input.go`、`commands/logical_executor.go`、`commands/tuning_baseline.go` 和 `resourcecontent/source_runner.go`，把原生能力落实到准备、资源编辑、候选执行和比较。核对现有任务保存的身份；分析可从会话开始，重放与评测是后续条件。
+- 快照与授权：查 `maxwellpreset/client.go`、`baseline.go` 的托管 Key 与资源读取权限差异，以及逐份捕获一致性和 Skill 正文是否实际加载。可信服务应绑定 Business、Preset、冻结资源与执行身份。普通 Thread 元数据不授予候选应用权限。
+- 生效与隔离：查 Agent Server 的 `runtime/extensions/skillloader/middleware.go` 是否仍合入动态来源，及 `app/integration/runtime/storeadapter/runtime.go` 的 Preset 分区。验收需证明 Skill 解绑后实际目录/读取符合语义、同一业务普通会话看不到候选状态，并单独核对工具、子 Agent 和外部副作用。
+- 恢复与比较：查 EVOLVE `maxwellexecutor/adapter.go` 的 checkpoint、`application/comparison/receipts.go` 的候选证明与现有采纳门禁。续行、响应丢失、取消和切换后的历史重放按冻结执行身份；基线候选采用同一评测条件。生效、验证、持久应用和回滚各有独立证据。上述为方案缺口审查，未实施。
