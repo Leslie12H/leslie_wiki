@@ -2,7 +2,7 @@
 name: evolve-maxwell-adapter-preset-lifecycle
 type: reference
 created: 2026-11-09
-updated: 2026-11-09
+updated: 2026-11-10
 tags: [maxwell, evolve, a2a, adapter, preset]
 links: [evolve-user-manual-entrypoints]
 ---
@@ -86,3 +86,11 @@ links: [evolve-user-manual-entrypoints]
 **Why:** 用户希望原生 Maxwell Agent 默认面向全部业务，EVOLVE 由隐藏的系统身份执行，免逐业务创建或授权执行 Key。隐藏指普通业务成员和 Key 管理界面，建议保留运维及安全审计身份。全业务覆盖与一次任务的资源权限应分层。
 
 **How to apply:** 当前按业务发 Key 的路径查 Agent Server `studio_evolve_executor_key.go` 与 EVOLVE `commands/executors.go`。主线 Agent Server `auth_guard.go`、`business_access.go` 及 `sandbox_auth.go` 已有受限 Service principal、按 operation 的校验及业务绑定，可复用规则接入独立 EVOLVE 受信身份；现有 sandbox 凭据的签发范围不等于 EVOLVE 写权限。建议发起者按原权限批准具体任务，后台调用绑定同一 Business、Preset、Work/Attempt、允许动作和资源归属。临时资源归属要用服务端可验证标记，不能只靠客户端命名。可沿用现有资源 API，租约留在 EVOLVE，但服务鉴权与授权必须新增受限分支。旧任务沿原冻结执行身份恢复。身份覆盖是用户方向，令牌、归属和权限细节是建议，未实施。
+
+## 2026-11-10 EVOLVE 系统身份改造范围
+
+**Why:** 平台身份可以覆盖全部业务，每次委派仍需绑定单业务。现有操作白名单与业务判定可以复用，Thread 和临时资源写入还需各自的归属校验。完整免 Key 与仅原生 Agent 执行免 Key 的交付边界不同。
+
+**How to apply:** 源码锚点为 Maxwell `f146431129a5f6907044a03e475349b3da08720a`。沿 Agent Server `auth_guard.go`、`business_access.go`、`thread_access.go` 与 `a2a_api.go` 查统一 Bearer、按操作拒绝、Service 的 Business 检查和 Thread/A2A 的独立鉴权。沿 EVOLVE `integration/executorsource/source.go`、`maxwellpreset` 基线读路径及 `maxwellexecutor/client.go` 查旧 Business Key 依赖与 Worker 接入。短凭据按任务续签时，检查 `integration/a2a/configuration.go` 的 bearer 摘要是否参与冻结比较；新路径应绑定稳定主体和授权范围，旧任务按原协议恢复。
+
+另查 `integration/llmjudge/maxwell.go` 与 `commands/model_settings.go`。内置 Maxwell 模型判卷仍读取 Business Credential；若产品要求从执行到判卷均免 Key，须独立设计受限模型调用授权。现有 A2A 路由仅接受 API Key，若新原生执行使用 Runtime HTTP，可避免把系统身份扩到外部 A2A。方案仍待确定发行信任、临时资源归属、接口安全声明与验收，未实施。
