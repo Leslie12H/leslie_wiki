@@ -44,3 +44,15 @@ links: [evolve-benchmark-unified-plan-review, evolve-preset-evaluation-entry, ev
 **Why:** 逐题详情的输出预览可能截断，也不单列执行器自定义指标。配置时应按实际冻结材料确认字段。单条试次说明该次有上报，覆盖率、业务含义和单位还需要确认。
 
 **How to apply:** Maxwell `evolve-evidence-fields` 工作区的 `docs/plans/evolve-scoring-field-discovery-20261110.md` 有操作步骤和接口边界。沿 `queries/scoring_fields.go` 和 `evaluation/evidence_output.go` 查单试次授权、冻结证据与评分路径。Studio 在「读取执行证据」绑定中从评测结果选择字段，在逐题详情按需查看并复制；代码入口为 `ScoringFieldPicker.tsx` 和 `TrialScoringFields.tsx`。自定义指标从执行器上报的 `metrics` 取值，平台运行指标、Case 参考答案和附件仍各走既有入口。版本及发布状态分别查业务 Git 和目标部署。
+
+## 2026-11-10 草稿入库与评分依据展示
+
+**Why**
+
+Agent 保存草稿、任务生成正式资产、发布共享评分标准是不同阶段。指标修订描述结果和汇总口径，评估器或 Judge 修订持有实际 Prompt 与规则。零运行时展示已配置的内容有助于首跑准备，逐行放在结果表里容易被误读为已有测量。
+
+**How to apply**
+
+- Case 草稿通过确认与生成正式资产后沿 `commands/freeze_draft.go` 写正式 Case 修订，可从用例库按来源任务查找。任务里的冻结 Judge 可沿 `ArtifactDrawer.tsx` 和 `StandardAdoptionButton.tsx` 另存共享评分标准，再到评分资产的「旧版评分配置」查看。独立指标与评估器各走对应目录。
+- 回查 Maxwell 工作分支 `codex/evolve-scoring-visibility`。指标详情沿 `StandardsTab.tsx`、`AssetReferences.tsx` 读取引用该精确修订的评估器或旧版评分配置，展开后按引用修订查询现有详情。逐题绑定仍沿「关联用例」查，具体 Benchmark 以其采用的冻结配置为准。
+- Benchmark 的「当前版本指标与趋势」沿 `BenchmarkResultsPanel.tsx` 区分加载、请求失败、过滤为空和完整题集零运行。零运行用 `BenchmarkDetailPage.tsx` 的首跑卡概览业务评分和平台采集，评分配置仍可直接打开。2026-11-10 本地浏览器用样例验证了首跑卡、窄工作区单列、评分配置入口与精确修订 Prompt。
