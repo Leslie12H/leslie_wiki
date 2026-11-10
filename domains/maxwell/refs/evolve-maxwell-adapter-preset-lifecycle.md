@@ -106,3 +106,13 @@ links: [evolve-user-manual-entrypoints]
 Nextplay 源码锚点为 `5408ebc5a264db463d4435743993c154bae0479c`。核对 `eval-service/src/eval_service/api.py` 的判卷入站认证与 `evidence_pull.py` 的出站证据客户端。两方向使用 EVAL_API_TOKEN，证据客户端在构造时固定 Header。只轮换 EVOLVE 端不足以证明在途证据拉取继续，联调需保留原 invocation 并协调两端切换。
 
 已存执行快照验原哈希及归属后，可投影到不含凭据的比较形状，保留原证据。已存判卷绑定可能只剩摘要。优先保留现有 CredentialRef 作为稳定槽位、原位轮换密文，或在首次切换前核实并留存不含凭据的绑定证据。检查 `postgres/executors.go` 已有原位更新入口及其并发约束。绑定缺证要单独报告；不能把当前登记无条件追认为历史，也不能重发已受理的远端执行或付费判卷。验收含在途轮换加重启、原 ID 续行、判卷取证与取消、未授权拒绝、真实配置变化以及已完成证据可回读。以上为设计方案，未实施。
+
+## 2026-11-10 临时试跑的存储归属和实际回收
+
+**Why:** 用户明确要求 Runtime 只承担执行所需存储，EVOLVE 保存评测元数据和原件。Nextplay 的临时资源生命周期可复用；调用删除接口、从目录消失、释放执行环境以及物理存储回收是可分别观测的事实。以目录消失替代回收验收会掩盖历史、文件与 Store 的累计增长。
+
+**How to apply:** 源码锚点为 Maxwell `f146431129a5f6907044a03e475349b3da08720a` 与 Nextplay `5408ebc5a264db463d4435743993c154bae0479c`。沿 Maxwell `maxwellexecutor/adapter.go` 查当前业务可见、可写的评测 Thread 及 metadata 搜索恢复，沿 `evidence.go` 查证据归档和 EVOLVE staging 清理。该原生执行器未调用 Runtime 删除 Thread。沿 Runtime `application/threads.go`、`infrastructure/threadstore/sql.go` 和 `infrastructure/historyretention/delete.go` 分别核对停机、释放后端、软删除以及保留引用保护下的物理清理；不要将现有物理删除 helper 当成普通删除链路的效果。Preset 与 Prompt 删除为软删；按 Preset 隔离的中间件 Store 查 `app/integration/runtime/storeadapter/runtime.go`。Nextplay 物化与释放的顺序、保留失败、精确 404 判定沿 `materializer/service.py`、`cleanup.py` 查。
+
+建议在 EVOLVE 现有持久 journal 记录每次创建意图、精确 ID、待清理资源和回执，证据与评分通过 EVOLVE 归档读取。Runtime 只写运行必需的执行状态、有限且服务端可信的临时归属与创建幂等身份。沿 Runtime `transport/http/controller.go` 核对已有 idempotencyKey 和非账号主体仅能创建业务可见 Thread 的限制，系统身份需补受限可见性；不能用 clientMetadata 或名称授权删除。沿 `ports/runtime_control.go` 核对现有内联 Skill 快照；完整 Case、冻结资源包、评分和租约应避免进入 Runtime metadata。仅在需要更改配置或隔离 Preset 级写入时物化临时 Preset，状态型基线和候选的隔离条件相同。未变化且可验证版本的资源允许引用，临时资源只清理明确归属的 ID。
+
+清理以执行停稳及可回读的 EVOLVE 归档为门槛，可与异步判卷并行。先释放 Thread 和依赖后端，再按精确归属回收临时 Preset、Prompt、Skill、文件及 Store。评测成功与清理积压分别记录；故障后从原 lease 重试，并监控超期残留。若原删除接口只保证逻辑删除，需要 Runtime 受限清除重型历史和试跑独占资源的能力，复用已有引用保护及防复活幂等记录，租约仍归 EVOLVE。验收分开量化目录残留与实际保留行数、字节、Store/文件/沙箱，在目标规模和重复批次验证达到保留窗口后不线性增长。保留历史和普通资源，清理后重判从 EVOLVE 原件读取。当前为只读方案复审，实际保留期和环境容量尚未核实。
