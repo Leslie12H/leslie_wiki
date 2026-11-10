@@ -135,4 +135,4 @@ Nextplay 源码锚点为 `5408ebc5a264db463d4435743993c154bae0479c`。核对 `ev
 
 Maxwell `f146431129a5f6907044a03e475349b3da08720a` 中，Preset 软删不级联 Thread。Thread 和历史 Run/事件的读取按 Runtime `transport/http/controller.go` 与事件存储核对；续跑和非托管 Sandbox 文件按 `application/runs.go`、`thread_files.go` 核对仍需可解析的 Preset 或已有受信快照。 `application/threads.go` 的 Thread 删除会运行后端释放，且配置化 Sandbox 释放会解析 Run Preset；先软删 Preset 可能使后续删除跳过该配置的 Sandbox 释放。删 Preset 也不回收其 Store 分区。
 
-首版若主要目标是临时配置退场和保留历史，建议正常停稳且证据归档后保留 Thread，清除本次创建的临时 Preset 与独占 Prompt/Skill。按历史回看验收，文件和重判从 EVOLVE 归档取；保留 Thread 会保留 Runtime 历史。对明确要求立即释放 Sandbox 的试跑，继续用 Thread 先删、Preset 后删的现有路径。当前核对为源码，未实施或实跑。
+2026-11-10 用户确认正常 Thread 可以保留。首版在执行停稳且证据归档后默认保留 Thread，清除本次创建的临时 Preset 与独占 Prompt/Skill。按历史回看验收，文件和重判从 EVOLVE 归档取；保留 Thread 会保留 Runtime 历史。对明确要求立即释放 Sandbox 的试跑，继续用 Thread 先删、Preset 后删的现有路径。当前核对为源码，未实施或实跑。

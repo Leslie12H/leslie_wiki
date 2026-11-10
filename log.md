@@ -2530,3 +2530,5 @@
 - 2026-11-10：核对 Nextplay 保留 Thread 的模式，以及 Maxwell 软删临时 Preset 后的历史和 Sandbox 释放边界。
 
 - 2026-11-10：补充 EVOLVE 完整 Case 表单示例、同一评估器多类型输出、旧版断言与证据取值的入口和路径边界。
+
+- 2026-11-10：记录用户确认 EVOLVE Adapter 首版保留正常 Thread。
