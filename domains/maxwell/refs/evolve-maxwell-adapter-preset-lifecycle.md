@@ -136,3 +136,17 @@ Nextplay 源码锚点为 `5408ebc5a264db463d4435743993c154bae0479c`。核对 `ev
 Maxwell `f146431129a5f6907044a03e475349b3da08720a` 中，Preset 软删不级联 Thread。Thread 和历史 Run/事件的读取按 Runtime `transport/http/controller.go` 与事件存储核对；续跑和非托管 Sandbox 文件按 `application/runs.go`、`thread_files.go` 核对仍需可解析的 Preset 或已有受信快照。 `application/threads.go` 的 Thread 删除会运行后端释放，且配置化 Sandbox 释放会解析 Run Preset；先软删 Preset 可能使后续删除跳过该配置的 Sandbox 释放。删 Preset 也不回收其 Store 分区。
 
 2026-11-10 用户确认正常 Thread 可以保留。首版在执行停稳且证据归档后默认保留 Thread，清除本次创建的临时 Preset 与独占 Prompt/Skill。按历史回看验收，文件和重判从 EVOLVE 归档取；保留 Thread 会保留 Runtime 历史。对明确要求立即释放 Sandbox 的试跑，继续用 Thread 先删、Preset 后删的现有路径。当前核对为源码，未实施或实跑。
+
+## 2026-11-10 首版启动与授权评审
+
+**Why:** 用户要求建立目标并开始开发。正常完成的 Thread 默认保留。目标是 Maxwell Agent 单入口完成普通评测及隔离的 SP/Skill 候选试跑，EVOLVE 留证、判卷与清理独占临时配置。
+
+**How to apply:** 本地工作树 `/Users/leslie/.codex/worktrees/evolve-maxwell-agent-v1/maxwell-ai` 基于 `f146431129a5f6907044a03e475349b3da08720a`。已启动 EVOLVE 侧实现，沿 `maxwellexecutor/adapter.go` 查创建幂等与旧 journal 恢复，沿 `integration/a2a/configuration.go`、`llmjudge/maxwell.go` 和 `judgeprovider/source.go` 查执行快照 v2 与判卷凭据按调用加载。2026-11-10 在该工作树运行 EVOLVE 服务全量 Go 测试通过。工作树改动尚未提交、发布或真实环境验收。新格式切换要保证 API 与 Worker 都可读；旧 Runner preparation 只存 v1 摘要时，缺历史快照且当前摘要无法证明绑定，应保留原任务并报告绑定不可验证。
+
+Agent Server 下一阶段仅评审现有接口的鉴权扩展，现有请求/返回字段、调用方权限和错误状态沿用。拟允许隐藏 EVOLVE 系统身份调用以下路径。
+
+- 配置读取 `GET /api/agent/preset/detail`、`GET /api/prompt`、`GET /api/skill/detail`。配置写入 `POST /api/agent/preset/copy`、`PUT /api/agent/preset`、`POST /api/agent/preset/delete`、`POST /api/prompt`、`POST /api/prompt/delete`、`POST /api/skill/import`、`POST /api/skill/delete`。写操作限本次试跑物化资源。
+- Runtime `GET|POST /api/runtime/threads`、`POST /api/runtime/threads/{threadId}/messages`、`GET /api/runtime/threads/{threadId}/runs`、`GET /api/runtime/threads/{threadId}/events`、`GET /api/runtime/threads/{threadId}/events/{eventId}`、`GET /api/runtime/threads/files`、`GET|HEAD|PUT /api/runtime/threads/files/content`、`GET /api/runtime/models` 和 `POST /api/runtime/model-completions`。正常试跑保留 Thread。
+- 如需接管在途 Maxwell A2A，按原身份归属验收 `GET /api/a2a/{agentId}/.well-known/agent-card.json`、`GET /api/a2a/{agentId}/tasks/{id}` 和 `POST /api/a2a/{agentId}/tasks/{id}:cancel`。保留原任务 ID。
+
+建议在现有 Bearer/Service principal 上加入独立 EVOLVE 信任与短期授权，限制 Business、任务、动作及资源范围。部署签名密钥按环境单独注入、缺省不启用该身份；请求范围及有效期用代码规则。权限风险是跨 Business 或对正式配置写入，验收应覆盖错误范围拒绝。回退可停用此身份，既有调用路径和 EVOLVE 归档仍可读取。鉴权扩展与候选物化尚待实施。正式 doc-hub 配置路径在本机未找到，本轮以已确认的对话范围推进内部代码。
