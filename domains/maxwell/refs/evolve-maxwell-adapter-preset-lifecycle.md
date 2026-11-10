@@ -263,6 +263,6 @@ Agent Server 的复制接口会按当前工具目录重新校验，可能裁掉�
 
 **How to apply**
 
-沿 EVOLVE `a2aoutput/output.go` 查两个入口共用的输出选择和判卷结果格式。沿 `maxwellexecutor/turns.go` 查隔离试跑使用当前凭据，通过现有 A2A Task 读取本轮正式结果。异步工具接续时使用发出终态事件的子 Run。EVOLVE 将每轮已读结果写入本地 journal，读取中断后的恢复只补读结果。沿 `evidence.go` 核对 Run、Thread 和临时 Preset 的绑定。单轮判卷保留结果对象，多轮沿普通评测的 `output.text` 和 `output.turns`。结构化原件随逐轮执行证据归档，已归档历史结果和 Nextplay 准备输入的判卷格式沿原路径读取。
+沿 EVOLVE `internal/app/integration/a2a/output/output.go` 查两个入口共用的输出选择和判卷结果格式。A2A SDK 的依赖集中在 `integration/a2a`。沿 `maxwellexecutor/turns.go` 查隔离试跑使用当前凭据，通过现有 A2A Task 读取本轮正式结果。异步工具接续时使用发出终态事件的子 Run。EVOLVE 将每轮已读结果写入本地 journal，读取中断后的恢复只补读结果。沿 `evidence.go` 核对 Run、Thread 和临时 Preset 的绑定。单轮判卷保留结果对象，多轮沿普通评测的 `output.text` 和 `output.turns`。结构化原件随逐轮执行证据归档，已归档历史结果和 Nextplay 准备输入的判卷格式沿原路径读取。
 
 `frozen_preset_test.go` 与 `frozen_preset_regrade_test.go` 使用替身 Runtime 验证两轮子 Run、读结果返回 502 后重启、每条用户消息只执行一次，以及清理临时 Preset 后由 EVOLVE Worker 读取同一份归档重判。Agent Server 的现有 A2A Handler 测试覆盖 Runtime Run 地址映射及业务 Key 权限。正式环境仍需核对同源服务和业务授权后验收。
