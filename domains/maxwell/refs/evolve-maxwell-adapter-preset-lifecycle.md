@@ -452,3 +452,16 @@ Studio 和 EVOLVE 发布成功后，另一个分支部署的 Agent API 仍可能
 - [新业务 Benchmark v1](https://agent.sandaii.cn/evolve/library/benchmarks/bench_ed10eccb270ee9ddfc2c7983080b30dd?businessId=8a0b2684-7779-4aca-883d-77086656b20e) 是实际验收入口。选本业务 Preset 完成注册，Agent 写 3 题、3 维 Judge 和 Benchmark。聊天中确认后，在用例库回读正式用例。冻结 Judge 另存共享后进入评分目录，零运行页回读首跑卡。
 - 新业务用默认评分模型提交时缺模型设置，运行前需选择可用模型。首次 DeepSeek 运行重复请求模型未得到完整回复，取消后保留记录。选 Gemini 后 [复验记录](https://agent.sandaii.cn/evolve/library/records?businessId=8a0b2684-7779-4aca-883d-77086656b20e&run=run_a9f453e676074b2fba56bebd0898f50e) 回读 1 通过、1 失败、1 执行错误。澄清题触发目标提问而 Case 未声明 `input.interaction`，不能计作客服答错。取消题真实输出声称已代办，权限边界维度为 0/5。
 - [从复验创建的调优任务](https://agent.sandaii.cn/evolve/tasks/work_2fabc9e1e1c882deb4fe1aabffa81cfa?businessId=8a0b2684-7779-4aca-883d-77086656b20e) 继承评测来源。实际预检明确缺原生隔离试跑和关联 Runner。沿 `maxwellpreset/client.go` 核对注册时受管 Key 只补基础执行及可读权限，原生试跑还校验 Preset/Prompt/Skill 写权限。#424 的系统身份授权只限三项配置读取。Agent 基于真实取消题失败保存了可审阅的系统 Prompt 候选 v1。候选复测、应用证明和临时资源回收尚未验收。
+
+## 2026-11-10 新业务默认判卷与草稿指标入库
+
+**Why**
+
+用例确认和冻结已经调用正式用例目录。旧式 Judge 的维度只存在于 Rubric 与旧式试次分数中，另存该 Judge 也不会产生独立指标。Maxwell 原生消息若转发完整的交互题输入，模拟用户答案会在首条消息里暴露给被测 Agent。
+
+**How to apply**
+
+- 在 Maxwell 的 `application/evaluation/judge_config.go` 查新评测的模型选择优先级。已有显式选择或冻结模型按原运行使用，未设业务默认才回落到平台默认。通过 `native_llm_admission_test.go` 验收业务配置优先、运行快照和重试。
+- 按 `agent-resources/skills/judge-design` 起草原生指标。Studio 确认并冻结后，在 `commands/reviewed_judge_metrics.go` 查独立 MetricSpec 发布、Judge 引用及目录重试。验收要同时检查用例库、指标的评分依据、Run 记录的同一指标修订。沿同名测试查本地替身端到端；已冻结旧 Judge 不回写。
+- 交互题按 `skills/case-design/examples/case.interactive.yaml` 写模拟答复；沿 `maxwellexecutor/case_text.go` 核对首次只给真实用户输入，`live_interaction.go` 在收到提问后才使用应答规则。
+- 区分系统身份覆盖的业务与 Agent Server 接受的操作。沿 `evolve_config_read_auth.go` 查现有签名身份的三项读取能力，沿 `native_tuning_baseline.go` 查隔离试跑仍消费的权限。复用同一个系统身份，签名有效期属于服务端凭证机制，不需要每次试跑由业务方审批。调整现有路由鉴权时遵循项目变更治理。
