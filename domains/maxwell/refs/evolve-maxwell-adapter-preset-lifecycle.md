@@ -328,3 +328,15 @@ EVOLVE 试跑的替身测试可以验证编排顺序。业务 Key 能否通过 A
 沿 `judgeprovider/source.go`、`measurements.go` 和 `recovery.go` 查当前登记、业务、角色、端点和评委版本检查。收到同源 401 且取得不同的新 Key 时，沿 `safehttp/bearer_refresh.go` 重试同一 HTTP 请求一次。已受理任务继续 GET 原 invocation，取消继续 DELETE 原 invocation。沿 `evidence_auth.go` 查证据入口使用当前授权和原请求哈希，旧 Key 被拒绝。旧绑定包含 CredentialRef 的任务可在引用保持不变时继续。普通 Executor PATCH 拒绝判卷登记，重复判卷登记也不会更新 Key。现有 `cmd/evolve-credential-rotate` 用于重新加密存储密文，和替换评委实际使用的 Key 是不同操作。
 
 沿 `evidence_pull_test.go` 查受理后轮换、原请求哈希和截止时间、原归档回读与篡改拒绝。沿 `recovery_test.go` 查旧绑定在同一槽位轮换后的取消回执。设置 `NEXTPLAY_EVAL_ROOT` 可在本机用 Nextplay `cc664e06c9cc61d6b1c81340dae30cfa754ac81c` 的实际下载器和新 Key 读取同一 24 MiB 归档。Nextplay 客户端在构造时读 Key，这个验证使用重新构造的客户端；在途 Nextplay 进程热切换 Key 仍待联调。
+
+## 2026-11-10 历史 Preset 快照与隔离试跑的执行选择
+
+**Why**
+
+历史 `ResolveBaseline` 已生成带 `preset://`、`baselineHash` 和资源目录的 Variant。只凭这个形状选择隔离执行，会使升级时仍排队的旧普通评测改走临时 Preset，影响原执行条件。
+
+**How to apply**
+
+沿 `commands/tuning_baseline.go` 查看创建 Maxwell 调优 Work 时保存的执行器和原生 Preset 选择。独立候选验证沿 `commands/candidate_validation.go` 将该选择写入已验证的派生 Work 计划。沿 `execution/frozen_preset.go` 和 `evaluation/live.go` 核对 Worker 使用 Work 保存的路径，再由 `integration/a2a/native.go` 和 `maxwellexecutor/adapter.go` 进入隔离试跑。历史 Variant 原件与协议保持可读取，普通评测沿原 A2A；已派发任务沿原 ID 恢复。路径记录归 EVOLVE。
+
+`native_tuning_baseline_test.go` 覆盖普通评测、隔离基线、归档重判、独立候选和同形状历史 Variant 的 Worker 派发。`native_inspection_test.go` 用同一份 Variant 验证普通路径向 A2A 发送一次，隔离路径只创建 EVOLVE 执行预留。这些测试在本机执行，真实 Runtime 验收仍需同源 Worker。
