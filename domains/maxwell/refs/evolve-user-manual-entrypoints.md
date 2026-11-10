@@ -38,3 +38,9 @@ links: [evolve-benchmark-unified-plan-review, evolve-preset-evaluation-entry, ev
 **Why:** 旧版标签是 Studio 的评分资产入口，方法本身仍按冻结版本执行。逐题页面的展示对象和评分方法收到的材料不同，样例字段不能被当作平台默认产出。
 
 **How to apply:** 按 Maxwell 手册「为什么有旧版评分配置」和「到哪里找证据字段」定位。沿 `supportsEvaluatorEditor`、`MethodsDirectory.tsx`、`StandardsTab.tsx`、`SharedBenchmarkEditorStore.ts` 核对 LLM 编辑入口及从旧评分资产发起 Benchmark 的方式。沿 `queries/evidence.go`、`attempt_evidence.go`、`TrialDetailPanel.tsx` 和 `evidenceReading.ts` 区分逐题输出投影、原件和格式化显示。自定义 `metrics` 由执行器上报，详情投影不单列；核对归档回执或执行器输出契约。比对 `evaluation/judge_dispatch.go`、`native_processor.go` 与 `plan_processor.go` 确定 JSON Pointer 的根。平台 `runtimeMetrics` 与业务自定义 `metrics` 分开核对。核对锚点沿上方 2026-11-10 主线记录。
+
+## 2026-11-10 从冻结输出发现评分字段
+
+**Why:** 配置页的示例路径会让用户以为当前执行器已采集到字段。输出展示会格式化 JSON 文本，真正的评分字段需要以冻结证据的类型与方法读取根为准。
+
+**How to apply:** Maxwell 工作区 `evolve-evidence-fields` 的 `TrialOutputFieldPaths.tsx` 与 `trialOutputFields.ts` 是前端实现入口。只从已冻结、未截断的结构化输出提取可用路径，保留 false 和 0，规则校验与证据取值分别复制。逐题详情仍无法发现自定义 `metrics`，只读字段接口及兼容要求见同工作区 `docs/plans/evolve-scoring-field-discovery-20261110.md`，实施须按项目变更治理确认。Studio 检查及受控浏览器样例验证了路径、隐藏和复制；发布状态另查 Git 与部署。
