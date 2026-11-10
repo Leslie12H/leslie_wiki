@@ -316,3 +316,15 @@ EVOLVE 试跑的替身测试可以验证编排顺序。业务 Key 能否通过 A
 沿 `maxwellexecutor/frozen_preset.go` 查看 EVOLVE journal 的逐资源回执。成功删除和目标接口确认资源已不存在分别留存。只有写入回执后才推进，后续重试跳过已确认项。原拥有的 ID 留存，回收仍先 Preset 再 Skill 和 Prompt。沿 `cancel.go` 查看未创建 Thread 的取消也进入后台回收队列，沿 `evidence.go` 查归档发布后仅在归档中保留原事件和文件索引。
 
 `archived_cleanup_test.go` 用本地替身让每轮回收只来得及确认一项，重建 Adapter 后继续直到四项全部确认。`cancel_recovery_test.go` 覆盖尚未创建 Thread 时，由后台队列找回创建回执并回收；`frozen_preset_test.go` 核对归档、判卷、Thread 保留和回执。本地渲染 dev、staging、prod 的 EVOLVE 部署清单，API 和 Worker 各自在同一 NAS 声明和对象目录下读取 journal。沿 `app/composition.go` 核对跨进程的 PostgreSQL advisory lock。环境真实存储与端到端执行仍需按部署验收步骤核对。
+
+## 2026-11-10 已受理判卷在 Key 轮换后续作
+
+**Why**
+
+评分请求受理后，EVOLVE 要继续查询原 invocation，评委也可能尚未读取归档。若 Key 在读取当前授权和发出请求之间轮换，旧 Key 的 401 会中断原任务。归档请求和截止时间属于任务，凭据属于连接的当前授权。
+
+**How to apply**
+
+沿 `judgeprovider/source.go`、`measurements.go` 和 `recovery.go` 查当前登记、业务、角色、端点和评委版本检查。收到同源 401 且取得不同的新 Key 时，沿 `safehttp/bearer_refresh.go` 重试同一 HTTP 请求一次。已受理任务继续 GET 原 invocation，取消继续 DELETE 原 invocation。沿 `evidence_auth.go` 查证据入口使用当前授权和原请求哈希，旧 Key 被拒绝。旧绑定包含 CredentialRef 的任务可在引用保持不变时继续。普通 Executor PATCH 拒绝判卷登记，重复判卷登记也不会更新 Key。现有 `cmd/evolve-credential-rotate` 用于重新加密存储密文，和替换评委实际使用的 Key 是不同操作。
+
+沿 `evidence_pull_test.go` 查受理后轮换、原请求哈希和截止时间、原归档回读与篡改拒绝。沿 `recovery_test.go` 查旧绑定在同一槽位轮换后的取消回执。设置 `NEXTPLAY_EVAL_ROOT` 可在本机用 Nextplay `cc664e06c9cc61d6b1c81340dae30cfa754ac81c` 的实际下载器和新 Key 读取同一 24 MiB 归档。Nextplay 客户端在构造时读 Key，这个验证使用重新构造的客户端；在途 Nextplay 进程热切换 Key 仍待联调。
