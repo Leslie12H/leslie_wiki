@@ -150,3 +150,13 @@ Agent Server 下一阶段仅评审现有接口的鉴权扩展，现有请求/返
 - 如需接管在途 Maxwell A2A，按原身份归属验收 `GET /api/a2a/{agentId}/.well-known/agent-card.json`、`GET /api/a2a/{agentId}/tasks/{id}` 和 `POST /api/a2a/{agentId}/tasks/{id}:cancel`。保留原任务 ID。
 
 建议在现有 Bearer/Service principal 上加入独立 EVOLVE 信任与短期授权，限制 Business、任务、动作及资源范围。部署签名密钥按环境单独注入、缺省不启用该身份；请求范围及有效期用代码规则。权限风险是跨 Business 或对正式配置写入，验收应覆盖错误范围拒绝。回退可停用此身份，既有调用路径和 EVOLVE 归档仍可读取。鉴权扩展与候选物化尚待实施。正式 doc-hub 配置路径在本机未找到，本轮以已确认的对话范围推进内部代码。
+
+## 2026-11-10 原生试跑物化与回收首轮验证
+
+**Why:** 首版复用 Nextplay 的临时配置办法。清理须等 EVOLVE 完成取证，正常 Thread 可以留作历史。成功归档与清理成功分别记录，清理失败可以在同一个 invocation 上重试。
+
+**How to apply:** 沿本地 Maxwell 工作树的 `maxwellexecutor/frozen_preset.go` 核对冻结源版本与清单、试跑独占资源的物化和回收。复用现有 Preset、Prompt、Skill 接口，按冻结目录实际应用 SP 和 Skill 绑定，再沿 `evidence.go` 查 Run 记录对实际 Business、Thread 和 Preset 的核验。清理只使用 journal 已确认归属的 ID。创建请求结果不明时留存创建意图，当前没有按意图补查的路径。取消时已有工作区但缺文件归档证据，则保留配置供补取。首版删除沿用现有资源接口的生命周期语义。
+
+沿 `commands/baseline.go` 查大资源的 Work Artifact 引用。只有历史裸 CAS 哈希时，需重新冻结或补齐经授权的资源引用。冻结资源经 Worker JSON 持久化后应使用已校验的原字节见证，避免 JSON 排版变化破坏内容校验。
+
+本地 HTTP 集成测试覆盖同一入口路由、基线及 SP 与 Skill 增删、归档、清理错误后恢复和保留 Thread。测试使用替身 Runtime，产品代码留在工作树。隐藏系统身份待授权确认，原生隔离路径目前覆盖已有 Nextplay Case 输入。生产回收、通用输入及完整判卷链路待联调。
