@@ -402,3 +402,16 @@ EVOLVE 试跑的替身测试可以验证编排顺序。业务 Key 能否通过 A
 - 验收使用已登记目标与缺读取权限的原 Key。重放同一 Work 的基线读取，核对快照内容和 Work/Key 未变化。检查无关联资源、其他业务、列表和写操作拒绝。本地通过 EVOLVE 客户端对接真实 Agent Server Handler 的跨服务测试。生产会话可按原会话继续提交当前卡片，线上验收以部署后真实工具回执和草稿进度为准。
 
 2026-11-10 将首版工作树的改动合入 [Maxwell PR #424](https://github.com/world-sim-dev/maxwell-ai/pull/424) 的源分支，保留同一 PR 的冻结试次评分字段改动。沿提交 `4067b86ab` 查本轮集成范围，发布与线上旧会话验收按实际服务版本另行核对。
+
+## 2026-11-10 Dev 发布与原会话草稿的边界
+
+**Why**
+
+部署、系统身份读到真实配置、会话用新回执完成草稿，是三件事。原会话可能把历史权限错误写成当前结论。保存带可执行 payload 的草稿会即时做结构校验，只有 Markdown 的审阅稿可以先保存。编排可按需前进，实际执行仍需冻结精确输入。
+
+**How to apply**
+
+- 查 [Dev 发布 42777186409](https://github.com/world-sim-dev/maxwell-ai/actions/runs/42777186409) 和合并提交 `7f2b3633c`。使用上海 ACK 的 Agent API/Worker、EVOLVE API/Worker，以及 `agent.sandaii.cn` 的 Studio 静态构建确认生效。补配环境级系统身份配对密钥，沿 Agent Server 的 `auth_method=evolve_config_read` 核对请求，跳过数据库迁移。用真实已登记目标探测 Preset、关联 Prompt 和 Skill，再验跨业务、非关联资源、列表、写入和过期凭据。
+- 在原会话提交自然语言重试后，2026-11-10 15:57（北京时间）的回复沿用了旧权限判断，当轮记录仅有计划和待办。明确要求本轮实际调用 `evolve_run resolve_baseline` 后，15:58 的回执和 Agent API 日志确认目标配置可读。原 Work 保存了评测目标、4 个 Cases、Judge 及 base 文字审阅稿；Benchmark 仍是会话里的烟测提案，未正式创建或执行。
+- 沿 EVOLVE `commands/draft.go`、`confirmed_draft.go` 查保存时仅在有 payload 的情况下校验、确认时要求可执行 payload。沿 `targetmodel/target_model.go` 查 base 的目标和接口来源，沿 `evaluation/variant.go` 查 profile 资源正文或可校验引用。原会话两次校验分别缺 `targetRef` 的来源和首项资源正文或引用。`resolve_baseline` 返回经过服务端校验的完整 `profilePayload`，按原结果透传即可避免手抄资源摘要时丢字段。
+- 沿 `agent-resources/prompts/evolve-tuning-agent.md` 查按需补齐资产的编排。沿 `commands/benchmark.go` 查 Benchmark 定义的冻结 CaseSet/Judge 引用，沿 `commands/run.go` 查运行阶段的 TargetProfile 与 Variant 要求。评测草稿先给用户审阅，准备正式资产时才补与实际入口有关的冻结依赖。
