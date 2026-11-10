@@ -116,3 +116,13 @@ Nextplay 源码锚点为 `5408ebc5a264db463d4435743993c154bae0479c`。核对 `ev
 建议在 EVOLVE 现有持久 journal 记录每次创建意图、精确 ID、待清理资源和回执，证据与评分通过 EVOLVE 归档读取。Runtime 只写运行必需的执行状态、有限且服务端可信的临时归属与创建幂等身份。沿 Runtime `transport/http/controller.go` 核对已有 idempotencyKey 和非账号主体仅能创建业务可见 Thread 的限制，系统身份需补受限可见性；不能用 clientMetadata 或名称授权删除。沿 `ports/runtime_control.go` 核对现有内联 Skill 快照；完整 Case、冻结资源包、评分和租约应避免进入 Runtime metadata。仅在需要更改配置或隔离 Preset 级写入时物化临时 Preset，状态型基线和候选的隔离条件相同。未变化且可验证版本的资源允许引用，临时资源只清理明确归属的 ID。
 
 清理以执行停稳及可回读的 EVOLVE 归档为门槛，可与异步判卷并行。先释放 Thread 和依赖后端，再按精确归属回收临时 Preset、Prompt、Skill、文件及 Store。评测成功与清理积压分别记录；故障后从原 lease 重试，并监控超期残留。若原删除接口只保证逻辑删除，需要 Runtime 受限清除重型历史和试跑独占资源的能力，复用已有引用保护及防复活幂等记录，租约仍归 EVOLVE。验收分开量化目录残留与实际保留行数、字节、Store/文件/沙箱，在目标规模和重复批次验证达到保留窗口后不线性增长。保留历史和普通资源，清理后重判从 EVOLVE 原件读取。当前为只读方案复审，实际保留期和环境容量尚未核实。
+
+## 2026-11-10 EVOLVE Adapter 首版回收范围
+
+**Why:** 用户希望首版达到 Nextplay 的正常自动回收水平，并收敛额外防御机制。首版以停机、留证、删除临时资源和记录异常为验收。上一节关于物理历史和 Store 清理的建议改为依据实际残留另行评估。
+
+**How to apply:** Nextplay 源码锚点 `5408ebc5a264db463d4435743993c154bae0479c`。查 `maxwell-runtime/src/nextplay_runtime/runner.py` 与 `materializer/service.py` 的采集、停机和 Thread → Preset → 本次导入的 Skills → Prompt 删除。物化失败会尽量回收已经记下 ID 的资源。停机、取证或删除失败保留 lease 与错误，`nextplay-a2a/skills/maxwell-candidate-runner/SKILL.md` 说明按原 lease 处理。查 `eval-service/src/eval_service/execution_worker.py` 区分 Worker 接管时的远端停机和资源清理。CLI 的 recapture 是原件未齐时的诊断取证，不改历史结果。历史单次验收见 2026-09-16 回执；未核对本次线上实际回收比例。
+
+建议首版复用 Maxwell Agent 登记和 EVOLVE `maxwellexecutor` 的 journal、归档及重启恢复。普通评测沿现有路径；配对调优的基线和候选各用独立试跑资源，支持 SP 替换与 Skill 绑定增删，解绑不删除源 Skill。每次创建记录本次拥有的 ID，Thread 使用现有幂等键，Runtime 只保留执行必需状态和最小关联。隐藏 EVOLVE 系统身份使用现有操作，执行和判卷在调用时取当前凭据，历史协议与任务 ID 保持。Agent Server 复用已有 CRUD 和停机释放能力。
+
+正常或失败后停稳、证据已存时用现有接口清理，判卷从 EVOLVE 读归档。停机或取证未确认、删除失败时保留待清理 ID，已有 Worker 恢复路径可重试同一释放，异常可按记录补收。执行/判卷结果与清理结果分别记录。首版沿用软删及现有存储保留策略，无新增租约接口或表、独立巡检、物理清理协议；试点记录软删历史、文件和 Store 的实际残留，再决定是否扩范围。验收覆盖普通评测、基线与 SP/Skill 候选、成功自动清理、失败留证与恢复、删除后从 EVOLVE 重判。此处是待实施方案。
