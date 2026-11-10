@@ -26,3 +26,9 @@ links: [evolve-benchmark-unified-plan-review, evolve-preset-evaluation-entry, ev
 **Why:** Case 的上下文和准备数据需要执行器明确消费；给评分看的参考答案来自冻结 Case。模板、评估器输出类型与目录里的计算方法是不同维度。
 
 **How to apply:** 完整退款题和三类型指标示例回查 Maxwell 手册。当前主线的 `CaseEditorDialog.tsx` 对应表单，`execution/contract.go` 及各执行器输入解析区分输入、上下文和准备数据；正式参考答案沿 `evaluation/plan_processor.go` 查。模板沿 `evaluatorTemplates.ts` 和 `evaluatorEditing.ts` 核对默认材料与输出，方法的实际配置入口沿 `MethodsDirectory.tsx` 检查。旧版确定性断言的 JSON 路径针对实际输出根，另查 `evaluation/judge_dispatch.go` 和 `methods/judge/caseaware.go`；证据取值按它自身的材料路径。手册样例通过导入解析，三项评分预期用于人工对照。
+
+## 2026-11-10 按方法配置可验收指标
+
+**Why:** 同一业务诉求可拆为答复表述、真实执行顺序和实际写入事实，三者需要不同证据。单次业务查询耗时的判断和 Benchmark 端到端耗时门槛也有不同分母。
+
+**How to apply:** 七个完整配置入口见 Maxwell 手册的「每种方法配一个可用指标」。以同日主线锚点回查 `NativeJudgeEditor.tsx`、`RubricJudgeEditor.tsx` 与 `BuiltinMetricRows.tsx`。`methods/measurement/evidence.go` 按指标键匹配 selector，数值路径缺失保留 missing；旧版断言路径相对实际输出根。参考答案对比的扣分公式见 `judge/refcompare/refcompare.go`，过程证据与里程碑见 `judge/trajectory/trajectory.go`。本地以手册原件核对证据取值的通过、失败、缺失以及字段断言的 1/0，两个 Judge 现有离线测试通过。外部业务审计与实际线上模型分回到目标环境验证。
