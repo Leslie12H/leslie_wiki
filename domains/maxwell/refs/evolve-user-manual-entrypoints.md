@@ -57,3 +57,9 @@ Agent 保存草稿、任务生成正式资产、发布共享评分标准是不�
 - 回查 [Maxwell PR #427](https://github.com/world-sim-dev/maxwell-ai/pull/427) 的 Studio 提交 `b2d731f3063b8d5ac8fb2aaa736fcc597e353506`。指标详情沿 `StandardsTab.tsx`、`AssetReferences.tsx` 读取引用该精确修订的评估器或旧版评分配置，展开后按引用修订查询现有详情。逐题绑定仍沿「关联用例」查，具体 Benchmark 以其采用的冻结配置为准。
 - Benchmark 的「当前版本指标与趋势」沿 `BenchmarkResultsPanel.tsx` 区分加载、请求失败、过滤为空和完整题集零运行。零运行用 `BenchmarkDetailPage.tsx` 的首跑卡概览业务评分和平台采集，评分配置仍可直接打开。2026-11-10 本地浏览器用样例验证了首跑卡、窄工作区单列、评分配置入口与精确修订 Prompt。
 - 会话工作台随同一 PR 提交。沿 `EvolveWorkspace.tsx`、`SessionWorkbench.tsx` 与 `EvolveWorkspaceStore.ts` 核对绑定任务的会话入口、当前版本草稿的人工确认和正式运行确认边界。绑定任务的会话须把 Work 引用传给聊天，否则资料引用入口失去任务范围。合并后的代码通过本地 Studio 检查，目标环境的会话实跑需按部署版本另行核对。
+
+## 2026-11-10 会话分析的执行者与证据范围
+
+**Why:** UI 写「分析 Agent」容易被理解为有一个独立部署的诊断服务。分析会话的创建、来源读取成功、实际诊断质量需要分别确认。运行里记录的错误也不等同于后台服务日志。
+
+**How to apply:** 从 Maxwell 的 `ConversationDiagnosisStore.ts` 追踪新建分析会话、绑定原会话和提交默认消息；从 EVOLVE `agentsessions/service.go` 核对复用的共享调优 Preset。从 `schemas_diagnostics.go` 和 Runtime `application/diagnostics/service.go` 查各类证据与明确不可用项；文件目录的时点另查 `resources.go`。实际结论是否引用运行证据，回看 `docs/acceptance/conversation-diagnosis-20261109.md` 的自然场景与缺口。原能力部署按本页 Web、EVOLVE、API 和 Worker 各自回执核查；入口布局或模拟提交不能替代已部署环境的模型实跑。
