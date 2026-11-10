@@ -352,3 +352,15 @@ EVOLVE 试跑的替身测试可以验证编排顺序。业务 Key 能否通过 A
 沿 Agent Server `app/api/http/evolve_trial_resources_test.go` 运行本地 Handler 集成测试。使用现有业务 Key、真实 Preset/Prompt/Skill Handler 与 Runtime 引擎，在进程内 `DriveDurable` 和确定性模型下核对候选收到替换 SP、保留及新增 Skill，源 Skill 从候选目录移除。Runtime 发起的 Run 从临时 Preset 的 A2A Task 返回正式结果，同一个 Run 用源 Preset 读取返回 404。删除独占配置后，临时 Preset 的 A2A 路由返回 404，Runtime Thread 仍可读完成事件和答复。再以同一个 Key 从源 Agent 发起普通 A2A 评测，核对原 Prompt 和独立终态。该测试未接入外部模型、真实 Temporal Worker 或实际共享存储。
 
 隐藏身份的鉴权评审需覆盖现有 A2A Agent Card、`POST /api/a2a/{agentId}/message:send`、`GET /api/a2a/{agentId}/tasks/{id}` 和 `POST /api/a2a/{agentId}/tasks/{id}:cancel`。普通评测使用发送与恢复，隔离试跑还依赖正式结果读取。沿 `a2a_api.go` 查当前仅接受业务 Key，沿 `auth_guard.go` 和 `sandbox_auth.go` 查可复用的服务主体、业务及操作校验。Sandbox 委派范围面向已有 Sandbox 能力。EVOLVE 的 `EVOLVE_AGENT_MCP_BEARER_TOKEN` 用于 Maxwell 调用 EVOLVE MCP。两者各自保留当前信任用途。系统身份的接口授权仍待确认。
+
+## 2026-11-10 主线工作区改版后的首版验收基线
+
+**Why**
+
+主线 #423 已改用 `EvolveSelect` 并调整评测弹窗。调优首版也修改同一入口，需要保留主线选择器行为与调优默认执行器、冻结基线及手动选择约束。
+
+**How to apply**
+
+2026-11-10 通过远端分支指针核对主线 `7d35be0e8bd4b4c43f37031ac506c4a40eafde05`。首版工作树从 `f146431129a5f6907044a03e475349b3da08720a` 更新到该基线。沿 Studio `products/evolve/dialogs/StartRunDialog.tsx` 核对 `event.currentTarget` 与原生调优分支，按文件哈希核对其余本地改动。重新运行 Studio check、EVOLVE 全量 Go 测试及 Agent Server HTTP、A2A、Runtime application 测试，均通过。
+
+该主线仍使用业务 Key 读取 A2A，EVOLVE 原生执行和内置模型判卷仍读取 Business Credential。系统身份范围沿上节和首版授权评审，真实环境验收前用 `make status-agent-worker` 核对当前代码目录。
