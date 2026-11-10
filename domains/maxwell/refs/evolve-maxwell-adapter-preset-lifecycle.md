@@ -438,3 +438,17 @@ Dev 原会话给 `evolve_draft put` 传了缺来源的 `base` 和缺资源正文
 - 回查 [Maxwell PR #427](https://github.com/world-sim-dev/maxwell-ai/pull/427) 的提交 `7930b9802` 及 `agent-resources/prompts/evolve-tuning-agent.md` 与 `skills/target-recon/references/target-connection.md`。旧 Work 重试以实际重调后的回执为准。先交用户要求的评测草稿，按需准备正式 Run 的依赖。
 - 沿 `commands/draft.go`、`app/toolcaller.go` 与 MCP `draftSchema` 查 `evolve_draft put object=profile` 的可选 `baseline` 参数。使用同一业务和 Work 的 executorRef、presetVersion、baselineHash，沿用基线读取与草稿写入权限。服务端重取或读回固定的原生快照，核对版本和哈希后写待确认草稿。格式错误沿既有可纠正入参映射，读取故障保留原错误。
 - 验收入口为 `TestDraftToolMarksOnlyInvalidDraftContentCorrectable`、`TestDraftToolSavesFullMaxwellBaselineWithExistingPermissions` 及 `agent-resources/tests/evolve-orchestration.test.mjs`。测试覆盖现场两种无效结构、长配置完整保存、版本变化与授权边界。线上旧会话验收须分别核对服务版本和实际加载的调优 Prompt、Skill。
+
+## 2026-11-10 PR #427 与全新业务 Dev 实验
+
+**Why**
+
+Studio 和 EVOLVE 发布成功后，另一个分支部署的 Agent API 仍可能缺少系统读取鉴权。新业务可读已接入的配置并创建评测资产，默认 Judge 与隔离试跑权限仍是独立前提。
+
+**How to apply**
+
+- [Studio 与 EVOLVE API/Worker 发布](https://github.com/world-sim-dev/maxwell-ai/actions/runs/42787265940) 对应主线 `3d6a7be2`。原 Dev 的 [Sandbox Agent API/Worker](https://github.com/world-sim-dev/maxwell-ai/actions/runs/42781532136) 来自未包含 #424 鉴权的 `c2635bb86`。对照实际 Agent API 源提交，而非只看 EVOLVE 部署。用合并两边的 `d99bc8ce5` [配套发布 Agent API/Worker](https://github.com/world-sim-dev/maxwell-ai/actions/runs/42789319498)，保留 Sandbox 验证。未执行迁移。
+- 共享调优 Preset 在线绑定 orchestration-v4 和内嵌说明的 target-recon。现有 GitHub 来源目录为空，本次仅在原资源中更新 #427 的重读与基线转交说明，保留其它线上规则。原 Vidmuse Work 在配套发布后实际读取到了 Preset、Prompt 与 Skill。自然语言恢复仍走手工回填并遇到资源哈希错误。明确使用工具的 `baseline` 字段后，原 Work 读回可确认的执行方案 v3。已有 Cases/Judge 仍在，未运行原任务。
+- [新业务 Benchmark v1](https://agent.sandaii.cn/evolve/library/benchmarks/bench_ed10eccb270ee9ddfc2c7983080b30dd?businessId=8a0b2684-7779-4aca-883d-77086656b20e) 是实际验收入口。选本业务 Preset 完成注册，Agent 写 3 题、3 维 Judge 和 Benchmark。聊天中确认后，在用例库回读正式用例。冻结 Judge 另存共享后进入评分目录，零运行页回读首跑卡。
+- 新业务用默认评分模型提交时缺模型设置，运行前需选择可用模型。首次 DeepSeek 运行重复请求模型未得到完整回复，取消后保留记录。选 Gemini 后 [复验记录](https://agent.sandaii.cn/evolve/library/records?businessId=8a0b2684-7779-4aca-883d-77086656b20e&run=run_a9f453e676074b2fba56bebd0898f50e) 回读 1 通过、1 失败、1 执行错误。澄清题触发目标提问而 Case 未声明 `input.interaction`，不能计作客服答错。取消题真实输出声称已代办，权限边界维度为 0/5。
+- [从复验创建的调优任务](https://agent.sandaii.cn/evolve/tasks/work_2fabc9e1e1c882deb4fe1aabffa81cfa?businessId=8a0b2684-7779-4aca-883d-77086656b20e) 继承评测来源。实际预检明确缺原生隔离试跑和关联 Runner。沿 `maxwellpreset/client.go` 核对注册时受管 Key 只补基础执行及可读权限，原生试跑还校验 Preset/Prompt/Skill 写权限。#424 的系统身份授权只限三项配置读取。Agent 基于真实取消题失败保存了可审阅的系统 Prompt 候选 v1。候选复测、应用证明和临时资源回收尚未验收。
