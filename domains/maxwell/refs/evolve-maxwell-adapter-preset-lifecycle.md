@@ -435,6 +435,6 @@ Dev 原会话给 `evolve_draft put` 传了缺来源的 `base` 和缺资源正文
 
 **How to apply**
 
-- 回查 Maxwell 工作树 `evolve-evidence-fields` 的 `agent-resources/prompts/evolve-tuning-agent.md` 与 `skills/target-recon/references/target-connection.md`。旧 Work 重试以实际重调后的回执为准。先交用户要求的评测草稿，按需准备正式 Run 的依赖。
+- 回查 [Maxwell PR #427](https://github.com/world-sim-dev/maxwell-ai/pull/427) 的提交 `7930b9802` 及 `agent-resources/prompts/evolve-tuning-agent.md` 与 `skills/target-recon/references/target-connection.md`。旧 Work 重试以实际重调后的回执为准。先交用户要求的评测草稿，按需准备正式 Run 的依赖。
 - 沿 `commands/draft.go`、`app/toolcaller.go` 与 MCP `draftSchema` 查 `evolve_draft put object=profile` 的可选 `baseline` 参数。使用同一业务和 Work 的 executorRef、presetVersion、baselineHash，沿用基线读取与草稿写入权限。服务端重取或读回固定的原生快照，核对版本和哈希后写待确认草稿。格式错误沿既有可纠正入参映射，读取故障保留原错误。
 - 验收入口为 `TestDraftToolMarksOnlyInvalidDraftContentCorrectable`、`TestDraftToolSavesFullMaxwellBaselineWithExistingPermissions` 及 `agent-resources/tests/evolve-orchestration.test.mjs`。测试覆盖现场两种无效结构、长配置完整保存、版本变化与授权边界。线上旧会话验收须分别核对服务版本和实际加载的调优 Prompt、Skill。
