@@ -228,3 +228,15 @@ Preset、Prompt 和 Skill 的现有创建接口由服务端分配 ID。创建已
 沿 `maxwellexecutor/evidence.go` 核对归档原件、登记待回收项和写终态 journal 的顺序。队列只有本次 invocation 的 journal 键。沿 `archived_cleanup.go` 查同一把锁下的终态与资源归属校验，再沿 `a2a/native.go` 查每次使用当前执行器授权。`worker/worker.go` 的现有清理循环处理有限批次。成功删除后 journal 留存回执，队列移除，Thread 与归档按原规则保留。
 
 本地 `frozen_preset_test.go` 和 `frozen_preset_regrade_test.go` 覆盖第一次删除失败仍可完成判卷、后续多次失败后用当前凭据补删、保留原件并重判。沿 `worker/evidence_cleanup_test.go` 查清理循环失败后继续推进。此前已经结束且没有登记待回收项的实验 journal，需要再次观察或单独核对；旧普通评测本身没有该类临时资源。
+
+## 2026-11-10 复制 Preset 时核对执行设置
+
+**Why**
+
+Agent Server 的复制接口会按当前工具目录重新校验，可能裁掉旧工具或更新 agent-mode 对工具的引用。只比较副本绑定 SP 和 Skill 前后的值，无法看到复制步骤已经引入的差异。
+
+**How to apply**
+
+沿 Agent Server `studio_api.go` 查复制时的工具和 agent-mode 调整。沿 EVOLVE `maxwellexecutor/frozen_preset.go` 查源 Preset 与副本的执行字段核对，处理旧记录中空集合的等价表示。源和副本的模型、工具、中间件或后端声明有差异时，在新建 Prompt、导入 Skill 或创建 Thread 前停止，按已登记的副本 ID 清理。合法试跑仍按源版本冻结并只调整 SP 和 Skill 绑定。
+
+`frozen_preset_test.go` 覆盖复制结果裁掉工具后的早停与回收。Agent Server 的真实 HTTP handler 技术测试覆盖正常复制、业务 API Key 边界以及删掉绑定 Preset 后的行为。真实浏览器和 Temporal Worker 验收需先用 `make check` 与 `make status-agent-worker` 核对同源 API、Worker 和 Studio。2026-11-10 本轮本机检查时没有配套服务，已有 Worker 属于另一工作树，未切换。
