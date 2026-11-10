@@ -254,3 +254,15 @@ Agent Server 的复制接口会按当前工具目录重新校验，可能裁掉�
 现有 Agent Server 签发的受管 Key 初始只含 `runtime_run`。EVOLVE 注册流程沿 `commands/key_permissions.go` 和 `maxwellpreset/client.go` 在现有授权下补齐 `runtime_read` 与 `preset_read`；隔离试跑对 Prompt、Skill 和配置写入的授权继续由现有业务权限决定。新的隐藏系统身份仍待单独确认。
 
 本地 `frozen_preset_test.go`、`a2a/connection_test.go` 和 `llmjudge/maxwell_test.go` 覆盖复制过程中轮换、目标 Preset 变更时拒绝重发、判卷重发保持请求字节、403 或凭据未变时保留原错误。
+
+## 2026-11-10 普通评测和隔离试跑的判卷输出
+
+**Why**
+
+普通 Maxwell 评测从 A2A Task 的正式产物读取最终回复。直接拼接隔离 Thread 的助手事件会把过程说明混入回答，并遗漏结构化结果和旧评分规则需要的逐轮字段。
+
+**How to apply**
+
+沿 EVOLVE `a2aoutput/output.go` 查两个入口共用的输出选择和判卷结果格式。沿 `maxwellexecutor/turns.go` 查隔离试跑使用当前凭据，通过现有 A2A Task 读取本轮正式结果。异步工具接续时使用发出终态事件的子 Run。EVOLVE 将每轮已读结果写入本地 journal，读取中断后的恢复只补读结果。沿 `evidence.go` 核对 Run、Thread 和临时 Preset 的绑定。单轮判卷保留结果对象，多轮沿普通评测的 `output.text` 和 `output.turns`。结构化原件随逐轮执行证据归档，已归档历史结果和 Nextplay 准备输入的判卷格式沿原路径读取。
+
+`frozen_preset_test.go` 与 `frozen_preset_regrade_test.go` 使用替身 Runtime 验证两轮子 Run、读结果返回 502 后重启、每条用户消息只执行一次，以及清理临时 Preset 后由 EVOLVE Worker 读取同一份归档重判。Agent Server 的现有 A2A Handler 测试覆盖 Runtime Run 地址映射及业务 Key 权限。正式环境仍需核对同源服务和业务授权后验收。
