@@ -400,3 +400,5 @@ EVOLVE 试跑的替身测试可以验证编排顺序。业务 Key 能否通过 A
 - 沿 EVOLVE `commands/baseline.go` 与 `maxwellpreset/system_baseline.go` 查当前读取身份。服务按已登记 Business 和 Preset 签发短期凭据，不把凭据加入历史执行配置或结果哈希。沿 Agent Server `app/api/http/evolve_config_read_auth.go` 查公钥验证、三个现有 operation、Business 和 Preset 绑定。Prompt 和 Skill 必须仍关联到该 Preset。关联的公开 Skill 可在业务范围查不到时走现有公开详情分支。
 - 按 Maxwell `docs/operations/agent-server.md` 配置每个环境的密钥。先上线 Agent Server 公钥，再启用 EVOLVE API 和 Worker 的签名种子。逐业务没有配置或迁移步骤。停用签名可恢复原业务 Key 路径。执行、配置写入和判卷的授权由各自入口决定。
 - 验收使用已登记目标与缺读取权限的原 Key。重放同一 Work 的基线读取，核对快照内容和 Work/Key 未变化。检查无关联资源、其他业务、列表和写操作拒绝。本地通过 EVOLVE 客户端对接真实 Agent Server Handler 的跨服务测试。生产会话可按原会话继续提交当前卡片，线上验收以部署后真实工具回执和草稿进度为准。
+
+2026-11-10 将首版工作树的改动合入 [Maxwell PR #424](https://github.com/world-sim-dev/maxwell-ai/pull/424) 的源分支，保留同一 PR 的冻结试次评分字段改动。沿提交 `4067b86ab` 查本轮集成范围，发布与线上旧会话验收按实际服务版本另行核对。
