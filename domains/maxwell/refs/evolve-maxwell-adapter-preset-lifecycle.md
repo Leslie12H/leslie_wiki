@@ -192,3 +192,15 @@ Agent Server 下一阶段仅评审现有接口的鉴权扩展，现有请求/返
 沿 `maxwellexecutor/cancel.go` 检查停止回执，沿 `goal_cancel.go` 检查文件原件、运行事件和已有配置快照入归档后的回收顺序。普通历史任务沿原取消流程。隔离试跑复用执行归档的文件范围，嵌套项目使用试跑 journal 中的项目根。读取或归档失败时，原 invocation 的临时配置暂留给现有 `evaluation/cleanup.go` 重试，已确认的停止动作不会重发。归档可读后删除试跑拥有的配置并保留 Thread。
 
 本地 `cancel_recovery_test.go` 覆盖停止后读取失败、重建 Adapter 和轮换凭据、归档可读后清理及保留 Thread。真实环境验收时，应将 Thread 历史与可继续运行分开验证，后者依赖仍有效的 Preset；原始评测文件以 EVOLVE 归档为准。
+
+## 2026-11-10 普通 Agent 的文件证据
+
+**Why**
+
+同一原生入口接受普通 Case 后，固定项目目录不能代表这个 Agent 的产物。清理临时配置前，从 Runtime 的显式产物引用获取原件，归档后判卷可在当前授权下读取。
+
+**How to apply**
+
+沿 `maxwellexecutor/agent_files.go` 核对持久的助手输出 Parts 和工具结果声明的 ResourceLink。新建的普通隔离试跑沿本次 Business 与 Thread 的文件接口取证，文件以工作区相对路径入归档。文本中的普通链接保留在事件原件内。Nextplay 准备输入沿原目录与媒体规则；普通评测和历史任务沿原执行路径。
+
+沿 `frozen_preset_test.go` 与 `frozen_preset_regrade_test.go` 核对非 Nextplay 的 Markdown、CSV 和 JSON 原件。测试使用替身 Runtime 和评分端点，真实 EVOLVE Worker 通过同一 EvidenceSet 给评分方法传归档文件，重判复用原件和归属校验，目标 Agent 只执行一次。
