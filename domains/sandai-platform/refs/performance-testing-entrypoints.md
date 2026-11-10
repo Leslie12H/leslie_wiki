@@ -2,7 +2,7 @@
 name: sandai-api-platform-performance-testing-entrypoints
 type: reference
 created: 2026-10-27
-updated: 2026-11-09
+updated: 2026-11-10
 tags: [sandai, api-platform, performance, testing, quota]
 links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi-quota-entrypoints]
 ---
@@ -174,3 +174,12 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why:** 分钟聚合会抹平短时错峰曲线。图片准备失败和生成未完成也可能同时出现，只汇报 HTTP 结果会掩盖下游积压。
 
 **How to apply:** 冻结图片 URL 与模型变体，先核对分档预算和单笔真实链路。结束后同时比对秒级客户端回执、错误详情中的任务 ID、只读队列快照与账本，最后读回临时 Key 和模拟认证的清理结果。
+
+## 2026-11-10 输入准备线程池看板口径
+
+- [香港 Dev 图文压测报告](https://j0yswlgboxz.feishu.cn/docx/Hr4QdGt1XouDS1xkSFrcojCvnJy) 和工作区 `.local/dev-fake-capacity-20261109/v2-image-ramp/` 的日志汇总与客户端回执可按档绘制拒绝与受理。真实活跃线程数与队列深度需要运行时指标，不能从 HTTP 503 或 CPU 反推。
+- 沿实际部署的 `GenerationPreparationConfig` 和 `OpenApiGenerationService` 核对执行器、提交点和异常映射。一个图文请求可以拆成提示词审核和首帧处理两份执行器工作；执行器计数与 HTTP 计数使用不同分母。
+
+**Why:** 独立线程池可以在容器 CPU 尚有余量时因依赖等待、突发提交和队列上限而拒绝工作。
+
+**How to apply:** 按 Pod 同时对齐活跃线程与上限、队列深度与容量、每秒拒绝数和排队耗时分位数。排队耗时按成功入池工作从提交到开始执行计量，阶段耗时按提示词审核、首帧下载和图片审核独立记录。高频突发结合拒绝计数器核对，避免低频队列采样漏掉瞬时满队列。
