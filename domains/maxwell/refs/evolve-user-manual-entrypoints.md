@@ -2,7 +2,7 @@
 name: evolve-user-manual-entrypoints
 type: reference
 created: 2026-11-09
-updated: 2026-11-09
+updated: 2026-11-10
 tags: [maxwell, evolve, user-guide, benchmark, a2a]
 links: [evolve-benchmark-unified-plan-review, evolve-preset-evaluation-entry, evolve-trial-review-boundaries]
 ---
@@ -14,3 +14,9 @@ links: [evolve-benchmark-unified-plan-review, evolve-preset-evaluation-entry, ev
 **How to apply:** 用户操作手册在 Maxwell 工作区 `docs/evolve-user-manual.md`（2026-11-09 初稿；是否已进入业务仓库主线须核对 Git）。按「接入 → Case → 评分 → Benchmark → 运行 → 候选验证」查页面，只有原会话时先走诊断入口。具体按钮与能力回查实际版本的 `EvolveNavigation.tsx`、`BenchmarkDetailPage.tsx`、`RecordsPage.tsx`、`RuntimeTuningPage.tsx`；开发者按 [Executor Kit](https://github.com/world-sim-dev/maxwell-ai/tree/main/services/evolve-server/docs/executor-kit) 与 [原生指标评分服务](https://github.com/world-sim-dev/maxwell-ai/blob/main/services/evolve-server/docs/native-grading-provider.md) 回查执行与评分两个契约。
 
 核对线上版本：读取对应环境的 Studio HTML，比较其中 `cicd-<run_id>-<attempt>` 的静态构建路径，再按 Actions 的实际作业核对 Web、EVOLVE、Agent API、Worker 是否分别发布。入口域名或发布标题不足以区分环境与服务。2026-11-09 取证入口：[日常 Studio](https://agent.sandaii.cn/evolve)、[DEV HTML](https://static.sandcdn.com/deploy/maxwell/dev/studio/index.html) 和 [DEV 回执](https://github.com/world-sim-dev/maxwell-ai/actions/runs/42591994053)；另比对 [生产 HTML](https://static.sandcdn.com/deploy/maxwell/prod/studio/index.html)、[生产 Web 回执](https://github.com/world-sim-dev/maxwell-ai/actions/runs/42182539731)、[生产 EVOLVE 回执](https://github.com/world-sim-dev/maxwell-ai/actions/runs/42171569360)。此为只读查证，不能替代当前部署或业务实跑。
+
+## 2026-11-10 Case 导入和评分从零到一
+
+**Why:** 手工表单最小输入、导入协议和评测准备是三个条件。Case 可以先保存，正式运行仍需匹配执行器的输入和可出分的评估器。独立指标描述值的口径，评估器的输出绑定提供实际计算方式。
+
+**How to apply:** 以 Maxwell `f146431129a5f6907044a03e475349b3da08720a` 为查证锚点。用户可把统一导入包交给外部 Agent 生成，页面文件和 HTTP 包装分别沿 `caseImportSource.ts`、`CaseImportStore.ts` 和 OpenAPI 的 `SharedCaseImportRequest` 核对。核对共享目录的预检、确认写入权限、来源键和冲突规则，另读 `case_catalog.go` 和 `toolcaller_benchmark.go` 区分 Studio 人类身份与 Work 内 Agent 工具。评分沿 `EvaluatorEditor.tsx`、`EvaluatorSamplePreview.tsx`、`plan_processor.go` 和 `CaseMetricAssociations.tsx` 查试评材料、原子保存、正式参考答案来源及 Benchmark 采用关系。手册中的 YAML 由该提交的实际解析器读取验证，评分示例为步骤说明。
