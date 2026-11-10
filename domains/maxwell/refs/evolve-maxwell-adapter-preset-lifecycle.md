@@ -155,7 +155,7 @@ Agent Server 下一阶段仅评审现有接口的鉴权扩展，现有请求/返
 
 **Why:** 首版复用 Nextplay 的临时配置办法。清理须等 EVOLVE 完成取证，正常 Thread 可以留作历史。成功归档与清理成功分别记录，清理失败可以在同一个 invocation 上重试。
 
-**How to apply:** 沿本地 Maxwell 工作树的 `maxwellexecutor/frozen_preset.go` 核对冻结源版本与清单、试跑独占资源的物化和回收。复用现有 Preset、Prompt、Skill 接口，按冻结目录实际应用 SP 和 Skill 绑定，再沿 `evidence.go` 查 Run 记录对实际 Business、Thread 和 Preset 的核验。清理只使用 journal 已确认归属的 ID。创建请求结果不明时留存创建意图，当前没有按意图补查的路径。取消时已有工作区但缺文件归档证据，则保留配置供补取。首版删除沿用现有资源接口的生命周期语义。
+**How to apply:** 沿本地 Maxwell 工作树的 `maxwellexecutor/frozen_preset.go` 核对冻结源版本与清单、试跑独占资源的物化和回收。复用现有 Preset、Prompt、Skill 接口，按冻结目录实际应用 SP 和 Skill 绑定，再沿 `evidence.go` 查 Run 记录对实际 Business、Thread 和 Preset 的核验。清理只使用 journal 已确认归属的 ID。创建请求结果不明时留存创建意图。只有带恢复标记的 journal 可以补查，规则见下文。取消时已有工作区但缺文件归档证据，则保留配置供补取。首版删除沿用现有资源接口的生命周期语义。
 
 沿 `commands/baseline.go` 查大资源的 Work Artifact 引用。只有历史裸 CAS 哈希时，需重新冻结或补齐经授权的资源引用。冻结资源经 Worker JSON 持久化后应使用已校验的原字节见证，避免 JSON 排版变化破坏内容校验。
 
@@ -204,3 +204,15 @@ Agent Server 下一阶段仅评审现有接口的鉴权扩展，现有请求/返
 沿 `maxwellexecutor/agent_files.go` 核对持久的助手输出 Parts 和工具结果声明的 ResourceLink。新建的普通隔离试跑沿本次 Business 与 Thread 的文件接口取证，文件以工作区相对路径入归档。文本中的普通链接保留在事件原件内。Nextplay 准备输入沿原目录与媒体规则；普通评测和历史任务沿原执行路径。
 
 沿 `frozen_preset_test.go` 与 `frozen_preset_regrade_test.go` 核对非 Nextplay 的 Markdown、CSV 和 JSON 原件。测试使用替身 Runtime 和评分端点，真实 EVOLVE Worker 通过同一 EvidenceSet 给评分方法传归档文件，重判复用原件和归属校验，目标 Agent 只执行一次。
+
+## 2026-11-10 创建响应丢失后的临时资源恢复
+
+**Why**
+
+Preset、Prompt 和 Skill 的现有创建接口由服务端分配 ID。创建已经提交而回执丢失时，EVOLVE 需要找回原 ID 才能继续隔离试跑或回收，避免重复创建。
+
+**How to apply**
+
+沿 `maxwellexecutor/frozen_preset.go` 核对每次创建前保存的随机标记。现有 Preset、Prompt 的描述和 Skill 的来源名用于关联，Skill 的模型可见名称和描述仍来自冻结配置。沿 `preset_recovery.go` 查同一业务、当前主体「我创建的」目录以及精确匹配。只认唯一命中的 ID，成功登记后再执行后续动作。取消时匹配暂缺或不唯一，现有 EVOLVE 终态清理继续重试，已确认归属的资源仍可回收。
+
+凭据轮换沿当前授权读取，恢复要求 Agent Server 将新凭据识别为同一创建主体。若换成不同主体，或历史 journal 未保存标记，缺失回执的资源仍需核对归属。沿 Agent Server `auth_guard.go` 核对 actor 身份，沿各 Studio 资源目录查创建者过滤。替身 Runtime 测试覆盖提交后响应丢失、换凭据后重启、接回原 ID、不重发创建、同名或多匹配时保留待回收记录。
