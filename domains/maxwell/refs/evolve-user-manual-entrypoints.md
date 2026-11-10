@@ -44,3 +44,9 @@ links: [evolve-benchmark-unified-plan-review, evolve-preset-evaluation-entry, ev
 **Why:** 配置页的示例路径会让用户以为当前执行器已采集到字段。输出展示会格式化 JSON 文本，真正的评分字段需要以冻结证据的类型与方法读取根为准。
 
 **How to apply:** Maxwell 工作区 `evolve-evidence-fields` 的 `TrialOutputFieldPaths.tsx` 与 `trialOutputFields.ts` 是前端实现入口。只从已冻结、未截断的结构化输出提取可用路径，保留 false 和 0，规则校验与证据取值分别复制。逐题详情仍无法发现自定义 `metrics`，只读字段接口及兼容要求见同工作区 `docs/plans/evolve-scoring-field-discovery-20261110.md`，实施须按项目变更治理确认。Studio 检查及受控浏览器样例验证了路径、隐藏和复制；发布状态另查 Git 与部署。
+
+## 2026-11-10 评分字段接口的通用范围
+
+**Why:** 判断字段能否评分要以冻结评分材料为依据。逐题详情、执行器原件和一个执行器的长期字段契约各有不同范围。仅在某条试次找到字段不能证明跨样本覆盖或业务含义。
+
+**How to apply:** 沿 Maxwell `7d35be0e8` 的 `evaluation/evidence_output.go`、`native_processor.go` 与 `queries/evidence.go` 查评分和逐题页面的共同解析及不同投影。单次输出与自定义指标沿 `execution/contract.go` 和 HTTP Simple 接入核对。字段发现按指定 Trial 的冻结评分材料通用，运行内置指标、Case 预期和只存在附件中的字段另走各自入口。按需读取的理由与返回范围见 `evolve-evidence-fields` 工作区的方案，接口仍待确认。
