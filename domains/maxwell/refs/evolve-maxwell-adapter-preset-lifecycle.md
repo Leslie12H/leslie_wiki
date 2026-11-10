@@ -494,3 +494,12 @@ Studio 和 EVOLVE 发布成功后，另一个分支部署的 Agent API 仍可能
 - 新版本用未配置模型的业务从 Studio 启动[隔离基线](https://agent.sandaii.cn/evolve/library/records?businessId=83ee4fb8-cc20-4d97-a286-78b201f44e0c&run=run_1811d56fe3e5d4aa8e2d0d32af2b9d0c)，冻结回执为 GPT-6.1 Sol、温度 1、每题 1 次；三个用例各有三项分数。自然调优 Agent 依据实际失分提出 Prompt/Skill 候选，从新版 Studio 以同一题集和评分配置启动[隔离候选](https://agent.sandaii.cn/evolve/library/records?businessId=83ee4fb8-cc20-4d97-a286-78b201f44e0c&run=run_6224babee33ec67c8c2098cf4b307bab)，仍有 9/9 项分数。
 - 候选的交互题原件实际 `question` 为「预约编号」，`basis` 为 `rules[2]`，返回合成编号，最终回复带编号指引去服务台。候选三个临时 Preset 在途可见，结束后全部从目录消失；试跑 Prompt 搜索无匹配，Skill 搜索只保留正式项，[候选 Thread](https://agent.sandaii.cn/threads?businessId=83ee4fb8-cc20-4d97-a286-78b201f44e0c&threadId=thr_01M72SFMS30DK57DC84REA6Q6P&tab=trace) 仍能回读真实工具应答。以上验收目录回收和正常 Thread 留存，不用于推断物理存储删除。
 - [调优任务](https://agent.sandaii.cn/evolve/tasks/work_06f2c154fabcda3434948b5eaa6e492a?businessId=83ee4fb8-cc20-4d97-a286-78b201f44e0c&candidate=candidate_73f1c368c16dd58a7e7f1516479466a2&candidateRun=run_6224babee33ec67c8c2098cf4b307bab) 的「评估与采纳」确认比较口径一致并判定未达标：交互题澄清从 0/2 到 2/2，通用期限题的办理指引从 2/2 到 1/2，未采纳。另存了冻结报告，详情抽屉未渲染可读摘要，数值和结论从「评估与采纳」读取。数值评测按 `outcome.mode: none` 不产生整题通过率，不能将「判卷通过率暂缺」解释为未出分。
+
+## 2026-11-10 同原件重判与候选回退归因
+
+**Why:** 温度是判卷调用参数，试跑质量是目标输出与冻结判据的比较。换一批输出做温度对照无法排除证据变化。候选某一项加分，也不能覆盖另一项约束退步。
+
+**How to apply:**
+
+- 从[温度 0 的重判](https://agent.sandaii.cn/evolve/library/records?businessId=83ee4fb8-cc20-4d97-a286-78b201f44e0c&run=run_bb9bcd61d8c4c84e11a224929a0896d6)查冻结模型、输出上限、原 CaseSet、Variant、EvidenceSet、JudgeSpec 和聚合条件。`POST /api/evolve/v1/runs/{runRef}/rescores` 现有契约接受 `judgeConfig.temperature`。保持其余参数，追加 `evidence_only` Run 并核对来源回执；Studio 的原重判表单只让换模型，保留原温度。业务级的人类重判命令与 Agent 会话绑定的 `evolve_run` 授权范围不同，历史记录能在目录打开不等于当前会话能跨 Work 读取。
+- 在[候选任务](https://agent.sandaii.cn/evolve/tasks/work_06f2c154fabcda3434948b5eaa6e492a?businessId=83ee4fb8-cc20-4d97-a286-78b201f44e0c&candidate=candidate_73f1c368c16dd58a7e7f1516479466a2&candidateRun=run_6224babee33ec67c8c2098cf4b307bab) 展开初次候选草稿前的工具组。直接查询失败包含参数缺失与跨 Work 拒绝，随后 `evolve_evidence_query baseline` 三次逐题返回成功。期限题完整回执 `call_oeCQQfzMuklsO8jrDgsbtzsq` 含基线答复和服务台指引的 2 分理由，不能归因为该证据没送到分析 Agent。候选 Prompt 和 Skill 都增加通用题直接回答的分支，但将服务台引导写在收到预约号的分支，未把已通过题的关键行为列成候选回归约束。逐题对照证实候选答了 3 天、自动释放与重新预约，少了服务台办理路径，冻结 Judge 因此给办理指引 1 分。逐题判据对通用期限问答是否强制补服务台属于口径选择，应区分实际答复变化与评分定义是否合适。
