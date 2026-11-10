@@ -240,3 +240,17 @@ Agent Server 的复制接口会按当前工具目录重新校验，可能裁掉�
 沿 Agent Server `studio_api.go` 查复制时的工具和 agent-mode 调整。沿 EVOLVE `maxwellexecutor/frozen_preset.go` 查源 Preset 与副本的执行字段核对，处理旧记录中空集合的等价表示。源和副本的模型、工具、中间件或后端声明有差异时，在新建 Prompt、导入 Skill 或创建 Thread 前停止，按已登记的副本 ID 清理。合法试跑仍按源版本冻结并只调整 SP 和 Skill 绑定。
 
 `frozen_preset_test.go` 覆盖复制结果裁掉工具后的早停与回收。Agent Server 的真实 HTTP handler 技术测试覆盖正常复制、业务 API Key 边界以及删掉绑定 Preset 后的行为。真实浏览器和 Temporal Worker 验收需先用 `make check` 与 `make status-agent-worker` 核对同源 API、Worker 和 Studio。2026-11-10 本轮本机检查时没有配套服务，已有 Worker 属于另一工作树，未切换。
+
+## 2026-11-10 单次调用内的凭据轮换
+
+**Why**
+
+执行和判卷在调用前读取当前凭据。一次试跑包含多个 HTTP 请求，轮换后旧凭据若在中间被撤销，首次 401 仍可能使本次试跑或判卷提前结束。
+
+**How to apply**
+
+沿 EVOLVE `safehttp/bearer_refresh.go` 核对一次调用的凭据使用。仅在同源请求收到 401、当前 Bearer 已改变且请求可完整重发时，使用当前 Bearer 重发一次，同一调用后续请求沿用新凭据。沿 `a2a/native.go` 查刷新前的业务、执行器及 Preset 身份检查，沿 `llmjudge/maxwell.go` 查模型校验和判卷。请求原件、invocation 和配置冻结口径沿原规则。
+
+现有 Agent Server 签发的受管 Key 初始只含 `runtime_run`。EVOLVE 注册流程沿 `commands/key_permissions.go` 和 `maxwellpreset/client.go` 在现有授权下补齐 `runtime_read` 与 `preset_read`；隔离试跑对 Prompt、Skill 和配置写入的授权继续由现有业务权限决定。新的隐藏系统身份仍待单独确认。
+
+本地 `frozen_preset_test.go`、`a2a/connection_test.go` 和 `llmjudge/maxwell_test.go` 覆盖复制过程中轮换、目标 Preset 变更时拒绝重发、判卷重发保持请求字节、403 或凭据未变时保留原错误。
