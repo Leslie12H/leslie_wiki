@@ -415,3 +415,14 @@ EVOLVE 试跑的替身测试可以验证编排顺序。业务 Key 能否通过 A
 - 在原会话提交自然语言重试后，2026-11-10 15:57（北京时间）的回复沿用了旧权限判断，当轮记录仅有计划和待办。明确要求本轮实际调用 `evolve_run resolve_baseline` 后，15:58 的回执和 Agent API 日志确认目标配置可读。原 Work 保存了评测目标、4 个 Cases、Judge 及 base 文字审阅稿；Benchmark 仍是会话里的烟测提案，未正式创建或执行。
 - 沿 EVOLVE `commands/draft.go`、`confirmed_draft.go` 查保存时仅在有 payload 的情况下校验、确认时要求可执行 payload。沿 `targetmodel/target_model.go` 查 base 的目标和接口来源，沿 `evaluation/variant.go` 查 profile 资源正文或可校验引用。原会话两次校验分别缺 `targetRef` 的来源和首项资源正文或引用。`resolve_baseline` 返回经过服务端校验的完整 `profilePayload`，按原结果透传即可避免手抄资源摘要时丢字段。
 - 沿 `agent-resources/prompts/evolve-tuning-agent.md` 查按需补齐资产的编排。沿 `commands/benchmark.go` 查 Benchmark 定义的冻结 CaseSet/Judge 引用，沿 `commands/run.go` 查运行阶段的 TargetProfile 与 Variant 要求。评测草稿先给用户审阅，准备正式资产时才补与实际入口有关的冻结依赖。
+
+## 2026-11-10 草稿入参错误的恢复信号
+
+**Why**
+
+Dev 原会话给 `evolve_draft put` 传了缺来源的 `base` 和缺资源正文或引用的 `profile`。业务校验正确拒绝了输入，但 Runtime 将两次失败显示为 `ProviderPermanent / choose_another_tool`，会引导模型离开仍可修正的操作。校验返回的恢复动作与失败原因应一致。
+
+**How to apply**
+
+- 沿 EVOLVE `app/toolcaller.go` 的 draft put 分支查应用校验错误，沿 `transport/mcp/handler.go` 查 `ErrCorrectableInput` 到 `invalid_input` 的既有映射。Agent Server 的 `modules/runtime/toolprotocol/result.go` 将参数错误映射为 `correct_arguments`。若修复，仅标记确定的草稿入参错误，保持权限、存储和网络故障的原有语义。
+- 原会话重试与纯草稿交付优先在 `agent-resources/prompts/evolve-tuning-agent.md`、`skills/target-recon` 修正。重试以新工具回执为依据。保存真实可执行快照时优先复用服务端生成的完整 payload，并保持原业务、Work 和基线身份。若做代码传递，明确区分基线读取与草稿写入授权，保留人工确认。
