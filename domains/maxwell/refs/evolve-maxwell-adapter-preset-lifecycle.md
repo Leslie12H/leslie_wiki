@@ -216,3 +216,15 @@ Preset、Prompt 和 Skill 的现有创建接口由服务端分配 ID。创建已
 沿 `maxwellexecutor/frozen_preset.go` 核对每次创建前保存的随机标记。现有 Preset、Prompt 的描述和 Skill 的来源名用于关联，Skill 的模型可见名称和描述仍来自冻结配置。沿 `preset_recovery.go` 查同一业务、当前主体「我创建的」目录以及精确匹配。只认唯一命中的 ID，成功登记后再执行后续动作。取消时匹配暂缺或不唯一，现有 EVOLVE 终态清理继续重试，已确认归属的资源仍可回收。
 
 凭据轮换沿当前授权读取，恢复要求 Agent Server 将新凭据识别为同一创建主体。若换成不同主体，或历史 journal 未保存标记，缺失回执的资源仍需核对归属。沿 Agent Server `auth_guard.go` 核对 actor 身份，沿各 Studio 资源目录查创建者过滤。替身 Runtime 测试覆盖提交后响应丢失、换凭据后重启、接回原 ID、不重发创建、同名或多匹配时保留待回收记录。
+
+## 2026-11-10 已归档试跑的后台回收
+
+**Why**
+
+成功试跑一旦进入终态，现有远端取消扫描不会再选中它。回收需要独立于判卷重试，才能覆盖管理接口暂时失败和 Worker 重启。
+
+**How to apply**
+
+沿 `maxwellexecutor/evidence.go` 核对归档原件、登记待回收项和写终态 journal 的顺序。队列只有本次 invocation 的 journal 键。沿 `archived_cleanup.go` 查同一把锁下的终态与资源归属校验，再沿 `a2a/native.go` 查每次使用当前执行器授权。`worker/worker.go` 的现有清理循环处理有限批次。成功删除后 journal 留存回执，队列移除，Thread 与归档按原规则保留。
+
+本地 `frozen_preset_test.go` 和 `frozen_preset_regrade_test.go` 覆盖第一次删除失败仍可完成判卷、后续多次失败后用当前凭据补删、保留原件并重判。沿 `worker/evidence_cleanup_test.go` 查清理循环失败后继续推进。此前已经结束且没有登记待回收项的实验 journal，需要再次观察或单独核对；旧普通评测本身没有该类临时资源。
