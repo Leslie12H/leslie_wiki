@@ -48,7 +48,7 @@ links: [maxwell, sandai-api-platform-development-entrypoints]
 
 ## 本机试点验证入口
 
-2026-11-10 建立独立项目 `~/Downloads/sandai-code/feishu-codex-agent`。验收入口见项目 README、`pnpm test` 与 `pnpm demo --real`。真实 Codex 两轮验证使用模拟飞书事件与合成 Git 仓库，分别查代码、按准确会话 ID 续跑。专用机器人及私有测试群已创建，飞书长连接完成有界连通性验证。机器人所在群的历史读取单独报 230027，开通群消息权限前保持服务的预检失败。真实消息回执以本地配置和后续联调为准。
+2026-11-10 建立独立项目 `~/Downloads/sandai-code/feishu-codex-agent`。验收入口见项目 README、`pnpm test` 与 `pnpm demo --real`。真实 Codex 两轮验证使用模拟飞书事件与合成 Git 仓库，分别查代码、按准确会话 ID 续跑。专用机器人与私有测试群已创建。飞书长连接先连通，群历史读取另报 230027，经用户确认开通 `im:message.group_msg` 后预检通过。真实话题首轮 @ 与第二轮无 @ 追问均调用本机 Codex，SQLite 记录同一工单的两条成功回复，飞书话题回读均可见。试点群、应用、工作项和交付状态沿项目 `config.json` 与 `.state/` 回查。
 
 **Why**
 
