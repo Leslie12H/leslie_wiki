@@ -364,3 +364,15 @@ EVOLVE 试跑的替身测试可以验证编排顺序。业务 Key 能否通过 A
 2026-11-10 通过远端分支指针核对主线 `7d35be0e8bd4b4c43f37031ac506c4a40eafde05`。首版工作树从 `f146431129a5f6907044a03e475349b3da08720a` 更新到该基线。沿 Studio `products/evolve/dialogs/StartRunDialog.tsx` 核对 `event.currentTarget` 与原生调优分支，按文件哈希核对其余本地改动。重新运行 Studio check、EVOLVE 全量 Go 测试及 Agent Server HTTP、A2A、Runtime application 测试，均通过。
 
 该主线仍使用业务 Key 读取 A2A，EVOLVE 原生执行和内置模型判卷仍读取 Business Credential。系统身份范围沿上节和首版授权评审，真实环境验收前用 `make status-agent-worker` 核对当前代码目录。
+
+## 2026-11-10 原生调优首版的权限、取消与恢复审查
+
+**Why**
+
+从普通 Maxwell Agent 评测进入调优时，已有业务连接的健康度、临时配置写入权限、Case 在 Runtime 中的可见范围、远端停止与归档回收各有独立的事实来源。测试若手动赋权或总能在下一次查询找到临时资源，会漏过默认入口和进程重启的缺口。
+
+**How to apply**
+
+- 审查自动选路时，对照 EVOLVE 的 `commands/native_tuning_baseline.go`、`tuning_preflight.go`、`maxwellpreset/client.go` 与 Agent Server 的 `app/api/http/evolve_trial_resources_test.go`。分别走默认业务 Key 和已具备临时配置能力的身份，再确认未满足能力时已有 Runner 的选择行为。保留普通 Thread 时，交叉检查 `maxwellauth/resolver.go`、`maxwellexecutor/adapter.go` 和 `app/api/http/thread_access.go`。用同一业务的 Runtime 读权限验证 hidden Case 原文与普通 Thread 历史各自的可见范围。
+- 对照 `maxwellexecutor/cancel.go`、`goal_cancel.go` 和 `evaluation/live.go`，分别注入远端已停止后清理返回 503、慢速弱 ETag 文件。记录停止回执、归档和清理三个状态。该轮在基线 `7d35be0e8bd4` 上的首版工作树复现了停止确认被清理错误掩盖。也在 `frozen_preset.go` 保存创建意图后、发送之前的状态做了重启复现，空目录查询和后台回收都无法推进；修复时同时保留响应丢失后找回已创建资源的校验。
+- 查外部 Runner 旧准备记录时，沿 `a2a/configuration_test.go` 的旧摘要轮换用例分别验证有无历史快照。仍可验证旧摘要时先保全对应快照；找不到原配置凭证的记录需要显式重做准备，历史结果另行保留。真实验收仍须在同源 API 与 Worker 上连跑默认注册、普通评测、隔离调优、取消、归档和回收。
