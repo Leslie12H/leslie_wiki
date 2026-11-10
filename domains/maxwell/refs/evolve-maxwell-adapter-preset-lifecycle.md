@@ -266,3 +266,17 @@ Agent Server 的复制接口会按当前工具目录重新校验，可能裁掉�
 沿 EVOLVE `internal/app/integration/a2a/output/output.go` 查两个入口共用的输出选择和判卷结果格式。A2A SDK 的依赖集中在 `integration/a2a`。沿 `maxwellexecutor/turns.go` 查隔离试跑使用当前凭据，通过现有 A2A Task 读取本轮正式结果。异步工具接续时使用发出终态事件的子 Run。EVOLVE 将每轮已读结果写入本地 journal，读取中断后的恢复只补读结果。沿 `evidence.go` 核对 Run、Thread 和临时 Preset 的绑定。单轮判卷保留结果对象，多轮沿普通评测的 `output.text` 和 `output.turns`。结构化原件随逐轮执行证据归档，已归档历史结果和 Nextplay 准备输入的判卷格式沿原路径读取。
 
 `frozen_preset_test.go` 与 `frozen_preset_regrade_test.go` 使用替身 Runtime 验证两轮子 Run、读结果返回 502 后重启、每条用户消息只执行一次，以及清理临时 Preset 后由 EVOLVE Worker 读取同一份归档重判。Agent Server 的现有 A2A Handler 测试覆盖 Runtime Run 地址映射及业务 Key 权限。正式环境仍需核对同源服务和业务授权后验收。
+
+## 2026-11-10 现有管理接口的真实 Handler 回归
+
+**Why**
+
+EVOLVE 试跑的替身测试可以验证编排顺序。业务 Key 能否通过 Agent Server 的真实权限检查，以及目录和删除接口是否支持故障恢复，需要从注册的 HTTP 路由独立验证。更新 SP 和 Skill 时，工具配置详情中的空数组可能只是脱敏投影，回写会重建原配置。
+
+**How to apply**
+
+沿 Agent Server `app/api/http/evolve_trial_resources_test.go` 查真实路由、当前业务 Key 权限和跨业务拒绝。测试使用进程内存储和临时 Skill 文件目录。它实际复制 Preset，发布新 Prompt，导入同 slug 的独立 Skill，更新绑定，从当前主体的三份资源列表找回 ID，并按真实删除结果核对重复清理。清理后从原路由读回原 Preset、原 Prompt、两个源 Skill 和试跑 Thread。Prompt 的 SQL 所有者与关键词过滤另见 `modules/shared/query/agent_content.sql` 的 `ListOwnedAgentContents`。
+
+沿 EVOLVE `maxwellexecutor/frozen_preset.go` 核对更新请求按 `providerId` 和 `toolName` 提交 `configured` 标记。Agent Server 使用副本已经保存的完整工具配置，详情脱敏字段只用于回读核对。沿 `agentpreset/application/tool_config_detail.go` 查已有保留语义，沿 EVOLVE `frozen_preset_test.go` 查脱敏数组的请求回归。
+
+隐藏 EVOLVE 身份的现有接口清单还需覆盖找回资源使用的 `GET /api/agent/preset`、`GET /api/prompts`、`GET /api/skills`。新隔离试跑的正式结果也使用 `GET /api/a2a/{agentId}/tasks/{id}`，并依赖该试跑的 Business、Preset、Thread 与 Run 归属。实际跨业务系统身份仍待接口授权审查。本机 `make check` 未发现本工作树的 API 或 Studio，`make status-agent-worker` 查到另一工作树的全局 Worker；未切换实例，也未将 Handler 回归计入真实环境端到端验收。
