@@ -170,3 +170,13 @@ Agent Server 下一阶段仅评审现有接口的鉴权扩展，现有请求/返
 **How to apply:** 沿 Maxwell 工作树的 `commands/tuning_baseline.go`、`native_tuning_baseline.go`、`runner_tuning_run.go` 检查同一个 Maxwell Agent 执行器、按 Work 寻址的冻结 Variant 和运行准入。资源内容继续入 EVOLVE。Artifact 在业务内按内容去重，平台冻结的 Variant 用同 Work 的固定 ID 和带 Work 标识的说明，区别两个配置相同的独立任务。恢复读已冻结 Variant；从本 Work 的隔离结果重判时，沿 `comparison.ExecutionSource` 找回原执行归属。已有 Runner 任务和明确选择 Runner 的任务继续使用原连接。
 
 沿 Studio `RunTuningStore.ts`、`StartRunDialog.tsx` 及 `LedgerLineage.tsx` 核对默认执行器和候选基线选择，空目标创建仍要发送幂等键。沿 `agent-resources/skills/target-recon/references/target-connection.md` 查原生准备后的资产读取方法。命令层集成测试覆盖普通评测、隔离基线、候选、固定配置重放、快照失败后恢复和重判无需再次派发。EVOLVE 全量 Go 测试及 Studio check 通过。代码仍在工作树，未部署。隐藏系统身份授权及真实环境验收待完成。
+
+## 2026-11-10 Skill 发现语义与清理后归档重判
+
+**Why:** Runtime 的 Skill 目录包含名称、描述及 Preset 绑定。只复制 SKILL.md 文件会改变模型发现 Skill 的信息，且临时 ID 不能充当可比较的配置摘要。重判需要从已授权的 EVOLVE 原件恢复，覆盖临时配置已删除的情况。
+
+**How to apply:** 沿 `maxwellpreset/baseline.go` 核对冻结 Preset 目录、Skill 名称、描述和绑定顺序。沿 `maxwellexecutor/frozen_preset.go` 核对已有 Skill 的元数据回读、新增 Skill 按包派生，以及移除仅作用于临时绑定。旧快照缺少 Skill 元数据时，按源 Preset 的已有绑定 ID 读取当前元数据。有效配置摘要排除临时资源 ID，执行回执记源 Preset 版本。
+
+沿 `maxwellexecutor/frozen_preset_test.go` 和 `frozen_preset_regrade_test.go` 查本地集成证据。替身 Runtime 执行后轮换 Bearer，原 invocation 补删并保存成功回执。随后真实 EVOLVE Worker、归档 Resolver 和原 Trial 授权读取原件，再从独立 Work 重判，同一份 EvidenceSet 只派发一次目标。评分模型使用替身。Agent Server Preset、Prompt、Skill 的应用层及 HTTP 包测试通过，真实环境和隐藏身份仍待验收。
+
+鉴权以 Agent Server `auth_guard.go`、`business_access.go` 及 `studio_evolve_executor_key.go` 为准。Studio 控制器的 `currentActorID` 可取 API Key 主体 ID，是否允许仍由已认证主体、Business 和操作权限决定。默认签发的受管 EVOLVE Key 只有运行权限，隐藏身份授权仍按前述评审清单单独确认。
