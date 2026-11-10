@@ -31,6 +31,21 @@ links: [maxwell, sandai-api-platform-development-entrypoints]
 
 首个本机试点可用 `codex exec --json` 捕获 `thread.started` 和终态，按明确 ID 执行 `codex exec resume`。需要嵌入式调用可选 Codex SDK；需要在运行中追加输入或中止时，查 App Server 协议。公开 DeepSeek 原型可供参考工作项与 Router 设计，Maxwell 也可作为日后复用的渠道层。本轮仅核对本机 CLI 命令和文档。 [Codex 非交互模式](https://learn.chatgpt.com/docs/non-interactive-mode) · [Codex SDK](https://learn.chatgpt.com/docs/codex-sdk#typescript-library) · [Codex App Server](https://learn.chatgpt.com/docs/app-server#api-overview)
 
+## DeepSeek 公开原型源码复查
+
+2026-11-10 核对 [`8c32a9dc` 源码](https://github.com/deepseek-ai/dsh-superagent-prototype/tree/8c32a9dc5d72c033816c6a8110b37f40cf94fba4)，包括核心状态机、两种来源、执行和回复实现，阅读关联测试。运行证据需另做联调。
+
+- 工作项归属查 `src/core/intake.ts`、`src/core/evals.ts`、`src/core/tickets.ts`。Trigger 去重后先向订阅者分发；关联仅供找证据，订阅决定后续消息去哪。Worker 可把超范围的追问交回路由。普通结束和人工停止具有不同的续作条件。
+- 触发和取上下文查 `src/sources/feishu-trigger.ts`、`feishu-loops.ts`、`feishu-read.ts`。消息 ID 负责去重，群和根消息负责归属；实时流、历史补读和订阅轮询使用同一事件身份。保留授权来源与分页边界，后续按工单订阅读取，无需每条回复都 @。
+- GitHub 查 `src/sources/github.ts`、`github-pull.ts`。通知、已绑定 PR 的评论和当前 head 的 CI 状态由轮询驱动。PR 绑定验证来源 PR 或智能体身份及分支归属；首次 CI 观测建立基线。独立版本可由交付进程记录准确的 PR 回执。
+- 工作授权查 `docs/002-authorization.md`、`src/policy.ts`。推断式接单分关闭、仅观察与自动执行。上下文订阅不会扩大 Mandate。独立版本的写操作在执行前按当前授权与目标复核。
+- 恢复查 `src/core/ports.ts`、`src/executor/dsh.ts`、`src/app/outbox.ts`、`src/sources/feishu-channel.ts`。Assignment 的输入投递、运行和外部回复有不同回执。回复持久化后重试，飞书用幂等键，GitHub 评论用标记回查。
+- 宿主边界查 `src/app/runtime.ts`、`src/app/sessions.ts` 和 `docs/006-deployment.md`。领域层有 Executor 端口；实际装配还绑定 DSH Session、工具、事件和生命周期。原型的账号包装和独立工作目录不构成进程隔离，部署文档声明两类 Session 均以操作系统用户的全权限运行。
+
+**How to apply**
+
+以原型的事件去重、工单订阅、授权和可恢复交付为参考。首版可用确定性的工单路由与独立 Codex 执行适配器。飞书话题、工作项、Codex 会话三种标识分别记录；收到消息后先区分可见性、既有任务的上下文和发起新动作的授权。个人工作机的试点优先用专用执行身份、最小凭据和隔离工作区。
+
 ## 试点顺序
 
 1. 用一个获授权的测试群和一个只读仓库，验证机器人能从当前话题中还原前文、区分已确认结论与待确认项、查到代码依据并在原话题回复。用权限不足、不同话题和重复事件做对照。
