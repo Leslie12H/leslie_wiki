@@ -32,3 +32,9 @@ links: [evolve-benchmark-unified-plan-review, evolve-preset-evaluation-entry, ev
 **Why:** 同一业务诉求可拆为答复表述、真实执行顺序和实际写入事实，三者需要不同证据。单次业务查询耗时的判断和 Benchmark 端到端耗时门槛也有不同分母。
 
 **How to apply:** 七个完整配置入口见 Maxwell 手册的「每种方法配一个可用指标」。以同日主线锚点回查 `NativeJudgeEditor.tsx`、`RubricJudgeEditor.tsx` 与 `BuiltinMetricRows.tsx`。`methods/measurement/evidence.go` 按指标键匹配 selector，数值路径缺失保留 missing；旧版断言路径相对实际输出根。参考答案对比的扣分公式见 `judge/refcompare/refcompare.go`，过程证据与里程碑见 `judge/trajectory/trajectory.go`。本地以手册原件核对证据取值的通过、失败、缺失以及字段断言的 1/0，两个 Judge 现有离线测试通过。外部业务审计与实际线上模型分回到目标环境验证。
+
+## 2026-11-10 评分配置入口与证据字段的可发现性
+
+**Why:** 旧版标签是 Studio 的评分资产入口，方法本身仍按冻结版本执行。逐题页面的展示对象和评分方法收到的材料不同，样例字段不能被当作平台默认产出。
+
+**How to apply:** 按 Maxwell 手册「为什么有旧版评分配置」和「到哪里找证据字段」定位。沿 `supportsEvaluatorEditor`、`MethodsDirectory.tsx`、`StandardsTab.tsx`、`SharedBenchmarkEditorStore.ts` 核对 LLM 编辑入口及从旧评分资产发起 Benchmark 的方式。沿 `queries/evidence.go`、`attempt_evidence.go`、`TrialDetailPanel.tsx` 和 `evidenceReading.ts` 区分逐题输出投影、原件和格式化显示。自定义 `metrics` 由执行器上报，详情投影不单列；核对归档回执或执行器输出契约。比对 `evaluation/judge_dispatch.go`、`native_processor.go` 与 `plan_processor.go` 确定 JSON Pointer 的根。平台 `runtimeMetrics` 与业务自定义 `metrics` 分开核对。核对锚点沿上方 2026-11-10 主线记录。
