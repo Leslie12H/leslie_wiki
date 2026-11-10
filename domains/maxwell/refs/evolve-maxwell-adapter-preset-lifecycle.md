@@ -426,3 +426,15 @@ Dev 原会话给 `evolve_draft put` 传了缺来源的 `base` 和缺资源正文
 
 - 沿 EVOLVE `app/toolcaller.go` 的 draft put 分支查应用校验错误，沿 `transport/mcp/handler.go` 查 `ErrCorrectableInput` 到 `invalid_input` 的既有映射。Agent Server 的 `modules/runtime/toolprotocol/result.go` 将参数错误映射为 `correct_arguments`。若修复，仅标记确定的草稿入参错误，保持权限、存储和网络故障的原有语义。
 - 原会话重试与纯草稿交付优先在 `agent-resources/prompts/evolve-tuning-agent.md`、`skills/target-recon` 修正。重试以新工具回执为依据。保存真实可执行快照时优先复用服务端生成的完整 payload，并保持原业务、Work 和基线身份。若做代码传递，明确区分基线读取与草稿写入授权，保留人工确认。
+
+## 2026-11-10 草稿错误和基线转交修复
+
+**Why**
+
+共享目标侦察 Skill 中曾要求遇到读取权限错误后不重试，并转向业务管理员补权。该规则与当前环境的 EVOLVE 系统身份冲突。较大的基线结果还会在模型视图裁剪，模型手工拼回 VariantManifest 容易丢正文或资源引用。
+
+**How to apply**
+
+- 回查 Maxwell 工作树 `evolve-evidence-fields` 的 `agent-resources/prompts/evolve-tuning-agent.md` 与 `skills/target-recon/references/target-connection.md`。旧 Work 重试以实际重调后的回执为准。先交用户要求的评测草稿，按需准备正式 Run 的依赖。
+- 沿 `commands/draft.go`、`app/toolcaller.go` 与 MCP `draftSchema` 查 `evolve_draft put object=profile` 的可选 `baseline` 参数。使用同一业务和 Work 的 executorRef、presetVersion、baselineHash，沿用基线读取与草稿写入权限。服务端重取或读回固定的原生快照，核对版本和哈希后写待确认草稿。格式错误沿既有可纠正入参映射，读取故障保留原错误。
+- 验收入口为 `TestDraftToolMarksOnlyInvalidDraftContentCorrectable`、`TestDraftToolSavesFullMaxwellBaselineWithExistingPermissions` 及 `agent-resources/tests/evolve-orchestration.test.mjs`。测试覆盖现场两种无效结构、长配置完整保存、版本变化与授权边界。线上旧会话验收须分别核对服务版本和实际加载的调优 Prompt、Skill。
