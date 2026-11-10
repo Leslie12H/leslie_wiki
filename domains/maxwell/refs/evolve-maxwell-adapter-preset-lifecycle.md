@@ -292,3 +292,15 @@ EVOLVE 试跑的替身测试可以验证编排顺序。业务 Key 能否通过 A
 沿 EVOLVE `integration/a2a/registry.go` 与 `turn.go` 核对同一执行配置下读取当前登记。凭据轮换不改变冻结配置。后续轮次、轮询和超时清理沿同一业务与执行配置。连接更换时不向替换目标发送原 Task ID，并保留取消未确认的状态。注册型 A2A 客户端在原端点收到 401 时沿 `safehttp/bearer_refresh.go` 尝试一次当前凭据。超时和其他传输失败沿原派发语义处理。
 
 沿 `runtime_result.go` 核对历史 Runner 的结果清单和分片读回。一次归档共用同源凭据刷新，成功更新后后续分片沿用当前凭据，原 Thread、invocation 和校验哈希继续绑定。`turn_test.go` 验证两次轮换、两次实际用户发送和变更目标后的无请求；`runtime_result_test.go` 验证首片读取遭 401 后原件完整归档。测试使用本地 HTTP 替身，真实环境和隐藏系统身份仍沿前述验收前提。
+
+## 2026-11-10 Worker 重启后沿用已接纳任务的连接
+
+**Why**
+
+普通评测的异步 Task 可跨 Worker 进程继续。旧任务的轮询、续答和取消需要同时使用本次登记授权和已接纳连接。用最新登记直接寻址，会在执行器被换成别的 Preset 时把旧 Task ID 送到新目标。轮询间隔、执行限额和凭据本身不决定原 Task 的位置。
+
+**How to apply**
+
+沿 EVOLVE `application/evaluation/live.go` 和 `live_interaction.go` 查看从 Attempt 持久化快照传入轮询、续答、取消与取消后取证的内部字段。沿 `integration/a2a/configuration.go` 查快照哈希、业务、执行器、端点、Preset 和结果通道校验。快照格式 v1 和 v2 复用同一对象读取逻辑，验证原件后忽略认证变化。带摘要但无法核验快照的历史任务会留下原 Task ID 和连接不可验证的结果。未保存摘要的更早任务沿已有地址处理。Maxwell A2A 结果进一步校验 Task ID 和已知 Context ID。
+
+沿 `integration/a2a/configuration_test.go` 查 Registry 重建后的两代快照、历史缺证、变更目标零请求和新 Key 的 HTTP 验证。沿 `application/evaluation/live_configuration_test.go` 及 `live_interaction_test.go` 查 Worker 重建后传递原摘要的轮询、续答和取消。2026-11-10 本机仍由另一工作树占用全局 Worker，同源真实环境验收待执行。
