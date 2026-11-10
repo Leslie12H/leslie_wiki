@@ -180,6 +180,9 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 - [香港 Dev 图文压测报告](https://j0yswlgboxz.feishu.cn/docx/Hr4QdGt1XouDS1xkSFrcojCvnJy) 和工作区 `.local/dev-fake-capacity-20261109/v2-image-ramp/` 的日志汇总与客户端回执可按档绘制拒绝与受理。真实活跃线程数与队列深度需要运行时指标，不能从 HTTP 503 或 CPU 反推。
 - 沿实际部署的 `GenerationPreparationConfig` 和 `OpenApiGenerationService` 核对执行器、提交点和异常映射。一个图文请求可以拆成提示词审核和首帧处理两份执行器工作；执行器计数与 HTTP 计数使用不同分母。
 
+- 香港 Dev [现有阿里云大盘](https://cms.console.aliyun.com/hybrid-monitor/dashboard2/custom/akpvcwp0891o2k374f6jfubgdd) 已保存输入准备面板。按实际 Pod 的启动参数、环境、外置配置和部署 SHA 核对默认值是否生效。运行读回与看板原件在 API 工作区 `.local/dev-preparation-pool-20261110/`。
+- Actuator 上出现 `executor_*` 时先核对 `name`，Dev 的 `taskScheduler` 序列不能用于请求的 `generationInputExecutor`。新埋点使用已在 PodMonitor 保留规则中的 `openapi_*` 前缀，发布后先读 Pod 的指标端点，再验云端按 Pod 序列。任务级 `input_review` 与执行器细分 P95 分开命名，空样本留空。
+
 **Why:** 独立线程池可以在容器 CPU 尚有余量时因依赖等待、突发提交和队列上限而拒绝工作。
 
 **How to apply:** 按 Pod 同时对齐活跃线程与上限、队列深度与容量、每秒拒绝数和排队耗时分位数。排队耗时按成功入池工作从提交到开始执行计量，阶段耗时按提示词审核、首帧下载和图片审核独立记录。高频突发结合拒绝计数器核对，避免低频队列采样漏掉瞬时满队列。

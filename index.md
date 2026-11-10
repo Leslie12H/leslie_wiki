@@ -6,7 +6,7 @@
 
 - 2026-11-09：[API Dev 生成入口 503 与发压超时分流](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-09-生成入口-503-与发压超时分流) — 按 OpenAPI 部署行号核对准备线程池拒绝、客户端超时及秒精度取数。
 
-- 2026-11-10：[API Dev 输入准备线程池看板口径](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-10-输入准备线程池看板口径) — 线程池拒绝实测、按 Pod 状态采样与 HTTP 口径的区别。
+- 2026-11-10：[API Dev 输入准备线程池看板口径](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-10-输入准备线程池看板口径) — 线程池拒绝实测、按 Pod 状态采样、运行配置与阿里云面板回读。
 
 - 2026-11-09：[API Dev v2 图文连续升压](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-09-v2-图文连续升压与双口径对账) — 组织错峰、503 任务 ID 与部署日志对账、202 终态和飞书原文显示回查。
 
