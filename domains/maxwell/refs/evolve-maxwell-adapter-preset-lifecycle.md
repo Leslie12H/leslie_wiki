@@ -161,4 +161,12 @@ Agent Server 下一阶段仅评审现有接口的鉴权扩展，现有请求/返
 
 本地 HTTP 集成测试覆盖同一入口路由、基线及 SP 与 Skill 增删、归档、清理错误后恢复和保留 Thread。测试使用替身 Runtime，产品代码留在工作树。隐藏系统身份待授权确认，真实运行、生产回收及完整判卷链路待联调。
 
-原生隔离路径沿 `a2a/native.go` 和 `maxwellexecutor/input.go` 同时接受 Nextplay 准备输入及现有 Maxwell 文本、结构化和标准多轮输入。共用单轮文本解析，保留结构化业务字段。沿 `evaluation/live.go` 查远端受理前冻结的传输方式，普通历史请求继续沿原路径，避免重复派发。按 `commands/optimization_candidate.go` 检查连续调优授予的精确路径，原生 Skill 文件可增删，基线 Preset 配置不可借此改写。调优就绪判断和从普通测量自动取得冻结基线仍需接通。
+原生隔离路径沿 `a2a/native.go` 和 `maxwellexecutor/input.go` 同时接受 Nextplay 准备输入及现有 Maxwell 文本、结构化和标准多轮输入。共用单轮文本解析，保留结构化业务字段。沿 `evaluation/live.go` 查远端受理前冻结的传输方式，普通历史请求继续沿原路径，避免重复派发。按 `commands/optimization_candidate.go` 检查连续调优授予的精确路径，原生 Skill 文件可增删，基线 Preset 配置不可借此改写。后续的调优入口接线见下节。
+
+## 2026-11-10 普通评测进入原生调优
+
+**Why:** 来源评测应保留原分数、版本和执行路径。隔离对照须绑定本任务准备的配置，基线和候选各自物化。任务创建可以先进入分析，配置读取暂时失败时留给同一任务恢复。
+
+**How to apply:** 沿 Maxwell 工作树的 `commands/tuning_baseline.go`、`native_tuning_baseline.go`、`runner_tuning_run.go` 检查同一个 Maxwell Agent 执行器、按 Work 寻址的冻结 Variant 和运行准入。资源内容继续入 EVOLVE。Artifact 在业务内按内容去重，平台冻结的 Variant 用同 Work 的固定 ID 和带 Work 标识的说明，区别两个配置相同的独立任务。恢复读已冻结 Variant；从本 Work 的隔离结果重判时，沿 `comparison.ExecutionSource` 找回原执行归属。已有 Runner 任务和明确选择 Runner 的任务继续使用原连接。
+
+沿 Studio `RunTuningStore.ts`、`StartRunDialog.tsx` 及 `LedgerLineage.tsx` 核对默认执行器和候选基线选择，空目标创建仍要发送幂等键。沿 `agent-resources/skills/target-recon/references/target-connection.md` 查原生准备后的资产读取方法。命令层集成测试覆盖普通评测、隔离基线、候选、固定配置重放、快照失败后恢复和重判无需再次派发。EVOLVE 全量 Go 测试及 Studio check 通过。代码仍在工作树，未部署。隐藏系统身份授权及真实环境验收待完成。
