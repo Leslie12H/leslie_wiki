@@ -54,5 +54,6 @@ Agent 保存草稿、任务生成正式资产、发布共享评分标准是不�
 **How to apply**
 
 - Case 草稿通过确认与生成正式资产后沿 `commands/freeze_draft.go` 写正式 Case 修订，可从用例库按来源任务查找。任务里的冻结 Judge 可沿 `ArtifactDrawer.tsx` 和 `StandardAdoptionButton.tsx` 另存共享评分标准，再到评分资产的「旧版评分配置」查看。独立指标与评估器各走对应目录。
-- 回查 Maxwell 工作分支 `codex/evolve-scoring-visibility`。指标详情沿 `StandardsTab.tsx`、`AssetReferences.tsx` 读取引用该精确修订的评估器或旧版评分配置，展开后按引用修订查询现有详情。逐题绑定仍沿「关联用例」查，具体 Benchmark 以其采用的冻结配置为准。
+- 回查 [Maxwell PR #427](https://github.com/world-sim-dev/maxwell-ai/pull/427) 的 Studio 提交 `b2d731f3063b8d5ac8fb2aaa736fcc597e353506`。指标详情沿 `StandardsTab.tsx`、`AssetReferences.tsx` 读取引用该精确修订的评估器或旧版评分配置，展开后按引用修订查询现有详情。逐题绑定仍沿「关联用例」查，具体 Benchmark 以其采用的冻结配置为准。
 - Benchmark 的「当前版本指标与趋势」沿 `BenchmarkResultsPanel.tsx` 区分加载、请求失败、过滤为空和完整题集零运行。零运行用 `BenchmarkDetailPage.tsx` 的首跑卡概览业务评分和平台采集，评分配置仍可直接打开。2026-11-10 本地浏览器用样例验证了首跑卡、窄工作区单列、评分配置入口与精确修订 Prompt。
+- 会话工作台随同一 PR 提交。沿 `EvolveWorkspace.tsx`、`SessionWorkbench.tsx` 与 `EvolveWorkspaceStore.ts` 核对绑定任务的会话入口、当前版本草稿的人工确认和正式运行确认边界。绑定任务的会话须把 Work 引用传给聊天，否则资料引用入口失去任务范围。合并后的代码通过本地 Studio 检查，目标环境的会话实跑需按部署版本另行核对。
