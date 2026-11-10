@@ -465,3 +465,14 @@ Studio 和 EVOLVE 发布成功后，另一个分支部署的 Agent API 仍可能
 - 按 `agent-resources/skills/judge-design` 起草原生指标。Studio 确认并冻结后，在 `commands/reviewed_judge_metrics.go` 查独立 MetricSpec 发布、Judge 引用及目录重试。验收要同时检查用例库、指标的评分依据、Run 记录的同一指标修订。沿同名测试查本地替身端到端；已冻结旧 Judge 不回写。
 - 交互题按 `skills/case-design/examples/case.interactive.yaml` 写模拟答复；沿 `maxwellexecutor/case_text.go` 核对首次只给真实用户输入，`live_interaction.go` 在收到提问后才使用应答规则。
 - 区分系统身份覆盖的业务与 Agent Server 接受的操作。沿 `evolve_config_read_auth.go` 查现有签名身份的三项读取能力，沿 `native_tuning_baseline.go` 查隔离试跑仍消费的权限。复用同一个系统身份，签名有效期属于服务端凭证机制，不需要每次试跑由业务方审批。调整现有路由鉴权时遵循项目变更治理。
+
+## 2026-11-10 原生隔离调优与系统身份的试跑范围
+
+**Why**
+
+业务能读取配置、普通评测能执行，不代表原生候选能创建并回收副本。隔离调优的目的，是在同题同评分口径下验证候选配置，避免影响正式 Preset 和其资源的引用关系；不等于复制目标的外部数据或工具写入空间。
+
+**How to apply**
+
+- 从 [Maxwell PR #428](https://github.com/world-sim-dev/maxwell-ai/pull/428) 的 `maxwellexecutor/frozen_preset.go`、`archived_cleanup.go` 和 Agent Server 的 `evolve_config_read_auth.go` 追踪授权、落地回读和释放。复用 EVOLVE 已有签名身份，沿原有接口按业务、源 Preset 和试跑归属创建及更新试跑副本。旧任务按其已有凭证路径恢复，不以凭证变化重算配置版本。试跑停稳且证据已归档再清理该次独占 Preset、Prompt、Skill；Thread 按现有保留策略。正式配置切换是后续独立操作。
+- 验收要同时核对 Dev 的 [服务发布回执](https://github.com/world-sim-dev/maxwell-ai/actions/runs/42807623073) 和共享调优 Agent 实际绑定的 Prompt/Skill。代码仓库有新 Skill 不代表当前 Preset 会加载；业务未配置 GitHub 来源时，先核对当前使用的资源 ID，再用已有资源编辑发布。用全新业务分别验证公开指标入库、基线和候选同题分数、试跑回执、临时配置回收以及正式配置保持。发布回执不等于实跑成功。
