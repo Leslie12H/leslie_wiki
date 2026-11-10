@@ -280,3 +280,15 @@ EVOLVE 试跑的替身测试可以验证编排顺序。业务 Key 能否通过 A
 沿 EVOLVE `maxwellexecutor/frozen_preset.go` 核对更新请求按 `providerId` 和 `toolName` 提交 `configured` 标记。Agent Server 使用副本已经保存的完整工具配置，详情脱敏字段只用于回读核对。沿 `agentpreset/application/tool_config_detail.go` 查已有保留语义，沿 EVOLVE `frozen_preset_test.go` 查脱敏数组的请求回归。
 
 隐藏 EVOLVE 身份的现有接口清单还需覆盖找回资源使用的 `GET /api/agent/preset`、`GET /api/prompts`、`GET /api/skills`。新隔离试跑的正式结果也使用 `GET /api/a2a/{agentId}/tasks/{id}`，并依赖该试跑的 Business、Preset、Thread 与 Run 归属。实际跨业务系统身份仍待接口授权审查。本机 `make check` 未发现本工作树的 API 或 Studio，`make status-agent-worker` 查到另一工作树的全局 Worker；未切换实例，也未将 Handler 回归计入真实环境端到端验收。
+
+## 2026-11-10 普通 A2A 多轮与历史原件的凭据轮换
+
+**Why**
+
+一个多轮 Case 在单次派发中发送多条消息。轮询每次读登记，但下一轮沿用开跑时的客户端会继续带旧凭据。若登记指向另一个 Agent，单凭当前连接又可能把原 Task ID 发给替换目标。历史 Runner 已产出的证据分片也可能在读取期间遇到旧凭据撤销。
+
+**How to apply**
+
+沿 EVOLVE `integration/a2a/registry.go` 与 `turn.go` 核对同一执行配置下读取当前登记。凭据轮换不改变冻结配置。后续轮次、轮询和超时清理沿同一业务与执行配置。连接更换时不向替换目标发送原 Task ID，并保留取消未确认的状态。注册型 A2A 客户端在原端点收到 401 时沿 `safehttp/bearer_refresh.go` 尝试一次当前凭据。超时和其他传输失败沿原派发语义处理。
+
+沿 `runtime_result.go` 核对历史 Runner 的结果清单和分片读回。一次归档共用同源凭据刷新，成功更新后后续分片沿用当前凭据，原 Thread、invocation 和校验哈希继续绑定。`turn_test.go` 验证两次轮换、两次实际用户发送和变更目标后的无请求；`runtime_result_test.go` 验证首片读取遭 401 后原件完整归档。测试使用本地 HTTP 替身，真实环境和隐藏系统身份仍沿前述验收前提。
