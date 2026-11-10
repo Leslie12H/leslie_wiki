@@ -20,3 +20,5 @@ links: [vidmuse-ai-frontend, vidmuse-zeus, vidmuse-admin, vidmuse-feedback-drive
 - 报表：从 Admin 的 `thread_outcome_sync.py`、`thread_outcomes.py`、`OutcomeMetricDefinitionHint.tsx` 核对 Thread 归因、有效分母和计数粒度；问卷页另查 `SurveyAnalyticsPage.tsx`。快评有效分母与列表记录总量不同，NPS 问卷也有独立类型。
 
 2026-11-10 只读样例：[Dev Thread](https://dev-vidmuse-admin.sandaii.cn/playground/thread/9874a4b1-3ccb-439b-a1f8-511f65fac61e?tab=chat) 的 16:28:24 原文含 `SatisfactionCard`；同 Thread 的快评查询仅返回 ID `869024735710533`，时间为 16:50:44（UTC+8），评分 `0`，对应直接发送的文字。后续普通单选没有第二条快评。该样例通过 Admin GET 回读，未重放提交，也不代表生产环境的配置或覆盖情况。
+
+2026-11-10 同一 Dev 样例的双端复查：用户侧成片交付处显示通用完成提示，Admin 工作台反馈行显示消息正文，反馈详情和 GET 保留 `rate: 0`。如果看到具体评分文案，先定位页面、记录 ID 和显示区域，区分卡片选项、反馈正文与统计分组。评分分组回查 Admin `playground/src/utils/quickRateAnalysis.ts`，选项与初始选中状态回查 `SatisfactionCard.tsx`。
