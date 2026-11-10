@@ -159,4 +159,6 @@ Agent Server 下一阶段仅评审现有接口的鉴权扩展，现有请求/返
 
 沿 `commands/baseline.go` 查大资源的 Work Artifact 引用。只有历史裸 CAS 哈希时，需重新冻结或补齐经授权的资源引用。冻结资源经 Worker JSON 持久化后应使用已校验的原字节见证，避免 JSON 排版变化破坏内容校验。
 
-本地 HTTP 集成测试覆盖同一入口路由、基线及 SP 与 Skill 增删、归档、清理错误后恢复和保留 Thread。测试使用替身 Runtime，产品代码留在工作树。隐藏系统身份待授权确认，原生隔离路径目前覆盖已有 Nextplay Case 输入。生产回收、通用输入及完整判卷链路待联调。
+本地 HTTP 集成测试覆盖同一入口路由、基线及 SP 与 Skill 增删、归档、清理错误后恢复和保留 Thread。测试使用替身 Runtime，产品代码留在工作树。隐藏系统身份待授权确认，真实运行、生产回收及完整判卷链路待联调。
+
+原生隔离路径沿 `a2a/native.go` 和 `maxwellexecutor/input.go` 同时接受 Nextplay 准备输入及现有 Maxwell 文本、结构化和标准多轮输入。共用单轮文本解析，保留结构化业务字段。沿 `evaluation/live.go` 查远端受理前冻结的传输方式，普通历史请求继续沿原路径，避免重复派发。按 `commands/optimization_candidate.go` 检查连续调优授予的精确路径，原生 Skill 文件可增删，基线 Preset 配置不可借此改写。调优就绪判断和从普通测量自动取得冻结基线仍需接通。
