@@ -304,3 +304,15 @@ EVOLVE 试跑的替身测试可以验证编排顺序。业务 Key 能否通过 A
 沿 EVOLVE `application/evaluation/live.go` 和 `live_interaction.go` 查看从 Attempt 持久化快照传入轮询、续答、取消与取消后取证的内部字段。沿 `integration/a2a/configuration.go` 查快照哈希、业务、执行器、端点、Preset 和结果通道校验。快照格式 v1 和 v2 复用同一对象读取逻辑，验证原件后忽略认证变化。带摘要但无法核验快照的历史任务会留下原 Task ID 和连接不可验证的结果。未保存摘要的更早任务沿已有地址处理。Maxwell A2A 结果进一步校验 Task ID 和已知 Context ID。
 
 沿 `integration/a2a/configuration_test.go` 查 Registry 重建后的两代快照、历史缺证、变更目标零请求和新 Key 的 HTTP 验证。沿 `application/evaluation/live_configuration_test.go` 及 `live_interaction_test.go` 查 Worker 重建后传递原摘要的轮询、续答和取消。2026-11-10 本机仍由另一工作树占用全局 Worker，同源真实环境验收待执行。
+
+## 2026-11-10 逐个确认临时资源回收
+
+**Why**
+
+回收请求有单次时间预算。若每轮都从 Preset 开始，即使接口每次都能完成一项，后面的 Skill 和 Prompt 也可能一直轮不到。Worker 重启后同样需要接回已确认的进度。
+
+**How to apply**
+
+沿 `maxwellexecutor/frozen_preset.go` 查看 EVOLVE journal 的逐资源回执。成功删除和目标接口确认资源已不存在分别留存。只有写入回执后才推进，后续重试跳过已确认项。原拥有的 ID 留存，回收仍先 Preset 再 Skill 和 Prompt。沿 `cancel.go` 查看未创建 Thread 的取消也进入后台回收队列，沿 `evidence.go` 查归档发布后仅在归档中保留原事件和文件索引。
+
+`archived_cleanup_test.go` 用本地替身让每轮回收只来得及确认一项，重建 Adapter 后继续直到四项全部确认。`cancel_recovery_test.go` 覆盖尚未创建 Thread 时，由后台队列找回创建回执并回收；`frozen_preset_test.go` 核对归档、判卷、Thread 保留和回执。本地渲染 dev、staging、prod 的 EVOLVE 部署清单，API 和 Worker 各自在同一 NAS 声明和对象目录下读取 journal。沿 `app/composition.go` 核对跨进程的 PostgreSQL advisory lock。环境真实存储与端到端执行仍需按部署验收步骤核对。
