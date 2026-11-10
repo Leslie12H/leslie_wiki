@@ -3,7 +3,7 @@ name: feishu-engineering-agent
 type: reference
 created: 2026-11-10
 updated: 2026-11-10
-tags: [maxwell, feishu, github, agent, context]
+tags: [maxwell, feishu, github, codex, agent, context]
 links: [maxwell, sandai-api-platform-development-entrypoints]
 ---
 
@@ -20,6 +20,16 @@ links: [maxwell, sandai-api-platform-development-entrypoints]
 - Maxwell 仓库从 `docs/operations/chat-gateway.md`、`docs/architecture/agent-server.md` 的 Chat 章节，以及 `apps/studio/src/pages/docs/content/tools/channels.md` 查渠道配置。原生 `platform` 的当前渠道读取沿 `services/agent-server/internal/modules/chat/application/capabilities.go` 查授权，再到 `services/chat-gateway/internal/feishu/message_history.go` 查飞书 API 调用。显式引用的飞书文档和 GitHub 仓库工具查 Studio 的 `tools/feishu.md`、`tools/github.md`。
 - 多人、多话题归属查 `services/agent-server/internal/modules/chat/contract/types.go` 的 `InboundEvent.ScopeID`，区分选中话题后按需读取的范围与 Runtime Thread 复用的范围。查 `services/chat-gateway/internal/gateway/gateway.go` 的群白名单和 @ 过滤，核对空白名单、@全员和私聊的实际行为。
 - PR 跟进和 CI 可查 [GitHub Webhook 事件](https://docs.github.com/en/webhooks/webhook-events-and-payloads) 与 [GitHub App 权限](https://docs.github.com/en/apps/creating-github-apps/registering-a-github-app/choosing-permissions-for-a-github-app)。接续时同时校验仓库、PR 与 head SHA。归属不明确的事件进入人工选择，避免按群、关键词或分支名推断写入目标。
+
+## 本地 Codex 作为执行器
+
+2026-11-10 补查公开原型的 [运行装配](https://github.com/deepseek-ai/dsh-superagent-prototype/blob/main/src/app/runtime.ts#L128) 和 [执行说明](https://github.com/deepseek-ai/dsh-superagent-prototype/blob/main/docs/003-execution.md)。公开版装配的是 DeepSeek Harness 的 `DshExecutor`，用 DSH Session 跑 Router 和每个 Ticket 的 Worker。Worker 能执行本机命令。通过命令再委派给其他 CLI 属于另行集成，截图无法确认本机部署有没有这种定制。
+
+**How to apply**
+
+以本地 Codex 为执行核心时，可在 Mac 上独立运行飞书接入和任务调度进程。接入层回读授权话题，调度层持有工作项、允许的仓库和操作范围，Codex 在对应工作区处理代码。按工作项保存准确的 Codex Thread ID、工作区和来源绑定。新任务启动独立会话，后续飞书消息或 PR 事件用该 ID 续跑，禁止用最近一次会话猜归属。不同工作项可并行，同一工作项的修改串行。发消息、推送和 PR 创建交由受控的交付步骤。
+
+首个本机试点可用 `codex exec --json` 捕获 `thread.started` 和终态，按明确 ID 执行 `codex exec resume`。需要嵌入式调用可选 Codex SDK；需要在运行中追加输入或中止时，查 App Server 协议。公开 DeepSeek 原型可供参考工作项与 Router 设计，Maxwell 也可作为日后复用的渠道层。本轮仅核对本机 CLI 命令和文档。 [Codex 非交互模式](https://learn.chatgpt.com/docs/non-interactive-mode) · [Codex SDK](https://learn.chatgpt.com/docs/codex-sdk#typescript-library) · [Codex App Server](https://learn.chatgpt.com/docs/app-server#api-overview)
 
 ## 试点顺序
 

@@ -1,4 +1,4 @@
-- 2026-11-10：[飞书研发 Agent 与跨渠道工作项](domains/maxwell/refs/feishu-engineering-agent.md) — 飞书上下文权限、Maxwell 渠道复用、工作项路由与试点验收入口。
+- 2026-11-10：[飞书研发 Agent 与跨渠道工作项](domains/maxwell/refs/feishu-engineering-agent.md) — 飞书上下文权限、Maxwell 渠道复用、公开原型执行归属、本地 Codex 执行器和工作项续跑入口。
 
 - 2026-11-10：[VidMuse 满意度卡片、快评与满意率](domains/vidmuse/refs/satisfaction-card-feedback-lineage.md) — 首次成片发卡、直接发消息后的卡片状态、未评分快评、评分文案来源和双端只读核验入口。
 
