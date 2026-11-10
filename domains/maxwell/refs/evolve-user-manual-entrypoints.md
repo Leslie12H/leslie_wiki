@@ -20,3 +20,9 @@ links: [evolve-benchmark-unified-plan-review, evolve-preset-evaluation-entry, ev
 **Why:** 手工表单最小输入、导入协议和评测准备是三个条件。Case 可以先保存，正式运行仍需匹配执行器的输入和可出分的评估器。独立指标描述值的口径，评估器的输出绑定提供实际计算方式。
 
 **How to apply:** 以 Maxwell `f146431129a5f6907044a03e475349b3da08720a` 为查证锚点。用户可把统一导入包交给外部 Agent 生成，页面文件和 HTTP 包装分别沿 `caseImportSource.ts`、`CaseImportStore.ts` 和 OpenAPI 的 `SharedCaseImportRequest` 核对。核对共享目录的预检、确认写入权限、来源键和冲突规则，另读 `case_catalog.go` 和 `toolcaller_benchmark.go` 区分 Studio 人类身份与 Work 内 Agent 工具。评分沿 `EvaluatorEditor.tsx`、`EvaluatorSamplePreview.tsx`、`plan_processor.go` 和 `CaseMetricAssociations.tsx` 查试评材料、原子保存、正式参考答案来源及 Benchmark 采用关系。手册中的 YAML 由该提交的实际解析器读取验证，评分示例为步骤说明。
+
+## 2026-11-10 表单完整样例与计算方法的配置位置
+
+**Why:** Case 的上下文和准备数据需要执行器明确消费；给评分看的参考答案来自冻结 Case。模板、评估器输出类型与目录里的计算方法是不同维度。
+
+**How to apply:** 完整退款题和三类型指标示例回查 Maxwell 手册。当前主线的 `CaseEditorDialog.tsx` 对应表单，`execution/contract.go` 及各执行器输入解析区分输入、上下文和准备数据；正式参考答案沿 `evaluation/plan_processor.go` 查。模板沿 `evaluatorTemplates.ts` 和 `evaluatorEditing.ts` 核对默认材料与输出，方法的实际配置入口沿 `MethodsDirectory.tsx` 检查。旧版确定性断言的 JSON 路径针对实际输出根，另查 `evaluation/judge_dispatch.go` 和 `methods/judge/caseaware.go`；证据取值按它自身的材料路径。手册样例通过导入解析，三项评分预期用于人工对照。
