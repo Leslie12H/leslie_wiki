@@ -180,3 +180,15 @@ Agent Server 下一阶段仅评审现有接口的鉴权扩展，现有请求/返
 沿 `maxwellexecutor/frozen_preset_test.go` 和 `frozen_preset_regrade_test.go` 查本地集成证据。替身 Runtime 执行后轮换 Bearer，原 invocation 补删并保存成功回执。随后真实 EVOLVE Worker、归档 Resolver 和原 Trial 授权读取原件，再从独立 Work 重判，同一份 EvidenceSet 只派发一次目标。评分模型使用替身。Agent Server Preset、Prompt、Skill 的应用层及 HTTP 包测试通过，真实环境和隐藏身份仍待验收。
 
 鉴权以 Agent Server `auth_guard.go`、`business_access.go` 及 `studio_evolve_executor_key.go` 为准。Studio 控制器的 `currentActorID` 可取 API Key 主体 ID，是否允许仍由已认证主体、Business 和操作权限决定。默认签发的受管 EVOLVE Key 只有运行权限，隐藏身份授权仍按前述评审清单单独确认。
+
+## 2026-11-10 取消试跑后的取证与回收
+
+**Why**
+
+取消可以发生在首个完整回合之前，工作区仍可能已经写入证据。保留 Thread 也不能替代 EVOLVE 归档，Runtime 部分工作区路径仍依赖绑定的 Preset 解析后端。
+
+**How to apply**
+
+沿 `maxwellexecutor/cancel.go` 检查停止回执，沿 `goal_cancel.go` 检查文件原件、运行事件和已有配置快照入归档后的回收顺序。普通历史任务沿原取消流程。隔离试跑复用执行归档的文件范围，嵌套项目使用试跑 journal 中的项目根。读取或归档失败时，原 invocation 的临时配置暂留给现有 `evaluation/cleanup.go` 重试，已确认的停止动作不会重发。归档可读后删除试跑拥有的配置并保留 Thread。
+
+本地 `cancel_recovery_test.go` 覆盖停止后读取失败、重建 Adapter 和轮换凭据、归档可读后清理及保留 Thread。真实环境验收时，应将 Thread 历史与可继续运行分开验证，后者依赖仍有效的 Preset；原始评测文件以 EVOLVE 归档为准。
