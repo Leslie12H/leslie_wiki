@@ -376,3 +376,15 @@ EVOLVE 试跑的替身测试可以验证编排顺序。业务 Key 能否通过 A
 - 审查自动选路时，对照 EVOLVE 的 `commands/native_tuning_baseline.go`、`tuning_preflight.go`、`maxwellpreset/client.go` 与 Agent Server 的 `app/api/http/evolve_trial_resources_test.go`。分别走默认业务 Key 和已具备临时配置能力的身份，再确认未满足能力时已有 Runner 的选择行为。保留普通 Thread 时，交叉检查 `maxwellauth/resolver.go`、`maxwellexecutor/adapter.go` 和 `app/api/http/thread_access.go`。用同一业务的 Runtime 读权限验证 hidden Case 原文与普通 Thread 历史各自的可见范围。
 - 对照 `maxwellexecutor/cancel.go`、`goal_cancel.go` 和 `evaluation/live.go`，分别注入远端已停止后清理返回 503、慢速弱 ETag 文件。记录停止回执、归档和清理三个状态。该轮在基线 `7d35be0e8bd4` 上的首版工作树复现了停止确认被清理错误掩盖。也在 `frozen_preset.go` 保存创建意图后、发送之前的状态做了重启复现，空目录查询和后台回收都无法推进；修复时同时保留响应丢失后找回已创建资源的校验。
 - 查外部 Runner 旧准备记录时，沿 `a2a/configuration_test.go` 的旧摘要轮换用例分别验证有无历史快照。仍可验证旧摘要时先保全对应快照；找不到原配置凭证的记录需要显式重做准备，历史结果另行保留。真实验收仍须在同源 API 与 Worker 上连跑默认注册、普通评测、隔离调优、取消、归档和回收。
+
+## 2026-11-10 原任务配置读取与隔离试跑恢复
+
+**Why**
+
+评测能运行只证明业务 Key 有执行能力。首次准备真实 Case 时还要读预设关联的系统提示词和技能。原生调优需要另一组临时资源写权限。Studio 的授权修复按钮曾只有组件测试，目标详情没有挂载入口。
+
+**How to apply**
+
+- 在 Studio 执行目标详情打开「修复业务执行授权」，沿 `v3/library/ObjectDetailDrawer.tsx`、`executor/ExecutorBusinessAuthorizationRepair.tsx` 和 EVOLVE `maxwellpreset/client.go` 查同一个目标的登记重放。补权仍由当前具备密钥管理和可授予读取权限的业务管理员完成。通过同一个 Key 复测 `evolve_executor.resolve_baseline` 读取预设、系统提示词和技能，回到原任务继续。配置读取权限与隔离试跑写权限分开。后者沿 `commands/native_tuning_baseline.go` 用已有 Business 详情核对实际授权，能力不足时沿用关联 Runner。
+- 保留正常试跑 Thread。沿 `commands/run.go` 和 Worker `evaluation/live.go` 核对 hidden Case 的接纳与执行检查。沿 `maxwellexecutor/cancel.go`、`archived_cleanup.go` 检查停止确认、异步归档和独占配置回收。回归须覆盖删除返回 503、慢速弱 ETag 和 Worker 重启。临时资源创建意图存在但目录为空时，试次可以结束并重新发起，后台降频查找晚到资源。
+- 沿 `a2a/configuration.go` 查可验证的 v1 摘要见证回填，沿 memory 与 postgres 的 `retention.go` 查 Runner 准备和准备历史的引用扫描。凭据已经轮换且原配置见证缺失时，恢复原绑定或以来源评测重新做调优准备，保留历史。隐藏系统身份涉及现有接口的授权变更，仍需独立确认与真实环境验收。
