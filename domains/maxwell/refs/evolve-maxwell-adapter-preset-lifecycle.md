@@ -126,3 +126,13 @@ Nextplay 源码锚点为 `5408ebc5a264db463d4435743993c154bae0479c`。核对 `ev
 建议首版复用 Maxwell Agent 登记和 EVOLVE `maxwellexecutor` 的 journal、归档及重启恢复。普通评测沿现有路径；配对调优的基线和候选各用独立试跑资源，支持 SP 替换与 Skill 绑定增删，解绑不删除源 Skill。每次创建记录本次拥有的 ID，Thread 使用现有幂等键，Runtime 只保留执行必需状态和最小关联。隐藏 EVOLVE 系统身份使用现有操作，执行和判卷在调用时取当前凭据，历史协议与任务 ID 保持。Agent Server 复用已有 CRUD 和停机释放能力。
 
 正常或失败后停稳、证据已存时用现有接口清理，判卷从 EVOLVE 读归档。停机或取证未确认、删除失败时保留待清理 ID，已有 Worker 恢复路径可重试同一释放，异常可按记录补收。执行/判卷结果与清理结果分别记录。首版沿用软删及现有存储保留策略，无新增租约接口或表、独立巡检、物理清理协议；试点记录软删历史、文件和 Store 的实际残留，再决定是否扩范围。验收覆盖普通评测、基线与 SP/Skill 候选、成功自动清理、失败留证与恢复、删除后从 EVOLVE 重判。此处是待实施方案。
+
+## 2026-11-10 保留试跑 Thread 的边界
+
+**Why:** 用户询问首版能否保留 Thread，只删除临时 Preset。Nextplay 已有同类用法。会话历史、续跑、Sandbox 文件访问和后端回收各有独立依赖。
+
+**How to apply:** Nextplay `5408ebc5a264db463d4435743993c154bae0479c` 的 `eval-runner/scripts/run_local_project_eval.py` 显式设置 `agent.lease.keep_threads`，之后仍调用 `agent.close()`。在 `materializer/service.py` 中，此开关只跳过 Thread 删除，保留删除本次临时 Preset、Skill 和 Prompt 的步骤。A2A CandidateRunner 正常清理内层 Thread 的行为按各自的 materialization lease 核对，勿将继承 Executor 的 keep_threads 与 lease 开关混为一谈。
+
+Maxwell `f146431129a5f6907044a03e475349b3da08720a` 中，Preset 软删不级联 Thread。Thread 和历史 Run/事件的读取按 Runtime `transport/http/controller.go` 与事件存储核对；续跑和非托管 Sandbox 文件按 `application/runs.go`、`thread_files.go` 核对仍需可解析的 Preset 或已有受信快照。 `application/threads.go` 的 Thread 删除会运行后端释放，且配置化 Sandbox 释放会解析 Run Preset；先软删 Preset 可能使后续删除跳过该配置的 Sandbox 释放。删 Preset 也不回收其 Store 分区。
+
+首版若主要目标是临时配置退场和保留历史，建议正常停稳且证据归档后保留 Thread，清除本次创建的临时 Preset 与独占 Prompt/Skill。按历史回看验收，文件和重判从 EVOLVE 归档取；保留 Thread 会保留 Runtime 历史。对明确要求立即释放 Sandbox 的试跑，继续用 Thread 先删、Preset 后删的现有路径。当前核对为源码，未实施或实跑。

@@ -2526,3 +2526,5 @@
 - 2026-11-10：复审 EVOLVE 临时试跑的元数据归属、归档、逻辑删除与实际存储回收。
 
 - 2026-11-10：收敛 EVOLVE Adapter 首版回收范围，区分 Nextplay 正常清理、异常留证和停机恢复。
+
+- 2026-11-10：核对 Nextplay 保留 Thread 的模式，以及 Maxwell 软删临时 Preset 后的历史和 Sandbox 释放边界。
