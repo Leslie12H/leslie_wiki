@@ -340,3 +340,15 @@ EVOLVE 试跑的替身测试可以验证编排顺序。业务 Key 能否通过 A
 沿 `commands/tuning_baseline.go` 查看创建 Maxwell 调优 Work 时保存的执行器和原生 Preset 选择。独立候选验证沿 `commands/candidate_validation.go` 将该选择写入已验证的派生 Work 计划。沿 `execution/frozen_preset.go` 和 `evaluation/live.go` 核对 Worker 使用 Work 保存的路径，再由 `integration/a2a/native.go` 和 `maxwellexecutor/adapter.go` 进入隔离试跑。历史 Variant 原件与协议保持可读取，普通评测沿原 A2A；已派发任务沿原 ID 恢复。路径记录归 EVOLVE。
 
 `native_tuning_baseline_test.go` 覆盖普通评测、隔离基线、归档重判、独立候选和同形状历史 Variant 的 Worker 派发。`native_inspection_test.go` 用同一份 Variant 验证普通路径向 A2A 发送一次，隔离路径只创建 EVOLVE 执行预留。这些测试在本机执行，真实 Runtime 验收仍需同源 Worker。
+
+## 2026-11-10 Agent Server 正式结果与 Thread 留存回归
+
+**Why**
+
+临时配置删除前要取回正式结果。Runtime 事件历史与 A2A Task 投影的读取条件不同，业务 Key 可访问现有接口也不能证明隐藏系统身份已经接入。
+
+**How to apply**
+
+沿 Agent Server `app/api/http/evolve_trial_resources_test.go` 运行本地 Handler 集成测试。使用现有业务 Key、真实 Preset/Prompt/Skill Handler 与 Runtime 引擎，在进程内 `DriveDurable` 和确定性模型下核对候选收到替换 SP、保留及新增 Skill，源 Skill 从候选目录移除。Runtime 发起的 Run 从临时 Preset 的 A2A Task 返回正式结果，同一个 Run 用源 Preset 读取返回 404。删除独占配置后，临时 Preset 的 A2A 路由返回 404，Runtime Thread 仍可读完成事件和答复。再以同一个 Key 从源 Agent 发起普通 A2A 评测，核对原 Prompt 和独立终态。该测试未接入外部模型、真实 Temporal Worker 或实际共享存储。
+
+隐藏身份的鉴权评审需覆盖现有 A2A Agent Card、`POST /api/a2a/{agentId}/message:send`、`GET /api/a2a/{agentId}/tasks/{id}` 和 `POST /api/a2a/{agentId}/tasks/{id}:cancel`。普通评测使用发送与恢复，隔离试跑还依赖正式结果读取。沿 `a2a_api.go` 查当前仅接受业务 Key，沿 `auth_guard.go` 和 `sandbox_auth.go` 查可复用的服务主体、业务及操作校验。Sandbox 委派范围面向已有 Sandbox 能力。EVOLVE 的 `EVOLVE_AGENT_MCP_BEARER_TOKEN` 用于 Maxwell 调用 EVOLVE MCP。两者各自保留当前信任用途。系统身份的接口授权仍待确认。
