@@ -388,3 +388,15 @@ EVOLVE 试跑的替身测试可以验证编排顺序。业务 Key 能否通过 A
 - 在 Studio 执行目标详情打开「修复业务执行授权」，沿 `v3/library/ObjectDetailDrawer.tsx`、`executor/ExecutorBusinessAuthorizationRepair.tsx` 和 EVOLVE `maxwellpreset/client.go` 查同一个目标的登记重放。补权仍由当前具备密钥管理和可授予读取权限的业务管理员完成。通过同一个 Key 复测 `evolve_executor.resolve_baseline` 读取预设、系统提示词和技能，回到原任务继续。配置读取权限与隔离试跑写权限分开。后者沿 `commands/native_tuning_baseline.go` 用已有 Business 详情核对实际授权，能力不足时沿用关联 Runner。
 - 保留正常试跑 Thread。沿 `commands/run.go` 和 Worker `evaluation/live.go` 核对 hidden Case 的接纳与执行检查。沿 `maxwellexecutor/cancel.go`、`archived_cleanup.go` 检查停止确认、异步归档和独占配置回收。回归须覆盖删除返回 503、慢速弱 ETag 和 Worker 重启。临时资源创建意图存在但目录为空时，试次可以结束并重新发起，后台降频查找晚到资源。
 - 沿 `a2a/configuration.go` 查可验证的 v1 摘要见证回填，沿 memory 与 postgres 的 `retention.go` 查 Runner 准备和准备历史的引用扫描。凭据已经轮换且原配置见证缺失时，恢复原绑定或以来源评测重新做调优准备，保留历史。隐藏系统身份涉及现有接口的授权变更，仍需独立确认与真实环境验收。
+
+## 2026-11-10 EVOLVE 系统身份读取原 Agent 配置
+
+**Why**
+
+业务 Key 能发起评测时也可能缺少系统提示词与技能读取权限。旧会话已经进入等待确认时，应让原任务重新读取已登记目标，并避免逐业务补权。当前授权范围是配置读取。
+
+**How to apply**
+
+- 沿 EVOLVE `commands/baseline.go` 与 `maxwellpreset/system_baseline.go` 查当前读取身份。服务按已登记 Business 和 Preset 签发短期凭据，不把凭据加入历史执行配置或结果哈希。沿 Agent Server `app/api/http/evolve_config_read_auth.go` 查公钥验证、三个现有 operation、Business 和 Preset 绑定。Prompt 和 Skill 必须仍关联到该 Preset。关联的公开 Skill 可在业务范围查不到时走现有公开详情分支。
+- 按 Maxwell `docs/operations/agent-server.md` 配置每个环境的密钥。先上线 Agent Server 公钥，再启用 EVOLVE API 和 Worker 的签名种子。逐业务没有配置或迁移步骤。停用签名可恢复原业务 Key 路径。执行、配置写入和判卷的授权由各自入口决定。
+- 验收使用已登记目标与缺读取权限的原 Key。重放同一 Work 的基线读取，核对快照内容和 Work/Key 未变化。检查无关联资源、其他业务、列表和写操作拒绝。本地通过 EVOLVE 客户端对接真实 Agent Server Handler 的跨服务测试。生产会话可按原会话继续提交当前卡片，线上验收以部署后真实工具回执和草稿进度为准。
