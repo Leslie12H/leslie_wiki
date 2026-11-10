@@ -94,3 +94,13 @@ links: [evolve-user-manual-entrypoints]
 **How to apply:** 源码锚点为 Maxwell `f146431129a5f6907044a03e475349b3da08720a`。沿 Agent Server `auth_guard.go`、`business_access.go`、`thread_access.go` 与 `a2a_api.go` 查统一 Bearer、按操作拒绝、Service 的 Business 检查和 Thread/A2A 的独立鉴权。沿 EVOLVE `integration/executorsource/source.go`、`maxwellpreset` 基线读路径及 `maxwellexecutor/client.go` 查旧 Business Key 依赖与 Worker 接入。短凭据按任务续签时，检查 `integration/a2a/configuration.go` 的 bearer 摘要是否参与冻结比较；新路径应绑定稳定主体和授权范围，旧任务按原协议恢复。
 
 另查 `integration/llmjudge/maxwell.go` 与 `commands/model_settings.go`。内置 Maxwell 模型判卷仍读取 Business Credential；若产品要求从执行到判卷均免 Key，须独立设计受限模型调用授权。现有 A2A 路由仅接受 API Key，若新原生执行使用 Runtime HTTP，可避免把系统身份扩到外部 A2A。方案仍待确定发行信任、临时资源归属、接口安全声明与验收，未实施。
+
+## 2026-11-10 执行与判卷统一使用当前授权
+
+**Why:** 用户明确要求执行与判卷统一走默认鉴权授权，凭据轮换不算配置变化，也不按任务创建时间分流。此节取代先前按旧凭据路径恢复的建议。可复现性依赖目标、输入和评判条件，运行中则由当前授权决定能否继续操作。
+
+**How to apply:** Maxwell 只读源码锚点为 `f146431129a5f6907044a03e475349b3da08720a`。沿 EVOLVE `integration/a2a/configuration.go`、`http_jobs.go`、`runner_preparation.go`、`evaluation/live.go` 和 `queries/executor_verification.go` 核对执行快照、归档及比较。执行快照含 Bearer 摘要，影响派发、HTTP 批量取消、准备链路和执行验证。沿 `judgeprovider/measurements.go`、`recovery.go`、`evidence_auth.go` 及 MeasurementJob 仓储核对判卷调用、恢复、取消和证据授权。判卷绑定摘要含 CredentialRef。执行器的 Token PATCH 会更换引用并清掉连接验证；判卷登记不走该 PATCH，重复登记同一端点也不会写入新凭据。仅改 HTTP Header 不足以贯通轮换。
+
+方案统一在调用时解析当前凭据。Maxwell 原生目标和内置模型判卷默认走隐藏的 EVOLVE 系统主体，按 Business、任务和 operation 约束。外部执行器及判卷服务继续使用各自登记连接的有效凭据，判卷取证绑定活动 invocation 与已归档证据。冻结业务、连接及执行目标、协议、资源版本、判卷模型和规则等有效语义，保留任务和远端 ID。凭据、其摘要、轮换版本和认证错误归独立运维状态；真实的授权撤销仍阻止后续调用。租约、恢复和清理继续归 EVOLVE。
+
+已存执行快照验原哈希及归属后，可投影到不含凭据的比较形状，保留原证据。已存判卷绑定可能只剩摘要。优先保留现有 CredentialRef 作为稳定槽位、原位轮换密文，或在首次切换前核实并留存不含凭据的绑定证据。检查 `postgres/executors.go` 已有原位更新入口及其并发约束。绑定缺证要单独报告；不能把当前登记无条件追认为历史，也不能重发已受理的远端执行或付费判卷。验收含在途轮换加重启、原 ID 续行、判卷取证与取消、未授权拒绝、真实配置变化以及已完成证据可回读。以上为设计方案，未实施。
