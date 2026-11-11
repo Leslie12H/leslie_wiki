@@ -2,7 +2,7 @@
 name: vidmuse-homepage-render-check-ops
 type: reference
 created: 2026-11-03
-updated: 2026-11-04
+updated: 2026-11-11
 tags: [vidmuse, frontend, monitoring, cron]
 links: [vidmuse-ai-frontend]
 ---
@@ -24,3 +24,11 @@ links: [vidmuse-ai-frontend]
 ## 正式调度的结果日志
 
 恢复后用 cron 条目指定的 `/var/log/vidmuse-check/vidmuse_check.log` 核对恢复时间之后新写入的记录。crontab 回读只能确认计划已启用。一次真实的计划执行以新增结果行的时间戳、主机名和页面规则为准。2026-11-04 恢复后，12:05:01（北京时间）的首条正式记录返回 `OK`，命中 `musi_home`。
+
+## 2026-11-11 首页改版后的回查
+
+告警截图和巡检机的无会话 Chromium 都显示，改版后主内容区仍提供 Musi 入口，原创作模式页签组已移除。新页面初始渲染时有名为 `Message Musi` 的禁用输入框。验证时等创作区内的可用入口出现，具体定位规则以正式脚本为准。回归覆盖旧布局、改版后的候补入口与输入控件，以及只有导航、只加载了占位输入框的页面。
+
+远程候选通过 14 项回归和三次无会话 Chromium 线上巡检。正式脚本回退文件在同目录下，匹配 `vidmuse_check.py.before-nov11.*`。
+
+恢复原调度后，2026-11-11 北京时间 20:40:01 的首条正式记录返回 `OK`，命中 `musi_home`。后续按正式日志和远程 crontab 回查。
