@@ -116,3 +116,10 @@ Agent 保存草稿、任务生成正式资产、发布共享评分标准是不�
 **Why** 原生评估器可以产生有效业务测量而没有整题通过或失败。记录列默认只用明确整题判定时，已有业务出分的 Run 会被读成没有结果。
 
 **How to apply** 沿 Studio `BenchmarkResultsPanel.tsx` 与 `benchmarkResultTrend.ts` 核对当前记录页的默认选择、同评分口径下的精确指标身份，以及手动切回整题通过率。核对 `benchmarkReading.ts` 的出分状态与整题判定字段；运行异常、缺少测量和真实零值分别显示。以本页青禾预约助手 Benchmark v1 和同任务 C2 正式对照为复验入口。2026-11-11 仅用当前工作树构建接同一 Dev 后端验证列表默认值、手动切换和两种评分口径。共享页面是否生效查后续发布回执。
+
+
+## 2026-11-11 独立会话历史与无任务资料关联
+
+**Why** 独立会话页也可能已绑定调优任务。用是否绑定任务推断历史列表范围，会隐藏当前业务下的其他会话。分析来源的访问授权可以属于会话，任务资料的脱敏复制另有接收范围与确认。
+
+**How to apply** 从 [Nextplay 独立调优会话](https://agent.sandaii.cn/evolve/agent/agent_session_8e4698dbf9a2e0d6ccbbe15eeb221f12?businessId=ad3d5c4b-c7c9-4ed3-b15d-4f3556520263) 打开历史，沿 `EvolveWorkspace.tsx` 和 `AgentSessionHistory.tsx` 核对业务范围、当前任务筛选及账号可见性。沿 `RuntimeSourcePicker.tsx` 区分无任务的诊断来源关联与有任务的复制路径。无任务可选整段线上会话或一次运行，通过现有 `diagnostic-sources` 契约绑定；用例和评测记录的引用沿任务复制路径。2026-11-11 使用局部 Studio 构建与 Dev 数据复验历史、范围和无任务选择器，提交前退出。授权与无任务绑定使用现有 Go 测试复验。发布及真实新消息行为按后续验收查证。

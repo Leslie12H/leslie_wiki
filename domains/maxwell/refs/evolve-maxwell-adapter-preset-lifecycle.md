@@ -511,4 +511,7 @@ Studio 和 EVOLVE 发布成功后，另一个分支部署的 Agent API 仍可能
 
 **How to apply** 由 EVOLVE Dev overlay 的共享业务与 Preset 定位 [在线调优 Agent 预设](https://agent.sandaii.cn/agents/746f0d19-f019-4b04-b09e-78305744e603?businessId=74d72fe4-e4f0-46ad-958a-da68d9fdd651)。从提示词预览确认实际 SP，从 Skill Loader 的已选项确认实际绑定，按名称或 Slug 搜索资源只用于定位。目标理解沿 `target-recon`、`commands/baseline.go`、`maxwellpreset/baseline.go` 及原生调优配置快照核对。工具和中间件的配置引用不等于工具后端源码，历史运行按当次冻结配置、归档及应用回执取证。
 
-`EvolveAgentConversation.tsx` 的「引用调优资料」在工作区未绑定或发送请求提交中禁用。用已绑定的调优任务打开 `RuntimeSourcePicker.tsx` 可确认可引用来源和版本范围；打开选择器本身不复制或发起评测。由线上会话直接发起的分析沿 `evolve_source current/read` 读取已关联来源。以用户实际页面的任务绑定与发送状态判断置灰原因。
+2026-11-11 初次核验的共享部署中，`EvolveAgentConversation.tsx` 的「引用调优资料」在工作区未绑定或发送请求提交中禁用。工作区后续实现查 [无任务资料关联](evolve-user-manual-entrypoints.md#2026-11-11-独立会话历史与无任务资料关联)。用已绑定的调优任务打开 `RuntimeSourcePicker.tsx` 可确认可引用来源和版本范围；打开选择器本身不复制或发起评测。由线上会话直接发起的分析沿 `evolve_source current/read` 读取已关联来源。以用户实际页面的任务绑定与发送状态判断置灰原因。
+
+
+接入对象详情的分析入口沿 `ObjectDetailDrawer.tsx` 检查是否把当前选中的对象交给会话。覆盖对象和版本、正文与依赖、实际行为证据、证据缺口与可验证建议，分别查调优主提示词与 `target-recon`。无任务配置快照若只返回 CAS 引用，现有读取工具需要已授权任务与准确资源引用；不能把文件名和哈希当正文。外部 Runner 的外层连接和内层被测对象分别取证。新增指导是否已生效以共享 Preset 实际绑定和新会话回执为准。
