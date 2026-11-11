@@ -77,3 +77,9 @@ Agent 保存草稿、任务生成正式资产、发布共享评分标准是不�
 **How to apply:** 先按会话详情和持久消息确认 Agent 是否空闲。计划回执以「加载并验证结果」取得原件，再核对候选引用和是否存在实际 Run。沿任务列表的 `Run.workId` 读取对应统计，分别核对执行、已评分和判不出次数；查看完整运行用评测记录中的精确 Run。前端在 `EvolveWorkspaceStore.ts` 保留父任务可读的运行列表，仅从父任务补齐其自身产物，子任务统计按真实归属读取。进度入口和回看路径沿 `LedgerPage.tsx`、`TaskRunTable.tsx` 和 `RunProgressReading.tsx` 查证。当前状态和部署版本均以对应环境回读为准。
 
 工作台排查补充：顶部「部分内容刷新失败」和候选区「任务内容读取失败」曾消费同一个 Store 错误。遇到同文案时，先按实际构建与请求核对是否是同一次错误。任务页面仅在读取失败的工作区提供重试，并保留已取得的评测及统计。会话头部从 Runtime 检查点区分「等待消息」「Agent 正在处理」「等待你确认」；任务的「进行中」是独立状态。刷新范围与可点击的历史记录沿 `LedgerPage.tsx`、`EvolveAgentConversation.tsx` 和 `TaskRunTable.tsx` 回查。
+
+## 2026-11-11 首次评测与报告下钻的交互查证
+
+**Why:** 连接成功只说明对象可选，首次评测仍取决于该对象、用例与实际评分配置能否连续交接。报告的判定数量属于特定的冻结运行范围。若下钻落到按最近运行默认选中的比较页，即使显示了有效数据，也无法用来解释原报告的数字。
+
+**How to apply:** 首次评测沿 `v3/onboard/OnboardPage.tsx`、`OnboardStatusStore.ts` 核对向导跳转和评分就绪来源，再沿 `executor/ExecutorRegistrationResult.tsx`、`v3/library/ObjectDetailDrawer.tsx`、`BenchmarkDetailPage.tsx` 核对是否能从刚接入的对象直达首跑，并带上对象和当前 Benchmark 版本。报告沿 `typed/ScorecardView.tsx`、`v3/report/ReportPage.tsx`、`v3/matrix/MatrixPage.tsx` 对照点击承诺、选中报告、精确运行引用、判定筛选和返回路径。用早于最近四次运行的一份报告回归，并分别核对原始评分和当前采用的判定范围。发现使用旧版评分资产检查或丢弃筛选时，以当前源码和相同构建的实际页面复核。
