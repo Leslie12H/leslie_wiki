@@ -503,3 +503,12 @@ Studio 和 EVOLVE 发布成功后，另一个分支部署的 Agent API 仍可能
 
 - 从[温度 0 的重判](https://agent.sandaii.cn/evolve/library/records?businessId=83ee4fb8-cc20-4d97-a286-78b201f44e0c&run=run_bb9bcd61d8c4c84e11a224929a0896d6)查冻结模型、输出上限、原 CaseSet、Variant、EvidenceSet、JudgeSpec 和聚合条件。`POST /api/evolve/v1/runs/{runRef}/rescores` 现有契约接受 `judgeConfig.temperature`。保持其余参数，追加 `evidence_only` Run 并核对来源回执；Studio 的原重判表单只让换模型，保留原温度。业务级的人类重判命令与 Agent 会话绑定的 `evolve_run` 授权范围不同，历史记录能在目录打开不等于当前会话能跨 Work 读取。
 - 在[候选任务](https://agent.sandaii.cn/evolve/tasks/work_06f2c154fabcda3434948b5eaa6e492a?businessId=83ee4fb8-cc20-4d97-a286-78b201f44e0c&candidate=candidate_73f1c368c16dd58a7e7f1516479466a2&candidateRun=run_6224babee33ec67c8c2098cf4b307bab) 展开初次候选草稿前的工具组。直接查询失败包含参数缺失与跨 Work 拒绝，随后 `evolve_evidence_query baseline` 三次逐题返回成功。期限题完整回执 `call_oeCQQfzMuklsO8jrDgsbtzsq` 含基线答复和服务台指引的 2 分理由，不能归因为该证据没送到分析 Agent。候选 Prompt 和 Skill 都增加通用题直接回答的分支，但将服务台引导写在收到预约号的分支，未把已通过题的关键行为列成候选回归约束。逐题对照证实候选答了 3 天、自动释放与重新预约，少了服务台办理路径，冻结 Judge 因此给办理指引 1 分。逐题判据对通用期限问答是否强制补服务台属于口径选择，应区分实际答复变化与评分定义是否合适。
+
+
+## 2026-11-11 调优 Agent 的实际绑定与被测对象取证
+
+**Why** 调优 Agent 自己的系统提示词与技能由共享预设绑定。仓库资源和业务下的同名技能可能存在多个版本。被测 Agent 的配置、历史评测冻结配置和实际运行证据需要分别查证。
+
+**How to apply** 由 EVOLVE Dev overlay 的共享业务与 Preset 定位 [在线调优 Agent 预设](https://agent.sandaii.cn/agents/746f0d19-f019-4b04-b09e-78305744e603?businessId=74d72fe4-e4f0-46ad-958a-da68d9fdd651)。从提示词预览确认实际 SP，从 Skill Loader 的已选项确认实际绑定，按名称或 Slug 搜索资源只用于定位。目标理解沿 `target-recon`、`commands/baseline.go`、`maxwellpreset/baseline.go` 及原生调优配置快照核对。工具和中间件的配置引用不等于工具后端源码，历史运行按当次冻结配置、归档及应用回执取证。
+
+`EvolveAgentConversation.tsx` 的「引用调优资料」在工作区未绑定或发送请求提交中禁用。用已绑定的调优任务打开 `RuntimeSourcePicker.tsx` 可确认可引用来源和版本范围；打开选择器本身不复制或发起评测。由线上会话直接发起的分析沿 `evolve_source current/read` 读取已关联来源。以用户实际页面的任务绑定与发送状态判断置灰原因。

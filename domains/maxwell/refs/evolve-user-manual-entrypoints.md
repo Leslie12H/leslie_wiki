@@ -109,3 +109,10 @@ Agent 保存草稿、任务生成正式资产、发布共享评分标准是不�
 [C2 的独立评测](https://agent.sandaii.cn/evolve/library/records?businessId=87836580-430d-4a0a-bcd5-12d40872589f&run=run_eddad6714ae482cf6d1fc5aaa5ea0faa&runWork=work_275464f7695bec41182054e89bdeb86a&recordTab=overview) 沿用 Benchmark v1，回看「预约答复达标」及缺编号题的普通文字回复、执行成功状态和实际应用回执。实测依据来自同组三题各一次，正式候选比较仍需在任务内启动并完成隔离基线。
 
 2026-11-11 修复验收：`StartRunDialog.tsx` 将含冻结评估器的 `evolve.evaluation-plan/v1` 纳入运行就绪判断，沿 `PreparedRunCard.test.mjs` 核对手动和已准备的运行入口。用同一 Dev 标签页的局部 Studio 构建复测，从原计划启动 [同任务隔离基线](https://agent.sandaii.cn/evolve/library/records?businessId=87836580-430d-4a0a-bcd5-12d40872589f&run=run_596f68d55cf9692c5c08195e6cb6c63f&recordTab=overview)，在「验证 C2」显式选此轮作为基线，得到 [正式对照](https://agent.sandaii.cn/evolve/library/records?businessId=87836580-430d-4a0a-bcd5-12d40872589f&run=run_2b15c0dc862b2e7d44684741175ee135&recordTab=overview)。结果页核对三题完整评分、两侧执行回执和冻结口径，再从任务的「评估与采纳」生成报告。报告抽屉显示无可读摘要时，以固定基线对照和任务内「正式评估 · 原始评分」核对冻结结论。源码修复以工作区分支和后续发布回执为准。
+
+
+## 2026-11-11 Benchmark 记录列与业务指标结果
+
+**Why** 原生评估器可以产生有效业务测量而没有整题通过或失败。记录列默认只用明确整题判定时，已有业务出分的 Run 会被读成没有结果。
+
+**How to apply** 沿 Studio `BenchmarkResultsPanel.tsx` 与 `benchmarkResultTrend.ts` 核对当前记录页的默认选择、同评分口径下的精确指标身份，以及手动切回整题通过率。核对 `benchmarkReading.ts` 的出分状态与整题判定字段；运行异常、缺少测量和真实零值分别显示。以本页青禾预约助手 Benchmark v1 和同任务 C2 正式对照为复验入口。2026-11-11 仅用当前工作树构建接同一 Dev 后端验证列表默认值、手动切换和两种评分口径。共享页面是否生效查后续发布回执。
