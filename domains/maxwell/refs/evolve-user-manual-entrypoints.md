@@ -82,4 +82,6 @@ Agent 保存草稿、任务生成正式资产、发布共享评分标准是不�
 
 **Why:** 连接成功只说明对象可选，首次评测仍取决于该对象、用例与实际评分配置能否连续交接。报告的判定数量属于特定的冻结运行范围。若下钻落到按最近运行默认选中的比较页，即使显示了有效数据，也无法用来解释原报告的数字。
 
-**How to apply:** 首次评测沿 `v3/onboard/OnboardPage.tsx`、`OnboardStatusStore.ts` 核对向导跳转和评分就绪来源，再沿 `executor/ExecutorRegistrationResult.tsx`、`v3/library/ObjectDetailDrawer.tsx`、`BenchmarkDetailPage.tsx` 核对是否能从刚接入的对象直达首跑，并带上对象和当前 Benchmark 版本。报告沿 `typed/ScorecardView.tsx`、`v3/report/ReportPage.tsx`、`v3/matrix/MatrixPage.tsx` 对照点击承诺、选中报告、精确运行引用、判定筛选和返回路径。用早于最近四次运行的一份报告回归，并分别核对原始评分和当前采用的判定范围。发现使用旧版评分资产检查或丢弃筛选时，以当前源码和相同构建的实际页面复核。
+**How to apply:** 首次评测沿 `v3/onboard/OnboardPage.tsx`、`OnboardStatusStore.ts` 核对向导跳转和评分就绪来源，再沿 `executor/ExecutorRegistrationForm.tsx`、`v3/library/ObjectDetailDrawer.tsx`、`BenchmarkDetailPage.tsx` 核对是否能从刚接入的对象直达首跑，并带上对象和当前 Benchmark 版本。报告沿 `typed/ScorecardView.tsx`、`v3/report/ReportPage.tsx`、`v3/matrix/MatrixPage.tsx` 对照点击承诺、选中报告、精确运行引用、判定筛选和返回路径。用早于最近四次运行的一份报告回归，并分别核对原始评分和当前采用的判定范围。发现使用旧版评分资产检查或丢弃筛选时，以当前源码和相同构建的实际页面复核。
+
+落地查证：试跑沿 `v3/catalog/BenchmarksPage.tsx`、`v3/library/DirectBenchmarkRun.tsx` 传递对象和冻结版本，核对已有草稿与待确认请求的保留。完整题集待补范围来自 `BenchmarkContentsStore.ts` 使用的冻结关联读回执，导入预览的准备事项不等于已通过运行与评分校验。报告逐题筛选沿 `v3/report/reportResultNavigation.ts`、`RunRecordStore.ts` 核对原始 Trial 判定和分页；冻结报告把取消计入未知、执行异常计入异常，人工改判只影响当前判定列。跨页无匹配时保留继续读取入口。
