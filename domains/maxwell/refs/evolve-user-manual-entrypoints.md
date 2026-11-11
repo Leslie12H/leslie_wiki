@@ -87,3 +87,9 @@ Agent 保存草稿、任务生成正式资产、发布共享评分标准是不�
 落地查证：试跑沿 `v3/catalog/BenchmarksPage.tsx`、`v3/library/DirectBenchmarkRun.tsx` 传递对象和冻结版本，核对已有草稿与待确认请求的保留。完整题集待补范围来自 `BenchmarkContentsStore.ts` 使用的冻结关联读回执，导入预览的准备事项不等于已通过运行与评分校验。报告逐题筛选沿 `v3/report/reportResultNavigation.ts`、`RunRecordStore.ts` 核对原始 Trial 判定和分页；冻结报告把取消计入未知、执行异常计入异常，人工改判只影响当前判定列。跨页无匹配时保留继续读取入口。
 
 2026-11-11 发布复验入口：[Maxwell PR #435](https://github.com/world-sim-dev/maxwell-ai/pull/435) 与 [Dev Web 发布回执](https://github.com/world-sim-dev/maxwell-ai/actions/runs/42979295785)。Benchmark 从指定版本进入，再切到内嵌跨版本记录，以保留评分列和趋势。任务验收需从右侧评测摘要打开精确轮次，并区分执行结束、已评分、已判定与逐题条数。运行中的当前构建以 Studio HTML 回读为准。
+
+## 2026-11-11 Studio 页面可达但业务加载失败
+
+**Why:** Studio CDN 对浏览器页面和未知路径可返回同一份 SPA HTML。首页、任务页或页面域名上的 `/healthz` 返回 200，只能在确认内容后判断是哪一层正常。前端成功启动也可能在读取账号、业务详情时被 Agent API 的 ALB 503 阻断。
+
+**How to apply:** 并排比对页面构建与 [Dev Web 作业](https://github.com/world-sim-dev/maxwell-ai/actions/runs/42979295785)、浏览器首个失败请求和 [Dev Agent API 直连](https://maxwell-agent-dev.sandaii.cn/healthz) 的状态及响应类型。CDN 响应的 `x-swift-error: orig response 5xx error` 与 ALB HTML 错误页能区分静态分发与 API 回源。沿 Maxwell `.github/actions/cicd-service/action.yml` 核对实际选中的服务与部署集群，再查对应 Ingress、Service EndpointSlice、Pod 与事件。默认本机 kubectl 上下文可能指向新加坡模型集群，应先验证集群身份；目标集群认证失败时只记录能从外部证明的故障层级。
