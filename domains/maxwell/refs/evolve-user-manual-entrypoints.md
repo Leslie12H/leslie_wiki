@@ -123,3 +123,10 @@ Agent 保存草稿、任务生成正式资产、发布共享评分标准是不�
 **Why** 独立会话页也可能已绑定调优任务。用是否绑定任务推断历史列表范围，会隐藏当前业务下的其他会话。分析来源的访问授权可以属于会话，任务资料的脱敏复制另有接收范围与确认。
 
 **How to apply** 从 [Nextplay 独立调优会话](https://agent.sandaii.cn/evolve/agent/agent_session_8e4698dbf9a2e0d6ccbbe15eeb221f12?businessId=ad3d5c4b-c7c9-4ed3-b15d-4f3556520263) 打开历史，沿 `EvolveWorkspace.tsx` 和 `AgentSessionHistory.tsx` 核对业务范围、当前任务筛选及账号可见性。沿 `RuntimeSourcePicker.tsx` 区分无任务的诊断来源关联与有任务的复制路径。无任务可选整段线上会话或一次运行，通过现有 `diagnostic-sources` 契约绑定；用例和评测记录的引用沿任务复制路径。2026-11-11 使用局部 Studio 构建与 Dev 数据复验历史、范围和无任务选择器，提交前退出。授权与无任务绑定使用现有 Go 测试复验。发布及真实新消息行为按后续验收查证。
+
+
+## 2026-11-11 合并审查与隔离基线校验
+
+**Why** 自动指标写入显式选择参数会跨对象或评分口径沿用上一范围。仅识别冻结评估计划的 schema 会让不匹配的题集进入提交，服务端随后拒绝。
+
+**How to apply** 回查 [Maxwell PR #437](https://github.com/world-sim-dev/maxwell-ai/pull/437) 与其 CI。自动指标按结果查询范围存在前端状态中，手动指标留在 URL。候选指标为空时可检查同页最近的其他完成记录。切换指标保留时间游标。冻结评估计划要求与所选用例集的 ID 和内容哈希一致，沿 `StartRunDialog.tsx`、`PreparedRunCard.test.mjs` 和服务端 `commands/run.go` 核对。评测记录使用 Dev 数据和局部前端构建复验。无任务来源关联在浏览器验证到确认前，绑定及授权通过服务端测试。实际发布和共享调优资源同步查各自回执。
