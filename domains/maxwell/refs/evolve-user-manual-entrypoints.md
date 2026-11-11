@@ -130,3 +130,11 @@ Agent 保存草稿、任务生成正式资产、发布共享评分标准是不�
 **Why** 自动指标写入显式选择参数会跨对象或评分口径沿用上一范围。仅识别冻结评估计划的 schema 会让不匹配的题集进入提交，服务端随后拒绝。
 
 **How to apply** 回查 [Maxwell PR #437](https://github.com/world-sim-dev/maxwell-ai/pull/437) 与其 CI。自动指标按结果查询范围存在前端状态中，手动指标留在 URL。候选指标为空时可检查同页最近的其他完成记录。切换指标保留时间游标。冻结评估计划要求与所选用例集的 ID 和内容哈希一致，沿 `StartRunDialog.tsx`、`PreparedRunCard.test.mjs` 和服务端 `commands/run.go` 核对。评测记录使用 Dev 数据和局部前端构建复验。无任务来源关联在浏览器验证到确认前，绑定及授权通过服务端测试。实际发布和共享调优资源同步查各自回执。
+
+## 2026-11-11 Dev 发布与无任务对象分析取证
+
+**Why:** Studio 构建、来源授权、共享调优资源和模型可用工具分别有自己的版本。会话显示「已关联分析来源」只证明绑定成功。共享调优预设即使同步了提示词和 Skill，如果 Provider 目录仍缺 `evolve_source`，Agent 也只能核对对象配置，无法引用实际对话证据。
+
+**How to apply:** 按 [PR #437 的 Dev Web 发布回执](https://github.com/world-sim-dev/maxwell-ai/actions/runs/43007902469) 和 Studio 资产路径核对构建。在线 SP 与 `target-recon` 在[共享调优预设](https://agent.sandaii.cn/agents/746f0d19-f019-4b04-b09e-78305744e603?businessId=74d72fe4-e4f0-46ad-958a-da68d9fdd651) 按实际绑定资源合入增量，保留线上已有约束，避免误改同名副本。首轮失败见[无任务分析会话](https://agent.sandaii.cn/evolve/agent/agent_session_cee9d40095898bf49399e5f366667ef0?businessId=87836580-430d-4a0a-bcd5-12d40872589f)。在共享调优业务的「工具管理 → 服务接入 → 调优与评测」比对服务端 `tools/list` 和已同步目录，确认差异再同步，在目标预设启用 `evolve_source`；连接、目录同步和预设启用分别回读。验收用新会话从接入对象进入，授权一段真实对话，检查对象配置与来源证据都已被 Agent 读取，并确认未生成任务或评测。
+
+[青禾预约助手复跑](https://agent.sandaii.cn/evolve/agent/agent_session_f82dd297234183361b634e007dba9402?businessId=87836580-430d-4a0a-bcd5-12d40872589f) 可回看 `target-recon`、对象快照和 `evolve_source` 工具记录，以及原话、实际运行与配置推断的区分。一次历史对话只证明该次行为；对照原始请求可核验模型和业务提示词，缺完整版本指纹时不能推断所有中间件与当前配置一致。
