@@ -83,3 +83,15 @@ links: [maxwell, sandai-api-platform-development-entrypoints]
 从 [Codex App Server](https://learn.chatgpt.com/docs/app-server#api-overview) 查会话发现、只读回读、恢复会话和事件入口。可以按已授权项目或会话定位来源，只读获取必要信息并绑定到飞书话题。需执行改动时按任务授权绑定仓库和执行环境，通知以约定的完成证据为准。参考 [DeepSeek 原型的工单授权](https://github.com/deepseek-ai/dsh-superagent-prototype/blob/8c32a9dc5d72c033816c6a8110b37f40cf94fba4/docs/002-authorization.md)。
 
 用本机 App Server 的 `thread/read` 和 `thread/turns/list` 按已知 ID 只读查到原合成试点会话的两轮记录。该探针验证本机读取接口，飞书接入与项目授权属于后续实现。
+
+## 本机执行权限模式
+
+2026-11-11 用户明确授权试点以当前 macOS 用户的完整本机权限运行。配置和回滚查独立项目 README 与 `config.example.json`，执行参数和提示词查 `src/adapters.mjs` 与 `src/agent.mjs`。权限开关加载后保留原工作项和会话绑定，飞书入口按现有群和用户授权工作。
+
+**Why**
+
+原试点的只读沙箱和提示词同时限制跨目录与已有会话。切换本机权限时应同时检查执行参数和提示词，避免两层状态不一致。
+
+**How to apply**
+
+确认运行中的服务输出权限模式和飞书就绪状态，再用合成数据对照验证。2026-11-11 真实 Codex 适配器成功读写初始仓库外的临时文件，访问本机 HTTP 端点，并回读原合成试点会话的两轮记录。日后用同样方法复查，不从历史记录推断当前开关状态。
