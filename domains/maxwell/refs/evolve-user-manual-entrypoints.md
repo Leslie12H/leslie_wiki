@@ -2,7 +2,7 @@
 name: evolve-user-manual-entrypoints
 type: reference
 created: 2026-11-09
-updated: 2026-11-10
+updated: 2026-11-11
 tags: [maxwell, evolve, user-guide, benchmark, a2a]
 links: [evolve-benchmark-unified-plan-review, evolve-preset-evaluation-entry, evolve-trial-review-boundaries]
 ---
@@ -63,3 +63,9 @@ Agent 保存草稿、任务生成正式资产、发布共享评分标准是不�
 **Why:** UI 写「分析 Agent」容易被理解为有一个独立部署的诊断服务。分析会话的创建、来源读取成功、实际诊断质量需要分别确认。运行里记录的错误也不等同于后台服务日志。
 
 **How to apply:** 从 Maxwell 的 `ConversationDiagnosisStore.ts` 追踪新建分析会话、绑定原会话和提交默认消息；从 EVOLVE `agentsessions/service.go` 核对复用的共享调优 Preset。从 `schemas_diagnostics.go` 和 Runtime `application/diagnostics/service.go` 查各类证据与明确不可用项；文件目录的时点另查 `resources.go`。实际结论是否引用运行证据，回看 `docs/acceptance/conversation-diagnosis-20261109.md` 的自然场景与缺口。原能力部署按本页 Web、EVOLVE、API 和 Worker 各自回执核查；入口布局或模拟提交不能替代已部署环境的模型实跑。
+
+## 2026-11-11 任务工作台的就绪详情与评分说明
+
+**Why:** 用户希望任务工作台的就绪项能展开查阅，也明确要求评分标准尚未校准时去掉警告图标。比较口径、评分校准和候选应用回执各有独立依据。任务中的 Variant 既可能是基线，也可能属于候选，不能按资产类型直接把候选版本当作基线展示。
+
+**How to apply:** 沿 Maxwell 的 `LedgerPage.tsx`、`TaskReadiness.tsx` 查冻结引用与原文入口，优先使用任务绑定的用例集和评分标准。基线出处不唯一时保留状态详情，避免猜测原文链接。沿 `LineageNodeDetail.tsx` 查校准说明与实际读取失败、重试入口。逐题对比和报告分别从 `MatrixPage.tsx`、`ReportPage.tsx` 回查，区分各轮评分范围及选中报告的冻结身份。
