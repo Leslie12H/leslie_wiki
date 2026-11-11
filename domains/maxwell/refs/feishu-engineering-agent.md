@@ -2,7 +2,7 @@
 name: feishu-engineering-agent
 type: reference
 created: 2026-11-10
-updated: 2026-11-10
+updated: 2026-11-11
 tags: [maxwell, feishu, github, codex, agent, context]
 links: [maxwell, sandai-api-platform-development-entrypoints]
 ---
@@ -69,3 +69,17 @@ links: [maxwell, sandai-api-platform-development-entrypoints]
 先证明飞书上下文能改善一次真实交办，再扩大到工作项并行和跨渠道写入。分别验证同一人发起两件事、不同人补充同一件事、重放同一事件、旧提交的 CI 结果迟到。回复用可回查来源，先核对目标话题、目标 PR 和结果受众。撤回试点时先停入口，再检查在途任务与外部回执。
 
 2026-11-10 在 Maxwell 本地 checkout `863b9acfc` 执行 `GOCACHE="$PWD/.tmp/go-cache" go test ./services/chat-gateway/internal/feishu ./services/chat-gateway/internal/gateway ./services/agent-server/internal/modules/chat/...`，退出 0。此记录只证明现有渠道包测试通过。试点应用、群历史权限、仓库授权及真实消息链路待核验。
+
+## 跨 Codex 会话跟进的授权边界
+
+2026-11-11 核对本机试点的 `src/agent.mjs`、`src/index.mjs` 和 `src/adapters.mjs`。试点的会话绑定来自机器人自己的工单，仓库和飞书群来自运行配置。用户引用已有 Codex 会话时，判断依据应来自该会话与指定仓库。示例仓库的代码无法回答业务仓库的具体问题。
+
+**Why**
+
+读取已有会话、在已有会话追加一轮、把结果发到飞书是三个独立动作。跟进完成状态还需要约定结束条件，单轮结束只证明该轮有结果。
+
+**How to apply**
+
+从 [Codex App Server](https://learn.chatgpt.com/docs/app-server#api-overview) 查会话发现、只读回读、恢复会话和事件入口。可以按已授权项目或会话定位来源，只读获取必要信息并绑定到飞书话题。需执行改动时按任务授权绑定仓库和执行环境，通知以约定的完成证据为准。参考 [DeepSeek 原型的工单授权](https://github.com/deepseek-ai/dsh-superagent-prototype/blob/8c32a9dc5d72c033816c6a8110b37f40cf94fba4/docs/002-authorization.md)。
+
+用本机 App Server 的 `thread/read` 和 `thread/turns/list` 按已知 ID 只读查到原合成试点会话的两轮记录。该探针验证本机读取接口，飞书接入与项目授权属于后续实现。

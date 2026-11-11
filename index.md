@@ -1,4 +1,4 @@
-- 2026-11-10：[飞书研发 Agent 与跨渠道工作项](domains/maxwell/refs/feishu-engineering-agent.md) — 飞书上下文权限、Maxwell 渠道复用、公开原型执行归属、本地 Codex 执行器和工作项续跑入口。附源码对照的订阅、补读、授权和回复恢复。 补本机试点、CLI 版本与真实 Codex 续跑查证入口。
+- 2026-11-10：[飞书研发 Agent 与跨渠道工作项](domains/maxwell/refs/feishu-engineering-agent.md) — 飞书上下文权限、Maxwell 渠道复用、公开原型执行归属、本地 Codex 执行器和工作项续跑入口。附源码对照的订阅、补读、授权和回复恢复。 补本机试点、CLI 版本与真实 Codex 续跑查证入口。 补跨 Codex 会话只读接续与通知边界。
 
 - 2026-11-10：[直接整改的待交接状态与自动回交](domains/sandai-data-smith/pitfalls/sandeval-direct-return-handoff-status.md) — 查证页面超时状态、单批回交回执及 Sand 复验任务的生产入口。
 
