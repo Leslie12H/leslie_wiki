@@ -93,3 +93,11 @@ Agent 保存草稿、任务生成正式资产、发布共享评分标准是不�
 **Why:** Studio CDN 对浏览器页面和未知路径可返回同一份 SPA HTML。首页、任务页或页面域名上的 `/healthz` 返回 200，只能在确认内容后判断是哪一层正常。前端成功启动也可能在读取账号、业务详情时被 Agent API 的 ALB 503 阻断。
 
 **How to apply:** 并排比对页面构建与 [Dev Web 作业](https://github.com/world-sim-dev/maxwell-ai/actions/runs/42979295785)、浏览器首个失败请求和 [Dev Agent API 直连](https://maxwell-agent-dev.sandaii.cn/healthz) 的状态及响应类型。CDN 响应的 `x-swift-error: orig response 5xx error` 与 ALB HTML 错误页能区分静态分发与 API 回源。沿 Maxwell `.github/actions/cicd-service/action.yml` 核对实际选中的服务与部署集群，再查对应 Ingress、Service EndpointSlice、Pod 与事件。默认本机 kubectl 上下文可能指向新加坡模型集群，应先验证集群身份；目标集群认证失败时只记录能从外部证明的故障层级。
+
+## 2026-11-11 空业务实跑的执行、评分与整题判定
+
+**Why:** 对象连接、实际执行、指标出值与整题判定分别有自己的证据。布尔评估器的「是的占比」可以有完整样本，整题的「按指标判定汇总」仍需要显式通过判定。
+
+**How to apply:** 从 [Dev 预约助手 Benchmark v1](https://agent.sandaii.cn/evolve/library/benchmarks/bench_3a99b9ca021d8f2c8024ef9a83b9705e?businessId=87836580-430d-4a0a-bcd5-12d40872589f&version=1) 分别打开初次和切换执行模型后的记录。执行长时间无进展时，沿同业务「运行追踪」按试题检查模型请求、回复事件及原轮取消回执。「指标概览 → 指标明细」显示有效样本和布尔值占比，「逐题结果 → 评分与复核」显示指标值、理由及「未设通过判定」。规则回查 EVOLVE `application/queries/explainability.go` 与 `domain/evaluation/native_scores.go`。导入用例的来源标记沿 `caseimport/bundle.go` 的支持列表填写。仅有参考答案的 Case 可能提示未配 Case 级评分，冻结 Benchmark 采用评估器后再核对覆盖。
+
+调优对话和被测 Agent 使用各自的 Preset。对话收到 `model_unsupported` 时，先对照会话错误与 [Dev 共享调优 Preset](https://agent.sandaii.cn/agents/746f0d19-f019-4b04-b09e-78305744e603?businessId=74d72fe4-e4f0-46ad-958a-da68d9fdd651)，共享绑定回查 `docs/evolve-shared-tuning-agent-design.md` 与 `services/evolve-server/internal/app/composition.go`。在 Preset 保存后重新读回模型和运行参数，再回原任务发送消息核实实际回复。
