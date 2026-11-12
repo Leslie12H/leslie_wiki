@@ -202,10 +202,14 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 
 ## 2026-11-12 双生产 CMS 压测看板
 
-- 已创建的入口：[API 生产压测 · 国内 / 美国](https://cms.console.aliyun.com/hybrid-monitor/dashboard2/custom/bqr0ki00956g4iku1pfwlcu059)。配置与验收记录见 API 工作区 `monitoring/aliyun/production-load-dashboard.md`，原生配置在 `cms-production-load.native.json`，构建器在 `build-production-load-dashboard.mjs`。持续维护同一个大盘 ID；原生导入会另建大盘。
-- 该 CMS 大盘使用国内、美国各自的 Prometheus 数据源并排展示；数据源绑定、环境和 Pod 过滤以原生配置与云端独立读回为准。Grafana 的 SSO 访问结果与 CMS 查询权限分别验证，不能从前者登录失败推断后者无数据。
-- 采样密度、空序列、真实业务窗口与页面呈现的验收原件在工作区 `.local/prod-load-dashboard-20261112/`。实际查询使用的窗口、分位数样本门槛、缺项与运行台账边界见建设说明和 `docs/production-load-test-runbook-20261112.md`；不在知识库复制运行数值。
+- 主入口：[API 生产压测 · 国内 / 美国](https://cms.console.aliyun.com/hybrid-monitor/dashboard2/custom/bqr0ki00956g4iku1pfwlcu059)；固定并排入口：[API 生产压测 · 双区对照](https://cms.console.aliyun.com/hybrid-monitor/dashboard2/custom/5dt4f1qdcp013goi13jdw9t9uc)。配置与验收记录见 API 工作区 `monitoring/aliyun/production-load-dashboard.md`，构建器在同目录 `build-production-load-dashboard.mjs`。面板数量、布局及可维护备份与当次独立回读核对，分别维护现有 ID；原生导入会另建大盘。
+- 2026-11-12 主视图已保存为顶部原生 Prometheus instance 区域单选，默认国内；对照视图保留两地固定数据源。默认值与实例地域映射沿回读配置的 `attribute.variables` 核对，不能只检查面板标题或手写的下拉默认值。切换时同时核对实际查询请求的 `regionId`、`clusterId`、精确环境及 namespace 条件和返回标签。默认国内、切换美国及切回国内的首屏真实路由已核验，所见请求地域与集群正确、反区表达式为空；这项验收不表示当前全部查询已逐条重跑。Grafana 的 SSO 与 CMS 查询权限分别验证。
+- 验收原件在工作区 `.local/prod-load-dashboard-20261112/`：`regional-readback.json`、`comparison-readback.json` 为两视图配置回读，`backlog-validation.json` 为队列查询核验，`region-cn-routing.json`、`region-us-routing.json`、`region-cn-return-routing.json` 为主视图国内、美国及切回国内的首屏实际路由回执，`comparison-routing.json` 为固定双区对照首屏回执。最终页面目检见 `main-final.png`、`comparison-final.png`，两份当前可维护备份为 `monitoring/aliyun/cms-production-load.native.json` 与 `monitoring/aliyun/cms-production-load-comparison.native.json`。此前首版与展示优化版的全量查询证据继续保留，与本次首屏往返验证分别记录。采样密度、窗口、样本门槛和当前缺项沿建设说明与 `docs/production-load-test-runbook-20261112.md` 查证，不复制即时任务数量或资源数值。
+- 阶段定义回查 Zeus `TaskLifecycleStage.resolve`、`TaskSnapshotReader` 和 `TaskMetrics.tags`，按实际部署 SHA 核对。待派发 / 待确认队列使用 `queued`，对应平台 WAITING，可含提交中、未知回执待确认及重试；沿 `TaskDispatchStateService.reserveAttempt` / `submissionFailed` 查控制状态。`input_review`、`preparing`、`executing`、`output_review` 分开观察，尤其不能把 executing 或全部在途叫作待派发积压。
+- 当前最老任务等待年龄及等待超阈值存量的接入状态沿建设说明核对；`TaskDispatcherRuntime` 的组织工作队列和 `openapi_dispatcher_work_oldest_seconds` 描述进程内组织调度工作，不是业务任务队列数量或最老等待年龄，不能用它们补缺项。阶段耗时直方图统计已退出阶段的样本，也不能替代仍在等待任务的当前年龄。
 
-**Why:** 页面刷新频率不等于源端采集频率；rate 窗口中只有一个样本时会产生空结果。查询成功、已有零速率、缺少事件序列、低样本分位数与完整链路验证也分别有不同含义。生产全量的既有在途任务不能直接归属当次压测。
+**Why:** 页面刷新频率不等于源端采集频率；rate 窗口中只有一个样本时会产生空结果。查询成功、已有零速率、缺少事件序列、低样本分位数与完整链路验证也分别有不同含义。区域标题变化不证明请求切换了数据源，生产全量的既有在途任务也不能直接归属当次压测；把 executing 或组织工作年龄当积压会进一步误判瓶颈。
 
 **How to apply:** 建图前用 count_over_time 核对实际采样密度，选择含足够样本的速率窗口并写清平滑范围；需要更快停发时独立核对运行器或采集配置。保存后独立回读原生模型，再执行最终表达式、检查非空覆盖和页面曲线。UP 仅反映已发现目标，还须与当前部署期望目标核对；快照须有有效 leader、抓取与新鲜度保护。成功事件未产生、无错误序列或样本不足时保留空值，不能宣称零错误或延迟达标。HTTP 202 只表示受理，公开成功终态也不包含客户端查询等待或媒体下载。新生错误计数器可能因窗口内只有一次采样而没有有效 rate，不能把这种空值补成零错误。首屏口径卡和延迟前的样本图用于提示这些边界。实际发送、受理批次结果和费用使用本轮台账，待补的输入准备、客户分类或真实模型指标沿建设说明处理。
+
+区域视图验收须覆盖默认打开与国内 / 美国往返，检查真实请求地域、实例和结果归属，再更新完成结论。队列查询保留 stage/model/task_type 维度去重；仅在同一完整有效 tasks 快照的 total 存在而 queued 无序列时允许锚定零，阶段与 total 使用相同 leader、up 和新鲜度保护。无有效快照继续留空。此规则依赖完整快照语义，不能套用于仅有一次采样的新生 HTTP 错误计数器。
