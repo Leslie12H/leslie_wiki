@@ -2,7 +2,7 @@
 name: vidmuse-homepage-render-check-ops
 type: reference
 created: 2026-11-03
-updated: 2026-11-11
+updated: 2026-11-12
 tags: [vidmuse, frontend, monitoring, cron]
 links: [vidmuse-ai-frontend]
 ---
@@ -32,3 +32,11 @@ links: [vidmuse-ai-frontend]
 远程候选通过 14 项回归和三次无会话 Chromium 线上巡检。正式脚本回退文件在同目录下，匹配 `vidmuse_check.py.before-nov11.*`。
 
 恢复原调度后，2026-11-11 北京时间 20:40:01 的首条正式记录返回 `OK`，命中 `musi_home`。后续按正式日志和远程 crontab 回查。
+
+## 2026-11-12 同名入口触发 Playwright 严格匹配
+
+告警只显示 `exception:Error` 时，可在巡检机用无会话 Chromium 加载首页，直接调用脚本的首页检查函数并读取异常。2026-11-12 两次复现均收到 HTTP 200。创作区里的候补横幅按钮和输入区覆盖按钮同时使用 `Join waitlist` 作为可访问名称，单元素可见性检查因匹配两个按钮而抛错。
+
+入口的渲染检查要求至少有一个可见且启用的匹配。使用集合查询和可见性过滤表达这个条件。回归同时覆盖两个同名入口可用，以及只有禁用或零尺寸入口时继续报缺失。回退脚本在同目录下，匹配 `vidmuse_check.py.before-nov12.*`。
+
+修复在 16 项回归和两次同机线上试跑通过后部署。2026-11-12 北京时间 12:10:01，部署后首轮 cron 返回 `OK`。
