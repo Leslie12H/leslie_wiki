@@ -203,12 +203,14 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 ## 2026-11-12 双生产 CMS 压测看板
 
 - 主入口：[API 生产压测 · 国内 / 美国](https://cms.console.aliyun.com/hybrid-monitor/dashboard2/custom/bqr0ki00956g4iku1pfwlcu059)；固定并排入口：[API 生产压测 · 双区对照](https://cms.console.aliyun.com/hybrid-monitor/dashboard2/custom/5dt4f1qdcp013goi13jdw9t9uc)。配置与验收记录见 API 工作区 `monitoring/aliyun/production-load-dashboard.md`，构建器在同目录 `build-production-load-dashboard.mjs`。面板数量、布局及可维护备份与当次独立回读核对，分别维护现有 ID；原生导入会另建大盘。
-- 2026-11-12 主视图已保存为顶部原生 Prometheus instance 区域单选，默认国内；对照视图保留两地固定数据源。默认值与实例地域映射沿回读配置的 `attribute.variables` 核对，不能只检查面板标题或手写的下拉默认值。切换时同时核对实际查询请求的 `regionId`、`clusterId`、精确环境及 namespace 条件和返回标签。默认国内、切换美国及切回国内的首屏真实路由已核验，所见请求地域与集群正确、反区表达式为空；这项验收不表示当前全部查询已逐条重跑。Grafana 的 SSO 与 CMS 查询权限分别验证。
-- 验收原件在工作区 `.local/prod-load-dashboard-20261112/`：`regional-readback.json`、`comparison-readback.json` 为两视图配置回读，`backlog-validation.json` 为队列查询核验，`region-cn-routing.json`、`region-us-routing.json`、`region-cn-return-routing.json` 为主视图国内、美国及切回国内的首屏实际路由回执，`comparison-routing.json` 为固定双区对照首屏回执。最终页面目检见 `main-final.png`、`comparison-final.png`，两份当前可维护备份为 `monitoring/aliyun/cms-production-load.native.json` 与 `monitoring/aliyun/cms-production-load-comparison.native.json`。此前首版与展示优化版的全量查询证据继续保留，与本次首屏往返验证分别记录。采样密度、窗口、样本门槛和当前缺项沿建设说明与 `docs/production-load-test-runbook-20261112.md` 查证，不复制即时任务数量或资源数值。
+- 2026-11-12 主视图使用顶部原生 Prometheus instance 区域单选，默认国内；对照视图保留两地固定数据源。同日增强版已保存并独立回读，按资产上传、发起与查询、任务交付、网络与运行资源分区；新增上传 HTTP、Pod 网络、CPU 限流、GC、重启与就绪图。默认值与地域映射沿 `attribute.variables` 核对，真实请求的 `regionId`、`clusterId`、环境、namespace 与结果标签共同验收；本轮默认国内、切换美国及切回国内的新增资源图真实请求与页面已核验，地域/集群正确且反区分支为空。后续修改仍需重新核验，不能沿用前版首屏回执代替新增图验收。Grafana 的 SSO 与 CMS 查询权限分别验证。
+- 当前增强版原件在工作区 `.local/prod-load-dashboard-20261112/enhancement/`：`metric-discovery.json`、`all-prometheus-validation.json` 为真实指标与最终表达式核验，`main-readback.json`、`comparison-readback.json` 为保存后独立回读；ALB 查询与保存后原生请求回执为 `alb-validation.json`、`alb-render-validation.json`，目检见 `alb-final.png`。新增资源图区域往返回执见 `us-switch.json`、`cn-return-switch.json`，页面目检见 `us-resources.png`、`cn-return-resources.png`；默认国内及共享 ALB 页面验收亦已完成，均不代表上传带载验收。两份可维护备份为 `monitoring/aliyun/cms-production-load.native.json` 与 `monitoring/aliyun/cms-production-load-comparison.native.json`，均随对应独立回读同步；父目录的首版查询、页面及往返回执作为历史证据保留。采样窗口、样本门槛和缺项沿建设说明与 `docs/production-load-test-runbook-20261112.md` 查证，不复制即时运行数值。
+- 上传四图沿 `POST /v1/assets` 的实际 URI/方法/状态标签核验；当前无有效 POST 样本时保持空值，不能填零或称为带载验收。HTTP 指标没有媒体类型标签，展示的是资产上传全量；图片分层需由运行器台账补充。Pod 网络沿已核实的 cAdvisor pause netns，使用 `container=""` 匹配缺失标签、限定 `eth0`，按 Pod/接口去重后计算收发 Mbps 与丢包；它不是公网出口或上传 payload 带宽。CPU 限流图是被限流调度周期占比，GC 是暂停秒/分钟，重启增量与就绪状态不能替代 OOM 原因。
+- 共享 ALB 的地域/实例先用域名关系及原生查询回执核对，带宽、连接与拒绝/后端失败图仅放固定双区对照的 05 区，主视图 04 区提供入口。原生 Prometheus instance 选择不会自动切换 `cmscloud` 的地域和实例；未验证联动前不能把固定云图伪装成区域联动。ALB 全量包含共享业务，不能归为 API 或本批压测独占。
 - 阶段定义回查 Zeus `TaskLifecycleStage.resolve`、`TaskSnapshotReader` 和 `TaskMetrics.tags`，按实际部署 SHA 核对。待派发 / 待确认队列使用 `queued`，对应平台 WAITING，可含提交中、未知回执待确认及重试；沿 `TaskDispatchStateService.reserveAttempt` / `submissionFailed` 查控制状态。`input_review`、`preparing`、`executing`、`output_review` 分开观察，尤其不能把 executing 或全部在途叫作待派发积压。
-- 当前最老任务等待年龄及等待超阈值存量的接入状态沿建设说明核对；`TaskDispatcherRuntime` 的组织工作队列和 `openapi_dispatcher_work_oldest_seconds` 描述进程内组织调度工作，不是业务任务队列数量或最老等待年龄，不能用它们补缺项。阶段耗时直方图统计已退出阶段的样本，也不能替代仍在等待任务的当前年龄。
+- 当前最老任务等待年龄、输入准备池、运行器实发/漏发、OOM 原因、费用及 NAT/额度仍需沿建设说明补齐，不能把空值或相近指标当成完成。`TaskDispatcherRuntime` 的组织工作队列与 `openapi_dispatcher_work_oldest_seconds` 描述进程内组织调度工作，不是任务队列数量或最老等待年龄；已退出阶段的耗时直方图也不能替代当前等待年龄。
 
-**Why:** 页面刷新频率不等于源端采集频率；rate 窗口中只有一个样本时会产生空结果。查询成功、已有零速率、缺少事件序列、低样本分位数与完整链路验证也分别有不同含义。区域标题变化不证明请求切换了数据源，生产全量的既有在途任务也不能直接归属当次压测；把 executing 或组织工作年龄当积压会进一步误判瓶颈。
+**Why:** 页面刷新频率不等于源端采集频率，查询成功不等于存在业务样本或完整链路已验证。区域标题变化不证明数据源切换，Pod 网络不等于公网或上传字节，共享 ALB 不等于单业务流量；把 executing 或组织工作年龄当积压也会误判瓶颈。
 
 **How to apply:** 建图前用 count_over_time 核对实际采样密度，选择含足够样本的速率窗口并写清平滑范围；需要更快停发时独立核对运行器或采集配置。保存后独立回读原生模型，再执行最终表达式、检查非空覆盖和页面曲线。UP 仅反映已发现目标，还须与当前部署期望目标核对；快照须有有效 leader、抓取与新鲜度保护。成功事件未产生、无错误序列或样本不足时保留空值，不能宣称零错误或延迟达标。HTTP 202 只表示受理，公开成功终态也不包含客户端查询等待或媒体下载。新生错误计数器可能因窗口内只有一次采样而没有有效 rate，不能把这种空值补成零错误。首屏口径卡和延迟前的样本图用于提示这些边界。实际发送、受理批次结果和费用使用本轮台账，待补的输入准备、客户分类或真实模型指标沿建设说明处理。
 
@@ -217,7 +219,7 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 
 ## 2026-11-12 三场景监控评审
 
-- 评审入口：API 工作区 `monitoring/aliyun/load-test-metrics-gap-review-20261112.md`，覆盖资产图片上传、创建生成和查询任务；指标缺口、优先级、参考 SHA 与未验证部署边界沿该文档回查，不把评审建议当作已接入或压测结果。
+- 评审入口：API 工作区 `monitoring/aliyun/load-test-metrics-gap-review-20261112.md`，覆盖资产图片上传、创建生成和查询任务；指标缺口、优先级、参考 SHA 与未验证部署边界沿该文档回查。已落地的看板增强及真实样本状态见上节建设入口，其余建议不能当作已接入或压测结果。
 - 外部上传沿 Zeus `modules/openapi/src/main/java/co/sandai/zeus/openapi/v1/asset/PlatformAssetController.java` → `modules/domain/src/main/java/co/sandai/zeus/domain/asset/service/AssetService.java` → `modules/infra/src/main/java/co/sandai/zeus/infra/infer/ArtifactClient.java` 核对。区分接收请求、图片处理、后端取得签名 URL、后端 PUT、资产登记和审核；存在后端 presign 步骤不能证明调用方直传。最终存储提供方、地域与网络路径按当前部署配置查证。
 - 输入路径沿 `CreateGenerationRequest`、`GenerationRequestDeserializer`、`OpenApiGenerationService.prepareImage`、`ImageAssetImporter` 和 `PublicImageDownloader` 回查，URL 导入与已有 assetId 分开计量。查询沿 `GenerationController`、`GenerationQueryService` 核对，HTTP 200、公开任务成功、返回签名地址和实际文件下载分别验收。
 - 带宽沿真实入口、Pod/节点、存储 bucket、出网路由和域名映射资源；先查指标是累计 Bytes、窗口总 Bytes 还是 B/s，再分别取增量速率或除以窗口秒数，换算 bit/s 时乘 8。确认额度前不推算利用率；共享 NAT/CDN 总量不能直接归因本批上传或压测。

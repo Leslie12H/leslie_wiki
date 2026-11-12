@@ -1,6 +1,6 @@
 - 2026-11-12：[三场景监控评审](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-三场景监控评审) — 上传后端签名与 PUT、URL/assetId、查询与文件下载分界，以及真实带宽资源、单位和输入准备采集的查证入口。
 
-- 2026-11-12：[双生产 CMS 压测看板](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-双生产-cms-压测看板) — 区域单选与双区对照入口、首屏往返实际请求路由验收、queued 队列及组织工作年龄边界；原生回读、双区对照与维护备份沿证据回查。
+- 2026-11-12：[双生产 CMS 压测看板](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-双生产-cms-压测看板) — 区域单选、资产上传与运行资源增强、固定双区共享 ALB 下钻；空样本、Pod 网络和云产品切换边界，保存回读及真实查询沿证据回查。
 
 - 2026-11-12：[EVOLVE 对话优先与 Benchmark 信息架构](domains/maxwell/projects/evolve-agent-first-benchmark.md) — 用户偏好 Duet；持续主对话、工作会话与执行 Session 分层、历史入口、输入范围、Benchmark 按需展开及完整待评审方案指针。
 
