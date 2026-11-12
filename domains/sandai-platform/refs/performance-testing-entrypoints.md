@@ -213,3 +213,16 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **How to apply:** 建图前用 count_over_time 核对实际采样密度，选择含足够样本的速率窗口并写清平滑范围；需要更快停发时独立核对运行器或采集配置。保存后独立回读原生模型，再执行最终表达式、检查非空覆盖和页面曲线。UP 仅反映已发现目标，还须与当前部署期望目标核对；快照须有有效 leader、抓取与新鲜度保护。成功事件未产生、无错误序列或样本不足时保留空值，不能宣称零错误或延迟达标。HTTP 202 只表示受理，公开成功终态也不包含客户端查询等待或媒体下载。新生错误计数器可能因窗口内只有一次采样而没有有效 rate，不能把这种空值补成零错误。首屏口径卡和延迟前的样本图用于提示这些边界。实际发送、受理批次结果和费用使用本轮台账，待补的输入准备、客户分类或真实模型指标沿建设说明处理。
 
 区域视图验收须覆盖默认打开与国内 / 美国往返，检查真实请求地域、实例和结果归属，再更新完成结论。队列查询保留 stage/model/task_type 维度去重；仅在同一完整有效 tasks 快照的 total 存在而 queued 无序列时允许锚定零，阶段与 total 使用相同 leader、up 和新鲜度保护。无有效快照继续留空。此规则依赖完整快照语义，不能套用于仅有一次采样的新生 HTTP 错误计数器。
+
+
+## 2026-11-12 三场景监控评审
+
+- 评审入口：API 工作区 `monitoring/aliyun/load-test-metrics-gap-review-20261112.md`，覆盖资产图片上传、创建生成和查询任务；指标缺口、优先级、参考 SHA 与未验证部署边界沿该文档回查，不把评审建议当作已接入或压测结果。
+- 外部上传沿 Zeus `modules/openapi/src/main/java/co/sandai/zeus/openapi/v1/asset/PlatformAssetController.java` → `modules/domain/src/main/java/co/sandai/zeus/domain/asset/service/AssetService.java` → `modules/infra/src/main/java/co/sandai/zeus/infra/infer/ArtifactClient.java` 核对。区分接收请求、图片处理、后端取得签名 URL、后端 PUT、资产登记和审核；存在后端 presign 步骤不能证明调用方直传。最终存储提供方、地域与网络路径按当前部署配置查证。
+- 输入路径沿 `CreateGenerationRequest`、`GenerationRequestDeserializer`、`OpenApiGenerationService.prepareImage`、`ImageAssetImporter` 和 `PublicImageDownloader` 回查，URL 导入与已有 assetId 分开计量。查询沿 `GenerationController`、`GenerationQueryService` 核对，HTTP 200、公开任务成功、返回签名地址和实际文件下载分别验收。
+- 带宽沿真实入口、Pod/节点、存储 bucket、出网路由和域名映射资源；先查指标是累计 Bytes、窗口总 Bytes 还是 B/s，再分别取增量速率或除以窗口秒数，换算 bit/s 时乘 8。确认额度前不推算利用率；共享 NAT/CDN 总量不能直接归因本批上传或压测。
+- 输入准备沿 `GenerationPreparationConfig`、本地实验目录 `.local/dev-preparation-pool-20261110/`、`deployment/observability/prometheus/podmonitor.yaml` 与实际源端/云端序列逐层核对。本地存在 `GenerationPreparationMetrics` 或模板有相近指标，不证明生产已部署、保留或展示。
+
+**Why:** 图片字节传输、解码审核、异步生成和状态轮询有不同容量限制；创建/查询分位数不能覆盖独立上传、无回执和结果下载。源码与本地埋点也不能替代部署或采集证据。
+
+**How to apply:** 先固定两地部署 SHA 和真实请求路径，再按三场景核对实发、响应、业务结果、字节与等待；客户端、网关、应用、依赖和存储分别确认单位、窗口和归属。已有指标经真实标签与样本核验后接图，缺项明确保留，并沿评审文档安排补齐；复用资产与 URL 导入分别报告，不把后端签名上传或共享网络图误作完整客户端链路证据。
