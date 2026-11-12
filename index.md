@@ -1,3 +1,5 @@
+- 2026-11-12：[双区实际配额和推理失败退费](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-双区实际配额和推理失败退费) — 生产管理台只读回查、组织覆盖、任务记录与扣费边界及逐任务退费验收。
+
 - 2026-11-12：[Magi2 全模态 API 测试查证入口](domains/sandai-platform/refs/magi2-multimodal-api-test-entrypoints.md) — 双协议、素材边界、分层失败、真实成片和当前公开契约的核对方法。
 
 - 2026-11-12：[三场景监控评审](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-三场景监控评审) — 上传后端签名与 PUT、URL/assetId、查询与文件下载分界，以及真实带宽资源、单位和输入准备采集的查证入口。

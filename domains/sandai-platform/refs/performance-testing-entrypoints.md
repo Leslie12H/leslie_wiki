@@ -228,3 +228,14 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why:** 图片字节传输、解码审核、异步生成和状态轮询有不同容量限制；创建/查询分位数不能覆盖独立上传、无回执和结果下载。源码与本地埋点也不能替代部署或采集证据。
 
 **How to apply:** 先固定两地部署 SHA 和真实请求路径，再按三场景核对实发、响应、业务结果、字节与等待；客户端、网关、应用、依赖和存储分别确认单位、窗口和归属。已有指标经真实标签与样本核验后接图，缺项明确保留，并沿评审文档安排补齐；复用资产与 URL 导入分别报告，不把后端签名上传或共享网络图误作完整客户端链路证据。
+
+## 2026-11-12 双区实际配额和推理失败退费
+
+- [生产管理台配额与限流](https://zeus-admin.sandaii.cn/platform/limits)。通过中央站点清单取得实际 ID，对国内和美国分别只读请求 /admin/api/v1/sites/{site}/platform-config/limits，核对 generation 的原始覆盖和有效值以及 requests 的有效值。部署与角色权限沿 [Admin API](https://github.com/world-sim-dev/zeus/blob/7db539d43e95f1d43933ae3ad920b8b3856079d7/docs/admin-api.md#平台配置与统一主体检索) 回查。
+- 生成组织级覆盖值和请求豁免按本轮目标组织另查。上传、任务查询共用配置值，各有独立计数桶。不要从组织多把 Key 推算总配额。原始与有效字段区分显式覆盖和代码继承。
+- 失败判定沿 [v2 创建与调度](https://github.com/world-sim-dev/zeus/blob/7db539d43e95f1d43933ae3ad920b8b3856079d7/docs/openapi-task-dispatch.md) 和 [任务退款运行说明](https://github.com/world-sim-dev/zeus/blob/7db539d43e95f1d43933ae3ad920b8b3856079d7/deployment/scripts/task-credit-refund.md) 核对。v2 可在准备阶段前持久化任务，扣款随后发生在入队事务。用任务 ID 与原扣款凭证确认失败发生在哪一步。
+- 双区档位与执行记录沿 API 工作区 docs/production-load-test-runbook-20261112.md 及当次《Magi2 API 压测用例》回查。实际配置、费率、排队阈值和模型耗时由执行批次保留。
+
+**Why:** 2026-11-12 用户要求按当前双区配额制定首轮档位，并明确已预付的推理失败如何取消本单预付。公开默认值无法识别当前环境配置和组织覆盖。任务失败与退回到账发生在不同事务。
+
+**How to apply:** 按区域确认配置、组织和模型实际执行时间后计算档位。隔离环境分别覆盖扣费前失败、付费入队后确定拒绝、匹配 job 的失败/过期、受理未知和重复回调。对已扣费且应退的任务回读原 OUT、结算状态、同额唯一 IN 和净额，保留 PENDING/FAILED 的独立差集及复查时间。未知受理继续追原请求。不要以退回费用补充本轮发流预算。
