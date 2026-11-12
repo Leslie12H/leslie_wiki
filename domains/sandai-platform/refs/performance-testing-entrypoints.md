@@ -259,3 +259,13 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why:** 降低新建流量后，排队、执行、终态追踪及应退结算仍可能持续。只看入口 QPS 降低或固定观察时间结束，会把未恢复的积压误判为测试通过。
 
 **How to apply:** 峰值结束后保持独立查询器，按批次核对终态、最老排队、在途走势、客户 SLO 和正式扣退账本。恢复以返回低流量稳定水平及峰值批次结案为准；仍有新任务时不要求总在途为零。观察时长与延长上限分别计预算，到上限仍未恢复则停止新增并保留未决追踪，不能自动记为通过。
+
+## 2026-11-12 香港 Dev 入口复压与派发积压
+
+- API 工作区 `.local/dev-repeat100-20261112/` 保存同口径 100 组织复压证据。`creation-finished.json` 和 `ramp-curve.json` 给出实际发流和 HTTP 响应。`ack-log-evidence.json` 对齐 OpenAPI Pod 和日志窗口。`submitted-distribution.json` 给出按组织拆分的在途分布。`snapshots.json` 与 `audit.json` 给出任务、退款和清理回读。对照沿 [11 月 9 日 v2 图文压测报告](https://j0yswlgboxz.feishu.cn/docx/Hr4QdGt1XouDS1xkSFrcojCvnJy) 回查。
+- 入口改善后，已受理任务仍可能长时间堆在派发队列。用 `WAITING` 与 `SUBMITTED` 统计业务在途，另列公开成功和失败。按任务关联输出审核失败与退款回执，分别呈现入口失败和受理后失败。观察到总在途贴近固定值时，按组织拆分并核对生效配额，再核对组织槽位、全局派发和下游限制各自的证据。
+- [阿里云 Dev 大盘](https://cms.console.aliyun.com/hybrid-monitor/dashboard2/custom/akpvcwp0891o2k374f6jfubgdd) 按测试窗口查询。入口 P95、业务队列及输入准备线程池指标各自读回。运行镜像与配置同轮变化时，改善归于本轮运行组合。
+
+**Why:** 受理延迟改善后，同样的客户端发速会让更多任务进入派发，排队和用户完成时长仍可能增长。
+
+**How to apply:** 复测时保持模型、图片、组织数、每秒计划和分档时长一致。并列报告发出、受理、等待派发、已派发、公开终态和扣退费，标明采样截至时刻。未完成时保留任务与账本的回查入口。
