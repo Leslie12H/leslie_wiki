@@ -1552,4 +1552,4 @@
 
 - 2026-11-11：[VidMuse 首页改版巡检](domains/vidmuse/refs/homepage-render-check-ops.md#2026-11-11-首页改版后的回查) — 旧页签移除、创作入口加载状态和同机验收回查。
 
-- 2026-11-12：[VidMuse 巡检同名入口异常](domains/vidmuse/refs/homepage-render-check-ops.md#2026-11-12-同名入口触发-playwright-严格匹配) — 同名候补按钮的严格匹配、可见性过滤和正式调度验收。
+- 2026-11-12：[VidMuse 巡检同名入口异常](domains/vidmuse/refs/homepage-render-check-ops.md#2026-11-12-同名入口触发-playwright-严格匹配) — 横幅与透明输入区按钮的前端来源、严格匹配和正式调度验收。
