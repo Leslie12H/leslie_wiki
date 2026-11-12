@@ -189,6 +189,7 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 
 ## 2026-11-12 国内与美国生产压测准备和收尾
 
+- 执行稿见工作区 `docs/production-load-test-runbook-20261112.md`。两地环境卡、值守填表、阶段升降判定、轮询与预算算例、精确对象清理预览及验收表均随该文档核对。生产参数以实际签核和现场冒烟为准。
 - 目标入口以[国内 OpenAPI 契约](https://api.sandai.cn/openapi.json)和[美国 OpenAPI 契约](https://api.sand.ai/openapi.json)回查，核对 servers 和 API 方法。运行版本、支付币种、模型路由和采集归属沿 Zeus `deployment/magi/`、实际部署回执及[两地生产监控实施记录](https://github.com/world-sim-dev/zeus/blob/7db539d43e95f1d43933ae3ad920b8b3856079d7/deployment/reports/prod-cn-observability-audit-20261106.md#2026-11-07-生产实施记录)回查。公开契约可读只证明入口可读。
 - 国内准入、美国模型权限、参数组合与组织级配额各自预检。历史正反样本见[生成验证入口](v2-input-validation-entrypoints.md)，配额原始覆盖和继承恢复见[管理后台验证入口](admin-rpm-change-verification-entrypoints.md)。生产额度的来源、币种、可用期和处置规则以当次批准及账本为准，勿搬用 Dev 模拟认证或赠送额度做法。
 - 对照[生成与素材接口](https://platform.sand.ai/docs/api-reference/)和当次部署的 `PlatformAssetController`、`AssetService.deleteAssetById`、`ImageAssetImporter` 核查删除语义。素材 API 回读和对象存储回收分别验收。首帧 URL 导入可能为任务生成内部素材，不能只清上传接口返回的素材 ID；输出、缩略图、播放列表等需按任务归属与引用核对对象清单。公开生成接口的状态枚举不能证明存在取消入口。

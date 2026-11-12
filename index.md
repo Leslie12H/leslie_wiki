@@ -1,4 +1,4 @@
-- 2026-11-12：[API 平台国内与美国生产压测准备和收尾](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-国内与美国生产压测准备和收尾) — 两地公开契约、监控、组织隔离、停发后任务与账务对账及素材回收查证。
+- 2026-11-12：[API 平台国内与美国生产压测准备和收尾](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-国内与美国生产压测准备和收尾) — 两地执行稿、开跑表、负载算例、停压值守、任务账务与素材清理回执。
 
 - 2026-11-11：[开放平台充值入账与对账查证入口](domains/sandai-platform/refs/recharge-settlement-entrypoints.md) — 支付渠道和 Zeus 提交边界、入账幂等、支付宝调度与 Stripe 漏单核对入口。附秒级调度主实例和成功轮次的生产只读查证。 补对公汇款漏通知、认款、退款和银行日账单健康查证。
 
