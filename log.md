@@ -2696,3 +2696,5 @@
 - 2026-11-12 ingest：记录 API 双生产压测执行稿、负载与预算算例、分档判定及清理验收表的工作区入口。
 
 - 2026-11-12 ingest：记录 EVOLVE 对话优先和 Benchmark 信息架构及独立交互预览。
+
+- 2026-11-12 ingest：补 EVOLVE 参考 OpenAI Dot 与 Claude Duet 的持续协作、进度和产物设计方案。

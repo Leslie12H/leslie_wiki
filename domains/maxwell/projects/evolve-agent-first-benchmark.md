@@ -29,3 +29,22 @@ links: [evolve-benchmark-unified-plan-review, evolve-user-manual-entrypoints, ev
 - 先核对 `apps/studio/src/products/evolve/v3/routes.ts` 和 `EvolveWorkspaceV3.tsx`，再看 `EvolveAgentConversation.tsx` 的会话、事实更新和交互回执。Benchmark 和结果详情沿 `v3/library/BenchmarkDetailPage.tsx` 和 `v3/catalog/RecordsPage.tsx` 回查。
 - 界面改造可以从入口、会话保留、详情按需挂载开始。核对已有深链接、业务隔离、只读权限、任务绑定后的会话连续性以及已接纳运行的冻结版本。真实能力与边界以当前接口和发布状态为准。
 - 2026-11-12 交付为独立交互预览，使用示例对话与评测数据。业务实现与真实运行验收尚未执行。预览会话指针为 Codex `01a1ce76-1824-77a2-8b00-503614d17f09`。
+
+## 2026-11-12 参考 Dot 与 Claude Duet 的使用方案
+
+用户明确要求先出方案，并指定参考 OpenAI Dot 与 Claude Duet。本轮以官方文档及公开演示为依据，账号内的完整任务链路仍待真实体验。
+
+**Why**
+
+长时间评测需要让用户随时继续交代事情，同时找得到进度、需要处理的事项和已完成产物。前版以新对话和历史为中心的预览，对持续工作与主动回报表达不足。
+
+**How to apply**
+
+以下为待评审的产品建议。默认进入当前用户在所选业务内的持续对话，复杂主题可以单独展开。用户从目标开始，Agent 组织工作并在已授权范围内推进。用「进行中」和「待你处理」承接持续状态，用 Benchmark 保存可复用的测量标准。一次工作可包含多次运行并引用多套 Benchmark，具体运行必须标明采用的评测版本与被测版本。关系设计应沿当前领域模型评估，不能由导航压缩直接推断数据库归属。
+
+右侧按需打开具体结果、Benchmark 定义、计划或证据。用户阅读或手工修改产物时，对话中的引用应定位到同一对象及版本。主对话优先呈现结论、重要变化和待决策事项，执行明细可展开。运行结束后的用户交付需包含结果与证据，遇到无法继续的情况应呈现实际阻碍和已完成部分。
+
+参考入口会持续变化，后续应回源核对。
+
+- [Dot 持续协作、后台工作与对话](https://learn.chatgpt.com/docs/dots) 与 [Activity、控制和停止范围](https://learn.chatgpt.com/docs/dots/controls)。
+- [Duet 主对话、Channels、Tasks 与 Make](https://support.claude.com/en/articles/17631495-get-started-with-claude-duet) 与 [官网演示](https://claude.com/product/claude-duet)。
