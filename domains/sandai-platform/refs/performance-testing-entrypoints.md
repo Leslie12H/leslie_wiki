@@ -2,7 +2,7 @@
 name: sandai-api-platform-performance-testing-entrypoints
 type: reference
 created: 2026-10-27
-updated: 2026-11-10
+updated: 2026-11-12
 tags: [sandai, api-platform, performance, testing, quota]
 links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi-quota-entrypoints]
 ---
@@ -186,3 +186,14 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why:** 独立线程池可以在容器 CPU 尚有余量时因依赖等待、突发提交和队列上限而拒绝工作。
 
 **How to apply:** 按 Pod 同时对齐活跃线程与上限、队列深度与容量、每秒拒绝数和排队耗时分位数。排队耗时按成功入池工作从提交到开始执行计量，阶段耗时按提示词审核、首帧下载和图片审核独立记录。高频突发结合拒绝计数器核对，避免低频队列采样漏掉瞬时满队列。
+
+## 2026-11-12 国内与美国生产压测准备和收尾
+
+- 目标入口以[国内 OpenAPI 契约](https://api.sandai.cn/openapi.json)和[美国 OpenAPI 契约](https://api.sand.ai/openapi.json)回查，核对 servers 和 API 方法。运行版本、支付币种、模型路由和采集归属沿 Zeus `deployment/magi/`、实际部署回执及[两地生产监控实施记录](https://github.com/world-sim-dev/zeus/blob/7db539d43e95f1d43933ae3ad920b8b3856079d7/deployment/reports/prod-cn-observability-audit-20261106.md#2026-11-07-生产实施记录)回查。公开契约可读只证明入口可读。
+- 国内准入、美国模型权限、参数组合与组织级配额各自预检。历史正反样本见[生成验证入口](v2-input-validation-entrypoints.md)，配额原始覆盖和继承恢复见[管理后台验证入口](admin-rpm-change-verification-entrypoints.md)。生产额度的来源、币种、可用期和处置规则以当次批准及账本为准，勿搬用 Dev 模拟认证或赠送额度做法。
+- 对照[生成与素材接口](https://platform.sand.ai/docs/api-reference/)和当次部署的 `PlatformAssetController`、`AssetService.deleteAssetById`、`ImageAssetImporter` 核查删除语义。素材 API 回读和对象存储回收分别验收。首帧 URL 导入可能为任务生成内部素材，不能只清上传接口返回的素材 ID；输出、缩略图、播放列表等需按任务归属与引用核对对象清单。公开生成接口的状态枚举不能证明存在取消入口。
+- 费用收尾沿[充值入账查证入口](recharge-settlement-entrypoints.md)及本页退款和账本指针。保留任务、正式流水、账单及审计回执；测试数据从业务统计排除时使用冻结的组织清单。实际资金调整使用相应财务和原支付渠道流程。
+
+**Why:** 独立测试组织可隔离凭据、配额与账务归属，入口、审核、调度和模型资源仍可能共享。停发、任务终态、资产可访问性、存储回收与财务结算各有独立完成条件。
+
+**How to apply:** 两地分开定窗口、硬预算、流量上限和停发值守人。发流前冻结区域、run ID、组织和 Key 标识、配置与账务基线，验证小样本和监控数据；逐档按实际发送、受理、完成及客户基线决定是否升压。停发后低频追踪在途及未知受理，按任务对账，预览并复核本批待清资产精确清单，再按归属回收临时资源。恢复覆盖和继承状态，回读有效配置、权限和残留，未决任务或差额保留责任人和复查时间。2026-11-12 仅查公开契约、源码与历史记录，未执行生产压测或清理。
