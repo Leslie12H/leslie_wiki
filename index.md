@@ -1,3 +1,4 @@
+- 2026-11-12：[突发后的恢复负载](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-突发后的恢复负载) — 生成阶梯与五分钟峰值后的低流量观察、存量查询延续，以及按终态、队列和账本判断恢复的入口。
 - 2026-11-12：[活跃窗口与生成峰值容量](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-活跃窗口与生成峰值容量) — 单组织低频验证与平台容量分开，五小时业务窗口、100 生成 QPS、在途轮询、字节和结算压力的方案回查入口。
 - 2026-11-12：[双区实际配额和推理失败退费](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-双区实际配额和推理失败退费) — 生产管理台只读回查、组织覆盖、任务记录与扣费边界及逐任务退费验收。
 
