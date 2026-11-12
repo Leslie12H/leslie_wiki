@@ -1,6 +1,6 @@
 - 2026-11-12：[双生产 CMS 压测看板](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-双生产-cms-压测看板) — 阿里云正式入口、原生配置回读、采样窗口与空值边界及验收指针。
 
-- 2026-11-12：[EVOLVE 对话优先与 Benchmark 信息架构](domains/maxwell/projects/evolve-agent-first-benchmark.md) — Dot/GPT 式主对话、Benchmark 按需展开、用例与评分组成、评测和调优动作及预览边界。 补 Dot 与 Claude Duet 官方参考、持续工作和按需产物的待评审使用方案。
+- 2026-11-12：[EVOLVE 对话优先与 Benchmark 信息架构](domains/maxwell/projects/evolve-agent-first-benchmark.md) — 用户偏好 Duet；持续主对话、工作会话与执行 Session 分层、历史入口、输入范围、Benchmark 按需展开及完整待评审方案指针。
 
 - 2026-11-12：[API 平台国内与美国生产压测准备和收尾](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-国内与美国生产压测准备和收尾) — 两地执行稿、开跑表、负载算例、停压值守、任务账务与素材清理回执。
 

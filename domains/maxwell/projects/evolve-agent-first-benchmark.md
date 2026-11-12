@@ -15,7 +15,7 @@ links: [evolve-benchmark-unified-plan-review, evolve-user-manual-entrypoints, ev
 
 **How to apply**
 
-对话默认占主视图，左侧可新建和回看历史。用户在聊天里描述要分析、验证或改进的问题。单会话诊断可以直接开始。需要反复测量或对比时，Agent 再推荐现有 Benchmark 或准备新 Benchmark 草稿。聊天中的结果和 Benchmark 引用按点击打开详情，关闭后回原会话。需要直接查找时由独立的 Benchmarks 入口进入目录。
+当前方案随用户对 Duet 的偏好收敛为持续主对话，历史通过搜索、时间线和具体工作回看。用户在聊天里描述要分析、验证或改进的问题。单会话诊断可以直接开始。需要反复测量或对比时，Agent 再推荐现有 Benchmark 或准备新 Benchmark 草稿。聊天中的结果和 Benchmark 引用按点击打开详情，关闭后回原会话。需要直接查找时由独立的 Benchmarks 入口进入目录。下方早期预览保留为历史交付指针。
 
 ## 产品层级
 
@@ -48,3 +48,15 @@ links: [evolve-benchmark-unified-plan-review, evolve-user-manual-entrypoints, ev
 
 - [Dot 持续协作、后台工作与对话](https://learn.chatgpt.com/docs/dots) 与 [Activity、控制和停止范围](https://learn.chatgpt.com/docs/dots/controls)。
 - [Duet 主对话、Channels、Tasks 与 Make](https://support.claude.com/en/articles/17631495-get-started-with-claude-duet) 与 [官网演示](https://claude.com/product/claude-duet)。
+
+## 2026-11-12 Duet 方向与 Session 分层方案
+
+用户进一步表达更倾向 Duet，并要求完整方案及中间 Session 的处理方式；尚未授权业务实施。
+
+**Why:** 持续主对话需要可追溯的工作过程，用户也需要深入讨论某项工作。若将执行重试、阶段切换和用户讨论都作为同级聊天，会重新增加管理负担。官方对 Duet 的历史与 Channels 说明回查上方使用文档，不从公开界面推断内部 Session 架构。
+
+**How to apply:** 建议主入口收敛为对话、工作、Benchmarks。取消常驻历史聊天侧栏，保留消息搜索、主对话时间线、已结束工作及原有深链接。简单问答不强制创建工作；持续目标由 Agent 自动建立。主对话与工作会话面向用户，执行 Session 由系统管理，一件工作可跨多次执行接续，具体映射沿现有模型核对。
+
+输入默认面向主 Agent，选择“讨论这项工作”后明确显示当前范围；单纯打开报告不隐式改变范围。工作过程按需展开，结论与待决定事项回主对话。持续上下文依赖工作状态、可检索历史及来源引用，不能仅靠摘要判断运行事实。Benchmark 可跨工作复用，评测证据保持版本可回查。
+
+完整方案及验收条目：[EVOLVE 持续协作使用方案](/Users/leslie/.codex/visualizations/2026/11/12/01a1ce76-1824-77a2-8b00-503614d17f09/evolve-duet-product-proposal.md)。包含导航、输入范围、工作与执行生命周期、历史、版本、恢复、迁移和首版边界；状态为待评审，未实现、未执行真实验收。
