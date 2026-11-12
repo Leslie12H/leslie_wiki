@@ -2,7 +2,7 @@
 name: evolve-user-manual-entrypoints
 type: reference
 created: 2026-11-09
-updated: 2026-11-11
+updated: 2026-11-12
 tags: [maxwell, evolve, user-guide, benchmark, a2a]
 links: [evolve-benchmark-unified-plan-review, evolve-preset-evaluation-entry, evolve-trial-review-boundaries]
 ---
@@ -138,3 +138,10 @@ Agent 保存草稿、任务生成正式资产、发布共享评分标准是不�
 **How to apply:** 按 [PR #437 的 Dev Web 发布回执](https://github.com/world-sim-dev/maxwell-ai/actions/runs/43007902469) 和 Studio 资产路径核对构建。在线 SP 与 `target-recon` 在[共享调优预设](https://agent.sandaii.cn/agents/746f0d19-f019-4b04-b09e-78305744e603?businessId=74d72fe4-e4f0-46ad-958a-da68d9fdd651) 按实际绑定资源合入增量，保留线上已有约束，避免误改同名副本。首轮失败见[无任务分析会话](https://agent.sandaii.cn/evolve/agent/agent_session_cee9d40095898bf49399e5f366667ef0?businessId=87836580-430d-4a0a-bcd5-12d40872589f)。在共享调优业务的「工具管理 → 服务接入 → 调优与评测」比对服务端 `tools/list` 和已同步目录，确认差异再同步，在目标预设启用 `evolve_source`；连接、目录同步和预设启用分别回读。验收用新会话从接入对象进入，授权一段真实对话，检查对象配置与来源证据都已被 Agent 读取，并确认未生成任务或评测。
 
 [青禾预约助手复跑](https://agent.sandaii.cn/evolve/agent/agent_session_f82dd297234183361b634e007dba9402?businessId=87836580-430d-4a0a-bcd5-12d40872589f) 可回看 `target-recon`、对象快照和 `evolve_source` 工具记录，以及原话、实际运行与配置推断的区分。一次历史对话只证明该次行为；对照原始请求可核验模型和业务提示词，缺完整版本指纹时不能推断所有中间件与当前配置一致。
+
+
+## 2026-11-12 调优目标引用资料与冻结评测资产
+
+**Why** 目标的引用资料字段只接收当前任务可读的业务知识包和平台保存的来源资料。用例集、评分标准和执行方案各有自己的冻结引用。它们的 ID 和哈希都正确时，误填进目标引用资料仍会在确认时失败。
+
+**How to apply** 在[青禾首轮调优任务](https://agent.sandaii.cn/evolve/tasks/work_37438c03487be2ad8823e4062e4f5629?businessId=87836580-430d-4a0a-bcd5-12d40872589f) 对照目标草稿的引用资料和任务资产。将评测资产留在目标说明和运行计划对应字段，提交新目标版本供人工确认。核对 Maxwell 的 `commands/objective_materials.go`、`commands/draft.go` 和 `confirm_validation_test.go`，区分草稿保存检查、人工确认和冻结沿用的原件校验。2026-11-12 在工作区修复并定向验证，线上发布状态另查部署回执。
