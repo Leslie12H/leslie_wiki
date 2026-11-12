@@ -1,3 +1,5 @@
+- 2026-11-12：[Magi2 全模态 API 测试查证入口](domains/sandai-platform/refs/magi2-multimodal-api-test-entrypoints.md) — 双协议、素材边界、分层失败、真实成片和当前公开契约的核对方法。
+
 - 2026-11-12：[三场景监控评审](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-三场景监控评审) — 上传后端签名与 PUT、URL/assetId、查询与文件下载分界，以及真实带宽资源、单位和输入准备采集的查证入口。
 
 - 2026-11-12：[双生产 CMS 压测看板](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-双生产-cms-压测看板) — 区域单选、资产上传与运行资源增强、固定双区共享 ALB 下钻；空样本、Pod 网络和云产品切换边界，保存回读及真实查询沿证据回查。
