@@ -1,3 +1,5 @@
+- 2026-11-12：[Magi2 压测脚本与中断续查](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-magi2-压测脚本与中断续查) — 双区离线计划、持久化请求意图、未知受理防重、存量查询及真实遥测和账务证据入口；本轮未发压。
+
 - 2026-11-12：[香港 Dev 入口复压与派发积压](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-香港-dev-入口复压与派发积压) — 同口径复压回查，联合观察入口受理、每组织派发槽位和公开终态。
 
 - 2026-11-12：[突发后的恢复负载](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-突发后的恢复负载) — 生成阶梯与五分钟峰值后的低流量观察、存量查询延续，以及按终态、队列和账本判断恢复的入口。
