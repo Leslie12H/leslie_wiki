@@ -2,7 +2,7 @@
 name: sandai-platform-recharge-settlement-entrypoints
 type: reference
 created: 2026-11-11
-updated: 2026-11-11
+updated: 2026-11-12
 tags: [sandai, zeus, recharge, alipay, stripe, reconciliation]
 links: [sandai-api-platform, sandai-api-platform-development-entrypoints]
 ---
@@ -27,3 +27,9 @@ links: [sandai-api-platform, sandai-api-platform-development-entrypoints]
 通过 [GetJobInfo](https://api.aliyun.com/api/schedulerx2/2019-04-30/GetJobInfo) 核对启用状态，使用 [GetWorkerList](https://api.aliyun.com/api/schedulerx2/2019-04-30/GetWorkerList) 核对同一应用分组。在控制台只能看到默认命名空间时，可用已登录的 OpenAPI Explorer，按[生产任务清单](https://github.com/world-sim-dev/zeus/blob/4e8b927d966b4bdff9f901eee13bf668086313a4/deployment/reports/prod-cn-prelaunch-checklist-20261105.md#L53-L64)指定地域、命名空间 ID、应用分组和任务 ID。
 
 用 [GetJobInstanceList](https://api.aliyun.com/api/schedulerx2/2019-04-30/GetJobInstanceList) 查询覆盖主实例启动的时间范围，保留运行中状态。读取完整调用结果的 `Progress.recentProgressHistory`，按 `success=true` 和 `endTime` 找最新完成轮次，毫秒时间戳按北京时间展示。[秒级任务历史说明](https://help.aliyun.com/zh/schedulerx/schedulerx-serverless/use-cases/create-second-delay-jobs)。运行成功只能确认调度结果，实际扫单和入账数量沿业务结果另查。
+
+## 对公汇款漏通知与资金处理的查证
+
+2026-11-12 按国内生产发布版本复核。对公汇款先有渠道资金，再经资金通知、认款及权威查单生成本地履约证据。排查时按[资金通知与认款流程](https://github.com/world-sim-dev/zeus/blob/4e8b927d966b4bdff9f901eee13bf668086313a4/docs/zeus/alipay-bank-transfer-api.md#L109-L160)核对收款绑定、付款主体、原资金号、认款请求号、订单和积分流水，按[对账与恢复](https://github.com/world-sim-dev/zeus/blob/4e8b927d966b4bdff9f901eee13bf668086313a4/docs/zeus/alipay-bank-reconciliation-api.md#L9-L43)区分已知待处理、需人工核对、漏通知和退款。
+
+银行账单任务与网页查单任务各自调度，任务 ID 回查生产清单。诊断自动发现时同时读 SchedulerX 结果的 `enabled`、`discoveryEnabled` 和超管只读对账状态中的最近成功账单日期、失败账单及未解决差异。理由和步骤见[银行账单调度结果](https://github.com/world-sim-dev/zeus/blob/4e8b927d966b4bdff9f901eee13bf668086313a4/docs/zeus/alipay-bank-reconciliation-api.md#L130-L159)。资金通知漏送要按原签名和原资金号恢复。停用前核对客户已保存的收款账号、原商户与未决资金，退款时回查对应积分流水。
