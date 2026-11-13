@@ -297,6 +297,9 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 
 ## 2026-11-13 压测输入实物与配对能力核查
 
+- 2026-11-14 拟执行的交接表见工作区 `docs/production-load-execution-readiness-20261114.md`，分开记录离线输入完成、环境准入、执行辅助工具与当天小样本验收。准备工具沿 runner 命令表核对：素材全覆盖的 seed 映射、query 单项任务池、真实 telemetry 生产者和发压机实速验证不能由离线配对单测代替。
+- 停压语义以 `runtime.mjs` 的 checkWindows/checkTelemetry 与阶段入口为准。核对分位数是否包含失败/超时，成功请求 SLO 必须有独立样本口径；allowAdvance 的阶段准入与当前档立即停发分开。执行方案多处阈值须指向同一规则，文档纠正不等于代码门控已经实现。当前差异与统一后的说明沿明日交接表及脚本 README 回查。
+
 - 同日已获准完成不依赖生产账号的离线补齐；使用与验证入口为工作区 `postman/load/magi2/DATASET.md` 和 `README.md`，实际素材、图文清单、统计与全解码回执在 `datasets/magi2-synthetic-v1/`。数据版本、数量和运行结果沿清单与 `.local/magi2-offline-20261113/` 回查，不把工程配比写成客户分布。接口语义另见[素材契约与冻结配对](magi2-fixture-contract-entrypoints.md)。
 - 唯一运行器结构为 dataset `images/cases`，以原配置和 manifest 指纹冻结，两区共用输入但独立绑定组织与资产。文生、图生各自轮转；上传按 imageId 入池，缺图记录漏发，未知回执不重放。配对关联沿 intent、task、终态及 GET 续查回读；台账存提示词 hash，不存完整提示词或凭据。无数据集的旧版续查指纹兼容须保持独立校验，不能用于数据集降级。
 - 全解码、格式/扩展名、文件 hash、字节/像素、配对引用、乱序回执与区域隔离分别验证。预览成功只证明离线输入可读，模型准入、生产素材和查询任务池、预算、遥测仍以执行前证据为准；候选扩展素材未接入默认 manifest 时不计入主包验证数量。
