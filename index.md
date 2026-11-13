@@ -1,3 +1,5 @@
+- 2026-11-13：[受控数据初始化与配套清理](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-13-受控数据初始化与配套清理) — API-only 三表关系、原生 ID 与凭据先备份、空主体和带载清理边界、100 组织低档图文相位的核对入口。
+
 - 2026-11-13：[多组织准备与成本控制决定](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-13-多组织准备与成本控制决定) — 测试身份与准备槽位、一用户一组织、退役批量 GET 的写入风险，以及推理侧成本控制与平台余额/非金额保护的核对入口。
 
 - 2026-11-13：[Magi2 素材契约与冻结配对](domains/sandai-platform/refs/magi2-fixture-contract-entrypoints.md) — CN/US 网页、schema 与源码交叉核对；上传和 URL 约束、提示词分层及 image/prompt/hash/source 冻结的查证入口。
