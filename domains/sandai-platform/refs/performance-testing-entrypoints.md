@@ -297,6 +297,10 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 
 ## 2026-11-13 压测输入实物与配对能力核查
 
+- 同日已获准完成不依赖生产账号的离线补齐；使用与验证入口为工作区 `postman/load/magi2/DATASET.md` 和 `README.md`，实际素材、图文清单、统计与全解码回执在 `datasets/magi2-synthetic-v1/`。数据版本、数量和运行结果沿清单与 `.local/magi2-offline-20261113/` 回查，不把工程配比写成客户分布。接口语义另见[素材契约与冻结配对](magi2-fixture-contract-entrypoints.md)。
+- 唯一运行器结构为 dataset `images/cases`，以原配置和 manifest 指纹冻结，两区共用输入但独立绑定组织与资产。文生、图生各自轮转；上传按 imageId 入池，缺图记录漏发，未知回执不重放。配对关联沿 intent、task、终态及 GET 续查回读；台账存提示词 hash，不存完整提示词或凭据。无数据集的旧版续查指纹兼容须保持独立校验，不能用于数据集降级。
+- 全解码、格式/扩展名、文件 hash、字节/像素、配对引用、乱序回执与区域隔离分别验证。预览成功只证明离线输入可读，模型准入、生产素材和查询任务池、预算、遥测仍以执行前证据为准；候选扩展素材未接入默认 manifest 时不计入主包验证数量。
+
 - 准备状态与逐项缺口见 API 工作区 `docs/production-load-data-readiness-20261113.md`；当前数据以 `postman/load/magi2/configs/{cn,us}.json`、实际上传文件及本轮私有冻结清单回查。区分示例文件、设计数量、已制作素材、已上传资产和经过归属核验的查询任务池，不在知识库复制变化中的库存数量。
 - 历史图文输入设计沿 `.local/dev-fake-capacity-20261109/mixed-input-retest/dataset-design.md` 查证；只有设计文档不能报告素材包已完成。历史 Dev 原图可作为候选，组织、资产与任务 ID 必须分区重新核对，不能按同名或历史成功直接复用为生产数据。
 - 逐图 prompt 是否实际生效，沿 `postman/load/magi2/runtime.mjs` 的 `generate` 组装逻辑、输入清单与台账字段核对。多个上传文件与全局同一 prompt 不等于逐 case 的图文配对；冻结文件 hash、规格、配套 prompt、来源授权以及 region/org/asset 映射后再验读取逻辑。
