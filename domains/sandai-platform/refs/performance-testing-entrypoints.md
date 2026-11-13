@@ -311,3 +311,14 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why:** 脚本能运行、计划素材数量和历史样本均容易被误作生产输入准备完成。微小纯色图也会显著低估上传字节压力，统一 prompt 会掩盖输入集没有真实配对。
 
 **How to apply:** 先清点并校验文件实物和清单，再检查运行器实际消费路径；按文件大小、像素、格式与输入方式分层报告。更换素材后重新计算字节上限及发压端能力；生产状态引用明确日期的回执，没有当前核验就保留待验证。缺身份或消费范围时先完成离线输入和脚本工作，生产上传、生成与清理分别依据授权执行。
+
+## 2026-11-13 多组织准备与成本控制决定
+
+- 当次用户决定、组织数量建议、真实建立状态和精确身份缺项，沿 API 工作区 `docs/production-load-org-preparation-20261113.md`、`docs/production-load-execution-readiness-20261114.md` 与 `postman/load/magi2/configs/organization-preparation.json` 回查。线上只读回执在 `.local/prod-org-preparation-20261113/`。本地槽位不是实际组织，值守负责人和组织所属用户分别记录；不在知识库存当前账号、余额或配额清单。
+- 一用户一组织和原生创建能力沿 Zeus `OrganizationService.getOrCreatePersonalOrganization`、组织 owner 唯一约束、`PlatformUserApiService`、`ApiKeyController` 与 `AdminRoutePolicy` 核对。profile GET 在首次访问时可能初始化组织；不能只按 HTTP 方法判断只读。多把同组织 Key 不增加组织配额，中央 Admin 的 Key 元数据也不能恢复完整凭据。
+- 历史 `TempBatchCreate` 数据来源沿 `docs/admin-api.md` 与 2026-10-26 提交 `957654f`（PR #430）回查退役过程；旧 `OperationController` 的批量临时用户 GET 有写入副作用，不得当作存活探针。剩余支付 Dev 冒烟脚本的环境、数据库和模拟认证保护不适用于生产，不能去掉保护后复用。
+- 用户本次明确推理侧控成本且不设客户端金额上限，实际策略沿 runner `config.mjs`、`runtime.mjs`、双区配置和测试回执核验。明确无金额上限模式、默认有限模式及误配应分别检查；请求、速率、字节、在途、未知受理、停发和正式账务证据仍独立保留。具体档位和累计量只存执行配置与手册。
+
+**Why:** 批量准备容易把历史临时用户来源误当当前建号入口，把执行负责人误当多组织 owner，或把推理成本控制误当组织余额与配额已经具备。历史 GET 也可能写用户，不能用方法名代替副作用审查。
+
+**How to apply:** 先确认原生身份和管理入口，再用合法测试身份逐区取得实际组织与 Key；配置前保存覆盖/继承和白名单成员状态，变更传播后独立回读。按真实容量确定组织级额度，不能靠海量默认账号绕过平台约束。用户已明确的金额决定不重复要求设限，但仍核对平台余额、正式扣退和剩余执行条件；组织准备与素材上传、生成发流分别按现有授权推进。

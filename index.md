@@ -1,3 +1,5 @@
+- 2026-11-13：[多组织准备与成本控制决定](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-13-多组织准备与成本控制决定) — 测试身份与准备槽位、一用户一组织、退役批量 GET 的写入风险，以及推理侧成本控制与平台余额/非金额保护的核对入口。
+
 - 2026-11-13：[Magi2 素材契约与冻结配对](domains/sandai-platform/refs/magi2-fixture-contract-entrypoints.md) — CN/US 网页、schema 与源码交叉核对；上传和 URL 约束、提示词分层及 image/prompt/hash/source 冻结的查证入口。
 
 - 2026-11-13：[压测输入实物与配对能力核查](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-13-压测输入实物与配对能力核查) — 示例、设计与实际素材池分层；已补离线合成图文包、双区配置与验证入口；附 11 月 14 日开跑准备、预上传/观测工具及停压口径查证。
