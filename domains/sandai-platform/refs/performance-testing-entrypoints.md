@@ -2,7 +2,7 @@
 name: sandai-api-platform-performance-testing-entrypoints
 type: reference
 created: 2026-10-27
-updated: 2026-11-12
+updated: 2026-11-13
 tags: [sandai, api-platform, performance, testing, quota]
 links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi-quota-entrypoints]
 ---
@@ -293,3 +293,14 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why:** 补齐模板容易把“已有只读快照、预算推导和本地测试”误写成“目标组织已经可跑”。身份、价格、素材分布和观测时间口径各自存在证据边界，任一被默认替代都会使发流预算或停压判断失真。
 
 **How to apply:** 先读预检报告，复用合法只读来源并保留采样时间、来源和未核实项；用户选择专用组织与每地预算后，精确补查组织事实。按目标部署、原 OUT、真实素材分布和源端采样时间分别验收；未满足条件继续保留配置门控，不伪填已就绪。代码测试通过不等于线上容量、资金结算或执行授权已完成。
+
+
+## 2026-11-13 压测输入实物与配对能力核查
+
+- 准备状态与逐项缺口见 API 工作区 `docs/production-load-data-readiness-20261113.md`；当前数据以 `postman/load/magi2/configs/{cn,us}.json`、实际上传文件及本轮私有冻结清单回查。区分示例文件、设计数量、已制作素材、已上传资产和经过归属核验的查询任务池，不在知识库复制变化中的库存数量。
+- 历史图文输入设计沿 `.local/dev-fake-capacity-20261109/mixed-input-retest/dataset-design.md` 查证；只有设计文档不能报告素材包已完成。历史 Dev 原图可作为候选，组织、资产与任务 ID 必须分区重新核对，不能按同名或历史成功直接复用为生产数据。
+- 逐图 prompt 是否实际生效，沿 `postman/load/magi2/runtime.mjs` 的 `generate` 组装逻辑、输入清单与台账字段核对。多个上传文件与全局同一 prompt 不等于逐 case 的图文配对；冻结文件 hash、规格、配套 prompt、来源授权以及 region/org/asset 映射后再验读取逻辑。
+
+**Why:** 脚本能运行、计划素材数量和历史样本均容易被误作生产输入准备完成。微小纯色图也会显著低估上传字节压力，统一 prompt 会掩盖输入集没有真实配对。
+
+**How to apply:** 先清点并校验文件实物和清单，再检查运行器实际消费路径；按文件大小、像素、格式与输入方式分层报告。更换素材后重新计算字节上限及发压端能力；生产状态引用明确日期的回执，没有当前核验就保留待验证。缺身份或消费范围时先完成离线输入和脚本工作，生产上传、生成与清理分别依据授权执行。

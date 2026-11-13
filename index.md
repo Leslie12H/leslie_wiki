@@ -1,3 +1,5 @@
+- 2026-11-13：[压测输入实物与配对能力核查](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-13-压测输入实物与配对能力核查) — 示例、设计与实际素材池分层；逐图 prompt 消费、双区资产任务映射和冻结清单的查证入口。
+
 - 2026-11-12：[执行前只读补齐与证据时效](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-执行前只读补齐与证据时效) — 模型计费推导与原 OUT、目标组织和预算、合成素材带宽边界及源端遥测新鲜度的预检入口。
 
 - 2026-11-12：[Magi2 压测脚本与中断续查](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-magi2-压测脚本与中断续查) — 双区离线计划、持久化请求意图、未知受理防重、存量查询及真实遥测和账务证据入口；本轮未发压。
