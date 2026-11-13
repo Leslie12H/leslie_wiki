@@ -1,3 +1,5 @@
+- 2026-11-13：[Magi2 素材契约与冻结配对](domains/sandai-platform/refs/magi2-fixture-contract-entrypoints.md) — CN/US 网页、schema 与源码交叉核对；上传和 URL 约束、提示词分层及 image/prompt/hash/source 冻结的查证入口。
+
 - 2026-11-13：[压测输入实物与配对能力核查](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-13-压测输入实物与配对能力核查) — 示例、设计与实际素材池分层；逐图 prompt 消费、双区资产任务映射和冻结清单的查证入口。
 
 - 2026-11-12：[执行前只读补齐与证据时效](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-执行前只读补齐与证据时效) — 模型计费推导与原 OUT、目标组织和预算、合成素材带宽边界及源端遥测新鲜度的预检入口。
