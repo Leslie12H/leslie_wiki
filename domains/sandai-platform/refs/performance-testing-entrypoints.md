@@ -330,6 +330,8 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 - 创建意图、完整 Key 和精确 ID 必须在 SQL 提交前可靠保全。Pod 临时目录的 fsync 不等于持久备份；沿初始化器的分阶段准备、凭据包摘要、独立受保护备份与执行回执核对。发生连接中断时只读核查原批次，不自动补建另一批。
 - 清理沿 `AccountCancellationService`、`AdminAccountCancellationController` 与工作区 `provision/cleanup.mjs` 回查。原生软注销保留历史且不可恢复，但不负责检查压测任务和账务排空；必须区分空主体注销与带载后清理、客户端 UNKNOWN、迟到受理和并发写入。配置先恢复，资产按精确归属处理，任务与正式账本保全；未实现或未验证的写入隔离不能用一份旧快照替代。
 - 多组织的输入相位沿 `runtime.mjs` 和 `tests/paired-runtime.test.mjs` 核对。每组织都从相同文生/图生相位起步会让低档出现长段同类输入；简单全局奇偶又会让偶数组织固定分成纯文/纯图。错开各组织相位并保留各自游标，按阶段与前缀验证实际分布；不同素材比例及浮点边界分别测试。
+- 实际配置加载层次沿 Zeus `deployment/magi/README.md`、`structure/<environment>/runtime.yml` 与工具 `loadConfig` 核对：公共属性和角色覆盖分开挂载，不能只读角色文件后宣称获得完整 DB/Redis 配置。JDBC 的 MySQL DATETIME 可能返回 LocalDateTime，回执统一成显式 UTC ISO 后再交给 Node，不能依赖默认 JVM 时区或裸 Jackson 自动序列化。
+- 注销预览绑定沿 `AccountCancellationService.preview/mask` 核对；它同时读取 login_account 和用户的 identity_email。零登录绑定不等于预览 bindings 为空，测试邮箱仍会形成原生脱敏项；冻结合法预期并拒绝额外项，真实邮箱一致性由同一身份数据库读回证明，脱敏文本本身不构成相等证明。
 
 **Why:** 用户授权数据建号后，阻塞从消费者注册身份转为实际生产访问、数据关系和回收机制。API Key 能生成不等于可登录或满足国内生成准入；账号注销也不等于存量任务、物理存储与账务已经清理完成。
 
