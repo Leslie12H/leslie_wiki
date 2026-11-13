@@ -14,7 +14,7 @@
 
 - 2026-11-12：[双生产 CMS 压测看板](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-双生产-cms-压测看板) — 区域单选、资产上传与运行资源增强、固定双区共享 ALB 下钻；空样本、Pod 网络和云产品切换边界，保存回读及真实查询沿证据回查。
 
-- 2026-11-12：[EVOLVE 对话优先与 Benchmark 信息架构](domains/maxwell/projects/evolve-agent-first-benchmark.md) — 用户偏好 Duet；持续主对话、工作会话与执行 Session 分层、历史入口、输入范围、Benchmark 按需展开及完整待评审方案指针。 2026-11-13 补独立交互 Demo 与模拟体验验证边界。
+- 2026-11-12：[EVOLVE 对话优先与 Benchmark 信息架构](domains/maxwell/projects/evolve-agent-first-benchmark.md) — 用户偏好 Duet；持续主对话、工作会话与执行 Session 分层、历史入口、输入范围、Benchmark 按需展开及完整待评审方案指针。 2026-11-13 补独立交互 Demo 与模拟体验验证边界。 补右侧编辑器、执行过程、对比与证据的默认展开演示。
 
 - 2026-11-12：[API 平台国内与美国生产压测准备和收尾](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-国内与美国生产压测准备和收尾) — 两地执行稿、开跑表、负载算例、停压值守、任务账务与素材清理回执。
 
