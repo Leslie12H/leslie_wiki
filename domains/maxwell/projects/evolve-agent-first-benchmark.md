@@ -2,7 +2,7 @@
 name: evolve-agent-first-benchmark
 type: project
 created: 2026-11-12
-updated: 2026-11-12
+updated: 2026-11-13
 tags: [maxwell, evolve, benchmark, navigation, workflow]
 links: [evolve-benchmark-unified-plan-review, evolve-user-manual-entrypoints, evolve-workspace-implementation-20261015]
 ---
@@ -60,3 +60,11 @@ links: [evolve-benchmark-unified-plan-review, evolve-user-manual-entrypoints, ev
 输入默认面向主 Agent，选择“讨论这项工作”后明确显示当前范围；单纯打开报告不隐式改变范围。工作过程按需展开，结论与待决定事项回主对话。持续上下文依赖工作状态、可检索历史及来源引用，不能仅靠摘要判断运行事实。Benchmark 可跨工作复用，评测证据保持版本可回查。
 
 完整方案及验收条目：[EVOLVE 持续协作使用方案](/Users/leslie/.codex/visualizations/2026/11/12/01a1ce76-1824-77a2-8b00-503614d17f09/evolve-duet-product-proposal.md)。包含导航、输入范围、工作与执行生命周期、历史、版本、恢复、迁移和首版边界；状态为待评审，未实现、未执行真实验收。
+
+## 2026-11-13 Duet 方向交互 Demo
+
+**Why:** 用户要求查看参考 Duet 的 Demo，需要直观看到持续主对话、工作会话和右侧产物之间的关系。
+
+**How to apply:** 在该 Codex 会话的可视化目录交付独立 Demo `evolve-duet-demo.html`。先点对比报告，再展开工作过程、选择讨论这项工作；也可模拟修复验证、暂停与继续，检查报告回主对话的体验。导航保留对话、工作、Benchmarks，历史从搜索和工作回看。仅采用示例数据与预设回复，没有接入业务服务或修改业务代码。
+
+验证范围和截图回查同目录 `duet-demo/verification.md`：主对话与工作草稿隔离、按需详情、模拟执行回报、标准修订与冻结引用、历史搜索及桌面/窄屏布局已做浏览器检查。该验证不能作为真实 Agent 能力或线上业务验收。
