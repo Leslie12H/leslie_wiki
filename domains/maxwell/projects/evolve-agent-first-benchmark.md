@@ -130,3 +130,15 @@ links: [evolve-benchmark-unified-plan-review, evolve-user-manual-entrypoints, ev
 - `agent-resources/skills/evolve-workspace-view/SKILL.md` 与其 references：核对生成 HTML、版本镜像和读回要求；辅助页面不取代服务端业务真相。
 
 查证依据为 2026-11-14 当前本地工作树，包含既有未提交内容，不代表线上已发布。正式 doc-hub 路径在本机未找到，本稿是独立评审交付，进入实施前仍应解析正式 owner 和执行包。
+
+## 2026-11-14：授权本地实现与首版验证
+
+用户随后授权“本地改造一版本看看”，并完成本地 Studio 登录供浏览器验证。此次授权覆盖本地前端实施；未扩展到业务仓库提交、发布，或 API/数据库契约变更。
+
+**Why:** 用真实 EVOLVE 会话与业务对象验证同一对话内的多产物阅读、引用和版本切换，避免把独立 Demo 的模拟能力当成正式运行能力。
+
+**How to apply:** 本地实现与验收记录见 [EVOLVE 本地对话与产物工作区](/Users/leslie/.codex/visualizations/2026/11/12/01a1ce76-1824-77a2-8b00-503614d17f09/evolve-local-workspace-implementation.md)。当前代码入口是 `apps/studio/src/products/evolve/collaboration/`，会话和导航衔接位于 `EvolveWorkspace.tsx`、`EvolveAgentConversation.tsx` 及 `v3/`。以代码和记录为当前证据，不能据此判断线上已发布。
+
+本轮实现对话首页与按需右侧工作区；保留原 AgentSession，按精确版本打开 Benchmark、草稿、冻结产物和运行记录，并可把分析消息放到右侧阅读。宿主保护当前阅读焦点，引用明确进入原输入框，业务修订复用既有编辑器。跨任务长期主对话、Agent 通用展示协议及任意生成页面仍未实施。
+
+本地前端代理现有 dev API；Studio check 与聚焦测试通过。真实浏览器验证多对象切换、引用与输入跨详情往返保留、Benchmark 未保存修订恢复/放弃、原生引用刷新恢复、390px 窄屏。修复了新会话入口遗漏旧基础样式导致放弃草稿确认框被修订面板遮挡的问题；复用旧业务阅读器/弹窗时须检查其完整样式依赖。没有发送新 Agent 消息、启动真实评测或保存正式业务修改，因此不称为自然 Agent 闭环通过。业务工作树保持未提交状态，既有改动未回滚。
