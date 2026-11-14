@@ -1593,3 +1593,5 @@
 - 2026-11-11：[VidMuse 首页改版巡检](domains/vidmuse/refs/homepage-render-check-ops.md#2026-11-11-首页改版后的回查) — 旧页签移除、创作入口加载状态和同机验收回查。
 
 - 2026-11-12：[VidMuse 巡检同名入口异常](domains/vidmuse/refs/homepage-render-check-ops.md#2026-11-12-同名入口触发-playwright-严格匹配) — 横幅与透明输入区按钮的前端来源、严格匹配和正式调度验收。
+
+- 2026-11-14：[双区原生与 Ark 接口冒烟](domains/sandai-platform/refs/dual-region-native-ark-smoke-entrypoints.md) — 创建/查询交叉验证、国内准入差异、真实成片参数与只读终态证据入口。
