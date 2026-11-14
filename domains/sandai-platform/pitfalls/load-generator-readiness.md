@@ -19,6 +19,8 @@ links: [sandai-api-platform-performance-testing-entrypoints]
 
 容量、持久化同步延迟和资源创建权限分别验收。NAS `df` 展示的逻辑容量不证明独占配额或同步写入延迟；没有 Available PV 也不证明整个云账号没有空闲云盘。云盘最低容量与性能级别有关，沿当时官方规格核对，不把某一等级下限推广到全部云盘。`kubectl auth can-i create pvc/pod` 不证明能够创建 StorageClass，更不证明 CSI 云角色有 CreateDisk/AttachDisk 权限、账户额度或已获新增费用授权；不得用付费创建试探权限。具体占用、权限核验、候选规格、保留时长与报价边界见工作区 `docs/magi2-essd-candidate-plan-20261114.md`。
 
+不能把发压器自设的毫秒级调度容差当作业务 SLA，再据其失败直接要求购买存储。先检查日志持久化是否处于发送关键路径、只读 GET 是否被不必要的发送前同步阻塞、控制/指标写入是否阻塞主调度循环。短距离预写 POST 意图与后台批写 GET 证据是待验证的解耦方向，仍须保留有界队列、查询预算恢复、未知 POST 不重发和人工停机。发压质量用短窗突刺、分钟实发偏差与连续窗口判断；业务安全保护单独处理。新标准必须先冻结再复测，原失败报告不可改判。2026-11-14 的具体评审与实施状态沿工作区 `docs/magi2-runner-pacing-review-20261114.md` 核对。
+
 ## 证据入口
 
 - 历史 Dev 执行位置和共享资源边界：工作区 `docs/dev-multitenant-load-report-20261028.md`。
