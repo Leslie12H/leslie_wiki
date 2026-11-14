@@ -17,6 +17,8 @@ links: [sandai-api-platform-performance-testing-entrypoints]
 
 持续写 NAS 台账会增加文件缓存，cgroup `memory.current` 接近 limit 不等于进程工作集同样饱和。保留总量并用 `memory.current - inactive_file` 展示工作集，依据 [cAdvisor 计算](https://github.com/google/cadvisor/blob/8164b38067246b36c773204f154604e2a1c962dc/container/libcontainer/handler.go#L835-L844)。未知或不一致采样不补成健康；工作集指标也不是 OOM 风险的完整证明。
 
+容量、持久化同步延迟和资源创建权限分别验收。NAS `df` 展示的逻辑容量不证明独占配额或同步写入延迟；没有 Available PV 也不证明整个云账号没有空闲云盘。云盘最低容量与性能级别有关，沿当时官方规格核对，不把某一等级下限推广到全部云盘。`kubectl auth can-i create pvc/pod` 不证明能够创建 StorageClass，更不证明 CSI 云角色有 CreateDisk/AttachDisk 权限、账户额度或已获新增费用授权；不得用付费创建试探权限。具体占用、权限核验、候选规格、保留时长与报价边界见工作区 `docs/magi2-essd-candidate-plan-20261114.md`。
+
 ## 证据入口
 
 - 历史 Dev 执行位置和共享资源边界：工作区 `docs/dev-multitenant-load-report-20261028.md`。
