@@ -25,3 +25,9 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 - 执行环境与模型权限沿[双区原生与 Ark 冒烟入口](dual-region-native-ark-smoke-entrypoints.md)再次核对。对比同一区域的实际配置与飞书参数版本，记录范围和枚举的差异。保留每次请求的存储及下游状态证据。
 
 **How to apply:** 已受理任务用原 ID 续查。公开 processing/running 长时间无变化时，按同一请求记录对照 Zeus 派发状态及 Athena 按请求号回读。前一批还在下游等待时，保持约定的批次边界。文件大小测试同时留存精确字节、客户端响应、服务端阶段及精确资产回读。部分输入预检通过后可能在生成中被拒绝，复测需覆盖该阶段与退款。
+
+## 下游排队与账务续查
+
+**Why:** 本轮通过相同任务的 Zeus 公开查询、Athena 按请求号查询和同模型队列指标，区分了接口处理中和下游 pending。单条任务的接口状态无法反映共享队列规模，队列总量也无法给出该任务的排位或完成时间。
+
+**How to apply:** 先用 Athena 实际路由的模型名筛选 `inference-queue-exporter` 的 `athena_inference_queue_pending`，核对 broker、db 和 priority，结合多个时点看趋势。再用原任务 ID 查终态产物，并按精确任务 ID 核对预扣、退款和终态入账。共享测试组织还有其他任务时，用逐任务账本归因金额，余额用于复核批次。监控和续跑证据沿本页生产报告及同目录的 `production-first-watch.jsonl`、`production-batch-billing.jsonl` 查询。

@@ -1,7 +1,7 @@
 - 2026-11-14：[多媒体压测素材与离线请求准备](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-14-多媒体压测素材与离线请求准备) — 不同大小图音视频、10图3视频3音频组合、分类累计时长、区域与组织绑定、输入字节与创建带宽分开，以及不自动切生产的准备入口。
 - 2026-11-14：[临时遥测源与Pod重建](domains/sandai-platform/pitfalls/load-generator-readiness.md#2026-11-14-临时遥测源与pod重建) — 实际角色/副本/Jar核验、IP复用、真实HTTP窗口与源有效期；新鲜空文件不能当作健康。
 - 2026-11-14：[双协议压测看板口径](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-14-双协议压测看板口径) — v2/方舟v3真实URI、各自成功码、合计和分协议QPS、查询比例及长窗跨档平滑的验证入口。
-- 2026-11-14：[开放平台多媒体功能验收](domains/sandai-platform/refs/media-functional-acceptance-entrypoints.md) — 音频、图片、视频格式与阈值素材包，含 multipart 精确字节、参考素材组合与端到端取证入口。 补生产边界回执、Athena 终态与字节异常回查入口。
+- 2026-11-14：[开放平台多媒体功能验收](domains/sandai-platform/refs/media-functional-acceptance-entrypoints.md) — 音频、图片、视频格式与阈值素材包，含 multipart 精确字节、参考素材组合与端到端取证入口。 补生产边界回执、Athena 终态、共享模型队列、逐任务账务与字节异常回查入口。
 
 - 2026-11-14：[视频参数文档与压测覆盖对齐](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-14-视频参数文档与压测覆盖对齐) — 参数约定与部署分层；按用户确认收窄为现有档位的双协议生成/查询 QPS，参数与多模态专项不作为本次前置；有效受理、查询和积压分别计量。
 - 2026-11-14：[发压器部署与真实就绪边界](domains/sandai-platform/pitfalls/load-generator-readiness.md) — 现有节点复用、镜像/NAS差异、持久化同步与时钟漏发、真实控制回执和回环/生产验收分层。 补逐窗口验收、持久化尾延迟、文件缓存/内存工作集及存储容量/创建权限的分层核验；新增存储前先审查调度与日志耦合。 补人工逐档、档间仅查询、动态时长、查询预算恢复和最终台账摘要的核验入口。 补镜像、代码包与执行配置三层核验，以及换模型后准入和契约证据不可继承的边界。
