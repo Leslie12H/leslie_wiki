@@ -1,3 +1,4 @@
+- 2026-11-14：[视频参数文档与压测覆盖对齐](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-14-视频参数文档与压测覆盖对齐) — 参数约定与部署分层、跨文档冲突、参考图与多模态专项、音频字段及大媒体资源/成片验收查证入口。
 - 2026-11-14：[发压器部署与真实就绪边界](domains/sandai-platform/pitfalls/load-generator-readiness.md) — 现有节点复用、镜像/NAS差异、持久化同步与时钟漏发、真实控制回执和回环/生产验收分层。 补逐窗口验收、持久化尾延迟及文件缓存/内存工作集口径。
 
 - 2026-11-14：[发压脚本反例审查](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-14-发压脚本反例审查入口) — 上传未知、任务失败率、阶段末漏发与迟到响应、组织Key绑定、查询续查及扣款凭证唯一性查证；审查与修复/上线分别验收。
