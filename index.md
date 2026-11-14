@@ -1,3 +1,5 @@
+- 2026-11-14：[双区生产建号、白名单与赠额](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-14-双区生产建号原生白名单与赠额) — 实际索引、PolarDB 主节点读、同身份意图转绑、原生清理幂等、CSRF 与赠额有效期/保留历史的查证入口。
+
 - 2026-11-13：[受控数据初始化与配套清理](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-13-受控数据初始化与配套清理) — API-only 三表关系、凭据先备份、空主体和带载清理、公共/角色配置、UTC 回执与原生绑定预览、低档图文相位的核对入口。
 
 - 2026-11-13：[多组织准备与成本控制决定](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-13-多组织准备与成本控制决定) — 测试身份与准备槽位、一用户一组织、退役批量 GET 的写入风险，以及推理侧成本控制与平台余额/非金额保护的核对入口。

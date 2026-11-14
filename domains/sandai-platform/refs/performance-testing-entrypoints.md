@@ -2,7 +2,7 @@
 name: sandai-api-platform-performance-testing-entrypoints
 type: reference
 created: 2026-10-27
-updated: 2026-11-13
+updated: 2026-11-14
 tags: [sandai, api-platform, performance, testing, quota]
 links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi-quota-entrypoints]
 ---
@@ -336,3 +336,19 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why:** 用户授权数据建号后，阻塞从消费者注册身份转为实际生产访问、数据关系和回收机制。API Key 能生成不等于可登录或满足国内生成准入；账号注销也不等于存量任务、物理存储与账务已经清理完成。
 
 **How to apply:** 独立冻结区域、数据库身份、部署与 schema 指纹；先用不发流的独立账号验证创建和清理，再分批准备正式主体。备份凭据后才提交，原生读回与生产带载验收分开；清理计划绑定同批 ID 和证据，能力不足时明确阻断实际注销，不能把模拟测试当作生产清理闭环。
+
+
+## 2026-11-14 双区生产建号、原生白名单与赠额
+
+- 现场目标、部署及计划指纹、实际创建/清理/白名单/赠额数量，以 API 工作区 `docs/production-test-org-execution-20261114.md` 和 `.local/prod-org-preparation-20261114/` 独立回执为准。prepare-intents 会使用真实 Redis ID 租约；业务 SQL 为零不能概括成生产零写。清理 canary 与正式组织分别计数，凭据始终在明确授权的受限目录内保管。
+- 实际 DDL、完整索引、EXPLAIN 必须先读。一 owner 一组织的业务意图不证明线上存在唯一 owner 索引；兼容路径及可见行/超时上限查 `postman/load/magi2/provision/ProdLoadTenantFixture.java` 和 README，不为测试工具自动修改生产 DDL。LIMIT 不是磁盘 IO 或 MVCC 历史扫描有界的证明。
+- PolarDB 集群读写地址可将连续普通 SELECT 分配给不同节点，单次 `@@server_uuid` 不证明写入主节点。主节点路由策略、同一计划的 ID/Key 保留转绑、主节点独立回读分别查上述 Java、`adopt-intents.mjs` 和 route-probe 回执。官方路由语法：[PolarDB HINT](https://help.aliyun.com/en/polardb/polardb-for-mysql/user-guide/hints)。旧计划和原意图保留，不能靠反复重试碰到某个节点来放行。
+- Pod helper Java 的环境隔离、资源限制和 UTC 声明查 `cleanup-live.mjs`；仅清除 helper 子进程的监控 agent 注入变量，不修改业务进程。kubectl 传输后的文件权限必须实际复验；父目录私密不代替文件和凭据子目录的独立模式检查。
+- Admin 写请求须沿当前页面会话获取动态 CSRF 头，token 保留在页面闭包；命令投影同时适配 CLI stdout/stderr，禁止把完整诊断/headers 当业务结果保存。业务采样时间和真正 fetch 前的时效分别核验，刷新会话不延长旧业务证据。
+- 正式测试组织的 Magi-2 开通使用 Zeus Admin 原生白名单，具体模型身份、修订、精确组织与原成员状态查 `whitelist-live.mjs` 及其冻结基线。配置读回和缓存传播、真实推理验收分开；建号与白名单不证明国内实名准入、RPM、余额或任务闭环。
+- 赠额沿 `gift-live.mjs`、当前 `AdminOrganizationController/Service` 和前端赠额页面查证：显示金额通过原生 preview 换算内部 credits；保留同一 operationId、具体到期时刻和原生赠送流水，未知结果先按 operationId 查询。当前用户授权及金额/币种/有效期保存在执行记录，不把知识库中的历史值当后续授权。
+- 赠额产生余额批次和正式 IN 流水，不能继续套用零业务 empty-fixture 清理证明。当前原生后台没有直接撤销赠额入口；有效期后失效与账号权限回收、模型成员恢复、任务终态/扣退核账分别验收，历史流水保留。日期核验同时看客户端 UTC、原生 receipt 和实际 SQL 映射；本次取消时间字段偏移的证据沿执行记录查，不用该字段作为赠额起点或真实 UTC 事件时间。
+
+**Why:** 模板、迁移源码、客户端 readOnly、登录成功或一次成功响应均可能与现场有效目标和业务终态不同。未保全的凭据、读写分离与后台时间映射会使可重复的建号/清理失去可信证据；新增赠额后，原先的零业务清理假设也会改变。
+
+**How to apply:** 先冻结实际目标和 schema，再按 prepare→持久备份→逐槽事务→独立主节点读回推进。先分别完成不发流的 canary 原生注销和零写幂等，才扩为正式组织。Admin 配置和赠额各自先存基线/唯一操作意图，再执行并独立读回；异常保留原件和未决状态。清理按权限、异步业务、余额到期和历史保留分项验收，不通过删账本伪造清零。
