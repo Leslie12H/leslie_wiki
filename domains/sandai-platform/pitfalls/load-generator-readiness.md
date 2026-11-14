@@ -13,6 +13,10 @@ links: [sandai-api-platform-performance-testing-entrypoints]
 
 **How to apply:** 先查看历史执行报告，再核对现有节点余量与实际镜像/存储能力；用独立限额 Pod 和专用持久目录，显式覆盖待命命令。用真实图片、真实 HTTP 回环、实际磁盘同步检测发压端；同批持久化同步必须仍保证请求意图先落盘，时钟采用固定时间点，过期请求不集中补发。按实际发送/漏发与服务端观测分别判断，不能把回环吞吐当作生产或公网容量。
 
+逐窗口漏发与全程平均发送率分别验收；短测通过不能覆盖后续持久化尾延迟。优化查询台账时保留每次请求意图/回执，通过组织、任务和原始序号关联完整输入，状态不变无需重复整份输入。批量 fsync 的等待仍须在请求发送前完成，记录同步尾延迟定位发压端瓶颈，不放宽漏发门槛来制造通过。
+
+持续写 NAS 台账会增加文件缓存，cgroup `memory.current` 接近 limit 不等于进程工作集同样饱和。保留总量并用 `memory.current - inactive_file` 展示工作集，依据 [cAdvisor 计算](https://github.com/google/cadvisor/blob/8164b38067246b36c773204f154604e2a1c962dc/container/libcontainer/handler.go#L835-L844)。未知或不一致采样不补成健康；工作集指标也不是 OOM 风险的完整证明。
+
 ## 证据入口
 
 - 历史 Dev 执行位置和共享资源边界：工作区 `docs/dev-multitenant-load-report-20261028.md`。
