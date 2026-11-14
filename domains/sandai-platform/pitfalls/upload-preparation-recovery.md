@@ -36,3 +36,11 @@ links: [sandai-api-platform-load-generator-readiness, sandai-api-platform-perfor
 - 原生合同查证：目标部署对应的 `ReferenceAssetUpload`、`ReferenceMediaImporter`、`AssetService.checkGenerationInput`、`GenerationMedia.checkExisting` 和 `MagiGenerationAdmission`；不能把准备工具的历史保守规则误写为服务端要求。
 - 低 QPS 短档同时核对协议 × 素材大小 × 语言的分布；总协议占比均衡仍可能因组织轮转相位而把某一大小层偏向一套接口。相位修正只作用于对应数据集，保留其他案例的既有语义，并验证少量前缀和完整组织轮次。
 - 发压器接入按组织固定完整多媒体引用、prompt hash 与 API 归属。准备上传字节、生成 JSON 正文字节和服务端读取字节分开统计；准备成功不自动开启生成准入标记或启动用户尚未指定的档位。
+
+## 2026-11-14 已受理对账与资产清理边界
+
+**Why:** 代理返回 502 时，服务端可能已经持久化正式资产。若原回包没有 ID，不能由 HTTP 结果推断失败；若对账成功后覆盖 UNKNOWN，又会丢掉原始故障及恢复依据。另外，原生 OpenAPI 上传资产的 `userId=0` 不能套用空测试账号清理器的 owner-user 假设。
+
+**How to apply:** 先停新增，冻结原计划、原 intent/UNKNOWN 行及完整台账 hash；按准确组织和文件名查全部时间范围（含已删记录）。只有唯一资产、创建窗口、同 Key GET、原始文件完整字节/hash及对象读取前后的数据库身份均一致，才在原锁下追加独立“服务端已受理对账”事件。保留原错误状态、来源与证据指纹，再续传未创建部分。追加幂等且持久化失败可显式重核，不能把“暂时查不到”扩展成自动重试权限。
+
+资产清理按实际组织、资产 ID、`source=Upload`、`userId=0` 和 `taskId=0` 生成独立交接清单；迁移承接和已受理对账都保留原始来源。准备清单里的空引用占位不代表完整扫描了任务引用。清理执行前还须冻结写入、收敛在途、完整引用扫描和独立删除读回；有资产的组织不能冒充空 fixture 执行注销。当前实现与未补齐的边界以 `postman/load/magi2/asset-cleanup-handoff.mjs`、`provision/CLEANUP.md` 和生产准备报告为准。
