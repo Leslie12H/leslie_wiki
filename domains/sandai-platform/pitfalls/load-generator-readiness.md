@@ -16,7 +16,7 @@ links: [sandai-api-platform-performance-testing-entrypoints]
 ## 证据入口
 
 - 历史 Dev 执行位置和共享资源边界：工作区 `docs/dev-multitenant-load-report-20261028.md`。
-- 当前两区发压器、版本、主流程和未解决项：工作区 `docs/magi2-runner-readiness-20261114.md`；实时位置和状态沿本次独立回读，不在知识库固化实例、Pod、版本或测试计数。
+- 当前两区接线、配额、素材、真实遥测、阻塞和正式步骤：工作区 `docs/production-load-final-readiness-20261114.md`；早期待命部署记录在 `docs/magi2-runner-readiness-20261114.md`。实时位置和状态沿本次独立回读，不在知识库固化实例、Pod、版本或测试计数。
 - 人工启动/暂停/继续/停止、持久化命令回执、断开终端与 Pod 故障后的区别：`postman/load/magi2/deploy/README.md`、`control.mjs`、`launch.mjs`。
 - 成功延迟窗口与样本门槛：`latency-gate.mjs`、区域配置与相应 tests；失败/超时不得混入成功分位数，查询成功不代表生成成功。低流量 P99 基线和统计充分性须明确标识。
 - 缺真实遥测、身份、准入、素材映射或输入契约时阻止生产启动；模板填 true、旧看板有序列或本地测试通过不构成生产验收。停新增后保留原台账和只读续查，不自动重放 POST。

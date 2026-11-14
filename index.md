@@ -164,6 +164,8 @@
 
 # leslie_wiki 目录
 
+- 2026-11-14：[上传失败回执与暂存清理](domains/sandai-platform/pitfalls/upload-preparation-recovery.md) — 503 后资产存在、精确请求归属、DeleteObject 权限与带业务清理分别验收的查证入口。
+
 - 2026-11-05：[派工父账与整题覆盖](domains/maxwell/refs/evolve-usage-accounting.md#父-run-账单不能代替派工总账2026-11-05) — Native 子 Run 独立记账、父子身份核对、未知覆盖保留及原件不回填。
 
 - 2026-11-04：[路线复审粒度与等待放大](domains/maxwell/pitfalls/evolve-route-review-granularity.md) — 实际父子派工、微小片段复审与整批交付、共享资源版本证据、超时取消，以及并发测试同步边界。
