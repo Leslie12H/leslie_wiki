@@ -425,6 +425,7 @@
 - [影游 Agent Benchmark 综合评测报告 9.19 对照入口](domains/maxwell/refs/nextplay-benchmark-report-20260919.md) — 2026-09-19 报告结论（D4/D5 集中失败、四模型互补、补分敏感）与下一轮协议清单；EVOLVE 三层对照（协议/评分/执行）
 
 ### sisyphus — [质量平台](domains/sisyphus/README.md)
+- 2026-11-14：[VidMuse UI 全量回归的滑块重试和空提示词断言](domains/sisyphus/pitfalls/vidmuse-ui-full-captcha-and-empty-prompt.md) — 422/00102、备用会话与空输入的网络断言查证入口。
 - [Sisyphus 质量平台](domains/sisyphus/README.md) — quality_dashboard 日投影/发版门禁、automation_triggers、Agent Token 与 project 边界；调度模型与 admin 不同
 - [定时用例的 Admin 会话凭据过期](domains/sisyphus/pitfalls/scheduled-admin-jwt-expiry.md) — `event-tracking` setup 401 的时间线、Runner 凭据映射、Attempt 2 验证与账号池探测陷阱（2026-09-29）
 
