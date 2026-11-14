@@ -1,3 +1,5 @@
+- 2026-11-14：[开放平台多媒体功能验收](domains/sandai-platform/refs/media-functional-acceptance-entrypoints.md) — 音频、图片、视频格式与阈值素材包，含 multipart 精确字节、参考素材组合与端到端取证入口。
+
 - 2026-11-14：[视频参数文档与压测覆盖对齐](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-14-视频参数文档与压测覆盖对齐) — 参数约定与部署分层；按用户确认收窄为现有档位的双协议生成/查询 QPS，参数与多模态专项不作为本次前置；有效受理、查询和积压分别计量。
 - 2026-11-14：[发压器部署与真实就绪边界](domains/sandai-platform/pitfalls/load-generator-readiness.md) — 现有节点复用、镜像/NAS差异、持久化同步与时钟漏发、真实控制回执和回环/生产验收分层。 补逐窗口验收、持久化尾延迟、文件缓存/内存工作集及存储容量/创建权限的分层核验；新增存储前先审查调度与日志耦合。
 
