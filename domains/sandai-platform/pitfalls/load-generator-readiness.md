@@ -52,4 +52,6 @@ links: [sandai-api-platform-performance-testing-entrypoints]
 
 **How to apply:** 重接前核对当前角色、实际副本、Pod身份和目标运行Jar指纹，确认业务聚合方法仍匹配部署。将来源绑定到已核验的实例，沿真实HTTP请求与响应验证覆盖和错误，保留完整时间窗口；数据源失败、无有效观测或窗口不足保持未知或阻止启动，不写健康占位值。临时源的有效期、退出条件与过期后的行为须可核验；角色变化、IP复用或Pod重建后重新核对，不能仅替换地址或沿用旧成功标志。
 
-上海重接的部署、临时源有效期、HTTP窗口、回执与实时就绪状态，统一沿API工作区 `docs/shanghai-telemetry-reconnect-20261114.md` 回查；知识库不固化临时地址、Token、运行计数或当前健康快照。
+一个旧IP返回200仍可能已变成其他角色，须把当前Pod UID、角色和完整目标集合共同核验。恢复脚本失败也可能发生在新只读源已启动、采集器尚未切换的中间阶段；先读回进程身份、配置hash和审计文件，再按冻结计划仅续办缺失步骤，不能直接重跑整段安装而创建重复源。采集恢复健康和allowAdvance为true，不证明旧运行的UNKNOWN、在途任务或区域锁已经清理。
+
+两区重接的部署、临时源有效期、HTTP窗口、分阶段恢复回执与实时就绪状态，沿API工作区 `docs/shanghai-telemetry-reconnect-20261114.md` 和 `docs/us-telemetry-reconnect-20261114.md` 回查；知识库不固化临时地址、Token、运行计数或当前健康快照。

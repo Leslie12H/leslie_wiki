@@ -1,5 +1,5 @@
 - 2026-11-14：[多媒体压测素材与离线请求准备](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-14-多媒体压测素材与离线请求准备) — 不同大小图音视频、10图3视频3音频组合、分类累计时长、区域与组织绑定、输入字节与创建带宽分开，以及不自动切生产的准备入口。
-- 2026-11-14：[临时遥测源与Pod重建](domains/sandai-platform/pitfalls/load-generator-readiness.md#2026-11-14-临时遥测源与pod重建) — 实际角色/副本/Jar核验、IP复用、真实HTTP窗口与源有效期；新鲜空文件不能当作健康。
+- 2026-11-14：[临时遥测源与Pod重建](domains/sandai-platform/pitfalls/load-generator-readiness.md#2026-11-14-临时遥测源与pod重建) — 实际角色/副本/Jar核验、IP复用、真实HTTP窗口、源有效期与部分apply失败后的窄续办；采集健康不证明旧运行排空。
 - 2026-11-14：[双协议压测看板口径](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-14-双协议压测看板口径) — v2/方舟v3真实URI、各自成功码、合计和分协议QPS、查询比例及长窗跨档平滑的验证入口。
 - 2026-11-14：[开放平台多媒体功能验收](domains/sandai-platform/refs/media-functional-acceptance-entrypoints.md) — 音频、图片、视频格式与阈值素材包，含 multipart 精确字节、参考素材组合与端到端取证入口。 补生产边界回执、Athena 终态、共享模型队列、逐任务账务与字节异常回查入口。
 
