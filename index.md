@@ -1,3 +1,4 @@
+- 2026-11-14：[inline 压测准入与动态健康发现](domains/sandai-platform/pitfalls/inline-load-admission-and-discovery.md) — 源码/白名单/认证/真实生成分层，独立 QPS 与正文带宽口径、Ready Pod 发现、客户保护和原凭据就地接线。
 - 2026-11-14：[压测网络错误归因边界](domains/sandai-platform/pitfalls/load-test-network-error-attribution.md) — 固定台账前缀、连接计时/cause、创建与历史查询分流、CPU/HPA与共享ALB证据关联。
 - 2026-11-14：[多媒体压测素材与离线请求准备](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-14-多媒体压测素材与离线请求准备) — 不同大小图音视频、10图3视频3音频组合、分类累计时长、区域与组织绑定、输入字节与创建带宽分开，以及不自动切生产的准备入口。
 - 2026-11-14：[临时遥测源与Pod重建](domains/sandai-platform/pitfalls/load-generator-readiness.md#2026-11-14-临时遥测源与pod重建) — 实际角色/副本/Jar核验、IP复用、真实HTTP窗口、源有效期与部分apply失败后的窄续办；采集健康不证明旧运行排空。
