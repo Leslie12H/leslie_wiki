@@ -170,7 +170,7 @@
 
 # leslie_wiki 目录
 
-- 2026-11-14：[上传失败回执与暂存清理](domains/sandai-platform/pitfalls/upload-preparation-recovery.md) — 503 后资产存在、精确请求归属、DeleteObject 权限与带业务清理分别验收的查证入口。
+- 2026-11-14：[上传失败回执与暂存清理](domains/sandai-platform/pitfalls/upload-preparation-recovery.md) — 失败回执与真实资产、暂存删除权限、多媒体上传合同/配置来源和计划承接分别验收的查证入口。
 
 - 2026-11-05：[派工父账与整题覆盖](domains/maxwell/refs/evolve-usage-accounting.md#父-run-账单不能代替派工总账2026-11-05) — Native 子 Run 独立记账、父子身份核对、未知覆盖保留及原件不回填。
 
