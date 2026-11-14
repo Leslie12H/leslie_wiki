@@ -41,3 +41,18 @@ links: [sandai-api-platform-load-generator-readiness, sandai-api-platform-load-t
 - 临时采集进程与审计 Pod 用完即清理；任务、资产、暂存对象和账务沿原生台账继续对账，不能以停止发压代表清理完成。
 
 本次参数、时间、逐事件证据、只读查询范围和恢复边界回查 `/Users/leslie/Documents/ChatGPT/Apipltform/.local/cn-inline-large-25qps-20261114/README.md` 及同目录审计文件，不在知识库固化当前任务或 Pod 状态。
+
+
+## 2026-11-14：完整正文目标与流式发送验证
+
+**Why:** 将原始素材减小，不等于 HTTP JSON 正文已满足同样大小；Base64 和元数据仍需计入。减小正文但沿用总在途字节预算，还可能允许更多并发，抵消内存收益。仅在不同本机 Node 版本测量，也不能代替发压镜像里的正文实现。
+
+**How to apply:**
+
+- 以最终 UTF-8 JSON 字节数为上限，明确 MB 与 MiB；选择真实素材组合，保留每个素材原始档位/哈希，不通过空白或无关字段凑大小。新素材包独立冻结，不覆盖旧包。
+- 对预编码共享 Buffer 使用有界切片和背压流，保持准确 Content-Length；在实际运行时验证 Request 对象不再整份复制，并通过回环 HTTP 完整接收核对每份长度和哈希。不能把这一点描述成整个网络链路绝对零拷贝。
+- 同时固定并发上限和正文在途预算，避免正文减半后并发翻倍。扩容应核对 Kubernetes requests/limits 与实际 cgroup 上限，记录具体 Pod UID。
+- 区分 Request 分配、测试进程 RSS、Pod cgroup 峰值及生产持续 QPS。回环内存通过不代表 TLS、入口带宽、推理或客户健康已验收。
+- 共用发压 Pod 被其他流程恢复时，使用独立版本/Pod且复用区域锁，不覆盖对方状态。新 Pod 的健康源访问和新输入准入需要重新核对。
+
+复查入口：`postman/load/magi2/inline/{dataset,runtime,runner}.mjs` 与 `tests/streaming.test.mjs`；本次 20 MB 实物、上海实际版本回环和扩容回执见 `/Users/leslie/Documents/ChatGPT/Apipltform/.local/ark-inline-20mb-stream-20261114/README.md`。
