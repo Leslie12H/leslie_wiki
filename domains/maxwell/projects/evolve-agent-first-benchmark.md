@@ -2,7 +2,7 @@
 name: evolve-agent-first-benchmark
 type: project
 created: 2026-11-12
-updated: 2026-11-13
+updated: 2026-11-14
 tags: [maxwell, evolve, benchmark, navigation, workflow]
 links: [evolve-benchmark-unified-plan-review, evolve-user-manual-entrypoints, evolve-workspace-implementation-20261015]
 ---
@@ -112,3 +112,21 @@ links: [evolve-benchmark-unified-plan-review, evolve-user-manual-entrypoints, ev
 **How to apply:** 新入口为该会话可视化目录的 `evolve-shared-workspace.html`，沿用此前 Demo 路径所在目录。对话中可请求权重工具、准备及修改 Benchmark、模拟验证、生成与改写备忘，也可打开来源资料。产物在同一工作区切换，收起后可从消息或产物列表找回。浏览器已验证草稿跨切换和刷新保留、引用反馈、模拟暂停和继续、后台结果不切走当前编辑内容、报告回查采用的旧标准；同时检查 1024px、736px、390px 和 320px 的布局及明暗主题。证据指针为同目录 `duet-demo/flexible-verification.md` 和配套截图。
 
 使用示例数据、预设回复与计时进度；未连接真实评测或修改业务代码。本轮验证只证明独立演示的交互行为。
+
+## 2026-11-14：方向认可与完整落地方案
+
+用户认可灵活产物工作区方向，要求结合当前 EVOLVE 整理完整方案，重点解释 Agent 的展示决策、产物更新及其与对话、任务的关系；仍明确要求先不改业务代码。认可方向不等于接口、数据结构或业务实施授权。
+
+**Why:** Demo 已表达同一对话内多产物协作，但正式实现需要核对现有会话绑定、业务草稿、冻结资产与 HTML 镜像的边界，避免只调整布局后产生错误的状态和归属。
+
+**How to apply:** 完整待评审稿见 [EVOLVE 持续对话与按需产物工作区](/Users/leslie/.codex/visualizations/2026/11/12/01a1ce76-1824-77a2-8b00-503614d17f09/evolve-agent-artifact-workspace-plan.md)。该稿包含源码查证索引、展示决策与宿主仲裁、稳定对象身份/版本、人工与 Agent 并发修改、主对话和任务分发、历史恢复、分阶段实施及验收计划。先沿文档指针重新核对当前实现，再冻结具体实施范围；本轮仅交付文档与知识库记录，未进行业务实施或真实 Agent 验收。
+
+方案建议由 Agent 决定内容及表达，宿主按显式打开、当前阅读/编辑、历史版本和前后台来源裁决展示时机。对话、Work 与产物分别持久化其职责，通过来源和引用关联；打开右侧不切换输入目标，背景完成不抢焦点，关闭视图不删除内容或停止任务。正式评测继续固定已接纳时的口径。
+
+实现边界应回查以下指针，不把早期设计术语直接映射到现有实体：
+
+- `services/evolve-server/internal/modules/evolve/domain/agentsession/session.go` 及 `infrastructure/postgres/agent_sessions.go`：核对用户会话、Runtime Thread、Work 绑定和过期/授权边界；旧方案中的“执行 Session”不能直接等同当前 AgentSession。跨任务主对话需要关联与分发能力，不能反复重绑当前 Session。
+- `domain/draft/draft.go`、`domain/artifact/artifact.go`、`domain/benchmark/benchmark.go`：核对服务端草稿版本、确认、冻结和 Benchmark 业务归属；产品“产物”是协作层统称，不是把不可变 Artifact 变为通用可覆盖文档。
+- `agent-resources/skills/evolve-workspace-view/SKILL.md` 与其 references：核对生成 HTML、版本镜像和读回要求；辅助页面不取代服务端业务真相。
+
+查证依据为 2026-11-14 当前本地工作树，包含既有未提交内容，不代表线上已发布。正式 doc-hub 路径在本机未找到，本稿是独立评审交付，进入实施前仍应解析正式 owner 和执行包。

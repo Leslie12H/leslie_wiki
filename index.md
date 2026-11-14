@@ -22,7 +22,7 @@
 
 - 2026-11-12：[双生产 CMS 压测看板](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-双生产-cms-压测看板) — 区域单选、资产上传与运行资源增强、固定双区共享 ALB 下钻；空样本、Pod 网络和云产品切换边界，保存回读及真实查询沿证据回查。
 
-- 2026-11-12：[EVOLVE 对话优先与 Benchmark 信息架构](domains/maxwell/projects/evolve-agent-first-benchmark.md) — 用户偏好 Duet；持续主对话、工作会话与执行 Session 分层、历史入口、输入范围、Benchmark 按需展开及完整待评审方案指针。 2026-11-13 补独立交互 Demo 与模拟体验验证边界。 补右侧编辑器、执行过程、对比与证据的默认展开演示。 补 Duet/Codex 的参考边界与按对象触发展开的建议。 用户进一步要求灵活的产物工作区与通用展示规则。 已交付同一对话内多产物协作 Demo，附草稿、版本、后台焦点及窄屏验证入口。
+- 2026-11-12：[EVOLVE 对话优先与 Benchmark 信息架构](domains/maxwell/projects/evolve-agent-first-benchmark.md) — 用户偏好 Duet；持续主对话、工作会话与执行 Session 分层、历史入口、输入范围、Benchmark 按需展开及完整待评审方案指针。 2026-11-13 补独立交互 Demo 与模拟体验验证边界。 补右侧编辑器、执行过程、对比与证据的默认展开演示。 补 Duet/Codex 的参考边界与按对象触发展开的建议。 用户进一步要求灵活的产物工作区与通用展示规则。 已交付同一对话内多产物协作 Demo，附草稿、版本、后台焦点及窄屏验证入口。 2026-11-14 用户认可方向；补结合源码的完整展示、版本、主对话/任务关系方案及 AgentSession/冻结资产边界，未授权业务实施。
 
 - 2026-11-12：[API 平台国内与美国生产压测准备和收尾](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-12-国内与美国生产压测准备和收尾) — 两地执行稿、开跑表、负载算例、停压值守、任务账务与素材清理回执。
 
