@@ -26,3 +26,18 @@ links: [sandai-api-platform-load-generator-readiness, sandai-api-platform-load-t
 - 同目录 `launch.mjs`、`telemetry.mjs`、`runtime.mjs`：原凭据注入、每轮健康、服务发现及未知 POST 不重发。
 - `/Users/leslie/Documents/ChatGPT/Apipltform/.local/ark-inline-shanghai-20261114/README.md`、`independent-readback.json`：现场接线、源码契约、认证、未完成实际生成准入及业务阻塞证据。
 - 同审计目录 `metrics-discovery-services.json`：本轮新增指标发现资源及精确选择器；不代表其他环境已部署。
+
+
+## 2026-11-14：大档 inline 的正文复制与中断台账
+
+**Why:** 大正文的单次创建/查询准入成功，不能证明并发发压器有足够内存。上海随后实际启动的一档被发压容器 OOM 中断；同版本零网络复现确认 Request 正文对象存在额外复制，按一份正文计数的在途预算低估了实际内存。
+
+**How to apply:**
+
+- 对大档同时核对预编码正文、HTTP 客户端复制、控制进程/子进程、JSON 校验和 TLS 等内存；在相同运行时用有限并发、零生产网络方式观察 external/RSS，再确定预算。不能只增加容器限制，或把可回收文件缓存全部当常驻内存。
+- 客户明确授权豁免历史时长时，冻结准确任务名单，保留 raw 统计；仅本轮使用，继续保护新增任务、失败、退款和遥测失效。它不自动覆盖未来轮次或其他业务规则。
+- OOM 后保留原 Pod、PVC、区域锁及台账，使用临时只读挂载取证，不自动重启补发。预写意图减去 not_sent 只是保守对账候选，不是实发数；旧状态 JSON 可能早于持久化节奏事件。
+- 区分 HTTP 开始发送、完整正文传输、服务端受理和终态。阶段中断后不能用计划时长计算的临时均值冒充实际平均速率。数据库查询无结果也不自动允许重发未知 POST。
+- 临时采集进程与审计 Pod 用完即清理；任务、资产、暂存对象和账务沿原生台账继续对账，不能以停止发压代表清理完成。
+
+本次参数、时间、逐事件证据、只读查询范围和恢复边界回查 `/Users/leslie/Documents/ChatGPT/Apipltform/.local/cn-inline-large-25qps-20261114/README.md` 及同目录审计文件，不在知识库固化当前任务或 Pod 状态。
