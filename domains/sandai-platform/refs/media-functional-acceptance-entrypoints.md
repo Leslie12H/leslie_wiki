@@ -31,3 +31,9 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **Why:** 本轮通过相同任务的 Zeus 公开查询、Athena 按请求号查询和同模型队列指标，区分了接口处理中和下游 pending。单条任务的接口状态无法反映共享队列规模，队列总量也无法给出该任务的排位或完成时间。
 
 **How to apply:** 先用 Athena 实际路由的模型名筛选 `inference-queue-exporter` 的 `athena_inference_queue_pending`，核对 broker、db 和 priority，结合多个时点看趋势。再用原任务 ID 查终态产物，并按精确任务 ID 核对预扣、退款和终态入账。共享测试组织还有其他任务时，用逐任务账本归因金额，余额用于复核批次。监控和续跑证据沿本页生产报告及同目录的 `production-first-watch.jsonl`、`production-batch-billing.jsonl` 查询。
+
+## 10 图、3 视频、3 音频功能冒烟
+
+**Why:** 上传和静态模板可证明素材可用、结构可编译。完整组合的生成准入、下游执行和结账要沿两套接口按真实任务 ID 核验。专项冒烟的素材有独立寿命，使用共享压测素材会使收敛在途与清理归属变得不确定。
+
+**How to apply:** 复用 `postman/load/magi2/multimodal-case.mjs` 和固定素材 manifest，使用本批独立上传的资产。通过 `multimodal-smoke.mjs` 持久化上传、创建、删除意图及回执，按原接口读取终态、解码成片、查逐笔结算，再用原生删除和独立 GET 404 核对本批逻辑删除。未知创建回执时保全素材，未知删除回执时先 GET 再确定是否重试。实际回执沿本页生产报告的完整组合章节查询。共享预置素材的交接和物理存储处置仍需各自的证据。
