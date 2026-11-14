@@ -16,3 +16,12 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 - [素材包与用例所在 Codex 对话](https://chatgpt.com/codex/threads/01a1d8d0-8c94-7523-95ea-8263a990e1d5)。本地交付目录为 `/Users/leslie/.codex/visualizations/2026/11/14/01a1d8d0-8c94-7523-95ea-8263a990e1d5/`。CSV 记录精确字节、解码结果、素材与用例映射和接口预期，ZIP 保留媒体实物。
 
 **How to apply:** 对 multipart 完整请求固定 boundary、filename 和 MIME 以构造阈值上下各一字节的可重复请求。对原始二进制入口按实体字节构造合法媒体容器，验证可解码及独立的尺寸、时长、数量和累计时长。对延后预检通过的素材同时记录上传 ID、生成终态、结果规格与账务；离线解码仅作为素材证据。
+
+## 2026-11-14 生产参数边界取证
+
+**Why:** 用户将验收环境改为生产，并指定模型 `magi-2-1114`。接口受理、Athena 等待、成片交付和账务结算分别取证。大文件超限返回与上传阶段的依赖失败有不同的复测依据。
+
+- 逐条结果、覆盖矩阵与分批状态在工作区 `.local/magi2-boundary-acceptance-20261114/production-report.md`、`production-case-results.csv`、`production-coverage.csv`。以相邻生产回执、模型只读回查、任务账本和上传服务日志为原件。Dev 的接口对照与生产目标模型各有单独记录。
+- 执行环境与模型权限沿[双区原生与 Ark 冒烟入口](dual-region-native-ark-smoke-entrypoints.md)再次核对。对比同一区域的实际配置与飞书参数版本，记录范围和枚举的差异。保留每次请求的存储及下游状态证据。
+
+**How to apply:** 已受理任务用原 ID 续查。公开 processing/running 长时间无变化时，按同一请求记录对照 Zeus 派发状态及 Athena 按请求号回读。前一批还在下游等待时，保持约定的批次边界。文件大小测试同时留存精确字节、客户端响应、服务端阶段及精确资产回读。部分输入预检通过后可能在生成中被拒绝，复测需覆盖该阶段与退款。
