@@ -1,3 +1,4 @@
+- 2026-11-14：[双协议压测看板口径](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-14-双协议压测看板口径) — v2/方舟v3真实URI、各自成功码、合计和分协议QPS、查询比例及长窗跨档平滑的验证入口。
 - 2026-11-14：[开放平台多媒体功能验收](domains/sandai-platform/refs/media-functional-acceptance-entrypoints.md) — 音频、图片、视频格式与阈值素材包，含 multipart 精确字节、参考素材组合与端到端取证入口。
 
 - 2026-11-14：[视频参数文档与压测覆盖对齐](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-14-视频参数文档与压测覆盖对齐) — 参数约定与部署分层；按用户确认收窄为现有档位的双协议生成/查询 QPS，参数与多模态专项不作为本次前置；有效受理、查询和积压分别计量。
