@@ -25,3 +25,13 @@ links: [sandai-api-platform, sandai-api-platform-development-entrypoints, sandai
 - 当次脱敏创建和查询回执、dispatcher 日志及精确任务状态回读在工作区 `/Users/leslie/Documents/ChatGPT/Apipltform/.local/magi2-us-v2-ark-smoke-20261114/`。查 `dispatch-db-readback.json` 的下游校验字段与退款状态，以及 `dispatcher-1080p-initial.txt` 的 Athena Job ID。线上状态和有效规格以现场回读为准。
 
 **How to apply:** 取同组织的已审核素材，双协议使用同一参数。收到任务 ID 后，按该 ID 查询公开状态，并从 dispatcher 的 `task_submitted` 事件确认下游 Job ID。提交失败时按组织和测试任务 ID 只读投影 `dispatch_control.last_error`、提交尝试次数、作业 ID 和退款状态。明确被拒且未创建下游作业时，按失败字段修正单一变量并保留前后请求证据。客户端提交结果未知时按原请求 ID 追查。
+
+
+## 2026-11-14 国内方舟实名准入查证
+
+**Why:** 同一已授权测试组织、模型、参考图与生成参数下，原生 V2 成功派发，方舟返回通用模型权限错误。方舟错误映射可覆盖创建阶段的实名拒绝。
+
+- [当时部署版本的入队实现](https://github.com/world-sim-dev/zeus/blob/2c8bcabfe8cd56a7ebeef56333c50f8b6108049f/modules/domain/src/main/java/co/sandai/zeus/domain/task/dispatch/OpenApiTaskEnqueueService.java#L45-L48)按 `nativeV2` 区分两条创建路径。[任务服务实现](https://github.com/world-sim-dev/zeus/blob/2c8bcabfe8cd56a7ebeef56333c50f8b6108049f/modules/domain/src/main/java/co/sandai/zeus/domain/service/impl/TaskDomainServiceImpl.java#L112-L123)限定常规路径检查实名。[国内准入源码](https://github.com/world-sim-dev/zeus/blob/2c8bcabfe8cd56a7ebeef56333c50f8b6108049f/modules/domain/src/main/java/co/sandai/zeus/domain/identity/DomesticAccessService.java#L40-L49)用于核对具体认证条件。
+- 当次事实沿工作区 `/Users/leslie/Documents/ChatGPT/Apipltform/.local/magi2-cn-us-v2-ark-1080p-20261114/` 的 `cn-ark-create.json`、`cn-openapi-compare.txt`、`cn-org-access.json` 和两区 dispatcher 日志回查。
+
+**How to apply:** 国内方舟出现 403 时，用请求 ID 确认拒绝阶段，并分别读取模型白名单和组织认证状态。压测或冒烟需要国内方舟实际入队时，预检同一专用组织具备真实认证以及模型权限。两区准入行为随部署和配置重新核对。
