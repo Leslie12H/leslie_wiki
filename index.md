@@ -1,3 +1,5 @@
+- 2026-11-14：[发压器部署与真实就绪边界](domains/sandai-platform/pitfalls/load-generator-readiness.md) — 现有节点复用、镜像/NAS差异、持久化同步与时钟漏发、真实控制回执和回环/生产验收分层。
+
 - 2026-11-14：[双区生产建号、白名单与赠额](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-14-双区生产建号原生白名单与赠额) — 实际索引、PolarDB 主节点读、同身份意图转绑、原生清理幂等、CSRF 与赠额有效期/保留历史的查证入口。
 
 - 2026-11-13：[受控数据初始化与配套清理](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-13-受控数据初始化与配套清理) — API-only 三表关系、凭据先备份、空主体和带载清理、公共/角色配置、UTC 回执与原生绑定预览、低档图文相位的核对入口。
