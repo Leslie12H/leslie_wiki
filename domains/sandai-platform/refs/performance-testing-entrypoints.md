@@ -405,3 +405,9 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why** 创建事务内预扣失败与异步生成失败后的余额退回属于不同事务边界。后者的自动巡检按结算状态筛选。核查某笔时，公开任务错误还需要同任务的结算状态和额度流水。
 
 **How to apply** 按现场镜像核验 `OpenApiTaskEnqueueService`、`TaskCreditChargeService`、`TaskCreditRefundService` 和 `TaskCreditSettlementMapper`。读回原 OUT、退款状态、应退金额和唯一等额 IN，另核对受理未知的任务是否取得下游终态。区分自动扫描的 PENDING、只能经内部路径重试的 FAILED 及开关、巡检容量。用部署版本、筛选窗口和样本范围限定结论。证据见工作区 `.local/generation-refund-review-20261116/REPORT.md`。
+
+### 2026-11-16 双区退款对账
+
+**Why** 退款执行日志不能覆盖结算仍为 `NONE` 的任务。任务终态、扣费和退款是不同字段。控制台生成和 API Key 生成也可能出现在同一个管理后台列表中。
+
+**How to apply** 按 [Zeus 管理后台](https://zeus-admin.sandaii.cn/tasks) 两区生产任务列表的创建时间和终态过滤，按游标读到末页并验证任务 ID 去重。逐笔回查带原扣费的 `Fail + NONE`，查看退款原因、执行终态和创建入口。单独记录 `Canceled + NONE` 并按退款资格解释。按退款发生时间查日志可补查此前创建的任务，日志查空不能推断创建窗口外的 `NONE` 数量。查询口径及证据见工作区 `.local/refund-weekly-review-20261116/REPORT.md`。
