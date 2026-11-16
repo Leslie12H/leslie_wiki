@@ -101,3 +101,11 @@ links: [sandai-api-platform-load-generator-readiness, sandai-api-platform-load-t
 **How to apply:** 核对 `inflight_limit` 触发瞬间的每组织与全局限额，以及预准备/预写名额、HTTP 在途和已受理但尚未观察到终态的任务。客户端 `inFlight` 与事后 `pending` 不是同一口径，不能仅凭最终 pending 数较小认定误触发。对本轮准入及正式档已受理 task IDs 冻结范围，以主键分批只读核对终态、扣费和退款；缺失结算行单列，明细留在 Pod，仅导出聚合。持续容量结论需同时满足实际完整时长、速率、保护和终态/结算验收。
 
 本轮参数、停止原因、发送与受理回执及对账状态仅回查 `/Users/leslie/Documents/ChatGPT/Apipltform/.local/cn-inline-10mb-5qps-20261116-r2/REPORT.md`。
+
+## 2026-11-16：单档总预算与固定查询采样
+
+**Why:** 用户允许覆盖指定 QPS × 时长的总任务数，不等于允许无限在途或自动延长。任务池增长时，固定 GET QPS 是有界采样；客户端等待轮询的时间不等于 HTTP 延迟或服务端队列年龄。
+
+**How to apply:** 在该档明确授权内一起核对组织 RPM/并发、客户端总量与每组织在途上限，以及预准备 cursor 和请求预算。正式最大实发仍绑定单档 QPS × 时长，预准备名额包含在同一预算内，准入请求单列。用单档计划序号截断预准备，避免耗尽预算后多尝试一次预留而提前停发；不自动扩时或补发。轮询滞后阈值仅按该档时长有界调整，注明固定 GET 速率不保证每任务实时终态；HTTP、客户、退款、资源及新增未知受理保护继续独立生效。结束或中断后恢复原组织配额并独立回读。
+
+动态参数、准入、执行与收尾结果仅回查 `/Users/leslie/Documents/ChatGPT/Apipltform/.local/cn-inline-10mb-50qps-20261116-r1/REPORT.md`；准备或启动记录不代表该档通过。
