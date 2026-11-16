@@ -57,3 +57,12 @@ links: [sandai-api-platform, sandai-api-platform-v2-input-validation-entrypoints
 - 本次修复后两条独立用例的配置 revision、任务类型、输入计数、422 Trace 和历史版校验器复现见同目录 `t2v-retest/REPORT.md` 及相邻 JSON。区分线上实测的 422 与离线定位的具体校验分支。
 
 **How to apply:** 使用无参考素材的同一提示词分别走两套协议，沿新任务查询实际保存的任务类型和输入。复查纯文本场景的有效增强类型，再对照下游当前校验规则。已经在队列里的旧任务保留创建时的任务类型；修复是否生效以修复后新任务实际派发、终态和成片为准。
+
+
+## 2026-11-17 推理执行阶段失败的 worker 取证
+
+**Why:** 原生 v2 和方舟都出现公开 `generation_failed`。相同错误码可对应节点取数据超时，也可对应完成回报被拒绝。收到推理完成请求不等于任务通过公开终态。
+
+- 已核验任务号、Job ID、worker 错误和同一批请求入口见工作区 `.local/magi2-cn-positive-20261116/KNOWN-ISSUES.md`。逐条载体为 `failure-causes.json`、`ark/failure-causes.json`、`job-id-index.json` 和对应 SLS worker 回执。
+
+**How to apply:** 先确认 Zeus 按任务号记录的终态阶段，再用派发日志中对应的 Athena Job ID 去 worker 搜索。遇到 `FETCH_TIMEOUT` 时核对对端请求失败与 worker 回报失败的时序；遇到 `Post-process source artifact already set` 时分别查首次产物设置和后续回报，不把已观察的冲突直接当成首次设置的根因。成片和参数验收继续使用公开成功且实际下载的产物。
