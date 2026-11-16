@@ -26,3 +26,11 @@ links: [sandai-api-platform-v2-input-validation-entrypoints]
 **How to apply:** 先记录 SDK 版本，用同一组织 Key 对同一已知任务只读查询，再用明确无效的创建体比较错误契约。保留 HTTP 状态、Content-Type、Via 和 X-Request-Id，遇到无业务回执的 HTML 503 要回查网关规则。需要验证有效创建时显式选定已确认可达的路径并关闭 SDK POST 重试。查询字段的 Unix 秒值还要与客户端观测时间对照，避免只有类型通过。SDK 请求体是否带默认 null 可以用带虚拟 Key 的本地 HTTP transport 验证。
 
 - 文档路径、短路径、默认 null 请求、真实生成和响应时间戳对照见工作区 `.local/ark-sdk-cn-20261116/REPORT.md`。脱敏回执与复现脚本在同一目录。路由和模型准入按本轮生产部署重新核对。
+
+## 2026-11-16 上海网关迁移与时间戳复核
+
+**Why:** Ark 迁移同时涉及应用映射和独立发布的公网 Ingress。应用文档跟随提交更新，生产入口可能仍在旧版本。任务创建可由 Java 显式写时间，状态流转又可由 MySQL 按会话时区生成时间，同一张表的两个字段因此可能使用不同时间口径。
+
+**How to apply:** 沿 Zeus [PR #491](https://github.com/world-sim-dev/zeus/pull/491) 的 `ArkRoutes`、`deployment/magi/README.md` 和 `ark_ingress_patch.py` 核对发布步骤，连续用同 Key 同任务读回切换前后状态，并在 ALB 监听中核对匹配路径、后端与默认组。时间偏移先比对原生响应和独立 JDBC 读回，再核对 SQL 是否显式写 UTC、列是否为 DATETIME 和 JDBC 驱动配置是否实际设置了 DB 会话时区。验证修复时兼顾旧行和其他共用连接的字段。
+
+- 11:10 路由切换、ALB 规则回读及 Connector/J 8.3.0 时区复现见工作区 `.local/ark-cn-root-cause-20261116/REPORT.md`。以报告的实际证据区分生产读回和本地复现。
