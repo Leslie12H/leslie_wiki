@@ -399,3 +399,9 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why:** 相同生成QPS下，单图与多媒体组合消耗的输入准备、传输和推理资源不同。只验证单文件上限会漏掉逐槽计数与同类累计时长；已上传媒体的总字节也不等于每次创建JSON的带宽。离线模板若填入造假或跨组织assetId，会把准备完成误当成可执行。
 
 **How to apply:** 先冻结目标版本契约，再校验完整文件与case顺序、每类数量及累计时长；重复素材也按槽位核算。媒体预上传字节、创建请求体字节、生成吞吐分别记录，按case和大小层比较。区域、组织、模型、清单指纹和素材hash共同绑定真实资产；未绑定或未核实归属的预览明确不可执行。准备与本地测试不自动改生产运行器、正式配置或门禁；线上最小准入、素材回读和每次QPS/时长授权仍分别确认。
+
+## 2026-11-16 生成预扣与失败退款恢复
+
+**Why** 创建事务内预扣失败与异步生成失败后的余额退回属于不同事务边界。后者的自动巡检按结算状态筛选。核查某笔时，公开任务错误还需要同任务的结算状态和额度流水。
+
+**How to apply** 按现场镜像核验 `OpenApiTaskEnqueueService`、`TaskCreditChargeService`、`TaskCreditRefundService` 和 `TaskCreditSettlementMapper`。读回原 OUT、退款状态、应退金额和唯一等额 IN，另核对受理未知的任务是否取得下游终态。区分自动扫描的 PENDING、只能经内部路径重试的 FAILED 及开关、巡检容量。用部署版本、筛选窗口和样本范围限定结论。证据见工作区 `.local/generation-refund-review-20261116/REPORT.md`。

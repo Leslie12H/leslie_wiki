@@ -2873,3 +2873,5 @@
 - 2026-11-16 ingest：补充 Seedance 1.5 Pro 历史有声与无声计价和中国站方舟 API 下线公告。
 
 - 2026-11-16 ingest：补充 Seedance 1.0 系列音频能力、Pro／Pro Fast 计价和 Lite／Pro 下线批次查证入口。
+
+- 2026-11-16 ingest：补开放平台预扣事务、FAILED 与 PENDING 退款恢复边界和当前版本查证指针。
