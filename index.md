@@ -1,4 +1,4 @@
-- 2026-11-16：[中美生产 V1 Assets 独立上传准备](domains/sandai-platform/refs/media-functional-acceptance-entrypoints.md#2026-11-16-中美生产-v1-assets-独立上传准备) — 按指定飞书上传附件验收，留存公开页差异、单文件与完整 multipart 双边界、流式验证及发压 Pod 访问回查。
+- 2026-11-16：[中美生产 V1 Assets 独立上传准备](domains/sandai-platform/refs/media-functional-acceptance-entrypoints.md#2026-11-16-中美生产-v1-assets-独立上传准备) — 按指定飞书上传附件验收，留存公开页差异、单文件与完整 multipart 双边界、流式验证、发压 Pod 访问回查及实际上传回执。
 
 - 2026-11-15：[素材注册 HTTP/2 断连与 503](domains/sandai-platform/pitfalls/asset-registration-http2-failures.md) — ARMS 深层异常、注册POST与OSS PUT分界、单次正文与连接重试、REFUSED_STREAM安全边界及ALB归因限制。
 

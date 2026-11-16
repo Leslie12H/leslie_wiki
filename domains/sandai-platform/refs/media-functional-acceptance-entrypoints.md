@@ -57,3 +57,9 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **Why:** 2026-11-16 用户指定[开放平台 API 文档（国内）](https://j0yswlgboxz.feishu.cn/wiki/QzRzwbeZiikxO7kPIH0cd5XSnvf)用于中美独立上传测试。其中「上传素材」的 Markdown 附件明确是 V1 multipart，规格与公开网页冲突。不能据公开页或旧 V2 大文件回执推断当前 V1 的实际响应。
 
 **How to apply:** 读最新飞书 revision 并另外读取内嵌附件，按指定文档冻结预期。单文件上限和更大的完整表单上限分别构造，在保留单个 file 部件时用 MIME 前导区跨表单边界。大文件用流式发送，核验真实 Content-Length。实际路由、文件是否成功和部署差异以本轮回执复核，附证据纪录入口仍见上节。
+
+### 2026-11-16 生产 V1 上传冒烟回执
+
+**Why:** 中美生产的同一 V1 路径对飞书上限内的视频返回了不同的业务错误。顶部边界样本的拒绝码吻合，只证明该样本被拒绝。判断契约达标还需要上限内样本有真实 200 和资产 ID。
+
+**How to apply:** 逐区域固定 endpoint、组织及素材 SHA，分别记录文件大小、完整表单大小、HTTP、业务 code、Request ID 和资产 ID。用普通视频对照上传成功，区分大小拒绝和媒体校验拒绝。定位实际阈值时让裸文件处于候选阈值以内，同时改变完整表单长度。5xx 无资产 ID 保留为未知，按准确组织、唯一文件名及 Request ID 对账。具体生产回执和当次决策见工作区 `.local/assets-v1-dual-production-20261116/production-smoke-evidence-20261116/`。
