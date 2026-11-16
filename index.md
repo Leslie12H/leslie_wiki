@@ -1,3 +1,5 @@
+- 2026-11-16：[火山方舟 Seedance 音频开关与定价查证](domains/sandai-platform/refs/seedance-ark-audio-pricing-entrypoints.md) — 回查 2.0 与 2.5 有声和无声的同规格计费，以及输入视频和实际账单的验证入口。
+
 - 2026-11-16：[生产测试组织退役](domains/sandai-platform/pitfalls/test-organization-retirement.md) — 权限回收与业务数据清理分开验收，配额先恢复、完整 owner 预览、逐动作身份与来源核验、未知先读回及保留对象零写；补物理删除造成的后台查询与退款前置失败，以及生产外键须现场核验的边界。
 
 - 2026-11-16：[开放平台模型定价查证入口](domains/sandai-platform/refs/model-pricing-entrypoints.md) — Zeus 费率、推理步数、双区折算、历史扣费与独立改价的核验路径。
