@@ -121,3 +121,5 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **90 MB 视频短时发起试跑（2026-11-16）：** 两区复用同一精确文件及两个保留测试组织。固定发送窗口与请求数即可验证突发受理，成功速率按完整回执排空后的总耗时计算。逐笔登记 HTTP、业务码、Request ID、Asset ID，以及发压端读完 multipart 的时间。区域 Pod 访问受阻时，记录实际发压位置和网络路径。需要观察长尾时，先看已发意图、回执与专属进程 TCP 字节进度。当次双区回执见工作区 `.local/assets-v1-dual-production-20261116/video-90mb-5qps/RESULTS.md`。
 
 **五分钟目标档的在途停发（2026-11-16）：** 以之前的短测耗时估算在途上限，按既有运行规程触顶停新增、排空已发请求。触顶时分别记录已回执、正文尚未读取完和正文已读完等待响应的数量，配合逐笔 trace 判断积压在何处。固定计划窗口、实际发送窗口与排空窗口分开统计。上海同区 Pod 的实测速率高于仅用公网 EIP 配置推算的数值，公网峰值换算只作路径规划，现场观测独立保存。证据见工作区 `.local/assets-v1-dual-production-20261116/video-90mb-5qps-300s/RESULTS.md`。
+
+**三分钟大文件上传与 TCP 缓冲（2026-11-16）：** 发送进程被 OOM 终止时，保留逐笔意图和已知回执。对照 `memory.current` 与 `memory.stat` 的 `anon`、`file`、`sock`，只限制应用分块仍可能被内核 TCP 发送缓冲占满。在既有发压 Pod 每条连接设置 `SO_SNDBUF`，通过受限的私有 Unix socket 继续沿用原调度和台账。发压镜像缺系统根时，使用 Node 已验证的公开根和只读 TLS HEAD 预检。发起窗口、回执排空、共享 ALB 分钟桶及 ACK 副本采样按同一 UTC 时间对齐。结果与监控见工作区 `.local/assets-v1-dual-production-20261116/video-90mb-5qps-180s/RESULTS.md`。
