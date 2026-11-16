@@ -2,7 +2,7 @@
 name: sandai-platform-magi2-cn-native-production-entrypoints
 type: reference
 created: 2026-11-16
-updated: 2026-11-16
+updated: 2026-11-17
 tags: [sandai, api-platform, magi2, testing, production]
 links: [sandai-api-platform, sandai-api-platform-v2-input-validation-entrypoints, sandai-platform-magi2-multimodal-api-test-entrypoints]
 ---
@@ -39,3 +39,11 @@ links: [sandai-api-platform, sandai-api-platform-v2-input-validation-entrypoints
 - 验收入口为项目 `.local/magi2-cn-positive-20261116/REPORT.md`，同目录 `plan.json` 按画幅、分辨率、输入类型和参数取值保存请求，`fixtures.json` 保存合成素材的规格和哈希，`ledger.jsonl` 保存线上回执。调度卡点沿精确任务号、`admin-queue-proof.json` 和派发日志回查。
 
 **How to apply:** 用无人物的几何画面和纯合成乐音，先本地解码，再上传并核对线上下载哈希。两档分辨率分别对全部画幅提交合法请求，每档选一组固定种子、提示词、画幅和素材，只改变显式水印布尔值。拿到成片后比较可见标识，另用媒体流核对时长、方向、尺寸和音轨。大量任务按原 ID 轮换查询，优先查上轮未覆盖的 ID，并按实际读接口限额调整频率。长时间 `queued` 时查看测试组织有效并发和在途任务的派发阶段。
+
+## 2026-11-17 失败比例与音频产物回查
+
+**Why:** 最近创建的生成任务仍可能大量在途，已失败占比和已完成任务失败率要保留各自分母。公开成功也可能带有不符合请求参数的产物。
+
+- 当次国内开放平台状态、同批测试归属和两条失败原因见工作区 `.local/magi2-cn-failures-20261117/REPORT.md`。同目录 `readback.json` 保留创建时间口径和翻页完整性。已下载成片的音轨证据见 `public-receipts.jsonl`，下发前的请求沿 `success-request-verified.json` 与提交哈希对应。
+
+**How to apply:** 以固定创建窗口完整翻页，区分失败占全部任务与失败占成功、失败终态之和，报告仍在途数量。审核拒绝与下游提交拒绝按精确任务号复核。对显式关闭音频且不引用音视频的用例，下载结果并检查音轨及实际信号，再用请求哈希和下游有效选项定位问题；公开状态仍以任务回执为准。
