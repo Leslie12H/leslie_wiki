@@ -1,3 +1,5 @@
+- 2026-11-16：[API 平台生产 ERROR 日志告警](domains/sandai-platform/refs/production-error-alerts-entrypoints.md) — 双区日志级别采集差异、应用错误文件去重、告警评估与飞书送达的回查入口。
+
 - 2026-11-16：[火山方舟 Seedance 音频开关与定价查证](domains/sandai-platform/refs/seedance-ark-audio-pricing-entrypoints.md) — 回查 2.0 与 2.5 的音频开关、输入视频和实际账单，1.5 Pro 历史有声/无声计价，以及 1.0 音频能力、计价和中国站 API 下线批次。
 
 - 2026-11-16：[生产测试组织退役](domains/sandai-platform/pitfalls/test-organization-retirement.md) — 权限回收与业务数据清理分开验收，配额先恢复、完整 owner 预览、逐动作身份与来源核验、未知先读回及保留对象零写；补物理删除造成的后台查询与退款前置失败，以及生产外键须现场核验的边界。
