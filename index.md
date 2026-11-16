@@ -1,4 +1,4 @@
-- 2026-11-16：[压测观察值与推荐容量分界](domains/sandai-platform/pitfalls/load-capacity-observation-vs-recommendation.md) — 生产实际记录补录、续段与连续窗口、成功HTTP与交付、历史快照和当前路由、推荐起点与已验容量分栏，以及飞书原文与证据附件入口。
+- 2026-11-16：[压测观察值与推荐容量分界](domains/sandai-platform/pitfalls/load-capacity-observation-vs-recommendation.md) — 生产实际记录补录、续段与连续窗口、成功HTTP与交付、历史快照和当前路由、推荐起点与已验容量分栏，以及飞书原文与证据附件入口；报告正文保持关键实测、推荐值和下一步，细节移至附件。
 
 - 2026-11-16：[中美生产 V1 Assets 独立上传准备](domains/sandai-platform/refs/media-functional-acceptance-entrypoints.md#2026-11-16-中美生产-v1-assets-独立上传准备) — 按指定飞书上传附件验收，留存公开页差异、单文件与完整 multipart 双边界、流式验证、发压 Pod 访问回查及实际上传回执。
 
