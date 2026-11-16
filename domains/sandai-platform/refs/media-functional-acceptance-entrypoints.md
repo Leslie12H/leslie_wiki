@@ -101,3 +101,5 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **修复后超限对照（2026-11-16）：** 保留两段素材，只替换第三段做最小超限复测。创建受理后沿 Zeus、Athena 和最终回执核实累计校验与公开错误码。美国生产证据见工作区 `.local/assets-v1-dual-production-20261116/us-audio-total-30p01-recheck.CTnXBG/RESULTS.md`。
 
 **国内生产对照（2026-11-16）：** 将美国复测的相同 WAV 字节上传至国内测试组织，验证 SHA 与时长，再用国内同组织资产 ID 分别跑触线和超限用例。通过 Zeus 与 Athena 的作业关联确认发生阶段，生成回执与素材证据见工作区 `.local/assets-v1-dual-production-20261116/cn-audio-total-30-boundary.FZzSVe/RESULTS.md`。
+
+**视频累计中美回归（2026-11-16）：** 对照同一批视频字节，固定前两段，只替换第三段，比较两个区域的公开回执和 Athena 预处理记录。用此前美国资产及新上传的国内同组织资产，检验音频累计规则拆分后的视频边界。证据见工作区 `.local/assets-v1-dual-production-20261116/dual-video-total-15-boundary.2o4Kb4/RESULTS.md`。
