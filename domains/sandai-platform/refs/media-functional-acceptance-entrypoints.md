@@ -69,3 +69,5 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **Why:** 后续复测读取了更高文档 revision，再核对上传附件哈希，确认验收字节阈值保持一致。相同贴线文件曾在一次请求被拒、另一次请求形成真实资产，单点结果不足以给出稳定的容量判断。本机向不同地域上传大文件时，客户端超时也会造成缺少 HTTP 和 Request ID 的回执。
 
 **How to apply:** 比对同一素材 SHA、裸文件字节、实际 multipart 字节、HTTP 和具体 ID。对成功回执用原组织读取精确资产 ID，区分上传返回和独立回查。慢传输可为尚未发送的用例调整客户端等待时间，已发且无回执的请求继续标记未知。同日第二轮预期、原始台账和回查在 `.local/assets-v1-dual-production-20261116/round2-check.rPwAUe/`。[执行上下文](https://chatgpt.com/codex/threads/01a1e238-0202-7422-aa74-ab277f0b1d06)。
+
+**国内基础格式补跑：** 用户要求完成全部用例后，按冻结矩阵减去已有回执，剩余用例用独立测试组织逐项执行。保留先前的未知回执，覆盖完成与业务通过分别核算。合并后的回执及未确认受理项见上述第二轮目录的 `RESULTS.md`。
