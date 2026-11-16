@@ -34,6 +34,8 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 
 **长耗时成功样本（2026-11-16）：** 当公开任务显示处理中或调用端报告超时时，先沿 Zeus 的派发、Athena 工作器认领和完成、Zeus 最终状态对齐时间戳。工作器已认领后的耗时不能从共享队列指标反推。调用端超时窗口以调用端日志确认。国内单任务的时间线和独立回查见工作区 `.local/assets-v1-dual-production-20261116/timeout-871118079481541.EjROQO/RESULTS.md`。
 
+**生产管理后台查退款（2026-11-16）：** 在 [Zeus 生产管理后台](https://zeus-admin.sandaii.cn/tasks)选择区域并用精确任务 ID 读取结算金额、币种、退款状态和原因。该视图读取任务结算表，等额退款事务可沿 [退款实现](https://github.com/world-sim-dev/zeus/blob/59b6561a80160de5be9c0227dd72ed2d2946fdee/modules/domain/src/main/java/co/sandai/zeus/domain/credit/refund/TaskCreditRefundService.java#L302-L322) 核对。本次中美生产视频超限样本证据见 `.local/assets-v1-dual-production-20261116/video-boundary-refund.gei4Wa/RESULTS.md`。
+
 ## 10 图、3 视频、3 音频功能冒烟
 
 **Why:** 上传和静态模板可证明素材可用、结构可编译。完整组合的生成准入、下游执行和结账要沿两套接口按真实任务 ID 核验。专项冒烟的素材有独立寿命，使用共享压测素材会使收敛在途与清理归属变得不确定。
