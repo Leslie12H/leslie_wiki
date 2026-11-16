@@ -2871,3 +2871,5 @@
 - 2026-11-16 ingest：登记火山方舟 Seedance 2.0 与 2.5 音频开关、参考视频和分辨率的官方计费查证入口。
 
 - 2026-11-16 ingest：补充 Seedance 1.5 Pro 历史有声与无声计价和中国站方舟 API 下线公告。
+
+- 2026-11-16 ingest：补充 Seedance 1.0 系列音频能力、Pro／Pro Fast 计价和 Lite／Pro 下线批次查证入口。

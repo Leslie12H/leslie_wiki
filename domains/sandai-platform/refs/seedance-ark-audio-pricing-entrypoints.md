@@ -22,3 +22,9 @@ links: [sandai-api-platform-model-pricing-entrypoints]
 2026-11-16 补查 `doubao-seedance-1-5-pro-251215`。从[火山引擎官方模型与价格示例](https://docs.volcengine.com/docs/87254/2075755?lang=zh)核对有声、无声的不同 Token 单价及 720p 样例。需要补算其它规格时，可对照 [BytePlus 官方视频生成教程](https://docs.byteplus.com/fr/docs/modelark/video-generation-tutorial)的 1.5 Pro 像素表，货币单价沿用对应区域的历史价目。
 
 中国站 API 仍需对照[火山方舟模型下线公告](https://docs.volcengine.com/docs/ark/model-deprecation-notice?lang=en)的第九批模型和完整模型 ID。该版本的关停时间为 2026-09-21 14:00（北京时间）。历史价格用于回查旧账与对比。
+
+## Seedance 1.0 音频能力、计价与下线
+
+2026-11-16 补查 1.0 系列。对照[方舟视频生成 API](https://docs.volcengine.com/docs/ark/create-video-generation-task-api?lang=zh)中 `generate_audio` 的支持型号。1.0 Pro 和 Pro Fast 的模型能力也可沿[火山引擎视频生成算子能力矩阵](https://docs.volcengine.com/docs/lake-ai-service/seedance-video-generation-doubao-series?lang=zh)回查。计算无声输出价格时，以[方舟模型价格](https://console.volcengine.com/ark/region%3Acn-beijing/docs/model-pricing)的在线或离线单价为准，按[方舟视频生成教程](https://docs.volcengine.com/docs/ark/video-generation-tutorial?lang=zh)核对 1.0 的实际输出像素。
+
+在[方舟模型下线公告](https://docs.volcengine.com/docs/ark/model-deprecation-notice?lang=zh)按完整 ID 查生命周期。第八批覆盖 `doubao-seedance-1-0-lite-i2v-250428` 和 `doubao-seedance-1-0-lite-t2v-250428`，第十批覆盖 `doubao-seedance-1-0-pro-250528` 和 `doubao-seedance-1-0-pro-fast-251015`。旧接入点的后续行为按批次表和模型行核对。
