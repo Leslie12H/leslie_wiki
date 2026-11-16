@@ -37,3 +37,9 @@ links: [sandai-api-platform-development-entrypoints]
 **Why:** 2026-11-16 夜间的国内与美国 `UploadArtifactCleanup` 日志均在同一 Zeus 镜像中指向 `ArtifactClient.deleteArtifact` 的未确认分支。按同一 trace 回查，所核对的双区清理请求都由上海 Athena API Service 执行。OSS 删除对象时返回 `403 AccessDenied`，详情指向 bucket ACL。Athena 回滚事务，访问日志仍记录 HTTP 200。Zeus 从业务响应中得不到删除成功确认，按代码重新排入 Redis 重试。具体生效访问策略需要沿 OSS 请求 ID 核对。
 
 **How to apply:** 先用生产镜像 SHA 对齐 Zeus 异常行，再带 artifact UUID 和 trace 在上海推理日志库查 `oss2.api`、事务回滚、服务错误与 `http.access`。美区 Zeus 请求也可在这个日志库命中下游。核对 HTTP 状态的同时读取下游业务失败，后台重试次数按素材去重。对同时段的请求 400，先和验收台账按请求 ID 双向对账，再判断是否为预期负例。11 月 16 日美国 V2 的 155 条 400 均匹配当晚功能测试台账，400 用例断言均通过，台账入口为工作区 `.local/magi2-us-native-20261116-side/cases.csv`。[上海推理日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/inference-prod?slsRegion=cn-shanghai) · [Zeus 删除确认分支](https://github.com/world-sim-dev/zeus/blob/c0bb6a646725a633804754f57fcfbabb7492d517/modules/infra/src/main/java/co/sandai/zeus/infra/infer/ArtifactClient.java#L400-L415)
+
+## 2026-11-17 异步生成失败的终态日志
+
+**Why:** 已接单的生成任务失败时，Zeus `TaskMetrics` 用 INFO 记录 `task_finished`。2026-11-17 双区均查到 `result=failure`，同时应用 ERROR 与美国 ALB 5xx 查询均未命中。
+
+**How to apply:** 在双区应用日志回查 `task_finished` 与 `result=failure`，按 `stage` 和去重后的 task ID 汇总。美国普通日志正文未开放 SQL 时，先计数再分页解析。用 task ID 对齐测试回执，命中现有记录后再用下游 trace 或 Job ID 确认原因。一次公共查询仍返回 200 时也可以取得失败终态。[Zeus TaskMetrics](https://github.com/world-sim-dev/zeus/blob/59b6561a80160de5be9c0227dd72ed2d2946fdee/modules/domain/src/main/java/co/sandai/zeus/domain/task/metrics/TaskMetrics.java#L157)
