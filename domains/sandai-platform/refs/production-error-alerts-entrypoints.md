@@ -31,3 +31,9 @@ links: [sandai-api-platform-development-entrypoints]
 **Why:** 2026-11-16 夜间的双区原始日志回查中，临时素材删除失败重试由 `UploadArtifactCleanup` 写为 WARN，V2 参数校验等客户端拒绝由 `RequestOutcome` 写为 INFO。美区 ALB 的生成状态轮询另有后端返回 429 的记录。只按 ERROR 查会漏掉这些类型。
 
 **How to apply:** 固定时间窗，分别汇总应用事件与入口 HTTP 状态。对素材清理同时统计重试日志和去重后的素材键，元数据中的 Pod 用来确认 OpenAPI 或 Dispatcher 来源。对 V2 请求摘要按 `httpStatus`、`errorCode` 分组，字段未开放 SQL 时用计数加分页，并核对去重请求 ID。对 ALB 按目标域名、请求方法、路径、`status` 和 `upstream_status` 核对。先从对应实例的访问日志页签确认采集状态，只有已投递且能确认覆盖窗口的日志库可用于入口结论。[美国入口日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c7c0ede6c71484f8da34a829954c50cd9/logsearch/alb_access_log_store?slsRegion=us-west-1) · [上海 ALB 访问日志状态](https://slb.console.aliyun.com/alb/cn-shanghai/albs/alb-bq1qujda99ty9r8wss/access-log)
+
+## 2026-11-17 临时素材清理重试的下游取证
+
+**Why:** 2026-11-16 夜间的国内与美国 `UploadArtifactCleanup` 日志均在同一 Zeus 镜像中指向 `ArtifactClient.deleteArtifact` 的未确认分支。按同一 trace 回查，所核对的双区清理请求都由上海 Athena API Service 执行。OSS 删除对象时返回 `403 AccessDenied`，详情指向 bucket ACL。Athena 回滚事务，访问日志仍记录 HTTP 200。Zeus 从业务响应中得不到删除成功确认，按代码重新排入 Redis 重试。具体生效访问策略需要沿 OSS 请求 ID 核对。
+
+**How to apply:** 先用生产镜像 SHA 对齐 Zeus 异常行，再带 artifact UUID 和 trace 在上海推理日志库查 `oss2.api`、事务回滚、服务错误与 `http.access`。美区 Zeus 请求也可在这个日志库命中下游。核对 HTTP 状态的同时读取下游业务失败，后台重试次数按素材去重。对同时段的请求 400，先和验收台账按请求 ID 双向对账，再判断是否为预期负例。11 月 16 日美国 V2 的 155 条 400 均匹配当晚功能测试台账，400 用例断言均通过，台账入口为工作区 `.local/magi2-us-native-20261116-side/cases.csv`。[上海推理日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/inference-prod?slsRegion=cn-shanghai) · [Zeus 删除确认分支](https://github.com/world-sim-dev/zeus/blob/c0bb6a646725a633804754f57fcfbabb7492d517/modules/infra/src/main/java/co/sandai/zeus/infra/infer/ArtifactClient.java#L400-L415)

@@ -2927,3 +2927,5 @@
 - 2026-11-16 ingest：补开放平台素材查询 HTTP 429 计入 SLS ERROR 的取证方法及异常、HTTP 状态与告警回查入口。
 
 - 2026-11-17 ingest：补开放平台在 ERROR 告警之外核对 WARN、INFO 请求拒绝与 ALB 访问日志的方法。
+
+- 2026-11-17 ingest：补双区临时素材清理的 OSS 403 与 Athena HTTP 200 查证，以及按请求 ID 核对美国 V2 测试负例。
