@@ -15,3 +15,12 @@ links: [sandai-api-platform, sandai-api-platform-v2-input-validation-entrypoints
 - 工作区证据：`/Users/leslie/Documents/ChatGPT/Apipltform/.local/magi2-cn-native-20261116/REPORT.md`。沿同目录 `case-results.csv` 和 `ledger.jsonl` 查字段错误、请求号、原任务查询和成片证据。另一模型的累计时长和分层诊断参见[既有多模态入口](magi2-multimodal-api-test-entrypoints.md)。
 
 **How to apply:** 同一组织上传每类小素材，逐条回读资产 ID，再用精确模型创建。严格校验用例检查 HTTP 与字段错误；引用已有 asset ID 的累计时长可能由下游预处理判断，应同时追查终态和可用时的失败阶段。对返回 202 的任务，仅沿原 ID 查询；GET 200 可能显示排队、处理中或失败。成功后下载并解码成片，分别核对时长、画幅、分辨率、音轨和显式水印。POST 缺回执不重放，查询触发限流时降低查询频率和每轮读取量。扣退款需用独立账务证据。
+
+## 2026-11-16 纯文本任务提交校验
+
+**Why:** 纯文本任务可以被开放平台受理，随后在 Athena 创建作业前失败。配置解析后，纯文本类型与提示词增强类型仍需满足同一份下游约束。参考素材提示词增强要求 `I2FV` 并启用增强。
+
+- 原任务、派发 Trace、落库选项和当时的下游校验源码取样见本页证据目录中的 `sls-871244278575877-submission.json`、`dispatch-options-871244278575877.tsv` 及 `athena-reference-871244278575877.txt`。实际生效配置与是否恢复沿当次任务和部署回查。
+- Zeus 按保存的选项构造 Athena 请求，结构化 422 会被分类为 `INVALID_REQUEST`。从[请求组装](https://github.com/world-sim-dev/zeus/blob/59b6561a80160de5be9c0227dd72ed2d2946fdee/modules/domain/src/main/java/co/sandai/zeus/domain/service/impl/TaskDomainServiceImpl.java#L444)与[派发错误分类](https://github.com/world-sim-dev/zeus/blob/59b6561a80160de5be9c0227dd72ed2d2946fdee/modules/infra/src/main/java/co/sandai/zeus/infra/infer/dispatch/AthenaDispatchClient.java#L191)定位，按当次部署重核。
+
+**How to apply:** 从任务 ID 确认 `SUBMISSION` 阶段，再按派发 Trace 关联下游响应。若结构化失败只保存了 `body`，只读核对单任务保存的类型、增强开关及增强类型，再用当时部署的 Athena 整体请求校验离线复现。后续验收分别验证纯文本和有参考素材的变体，区分校验复现与线上生成恢复。
