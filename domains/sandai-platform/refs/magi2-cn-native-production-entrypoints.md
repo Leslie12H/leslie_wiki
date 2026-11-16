@@ -30,3 +30,12 @@ links: [sandai-api-platform, sandai-api-platform-v2-input-validation-entrypoints
 **Why:** Athena 按 `promptEnhancementType` 识别参考素材增强，再校验任务类型和开关。因此只关闭开关时，残留的参考增强类型仍会触发整体验证。Zeus 配置合并按公共、变体、请求的顺序应用非 null 值。
 
 **How to apply:** 从管理台目标区域读取精确模型的公共项和 `NONE/T2V`、`REFERENCE/I2FV` 各自的有效选项。国内配置回读及当次 revision 见证据目录 `cn-magi2-config-readback.json`。对关闭增强的纯文本配置，确认有效开关为 false，且有效类型没有参考增强前缀。管理变更沿 [Zeus 模型配置契约](https://github.com/world-sim-dev/zeus/blob/59b6561a80160de5be9c0227dd72ed2d2946fdee/docs/admin-api.md#模型配置与白名单) 和现场 revision；验证时先对比两个变体的有效选项，再分别查新任务终态与成片。
+
+
+## 2026-11-16 正向参数覆盖与成片验收
+
+**Why:** 用户要求更换各类素材并先走正向用例，覆盖两档分辨率与全部画幅，以及显式水印开关。参数受理、下游派发和成片满足预期需要各自取证。
+
+- 验收入口为项目 `.local/magi2-cn-positive-20261116/REPORT.md`，同目录 `plan.json` 按画幅、分辨率、输入类型和参数取值保存请求，`fixtures.json` 保存合成素材的规格和哈希，`ledger.jsonl` 保存线上回执。调度卡点沿精确任务号、`admin-queue-proof.json` 和派发日志回查。
+
+**How to apply:** 用无人物的几何画面和纯合成乐音，先本地解码，再上传并核对线上下载哈希。两档分辨率分别对全部画幅提交合法请求，每档选一组固定种子、提示词、画幅和素材，只改变显式水印布尔值。拿到成片后比较可见标识，另用媒体流核对时长、方向、尺寸和音轨。大量任务按原 ID 轮换查询，优先查上轮未覆盖的 ID，并按实际读接口限额调整频率。长时间 `queued` 时查看测试组织有效并发和在途任务的派发阶段。
