@@ -51,3 +51,9 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **How to apply:** 先重读[国内](https://platform.sandai.cn/docs/api-reference/)和[美国](https://platform.sand.ai/docs/api-reference/#upload-an-asset)当前文档、两区公开 OpenAPI 的 `/v1/assets` 请求体与响应 schema。按契约扩展名和大小分档准备正常容量素材，用固定长度的唯一文件名和编码后的 Content-Length 校验 multipart 边界。串行执行契约用例，单独记录网关与业务层拒绝。文件本身触线时请求体已超限，单条请求无法区分两道阈值。生产上传回执不明时以本轮组织、文件名、哈希和 Request ID 查证，保留原回执。正式走区域发压 Pod 前重查 kubeconfig 证书有效期、运行器闲忙及真实遥测。
 
 - 工作区入口 `postman/load/assets-v1/README.md`，当次清单和离线校验见 `.local/assets-v1-dual-production-20261116/`。[本次执行上下文](https://chatgpt.com/codex/threads/01a1e238-0202-7422-aa74-ab277f0b1d06)。
+
+### 当日更正：验收以指定飞书上传附件为准
+
+**Why:** 2026-11-16 用户指定[开放平台 API 文档（国内）](https://j0yswlgboxz.feishu.cn/wiki/QzRzwbeZiikxO7kPIH0cd5XSnvf)用于中美独立上传测试。其中「上传素材」的 Markdown 附件明确是 V1 multipart，规格与公开网页冲突。不能据公开页或旧 V2 大文件回执推断当前 V1 的实际响应。
+
+**How to apply:** 读最新飞书 revision 并另外读取内嵌附件，按指定文档冻结预期。单文件上限和更大的完整表单上限分别构造，在保留单个 file 部件时用 MIME 前导区跨表单边界。大文件用流式发送，核验真实 Content-Length。实际路由、文件是否成功和部署差异以本轮回执复核，附证据纪录入口仍见上节。
