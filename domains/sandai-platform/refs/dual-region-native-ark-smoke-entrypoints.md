@@ -39,3 +39,4 @@ links: [sandai-api-platform-v2-input-validation-entrypoints]
 
 - 新任务的创建、按 ID 查询和时间戳对照见工作区 `.local/ark-sdk-cn-documented-retest-20261116/REPORT.md`。可用分辨率取决于调用的模型和输入组合。遇到 `param=resolution` 的明确 400 时应保留拒绝回执，查证有效组合后再提交；若切换只改变路由，应使用切换后新建的任务来检查时间偏移是否仍发生。
 - 如果模型不支持 Ark 解析器的默认分辨率，省略字段会在模型校验时报错。纯文本和带素材输入可用同样的方法定位。抓取实际请求体，沿 `ArkGenerationRequest.command()` 核对默认值，再仅改变 `resolution` 做对照。模型规格按当前配置查证，实测及用户补充口径见同一报告。
+- 纯文本分辨率的对照应同时核对终态的 `resolution` 和本地 `ffprobe` 读到的视频流宽高。2026-11-16 的 540p 纯文本回执与成片见同一报告的「540p 纯文生视频」。
