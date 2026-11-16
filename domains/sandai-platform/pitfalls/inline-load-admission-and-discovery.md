@@ -93,3 +93,11 @@ links: [sandai-api-platform-load-generator-readiness, sandai-api-platform-load-t
 - 临时提高 RPM 前保存精确组织和原值；无论准入失败或正式档结束，都恢复原值并独立 GET 核验。写请求返回成功不代替恢复确认，临时配额也不构成容量结论。
 
 动态状态与原始回执只回查 API 工作区 `.local/cn-inline-10mb-5qps-20261116-r1/REPORT.md`；后续复测入口为 `.local/cn-inline-10mb-5qps-20261116-r2/`，以该目录实际产生的 `REPORT.md` 为准，目录或准备完成不代表生产已执行或通过。代码和看板入口见[压测方案入口](../refs/performance-testing-entrypoints.md#2026-11-16-inline-复测路由与收尾核验)。
+
+## 2026-11-16：fake 受理与客户端在途保护
+
+**Why:** fake 模型仍经过媒体准备、任务和结算链路，其受理吞吐不能证明真实推理或 GPU 容量。短时达到目标 QPS、HTTP 无错误，也不等于完成指定持续时长或业务终态验收；不能因使用 fake 就假定免费或固定耗时。
+
+**How to apply:** 核对 `inflight_limit` 触发瞬间的每组织与全局限额，以及预准备/预写名额、HTTP 在途和已受理但尚未观察到终态的任务。客户端 `inFlight` 与事后 `pending` 不是同一口径，不能仅凭最终 pending 数较小认定误触发。对本轮准入及正式档已受理 task IDs 冻结范围，以主键分批只读核对终态、扣费和退款；缺失结算行单列，明细留在 Pod，仅导出聚合。持续容量结论需同时满足实际完整时长、速率、保护和终态/结算验收。
+
+本轮参数、停止原因、发送与受理回执及对账状态仅回查 `/Users/leslie/Documents/ChatGPT/Apipltform/.local/cn-inline-10mb-5qps-20261116-r2/REPORT.md`。
