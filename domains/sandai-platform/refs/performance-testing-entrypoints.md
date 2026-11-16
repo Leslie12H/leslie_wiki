@@ -2,12 +2,14 @@
 name: sandai-api-platform-performance-testing-entrypoints
 type: reference
 created: 2026-10-27
-updated: 2026-11-14
+updated: 2026-11-16
 tags: [sandai, api-platform, performance, testing, quota]
-links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi-quota-entrypoints]
+links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi-quota-entrypoints, sandai-api-platform-test-organization-retirement]
 ---
 
 # API 平台压测方案入口
+
+- 2026-11-16：[生产测试组织退役](../pitfalls/test-organization-retirement.md)记录权限回收与业务清理分界、配额恢复顺序、完整身份预览、逐动作核验、未知结果恢复和保留对象零写；动态范围与后验只沿该页证据指针回查。
 
 **Why:** 2026-10-27 用户要求制定 API 平台压测方案和提前准备清单。生成接口受理、长时任务执行、轮询请求和计费存在不同瓶颈，单看 HTTP 202 或虚拟用户数无法给出业务容量。
 

@@ -1,3 +1,5 @@
+- 2026-11-16：[生产测试组织退役](domains/sandai-platform/pitfalls/test-organization-retirement.md) — 权限回收与业务数据清理分开验收，配额先恢复、完整 owner 预览、逐动作身份与来源核验、未知先读回及保留对象零写。
+
 - 2026-11-16：[开放平台模型定价查证入口](domains/sandai-platform/refs/model-pricing-entrypoints.md) — Zeus 费率、推理步数、双区折算、历史扣费与独立改价的核验路径。
 
 - 2026-11-16：[美国视频单段及音视频累计时长](domains/sandai-platform/refs/media-functional-acceptance-entrypoints.md#2026-11-16-美国视频单段及音视频累计时长) — 补单段与三段边界实测、修复后的中美音视频累计触线与超限回归、Athena 历史 PR，以及工作器耗时和调用端超时的取证方法。
