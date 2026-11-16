@@ -1,3 +1,5 @@
+- 2026-11-16：[美国 V1 WAV 时长上限](domains/sandai-platform/refs/media-functional-acceptance-entrypoints.md#2026-11-16-美国-v1-wav-时长上限) — 音频上限上下和触线实测，以及实际错误码与契约差异。
+
 - 2026-11-16：[裸 URL 与模型输入角色](domains/sandai-platform/refs/v2-input-validation-entrypoints.md#2026-11-16-裸-url-与模型输入角色的实测区分) — 对照实际响应字段，区分地址格式与模型角色准入。
 
 - 2026-11-16：[压测观察值与推荐容量分界](domains/sandai-platform/pitfalls/load-capacity-observation-vs-recommendation.md) — 生产实际记录补录、续段与连续窗口、成功HTTP与交付、历史快照和当前路由、推荐起点与已验容量分栏，以及飞书原文与证据附件入口；报告正文保持关键实测、推荐值和下一步，细节移至附件。

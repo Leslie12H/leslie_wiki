@@ -77,3 +77,9 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **Why:** 同一镜像在两地可以通过不同入口访问 Athena。上海 V1 冒烟的跨格式 500 和两条大视频 00202 在实际日志中都落在注册阶段的响应头 EOF。视频处理可能两次注册，海报失败可以被映射为素材内容无效并删除原资产。暂存删除告警也出现在成功样本，不能仅凭它给响应错误归因。
 
 **How to apply:** 以当次同 SHA 部署回执和政策确认两区实际路线，用 Request ID 查 Zeus 阶段及 Trace ID，再与 Athena 注册访问日志和 ARMS 比对。先区分初次注册、实际对象 PUT 和视频海报注册。服务器分配的资产 ID 用原组织 GET 对账。无响应头时保留请求是否已被 Athena 处理的不确定性，区分 HTTP/1.1 EOF 与[历史 HTTP/2 异常](../pitfalls/asset-registration-http2-failures.md)。此次证据与仍未知的关闭连接组件见工作区 `.local/assets-v1-dual-production-20261116/root-cause-20261116/RESULTS.md`。
+
+### 2026-11-16 美国 V1 WAV 时长上限
+
+**Why:** 实际生产错误码与文档这一条媒体时长规则的预期不一致。边界接受行为和响应契约各自验收。
+
+**How to apply:** 同一区和组织使用相同编码的 WAV，以实际解码时长生成低于、等于、超过上限的三份文件，字节量留足余量。逐条记录 HTTP、业务码及资产 ID。必要时对照部署代码中媒体时长校验的异常类型和公开错误映射。契约回查以上述飞书上传附件为准，原始回执及分钟窗口见工作区 `.local/assets-v1-dual-production-20261116/us-audio-duration.Fnm46A/RESULTS.md`。
