@@ -26,3 +26,13 @@ links: [sandai-api-platform-performance-testing-entrypoints, sandai-api-platform
 - **保留组织零写。** 执行入口与逐动作身份集合都排除保留对象，最终独立读取其身份、Key、配额和权限基线。保留对象只读对照，不能为了让后验通过而回写旧快照。
 
 **How to apply:** 先核对目标环境当前原生契约，区分完整业务清理与本次获授权的权限退役。保存精确清单和配置基线，离线验证保留对象、身份漂移、来源冲突、过期意图、读回失败和未知响应的反例，再按限定对象验证原生闭环后分批执行。原生接口若只有用户状态前置条件，不把客户端预览当作覆盖全部身份集合的原子锁；保持逐动作新鲜核验、短时意图和异常即停。交付明确说明退役范围，业务历史与未决事项继续沿原件追踪。
+
+## 2026-11-16 直接删除组织主记录的影响
+
+**Why:** 删除 `organization` 行不等于原生注销或完成关联数据清理。钱包、流水和任务各自保存组织标识；失去组织主记录会破坏查询与后续退款前置条件，不能通过“数据库允许删除”推断业务已经安全收尾。
+
+- 沿 Zeus `modules/admin/src/main/java/co/sandai/zeus/admin/organization/AdminOrganizationService.java` 的 `organization`、`balance`、`transactions` 回查：余额和流水查询先要求组织存在，主记录缺失会返回 `Organization not found`，并不表示余额或正式流水已清除。
+- 必须查完整退款调用链：`modules/domain/src/main/java/co/sandai/zeus/domain/credit/refund/TaskCreditRefundService.java` 的 `retryPendingAthenaRefunds`、`execute`、`prepare`，以及同模块 `domain/credit/CreditBalanceAccess.java` 的 `lockCreditOwner`。Magi 的实际退款入账前需锁组织主记录，缺失会报 `Credit owner not found`；只看退款 Mapper 按 credit ID 更新或插入 BONUS 的 SQL，会错误推断删组织后仍能退款成功。任务观察及退款触发沿 `domain/task/dispatch/TaskDispatchStateService.java` 回查，删除主记录不是撤销已派发推理或退款待办的操作。
+- 迁移文件中的 `org_id`、普通索引和本地未发现外键，都不能证明生产当前外键及级联规则；只保存 columns/indexes 的历史 schema 快照也不足以判定。实际约束应在目标数据库只读核对 `information_schema.KEY_COLUMN_USAGE`、`REFERENTIAL_CONSTRAINTS` 和相关表 DDL，不能假设会阻止删除或自动级联清理。
+
+**How to apply:** 若另有明确的物理清理需求，先按当前部署核对上述完整链路，再查双区真实约束、精确关联范围与异步未决状态；保全历史和必要业务主体后单独设计清理方案。不要直接删除组织主行，也不要为消除残留而连带删除扣退证据。源码与元数据指针用于复核，知识库不保存某批数据已排空或可物理删除的结论。
