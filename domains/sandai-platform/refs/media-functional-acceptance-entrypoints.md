@@ -71,3 +71,9 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **How to apply:** 比对同一素材 SHA、裸文件字节、实际 multipart 字节、HTTP 和具体 ID。对成功回执用原组织读取精确资产 ID，区分上传返回和独立回查。慢传输可为尚未发送的用例调整客户端等待时间，已发且无回执的请求继续标记未知。同日第二轮预期、原始台账和回查在 `.local/assets-v1-dual-production-20261116/round2-check.rPwAUe/`。[执行上下文](https://chatgpt.com/codex/threads/01a1e238-0202-7422-aa74-ab277f0b1d06)。
 
 **国内基础格式补跑：** 用户要求完成全部用例后，按冻结矩阵减去已有回执，剩余用例用独立测试组织逐项执行。保留先前的未知回执，覆盖完成与业务通过分别核算。合并后的回执及未确认受理项见上述第二轮目录的 `RESULTS.md`。
+
+### 2026-11-16 上海 V1 素材注册 HTTP/1.1 EOF
+
+**Why:** 同一镜像在两地可以通过不同入口访问 Athena。上海 V1 冒烟的跨格式 500 和两条大视频 00202 在实际日志中都落在注册阶段的响应头 EOF。视频处理可能两次注册，海报失败可以被映射为素材内容无效并删除原资产。暂存删除告警也出现在成功样本，不能仅凭它给响应错误归因。
+
+**How to apply:** 以当次同 SHA 部署回执和政策确认两区实际路线，用 Request ID 查 Zeus 阶段及 Trace ID，再与 Athena 注册访问日志和 ARMS 比对。先区分初次注册、实际对象 PUT 和视频海报注册。服务器分配的资产 ID 用原组织 GET 对账。无响应头时保留请求是否已被 Athena 处理的不确定性，区分 HTTP/1.1 EOF 与[历史 HTTP/2 异常](../pitfalls/asset-registration-http2-failures.md)。此次证据与仍未知的关闭连接组件见工作区 `.local/assets-v1-dual-production-20261116/root-cause-20261116/RESULTS.md`。
