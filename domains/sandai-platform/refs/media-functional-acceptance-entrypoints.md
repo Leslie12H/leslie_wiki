@@ -89,3 +89,5 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **Why:** 同一批素材可能逐个通过 V1，同时在 V2 的 Athena 累计时长预处理失败。创建回执只表示受理，公开生成错误可能隐去触发的媒体类型与时长阈值。本轮定位到音频累计阈值与飞书规范不一致。
 
 **How to apply:** 对单段分别取低于、等于、超过文档上限的实际流时长。累计用例固定前两段，改变第三段，保证各段独立合规，并以本区同组织的上传 ID 组装 V2 请求。用同一任务查询终态，沿 Zeus 的任务 ID 到 Athena 作业 ID 关联预处理错误，区分累计拒绝与其他生成失败。按日期回查工作区 `.local/assets-v1-dual-production-20261116/us-cumulative-duration.rmbEUv/RESULTS.md`、精确回执和日志，契约以指定飞书文档的对应附件为准。
+
+**三段参考音频累计阈值复测（2026-11-16）：** 上一轮在第二段累计 20 秒处触发拦截，不能从该样本确定等号行为。本次用同样的模型、组织和 `assetId` 入口，保持前两段相同并精确裁剪第三段，通过创建、终态查询及 Athena 关联日志确定边界。回执见工作区 `.local/assets-v1-dual-production-20261116/us-audio-total-15.pRUqs1/RESULTS.md`。
