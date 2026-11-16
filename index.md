@@ -1,3 +1,5 @@
+- 2026-11-16：[开放平台模型定价查证入口](domains/sandai-platform/refs/model-pricing-entrypoints.md) — Zeus 费率、推理步数、双区折算、历史扣费与独立改价的核验路径。
+
 - 2026-11-16：[美国视频单段及音视频累计时长](domains/sandai-platform/refs/media-functional-acceptance-entrypoints.md#2026-11-16-美国视频单段及音视频累计时长) — 补单段与三段边界实测、修复后的中美音视频累计触线与超限回归、Athena 历史 PR，以及工作器耗时和调用端超时的取证方法。
 
 - 2026-11-16：[美国 V1 WAV 时长上限](domains/sandai-platform/refs/media-functional-acceptance-entrypoints.md#2026-11-16-美国-v1-wav-时长上限) — 音频上限上下和触线实测，以及实际错误码与契约差异。
