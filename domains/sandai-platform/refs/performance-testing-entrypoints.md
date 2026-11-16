@@ -411,3 +411,9 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why** 退款执行日志不能覆盖结算仍为 `NONE` 的任务。任务终态、扣费和退款是不同字段。控制台生成和 API Key 生成也可能出现在同一个管理后台列表中。
 
 **How to apply** 按 [Zeus 管理后台](https://zeus-admin.sandaii.cn/tasks) 两区生产任务列表的创建时间和终态过滤，按游标读到末页并验证任务 ID 去重。逐笔回查带原扣费的 `Fail + NONE`，查看退款原因、执行终态和创建入口。单独记录 `Canceled + NONE` 并按退款资格解释。按退款发生时间查日志可补查此前创建的任务，日志查空不能推断创建窗口外的 `NONE` 数量。查询口径及证据见工作区 `.local/refund-weekly-review-20261116/REPORT.md`。
+
+### 2026-11-16 退款流水与终态写入定位
+
+**Why** 结算状态和同组织的流水列表不足以识别单笔退款，需要核对原扣交易 ID 及退款流水的任务关联。先写入执行 `Fail` 的分支如果未认领退款，后续已终态判断可能让账务一直停在 `NONE`。
+
+**How to apply** 在生产只读库使用 `task_credit_settlement.charge_transaction_id` 关联原扣流水，结合退款交易 ID 与实现中的任务级退款 trace 交叉验证。以 `public_completed_at`、`dispatch_updated_at`、持久化失败信息、相关消费者日志和 SQL 审计确认第一次 `Fail` 写入路径。排查不同生产镜像的状态写入与退款认领，覆盖旧 Redis 推理状态回写和 Athena 终态重放。复核入口见工作区 `.local/refund-nine-rca-20261116/REPORT.md`。
