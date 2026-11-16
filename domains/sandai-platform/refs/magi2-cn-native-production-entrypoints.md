@@ -66,3 +66,12 @@ links: [sandai-api-platform, sandai-api-platform-v2-input-validation-entrypoints
 - 已核验任务号、Job ID、worker 错误和同一批请求入口见工作区 `.local/magi2-cn-positive-20261116/KNOWN-ISSUES.md`。逐条载体为 `failure-causes.json`、`ark/failure-causes.json`、`job-id-index.json` 和对应 SLS worker 回执。
 
 **How to apply:** 先确认 Zeus 按任务号记录的终态阶段，再用派发日志中对应的 Athena Job ID 去 worker 搜索。遇到 `FETCH_TIMEOUT` 时核对对端请求失败与 worker 回报失败的时序；遇到 `Post-process source artifact already set` 时分别查首次产物设置和后续回报，不把已观察的冲突直接当成首次设置的根因。成片和参数验收继续使用公开成功且实际下载的产物。
+
+## 2026-11-17 推理完成后审核 worker 的字段兼容错误
+
+**Why** 公开任务长时间处于处理中时，推理可能已经完成。国内生产这次在 Athena 审核 worker 的 JobPreProcessor 校验拒绝了 `pp_reference_media_validation`，并观察到后处理失败写回阶段重复出现同一字段错误。
+
+- 逐条任务号、Job ID、公开状态及日志位置见工作区 `.local/magi2-cn-positive-20261116/KNOWN-ISSUES.md` 的在途诊断和相邻 `in-flight-diagnostics.json`。原始取证按 v2 与方舟分别保存。
+- 取证时按同一 Job ID 对齐 `inference-completed`、`Task athena.moderation` 和 `Failed to persist post-process failure`，以日志中的实际校验字段和值定位兼容问题。
+
+**How to apply** 用该 Job 的最新公开查询确认终态，日志异常单独标记为在途阻塞。对照提交端写入的步骤类型和读取端正在运行的任务 schema，再检查异常后的失败状态能否持久化。记录修复后原任务是否能继续，以及新建任务是否经过审核并产生成片。
