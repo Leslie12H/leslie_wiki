@@ -2809,3 +2809,5 @@
 - 2026-11-15 ingest：录入上海十图URL压测503的HTTP/2注册连接查证方法；保留Broken pipe/REFUSED_STREAM Trace与固定源码指针，区分已确认故障位置、客户端恢复缺口和未证实的ALB触发条件。
 
 - 2026-11-16 ingest：补双区 V1 Assets 上传专项的契约回查、完整 multipart 尺寸、素材矩阵、离线验证与运行入口。
+
+- 2026-11-16 ingest：记录国内方舟 SDK 路由的同任务对照、网关与业务回执区别、SDK 默认 null 及查询 Unix 秒值校验；具体回执留在工作区。
