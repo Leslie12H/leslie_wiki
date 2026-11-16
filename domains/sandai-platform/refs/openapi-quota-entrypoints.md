@@ -2,7 +2,7 @@
 name: sandai-api-platform-openapi-quota-entrypoints
 type: reference
 created: 2026-10-26
-updated: 2026-10-26
+updated: 2026-11-16
 tags: [sandai, openapi, quota, concurrency, testing]
 links: [sandai-api-platform-development-entrypoints, sandai-api-platform-global-acceptance-20261026]
 ---
@@ -30,6 +30,12 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-global-
 - 2026-10-26 的本次工作仅只读分析和方案，未修改业务代码、配额或部署；当前线上生效情况需另查。
 
 **How to apply:** 先读取上述调度文档与真实配额回执，确认缺少的是配置启用、对用户展示、执行并发还是 token 计量。补 TPM 时明确预占 ID、重复请求、失败返还与窗口到期的语义，再用隔离环境验证多实例争抢、终态重复回调、未知受理和队列上限。
+
+## 2026-11-16 执行 Fail 后的占位验证
+
+**Why** 任务表的执行状态、Dispatcher 派发状态、Redis 实际占位和 Athena 状态分别推进。单写执行状态会跳过事务后的槽位释放，也会跳过事务内的退款认领。任务已经 `Fail` 仍可能有待执行的下游作业。
+
+**How to apply** 同一时间按任务 ID 对照 `task.status`、`task.dispatch_status`、组织并发 Set 的 `SISMEMBER` 和 Athena 作业状态。对卡在 `WAITING` 的任务，依据当前版本核对未提交收尾分支、是否存在未知受理和实际派发次数。对 `SUBMITTED` 找下游终态，`FINISHED` 排查 Redis 删除及重试。余额退回另用实际流水核验。现场证据见 `.local/refund-nine-slots-20261116/REPORT.md`。
 
 ## 2026-10-26 真实配额测试入口
 
