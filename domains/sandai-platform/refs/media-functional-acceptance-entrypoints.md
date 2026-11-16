@@ -2,7 +2,7 @@
 name: sandai-api-platform-media-functional-acceptance-entrypoints
 type: reference
 created: 2026-11-14
-updated: 2026-11-14
+updated: 2026-11-16
 tags: [sandai, api-platform, media, functional-testing, openapi]
 links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform-performance-testing-entrypoints]
 ---
@@ -43,3 +43,11 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **Why:** 2026-11-14 的参数页在同一轮生产验收期间更新，已有回执对应旧版本；后台配置、网关实际路由和详情序列化可能各自滞后。已生成的同一成片可重查详情验证返回字段，成片本身的历史行为仍须用新任务验证修复。
 
 **How to apply:** 用飞书当前 revision 与原始测试快照逐字段对照；改动枚举先查两区有效模型配置，再以当前 API 请求回执确认受理或拒绝。用已知任务比较文档列出的路由前缀与实际请求路径；对 Ark `duration` 同时记录请求秒数、响应值、视频流时长和容器时长。动态值与回执沿本页生产报告的「现行请求规范复核」查阅。
+
+## 2026-11-16 中美生产 V1 Assets 独立上传准备
+
+**Why:** 用户要求为两区生产的独立上传压测备齐图片、音频与视频。请求体包含文件及表单开销，按裸文件长度构造边界会测错拒绝条件。把预期 4xx 纳入容量错误率也会误判发压结果。
+
+**How to apply:** 先重读[国内](https://platform.sandai.cn/docs/api-reference/)和[美国](https://platform.sand.ai/docs/api-reference/#upload-an-asset)当前文档、两区公开 OpenAPI 的 `/v1/assets` 请求体与响应 schema。按契约扩展名和大小分档准备正常容量素材，用固定长度的唯一文件名和编码后的 Content-Length 校验 multipart 边界。串行执行契约用例，单独记录网关与业务层拒绝。文件本身触线时请求体已超限，单条请求无法区分两道阈值。生产上传回执不明时以本轮组织、文件名、哈希和 Request ID 查证，保留原回执。正式走区域发压 Pod 前重查 kubeconfig 证书有效期、运行器闲忙及真实遥测。
+
+- 工作区入口 `postman/load/assets-v1/README.md`，当次清单和离线校验见 `.local/assets-v1-dual-production-20261116/`。[本次执行上下文](https://chatgpt.com/codex/threads/01a1e238-0202-7422-aa74-ab277f0b1d06)。

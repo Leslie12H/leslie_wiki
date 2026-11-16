@@ -1,3 +1,5 @@
+- 2026-11-16：[中美生产 V1 Assets 独立上传准备](domains/sandai-platform/refs/media-functional-acceptance-entrypoints.md#2026-11-16-中美生产-v1-assets-独立上传准备) — 公开双区契约、媒体格式与大小矩阵、完整 multipart 精确尺寸、计划校验和发压 Pod 访问回查。
+
 - 2026-11-15：[素材注册 HTTP/2 断连与 503](domains/sandai-platform/pitfalls/asset-registration-http2-failures.md) — ARMS 深层异常、注册POST与OSS PUT分界、单次正文与连接重试、REFUSED_STREAM安全边界及ALB归因限制。
 
 - 2026-11-14：[inline 压测准入与动态健康发现](domains/sandai-platform/pitfalls/inline-load-admission-and-discovery.md) — 源码/白名单/认证/真实生成分层，独立 QPS 与正文带宽口径、Ready Pod 发现、客户保护和原凭据就地接线；附大档 Request 正文复制、OOM 只读取证及预写意图对账边界；补完整20MB正文、分块发送及实际镜像内存验证；滚动更新/HPA 健康窗口、精确基线持久化、零发压启动恢复和内存/并发/实发 QPS 的区分。
