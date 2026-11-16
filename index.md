@@ -19,7 +19,7 @@
 - 2026-11-16：[inline 压测准入与动态健康发现](domains/sandai-platform/pitfalls/inline-load-admission-and-discovery.md) — 源码/白名单/认证/真实生成分层，独立 QPS 与正文带宽口径、Ready Pod 发现、客户保护和原凭据就地接线；附大档 Request 正文复制、OOM 只读取证及预写意图对账边界；补完整20MB正文、分块发送及实际镜像内存验证；滚动更新/HPA 健康窗口、精确基线持久化、零发压启动恢复和内存/并发/实发 QPS 的区分。补路由与指标 URI 同步核验、ALB 503 与 UNKNOWN 证明边界、单条旧未知的精确前置豁免、历史年龄豁免及临时 RPM 恢复入口；附 fake 受理的容量边界、客户端在途名额和固定任务范围的只读对账；补单档总预算、预准备上限及固定 GET 采样口径。
 
 - 2026-11-14：[停压后的连接池 CPU 空转](domains/sandai-platform/pitfalls/okhttp-pool-spin-after-load-stop.md) — 在途素材下载、OkHttp 清理调度的回环对照，以及双协议一键入口的实际部署和只读门控边界。 补失败 Pod/失效锁恢复和错误率各分支边界测试。
-- 2026-11-14：[压测网络错误归因边界](domains/sandai-platform/pitfalls/load-test-network-error-attribution.md) — 固定台账前缀、连接计时/cause、创建与历史查询分流、CPU/HPA与共享ALB证据关联。
+- 2026-11-16：[压测网络错误归因边界](domains/sandai-platform/pitfalls/load-test-network-error-attribution.md) — 固定台账、连接计时/cause及CPU/HPA/ALB关联；补正文带宽与节点能力、HTTP并发和建连超时、短突发采样、计时器批次及filter耗时边界，保留逐请求UNKNOWN。
 - 2026-11-14：[多媒体压测素材与离线请求准备](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-14-多媒体压测素材与离线请求准备) — 不同大小图音视频、10图3视频3音频组合、分类累计时长、区域与组织绑定、输入字节与创建带宽分开，以及不自动切生产的准备入口。
 - 2026-11-14：[临时遥测源与Pod重建](domains/sandai-platform/pitfalls/load-generator-readiness.md#2026-11-14-临时遥测源与pod重建) — 实际角色/副本/Jar核验、IP复用、真实HTTP窗口、源有效期与部分apply失败后的窄续办；采集健康不证明旧运行排空。
 - 2026-11-14：[双协议压测看板口径](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-14-双协议压测看板口径) — v2/方舟v3真实URI、各自成功码、合计和分协议QPS、查询比例及长窗跨档平滑的验证入口。

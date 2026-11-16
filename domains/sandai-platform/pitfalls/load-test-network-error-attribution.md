@@ -2,7 +2,7 @@
 name: sandai-api-platform-load-test-network-error-attribution
 type: pitfall
 created: 2026-11-14
-updated: 2026-11-14
+updated: 2026-11-16
 tags: [sandai, api-platform, performance, network, undici, evidence]
 links: [sandai-api-platform-load-generator-readiness, sandai-api-platform-performance-testing-entrypoints]
 ---
@@ -23,3 +23,17 @@ links: [sandai-api-platform-load-generator-readiness, sandai-api-platform-perfor
 源码版本依据：[Node v24.5.0 fetch](https://nodejs.org/download/release/v24.5.0/docs/api/globals.html#fetch)、[Undici v7.12.0 connector](https://github.com/nodejs/undici/blob/v7.12.0/lib/core/connect.js#L49)、[fetch cause](https://github.com/nodejs/node/blob/v24.5.0/deps/undici/src/lib/web/fetch/index.js#L215)。运行版本变化时重新核对。
 
 当前取证指针：API 工作区 `.local/magi2-us-network-investigation-20261114/REPORT.md`；同目录 `client-statistics.json` 为固定前缀统计，`source-analysis.md` 为 catch 复现和版本依据，`cloud-*-history.json` 为历史监控原始回读，`server-503-*.json` 为服务端关联证据。具体轮次数字、Pod 和配置只留在证据，不把本页当实时状态。
+
+## 2026-11-16：大正文带宽、HTTP 并发与建连超时
+
+**Why:** 大正文的目标 QPS 可能先超过发压节点的网络能力，随后请求占槽变长、HTTP 并发触顶，尚未发送的预准备意图被撤销。连接超时、API 请求耗时升高与这一过程同时出现，仍不足以逐请求归因，更不能据此认定业务 CPU 饱和。
+
+**How to apply:**
+
+1. 用完整 HTTP 正文字节数（含 Base64、JSON）×目标 QPS×8 核算正文带宽，再留协议开销和同节点流量余量。沿 Runner Pod→Node→实际 ECS 规格→默认路由/NAT/公网出口核对基础带宽、突发条件和实际限额；回环内存测试不证明网络容量。HTTP 并发所需量约为 QPS×平均请求占槽时间，增加并发或延长超时都不能补足物理带宽。
+2. 分开重建逐秒实发、HTTP 在途、调度延迟和未发送原因；创建 HTTP 上限不等于 Undici Pool 连接数。核对当前内置 connector：若默认为10秒，HTTPS在 `secureConnect` 后才清除计时，DNS/TCP/TLS均可能涉及；较长的请求总超时不会覆盖它。核验 FastTimer 实现后再解释成组超时；499ms tick 形成的批次不能作为 CPU 卡顿证据。正式新进程也不会继承准入进程的暖连接。
+3. 云监控60秒平均不能代表更短突发的峰值；将带宽能力不足与具体失败原因分开。ECS网络调度丢包为零只覆盖该指标，不能排除限速排队或其他链路丢包；累计TCP计数必须有窗口差分，不能直接归到本轮。
+4. 按当前部署源码确认 `TraceIdFilter`/`RequestOutcome.elapsedMs` 的计时边界。其 filter chain 内可包含剩余正文读取、JSON/Base64解析、同步 inline 资产上传和任务受理，不是纯业务 CPU 时间，也不含进入 filter 前的全部网络等待；没有分段计时就不分摊耗时占比。
+5. 即使发压节点能力不足已证实，也保留未关联的 UNKNOWN；已知 task 全部终态只证明已知范围。没有逐连接阶段或关联入口日志，不把已确认的容量瓶颈写成每条连接超时的最终根因，也不自动重发。
+
+诊断与版本依据只沿 API 工作区 `.local/cn-inline-10mb-50qps-20261116-r1/DIAGNOSIS.md`、同目录 `diagnosis-*` 证据目录回查；当前节点规格、吞吐、云指标与逐请求未证实范围不固化为通用结论。
