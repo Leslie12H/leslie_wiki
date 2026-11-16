@@ -119,3 +119,5 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **大视频上传的公网带宽核算（2026-11-16）：** 先用公网域名的 DNS、ALB 可用区和绑定 EIP 核对实际路径与带宽，检查共享带宽是否接管峰值。以完整 multipart 字节乘每秒上传数和 8 算持续入流要求，再按单 EIP 与聚合峰值分别评估。发起速率、传完请求体和收齐成功回执均需独立记账，短窗口可把尚在上传的请求积压到排空期。本次现场配置与素材预检见工作区 `.local/assets-v1-dual-production-20261116/video-90mb-10qps/READINESS.md`。公网带宽口径见 [ALB 官方文档](https://help.aliyun.com/zh/slb/application-load-balancer/what-is-alb)。
 
 **90 MB 视频短时发起试跑（2026-11-16）：** 两区复用同一精确文件及两个保留测试组织。固定发送窗口与请求数即可验证突发受理，成功速率按完整回执排空后的总耗时计算。逐笔登记 HTTP、业务码、Request ID、Asset ID，以及发压端读完 multipart 的时间。区域 Pod 访问受阻时，记录实际发压位置和网络路径。需要观察长尾时，先看已发意图、回执与专属进程 TCP 字节进度。当次双区回执见工作区 `.local/assets-v1-dual-production-20261116/video-90mb-5qps/RESULTS.md`。
+
+**五分钟目标档的在途停发（2026-11-16）：** 以之前的短测耗时估算在途上限，按既有运行规程触顶停新增、排空已发请求。触顶时分别记录已回执、正文尚未读取完和正文已读完等待响应的数量，配合逐笔 trace 判断积压在何处。固定计划窗口、实际发送窗口与排空窗口分开统计。上海同区 Pod 的实测速率高于仅用公网 EIP 配置推算的数值，公网峰值换算只作路径规划，现场观测独立保存。证据见工作区 `.local/assets-v1-dual-production-20261116/video-90mb-5qps-300s/RESULTS.md`。
