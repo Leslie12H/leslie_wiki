@@ -417,3 +417,5 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why** 结算状态和同组织的流水列表不足以识别单笔退款，需要核对原扣交易 ID 及退款流水的任务关联。先写入执行 `Fail` 的分支如果未认领退款，后续已终态判断可能让账务一直停在 `NONE`。
 
 **How to apply** 在生产只读库使用 `task_credit_settlement.charge_transaction_id` 关联原扣流水，结合退款交易 ID 与实现中的任务级退款 trace 交叉验证。以 `public_completed_at`、`dispatch_updated_at`、持久化失败信息、相关消费者日志和 SQL 审计确认第一次 `Fail` 写入路径。排查不同生产镜像的状态写入与退款认领，覆盖旧 Redis 推理状态回写和 Athena 终态重放。复核入口见工作区 `.local/refund-nine-rca-20261116/REPORT.md`。
+
+核对恢复入口时分别检查退款认领和已认领退款的重试。若结算仍为 `NONE`，须先用可信失败证据核对退款资格和是否已补偿，再在任务锁下补认领。现有重试只消费已有认领，异常筛选还要覆盖 `Fail + NONE`，并记录排除原因。

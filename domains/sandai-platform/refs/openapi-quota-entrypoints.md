@@ -37,6 +37,8 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-global-
 
 **How to apply** 同一时间按任务 ID 对照 `task.status`、`task.dispatch_status`、组织并发 Set 的 `SISMEMBER` 和 Athena 作业状态。对卡在 `WAITING` 的任务，依据当前版本核对未提交收尾分支、是否存在未知受理和实际派发次数。对 `SUBMITTED` 找下游终态，`FINISHED` 排查 Redis 删除及重试。余额退回另用实际流水核验。现场证据见 `.local/refund-nine-slots-20261116/REPORT.md`。
 
+巡检若从 Redis Set 枚举任务，只能核对已登记占位的成员。还需从 MySQL `SUBMITTED` 和 Athena 在途作业反向核对缺失占位。处理历史异常前，区分未提交、受理未知和已受理，否则可能在作业仍可执行时提前放开槽位。
+
 ## 2026-10-26 真实配额测试入口
 
 - 专项报告：`/Users/leslie/Documents/ChatGPT/Apipltform/postman/reports/quota-global-20261026/README.md`。阈值、窗口恢复、token TPM 检查范围、任务采样有效性、费用与待确认项以该报告及相邻 JSON/CLI 原件为准，不把默认配置当组织有效覆盖值。
