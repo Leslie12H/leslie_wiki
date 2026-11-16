@@ -83,3 +83,9 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **Why:** 实际生产错误码与文档这一条媒体时长规则的预期不一致。边界接受行为和响应契约各自验收。
 
 **How to apply:** 同一区和组织使用相同编码的 WAV，以实际解码时长生成低于、等于、超过上限的三份文件，字节量留足余量。逐条记录 HTTP、业务码及资产 ID。必要时对照部署代码中媒体时长校验的异常类型和公开错误映射。契约回查以上述飞书上传附件为准，原始回执及分钟窗口见工作区 `.local/assets-v1-dual-production-20261116/us-audio-duration.Fnm46A/RESULTS.md`。
+
+### 2026-11-16 美国视频单段及音视频累计时长
+
+**Why:** 同一批素材可能逐个通过 V1，同时在 V2 的 Athena 累计时长预处理失败。创建回执只表示受理，公开生成错误可能隐去触发的媒体类型与时长阈值。本轮定位到音频累计阈值与飞书规范不一致。
+
+**How to apply:** 对单段分别取低于、等于、超过文档上限的实际流时长。累计用例固定前两段，改变第三段，保证各段独立合规，并以本区同组织的上传 ID 组装 V2 请求。用同一任务查询终态，沿 Zeus 的任务 ID 到 Athena 作业 ID 关联预处理错误，区分累计拒绝与其他生成失败。按日期回查工作区 `.local/assets-v1-dual-production-20261116/us-cumulative-duration.rmbEUv/RESULTS.md`、精确回执和日志，契约以指定飞书文档的对应附件为准。

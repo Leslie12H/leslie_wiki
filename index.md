@@ -1,3 +1,5 @@
+- 2026-11-16：[美国视频单段及音视频累计时长](domains/sandai-platform/refs/media-functional-acceptance-entrypoints.md#2026-11-16-美国视频单段及音视频累计时长) — 补单段与三段边界实测，以及从公开回执关联 Athena 累计阈值错误的入口。
+
 - 2026-11-16：[美国 V1 WAV 时长上限](domains/sandai-platform/refs/media-functional-acceptance-entrypoints.md#2026-11-16-美国-v1-wav-时长上限) — 音频上限上下和触线实测，以及实际错误码与契约差异。
 
 - 2026-11-16：[裸 URL 与模型输入角色](domains/sandai-platform/refs/v2-input-validation-entrypoints.md#2026-11-16-裸-url-与模型输入角色的实测区分) — 对照实际响应字段，区分地址格式与模型角色准入。
