@@ -117,3 +117,5 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **滚动发布期间的上传 502（2026-11-16）：** 客户端记录尚未读完 multipart 就收到 502。先从公网域名核对 ALB 实例，再用客户端时间对齐 Kubernetes 缩容与 kubelet 停容器事件、旧 Pod 的应用退出日志，并用同组织的大文件成功回执验证上传链路。本次美西证据见工作区 `.local/assets-v1-dual-production-20261116/dual-upload-qps.PNc3HW/US-94MB-502.md`。只有逐请求的 `upstream_addr`、`upstream_status` 或可关联的 trace 才能确认请求命中和状态码来源。Pod 同时段的连接关闭日志和 ALB 分钟指标只能辅助定位。
 
 **大视频上传的公网带宽核算（2026-11-16）：** 先用公网域名的 DNS、ALB 可用区和绑定 EIP 核对实际路径与带宽，检查共享带宽是否接管峰值。以完整 multipart 字节乘每秒上传数和 8 算持续入流要求，再按单 EIP 与聚合峰值分别评估。发起速率、传完请求体和收齐成功回执均需独立记账，短窗口可把尚在上传的请求积压到排空期。本次现场配置与素材预检见工作区 `.local/assets-v1-dual-production-20261116/video-90mb-10qps/READINESS.md`。公网带宽口径见 [ALB 官方文档](https://help.aliyun.com/zh/slb/application-load-balancer/what-is-alb)。
+
+**90 MB 视频短时发起试跑（2026-11-16）：** 两区复用同一精确文件及两个保留测试组织。固定发送窗口与请求数即可验证突发受理，成功速率按完整回执排空后的总耗时计算。逐笔登记 HTTP、业务码、Request ID、Asset ID，以及发压端读完 multipart 的时间。区域 Pod 访问受阻时，记录实际发压位置和网络路径。需要观察长尾时，先看已发意图、回执与专属进程 TCP 字节进度。当次双区回执见工作区 `.local/assets-v1-dual-production-20261116/video-90mb-5qps/RESULTS.md`。
