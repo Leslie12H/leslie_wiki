@@ -1606,4 +1606,4 @@
 
 - 2026-11-12：[VidMuse 巡检同名入口异常](domains/vidmuse/refs/homepage-render-check-ops.md#2026-11-12-同名入口触发-playwright-严格匹配) — 横幅与透明输入区按钮的前端来源、严格匹配和正式调度验收。
 
-- 2026-11-14：[双区原生与 Ark 接口冒烟](domains/sandai-platform/refs/dual-region-native-ark-smoke-entrypoints.md) — 创建/查询交叉验证、国内准入差异、真实成片参数与只读终态证据入口。2026-11-16 补 SDK base_url 路由对照、默认 null、上海 ALB 路由迁移及切换后新任务的模型组合与时间戳复验。
+- 2026-11-14：[双区原生与 Ark 接口冒烟](domains/sandai-platform/refs/dual-region-native-ark-smoke-entrypoints.md) — 创建/查询交叉验证、国内准入差异、真实成片参数与只读终态证据入口。2026-11-16 补 SDK base_url、默认 null、上海 ALB 迁移后的复验及默认分辨率与模型冲突的对照。
