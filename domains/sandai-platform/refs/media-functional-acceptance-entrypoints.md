@@ -107,3 +107,9 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **国内生产对照（2026-11-16）：** 将美国复测的相同 WAV 字节上传至国内测试组织，验证 SHA 与时长，再用国内同组织资产 ID 分别跑触线和超限用例。通过 Zeus 与 Athena 的作业关联确认发生阶段，生成回执与素材证据见工作区 `.local/assets-v1-dual-production-20261116/cn-audio-total-30-boundary.FZzSVe/RESULTS.md`。
 
 **视频累计中美回归（2026-11-16）：** 对照同一批视频字节，固定前两段，只替换第三段，比较两个区域的公开回执和 Athena 预处理记录。用此前美国资产及新上传的国内同组织资产，检验音频累计规则拆分后的视频边界。证据见工作区 `.local/assets-v1-dual-production-20261116/dual-video-total-15-boundary.2o4Kb4/RESULTS.md`。
+
+### 2026-11-16 两区 V1 单文件上传速率与大小分档
+
+**Why:** 测试组织部分退役后，可用 Key 数量与上传路由的既有限流豁免需要分别确认。小文件的短时请求速率、大文件的字节吞吐和发压端在途限制各自影响结果。
+
+**How to apply:** 从生产管理后台核对精确保留组织、Key 与既有豁免，只使用当前保留范围。固定小文件混合比例逐档发送，另测中档和大视频单请求。比较发起 QPS、完整回执、漏发原因和端到端 P95，记录本机或区域运行器路径。早期网关回执须保留已读取的请求体字节及资产状态证据。当次两区实测见工作区 `.local/assets-v1-dual-production-20261116/dual-upload-qps.PNc3HW/RESULTS.md`。
