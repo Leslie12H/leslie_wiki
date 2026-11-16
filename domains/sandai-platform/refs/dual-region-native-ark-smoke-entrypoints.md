@@ -34,3 +34,7 @@ links: [sandai-api-platform-v2-input-validation-entrypoints]
 **How to apply:** 沿 Zeus [PR #491](https://github.com/world-sim-dev/zeus/pull/491) 的 `ArkRoutes`、`deployment/magi/README.md` 和 `ark_ingress_patch.py` 核对发布步骤，连续用同 Key 同任务读回切换前后状态，并在 ALB 监听中核对匹配路径、后端与默认组。时间偏移先比对原生响应和独立 JDBC 读回，再核对 SQL 是否显式写 UTC、列是否为 DATETIME 和 JDBC 驱动配置是否实际设置了 DB 会话时区。验证修复时兼顾旧行和其他共用连接的字段。
 
 - 11:10 路由切换、ALB 规则回读及 Connector/J 8.3.0 时区复现见工作区 `.local/ark-cn-root-cause-20261116/REPORT.md`。以报告的实际证据区分生产读回和本地复现。
+
+### 切换后新任务复验
+
+- 新任务的创建、按 ID 查询和时间戳对照见工作区 `.local/ark-sdk-cn-documented-retest-20261116/REPORT.md`。可用分辨率取决于调用的模型和输入组合。遇到 `param=resolution` 的明确 400 时应保留拒绝回执，查证有效组合后再提交；若切换只改变路由，应使用切换后新建的任务来检查时间偏移是否仍发生。
