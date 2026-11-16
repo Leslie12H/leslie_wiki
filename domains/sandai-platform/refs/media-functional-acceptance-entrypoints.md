@@ -99,3 +99,5 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **Athena 修复后复测（2026-11-16）：** 对照 [PR #822](https://github.com/world-sim-dev/athena-admin/pull/822)，复用旧失败用例的原始请求体与已有资产 ID，跟踪同一公开任务至 Athena 预处理和生成回执。美国生产实际回执见工作区 `.local/assets-v1-dual-production-20261116/us-audio-total-30-recheck.LgahUq/RESULTS.md`。
 
 **修复后超限对照（2026-11-16）：** 保留两段素材，只替换第三段做最小超限复测。创建受理后沿 Zeus、Athena 和最终回执核实累计校验与公开错误码。美国生产证据见工作区 `.local/assets-v1-dual-production-20261116/us-audio-total-30p01-recheck.CTnXBG/RESULTS.md`。
+
+**国内生产对照（2026-11-16）：** 将美国复测的相同 WAV 字节上传至国内测试组织，验证 SHA 与时长，再用国内同组织资产 ID 分别跑触线和超限用例。通过 Zeus 与 Athena 的作业关联确认发生阶段，生成回执与素材证据见工作区 `.local/assets-v1-dual-production-20261116/cn-audio-total-30-boundary.FZzSVe/RESULTS.md`。
