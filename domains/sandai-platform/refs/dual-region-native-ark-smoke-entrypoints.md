@@ -56,3 +56,7 @@ links: [sandai-api-platform-v2-input-validation-entrypoints]
 **How to apply** 先在两区生产 Zeus 日志按测试任务 ID 核对 `SUBMISSION` 和 `EXECUTION`，并从 `task_submitted` 查 Athena 作业 ID。上海生产 SLS 里的 `inference-prod` 查参数校验和素材预处理，`athena` 查对应工作器输入、模型请求尺寸和编码尺寸。沿同一 ID 比较出站字段、下游参数类型、工作器输入和 MP4 音轨。水印按成功交付的原文件逐条抽帧。生产工作器与源码同名实现需要用实际队列、镜像或运行日志对齐。
 
 - 双区画幅改写、提交枚举、音轨开关以及参考媒体时长的根因和逐任务证据见工作区 `.local/generation-parameter-root-cause-20261116/REPORT.md`。按报告区分线上回执、源码复现和尚缺证据的环节。可下载水印样本入口在同一份报告。
+
+### 方舟宽高比回查
+
+- 方舟从宽高推导比例时，先约分再匹配公开枚举。枚举含 `21:9`，同画幅的 1260×540 会约为 `7:3`。回归需同时检查无比例元数据与上游提供等价比例两条分支，保证输出为契约枚举。实际成片与查询字段分别验证。源码和四入口用例见工作区 `.local/generation-parameter-root-cause-20261116/FIX-CHECKLIST.md`。
