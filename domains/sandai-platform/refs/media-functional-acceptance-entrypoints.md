@@ -63,3 +63,9 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **Why:** 中美生产的同一 V1 路径对飞书上限内的视频返回了不同的业务错误。顶部边界样本的拒绝码吻合，只证明该样本被拒绝。判断契约达标还需要上限内样本有真实 200 和资产 ID。
 
 **How to apply:** 逐区域固定 endpoint、组织及素材 SHA，分别记录文件大小、完整表单大小、HTTP、业务 code、Request ID 和资产 ID。用普通视频对照上传成功，区分大小拒绝和媒体校验拒绝。定位实际阈值时让裸文件处于候选阈值以内，同时改变完整表单长度。5xx 无资产 ID 保留为未知，按准确组织、唯一文件名及 Request ID 对账。具体生产回执和当次决策见工作区 `.local/assets-v1-dual-production-20261116/production-smoke-evidence-20261116/`。
+
+### 同日复测与上限附近的受理波动
+
+**Why:** 后续复测读取了更高文档 revision，再核对上传附件哈希，确认验收字节阈值保持一致。相同贴线文件曾在一次请求被拒、另一次请求形成真实资产，单点结果不足以给出稳定的容量判断。本机向不同地域上传大文件时，客户端超时也会造成缺少 HTTP 和 Request ID 的回执。
+
+**How to apply:** 比对同一素材 SHA、裸文件字节、实际 multipart 字节、HTTP 和具体 ID。对成功回执用原组织读取精确资产 ID，区分上传返回和独立回查。慢传输可为尚未发送的用例调整客户端等待时间，已发且无回执的请求继续标记未知。同日第二轮预期、原始台账和回查在 `.local/assets-v1-dual-production-20261116/round2-check.rPwAUe/`。[执行上下文](https://chatgpt.com/codex/threads/01a1e238-0202-7422-aa74-ab277f0b1d06)。
