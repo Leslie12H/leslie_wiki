@@ -419,3 +419,12 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **How to apply** 在生产只读库使用 `task_credit_settlement.charge_transaction_id` 关联原扣流水，结合退款交易 ID 与实现中的任务级退款 trace 交叉验证。以 `public_completed_at`、`dispatch_updated_at`、持久化失败信息、相关消费者日志和 SQL 审计确认第一次 `Fail` 写入路径。排查不同生产镜像的状态写入与退款认领，覆盖旧 Redis 推理状态回写和 Athena 终态重放。复核入口见工作区 `.local/refund-nine-rca-20261116/REPORT.md`。
 
 核对恢复入口时分别检查退款认领和已认领退款的重试。若结算仍为 `NONE`，须先用可信失败证据核对退款资格和是否已补偿，再在任务锁下补认领。现有重试只消费已有认领，异常筛选还要覆盖 `Fail + NONE`，并记录排除原因。
+
+## 2026-11-16 inline 复测路由与收尾核验
+
+- 路由与计数一起查：当前部署的 Ingress 和 Zeus 方舟兼容 Controller，工作区 `postman/load/magi2/inline/{runtime,telemetry}.mjs`、实际冻结运行配置，以及 `monitoring/aliyun/build-production-load-dashboard.mjs` 的 `uri` 过滤。历史报告中的 URL 不证明当前入口仍可用。
+- 本轮准入、未知受理、精确历史年龄范围及 RPM 恢复证据：`/Users/leslie/Documents/ChatGPT/Apipltform/.local/cn-inline-10mb-5qps-20261116-r1/REPORT.md`；后续复测只沿同级 `cn-inline-10mb-5qps-20261116-r2/` 的实际报告回查，不预记执行或通过。
+
+**Why:** 路由不匹配产生的 HTTP 503、发压网络错误和实际容量瓶颈需要不同证据；更换路径后，准入、指标归属与收尾也要共同复核。
+
+**How to apply:** 沿[inline 准入与健康发现](../pitfalls/inline-load-admission-and-discovery.md#2026-11-16路由切换未知受理与有限历史豁免)核对原回执的证明边界、精确旧 `UNKNOWN` 的单次前置豁免、仅限授权名单的年龄豁免、原始统计保留和临时 RPM 恢复后的独立 GET。具体授权、运行参数、当前配额、任务明细和结果仅存对应审计目录。

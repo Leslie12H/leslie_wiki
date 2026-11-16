@@ -2,7 +2,7 @@
 name: sandai-api-platform-inline-load-admission-and-discovery
 type: pitfall
 created: 2026-11-14
-updated: 2026-11-14
+updated: 2026-11-16
 tags: [sandai, api-platform, performance, inline-data, telemetry, admission]
 links: [sandai-api-platform-load-generator-readiness, sandai-api-platform-load-test-network-error-attribution, sandai-api-platform-v2-input-validation-entrypoints]
 ---
@@ -79,3 +79,17 @@ links: [sandai-api-platform-load-generator-readiness, sandai-api-platform-load-t
 **How to apply:** 同时记录请求占用时长、并发/正文预算、真实 RSS 和每窗口实发数。把已预写意图、到点未发、停止后撤销的未来意图、已发和受理分开。发生速率保护时，用停止发送前的实际窗口计算 QPS，等待已有回执另计；不能用计划时长作为分母。查询因没有到期任务跳过的时隙不等于服务端查询失败。按实测时长估算并发后，还需独立验证内存和网络预算，不能直接扩大至任意并发后自动重跑。
 
 证据沿上面的 20 MB 本轮审计目录重新读取；该轮结果不是业务容量验收，也不证明生成终态和清理已完成。
+
+## 2026-11-16：路由切换、未知受理与有限历史豁免
+
+**Why:** 上海复测准备时，旧路径复现 ALB 503；原 canary 收到 HTTP 503 且 `networkError=false`，不能记成网络错误或 QPS 容量不足。原回执未保存响应正文和路由响应头，ALB 又没有访问日志，即使封闭时间窗内查到零任务，也不足以逐条证明请求未到后端。
+
+**How to apply:**
+
+- 将当前部署的 Ingress、Controller、发压配置实际 URL 与遥测/看板的 `uri` 过滤一起核对；路由改了而过滤未改，会漏算成功流量。新路径的认证 GET 仍不代替真实生成准入。
+- 原始 `UNKNOWN` 回执不改写、不自动重发。零任务只是已核对范围内的证据；以路由拒绝解除未知，需追加能关联原请求且证明未向业务后端转发的网关证据，写明时间、方法、路径与关联标识。当前路由和后来 GET 的复现不能冒充原 POST 的逐请求证明；进程退出或锁已失效也不等于业务未知已解除。
+- 用户可明确允许仅将冻结的 1 条旧待对账请求从独立新 run 的前置阻塞中豁免。授权须绑定原回执哈希、精确范围与新 run，旧 `UNKNOWN` 仍保留且不重发；新准入和正式档出现未知仍按原保护停发，不能变成通用未知容忍额度。具体授权和执行状态只沿本轮审计证据回查。
+- 2026-11-16 的授权范围仅为原 11 条加审计确认的新增 3 条历史任务。冻结任务、组织、原始创建时间及范围哈希，只在两个 `MAX` 年龄计算中排除这 14 条，保留 `rawActive`、所有数量及客户、退款、HTTP/失败和遥测保护；不扩大至保留组织的历史任务、未来任务或其他轮次。
+- 临时提高 RPM 前保存精确组织和原值；无论准入失败或正式档结束，都恢复原值并独立 GET 核验。写请求返回成功不代替恢复确认，临时配额也不构成容量结论。
+
+动态状态与原始回执只回查 API 工作区 `.local/cn-inline-10mb-5qps-20261116-r1/REPORT.md`；后续复测入口为 `.local/cn-inline-10mb-5qps-20261116-r2/`，以该目录实际产生的 `REPORT.md` 为准，目录或准备完成不代表生产已执行或通过。代码和看板入口见[压测方案入口](../refs/performance-testing-entrypoints.md#2026-11-16-inline-复测路由与收尾核验)。
