@@ -1,3 +1,5 @@
+- 2026-11-16：[裸 URL 与模型输入角色](domains/sandai-platform/refs/v2-input-validation-entrypoints.md#2026-11-16-裸-url-与模型输入角色的实测区分) — 对照实际响应字段，区分地址格式与模型角色准入。
+
 - 2026-11-16：[压测观察值与推荐容量分界](domains/sandai-platform/pitfalls/load-capacity-observation-vs-recommendation.md) — 生产实际记录补录、续段与连续窗口、成功HTTP与交付、历史快照和当前路由、推荐起点与已验容量分栏，以及飞书原文与证据附件入口；报告正文保持关键实测、推荐值和下一步，细节移至附件。
 
 - 2026-11-16：[中美生产 V1 Assets 独立上传准备](domains/sandai-platform/refs/media-functional-acceptance-entrypoints.md#2026-11-16-中美生产-v1-assets-独立上传准备) — 按指定飞书上传附件验收，留存公开页差异、单文件与完整 multipart 双边界、流式验证、实际上传回执、同素材复测、原组织回查和基础格式补跑。补上海素材注册 HTTP/1.1 EOF 与视频海报错误映射。

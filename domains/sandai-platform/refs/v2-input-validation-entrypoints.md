@@ -2,7 +2,7 @@
 name: sandai-api-platform-v2-input-validation-entrypoints
 type: reference
 created: 2026-10-26
-updated: 2026-11-05
+updated: 2026-11-16
 tags: [sandai, openapi, v2, validation, testing, quota]
 links: [sandai-api-platform-openapi-quota-entrypoints, sandai-api-platform-global-acceptance-20261026]
 ---
@@ -94,3 +94,9 @@ Zeus Dev 管理后台任务详情的总体审核状态 `PASS` 可覆盖逐项审
 目标入口为 [MAGI-2 用例表](https://j0yswlgboxz.feishu.cn/base/O4AQbFHynaaPMasxtGUcgrElnGd?table=tblatlQqvDrJNPrW&view=vewytkCwBB)。用 lark-cli 的用户身份解析链接，读取实时字段和现有记录，沿现有文本用例确认 `content` 承载测试文本、`expected` 复选框表达预期通过与否。字段会变，写入前重新核对。来源为题库拒答标签时，写入预期不过审不代表已实测拦截。
 
 按源文本和目标表已有文本去重后随机抽样，批次、源行号及分类写入现有备注与测试点字段，保存随机种子和源文件哈希。新增回执按 record_id 集合回读，比对全部提交字段。2026-11-05 的 200 条导入证据见工作区 `.local/feishu-magi2-refusal-200-20261105/`。
+
+## 2026-11-16 裸 URL 与模型输入角色的实测区分
+
+**Why:** 参考图片 URL 去掉聊天里的 Markdown 包装后，地址格式正确仍可能遇到模型输入角色校验。通用 `invalid_parameter` 需要按回执的 `details` 定位字段。
+
+**How to apply:** 固定生产区域、组织、端点和其余请求字段。实际发送原生 JSON 裸 URL 后，保留 HTTP、Request ID、`code/message/details`。若回执定位 `parts` 并写明模型不支持请求中的输入角色，结合实际参考项和本组织模型配置复核，避免把公网地址可访问性当作模型准入证据。此次固定请求与回执见 API 工作区 `.local/assets-v1-dual-production-20261116/cn-generation-raw-url.MUKiVT/`。
