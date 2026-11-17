@@ -49,3 +49,5 @@ links: [sandai-api-platform-development-entrypoints]
 **Why:** 2026-11-16 夜间两地出现 `OssClient` 的 `asset_staging_cleanup_failed`，对象键位于 `upload-staging/`，异常为 `S3Exception`。同一晚的 `UploadArtifactCleanup` 则沿 Athena 删除内联 artifact 并重新入队。上传暂存删除日志的业务操作和对象标识可从 `OssClient.deleteStaged` 回查。
 
 **How to apply:** 用日志组件、事件名和对象键识别清理操作。暂存对象可按 object key 统计，内联 artifact 按 artifact UUID 去重并确认最后一次重试。获取上传 HTTP 结果时用请求 ID 或入口访问日志核对。仅有 `S3Exception` 类名时，通过对象存储侧请求回执核对具体状态码。[Zeus 暂存清理](https://github.com/world-sim-dev/zeus/blob/59b6561a80160de5be9c0227dd72ed2d2946fdee/modules/infra/src/main/java/co/sandai/zeus/infra/oss/OssClient.java#L346-L354)
+
+2026-11-17 复查暂存清理时，SLS 收录时间排序与应用报错时间排序不同。确认最后一次发生时，读取结构化应用 timestamp 或美国普通日志行首时间并转为北京时间。保留收录时间和应用时间，避免把延迟写入当成复发。SLS 控制台 GetLogs 的 from/to 使用整数 Unix 秒，本次带小数的时间参数返回 InternalError。
