@@ -54,7 +54,7 @@ links: [sandai-api-platform, sandai-api-platform-v2-input-validation-entrypoints
 **Why:** 纯文本变体调整任务类型后，原生 v2 和方舟都能受理请求，仍可能在下游创建阶段被拒绝。参考增强的任务类型条件和素材存在条件需要同时满足。
 
 - 方舟使用中央文档和现场 GET / POST 对照核对路径，正向请求和原生对照见工作区 `.local/magi2-cn-positive-20261116/ark/REQUEST-DETAILS.md`。分辨率默认值按协议和当前模型能力分别确认。
-- 本次修复后两条独立用例的配置 revision、任务类型、输入计数、422 Trace 和历史版校验器复现见同目录 `t2v-retest/REPORT.md` 及相邻 JSON。区分线上实测的 422 与离线定位的具体校验分支。
+- 本次修复后两条独立用例的配置 revision、任务类型、输入计数、422 Trace 和历史版校验器复现见同目录 `t2v-retest/REPORT.md` 及相邻 JSON。2026-11-17 复查发布标签与日志后，更正早期校验器推断。该批复验时的 Athena 已包含 #824 并允许空参考输入。Zeus 当时的无素材 I2FV 路径仍会带上两个缺省 0 的旧裁剪字段。使用生产版本的校验函数重放会拒绝旧裁剪参数，移除这两个字段后通过。Zeus [#505](https://github.com/world-sim-dev/zeus/pull/505) 与实际部署及新任务验收分别查证。更正后的任务级报表见同目录 `FAILURE-RCA-20261117.md`。
 
 **How to apply:** 使用无参考素材的同一提示词分别走两套协议，沿新任务查询实际保存的任务类型和输入。复查纯文本场景的有效增强类型，再对照下游当前校验规则。已经在队列里的旧任务保留创建时的任务类型；修复是否生效以修复后新任务实际派发、终态和成片为准。
 
@@ -73,5 +73,6 @@ links: [sandai-api-platform, sandai-api-platform-v2-input-validation-entrypoints
 
 - 逐条任务号、Job ID、公开状态及日志位置见工作区 `.local/magi2-cn-positive-20261116/KNOWN-ISSUES.md` 的在途诊断和相邻 `in-flight-diagnostics.json`。原始取证按 v2 与方舟分别保存。
 - 取证时按同一 Job ID 对齐 `inference-completed`、`Task athena.moderation` 和 `Failed to persist post-process failure`，以日志中的实际校验字段和值定位兼容问题。
+- Athena [#823](https://github.com/world-sim-dev/athena-admin/pull/823) 新增 Job 步骤类型。该次按日志的容器镜像标记反查发布 tag，定位到 API 写入端与消费同一 Job 的后处理 worker 部署到了不同版本。API、预处理和后处理使用独立发布目标，核对各自 rollout 和有效 Git SHA。实际镜像、发布记录、重复完成回报对照及未恢复任务指向 `FAILURE-RCA-20261117.md`。
 
 **How to apply** 用该 Job 的最新公开查询确认终态，日志异常单独标记为在途阻塞。对照提交端写入的步骤类型和读取端正在运行的任务 schema，再检查异常后的失败状态能否持久化。记录修复后原任务是否能继续，以及新建任务是否经过审核并产生成片。

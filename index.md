@@ -2,11 +2,11 @@
 
 - 2026-11-16：[Playground 模型 Schema 不兼容](domains/sandai-platform/pitfalls/playground-catalog-schema-mismatch.md) — 目录 200 后的前端错误、线上构建与单模型复现、正则和枚举约束的回查入口。
 
-- 2026-11-17：[Magi-2 推理完成后审核 worker 字段兼容错误](domains/sandai-platform/refs/magi2-cn-native-production-entrypoints.md#2026-11-17-推理完成后审核-worker-的字段兼容错误) — 按 Job ID 对齐推理完成、审核枚举校验和失败状态写回。
+- 2026-11-17：[Magi-2 推理完成后审核 worker 字段兼容错误](domains/sandai-platform/refs/magi2-cn-native-production-entrypoints.md#2026-11-17-推理完成后审核-worker-的字段兼容错误) — 按 Job ID 对齐推理完成、审核枚举校验和失败状态写回，核对 API 和后处理的独立发布 tag 及存量任务状态。
 
 - 2026-11-17：[Magi-2 推理执行失败的 worker 查证](domains/sandai-platform/refs/magi2-cn-native-production-entrypoints.md#2026-11-17-推理执行阶段失败的-worker-取证) — 按任务与 Job ID 区分 worker 取数据超时和完成回报冲突。
 
-- 2026-11-17：[文生视频变体调整后的双接口复验](domains/sandai-platform/refs/magi2-cn-native-production-entrypoints.md#2026-11-17-文生视频变体调整后的双接口复验) — 方舟与 v2 新任务、纯文本参考素材条件、实际 422 与复现分支。
+- 2026-11-17：[文生视频变体调整后的双接口复验](domains/sandai-platform/refs/magi2-cn-native-production-entrypoints.md#2026-11-17-文生视频变体调整后的双接口复验) — 方舟与 v2 新任务、纯文本 I2FV 在生产版本中通过空输入约束，按 Zeus 裁剪参数修正后的实际 422、源码与复现分支。
 
 - 2026-11-17：[Magi-2 失败比例与音频产物回查](domains/sandai-platform/refs/magi2-cn-native-production-entrypoints.md#2026-11-17-失败比例与音频产物回查) — 按完整创建窗口统计失败分母，沿原任务回执及成片探测核对音频开关。
 
