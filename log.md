@@ -2949,3 +2949,5 @@
 - 2026-11-17：记录火山方舟 Seedance 2.5 提示词改写与生成 API 参数的查证入口。
 
 - 2026-11-17 ingest：补暂存删除 WARN 的应用时间、SLS 收录时间和整数 Unix 秒查询参数验证。
+
+- 2026-11-17 ingest：补上海 Ark inline 压测的 Reference PE 实体 ID 校验与逐请求归属查证方法。
