@@ -1,3 +1,5 @@
+- 2026-11-17：[Magi-2 推理工作器关停与运行中状态](domains/sandai-platform/refs/magi2-cn-native-production-entrypoints.md#2026-11-17-推理工作器关停与运行中状态) — 串联任务、Job、推理请求、工作器关停和最后去噪进度，再回读终态。
+
 - 2026-11-17：[国内方舟文档与生产版本核对](domains/sandai-platform/refs/magi2-cn-native-production-entrypoints.md#2026-11-17-方舟公开文档与生产版本核对) — 以在线静态资源和发布记录定位版本，分别核对创建参数与查询时长语义。
 
 - 2026-11-17：[Reference PE 的结构化输出与本地值校验](domains/sandai-platform/pitfalls/reference-pe-structured-output-pattern.md) — 精确匹配压测台账，核对模型输出 Schema、实体 ID 正则和最后一次失败。

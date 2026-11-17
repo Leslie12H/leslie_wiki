@@ -83,3 +83,11 @@ links: [sandai-api-platform, sandai-api-platform-v2-input-validation-entrypoints
 **Why:** 公开文档的发布时间和参数说明准确性需要分别检查。此日国内线上页面已包含当时主线的最新 Ark 文档，查询 `duration` 的说明仍把它概括为实际成片时长。
 
 **How to apply:** 读取[线上方舟文档](https://platform.sandai.cn/docs/ark-generations/)的 HTML，核对静态资源路径中的前端 SHA 与[国内发布工作流](https://github.com/world-sim-dev/sandai-website/actions/runs/44005528927)，再比较部署 SHA 和主线之间是否修改文档。另从生产 Zeus Pod 镜像定位[方舟查询响应](https://github.com/world-sim-dev/zeus/blob/aa0add01bfdde4c3d4300264f829ddc901f1d3f8/modules/openapi/src/main/java/co/sandai/zeus/openapi/compatible/ark/ArkGenerationController.java#L114)及[创建参数解析](https://github.com/world-sim-dev/zeus/blob/aa0add01bfdde4c3d4300264f829ddc901f1d3f8/modules/openapi/src/main/java/co/sandai/zeus/openapi/compatible/ark/ArkGenerationRequest.java#L140)。该历史版本优先返任务记录中的正整数时长，回退时才对成片时长取整。模型可用分辨率也需结合有效模型配置，解析器枚举只证明入口识别。
+
+## 2026-11-17 推理工作器关停与运行中状态
+
+**Why:** Athena 已派发的任务可以在工作器关停后继续显示运行中。只有按工作器和推理请求核对实际进度，才能区分执行被打断、排队及推理完成后的交付阻塞。
+
+- 当次任务、派发时点、GPU 工作器关停和最后去噪步数见工作区 `.local/task-871469831763909/`，沿 `sls-job-4232150.json`、`sls-gpu-pod.json`、`sls-request-final-check.json` 及 `admin-status-recheck.json` 回查。关停触发方须在工作器所属环境查证。
+
+**How to apply:** 从 Zeus 任务 ID 取得 Athena Job ID，再用 Job ID 找工作器、推理请求 ID 和 trace。用工作器名回查无任务 ID 的关停日志，用推理请求 ID 查最后一条进度和接续情况。再读 API 或管理台终态，按实际事件时间排序。区分已确认的执行中断和待证的发布、缩容或驱逐原因。
