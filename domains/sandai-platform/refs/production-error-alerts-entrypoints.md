@@ -43,3 +43,9 @@ links: [sandai-api-platform-development-entrypoints]
 **Why:** 已接单的生成任务失败时，Zeus `TaskMetrics` 用 INFO 记录 `task_finished`。2026-11-17 双区均查到 `result=failure`，同时应用 ERROR 与美国 ALB 5xx 查询均未命中。
 
 **How to apply:** 在双区应用日志回查 `task_finished` 与 `result=failure`，按 `stage` 和去重后的 task ID 汇总。美国普通日志正文未开放 SQL 时，先计数再分页解析。用 task ID 对齐测试回执，命中现有记录后再用下游 trace 或 Job ID 确认原因。一次公共查询仍返回 200 时也可以取得失败终态。[Zeus TaskMetrics](https://github.com/world-sim-dev/zeus/blob/59b6561a80160de5be9c0227dd72ed2d2946fdee/modules/domain/src/main/java/co/sandai/zeus/domain/task/metrics/TaskMetrics.java#L157)
+
+## 2026-11-17 上传暂存对象删除错误
+
+**Why:** 2026-11-16 夜间两地出现 `OssClient` 的 `asset_staging_cleanup_failed`，对象键位于 `upload-staging/`，异常为 `S3Exception`。同一晚的 `UploadArtifactCleanup` 则沿 Athena 删除内联 artifact 并重新入队。上传暂存删除日志的业务操作和对象标识可从 `OssClient.deleteStaged` 回查。
+
+**How to apply:** 用日志组件、事件名和对象键识别清理操作。暂存对象可按 object key 统计，内联 artifact 按 artifact UUID 去重并确认最后一次重试。获取上传 HTTP 结果时用请求 ID 或入口访问日志核对。仅有 `S3Exception` 类名时，通过对象存储侧请求回执核对具体状态码。[Zeus 暂存清理](https://github.com/world-sim-dev/zeus/blob/59b6561a80160de5be9c0227dd72ed2d2946fdee/modules/infra/src/main/java/co/sandai/zeus/infra/oss/OssClient.java#L346-L354)
