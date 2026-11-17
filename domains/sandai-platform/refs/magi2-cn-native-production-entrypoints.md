@@ -76,3 +76,10 @@ links: [sandai-api-platform, sandai-api-platform-v2-input-validation-entrypoints
 - Athena [#823](https://github.com/world-sim-dev/athena-admin/pull/823) 新增 Job 步骤类型。该次按日志的容器镜像标记反查发布 tag，定位到 API 写入端与消费同一 Job 的后处理 worker 部署到了不同版本。API、预处理和后处理使用独立发布目标，核对各自 rollout 和有效 Git SHA。实际镜像、发布记录、重复完成回报对照及未恢复任务指向 `FAILURE-RCA-20261117.md`。
 
 **How to apply** 用该 Job 的最新公开查询确认终态，日志异常单独标记为在途阻塞。对照提交端写入的步骤类型和读取端正在运行的任务 schema，再检查异常后的失败状态能否持久化。记录修复后原任务是否能继续，以及新建任务是否经过审核并产生成片。
+
+
+## 2026-11-17 方舟公开文档与生产版本核对
+
+**Why:** 公开文档的发布时间和参数说明准确性需要分别检查。此日国内线上页面已包含当时主线的最新 Ark 文档，查询 `duration` 的说明仍把它概括为实际成片时长。
+
+**How to apply:** 读取[线上方舟文档](https://platform.sandai.cn/docs/ark-generations/)的 HTML，核对静态资源路径中的前端 SHA 与[国内发布工作流](https://github.com/world-sim-dev/sandai-website/actions/runs/44005528927)，再比较部署 SHA 和主线之间是否修改文档。另从生产 Zeus Pod 镜像定位[方舟查询响应](https://github.com/world-sim-dev/zeus/blob/aa0add01bfdde4c3d4300264f829ddc901f1d3f8/modules/openapi/src/main/java/co/sandai/zeus/openapi/compatible/ark/ArkGenerationController.java#L114)及[创建参数解析](https://github.com/world-sim-dev/zeus/blob/aa0add01bfdde4c3d4300264f829ddc901f1d3f8/modules/openapi/src/main/java/co/sandai/zeus/openapi/compatible/ark/ArkGenerationRequest.java#L140)。该历史版本优先返任务记录中的正整数时长，回退时才对成片时长取整。模型可用分辨率也需结合有效模型配置，解析器枚举只证明入口识别。
