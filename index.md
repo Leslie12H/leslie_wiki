@@ -1,3 +1,5 @@
+- 2026-11-17：[Magi-2 单次请求控制 PE](domains/sandai-platform/refs/magi2-request-pe-control.md) — 严格请求解析、任务快照覆盖、参考增强类型、素材校验及实际推理派发的查证入口。
+
 - 2026-11-16：[Playground 模型 Schema 不兼容](domains/sandai-platform/pitfalls/playground-catalog-schema-mismatch.md) — 目录 200 后的前端错误、线上构建与单模型复现、正则和枚举约束的回查入口。
 
 - 2026-11-17：[Magi-2 推理完成后审核 worker 字段兼容错误](domains/sandai-platform/refs/magi2-cn-native-production-entrypoints.md#2026-11-17-推理完成后审核-worker-的字段兼容错误) — 按 Job ID 对齐推理完成、审核枚举校验和失败状态写回。
