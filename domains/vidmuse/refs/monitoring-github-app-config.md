@@ -37,6 +37,15 @@ ACK Secret 详情的 annotations 可能包含 `kubectl.kubernetes.io/last-applie
 2. 从 [生产发布工作流](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/blob/main/.github/workflows/deploy-prod.yaml) 定位 ACK 环境，在 Deployment 的容器组页核对实际镜像。用镜像 SHA 打开对应版本的 `deploy/kubernetes.yaml` 与 `configs/config.prod.yaml`，读取工作负载的 Secret 引用、仓库和路径白名单、返回限制。
 3. 只需确认 App 绑定时，从 ACK 保密字典详情的数据表中按完整键名唯一匹配 App ID 和 Installation ID 两行，只展开这两个值。通过 [GitHub App 元数据接口](https://api.github.com/apps/vidmuse-monitor-ro-prod-leslie) 核对生产 App ID，查看 `permissions` 与 `events`。保留 Secret 与代码入口，省略数字 ID 和凭据值。
 
+## 2026-11-17 Maxwell GitHub OpenAPI 的授权范围
+
+**Why:** 同一个 App 安装可以为不同工具签发令牌，工具自身的配置决定可用操作及额外限制。Monitoring MCP 的证据路径规则由它自己的服务执行，Maxwell GitHub OpenAPI 的配置以仓库为粒度。
+
+**How to apply:**
+
+- 在 Maxwell 预设的「Tools 选择 → GitHub OpenAPI → 工具运行配置」按 [Maxwell 产品文档](https://github.com/world-sim-dev/maxwell-ai/blob/main/apps/studio/src/pages/docs/content/tools/github.md) 提交 App 安装凭据。若沿用同一个 App 安装，用同一 App 签发的 PEM，并确认安装已授权每个所选仓库。私密字段留空保存沿用已有值。
+- 核对 [工具配置 schema](https://github.com/world-sim-dev/maxwell-ai/blob/main/services/mcp-server/internal/server/github_tool.go) 和 [GitHub 客户端](https://github.com/world-sim-dev/maxwell-ai/blob/main/services/mcp-server/internal/github/client.go) 的仓库检查、安装令牌及操作权限上限。配置的仓库必须属于同一个安装账号。录入仓库名单后，用名单内仓库的 README 读取验证认证和范围，全局搜索类操作受仓库范围约束。Monitor 的路径白名单沿其部署版本的生产配置核对。
+
 ## 核验指针
 
 - 2026-09-12 核对的监控源码：`vidmuse-monitoring-mcp` Git ref `2a3389fe11e448bface2aaea7d0063c34cc8e98b`，`.github/workflows/deploy-prod.yaml`、`deploy/kubernetes.yaml`、`configs/config.prod.yaml`、`docs/readonly-code-database-evidence.md`。下次先刷新并核对当前部署；provider 激活路径会影响三个键是否存在。

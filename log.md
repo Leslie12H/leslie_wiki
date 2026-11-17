@@ -2963,3 +2963,5 @@
 - 2026-11-17 ingest：补 CN beta 预发布的日志归属、Sand AI Open 提交回执和生成终态的查证入口。
 
 - 2026-11-17：补充 VidMuse Monitoring MCP 生产 GitHub App、安装 ID 与代码白名单的只读核对入口。
+
+- 2026-11-17：补充 Monitoring 与 Maxwell GitHub OpenAPI 复用同一安装时的权限边界。
