@@ -1,3 +1,5 @@
+- 2026-11-17：[Playground 任务成功但结果区无法播放](domains/sandai-platform/pitfalls/playground-success-video-unavailable.md) — 沿任务终态、管理台源站预览、原账号任务详情和播放器错误核对成片交付。
+
 - 2026-11-17：[Magi-2 推理工作器关停与运行中状态](domains/sandai-platform/refs/magi2-cn-native-production-entrypoints.md#2026-11-17-推理工作器关停与运行中状态) — 串联任务、Job、推理请求、工作器关停和最后去噪进度，再回读终态。
 
 - 2026-11-17：[国内方舟文档与生产版本核对](domains/sandai-platform/refs/magi2-cn-native-production-entrypoints.md#2026-11-17-方舟公开文档与生产版本核对) — 以在线静态资源和发布记录定位版本，分别核对创建参数与查询时长语义。

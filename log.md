@@ -2967,3 +2967,5 @@
 - 2026-11-17：补充 Monitoring 与 Maxwell GitHub OpenAPI 复用同一安装时的权限边界。
 
 - 2026-11-17：补充 Monitor GitHub App 实际安装仓库的只读回读流程。
+
+- 2026-11-17 ingest：补 Playground 成功后无法播放的前端提示和源站、结果签名查证入口。
