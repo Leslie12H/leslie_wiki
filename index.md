@@ -733,7 +733,7 @@
 
 - 2026-09-23：最新主线的正式交接执行校验仍使用未过滤批次，导致 `SOURCE_SCOPE_CHANGED`；统一 live batch owner、后续 Sand 批次与成果资格的修复指针见 [整包提交排查](domains/sandai-data-smith/refs/sandeval-handoff-duplicate-scope.md)。
 
-- [VidMuse 访问日志入口](domains/vidmuse/refs/access-log-entrypoints.md) — runtime sidecar 与网站网关的覆盖边界、ALB/SLS 和生产环境核验指针（2026-09-22）。
+- [VidMuse 访问日志入口](domains/vidmuse/refs/access-log-entrypoints.md) — runtime sidecar、网站网关与 ALB/SLS 的覆盖边界，含 CN 生产自由画布的 Zeus、Manager 和 VidFlow 日志查询入口（更新至 2026-11-17）。
 
 - [Sand Eval 检查读取与保存性能](domains/sandai-data-smith/refs/sandeval-review-performance.md) — 整包报告、提交链、质检员列表 live 与 summary 路径、单人整改重复读取与批量读取的自动提交校验边界、默认样本展开及 Hologres 查询日志/计划证据边界（更新至 2026-09-29）。
 
