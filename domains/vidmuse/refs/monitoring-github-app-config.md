@@ -2,7 +2,7 @@
 name: monitoring-github-app-config
 type: reference
 created: 2026-09-12
-updated: 2026-09-12
+updated: 2026-11-17
 tags: [vidmuse, monitoring, github-app, maxwell, secrets, browser]
 links: [monitoring-code-scope-blocks-claim]
 ---
@@ -26,6 +26,16 @@ ACK Secret 详情的 annotations 可能包含 `kubectl.kubernetes.io/last-applie
 在该页面使用 `getByRole('row').filter({hasText: key})` 定位键时，外层注解行也会命中键名。此次因此触发 strict 错误，错误文本包含匹配元素内容。捕获异常后再输出原文同样会泄露；仅避免主动打印 Secret 正文并不充分。
 
 下次先通过 `getByText(key, {exact: true})` 计数，确认唯一匹配后，再沿 DOM 定位最近的 `tr`，只读取该行目标值。唯一性不成立就停止该次读取并换定位方式；不要执行可能产生完整元素诊断的模糊定位。Secret 页面禁止输出全量 DOM 树、截图和错误原文；异常仅返回预设的无凭据错误码或简短失败说明。
+
+## 2026-11-17 生产只读核对
+
+**Why:** GitHub App 的个人设置页可能要求二次验证。公开 App 元数据可以核对当前 App 的 ID、所有者、权限和订阅事件，生产 ACK 的运行时配置提供实际绑定证据。
+
+**How to apply:**
+
+1. 在 Studio 的预设配置确认监控工具绑定，在工具管理的「服务接入」核对生产 MCP 的入口及 `monitoring_code_evidence`。独立的 GitHub OpenAPI 工具有自己的配置。
+2. 从 [生产发布工作流](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/blob/main/.github/workflows/deploy-prod.yaml) 定位 ACK 环境，在 Deployment 的容器组页核对实际镜像。用镜像 SHA 打开对应版本的 `deploy/kubernetes.yaml` 与 `configs/config.prod.yaml`，读取工作负载的 Secret 引用、仓库和路径白名单、返回限制。
+3. 只需确认 App 绑定时，从 ACK 保密字典详情的数据表中按完整键名唯一匹配 App ID 和 Installation ID 两行，只展开这两个值。通过 [GitHub App 元数据接口](https://api.github.com/apps/vidmuse-monitor-ro-prod-leslie) 核对生产 App ID，查看 `permissions` 与 `events`。保留 Secret 与代码入口，省略数字 ID 和凭据值。
 
 ## 核验指针
 
