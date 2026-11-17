@@ -531,7 +531,7 @@
 
 - 同源失败的客户端缓存与重试边界：见 [EVOLVE 接入记录](domains/maxwell/refs/evolve-preset-evaluation-entry.md) 的部署版本 a158e6c1 核验指针（2026-09-12）。
 
-- [监控 GitHub App 配置与 Secret 读取](domains/vidmuse/refs/monitoring-github-app-config.md) — App/installation 定位、生产凭据指针、指纹校验与 ACK 注解泄露防护（2026-09-12）。 补充生产镜像、ACK 数字 ID 和 GitHub App 元数据的交叉核对。 补充复用安装凭据时两种工具的授权范围。
+- [监控 GitHub App 配置与 Secret 读取](domains/vidmuse/refs/monitoring-github-app-config.md) — App/installation 定位、生产凭据指针、指纹校验与 ACK 注解泄露防护（2026-09-12）。 补充生产镜像、ACK 数字 ID 和 GitHub App 元数据的交叉核对。 补充复用安装凭据时两种工具的授权范围。 附 GitHub 安装仓库的实时回读入口。
 
 - 五文件内容可由业务 Adapter 放入 evidence.output 复用已有 CAS/冻结/Judge；见 [EVOLVE 接入记录](domains/maxwell/refs/evolve-preset-evaluation-entry.md) 的 2026-09-12 方案收窄。
 

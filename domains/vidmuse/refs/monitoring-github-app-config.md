@@ -46,6 +46,12 @@ ACK Secret 详情的 annotations 可能包含 `kubectl.kubernetes.io/last-applie
 - 在 Maxwell 预设的「Tools 选择 → GitHub OpenAPI → 工具运行配置」按 [Maxwell 产品文档](https://github.com/world-sim-dev/maxwell-ai/blob/main/apps/studio/src/pages/docs/content/tools/github.md) 提交 App 安装凭据。若沿用同一个 App 安装，用同一 App 签发的 PEM，并确认安装已授权每个所选仓库。私密字段留空保存沿用已有值。
 - 核对 [工具配置 schema](https://github.com/world-sim-dev/maxwell-ai/blob/main/services/mcp-server/internal/server/github_tool.go) 和 [GitHub 客户端](https://github.com/world-sim-dev/maxwell-ai/blob/main/services/mcp-server/internal/github/client.go) 的仓库检查、安装令牌及操作权限上限。配置的仓库必须属于同一个安装账号。录入仓库名单后，用名单内仓库的 README 读取验证认证和范围，全局搜索类操作受仓库范围约束。Monitor 的路径白名单沿其部署版本的生产配置核对。
 
+## 2026-11-17 GitHub App 安装仓库的实时核对
+
+**Why:** Monitoring MCP 的仓库配置约束日常取证，GitHub App 的安装授权可能覆盖更多仓库。复用安装前，以 GitHub 返回的安装仓库列表为准。
+
+**How to apply:** 从 GitHub 组织的 Installed GitHub Apps 进入目标安装核对仓库。也可用现有 App 凭据在内存签发 App JWT，经 [Get an installation for the authenticated app](https://docs.github.com/en/rest/apps/apps#get-an-installation-for-the-authenticated-app) 核对安装账号、App ID 和 `repository_selection`。换取仅含 Metadata 读权限、未指定仓库子集的短期安装令牌，分页调用 [List repositories accessible to the app installation](https://docs.github.com/en/rest/apps/installations#list-repositories-accessible-to-the-app-installation)，用 `total_count` 校验去重结果。保留查证入口，省略令牌、PEM 和实时名单。
+
 ## 核验指针
 
 - 2026-09-12 核对的监控源码：`vidmuse-monitoring-mcp` Git ref `2a3389fe11e448bface2aaea7d0063c34cc8e98b`，`.github/workflows/deploy-prod.yaml`、`deploy/kubernetes.yaml`、`configs/config.prod.yaml`、`docs/readonly-code-database-evidence.md`。下次先刷新并核对当前部署；provider 激活路径会影响三个键是否存在。

@@ -2965,3 +2965,5 @@
 - 2026-11-17：补充 VidMuse Monitoring MCP 生产 GitHub App、安装 ID 与代码白名单的只读核对入口。
 
 - 2026-11-17：补充 Monitoring 与 Maxwell GitHub OpenAPI 复用同一安装时的权限边界。
+
+- 2026-11-17：补充 Monitor GitHub App 实际安装仓库的只读回读流程。
