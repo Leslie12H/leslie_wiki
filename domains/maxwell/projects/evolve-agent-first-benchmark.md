@@ -197,3 +197,9 @@ Studio check、typecheck 和就近技术测试通过；真实 dev 数据页面�
 **How to apply:** 回查 [本地原位编辑验证](/Users/leslie/.codex/visualizations/2026/11/12/01a1ce76-1824-77a2-8b00-503614d17f09/inline-artifact-20261118/verification.md)。保留标题与规则的阅读顺序，编辑态替换为就地控件。用例与评分配置按需展开。修订绑定来源版本，查看原版与切换产物可恢复草稿。保存成功为新版本，若用户期间已离开对象，在资料切换中提供结果。Agent 草稿以具体版本引用继续讨论，冻结产物保持历史语义。
 
 复用现有共享 Benchmarks 编辑规则和生成客户端。实现入口为 `collaboration/WorkspaceBenchmark.tsx`、`WorkspaceReader.tsx` 与 `benchmarks/sharedBenchmarkEditorSession.ts`。已有业务目录抽屉仍可恢复该入口原草稿。浏览器验收使用真实数据读取及本地草稿，正式版本提交由现有保存路径的自动化测试覆盖。
+
+### 2026-11-18：同一对话的文档编辑与续接
+
+**Why:** 用户要求 Agent 生成的调优方案正文能原位直接修改，且下次回来能找到同一对话、继续编辑并管理对话名称。产物阅读器与历史入口需要共同支撑这段工作。
+
+**How to apply:** 回查 [本地交互验证](/Users/leslie/.codex/visualizations/2026/11/12/01a1ce76-1824-77a2-8b00-503614d17f09/document-continuity-20261118/verification.md)。从当前对话标题打开历史，区分显式新对话与默认续接。可编辑文档保留来源版本，正文修改在浏览器内恢复，执行规则仍取原稿。入口在 `collaboration/WorkspaceDocument.tsx`、`ConversationMetadata.ts` 和 `WorkspaceConversationHistory.tsx`。保存正文与改名的现有 OpenAPI 缺口和拟议契约见 [接口审阅](/Users/leslie/.codex/visualizations/2026/11/12/01a1ce76-1824-77a2-8b00-503614d17f09/document-continuity-20261118/api-review.md)。本地体验可验收，正式保存及跨设备同步需确认接口后接入。
