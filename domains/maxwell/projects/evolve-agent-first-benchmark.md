@@ -150,3 +150,9 @@ links: [evolve-benchmark-unified-plan-review, evolve-user-manual-entrypoints, ev
 **How to apply:** 本轮改为紧凑单行入口、常驻真实输入框、按需历史与右侧产物。实现及验证回查 [本轮记录](/Users/leslie/.codex/visualizations/2026/11/12/01a1ce76-1824-77a2-8b00-503614d17f09/duet-refinement-20261118/verification.md)，代码入口为 `collaboration/HomeConversation.tsx`、`HomeConversationStore.ts` 和 `AgentWorkspace.tsx`。首页显式发送才创建会话；不确定重试保留消息身份与内容，站内切换保留草稿，账号/业务切换须隔离异步返回。不能由入口视觉简化推断已实现长期主对话。
 
 Studio check、typecheck 和就近技术测试通过；真实 dev 数据页面验证历史往返、Benchmark 引用与桌面/窄屏，未发送新 Agent 消息或保存正式业务修改。业务代码仍为本地未提交状态。重开产物应按工作区可用宽度决定分栏，避免只看整窗宽度而漏算 Studio 侧栏。
+
+### 同日补充：背景与输入区需要形成层次
+
+**Why:** 用户继续指出首屏像没有背景，要求参考 Claude；仅缩减导航会让同色画布上的内容显得分散。
+
+**How to apply:** 将问候与真实输入聚拢，用中性暖灰画布、浅色编辑面区分阅读和输入区域；产物打开后保留独立表面。对应局部 CSS、首页排列及桌面/窄屏/暗色预览证据见 [背景调整记录](/Users/leslie/.codex/visualizations/2026/11/12/01a1ce76-1824-77a2-8b00-503614d17f09/claude-surfaces-20261118/verification.md)。仍为本地前端调整，未扩大为业务逻辑或全站主题改造。
