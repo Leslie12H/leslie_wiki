@@ -3013,3 +3013,5 @@
 - 2026-11-18 ingest：补 EVOLVE 聊天后布局研究、Duet/Codex 参考证据边界，以及工作/资料索引与内容查看器的区分。
 
 - 2026-11-18 ingest：登记 `$vidmuse-task-lineage`，供 VidMuse Thread 任务跨环境关联开放平台生成 ID 与 Athena Job ID。
+
+- 2026-11-18 ingest：记录 EVOLVE 授权本地协作布局改造、工作/资料按需入口、草稿切换与窄屏验证；保留未执行 Agent 闭环的边界。

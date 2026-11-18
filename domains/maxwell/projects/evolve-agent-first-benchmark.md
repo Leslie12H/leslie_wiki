@@ -179,3 +179,13 @@ Studio check、typecheck 和就近技术测试通过；真实 dev 数据页面�
 **How to apply:** 回查 [本轮研究与布局建议](/Users/leslie/.codex/visualizations/2026/11/12/01a1ce76-1824-77a2-8b00-503614d17f09/layout-research-20261118.md)。已核对 Duet 官方教程中的 Chat/Tasks/Make、公开手机演示，以及 OpenAI 对摘要区、文件预览和并排标签页的说明。Duet 账号内桌面未验证；Codex 本机 UI 工具不允许读取，不从公开文档推断精确菜单或自动展示策略。
 
 设计建议区分持续对话、当前工作/资料索引、具体内容查看器；右上入口查看进度或查找内容，点击对象才展开正文。当前目录混合业务库与会话内容、右侧重复标题及常驻多层操作区，是源码可回查的问题。后续沿 `collaboration/AgentWorkspace.tsx`、`WorkspaceReader.tsx` 和 `EvolveAgentConversation.tsx` 核对修改范围，保护草稿、精确版本与阅读焦点；后台完成不抢当前编辑。任务状态与步骤不能代替真实运行结果。本轮仅交付研究，未改业务代码或执行真实 Agent 链路。
+
+### 2026-11-18：工作与资料入口、本地消息和产物布局落地
+
+**Why:** 用户授权把聊天后布局研究落实到本地，消息区、右上工作和资料入口、右侧查看器同时调整；继续沿用 Maxwell token，避免只换背景而保留后台式多层导航。
+
+**How to apply:** 回查 [本轮实施与验证](/Users/leslie/.codex/visualizations/2026/11/12/01a1ce76-1824-77a2-8b00-503614d17f09/layout-implementation-20261118/verification.md) 及其独立 diff。实现入口仍是 `collaboration/AgentWorkspace.tsx`、`WorkspaceReader.tsx`、`EvolveAgentConversation.tsx`；当前工作和资料读取放在 `WorkspaceCatalogStore.ts`，概览视图在 `WorkspaceOverview.tsx`。工作索引读取真实状态，资料索引与业务库分开，点击对象才展开正文；右侧单工具栏，分栏可调整，切换保护消息输入和已有修订草稿。
+
+复用门户浮层时，需将领域字号 token 的作用域覆盖浮层根节点；仅继承页面祖先样式会导致字号回落。窄屏下按工作区可用宽度切为单视图，隐藏已无作用的放大按钮并约束标题按钮收缩。
+
+最终 Studio check 和 8 个聚焦测试文件通过；真实既有会话验证工作/资料、精确版本切换、未保存修订恢复及放弃、引用、键盘/拖动分栏、桌面与 390px 窄屏。未发送新 Agent 消息、保存正式资产或执行评测；不据此宣称 Agent 闭环通过。业务代码未提交发布，服务与入口以实施记录为准。
