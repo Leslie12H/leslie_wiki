@@ -32,6 +32,12 @@ links: [vidmuse-aion, vidmuse-ai-frontend]
 - Aion 显示 `submission outcome is unknown` 时，按 Manager Trace ID 查同项目的 [开放平台生产日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/co_sandai_zeus_prod?slsRegion=cn-shanghai)。对照 `RequestOutcome` 的 HTTP 状态、`stage`、`field`、下载异常以及是否有 generation ID。已核验素材下载超时可返回 503 并映射为该提示。按实际平台回执和 Aion 入库状态核对是否受理。
 - 上游返回生成 ID 后，按该 ID 核对最终错误码。轮询中的 HTTP 429 表示查询限流，终态仍以成功读取的任务状态为准。应用侧预扣与撤销按同一个模型请求 ID 和账务交易号核验。
 
+## Sand AI Open 提交回执未知（2026-11-18）
+
+**Why:** 自由画布的 `on_failure: AionClient request failed:` 由 VidFlow 写入失败状态。`Sand AI Open submission outcome is unknown` 来自 AION 的开放平台适配器，表示客户端在提交阶段没有拿到可确认受理的回执。判断请求是否已建单，需要查原请求。
+
+**How to apply:** 用 [AION 适配器的创建回执分支](https://github.com/world-sim-dev/aion/blob/a84ccdddadfd4650f7068db698788d9d5b8e41e6/packages/api_aggregation_adapter/src/api_aggregation_adapter/adapters/sandai_open_adapter.py#L314-L332) 核对实际部署版本对传输异常、HTTP 状态和生成 ID 的处理。拿到画布任务 ID 后，按 [生成链路](free-canvas-draw-video-chain.md) 找 Manager Trace ID 和请求目标。再用 Trace ID 对齐开放平台原始响应、建单记录及生成 ID，确认受理情况后再决定是否重发。
+
 ## Dev 模型请求的上游提示词审核（2026-11-18）
 
 **Why:** VidMuse 的模型请求 UUID 可以由工具调用直接产生，查 Thread 或普通任务详情时可能返回 404。Dev 的应用环境与模型提供方的开放平台、推理工作器区域分别路由。对外显示的通用审核失败文案只保留结果。
