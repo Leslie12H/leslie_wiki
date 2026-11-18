@@ -170,3 +170,12 @@ Studio check、typecheck 和就近技术测试通过；真实 dev 数据页面�
 **Why:** 用户认为紫杏氛围过花，明确要求符合整体 Maxwell 色彩和 token，但保留适度质感。此约束取代上一节独立环境色的视觉建议。
 
 **How to apply:** 消费现有背景、文字、边框与动作 token，不重定义品牌色；通过同色系低对比明暗、浅色输入和产物表面形成层次。实现及证据见 [Maxwell 色彩收敛记录](/Users/leslie/.codex/visualizations/2026/11/12/01a1ce76-1824-77a2-8b00-503614d17f09/maxwell-surfaces-20261118/verification.md)。浅深色 computed style 已与根 token 对照；保持本地 CSS 改动范围，未改业务行为。
+
+
+### 2026-11-18：聊天后布局研究与信息层级纠偏
+
+**Why:** 用户指出对话后的消息区和右侧仍像传统后台，要求先研究 Duet 整体布局及 Codex 右上角文件、待办等入口。色彩继续沿用 Maxwell token；不能再以背景调整代替布局研究。
+
+**How to apply:** 回查 [本轮研究与布局建议](/Users/leslie/.codex/visualizations/2026/11/12/01a1ce76-1824-77a2-8b00-503614d17f09/layout-research-20261118.md)。已核对 Duet 官方教程中的 Chat/Tasks/Make、公开手机演示，以及 OpenAI 对摘要区、文件预览和并排标签页的说明。Duet 账号内桌面未验证；Codex 本机 UI 工具不允许读取，不从公开文档推断精确菜单或自动展示策略。
+
+设计建议区分持续对话、当前工作/资料索引、具体内容查看器；右上入口查看进度或查找内容，点击对象才展开正文。当前目录混合业务库与会话内容、右侧重复标题及常驻多层操作区，是源码可回查的问题。后续沿 `collaboration/AgentWorkspace.tsx`、`WorkspaceReader.tsx` 和 `EvolveAgentConversation.tsx` 核对修改范围，保护草稿、精确版本与阅读焦点；后台完成不抢当前编辑。任务状态与步骤不能代替真实运行结果。本轮仅交付研究，未改业务代码或执行真实 Agent 链路。

@@ -3009,3 +3009,5 @@
 - 2026-11-18 ingest：补 VidMuse 画布节点与 RTC task 唯一匹配、香港预发布 OpenAPI 503 及建单边界查证。
 
 - 2026-11-18 ingest：补 OpenAPI 素材下载超时、Athena 注册与生成提交三层重试策略的源码入口。
+
+- 2026-11-18 ingest：补 EVOLVE 聊天后布局研究、Duet/Codex 参考证据边界，以及工作/资料索引与内容查看器的区分。
