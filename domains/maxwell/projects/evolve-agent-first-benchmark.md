@@ -9,6 +9,8 @@ links: [evolve-benchmark-unified-plan-review, evolve-user-manual-entrypoints, ev
 
 # EVOLVE 对话优先与 Benchmark 信息架构
 
+当前视觉约束（2026-11-18）：保持 Duet 式对话与按需产物结构，但色彩必须使用 Maxwell 既有 token。用户已否定过花的紫杏环境色；只用同色系明暗、边界与表面层次增加质感。下方保留迭代历史。
+
 **Why**
 
 2026-11-12 用户提出以 Dot 和 GPT 式对话作为 EVOLVE 主入口，Benchmark 等内容按需展开。随后指出，Case 和 Judge 是用户在定义评测时才需要理解的组成，评测运行和调优是围绕 Benchmark 发生的动作。把这些概念并列放在首页会增加首次使用的理解成本。
@@ -162,3 +164,9 @@ Studio check、typecheck 和就近技术测试通过；真实 dev 数据页面�
 **Why:** 用户再次指出背景奇怪，明确选择「Claude Duet 的背景与氛围」。上一节按普通 Claude 暖灰页处理的推定不再作为当前视觉方向。
 
 **How to apply:** 回查 [Duet 氛围修正记录](/Users/leslie/.codex/visualizations/2026/11/12/01a1ce76-1824-77a2-8b00-503614d17f09/duet-atmosphere-20261118/verification.md)。使用官方演示开场的淡紫—暖杏环境色适配 EVOLVE 桌面外层，同时保留清晰近白的输入和产物面；统一协作页侧栏及边线，按路由限定影响。官方演示的开场背景与实际聊天阅读面需分开描述，不把手机开场渐变冒充 Duet 桌面聊天截图。已做桌面/窄屏、真实既有会话阅读、暗色样式及离开协作页恢复原主题的浏览器验证，未改变业务逻辑。
+
+### 同日收敛：Maxwell token 优先
+
+**Why:** 用户认为紫杏氛围过花，明确要求符合整体 Maxwell 色彩和 token，但保留适度质感。此约束取代上一节独立环境色的视觉建议。
+
+**How to apply:** 消费现有背景、文字、边框与动作 token，不重定义品牌色；通过同色系低对比明暗、浅色输入和产物表面形成层次。实现及证据见 [Maxwell 色彩收敛记录](/Users/leslie/.codex/visualizations/2026/11/12/01a1ce76-1824-77a2-8b00-503614d17f09/maxwell-surfaces-20261118/verification.md)。浅深色 computed style 已与根 token 对照；保持本地 CSS 改动范围，未改业务行为。
