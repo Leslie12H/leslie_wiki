@@ -38,6 +38,14 @@ links: [vidmuse-aion, vidmuse-ai-frontend]
 
 **How to apply:** 用 [AION 适配器的创建回执分支](https://github.com/world-sim-dev/aion/blob/a84ccdddadfd4650f7068db698788d9d5b8e41e6/packages/api_aggregation_adapter/src/api_aggregation_adapter/adapters/sandai_open_adapter.py#L314-L332) 核对实际部署版本对传输异常、HTTP 状态和生成 ID 的处理。拿到画布任务 ID 后，按 [生成链路](free-canvas-draw-video-chain.md) 找 Manager Trace ID 和请求目标。再用 Trace ID 对齐开放平台原始响应、建单记录及生成 ID，确认受理情况后再决定是否重发。
 
+## 预发布画布错误与开放平台建单核验（2026-11-18）
+
+**Why:** 画布可以同时出现多笔相同的失败提示。截图时间适合缩小检索窗口，节点标题和失败任务 ID 才能对齐具体操作。上海 VidMuse staging 可以通过独立的提供方配置调用香港 OpenAPI 国内预发布。
+
+**How to apply:** 在 VidFlow 或 VidMuse Zeus 取失败的 RTC task ID，从 `meta.canvas.nodeId` 回查 `documents/free_canvas` 的节点和失败记录。用同一个 RTC task 找到实际提交 Trace，再用 AION Manager 的出站 HTTP 日志确认目标 host 和状态。从 [Zeus 环境路由表](https://github.com/world-sim-dev/zeus/blob/338d36504de0c03654e92f60e6547df35a285816/deployment/magi/README.md#L185-L195) 定位目标环境。目标为国内预发布时，查香港 ACK 的 `staging-cn-openapi-zeus-deployment`，按同一 Trace 对齐 `RequestOutcome`。确认是否建单时，结合平台的阶段字段、生成 ID 和实际镜像的受理事务边界。
+
+2026-11-18 的具体查证见工作区 `.local/vidmuse-screenshot-503-20261118/REPORT.md`。
+
 ## Dev 模型请求的上游提示词审核（2026-11-18）
 
 **Why:** VidMuse 的模型请求 UUID 可以由工具调用直接产生，查 Thread 或普通任务详情时可能返回 404。Dev 的应用环境与模型提供方的开放平台、推理工作器区域分别路由。对外显示的通用审核失败文案只保留结果。
