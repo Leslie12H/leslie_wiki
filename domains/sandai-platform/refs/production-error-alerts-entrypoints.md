@@ -2,7 +2,7 @@
 name: sandai-platform-production-error-alerts-entrypoints
 type: reference
 created: 2026-11-16
-updated: 2026-11-17
+updated: 2026-11-18
 tags: [sandai, api-platform, sls, observability, alerting]
 links: [sandai-api-platform-development-entrypoints]
 ---
@@ -51,3 +51,11 @@ links: [sandai-api-platform-development-entrypoints]
 **How to apply:** 用日志组件、事件名和对象键识别清理操作。暂存对象可按 object key 统计，内联 artifact 按 artifact UUID 去重并确认最后一次重试。获取上传 HTTP 结果时用请求 ID 或入口访问日志核对。仅有 `S3Exception` 类名时，通过对象存储侧请求回执核对具体状态码。[Zeus 暂存清理](https://github.com/world-sim-dev/zeus/blob/59b6561a80160de5be9c0227dd72ed2d2946fdee/modules/infra/src/main/java/co/sandai/zeus/infra/oss/OssClient.java#L346-L354)
 
 2026-11-17 复查暂存清理时，SLS 收录时间排序与应用报错时间排序不同。确认最后一次发生时，读取结构化应用 timestamp 或美国普通日志行首时间并转为北京时间。保留收录时间和应用时间，避免把延迟写入当成复发。SLS 控制台 GetLogs 的 from/to 使用整数 Unix 秒，本次带小数的时间参数返回 InternalError。
+
+## 2026-11-18 开放平台 HTTP 503 查证
+
+**Why:** 共用 ALB 的实例指标汇总多个域名。SLS 全文查询中的 `httpStatus=503` 也可能匹配到时间戳或耗时里的 `503`。逐条解析出真实 HTTP 状态和请求 ID 才能给出 OpenAPI 应用的数量。
+
+**How to apply:** 先在启用访问日志的入口按 `host` 或 `http_host`、`status` 和 `upstream_status` 过滤，查同域名总请求数确认覆盖。再从两区 Zeus `RequestOutcome` 中解析 `httpStatus`、应用时间、`requestId` 和 Pod，按请求去重。查素材失败时依次回看 `stage`、`field`、`sourceHost`、`downloadReason` 以及生成 ID。`DOWNLOAD` 核对具体来源和异常，`INPUT_PREPARATION` 继续查同一 Trace 的依赖异常。访问日志缺失时，共享 ALB 峰值保留实例口径。前端遇到提交回执未知时，沿 [VidMuse 访问日志核验入口](../../vidmuse/refs/access-log-entrypoints.md#sand-ai-open-提交回执未知2026-11-18) 回查原始响应和受理状态。
+
+2026-11-18 的双区窗口、逐请求证据和上海入口覆盖范围见工作区 `.local/openapi-503-20261118/REPORT.md`。

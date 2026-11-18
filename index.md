@@ -26,7 +26,7 @@
 
 - 2026-11-16：[国内生产 Magi-2 原生全链路验收入口](domains/sandai-platform/refs/magi2-cn-native-production-entrypoints.md) — 精确模型、素材回读、同步与异步参数边界，以及原任务到成片的查证。 含[纯文本任务提交校验](domains/sandai-platform/refs/magi2-cn-native-production-entrypoints.md#2026-11-16-纯文本任务提交校验)和模型变体配置回查。 补两档分辨率全画幅、显式水印对照和成片验收流程。
 
-- 2026-11-16：[API 平台生产 ERROR 日志告警](domains/sandai-platform/refs/production-error-alerts-entrypoints.md) — 双区日志级别采集差异、应用错误文件去重、告警评估与飞书送达的回查入口。含运维群追加与双渠道回读。 补素材查询 429 计入 ERROR 时的查证方法。 补原始应用日志、ALB 与重试去重的查证。 补 OSS 删除被拒、Athena HTTP 200 与测试请求对账。 补异步生成失败的 INFO 终态回查。 补上传暂存对象删除失败的回查。 补日志晚到与实际事件时间核对。
+- 2026-11-16：[API 平台生产 ERROR 日志告警](domains/sandai-platform/refs/production-error-alerts-entrypoints.md) — 双区日志级别采集差异、应用错误文件去重、告警评估与飞书送达的回查入口。含运维群追加与双渠道回读。 补素材查询 429 计入 ERROR 时的查证方法。 补原始应用日志、ALB 与重试去重的查证。 补 OSS 删除被拒、Athena HTTP 200 与测试请求对账。 补异步生成失败的 INFO 终态回查。 补上传暂存对象删除失败的回查。 补日志晚到与实际事件时间核对。 补按域名拆分 HTTP 503、全文命中复核与素材阶段取证。
 
 - 2026-11-16：[火山方舟 Seedance 音频开关与定价查证](domains/sandai-platform/refs/seedance-ark-audio-pricing-entrypoints.md) — 回查 2.0 与 2.5 的音频开关、输入视频和实际账单，1.5 Pro 历史有声/无声计价，以及 1.0 音频能力、计价和中国站 API 下线批次。
 
