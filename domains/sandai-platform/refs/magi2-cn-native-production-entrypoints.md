@@ -98,6 +98,6 @@ links: [sandai-api-platform, sandai-api-platform-v2-input-validation-entrypoints
 **Why** 参考视频单段和独立视频累计上限由 Athena 预处理规则决定。Zeus 的模型变体、生成余额和预处理版本分别影响线上用例能走到哪一步。
 
 - Athena [#835](https://github.com/world-sim-dev/athena-admin/pull/835) 与生产发布回执为时长上限的源码入口。重点查 `ApiService/validators/reference.py` 的上下限常量及 `ApiService/preprocessors/reference_checks.py` 的单段、累计校验。
-- 2026-11-18 的素材哈希、Zeus 实际变体、两协议完整请求、同步余额拦截和发布版离线边界验证见工作区 `.local/magi2-cn-reference-video-30s-20261118/REPORT.md` 及同目录回执。线上任务和成片从当次最新回执回查。
+- 2026-11-18 的素材哈希、Zeus 实际变体、两协议完整请求、同步余额拦截和发布版离线边界验证见工作区 `.local/magi2-cn-reference-video-30s-20261118/REPORT.md` 及同目录回执。补额后沿同一素材 ID 核实 Zeus 派发与 Athena 参考校验，再查每个原任务的成功回执、完整解码和音轨实测。成片成功、时长边界成立与音频开关是否生效分别记录。
 
 **How to apply** 用三个不同且逐帧可解码的合成视频覆盖恰好等于累计上限，再用独立视频覆盖恰好等于单段上限。先核对上传读回与哈希、有效模型分辨率和测试组织可用额度。同步创建若返回余额不足，保留请求 ID，余额可用后沿同批已验证素材重新提交，追踪下游先过预处理再到成片查询。使用另一组织时应在其作用域内上传素材。
