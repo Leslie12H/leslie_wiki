@@ -2,7 +2,7 @@
 name: sandai-api-platform-media-functional-acceptance-entrypoints
 type: reference
 created: 2026-11-14
-updated: 2026-11-16
+updated: 2026-11-18
 tags: [sandai, api-platform, media, functional-testing, openapi]
 links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform-performance-testing-entrypoints]
 ---
@@ -123,3 +123,9 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **五分钟目标档的在途停发（2026-11-16）：** 以之前的短测耗时估算在途上限，按既有运行规程触顶停新增、排空已发请求。触顶时分别记录已回执、正文尚未读取完和正文已读完等待响应的数量，配合逐笔 trace 判断积压在何处。固定计划窗口、实际发送窗口与排空窗口分开统计。上海同区 Pod 的实测速率高于仅用公网 EIP 配置推算的数值，公网峰值换算只作路径规划，现场观测独立保存。证据见工作区 `.local/assets-v1-dual-production-20261116/video-90mb-5qps-300s/RESULTS.md`。
 
 **三分钟大文件上传与 TCP 缓冲（2026-11-16）：** 发送进程被 OOM 终止时，保留逐笔意图和已知回执。对照 `memory.current` 与 `memory.stat` 的 `anon`、`file`、`sock`，只限制应用分块仍可能被内核 TCP 发送缓冲占满。在既有发压 Pod 每条连接设置 `SO_SNDBUF`，通过受限的私有 Unix socket 继续沿用原调度和台账。发压镜像缺系统根时，使用 Node 已验证的公开根和只读 TLS HEAD 预检。发起窗口、回执排空、共享 ALB 分钟桶及 ACK 副本采样按同一 UTC 时间对齐。结果与监控见工作区 `.local/assets-v1-dual-production-20261116/video-90mb-5qps-180s/RESULTS.md`。
+
+## 2026-11-18 参考视频扩展名与实际容器
+
+**Why:** 方舟兼容接口受理后，Athena 会在推理前检查参考视频。扩展名报错中的 Allowed 可以只列出该文件探测出的容器对应后缀。单段时长超限也会在同一步失败。
+
+**How to apply:** 先用开放平台任务 ID 找 Athena Job ID，再读 `pp_reference_media_validation` 的错误并保留输入序号。扩展名问题按 [Athena 容器与后缀校验](https://github.com/world-sim-dev/athena-admin/blob/99b655f72c6fdbf300a3a3404b0a02096dfe218f/ApiService/preprocessors/reference_checks.py#L28-L45) 区分容器白名单、实际容器与后缀一致性以及编解码器检查。时长问题按错误中的实际秒数核对单段和累计阈值。该次线上回执可从工作区 `.local/platform-three-failures-20261118/sls-zeus-cn.json` 和 `sls-athena-execution.json` 关联。
