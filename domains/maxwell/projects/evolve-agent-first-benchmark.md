@@ -2,7 +2,7 @@
 name: evolve-agent-first-benchmark
 type: project
 created: 2026-11-12
-updated: 2026-11-14
+updated: 2026-11-18
 tags: [maxwell, evolve, benchmark, navigation, workflow]
 links: [evolve-benchmark-unified-plan-review, evolve-user-manual-entrypoints, evolve-workspace-implementation-20261015]
 ---
@@ -142,3 +142,11 @@ links: [evolve-benchmark-unified-plan-review, evolve-user-manual-entrypoints, ev
 本轮实现对话首页与按需右侧工作区；保留原 AgentSession，按精确版本打开 Benchmark、草稿、冻结产物和运行记录，并可把分析消息放到右侧阅读。宿主保护当前阅读焦点，引用明确进入原输入框，业务修订复用既有编辑器。跨任务长期主对话、Agent 通用展示协议及任意生成页面仍未实施。
 
 本地前端代理现有 dev API；Studio check 与聚焦测试通过。真实浏览器验证多对象切换、引用与输入跨详情往返保留、Benchmark 未保存修订恢复/放弃、原生引用刷新恢复、390px 窄屏。修复了新会话入口遗漏旧基础样式导致放弃草稿确认框被修订面板遮挡的问题；复用旧业务阅读器/弹窗时须检查其完整样式依赖。没有发送新 Agent 消息、启动真实评测或保存正式业务修改，因此不称为自然 Agent 闭环通过。业务工作树保持未提交状态，既有改动未回滚。
+
+## 2026-11-18：首屏向 Duet 形态收敛
+
+**Why:** 用户认为本地首屏第一眼奇怪，要求向 Duet 靠拢。双层导航、宣传式标题、开始按钮和重复历史列表，让真实输入退到第二步。
+
+**How to apply:** 本轮改为紧凑单行入口、常驻真实输入框、按需历史与右侧产物。实现及验证回查 [本轮记录](/Users/leslie/.codex/visualizations/2026/11/12/01a1ce76-1824-77a2-8b00-503614d17f09/duet-refinement-20261118/verification.md)，代码入口为 `collaboration/HomeConversation.tsx`、`HomeConversationStore.ts` 和 `AgentWorkspace.tsx`。首页显式发送才创建会话；不确定重试保留消息身份与内容，站内切换保留草稿，账号/业务切换须隔离异步返回。不能由入口视觉简化推断已实现长期主对话。
+
+Studio check、typecheck 和就近技术测试通过；真实 dev 数据页面验证历史往返、Benchmark 引用与桌面/窄屏，未发送新 Agent 消息或保存正式业务修改。业务代码仍为本地未提交状态。重开产物应按工作区可用宽度决定分栏，避免只看整窗宽度而漏算 Studio 侧栏。
