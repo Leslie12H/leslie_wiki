@@ -2,7 +2,7 @@
 name: sandai-api-platform-performance-testing-entrypoints
 type: reference
 created: 2026-10-27
-updated: 2026-11-16
+updated: 2026-11-18
 tags: [sandai, api-platform, performance, testing, quota]
 links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi-quota-entrypoints, sandai-api-platform-test-organization-retirement]
 ---
@@ -428,3 +428,11 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why:** 路由不匹配产生的 HTTP 503、发压网络错误和实际容量瓶颈需要不同证据；更换路径后，准入、指标归属与收尾也要共同复核。
 
 **How to apply:** 沿[inline 准入与健康发现](../pitfalls/inline-load-admission-and-discovery.md#2026-11-16路由切换未知受理与有限历史豁免)核对原回执的证明边界、精确旧 `UNKNOWN` 的单次前置豁免、仅限授权名单的年龄豁免、原始统计保留和临时 RPM 恢复后的独立 GET。具体授权、运行参数、当前配额、任务明细和结果仅存对应审计目录。
+
+## 2026-11-18 按组织拆解 Athena 排队与推理时长
+
+**Why:** 开放平台 Running 表示任务已经派发或进入执行阶段。提交后还可能等待 Athena worker。端到端平均耗时会受到该等待和结果审核影响。
+
+**How to apply:** 在 Admin 按组织与创建时间固定任务集合，保存状态和读取时刻。上海 SLS `co_sandai_zeus_prod` 用 `task_submitted` 将平台任务号对到 Athena Job，`task_finished` 取首次公开终态。用 `inference-prod` 的 `Created … task chunks for job …` 到 `athena` 的 `task started` 计算分发至 worker 的等待，用 worker 日志 `inference finished in …s` 取推理时间。以 `/inference-completed` 的成功回执核对完成边界，以 `task accepted` 中的分辨率、目标时长、步数核对可比性。按创建时间和北京时间分桶，记录每桶成功样本数、失败与在途，检查三段事件全量匹配和顺序再计算。定位等待成因时还需核对调度器、目标队列和槽位数据。
+
+2026-11-18 上海组织样本的逐任务对照见工作区 `.local/prod-task-stats-20261118/org-task-timings.json`。线上回查入口为 [API 管理后台](https://zeus-admin.sandaii.cn/) 和 [Athena worker 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai)。
