@@ -2,7 +2,7 @@
 name: vidmuse-access-log-entrypoints
 type: reference
 created: 2026-09-22
-updated: 2026-11-17
+updated: 2026-11-18
 tags: [vidmuse, nginx, logs]
 links: [vidmuse-aion, vidmuse-ai-frontend]
 ---
@@ -31,3 +31,11 @@ links: [vidmuse-aion, vidmuse-ai-frontend]
 - **How:** 沿 [Zeus 上海 staging 路由](https://github.com/world-sim-dev/vidmuse-zeus/blob/954f5a278146d9e47f4a43d8b8e7250058dc1c20/docs/runbooks/zeus/shanghai-staging-deployment.md#L41-L61) 核对当前域名归属。在 [上海集群应用 SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/vidmuse-cn-staging-manager?slsRegion=cn-shanghai) 按画布或任务 ID 查 `vidmuse-cn-staging-zeus`、`vidmuse-cn-staging-manager`、`vidmuse-cn-staging-vidflow`。相同任务 ID 也可能出现在另一环境的回调日志中。取证时核对实际 Pod、请求目标和任务回执。
 - Aion 显示 `submission outcome is unknown` 时，按 Manager Trace ID 查同项目的 [开放平台生产日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/co_sandai_zeus_prod?slsRegion=cn-shanghai)。对照 `RequestOutcome` 的 HTTP 状态、`stage`、`field`、下载异常以及是否有 generation ID。已核验素材下载超时可返回 503 并映射为该提示。按实际平台回执和 Aion 入库状态核对是否受理。
 - 上游返回生成 ID 后，按该 ID 核对最终错误码。轮询中的 HTTP 429 表示查询限流，终态仍以成功读取的任务状态为准。应用侧预扣与撤销按同一个模型请求 ID 和账务交易号核验。
+
+## Dev 模型请求的上游提示词审核（2026-11-18）
+
+**Why:** VidMuse 的模型请求 UUID 可以由工具调用直接产生，查 Thread 或普通任务详情时可能返回 404。Dev 的应用环境与模型提供方的开放平台、推理工作器区域分别路由。对外显示的通用审核失败文案只保留结果。
+
+**How to apply:** 在正确环境按模型请求主键查 Aion `model_api_requests`，用 `upstream_task_id` 和实际提供方入口匹配开放平台任务，再从 Zeus 提交日志取得 Athena Job ID。查 `moderation stage decided` 的 `stage`、`item` 和 `reason`；若只有 Celery 任务日志，用接收日志中的工作器名和秒级窗口补查决策。文本项后缀按 [Athena 提示词分段实现](https://github.com/world-sim-dev/athena-admin/blob/1fbfab7a8972faa04dc68772d2777f377440ff49/ApiService/services/moderation.py#L71-L79) 回查，标签指向整个分段，具体命中词仍以审核细项为准。
+
+- 该次跨环境的证据路径为工作区 `.local/newjeans-magi2-review-20261118/`，依次查看 `dev-aion-evidence.json`、`dev-provider-host.json`、`sls-initial.json` 和 `sls-athena-decisions.json`。线上路由须重新核对。
