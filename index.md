@@ -137,7 +137,7 @@
 
 - 2026-10-27：[API Dev 采集接通与保存验收](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-27-已授权后的实际接通验收入口) — 既有实例复用、缺字段与 UP 区分、心跳新鲜度、CMS 保存后逐图回读及受限部署入口。
 
-- 2026-11-18：[按组织拆解 Athena 排队与推理时长](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-18-按组织拆解-athena-排队与推理时长) — 任务号与 Job ID 对齐，核对分发至 worker 的等待、worker 实测时长和成功交付，附同池槽位占用与同 Pod 接力查证。
+- 2026-11-18：[按组织拆解 Athena 排队与推理时长](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-18-按组织拆解-athena-排队与推理时长) — 任务号与 Job ID 对齐，核对分发至 worker 的等待、worker 实测时长和成功交付，附同池槽位占用、同 Pod 接力和跨环境组织归属查证。
 
 - 2026-10-27：[API 平台阿里云看板入口](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-10-27-阿里云看板交付入口) — CMS 原生云看板、Grafana 权限、JSON 采集实施清单及云上验收边界。
 
