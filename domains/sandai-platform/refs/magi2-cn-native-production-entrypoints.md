@@ -2,7 +2,7 @@
 name: sandai-platform-magi2-cn-native-production-entrypoints
 type: reference
 created: 2026-11-16
-updated: 2026-11-17
+updated: 2026-11-18
 tags: [sandai, api-platform, magi2, testing, production]
 links: [sandai-api-platform, sandai-api-platform-v2-input-validation-entrypoints, sandai-platform-magi2-multimodal-api-test-entrypoints]
 ---
@@ -91,3 +91,13 @@ links: [sandai-api-platform, sandai-api-platform-v2-input-validation-entrypoints
 - 当次任务、派发时点、GPU 工作器关停和最后去噪步数见工作区 `.local/task-871469831763909/`，沿 `sls-job-4232150.json`、`sls-gpu-pod.json`、`sls-request-final-check.json` 及 `admin-status-recheck.json` 回查。关停触发方须在工作器所属环境查证。
 
 **How to apply:** 从 Zeus 任务 ID 取得 Athena Job ID，再用 Job ID 找工作器、推理请求 ID 和 trace。用工作器名回查无任务 ID 的关停日志，用推理请求 ID 查最后一条进度和接续情况。再读 API 或管理台终态，按实际事件时间排序。区分已确认的执行中断和待证的发布、缩容或驱逐原因。
+
+
+## 2026-11-18 参考视频单段与累计时长边界
+
+**Why** 参考视频单段和独立视频累计上限由 Athena 预处理规则决定。Zeus 的模型变体、生成余额和预处理版本分别影响线上用例能走到哪一步。
+
+- Athena [#835](https://github.com/world-sim-dev/athena-admin/pull/835) 与生产发布回执为时长上限的源码入口。重点查 `ApiService/validators/reference.py` 的上下限常量及 `ApiService/preprocessors/reference_checks.py` 的单段、累计校验。
+- 2026-11-18 的素材哈希、Zeus 实际变体、两协议完整请求、同步余额拦截和发布版离线边界验证见工作区 `.local/magi2-cn-reference-video-30s-20261118/REPORT.md` 及同目录回执。线上任务和成片从当次最新回执回查。
+
+**How to apply** 用三个不同且逐帧可解码的合成视频覆盖恰好等于累计上限，再用独立视频覆盖恰好等于单段上限。先核对上传读回与哈希、有效模型分辨率和测试组织可用额度。同步创建若返回余额不足，保留请求 ID，余额可用后沿同批已验证素材重新提交，追踪下游先过预处理再到成片查询。使用另一组织时应在其作用域内上传素材。

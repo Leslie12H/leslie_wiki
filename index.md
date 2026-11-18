@@ -1,5 +1,7 @@
 - 2026-11-18：[登录验证码测试通道评审](disciplines/testing/test-otp-login-review.md) — 多业务按项目接入、测试身份、取码权限、并发租约与业务会话回收的验收入口。
 
+- 2026-11-18：[Magi-2 参考视频单段与累计时长边界](domains/sandai-platform/refs/magi2-cn-native-production-entrypoints.md#2026-11-18-参考视频单段与累计时长边界) — 两协议验证单段和累计边界，核对模型变体、余额、预处理部署和原任务成片。
+
 - 2026-11-17：[Playground 任务成功但结果区无法播放](domains/sandai-platform/pitfalls/playground-success-video-unavailable.md) — 沿任务终态、管理台源站预览、原账号任务详情和播放器错误核对成片交付。
 
 - 2026-11-17：[Magi-2 推理工作器关停与运行中状态](domains/sandai-platform/refs/magi2-cn-native-production-entrypoints.md#2026-11-17-推理工作器关停与运行中状态) — 串联任务、Job、推理请求、工作器关停和最后去噪进度，再回读终态。
