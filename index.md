@@ -1,4 +1,4 @@
-- 2026-11-18：[登录验证码测试通道评审](disciplines/testing/test-otp-login-review.md) — 测试身份、取码权限、并发租约与业务会话回收的验收入口。
+- 2026-11-18：[登录验证码测试通道评审](disciplines/testing/test-otp-login-review.md) — 多业务按项目接入、测试身份、取码权限、并发租约与业务会话回收的验收入口。
 
 - 2026-11-17：[Playground 任务成功但结果区无法播放](domains/sandai-platform/pitfalls/playground-success-video-unavailable.md) — 沿任务终态、管理台源站预览、原账号任务详情和播放器错误核对成片交付。
 
