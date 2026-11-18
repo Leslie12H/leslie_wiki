@@ -436,3 +436,5 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **How to apply:** 在 Admin 按组织与创建时间固定任务集合，保存状态和读取时刻。上海 SLS `co_sandai_zeus_prod` 用 `task_submitted` 将平台任务号对到 Athena Job，`task_finished` 取首次公开终态。用 `inference-prod` 的 `Created … task chunks for job …` 到 `athena` 的 `task started` 计算分发至 worker 的等待，用 worker 日志 `inference finished in …s` 取推理时间。以 `/inference-completed` 的成功回执核对完成边界，以 `task accepted` 中的分辨率、目标时长、步数核对可比性。按创建时间和北京时间分桶，记录每桶成功样本数、失败与在途，检查三段事件全量匹配和顺序再计算。定位等待成因时还需核对调度器、目标队列和槽位数据。
 
 2026-11-18 上海组织样本的逐任务对照见工作区 `.local/prod-task-stats-20261118/org-task-timings.json`。线上回查入口为 [API 管理后台](https://zeus-admin.sandaii.cn/) 和 [Athena worker 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai)。
+
+**诊断 worker 槽位持续占用。** 从目标 Job 的 worker 标签确定对应模型池，用 SLS 可搜索标签 `__tag__:_std_pod_name_` 前缀按小窗口查池内全部 `task started` 和 `inference finished in`。核对单页上限与去重，按同一 Pod 将目标任务启动与上一任务结束配对。运行计数保持在同一高位且上单刚结束便从队列接下一单，支持执行槽位占用的归因。目标组织以外的 Job 也计入池使用率。日志中观测到的并行数仍需从运行配置核对硬上限，队列优先级和扩容成因也需要独立证据。该次取证见工作区 `.local/prod-task-stats-20261118/cn-fleet-occupancy-evidence.json`。
