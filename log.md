@@ -3011,3 +3011,5 @@
 - 2026-11-18 ingest：补 OpenAPI 素材下载超时、Athena 注册与生成提交三层重试策略的源码入口。
 
 - 2026-11-18 ingest：补 EVOLVE 聊天后布局研究、Duet/Codex 参考证据边界，以及工作/资料索引与内容查看器的区分。
+
+- 2026-11-18 ingest：登记 `$vidmuse-task-lineage`，供 VidMuse Thread 任务跨环境关联开放平台生成 ID 与 Athena Job ID。

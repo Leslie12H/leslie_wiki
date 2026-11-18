@@ -46,6 +46,8 @@ links: [vidmuse-aion, vidmuse-ai-frontend]
 
 2026-11-18 的具体查证见工作区 `.local/vidmuse-screenshot-503-20261118/REPORT.md`。
 
+跨 VidMuse 和开放平台的任务映射可以调用本机 `$vidmuse-task-lineage`。该 skill 以持久化任务关联和实际出站路由选环境，沿 Zeus 的派发记录核对 Athena Job。入口为 `~/.codex/skills/vidmuse-task-lineage/SKILL.md`。
+
 ## Dev 模型请求的上游提示词审核（2026-11-18）
 
 **Why:** VidMuse 的模型请求 UUID 可以由工具调用直接产生，查 Thread 或普通任务详情时可能返回 404。Dev 的应用环境与模型提供方的开放平台、推理工作器区域分别路由。对外显示的通用审核失败文案只保留结果。
