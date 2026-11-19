@@ -2,7 +2,7 @@
 name: sandai-api-platform-openapi-quota-entrypoints
 type: reference
 created: 2026-10-26
-updated: 2026-11-16
+updated: 2026-11-19
 tags: [sandai, openapi, quota, concurrency, testing]
 links: [sandai-api-platform-development-entrypoints, sandai-api-platform-global-acceptance-20261026]
 ---
@@ -45,3 +45,15 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-global-
 - 可复查脚本：项目 `postman/scripts/quota_acceptance.py`；probe / observe 为只读查询，concurrency 为会收费的 fake 任务创建。复查旧任务不重发创建请求。
 - **Why:** Postman CLI 退出码 0 只证明实际执行的断言通过；异步采样若未真正发出请求，空快照不能证明并发生效。
 - **How to apply:** 同时核对实际 HTTP 查询数、逐任务状态记录、样本完整性与断言数。没有队列/在途证据时保留未验证；修复采样先读已有任务，再依据当前授权决定是否增加付费样本。严格执行并发还需组织配额与内部 slot / 下游时间线。
+
+
+## 2026-11-19 组织任务排队与 GPU 启动的查证
+
+**Why** 管理后台的 Running 覆盖任务从入库到出片的多个阶段。同一批次可能先等组织并发名额，下发成功后又在 Athena 等待 GPU。只看任务状态或更新时间，无法定位等待发生的位置。
+
+**How to apply**
+
+1. 用管理后台的组织任务列表和组织 quota GET 分别取任务创建时间、状态与 `effectiveMaxConcurrentTasks`。固定时间窗口和任务 ID，保留终态前序任务供并发复盘。
+2. 在上海生产 SLS 的 `co_sandai_zeus_prod` 按 taskId 查 `task_submitted` 和 `task_finished`。用入库至下发的时间差计算平台等待。按下发和终态时间重建已受理未终态的数量，对照有效上限与前序终态后的补位间隔。遇到未知受理或异常占位时，加查派发状态与 Redis 实际成员。
+3. 以 `task_submitted` 的 jobId 串接 `inference-prod` 的前处理和任务切片，以及 `athena` 的 worker `task started`、`inference finished in`。已建切片但还无 worker 开始回执时，核对调度记录与日志时效后再判定下游等待。用 worker 开始至结束的耗时衡量推理，用平台终态确认交付。
+4. 本次只读证据见工作区 `.local/org-871466884966341-20261119/` 的配额回读和日志时间线。线上数量、上限和等待时长按当时快照重新查证。
