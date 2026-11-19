@@ -2,7 +2,7 @@
 name: vidmuse-access-log-entrypoints
 type: reference
 created: 2026-09-22
-updated: 2026-11-18
+updated: 2026-11-19
 tags: [vidmuse, nginx, logs]
 links: [vidmuse-aion, vidmuse-ai-frontend]
 ---
@@ -55,3 +55,12 @@ links: [vidmuse-aion, vidmuse-ai-frontend]
 **How to apply:** 在正确环境按模型请求主键查 Aion `model_api_requests`，用 `upstream_task_id` 和实际提供方入口匹配开放平台任务，再从 Zeus 提交日志取得 Athena Job ID。查 `moderation stage decided` 的 `stage`、`item` 和 `reason`；若只有 Celery 任务日志，用接收日志中的工作器名和秒级窗口补查决策。文本项后缀按 [Athena 提示词分段实现](https://github.com/world-sim-dev/athena-admin/blob/1fbfab7a8972faa04dc68772d2777f377440ff49/ApiService/services/moderation.py#L71-L79) 回查，标签指向整个分段，具体命中词仍以审核细项为准。
 
 - 该次跨环境的证据路径为工作区 `.local/newjeans-magi2-review-20261118/`，依次查看 `dev-aion-evidence.json`、`dev-provider-host.json`、`sls-initial.json` 和 `sls-athena-decisions.json`。线上路由须重新核对。
+
+## 画布提示词命中阿里云文本标签（2026-11-19）
+
+**Why:** Athena 的 `prompt:<offset>` 是送审提示词按 Unicode 字符切分的起点。阿里云文本审核返回的 `regional` 表示地域和涉政内容。Athena 的文本适配器只保留用于拦截的标签，细分理由和命中词要看供应商原回执。
+
+**How to apply:** 按 Zeus 的建单和派发日志对齐 Athena Job，再用 `moderation stage decided` 确认阶段、分段和标签。根据同一 Trace 回查 VidFlow 和对应 RTC task 的当时提交快照。遇到 `@ElementN` 等素材引用时，先对照 AION 适配器和实际素材顺序，换算文本后再切段。日志转义的换行还原为实际字符后再计数。若要定位具体词句，从阿里云文本审核结果的原始回执核实细节。
+
+- [Athena 文本分段](https://github.com/world-sim-dev/athena-admin/blob/1fbfab7a8972faa04dc68772d2777f377440ff49/ApiService/services/moderation.py#L69-L91) · [Athena 文本标签归一化](https://github.com/world-sim-dev/athena-admin/blob/1fbfab7a8972faa04dc68772d2777f377440ff49/ApiService/clients/green.py#L137-L143) · [阿里云文本标签定义](https://help.aliyun.com/zh/document_detail/465315.html) · [AION 素材占位符替换](https://github.com/world-sim-dev/aion/blob/920753afd976f7a98c5dfdd886005e1aeed0d197/packages/api_aggregation_adapter/src/api_aggregation_adapter/adapters/sandai_open_adapter.py#L165-L187)。
+- 2026-11-19 的逐笔映射及分段见 Apipltform 工作区 `.local/beta-cn-regional-20261119/cases.md`。
