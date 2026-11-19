@@ -3029,3 +3029,5 @@
 - 2026-11-19 ingest：补 Beta CN 的 Reference PE 引用校验失败、Athena 预处理终态和 Celery 执行回执的取证方法。
 
 - 2026-11-19 ingest：补充在线体验 HTTP 计量与低样本看板回读方法。
+
+- 2026-11-19 ingest：补阿里云成片拒绝按 DataId 回查具体命中标签、抽帧时间和语音风险的入口。
