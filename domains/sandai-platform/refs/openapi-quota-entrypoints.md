@@ -57,3 +57,16 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-global-
 2. 在上海生产 SLS 的 `co_sandai_zeus_prod` 按 taskId 查 `task_submitted` 和 `task_finished`。用入库至下发的时间差计算平台等待。按下发和终态时间重建已受理未终态的数量，对照有效上限与前序终态后的补位间隔。遇到未知受理或异常占位时，加查派发状态与 Redis 实际成员。
 3. 以 `task_submitted` 的 jobId 串接 `inference-prod` 的前处理和任务切片，以及 `athena` 的 worker `task started`、`inference finished in`。已建切片但还无 worker 开始回执时，核对调度记录与日志时效后再判定下游等待。用 worker 开始至结束的耗时衡量推理，用平台终态确认交付。
 4. 本次只读证据见工作区 `.local/org-871466884966341-20261119/` 的配额回读和日志时间线。线上数量、上限和等待时长按当时快照重新查证。
+
+
+## 2026-11-19 同时核对创建 RPM、组织并发和 worker 执行并发
+
+**Why:** 组织并发上限只控制平台允许下发的在途任务数；创建请求仍受 RPM 限制，下发后的任务还会排队等待模型池 worker。只改并发、只数 Running，或把日志中 worker 的执行数当作组织配额，都会混淆限制层级。
+
+**How to apply:**
+
+1. 同一时间读取组织 quota GET 的 `rpm`、`maxConcurrentTasks` 和两个 effective 值。继承字段为空时按 effective 值核对。接口的当前值不替代各派发实例缓存或实际槽位的验证。
+2. 对创建接口按组织、精确路径和时间窗口聚合 HTTP 状态码、`stage`、`errorCode`。分清请求次数、成功受理的任务数和 429；达到日志页面条数上限时改用聚合或拆分窗口，不能从截断的原始列表直接报总量。
+3. 将已受理任务逐一串到 Athena Job，分别记录创建、下发、前处理完成、worker 开始和平台终态时间。排查速度优先计算各段等待，不能将平台 Running 等同于 GPU 已开始。
+4. 按该批 Job 实际命中的模型池前缀查询 worker 开始/完成事件，按 Pod 重建占用；日志观测到的执行并发与配置上限分别报告。仅凭活跃 Pod 数不能证明整个池的最大副本数，也不能把模型池的占用全部归属到该组织。
+5. 现场原件位于 `/Users/leslie/Documents/ChatGPT/Apipltform/.local/org-concurrency-20261119-1800/`，含配额、完整受理回执聚合、任务与 Job 映射、worker 时间线，以及后续用户明确授权的组织 RPM 修改前值、原生保存回执和独立回读。当前配额、任务数及 Pod 数须重新取快照，知识库不存为长期事实。

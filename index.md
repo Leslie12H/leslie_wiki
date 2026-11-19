@@ -260,7 +260,7 @@
 
 - 2026-10-26：[v2 生成参数校验与 quota 权限](domains/sandai-platform/refs/v2-input-validation-entrypoints.md) — 漏传/非法值、同步报错与异步失败的专项证据；普通登录与配额管理员权限分开查证。
 
-- 2026-10-26：[OpenAPI 频率、并发与 TPM](domains/sandai-platform/refs/openapi-quota-entrypoints.md) — 既有组织配额、后台任务占位与管理员配置入口。含 [执行 Fail 后的占位验证及双向核对](domains/sandai-platform/refs/openapi-quota-entrypoints.md#2026-11-16-执行-fail-后的占位验证)。
+- 2026-10-26：[OpenAPI 频率、并发与 TPM](domains/sandai-platform/refs/openapi-quota-entrypoints.md) — 既有组织配额、后台任务占位与管理员配置入口；含创建 RPM、组织并发与 worker 执行并发的分层核对方法。含 [执行 Fail 后的占位验证及双向核对](domains/sandai-platform/refs/openapi-quota-entrypoints.md#2026-11-16-执行-fail-后的占位验证)。
 
 - 2026-11-19：[开放平台组织任务排队与 GPU 启动查证](domains/sandai-platform/refs/openapi-quota-entrypoints.md#2026-11-19-组织任务排队与-gpu-启动的查证) — 组织配额、前序终态补位、Athena 接单和 GPU 启动的只读时间线。
 
