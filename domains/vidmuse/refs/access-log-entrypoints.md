@@ -64,3 +64,11 @@ links: [vidmuse-aion, vidmuse-ai-frontend]
 
 - [Athena 文本分段](https://github.com/world-sim-dev/athena-admin/blob/1fbfab7a8972faa04dc68772d2777f377440ff49/ApiService/services/moderation.py#L69-L91) · [Athena 文本标签归一化](https://github.com/world-sim-dev/athena-admin/blob/1fbfab7a8972faa04dc68772d2777f377440ff49/ApiService/clients/green.py#L137-L143) · [阿里云文本标签定义](https://help.aliyun.com/zh/document_detail/465315.html) · [AION 素材占位符替换](https://github.com/world-sim-dev/aion/blob/920753afd976f7a98c5dfdd886005e1aeed0d197/packages/api_aggregation_adapter/src/api_aggregation_adapter/adapters/sandai_open_adapter.py#L165-L187)。
 - 2026-11-19 的逐笔映射及分段见 Apipltform 工作区 `.local/beta-cn-regional-20261119/cases.md`。
+
+## 对比生成的重试与错误回写（2026-11-19）
+
+**Why:** 自由画布的对比生成可在同一个 `comparison_id` 下记录多条 RTC task。RTC 的最终失败提示可能只来自最后一次工作流执行。现场出现生成接口多次回 `400 / content_policy`，最后一次领取执行权时连接失败，画布只收到连接失败的情况。
+
+**How to apply:** 从 Thread 的 RTC 数据按 `comparison_id` 汇总本轮及重试的任务，区分创建、模型请求与失败回写的 Trace。用上海 Beta CN 的 VidFlow 日志对齐每次 `/api/v1/model/generate-video/workflow` 回执，再读最终 `on_failure_mark_parent_task` 和失败阶段。AION 内部的 `model_submit_rate_limit_unavailable` 或 `model_generation_concurrency_unavailable` 应按系统不可用回执定位；是否提交到开放平台需另查实际出站及建单证据。
+
+- 2026-11-19 的只读证据见 Apipltform 工作区 `.local/beta-cn-thread-41d42725/` 内的 `comparisons.json`、`attempts.json` 和 `deep.json`。
