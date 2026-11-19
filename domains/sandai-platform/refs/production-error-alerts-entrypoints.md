@@ -2,7 +2,7 @@
 name: sandai-platform-production-error-alerts-entrypoints
 type: reference
 created: 2026-11-16
-updated: 2026-11-18
+updated: 2026-11-20
 tags: [sandai, api-platform, sls, observability, alerting]
 links: [sandai-api-platform-development-entrypoints]
 ---
@@ -61,3 +61,9 @@ links: [sandai-api-platform-development-entrypoints]
 2026-11-18 的双区窗口、逐请求证据和上海入口覆盖范围见工作区 `.local/openapi-503-20261118/REPORT.md`。
 
 下载超时的重试策略按实际失败环节回查。参考源 URL 读取检查 [PublicMediaDownloader 的客户端配置](https://github.com/world-sim-dev/zeus/blob/338d36504de0c03654e92f60e6547df35a285816/modules/infra/src/main/java/co/sandai/zeus/infra/http/PublicMediaDownloader.java#L35-L46) 和 [IOException 分支](https://github.com/world-sim-dev/zeus/blob/338d36504de0c03654e92f60e6547df35a285816/modules/infra/src/main/java/co/sandai/zeus/infra/http/PublicMediaDownloader.java#L199-L206)。Athena 素材注册及应用生成提交分别沿 [注册重试条件](https://github.com/world-sim-dev/zeus/blob/338d36504de0c03654e92f60e6547df35a285816/modules/infra/src/main/java/co/sandai/zeus/infra/infer/ArtifactClient.java#L274-L298) 与 [VidMuse 提交回执](../../vidmuse/refs/access-log-entrypoints.md) 核对。把下载超时、注册重试计数和生成受理记录分别对应到各自的请求。
+
+## 2026-11-20 邮箱登录验证码拒绝
+
+美国 Platform 的邮箱登录验证码失败由 `ErrorLogger` 记录，告警级别取自应用日志。按同一 Trace 核对 `CaptchaService` 的供应商结果和 `RequestCompletionLog` 的 HTTP 状态，才能判定失败发生在哪个环节。供应商返回 `F002` 时，查看阿里云服务端接入文档的返回码表，参数丢失的位置需要单独取证。[阿里云验证码服务端接入](https://help.aliyun.com/zh/captcha/captcha2-0/user-guide/server-access)
+
+按 Trace ID 搜索若只命中结构化摘要，从摘要取 Pod 名和应用时间，再收窄至该 Pod 与前后数秒，查询 `/app/logs/error.log` 和 `/app/logs/zeus-default.log`。用原始行中的 Trace ID 对齐验证码回执、异常栈和请求完成记录，两份文件的同一异常按同一请求归并。查询证据见 API 平台工作区 `.local/trace-45fd1460-20261120/digest.json`。[美国生产日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c7c0ede6c71484f8da34a829954c50cd9/logsearch/co_sandai_zeus_prod?slsRegion=us-west-1)
