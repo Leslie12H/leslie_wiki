@@ -82,3 +82,11 @@ links: [vidmuse-aion, vidmuse-ai-frontend]
 - [AION 视频生成前置调用](https://github.com/world-sim-dev/aion/blob/edfd935e6e77a8467be527ba34a172aecddf1d55/apps/manager/controller/model_api.py#L4399-L4413) · [AION 提示词组装与前置审核](https://github.com/world-sim-dev/aion/blob/edfd935e6e77a8467be527ba34a172aecddf1d55/apps/manager/service/model_api/output_safety.py#L101-L140) · [Green 调用与分段](https://github.com/world-sim-dev/aion/blob/edfd935e6e77a8467be527ba34a172aecddf1d55/apps/manager/service/content_safety.py#L76-L110) · [阿里云结果查询](https://help.aliyun.com/zh/document_detail/2878237.html)。
 - 在阿里云内容安全控制台的「机器审核增强版 → 文本审核 → 结果查询」按 **RequestId** 查询已发生的审核。进入精确记录的详情，在文本内容处选「展开更多」，从返回结果读 `result[].label`、`riskWords` 和 `riskPositions`。用位置回核原句中的语义。多段内容可在验证重叠字符一致后拼回已送审文本，首次拒绝后的原提示词从同一次任务快照取证。
 - 2026-11-19 的联查指针见工作区 `.local/beta-cn-thread-41d42725/policy/` 下的 `last-policy.json`、`green-drawers.json`、`green-expanded-text.json` 和 `submitted-prompt-verified-prefix.txt`。
+
+## 对比生成在积分预扣时失败（2026-11-19）
+
+**Why:** 自由画布的对比生成可先拿到 AION model request ID。后续如果计费预扣连接失败，AION 会在调用模型供应商之前结束请求。此时内部响应曾显示 `submitted`，终态与上游建单需要分别验证。
+
+**How to apply:** 从 RTC 和轮询回执取得两条模型请求 ID。按 ID 查 Manager 的实际 Trace、`Starting adventurer pre_deduct`、`Marking pre-submission failure` 及具体 `reason`。用终态的 `upstream_task_id` 和出站日志核对是否派发。预扣连接失败按网络错误归因。积分是否入账以计费流水为准。
+
+- 本次证据见 Apipltform 工作区 `.local/beta-cn-thread-41d42725/retry-1730/model-ids.json`。
