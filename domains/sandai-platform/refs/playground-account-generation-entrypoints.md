@@ -19,3 +19,7 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-v2-inpu
 - 生产测试的用量、创建回执、终态及素材兼容性证据见工作区 `.local/video-benchmark-cn-20261119/REPORT.md`。本页保留回查路径。个人账号、余额、模型限制和签名媒体 URL 随当次运行记录处理。
 
 **How to apply**　先核对登录账号、地区、余额及在线能力。将附件作为数据解析并保留素材顺序，记录实际参数与测评要求的差异。提交前限制生成次数、用量与截止时间，以创建回执记录任务 ID。遇到结果未知的创建先回读历史，避免重复消费。用 [生成记录](https://platform.sandai.cn/app/generation-history/) 查到终态与产物，再在 [用量明细](https://platform.sandai.cn/app/general/) 按任务 ID 核对金额。
+
+## 切换提交批次
+
+Ego 的本地命令退出后，浏览器内已启动的执行仍可能推进到下一条 POST。2026-11-19 的批次切换因此留下两条不同任务 ID。交接时等待旧执行器确认停止，并核对最新意图、受理回执和在途请求，随后再启动新批次。让提交执行共用一把互斥锁，提交前检查停止信号及整轮上限。按任务 ID 对账时保留同题的每笔实际受理。
