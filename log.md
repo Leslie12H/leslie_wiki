@@ -3043,3 +3043,5 @@
 - 2026-11-19 ingest：补 VidMuse Regional 文本审核分段、素材占位符换算和供应商回执核验。
 
 - 2026-11-19 ingest：补 VidMuse 对比生成的 RTC 分组、模型回执和工作流失败回写取证。
+
+- 2026-11-19 ingest：补 AION 提交前 Green 文本审核、分段及 Request ID 回查。

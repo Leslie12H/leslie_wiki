@@ -72,3 +72,12 @@ links: [vidmuse-aion, vidmuse-ai-frontend]
 **How to apply:** 从 Thread 的 RTC 数据按 `comparison_id` 汇总本轮及重试的任务，区分创建、模型请求与失败回写的 Trace。用上海 Beta CN 的 VidFlow 日志对齐每次 `/api/v1/model/generate-video/workflow` 回执，再读最终 `on_failure_mark_parent_task` 和失败阶段。AION 内部的 `model_submit_rate_limit_unavailable` 或 `model_generation_concurrency_unavailable` 应按系统不可用回执定位；是否提交到开放平台需另查实际出站及建单证据。
 
 - 2026-11-19 的只读证据见 Apipltform 工作区 `.local/beta-cn-thread-41d42725/` 内的 `comparisons.json`、`attempts.json` 和 `deep.json`。
+
+## AION 提交前的提示词审核（2026-11-19）
+
+**Why:** AION 的模型入口可以在调用生成供应商之前，按模型配置调用 Green 的文本审核。出现 `Prompt did not pass content safety review` 时，先用同一请求的 Manager 审核日志对齐该分支。该分支在 Green 返回中高风险后立即结束，调用日志只记录服务名、接口 Code 和 Request ID。
+
+**How to apply:** 先从 VidFlow 的生成请求获得任务与 Trace，在 Manager 用该调用的实际 Trace、HTTP 状态及时间对齐同一审核 span。Green 接口的 `Code=200` 表示审核调用成功。按 span 内的返回顺序找出使 AION 退出的分段，再用最后一条 Green Request ID 查询供应商审核明细。分段按提交前拼接的文本计数，包含字段名和多段提示词。有重叠的分段窗口以当时部署实现为准。VidFlow 的请求日志会截断长文本，从有权读取的当时提交快照核对被截断部分。
+
+- [AION 视频生成前置调用](https://github.com/world-sim-dev/aion/blob/edfd935e6e77a8467be527ba34a172aecddf1d55/apps/manager/controller/model_api.py#L4399-L4413) · [AION 提示词组装与前置审核](https://github.com/world-sim-dev/aion/blob/edfd935e6e77a8467be527ba34a172aecddf1d55/apps/manager/service/model_api/output_safety.py#L101-L140) · [Green 调用与分段](https://github.com/world-sim-dev/aion/blob/edfd935e6e77a8467be527ba34a172aecddf1d55/apps/manager/service/content_safety.py#L76-L110) · [阿里云结果查询](https://help.aliyun.com/zh/document_detail/2878237.html)。
+- 本次关联证据见工作区 `.local/beta-cn-thread-41d42725/policy/last-policy.json`。
