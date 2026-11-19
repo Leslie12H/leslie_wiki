@@ -23,3 +23,9 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-v2-inpu
 ## 切换提交批次
 
 Ego 的本地命令退出后，浏览器内已启动的执行仍可能推进到下一条 POST。2026-11-19 的批次切换因此留下两条不同任务 ID。交接时等待旧执行器确认停止，并核对最新意图、受理回执和在途请求，随后再启动新批次。让提交执行共用一把互斥锁，提交前检查停止信号及整轮上限。按任务 ID 对账时保留同题的每笔实际受理。
+
+## 生产看板漏计在线体验与低流量延迟
+
+**Why**　2026-11-19 国内在线体验已有创建回执，生产看板的公开 v2 创建仍可在同窗显示零。控制台入口和公开 OpenAPI 复用生成服务，但 HTTP 响应在各自入口服务、路由和状态下采集。低流量时，延迟图的固定最小样本门槛也会把已有样本的窗口隐藏。
+
+**How to apply**　核对请求回执及时间后，在对应区域按 `job/service/uri/method/status` 查实际标签，再比较共享受理事件、HTTP 响应量和延迟桶。先验证无样本、少样本及有响应但无错误序列三种窗口，再保存并独立回读主视图与双区对照。生产配置与验收证据沿工作区 [低流量与在线体验](/Users/leslie/Documents/ChatGPT/Apipltform/monitoring/aliyun/production-load-dashboard.md#2026-11-19-低流量与在线体验) 查看。
