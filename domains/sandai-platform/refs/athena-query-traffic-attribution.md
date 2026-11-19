@@ -17,3 +17,7 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 2. 核对 Logstore 全文索引与分析索引。内容可以用全文搜索而无法在 SQL 中直接引用时，用已验证的全文条件缩小到指定指纹、UA 和路由样本，再按时间桶聚合。落结论前抽查峰值起点和持续期的实际 path、状态及指纹。
 3. 定点复查多个 Job 的 GET 时间差，和 Athena worker 的推理结束记录、持久化终态分别关联。核对是否为周期扫描、重复扫描或正常单任务轮询。用已部署版本的 Zeus 状态查询源和发布回执验证是否转发 Athena，按 job_id 和 by-request 路由分别统计。
 4. 本次证据见工作区 `.local/athena-query-qps-20261119/` 的 `time-buckets.json`、`verified-fingerprint.json` 和 `repeats.json`。实际流量、连接对端、凭据归属与客户端策略每次回源确认。
+
+## 2026-11-19 Athena 凭据和开放平台组织归属
+
+Athena 的 public Job 入口按 `X-API-Key` 解析项目，开放平台通过自身的 API Key 与任务组织 ID 归属请求。多个开放平台组织的 Zeus 派发可共用同一枚 Athena 项目凭据。核对峰值指纹时，选已知组织任务，通过精确的派发时间、trace 和 Athena 入站 POST 读取真实指纹，再与峰值 GET 比对。差异可以用来区分调用链路。要确认另一枚 Athena 项目凭据的项目名或最终组织，还需要已授权的项目元数据或明确的上游调用归属。现场回读见 `.local/athena-query-qps-20261119/ownership-*.json`。

@@ -167,7 +167,7 @@
 
 - 2026-11-19：[Ark 任务的 PE 默认值变更查证](domains/sandai-platform/refs/playground-account-generation-entrypoints.md#2026-11-19-ark-任务的-pe-默认值变更查证) — 按实际镜像、入口解析、任务开关与数据库审计区分调用参数和模型默认值，附组织创建入口与失败请求覆盖的查证方法。
 
-- 2026-11-19：[Athena Job 查询 QPS 溯源](domains/sandai-platform/refs/athena-query-traffic-attribution.md) — 访问日志指纹、按 Job 重复查询、连接对端与 Zeus 状态查询的对照方法。
+- 2026-11-19：[Athena Job 查询 QPS 溯源](domains/sandai-platform/refs/athena-query-traffic-attribution.md) — 访问日志指纹、按 Job 重复查询、连接对端与 Zeus 状态查询的对照方法。附 Athena 项目凭据与开放平台组织归属核对。
 - [Sand.ai API 开放平台](domains/sandai-platform/README.md) — 业务归属与仓库导航。
 
 - 2026-10-26：[EVOLVE 失败原件读取与重评边界](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-失败诊断必须有原件读取能力) — 文件目录、分段正文、跨阶段失败事件与自然根因判断分别验收，独立验证不等于采纳。
