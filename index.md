@@ -8,7 +8,7 @@
 
 - 2026-11-17：[国内方舟文档与生产版本核对](domains/sandai-platform/refs/magi2-cn-native-production-entrypoints.md#2026-11-17-方舟公开文档与生产版本核对) — 以在线静态资源和发布记录定位版本，分别核对创建参数与查询时长语义。
 
-- 2026-11-17：[Reference PE 的结构化输出与本地值校验](domains/sandai-platform/pitfalls/reference-pe-structured-output-pattern.md) — 精确匹配压测台账，核对模型输出 Schema、实体 ID 正则和最后一次失败。
+- 2026-11-17：[Reference PE 的结构化输出与本地值校验](domains/sandai-platform/pitfalls/reference-pe-structured-output-pattern.md) — 精确匹配压测台账，核对模型输出 Schema、实体 ID 正则，以及 Beta CN 的 `scene_ref`、素材占位符和 Athena 预处理终态（更新至 2026-11-19）。
 
 - 2026-11-17：[火山方舟 Seedance 2.5 提示词改写查证入口](domains/sandai-platform/refs/seedance-25-pe-entrypoints.md) — 视频生成 API 参数与 `sd25-pe` 调优技能的官方查证入口。
 

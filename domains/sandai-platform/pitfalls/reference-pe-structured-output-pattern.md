@@ -2,9 +2,9 @@
 name: sandai-api-platform-reference-pe-structured-output-pattern
 type: pitfall
 created: 2026-11-17
-updated: 2026-11-17
+updated: 2026-11-19
 tags: [sandai, api-platform, athena, reference-pe, structured-output]
-links: [sandai-api-platform-inline-load-admission-and-discovery, sandai-platform-production-error-alerts-entrypoints]
+links: [sandai-api-platform-inline-load-admission-and-discovery, sandai-platform-production-error-alerts-entrypoints, vidmuse-access-log-entrypoints]
 ---
 
 # Reference PE 的结构化输出与本地值校验
@@ -17,3 +17,11 @@ links: [sandai-api-platform-inline-load-admission-and-discovery, sandai-platform
 - [Provider 响应与重试](https://github.com/world-sim-dev/athena-admin/blob/002eac3448bb89a207773089289ac7524cf5a942/ApiService/prompt_enhancement/enhance_v2/providers/gaga4_reference_enhance.py#L130)
 - [结构化输出 Schema 投影](https://github.com/world-sim-dev/athena-admin/blob/002eac3448bb89a207773089289ac7524cf5a942/ApiService/prompt_enhancement/enhance_v2/reference/schema.py#L6)
 - [完整 Schema](https://github.com/world-sim-dev/athena-admin/blob/002eac3448bb89a207773089289ac7524cf5a942/ApiService/prompt_enhancement/enhance_v2/reference/schema.v1.json#L88)
+
+## Beta CN 画布的业务终态（2026-11-19）
+
+**Why:** 画布的通用生成失败文案可来自 Athena 提示词增强。Zeus 将这类预处理失败归入 `EXECUTION`。内容审核和参考素材校验可能已经通过，推理尚未开始。这次现场看到 Reference PE 返回未注册的 `scene_ref` 和无效的素材占位符，Athena 在校验输出时结束任务。
+
+**How to apply:** 通过 [VidMuse 生成日志入口](../../vidmuse/refs/access-log-entrypoints.md) 核对 AION 实际访问的 OpenAPI 环境和组织，再用已返回的生成 ID 查派发 Job。按 Job ID 搜上海 `inference-prod` 的 `preprocess-worker` 日志，读取 `pp_prompt_enhancement` 的最终状态和 `Reference PE response violates its protocol` 的字段路径。Celery 的 `Task ... succeeded` 表示处理函数返回，业务终态以 Job 状态为准。若需核实模型生成了什么或素材如何映射，另查对应请求与原始 PE 输出。
+
+- 本次证据见 Apipltform 工作区 `.local/beta-cn-magi2-failures-20261119/` 下的 `exact.json` 和 `worker-reasons.json`。
