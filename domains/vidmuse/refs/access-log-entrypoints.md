@@ -2,7 +2,7 @@
 name: vidmuse-access-log-entrypoints
 type: reference
 created: 2026-09-22
-updated: 2026-11-19
+updated: 2026-11-20
 tags: [vidmuse, nginx, logs]
 links: [vidmuse-aion, vidmuse-ai-frontend]
 ---
@@ -64,6 +64,8 @@ links: [vidmuse-aion, vidmuse-ai-frontend]
 
 - [Athena 文本分段](https://github.com/world-sim-dev/athena-admin/blob/1fbfab7a8972faa04dc68772d2777f377440ff49/ApiService/services/moderation.py#L69-L91) · [Athena 文本标签归一化](https://github.com/world-sim-dev/athena-admin/blob/1fbfab7a8972faa04dc68772d2777f377440ff49/ApiService/clients/green.py#L137-L143) · [阿里云文本标签定义](https://help.aliyun.com/zh/document_detail/465315.html) · [AION 素材占位符替换](https://github.com/world-sim-dev/aion/blob/920753afd976f7a98c5dfdd886005e1aeed0d197/packages/api_aggregation_adapter/src/api_aggregation_adapter/adapters/sandai_open_adapter.py#L165-L187)。
 - 2026-11-19 的逐笔映射及分段见 Apipltform 工作区 `.local/beta-cn-regional-20261119/cases.md`。
+
+**无审核 Request ID 时回查原回执（2026-11-20）。** 先将 RTC、AION 请求、OpenAPI 生成及 Athena Job 逐级对齐。以 Athena 审核时间缩小到秒，用实际送审分段里的独特文本片段查阿里云「机器审核增强版 → 文本审核 → 结果查询」的「文本内容」。若同时出现 AION 预审核和 Athena 复审，按审核服务、时间和风险状态核对。打开对应行，展开送审全文并逐字对齐分段，再读取 `data.reason` 内的 `riskTips`、`riskWords` 及原始 Request ID。A/B 共用提示词时，以各自 Job 的决定时间和完整分段匹配，确保选中目标回执。业务链路的具体记录见 Apipltform 工作区 `.local/vidmuse-policy-4618107f/`。
 
 ## 对比生成的重试与错误回写（2026-11-19）
 
