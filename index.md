@@ -1,4 +1,4 @@
-- 2026-11-19：[Magi-2 与 Seedance 的多素材提示词引用](domains/sandai-platform/refs/magi2-reference-prompt-entrypoints.md) — 按素材类型核对提示词编号、请求数组顺序、Zeus 透传和 Athena 内部标签，附 Seedance 分版本规则。
+- 2026-11-19：[Magi-2 与 Seedance 的多素材提示词引用](domains/sandai-platform/refs/magi2-reference-prompt-entrypoints.md) — 按素材类型核对提示词编号、请求数组顺序、Zeus 透传和 Athena 内部标签，附 Seedance 分版本规则。 补充方舟 Python SDK 分包与双图请求模拟验证。
 
 - 2026-11-18：[登录验证码测试通道评审](disciplines/testing/test-otp-login-review.md) — 多业务按项目接入、测试身份、取码权限、并发租约与业务会话回收的验收入口。
 

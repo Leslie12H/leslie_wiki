@@ -3057,3 +3057,5 @@
 - 2026-11-19 ingest：补充 Athena 项目鉴权和 Zeus 派发键指纹的组织归属核对入口。
 
 - 2026-11-19 ingest：记录 Magi-2 与 Seedance 多素材提示词引用、Zeus 透传及成片验证入口。
+
+- 2026-11-19 ingest：补充方舟 Python SDK 分包与 Sand.ai 双图创建和查询的模拟验证入口。

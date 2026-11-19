@@ -15,3 +15,9 @@ links: [sandai-playground-account-generation-entrypoints, ark-seedance-25-pe-ent
 
 - Magi-2 调用侧沿用 Playground 的拼写。Zeus 旧设计和测试里出现的其他拼写用于验证原文透传。要确认某种拼写的成片效果，用两张视觉特征明显的输入做交换顺序对照，并记录实际生效的提示词增强开关。历史 Playground 证据范围见 [在线体验生成与回读](playground-account-generation-entrypoints.md)。
 - 火山方舟按所用版本查看 [Seedance 2.0 教程](https://docs.volcengine.com/docs/ark/seedance-2-0?lang=zh)、[Seedance 2.5 教程](https://docs.volcengine.com/docs/ark/seedance-2-5?lang=zh) 的提示词规则，以及 [2.5 提示词指南](https://docs.volcengine.com/docs/ark/seedance-2-5-prompt-guide?lang=zh) 的多素材映射。请求中的素材字段和角色查 [创建视频生成任务](https://docs.volcengine.com/docs/ark/create-video-generation-task-api?lang=zh)。
+
+## 方舟 Python SDK 调用 Sand.ai
+
+**Why**　安装包名与 Python 导入名可能不同。按 Sand.ai 文档的导入名选择匹配的火山 SDK 分包，避免依赖已移除的元包可选项。
+
+**How to apply**　从 Sand.ai 方舟兼容文档取所在地区的 SDK base URL、组织密钥与请求结构。用 Volcengine PyPI 的安装说明核对分包与导入名。多张普通参考图分别传 `content` 项并显式填 `reference_image`。调用前可用 httpx MockTransport 检查 Bearer 鉴权、创建与查询路径、原文和素材顺序。2026-11-19 已做过双图模拟验证，成片效果仍需真实任务对照。 [国内文档](https://platform.sandai.cn/docs/ark-generations/) · [海外文档](https://platform.sand.ai/docs/ark-generations/) · [火山 SDK 分包](https://pypi.org/project/volcengine-ark-runtime/)
