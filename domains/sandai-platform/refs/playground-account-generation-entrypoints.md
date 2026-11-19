@@ -29,3 +29,10 @@ Ego 的本地命令退出后，浏览器内已启动的执行仍可能推进到�
 **Why**　2026-11-19 国内在线体验已有创建回执，生产看板的公开 v2 创建仍可在同窗显示零。控制台入口和公开 OpenAPI 复用生成服务，但 HTTP 响应在各自入口服务、路由和状态下采集。低流量时，延迟图的固定最小样本门槛也会把已有样本的窗口隐藏。
 
 **How to apply**　核对请求回执及时间后，在对应区域按 `job/service/uri/method/status` 查实际标签，再比较共享受理事件、HTTP 响应量和延迟桶。先验证无样本、少样本及有响应但无错误序列三种窗口，再保存并独立回读主视图与双区对照。生产配置与验收证据沿工作区 [低流量与在线体验](/Users/leslie/Documents/ChatGPT/Apipltform/monitoring/aliyun/production-load-dashboard.md#2026-11-19-低流量与在线体验) 查看。
+
+
+## 2026-11-19 提示词增强的请求覆盖与作业回读
+
+**Why**　在线体验的模型目录显示默认开启时，脚本显式提交 `enhancePrompt: false` 仍会关闭该次生成的提示词增强。作业结果里的 `enhanced_prompt` 为空时，需要通过请求和前处理回执确认是主动关闭还是执行异常。
+
+**How to apply**　从测评提交原件和 HTTP 回执锁定同一 taskId，核对 `enhancePrompt` 是省略还是显式布尔值。再读取生产模型配置 `config.options.promptEnhancement`、任务详情 `parameters.enablePromptEnhancement` 和 Athena 作业 `pre_processors`，以 `task_submitted` 串起 taskId 与 jobId。当前优先级沿 Zeus `OpenApiGenerationService` 和 `ModelOptionResolver` 查证。本次原请求和受理回执见工作区 `.local/video-benchmark-cn-20261119/`。后续核对以相应环境的模型修订和请求原件为准。

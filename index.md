@@ -162,6 +162,8 @@
 - 2026-10-26：[API 开放平台研发入口](domains/sandai-platform/refs/development-entrypoints.md) — sandai-website / zeus 双仓库、PRD 与首发 TODO、Codex 工作区及需求差异的回查方法；与 VidMuse Zeus 分开。
 
 - 2026-11-19：[开放平台个人账号的在线体验生成与回读](domains/sandai-platform/refs/playground-account-generation-entrypoints.md) — 国内生产账号的控制台会话、素材顺序与引用、任务终态及逐笔用量查证。 补充批次切换停发确认与防重复提交。 补充生产看板的入口归属、低流量分位数和错误率取证。
+
+- 2026-11-19：[在线体验提示词增强的请求覆盖](domains/sandai-platform/refs/playground-account-generation-entrypoints.md#2026-11-19-提示词增强的请求覆盖与作业回读) — 模型默认开关、原始请求、任务持久值和 Athena 前处理的回查方法。
 - [Sand.ai API 开放平台](domains/sandai-platform/README.md) — 业务归属与仓库导航。
 
 - 2026-10-26：[EVOLVE 失败原件读取与重评边界](domains/maxwell/pitfalls/evolve-runtime-payload-and-terminal-recovery.md#2026-10-26-失败诊断必须有原件读取能力) — 文件目录、分段正文、跨阶段失败事件与自然根因判断分别验收，独立验证不等于采纳。
