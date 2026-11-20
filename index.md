@@ -1,3 +1,5 @@
+- 2026-11-21：[单图短片的机身稳定性与切点验收](domains/sandai-platform/refs/playground-account-generation-entrypoints.md#2026-11-21-单图短片的机身稳定性与切点验收) — 用官网单图约束产品姿态，以成片切点和主体结构核对实际效果。
+
 - 2026-11-20：[品牌短片参考素材与重生成回读](domains/sandai-platform/refs/playground-account-generation-entrypoints.md#2026-11-20-品牌短片参考素材与重生成回读) — 官方车型与配色参考、逐图绑定、替换版本与逐笔用量查证。
 
 - 2026-11-20：[多镜头请求的分镜素材预检](domains/sandai-platform/refs/magi2-reference-prompt-entrypoints.md#2026-11-20-多镜头请求的分镜素材预检) — 对齐输出时长、分镜板、素材内容和逐镜音频要求，含外链媒体探测。

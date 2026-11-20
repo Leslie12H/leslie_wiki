@@ -2,7 +2,7 @@
 name: sandai-playground-account-generation-entrypoints
 type: reference
 created: 2026-11-19
-updated: 2026-11-20
+updated: 2026-11-21
 tags: [sandai, api-platform, playground, video, production, testing]
 links: [sandai-api-platform-development-entrypoints, sandai-api-platform-v2-input-validation-entrypoints]
 ---
@@ -57,3 +57,9 @@ Ego 的本地命令退出后，浏览器内已启动的执行仍可能推进到�
 **Why**　产品宣传片的氛围参考和外观依据可能混在一起。多角度商品图也容易让模型误解为一镜中的两台设备。任务受理后再纠正参考素材会产生独立任务和用量记录。
 
 **How to apply**　在品牌产品页或对应配色的商店页选出机背、侧面和展开状态，再目检下载文件。提示词按上传顺序逐张标明外形、配色、构图和光线的用途，混用灵感图时明确它的边界。随请求保存文件哈希、Asset ID、目标时长和显式 PE 值。若需要替换素材，沿新旧任务 ID 保留各自的回读和用量。正式交付时用最终任务的详细输入和成片核对。 [Apple iPhone Duo](https://www.apple.com/iphone-duo/) · [BMW S 1000 RR](https://www.bmwmotorcycles.com/en/models/sport/s1000rr.html) · [生成请求](https://platform.sand.ai/docs/create-generation/)
+
+## 2026-11-21 单图短片的机身稳定性与切点验收
+
+**Why**　商品图与模型道具图提供的是身份和材质依据。参考图减少后，生成仍可能改变视角、屏幕轮廓或轮组方向。完整成片应核对切点两侧和主体结构，任务成功和分辨率只是基础回执。
+
+**How to apply**　刚性产品优先选一张官网图，固定参考姿态和可见侧，分别设计短滑轨、微距和拉远镜头。道具到真物可选同一几何特征做匹配剪辑。屏幕内外切换可用运动遮挡和连续声音做衔接。检查两帧之间的主体位置、运动方向和光线，从提示词、选图和成片分开找偏差。若同时改变素材和镜头方案，把效果写成当次观察，保留单因素归因的未知。工作区成片和精确提示词见 `outputs/magi2-product-shorts-20261120/revision-single-reference/`。 [匹配剪辑方法](https://www.adobe.com/creativecloud/video/post-production/cuts-in-film/match-cut.html)
