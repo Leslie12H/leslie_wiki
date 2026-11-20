@@ -33,3 +33,7 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-aliyun-
 核对某个词是否确实命中时，直接读取供应商命中词字段。按送审分段哈希、审核阶段时间及供应商回执排重。相同请求窗口内有重复文本时，在共用候选的任务之间核对回执 ID 的唯一分配。对没有回调的同步图片审核，使用审核项索引、同素材对象路径和风险等级对应 Green 记录。只有明确授权需要原始 Prompt 时才从任务内容接口逐条拉取，汇总后回读工作簿验证多行文本与标识符。
 
 - 2026-11-20 四站点的任务清点与只读回执证据指针见 Apipltform 工作区 `.local/moderation-expanded-20261120/`。
+
+## 2026-11-20 Beta 与国内生产的文本审核配置对照
+
+环境和入口不同的任务可能共用同一 Athena 审核部署。先按 Job ID 查审核决定所在的 Pod 和镜像，再把发布镜像对应到精确提交。此次 Beta 改稿和国内生产对照任务在同一 Pod 上调用同一 Green 文本服务。该版本按返回的文本标签决定是否拦截，单个 Job 的审核服务覆盖项适用于图片和视频。结合跨环境原回执可区分供应商标签差异与平台决定差异。供应商内部模型和规则版本需以供应商证据核实。工作区证据入口为 `.local/magi2-green-config-compare-20261120/`。[预处理发布](https://github.com/world-sim-dev/athena-admin/actions/runs/44480415355) · [文本服务选择](https://github.com/world-sim-dev/athena-admin/blob/9c633829fb3a479708dbc8247f293ccd2ea52c66/ApiService/clients/green.py#L68-L79) · [标签判定](https://github.com/world-sim-dev/athena-admin/blob/9c633829fb3a479708dbc8247f293ccd2ea52c66/ApiService/clients/green.py#L137-L143)
