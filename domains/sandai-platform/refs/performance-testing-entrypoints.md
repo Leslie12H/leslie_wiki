@@ -2,7 +2,7 @@
 name: sandai-api-platform-performance-testing-entrypoints
 type: reference
 created: 2026-10-27
-updated: 2026-11-18
+updated: 2026-11-20
 tags: [sandai, api-platform, performance, testing, quota]
 links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi-quota-entrypoints, sandai-api-platform-test-organization-retirement]
 ---
@@ -440,3 +440,11 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **诊断 worker 槽位持续占用。** 从目标 Job 的 worker 标签确定对应模型池，用 SLS 可搜索标签 `__tag__:_std_pod_name_` 前缀按小窗口查池内全部 `task started` 和 `inference finished in`。核对单页上限与去重，按同一 Pod 将目标任务启动与上一任务结束配对。运行计数保持在同一高位且上单刚结束便从队列接下一单，支持执行槽位占用的归因。目标组织以外的 Job 也计入池使用率。日志中观测到的并行数仍需从运行配置核对硬上限，队列优先级和扩容成因也需要独立证据。该次取证见工作区 `.local/prod-task-stats-20261118/cn-fleet-occupancy-evidence.json`。
 
 **跨环境共享池的组织归属。** worker 的部署地域和名称只能确定执行位置。按统计窗口从开始或完成事件取 Job ID，再从 Athena `jobs.project_name` 和 `request_id` 核验调用项目及业务任务。项目回调主机可辅助校验环境。Magi 的业务任务号按已确认环境到对应生产 Admin 核对组织，国内 Staging 的 OpenAPI 回执在香港 SLS `co_sandai_zeus_dev`，按 `staging-cn` Pod 和任务号确认 `orgId`。2026-11-18 在同一上海 H200 池观察到海外生产、国内 Staging 和国内生产均有任务。逐任务来源见工作区 `.local/prod-task-stats-20261118/cn-fleet-attribution-summary.json`。对外说明资源占比前，明确所用分母为任务数或实测占用时间。
+
+## 2026-11-20 双区按创建时间统计 E2E 和生成阶段
+
+**Why:** 按完成时间汇总的监控曲线会混入前一日发起的任务。2026-11-20 美西 Zeus 日志按通用终态标记搜索返回零条，按后台任务 ID 查同一时间窗可以取到下发与终态，单看通用搜索会漏掉美西样本。
+
+**How to apply:** 在生产管理后台按北京时间创建范围冻结样本，并为终态设置同一截止时间。逐区取首次公开终态，缺口用小批任务 ID 搜索，核对分页和成功数，再按 Zeus 的 Job 关联到 Athena 执行日志。按切片生成到 worker 开始计算队列等待，单列创建到 worker 开始的时长以保留前处理。实际生成按 worker 报告的推理时长。记录缺失阶段和重复启动的样本数，按任务数合并双区均值。跨区时钟精度不足时保留原始时间精度。
+
+生成阶段口径和日志入口见上文 2026-11-18 小节。只读核查脚本及聚合入口见工作区 `.local/platform-e2e-20261120/rollup-stages.py`。
