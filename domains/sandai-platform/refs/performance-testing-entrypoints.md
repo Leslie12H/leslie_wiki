@@ -456,3 +456,5 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **How to apply:** 锁定地区和评估时刻，回放该面板的直方图分位数、累积桶与成功样本数，再对照同窗 SLS 终态。扩展到完整请求链路时，用创建请求日志和实际计时范围估算服务器开始点，核对控制器计时与入口接收的边界；在任务仓储生成任务 ID 的路径、依赖配置和后台时间全部相符时，可用 ID 分配时间定位建单。用 Athena 建单完成分开 Zeus 派发和 Athena 前处理，切片就绪后到 worker 启动是 Athena 队列等待。按同一批阶段齐全的任务算分布，并核对各段加总。客户端发送与首次取到结果仍需客户端时间戳。
 
 回放和汇总入口见工作区 `.local/platform-e2e-20261120/dashboard-1620/compare.mjs` 与 `.local/platform-e2e-20261120/phase-distribution.py`。
+
+**看板按分钟刷新时的采样边界。** 2026-11-20 只读回放上海和美西的完片直方图，约 60 秒的抓取间隔下，`[1m]` 的均值、P95 和样本计数在核验窗口均无点。用 `[5m]` 可按分钟刷新趋势，均值用时长累计量和任务数的增量计算，P95 仍按桶插值。与逐任务 CSV 对齐时，按首次公开成功事件的发生分钟聚合原始耗时与成功数。双区 P95 从双区任务合并计算。回放脚本见工作区 `.local/platform-e2e-20261120/dashboard-minute-check.mjs`。
