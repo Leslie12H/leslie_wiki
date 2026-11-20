@@ -1,4 +1,4 @@
-- 2026-11-20：[开放平台审核失败全量取数](domains/sandai-platform/refs/moderation-failure-census-entrypoints.md) — 对齐双区 Zeus 终态、共享 Athena 审核决定、媒体 DataId、平台建单 Request ID 和供应商原回执。 含输入审核通过及提示词增强顺序的对照核验。
+- 2026-11-20：[开放平台审核失败全量取数](domains/sandai-platform/refs/moderation-failure-census-entrypoints.md) — 对齐国内及海外的预发和生产任务、Zeus 终态、共享 Athena 审核决定、媒体 DataId、平台建单 Request ID 和供应商原回执。 含输入审核通过及提示词增强顺序的对照核验。
 
 - 2026-11-19：[Magi-2 与 Seedance 的多素材提示词引用](domains/sandai-platform/refs/magi2-reference-prompt-entrypoints.md) — 按素材类型核对提示词编号、请求数组顺序、Zeus 透传和 Athena 内部标签，附 Seedance 分版本规则。 补充方舟 Python SDK 分包与双图请求模拟验证。 补七张直链图的推理槽位与成片对照、视频和音频混传编号。
 
