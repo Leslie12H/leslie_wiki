@@ -1,3 +1,5 @@
+- 2026-11-21：[分镜生成与切点实测](domains/sandai-platform/refs/playground-account-generation-entrypoints.md#2026-11-21-分镜生成与切点实测) — 独立机位生成、轮轴匹配、屏内外连续帧和声画透视的成片验证。
+
 - 2026-11-21：[单图短片的机身稳定性与切点验收](domains/sandai-platform/refs/playground-account-generation-entrypoints.md#2026-11-21-单图短片的机身稳定性与切点验收) — 用官网单图约束产品姿态，以成片切点和主体结构核对实际效果。
 
 - 2026-11-20：[品牌短片参考素材与重生成回读](domains/sandai-platform/refs/playground-account-generation-entrypoints.md#2026-11-20-品牌短片参考素材与重生成回读) — 官方车型与配色参考、逐图绑定、替换版本与逐笔用量查证。

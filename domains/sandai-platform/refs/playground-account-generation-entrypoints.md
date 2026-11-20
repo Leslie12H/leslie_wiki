@@ -63,3 +63,9 @@ Ego 的本地命令退出后，浏览器内已启动的执行仍可能推进到�
 **Why**　商品图与模型道具图提供的是身份和材质依据。参考图减少后，生成仍可能改变视角、屏幕轮廓或轮组方向。完整成片应核对切点两侧和主体结构，任务成功和分辨率只是基础回执。
 
 **How to apply**　刚性产品优先选一张官网图，固定参考姿态和可见侧，分别设计短滑轨、微距和拉远镜头。道具到真物可选同一几何特征做匹配剪辑。屏幕内外切换可用运动遮挡和连续声音做衔接。检查两帧之间的主体位置、运动方向和光线，从提示词、选图和成片分开找偏差。若同时改变素材和镜头方案，把效果写成当次观察，保留单因素归因的未知。工作区成片和精确提示词见 `outputs/magi2-product-shorts-20261120/revision-single-reference/`。 [匹配剪辑方法](https://www.adobe.com/creativecloud/video/post-production/cuts-in-film/match-cut.html)
+
+## 2026-11-21 分镜生成与切点实测
+
+**Why**　按时间写多个镜头仍可能生成近似同机位的长镜头。单张品牌图约束的是主体身份。机位变化、声画透视和道具到实物的动作连续还需要成片处理。
+
+**How to apply**　先按画面信息设计景别和运动，再把不同机位单独生成，给每条片留剪切余量。对照前后镜头的色调和主物体位置选切点。道具轮与实车轮的尺度及轴心可在后期微调，行车镜头相反方向和曝光差过大时补同向或轴线正面的过渡。屏内外复用同一运动素材，以屏幕角点定位画面，进出屏时对照源视频连续帧并让音色由扬声器过渡到环境声。分别核对在线生成输入、实际采用素材、输出切点及编码。现场的提示词、切点与成片见 `outputs/magi2-product-shorts-20261120/redesign-shot-by-shot/`。 [Bruce Block 的画面反差与相似度](https://www.oreilly.com/library/view/the-visual-story/9781317745693/xhtml/Ch02.xhtml) · [Steven Katz 的匹配剪接与跟拍](https://studylib.net/doc/28503985/steven-d.-katz----1991----film-directing-shot-by-shot)
