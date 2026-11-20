@@ -1,6 +1,6 @@
 - 2026-11-20：[飞书文档表格中的内嵌视频回填](global/pitfalls/feishu-docx-table-video-preview.md) — 按目标块标识定位，处理本地附件部分成功，使用预览附件移动并回读验证。 补原表追加行、更新新单元格及原有行回读参照。
 
-- 2026-11-20：[双区按创建时间统计 E2E 和生成阶段](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-20-双区按创建时间统计-e2e-和生成阶段) — 美西终态按任务 ID 回查、同一截止时间、看板滚动直方图、一分钟抓取边界和原生 Logstore SQL 的逐分钟验算与发布回读，含请求分段。
+- 2026-11-20：[双区按创建时间统计 E2E 和生成阶段](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-20-双区按创建时间统计-e2e-和生成阶段) — 美西终态按任务 ID 回查、同一截止时间、看板滚动直方图、一分钟抓取边界和原生 Logstore SQL 的逐分钟验算与发布回读，含请求分段和平台派发等待。
 
 - 2026-11-20：[VidMuse Magi-2 抽卡与 CLI 任务关联](domains/vidmuse/refs/magi2-generation-lineage-entrypoints.md) — 从 Thread 或 AION 请求 ID 串到 OpenAPI 与 Athena，核对派发持久化、实际路由、提示词版本和内部查询入口。
 

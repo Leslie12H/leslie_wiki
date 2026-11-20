@@ -460,3 +460,9 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **看板按分钟刷新时的采样边界。** 2026-11-20 只读回放上海和美西的完片直方图，约 60 秒的抓取间隔下，`[1m]` 的均值、P95 和样本计数在核验窗口均无点。用 `[5m]` 可按分钟刷新趋势，均值用时长累计量和任务数的增量计算，P95 仍按桶插值。与逐任务 CSV 对齐时，按首次公开成功事件的发生分钟聚合原始耗时与成功数。双区 P95 从双区任务合并计算。回放脚本见工作区 `.local/platform-e2e-20261120/dashboard-minute-check.mjs`。
 
 **现有 CMS 大盘的逐任务数据源。** 2026-11-20 在生产主看板编辑器中确认有原生 Logstore (SQL) 插件。上海用结构化 `message` 和 `timestamp`，美西用 `content` 的 SQL 条件匹配，兼容全文事件名检索漏数。按任务去重，用首次成功事件实际时间分桶，取排序后相邻任务耗时线性插值。上线前逐分钟核对两区成功数、均值和 P95，再独立读回看板配置。进入两区表格所在的任务交付区，等待 SLS 异步查询返回并检查实际数据行，避免把首次空态当作查询失败。主视图本地原生备份及构建器沿工作区 `monitoring/aliyun/production-load-dashboard.md` 回查。阿里云 StoreView 跨地域分析仅覆盖中国内地，跨境双区合并分位数需独立数据路径。现场查询和配置备份在工作区 `.local/platform-e2e-20261120/dashboard-publish/`。[StoreView 使用限制](https://help.aliyun.com/zh/sls/dataset-storeview-overview)
+
+### 平台派发等待
+
+**Why:** 从 Zeus 建单到平台确认 Athena 接单，反映申请发出后在平台侧等待与提交的耗时。切片就绪后的 worker 排队在另一阶段。单看平均与 P95 可能漏掉少量等待很长的任务，合看 P99 与样本数。
+
+**How to apply:** 从任务建单时间到事务提交后的首次 `task_submitted taskId=… jobId=…` 计算耗时，按确认时间纳入所选窗口。Zeus 可以从创建响应、回调或补偿查询首次确认接单，因此指标包含确认延迟。仍未确认的任务看待派发队列。先按任务去重，再从原始耗时计算分位数。线上表格位于生产主视图的待派发区下方。配置、六小时抽查及独立回读从工作区 `monitoring/aliyun/production-load-dashboard.md` 的 2026-11-20 段落定位。
