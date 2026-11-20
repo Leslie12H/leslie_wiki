@@ -1,3 +1,5 @@
+- 2026-11-20：[方舟兼容双区对外调用口径](domains/sandai-platform/refs/magi2-reference-prompt-entrypoints.md#2026-11-20-方舟兼容双区对外调用口径) — 双区在线规格、素材上传、SDK 透传和只读鉴权查证入口。
+
 - 2026-11-20：[飞书文档表格中的内嵌视频回填](global/pitfalls/feishu-docx-table-video-preview.md) — 按目标块标识定位，处理本地附件部分成功，使用预览附件移动并回读验证。 补原表追加行、更新新单元格及原有行回读参照。
 
 - 2026-11-20：[双区按创建时间统计 E2E 和生成阶段](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-20-双区按创建时间统计-e2e-和生成阶段) — 美西终态按任务 ID 回查、同一截止时间、看板滚动直方图、一分钟抓取边界和原生 Logstore SQL 的逐分钟验算与发布回读，含请求分段和平台派发等待。

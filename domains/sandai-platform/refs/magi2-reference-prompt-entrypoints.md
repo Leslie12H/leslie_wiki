@@ -35,3 +35,11 @@ links: [sandai-playground-account-generation-entrypoints, ark-seedance-25-pe-ent
 ## 音频与视频混传
 
 按 [Sand.ai 方舟兼容接口](https://platform.sandai.cn/docs/ark-generations/) 和 [Playground 编号实现](https://github.com/world-sim-dev/sandai-website/blob/e7bd6949f6628544c15899852945c418b56f767a/apps/platform/src/features/generations/mentions.ts#L15-L27) 核对请求角色和模态内编号。素材 ID 属于请求的素材来源。需要指定视频的内嵌音轨时，先区分视频引用和独立参考音频的编号；Athena 内部媒体处理顺序以 [参考输入契约](https://github.com/world-sim-dev/athena-admin/blob/c96e45409dfa9d97e0321f9276aa7c551c37e093/docs/architecture/i2fv-reference-inputs.md) 为准。火山方舟的素材 ID、视频及音频来源字段见 [创建视频生成任务](https://docs.volcengine.com/docs/ark/create-video-generation-task-api?lang=zh)，表述方式按模型版本查本页的教程入口。
+
+## 2026-11-20 方舟兼容双区对外调用口径
+
+**Why**　搜索缓存和 Zeus 请求解析器可能给出比当前公开文档更多的分辨率。国内和海外对水印的公开约定也有差异。
+
+**How to apply**　直接读取两区线上方舟文档，分别核对 SDK Base URL、创建与查询路由、分辨率和水印说明。查提示词增强的 SDK 透传时，用模拟传输核对 `extra_body` 是否合并到请求 JSON 顶层。素材从独立上传的 API 参考回查，并保留数值 ID 的十进制精度。需要验证实际模型能力时，核对目标地区部署与模型配置，再以获授权生成任务校验成片。 [国内方舟文档](https://platform.sandai.cn/docs/ark-generations/) · [海外方舟文档](https://platform.sand.ai/docs/ark-generations/) · [上传素材](https://platform.sand.ai/docs/api-reference/#upload-an-asset) · [Zeus 提示词增强接入](https://github.com/world-sim-dev/zeus/pull/515)
+
+2026-11-20 两区文档直接读取均返回 200。无凭据查询均返回 Ark 格式的 `401 AuthenticationError`。Python SDK 模拟传输覆盖两区路径、Bearer 头、顶层增强参数及任务轮询。
