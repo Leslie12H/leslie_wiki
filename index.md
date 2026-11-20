@@ -1,3 +1,5 @@
+- 2026-11-20：[多镜头请求的分镜素材预检](domains/sandai-platform/refs/magi2-reference-prompt-entrypoints.md#2026-11-20-多镜头请求的分镜素材预检) — 对齐输出时长、分镜板、素材内容和逐镜音频要求，含外链媒体探测。
+
 - 2026-11-20：[方舟兼容双区对外调用口径](domains/sandai-platform/refs/magi2-reference-prompt-entrypoints.md#2026-11-20-方舟兼容双区对外调用口径) — 双区在线规格、素材上传、SDK 透传和只读鉴权查证入口。
 
 - 2026-11-20：[飞书文档表格中的内嵌视频回填](global/pitfalls/feishu-docx-table-video-preview.md) — 按目标块标识定位，处理本地附件部分成功，使用预览附件移动并回读验证。 补原表追加行、更新新单元格及原有行回读参照。

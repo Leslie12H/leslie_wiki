@@ -43,3 +43,9 @@ links: [sandai-playground-account-generation-entrypoints, ark-seedance-25-pe-ent
 **How to apply**　直接读取两区线上方舟文档，分别核对 SDK Base URL、创建与查询路由、分辨率和水印说明。查提示词增强的 SDK 透传时，用模拟传输核对 `extra_body` 是否合并到请求 JSON 顶层。素材从独立上传的 API 参考回查，并保留数值 ID 的十进制精度。需要验证实际模型能力时，核对目标地区部署与模型配置，再以获授权生成任务校验成片。 [国内方舟文档](https://platform.sandai.cn/docs/ark-generations/) · [海外方舟文档](https://platform.sand.ai/docs/ark-generations/) · [上传素材](https://platform.sand.ai/docs/api-reference/#upload-an-asset) · [Zeus 提示词增强接入](https://github.com/world-sim-dev/zeus/pull/515)
 
 2026-11-20 两区文档直接读取均返回 200。无凭据查询均返回 Ark 格式的 `401 AuthenticationError`。Python SDK 模拟传输覆盖两区路径、Bearer 头、顶层增强参数及任务轮询。
+
+## 2026-11-20 多镜头请求的分镜素材预检
+
+**Why**　分镜末尾时间可能超过 API 输出时长。请求中也可能只传角色图、道具和场景概念图，却在提示词里要求逐格复现未提供的分镜板。
+
+**How to apply**　先将最后一个镜头的结束时间与请求 `duration` 对齐。按素材类型编号生成清单，通过预览图和视频抽帧核对分镜板、角色和场景用途，为普通场景图和构图参考分别绑定引用。将音频引用定位到实际镜头或画外音，并与逐镜台词要求对齐。校验外链时读取实际文件并探测尺寸、编码和时长。返回泛型 Content-Type 的音频可进一步核对文件名与字节签名，按目标部署复核服务端接收。 [原生 v2 创建参数](https://platform.sand.ai/docs/create-generation/) · [Zeus 外链素材导入](https://github.com/world-sim-dev/zeus/blob/51b97abc89c633a5b4d6ef42678b6afc69a44bc9/modules/domain/src/main/java/co/sandai/zeus/domain/asset/service/ReferenceMediaImporter.java)
