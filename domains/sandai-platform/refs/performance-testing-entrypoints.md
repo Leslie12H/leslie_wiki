@@ -458,3 +458,5 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 回放和汇总入口见工作区 `.local/platform-e2e-20261120/dashboard-1620/compare.mjs` 与 `.local/platform-e2e-20261120/phase-distribution.py`。
 
 **看板按分钟刷新时的采样边界。** 2026-11-20 只读回放上海和美西的完片直方图，约 60 秒的抓取间隔下，`[1m]` 的均值、P95 和样本计数在核验窗口均无点。用 `[5m]` 可按分钟刷新趋势，均值用时长累计量和任务数的增量计算，P95 仍按桶插值。与逐任务 CSV 对齐时，按首次公开成功事件的发生分钟聚合原始耗时与成功数。双区 P95 从双区任务合并计算。回放脚本见工作区 `.local/platform-e2e-20261120/dashboard-minute-check.mjs`。
+
+**现有 CMS 大盘的逐任务数据源。** 2026-11-20 在生产主看板编辑器中确认有原生 Logstore (SQL) 插件。上海用结构化 `message` 和 `timestamp`，美西用 `content` 的 SQL 条件匹配，兼容全文事件名检索漏数。按任务去重，用首次成功事件实际时间分桶，取排序后相邻任务耗时线性插值。上线前逐分钟核对两区成功数、均值和 P95，再独立读回看板和渲染。阿里云 StoreView 跨地域分析仅覆盖中国内地，跨境双区合并分位数需独立数据路径。现场查询和配置备份在工作区 `.local/platform-e2e-20261120/dashboard-publish/`。[StoreView 使用限制](https://help.aliyun.com/zh/sls/dataset-storeview-overview)
