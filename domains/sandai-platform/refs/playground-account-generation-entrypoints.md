@@ -51,3 +51,9 @@ Ego 的本地命令退出后，浏览器内已启动的执行仍可能推进到�
 **Why**　相同提示词和输出设置重复生成时，需要确认请求里是否指定了 seed，以及服务端实际给该任务分配了什么值。
 
 **How to apply**　从国内生产 Playground 页的静态资源定位部署版本，核对此版本的请求组装和发送字段。沿 Zeus 的请求反序列化与任务组装核对默认值，在同一账号下按已知任务 ID 查询生成详情的 `input.seed`。2026-11-19 的同题双提交可以从工作区 `.local/video-benchmark-cn-20261119/REPORT.md` 中的 H01 两条记录回查。直接 API 的显式取值范围以对外文档为准。 [线上前端提交源码](https://github.com/world-sim-dev/sandai-website/blob/6d8eaddf25adc2bee512d95602897d34e25f793b/apps/platform/src/features/playground/pages/playground-page.tsx#L123-L144) · [Zeus 种子选取](https://github.com/world-sim-dev/zeus/blob/51b97abc89c633a5b4d6ef42678b6afc69a44bc9/modules/domain/src/main/java/co/sandai/zeus/domain/platform/generation/OpenApiGenerationService.java#L54-L65) · [对外创建契约](https://platform.sand.ai/docs/create-generation/)
+
+## 2026-11-20 品牌短片参考素材与重生成回读
+
+**Why**　产品宣传片的氛围参考和外观依据可能混在一起。多角度商品图也容易让模型误解为一镜中的两台设备。任务受理后再纠正参考素材会产生独立任务和用量记录。
+
+**How to apply**　在品牌产品页或对应配色的商店页选出机背、侧面和展开状态，再目检下载文件。提示词按上传顺序逐张标明外形、配色、构图和光线的用途，混用灵感图时明确它的边界。随请求保存文件哈希、Asset ID、目标时长和显式 PE 值。若需要替换素材，沿新旧任务 ID 保留各自的回读和用量。正式交付时用最终任务的详细输入和成片核对。 [Apple iPhone Duo](https://www.apple.com/iphone-duo/) · [BMW S 1000 RR](https://www.bmwmotorcycles.com/en/models/sport/s1000rr.html) · [生成请求](https://platform.sand.ai/docs/create-generation/)
