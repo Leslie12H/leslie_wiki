@@ -67,6 +67,8 @@ links: [vidmuse-aion, vidmuse-ai-frontend]
 
 **无审核 Request ID 时回查原回执（2026-11-20）。** 先将 RTC、AION 请求、OpenAPI 生成及 Athena Job 逐级对齐。以 Athena 审核时间缩小到秒，用实际送审分段里的独特文本片段查阿里云「机器审核增强版 → 文本审核 → 结果查询」的「文本内容」。若同时出现 AION 预审核和 Athena 复审，按审核服务、时间和风险状态核对。打开对应行，展开送审全文并逐字对齐分段，再读取 `data.reason` 内的 `riskTips`、`riskWords` 及原始 Request ID。A/B 共用提示词时，以各自 Job 的决定时间和完整分段匹配，确保选中目标回执。业务链路的具体记录见 Apipltform 工作区 `.local/vidmuse-policy-4618107f/`。
 
+**核对供应商命中词与送审正文（2026-11-20）。** 阿里云 `data.reason.riskWords` 可能包含无法在送审正文中逐字找到的词。先展开完整分段，按实际引用转换和空白规则对齐原始提示词。将原回执中的命中词与正文可定位的原句分别核实，避免把无法定位的词解释为用户原文或推断供应商的匹配算法。同一个画布 RTC 可能有多个 AION 提交和 Athena Job，应分别核对各自的审核秒和供应商回执。证据入口在 Apipltform 工作区 `.local/vidmuse-seal-ab-20261120/`。
+
 ## 对比生成的重试与错误回写（2026-11-19）
 
 **Why:** 自由画布的对比生成可在同一个 `comparison_id` 下记录多条 RTC task。RTC 的最终失败提示可能只来自最后一次工作流执行。现场出现生成接口多次回 `400 / content_policy`，最后一次领取执行权时连接失败，画布只收到连接失败的情况。
