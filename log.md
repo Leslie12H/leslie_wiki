@@ -3083,3 +3083,5 @@
 - 2026-11-20 ingest：补四站点审核失败同窗核对、原始 Prompt 授权回读和同步图片回执关联。
 
 - 2026-11-20 ingest：补跨环境按 Athena Pod、发布镜像及 Green 标签判定核对文本审核配置的方法。
+
+- 2026-11-20 ingest：记录 VidMuse Magi-2 抽卡与 CLI 到 OpenAPI、Athena 的关联入口及查询提案。
