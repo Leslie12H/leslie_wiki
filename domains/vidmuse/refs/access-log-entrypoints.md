@@ -94,3 +94,13 @@ links: [vidmuse-aion, vidmuse-ai-frontend]
 **How to apply:** 从 RTC 和轮询回执取得两条模型请求 ID。按 ID 查 Manager 的实际 Trace、`Starting adventurer pre_deduct`、`Marking pre-submission failure` 及具体 `reason`。用终态的 `upstream_task_id` 和出站日志核对是否派发。预扣连接失败按网络错误归因。积分是否入账以计费流水为准。
 
 - 本次证据见 Apipltform 工作区 `.local/beta-cn-thread-41d42725/retry-1730/model-ids.json`。
+
+## 新加坡 staging 与上海 Beta 的 OpenAPI 超时（2026-11-20）
+
+**Why:** 相同的 staging Pod 前缀可以出现在多个集群。网站入口的 ALB HTTP 503 记录的是入口请求，素材下载超时在生成服务的出站调用或 OpenAPI 请求结果中查证。素材域名能识别下载来源，仅靠域名无法确定请求发起集群。
+
+**How to apply:** 先用 CNAME 和实际 Ingress 确认网站入口。新加坡 `vidmuse-staging.sandaii.cn` 的 Manager 在同集群的 `aion` 共享日志库，用 `__tag__:_pod_name_: staging-vidmuse-manager-deployment*` 核对采集覆盖。再从 `log` 提取真实出站 host、方法、状态、应用时间和 Trace，同一 Trace 与时间可能重复收录。入口 503 在 ALB 按 `http_host`、状态、HTTP 方法和路径归类，并用应用日志核实具体原因。[新加坡 Manager](https://sls.console.aliyun.com/lognext/project/k8s-log-c8537cc4bdbe246968912d1aaefa38832/logsearch/aion?slsRegion=ap-southeast-1) · [新加坡 ALB](https://sls.console.aliyun.com/lognext/project/pro-sg-alb/logsearch/alb_access_log_store?slsRegion=ap-southeast-1)
+
+上海 `beta.vidmuse.cn` 通过同地区的 `vidmuse-cn-staging-manager` 查实际 API 目的地。调用 `api-staging-cn.sandaii.cn` 时，把 Manager 的 HTTP 503 和香港国内预发 `RequestOutcome` 按 Trace 对齐，再按 OpenAPI `requestId` 和明确的 `downloadReason` 计数。两侧记录属于同一个请求。服务历史日志的覆盖单独检查，SLS 及 Pod 日志的缺口保留在结果里。[上海 Manager](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/vidmuse-cn-staging-manager?slsRegion=cn-shanghai) · [香港 OpenAPI](../../sandai-platform/refs/production-error-alerts-entrypoints.md#2026-11-20-国内预发-openapi-的素材下载超时计数)
+
+2026-11-20 的跨区对账与采集覆盖查证见 Apipltform 工作区 `.local/socket-timeout-20261120/` 中的 `vidmuse-beta-join.json`、`singapore-final.json` 与 `singapore-service.json`。
