@@ -21,3 +21,7 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-aliyun-
 
 - [Athena 审核编排](https://github.com/world-sim-dev/athena-admin/blob/main/ApiService/services/moderation.py) · [审核状态存储](https://github.com/world-sim-dev/athena-admin/blob/main/ApiService/models/moderation.py) · [Green 返回值归一化](https://github.com/world-sim-dev/athena-admin/blob/main/ApiService/clients/green.py) · [媒体原回执查证](aliyun-output-moderation-receipts.md)。
 - 2026-11-20 两区域 96 小时只读核对的证据入口为 Apipltform 工作区 `.local/moderation-96h-20261120/`。
+
+## 2026-11-20 审核通过的对照样本
+
+先按平台 Task ID 对齐 Athena Job，读取 `moderation stage decided` 中的 `stage=input` 与 `status=passed`，再用实际送审文本、调用时间和服务名定位供应商回执。遇到提示词增强，按事件先后识别实际审核的版本。本次国内生产 Playground 的原文在增强前送审，回执为 `riskLevel=none` 且标签为空。用同名审核服务的拒绝样本核对时，共有词可以对应不同分类结果，原因以原回执字段和可观测的配置为准。只读证据见工作区 `.local/task-872481655980421/`。
