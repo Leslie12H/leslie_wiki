@@ -3065,3 +3065,5 @@
 - 2026-11-20 ingest：补 Athena 无审核 Request ID 时按精确分段、服务和时间匹配阿里云原回执。
 
 - 2026-11-20 ingest：记录美国 Platform 邮箱登录验证码 F002 与按 Pod 回查原始日志的方法。
+
+- 2026-11-20 ingest：补充 Playground 的 seed 从线上请求组装到已受理任务详情的只读核验入口。

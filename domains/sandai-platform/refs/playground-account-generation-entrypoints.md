@@ -2,7 +2,7 @@
 name: sandai-playground-account-generation-entrypoints
 type: reference
 created: 2026-11-19
-updated: 2026-11-19
+updated: 2026-11-20
 tags: [sandai, api-platform, playground, video, production, testing]
 links: [sandai-api-platform-development-entrypoints, sandai-api-platform-v2-input-validation-entrypoints]
 ---
@@ -45,3 +45,9 @@ Ego 的本地命令退出后，浏览器内已启动的执行仍可能推进到�
 **How to apply**　按 taskId 回查两个创建响应的 HTTP 路由、外部模型名和实际 OpenAPI 镜像，用发布回执把镜像绑定到对应源码。核对 Ark 解析器是否允许 PE 字段、传给共享命令的 PE 值以及模型默认值的合并优先级。对照 Zeus 任务保存的开关和 Athena 前处理；记录能定位的生效区间。请求日志只有受理摘要时按已保存的参数投影呈现。精确写入时间、操作者和字段旧值需要配置或数据库审计回执。现场日志见工作区 `.local/org-871466884966341-20261119/boundary-*.json`，发布版本见 [上海生产发布](https://github.com/world-sim-dev/zeus/actions/runs/44293927203)。
 
 核对组织使用了哪些创建入口时，先分页冻结管理台任务 ID，再从组织建立时间起查可关联 orgId 的入口受理和失败日志。用完整创建路由和 taskId 逐笔交叉核对，失败请求可能没有 taskId。待 SLS 追齐快照尾部后，补查缺失的精确 ID。现场入口查询和名单见工作区 `.local/org-871466884966341-20261119/route-*.json`。
+
+## 2026-11-20 Playground 的随机种子核验
+
+**Why**　相同提示词和输出设置重复生成时，需要确认请求里是否指定了 seed，以及服务端实际给该任务分配了什么值。
+
+**How to apply**　从国内生产 Playground 页的静态资源定位部署版本，核对此版本的请求组装和发送字段。沿 Zeus 的请求反序列化与任务组装核对默认值，在同一账号下按已知任务 ID 查询生成详情的 `input.seed`。2026-11-19 的同题双提交可以从工作区 `.local/video-benchmark-cn-20261119/REPORT.md` 中的 H01 两条记录回查。直接 API 的显式取值范围以对外文档为准。 [线上前端提交源码](https://github.com/world-sim-dev/sandai-website/blob/6d8eaddf25adc2bee512d95602897d34e25f793b/apps/platform/src/features/playground/pages/playground-page.tsx#L123-L144) · [Zeus 种子选取](https://github.com/world-sim-dev/zeus/blob/51b97abc89c633a5b4d6ef42678b6afc69a44bc9/modules/domain/src/main/java/co/sandai/zeus/domain/platform/generation/OpenApiGenerationService.java#L54-L65) · [对外创建契约](https://platform.sand.ai/docs/create-generation/)
