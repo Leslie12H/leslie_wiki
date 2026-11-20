@@ -79,6 +79,8 @@ links: [vidmuse-aion, vidmuse-ai-frontend]
 
 - 2026-11-19 的只读证据见 Apipltform 工作区 `.local/beta-cn-thread-41d42725/` 内的 `comparisons.json`、`attempts.json` 和 `deep.json`。
 
+**终态重试与 Athena 派发前置检查（2026-11-20）。** 开放平台 `stage=EXECUTION` 可以覆盖 Athena 预处理后的派发校验。若同一 Job 出现 `reference preparation completed`，随后仍报 `Reference PE has not completed`，用工作器和秒级时间窗对齐两行，再从部署版本核对派发要求的完成标记与增强提示词字段。用相同 RTC、AION 请求 ID 和平台生成 ID 区分工作流反复返回同一终态与真正重新建单。另一次生成请求的素材校验或并发服务超时按其自身 Trace 查。证据入口在 Apipltform 工作区 `.local/vidmuse-6ee56303-20261120/`。[Athena 派发前检查](https://github.com/world-sim-dev/athena-admin/blob/3971398cc366ae60741b42469e82ebe3c6d71755/ApiService/services/reference.py#L177-L188)
+
 ## AION 提交前的提示词审核（2026-11-19）
 
 **Why:** AION 的模型入口可以在调用生成供应商之前，按模型配置调用 Green 的文本审核。出现 `Prompt did not pass content safety review` 时，先用同一请求的 Manager 审核日志对齐该分支。该分支在 Green 返回中高风险后立即结束，调用日志只记录服务名、接口 Code 和 Request ID。
