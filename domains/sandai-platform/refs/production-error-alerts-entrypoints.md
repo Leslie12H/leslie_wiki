@@ -67,3 +67,11 @@ links: [sandai-api-platform-development-entrypoints]
 美国 Platform 的邮箱登录验证码失败由 `ErrorLogger` 记录，告警级别取自应用日志。按同一 Trace 核对 `CaptchaService` 的供应商结果和 `RequestCompletionLog` 的 HTTP 状态，才能判定失败发生在哪个环节。供应商返回 `F002` 时，查看阿里云服务端接入文档的返回码表，参数丢失的位置需要单独取证。[阿里云验证码服务端接入](https://help.aliyun.com/zh/captcha/captcha2-0/user-guide/server-access)
 
 按 Trace ID 搜索若只命中结构化摘要，从摘要取 Pod 名和应用时间，再收窄至该 Pod 与前后数秒，查询 `/app/logs/error.log` 和 `/app/logs/zeus-default.log`。用原始行中的 Trace ID 对齐验证码回执、异常栈和请求完成记录，两份文件的同一异常按同一请求归并。查询证据见 API 平台工作区 `.local/trace-45fd1460-20261120/digest.json`。[美国生产日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c7c0ede6c71484f8da34a829954c50cd9/logsearch/co_sandai_zeus_prod?slsRegion=us-west-1)
+
+## 2026-11-20 国内预发 OpenAPI 的素材下载超时计数
+
+**Why:** VidMuse 的调用入口可能落在香港国内预发。生产 Zeus 日志覆盖上海和美西，香港国内预发 OpenAPI 的记录出现在名称含 `dev` 的香港日志库。预发应用将同一个 `RequestOutcome` 写入普通日志和错误日志，两份记录的 SLS 收录时间可能不同。素材下载在生成受理前执行，因此该阶段的失败通过创建请求日志计数。
+
+**How to apply:** 先从调用域名或同一 Trace 核对实际部署环境。香港日志按 `staging-cn-openapi-zeus-deployment-*` 限定 Pod，从 `content` 解析 `route`、`httpStatus`、`stage`、`downloadReason`、`sourceHost` 和 `requestId`。用 `stage=DOWNLOAD`、`downloadReason=SocketTimeoutException` 和 HTTP 503 确认这类失败，按 `requestId` 去重。按日统计时，将应用日志行首 UTC 时间转换为北京时间。SLS 计数可用分页读回和 ACK 容器日志复核，滚动发布前后的全窗口覆盖以集中日志为准。[香港日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c4d615674e9994747af45004405e35503/logsearch/co_sandai_zeus_dev?slsRegion=cn-hongkong) · [香港预发部署](https://cs.console.aliyun.com/#/k8s/cluster/c4d615674e9994747af45004405e35503/v2/workload/deployment/detail/default/staging-cn-openapi-zeus-deployment/pods?region=cn-hongkong&ns=default)
+
+2026-11-20 的聚合查询、去重核对与容器取证见 API 平台工作区 `.local/socket-timeout-20261120/` 下的 `hk-dedup.json`、`hk-causes.json` 和 `hk-ack.json`。
