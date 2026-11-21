@@ -1,4 +1,4 @@
-- 2026-11-21：[生成输入限制与请求覆盖查证入口](domains/sandai-platform/refs/generation-input-limits-and-options.md) — PR #518 的阈值分轮、账号隔离、ACK 重部署回读与 MP4 时长探测指针。 补 PR #519 / Athena #819 音轨对照和实际交付查证。
+- 2026-11-21：[生成输入限制与请求覆盖查证入口](domains/sandai-platform/refs/generation-input-limits-and-options.md) — PR #518 的阈值分轮、账号隔离、ACK 重部署回读与 MP4 时长探测指针。 补 PR #519 / Athena #819 音轨对照和实际交付查证。 补方舟双区阈值与音轨实测。
 
 - 2026-11-21：[分镜生成与切点实测](domains/sandai-platform/refs/playground-account-generation-entrypoints.md#2026-11-21-分镜生成与切点实测) — 独立机位生成、轮轴匹配、屏内外连续帧和声画透视的成片验证。
 

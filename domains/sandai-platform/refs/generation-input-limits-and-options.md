@@ -34,3 +34,9 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 
 - [Zeus #519](https://github.com/world-sim-dev/zeus/pull/519) · [Athena #819](https://github.com/world-sim-dev/athena-admin/pull/819)
 - 海外与国内环境分开取证。本次 `staging-cn` 自有 v2 `magi-2` A/B 的请求、成片流和终态见 `/Users/leslie/Documents/ChatGPT/Apipltform/.local/zeus-pr519-audio-20261121/RESULTS.md`。
+
+## 2026-11-21 方舟兼容入口分区回读
+
+先用兼容路径的鉴权响应定位入口，再用有效 Key 完成创建与查询闭环。验证两区提示词阈值不同，可以给同一超默认上限的提示词设置一个下游必定拒绝的时长，读取返回的参数名判断是否通过前面的长度校验，全程避免创建长提示词生成任务。方舟请求字段是 `generate_audio`，最终音轨沿 `content.video_url` 查证。
+
+- 海外与国内方舟入口、代表性阈值、默认音频及静音成片证据见 `/Users/leslie/Documents/ChatGPT/Apipltform/.local/zeus-pr519-ark-20261121/RESULTS.md`。
