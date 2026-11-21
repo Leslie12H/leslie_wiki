@@ -530,6 +530,7 @@
 - [影游 Agent Benchmark 综合评测报告 9.19 对照入口](domains/maxwell/refs/nextplay-benchmark-report-20260919.md) — 2026-09-19 报告结论（D4/D5 集中失败、四模型互补、补分敏感）与下一轮协议清单；EVOLVE 三层对照（协议/评分/执行）
 
 ### sisyphus — [质量平台](domains/sisyphus/README.md)
+- 2026-11-21：[Musi SSE 心跳与 Sandbox JWT 续期拒绝](domains/sisyphus/pitfalls/musi-sandbox-jwt-renewal-rejected.md) — Sisyphus 原始流证据、AION 收件 401 与 ACS 凭据 PATCH 422 的核对入口。
 - 2026-11-18：[VidMuse Playground OSS 配置查证入口](domains/sisyphus/refs/vidmuse-playground-oss-entrypoints.md) — 发布 Secret 映射、运行时引用、OSS 只读验证及凭证生效步骤。
 - 2026-11-14：[VidMuse UI 全量回归的滑块重试和空提示词断言](domains/sisyphus/pitfalls/vidmuse-ui-full-captcha-and-empty-prompt.md) — 422/00102、备用会话与空输入的网络断言查证入口。
 - [Sisyphus 质量平台](domains/sisyphus/README.md) — quality_dashboard 日投影/发版门禁、automation_triggers、Agent Token 与 project 边界；调度模型与 admin 不同
