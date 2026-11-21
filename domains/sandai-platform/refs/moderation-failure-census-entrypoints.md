@@ -43,3 +43,5 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-aliyun-
 以原建单 Request ID 和任务 ID 回读提交台账。保留请求里的参考音频类型与资产号，按去除文本项后的素材顺序对应 Athena 的 `inputs[n]`，槽位从 0 开始。对输入音频的 `sexual_sounds`，沿回调 DataId 核对 Green 的语音 Task ID 和风险等级。通过上传或下载校验哈希核对原始文件，内联场景可用同一文件复算当时请求体哈希。合成音频的误报复核可看生成脚本、文件哈希和实际解码。成片音轨开关与输入参考音频各自取证。
 
 本次工作区入口为 `.local/moderation-expanded-20261120/input-audio-evidence.json`。素材生成代码见 `postman/load/magi2/scripts/build_multimodal_dataset.py` 的 `make_audio`。
+
+工作簿的相对文件超链接依赖客户端与附件目录。用户反馈无法打开时，先对压缩包内的音频逐个校验 SHA-256 和完整解码，再交付原件内置的离线试听页。用浏览器验证播放时间推进和暂存原件引用。证据指针为工作区 `.local/moderation-expanded-20261120/build-audio-listener.py`。
