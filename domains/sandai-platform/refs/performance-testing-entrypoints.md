@@ -2,7 +2,7 @@
 name: sandai-api-platform-performance-testing-entrypoints
 type: reference
 created: 2026-10-27
-updated: 2026-11-20
+updated: 2026-11-21
 tags: [sandai, api-platform, performance, testing, quota]
 links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi-quota-entrypoints, sandai-api-platform-test-organization-retirement]
 ---
@@ -466,3 +466,11 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why:** 从 Zeus 建单到平台确认 Athena 接单，反映申请发出后在平台侧等待与提交的耗时。切片就绪后的 worker 排队在另一阶段。单看平均与 P95 可能漏掉少量等待很长的任务，合看 P99 与样本数。
 
 **How to apply:** 从任务建单时间到事务提交后的首次 `task_submitted taskId=… jobId=…` 计算耗时，按确认时间纳入所选窗口。Zeus 可以从创建响应、回调或补偿查询首次确认接单，因此指标包含确认延迟。仍未确认的任务看待派发队列。先按任务去重，再从原始耗时计算分位数。线上表格位于生产主视图的待派发区下方。配置、六小时抽查及独立回读从工作区 `monitoring/aliyun/production-load-dashboard.md` 的 2026-11-20 段落定位。
+
+## 2026-11-21 Worker 接单后的 GPU 等待
+
+**Why**　Worker 可以在 GPU 还在执行其他任务时接下新任务。切片就绪到接单很短时，后续仍可能有长时间的本地等待。`inference finished in` 在当日的 S5000 样本中包含这段等待，从该值直接汇总纯 GPU 推理耗时会高估。
+
+**How to apply**　将切片就绪、`task accepted`、`GPU worker started inference`、推理完成和平台终态用 Job ID 和 Pod 对齐。`task accepted` 到 GPU 开始用于衡量 worker 内等待。同 Pod 查上一条任务的推理起止、降噪和解码进度，再用同部署前缀的其他 Pod 样本验证是否持续完片。用墙钟时间戳核对日志中的计时范围。没有 GPU 利用率、队列深度和有效槽位配置时，保留全池容量是否不足的结论。
+
+- 生产样本查证入口是开放平台任务 `872967989601285`、Athena Job `4518857`，同 Pod 上一条长任务为 `4518849`。按北京时间 2026-11-21 20:15–20:41 搜索，先从 Zeus 查派发，再到 Athena 对齐两个 Job 的接单、GPU 开始与进度。 [Zeus 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/co_sandai_zeus_prod?slsRegion=cn-shanghai) · [Athena Worker 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai)
