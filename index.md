@@ -258,6 +258,8 @@
 
 # leslie_wiki 目录
 
+- 2026-11-21：[飞书项目发布组合与已有版本的关联](domains/sandai-platform/refs/feishu-project-model-release-combination.md) — 原生关联字段、版本类型筛选和实例回读入口。
+
 - 2026-11-14：[上传失败回执与暂存清理](domains/sandai-platform/pitfalls/upload-preparation-recovery.md) — 失败回执与真实资产、暂存删除权限、多媒体合同/计划承接、已受理追加对账、长探针结果留存及资产清理边界。
 
 - 2026-11-05：[派工父账与整题覆盖](domains/maxwell/refs/evolve-usage-accounting.md#父-run-账单不能代替派工总账2026-11-05) — Native 子 Run 独立记账、父子身份核对、未知覆盖保留及原件不回填。
