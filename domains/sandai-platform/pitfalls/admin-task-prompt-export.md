@@ -32,3 +32,9 @@ links: [sandai-api-platform-development-entrypoints]
 ## 2026-11-21 图片 URL 的来源
 
 任务详情的 `inputs[].url` 是按资产签发的素材下载地址。核对域名、签名参数和 `expiresAt`，用 `assetId` 关联原件。创建请求可传 `image.url` 或 `image.assetId`。Zeus 的 URL 导入路径读取外部文件，再以内部资产关联任务。要确认客户当时提交的外部 URL，需查留存的创建请求入参。
+
+## 2026-11-21 用生产链路区分图片 URL 与素材 ID
+
+创建请求正文缺失时，先在 `co_sandai_zeus_prod` 按组织和任务 ID 把 `/v2/generations` 受理摘要与请求 ID 对齐，从日志关联字段取得独立的 Trace ID，再查同区域 ARMS。核对运行版本的请求解析和入队代码。外部 HTTPS 图片导入会在该创建请求里新建素材，现成 `assetId` 和 `asset://` 只读取已有素材。生成 Trace 内的 `AssetMapper.insertAsset` 和素材 ID 分配时序可相互校验。
+
+按同一 Trace 检索入口正文、出站 GET 以及 `url.full`、`http.url` 等属性。素材插入记录可以确认导入方式，只有原始请求或有完整来源字段时才能回填客户 URL。保留查证入口与方法，任务 ID、客户 URL 和请求日志留在授权工作区。
