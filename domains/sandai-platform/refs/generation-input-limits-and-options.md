@@ -40,3 +40,12 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 先用兼容路径的鉴权响应定位入口，再用有效 Key 完成创建与查询闭环。验证两区提示词阈值不同，可以给同一超默认上限的提示词设置一个下游必定拒绝的时长，读取返回的参数名判断是否通过前面的长度校验，全程避免创建长提示词生成任务。方舟请求字段是 `generate_audio`，最终音轨沿 `content.video_url` 查证。
 
 - 海外与国内方舟入口、代表性阈值、默认音频及静音成片证据见 `/Users/leslie/Documents/ChatGPT/Apipltform/.local/zeus-pr519-ark-20261121/RESULTS.md`。
+
+## 2026-11-21 国内生产无声反馈取证
+
+**Why**　模型输入里写有音效或音乐，最终交付仍可能静音。方舟的 `generate_audio` 控制交付音轨，Athena 在 GPU 返回原片后按任务配置决定是否去音轨。
+
+**How to apply**　先按 OpenAPI 任务 ID 查创建路由、实际接单 Pod 和 Dispatcher 关联的 Athena Job ID。再查该 Job 的 `processor_type=post_remove_audio` 及终态，并对齐实际接单和交付两个角色的发布版本。Athena 的 `postprocessor published` 表示已下发。是否完成应核对 Job 步骤状态，或核对当时交付代码是否要求成功的处理步骤及其产物。需要验证实际听感时，分别检查推理原片和该任务查询接口交付的 MP4，用 `ffprobe` 检查音轨，用 `volumedetect` 核对有轨文件的信号。参数未直读时写明它是从执行链路推定的值。
+
+- 生产样本的查证锚点是 OpenAPI 任务 `872957884154373`、Athena Job `4518090`、去音轨处理器 `b8d3b434`。在上海 SLS 查询 2026-11-21 19:34–19:53（北京时间），沿任务提交、原片交接、处理器下发和成功终态查证。原始 HTTP 请求体和最终下载 MP4 未直接读回。 [Zeus 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/co_sandai_zeus_prod?slsRegion=cn-shanghai) · [Athena 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/inference-prod?slsRegion=cn-shanghai)
+- 当次接单发生在生产滚动发布中。用发布回执里的 Pod 名和镜像核对逐角色的版本，再检查原请求解析中省略字段的默认值和新版静音产物选择条件。 [方舟请求解析](https://github.com/world-sim-dev/zeus/blob/51b97abc89c633a5b4d6ef42678b6afc69a44bc9/modules/openapi/src/main/java/co/sandai/zeus/openapi/compatible/ark/ArkGenerationRequest.java#L158-L172) · [Zeus 国内生产发布](https://github.com/world-sim-dev/zeus/actions/runs/44899239152) · [Zeus 成片选择逻辑](https://github.com/world-sim-dev/zeus/blob/f04eae7afef28dd3941d9a2ff18ffffff0c52782/modules/domain/src/main/java/co/sandai/zeus/domain/task/dispatch/AthenaVideoDelivery.java#L73-L131)
