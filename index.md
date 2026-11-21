@@ -179,7 +179,7 @@
 
 - 2026-11-19：[阿里云成片审核明细查证](domains/sandai-platform/refs/aliyun-output-moderation-receipts.md) — 从平台任务对齐 Athena 回调与供应商 DataId，再查命中帧时间、标签分值及语音风险。
 
-- 2026-11-20：[管理台任务 Prompt 导出](domains/sandai-platform/pitfalls/admin-task-prompt-export.md) — 对照 CSV、视频视图与原始内容接口，按组织冻结全量任务并验证提示词完整性。
+- 2026-11-21：[管理台任务 Prompt 与参考素材导出](domains/sandai-platform/pitfalls/admin-task-prompt-export.md) — 对照 CSV、视频视图和原始内容接口，核对历史模型、实际输入类型、素材链接有效期和稳定附件。
 
 - 2026-11-20：[PE 滚动发布的时间与任务统计](domains/sandai-platform/pitfalls/pe-rollout-audit-window.md) — Deployment 审计、运行日志和任务归属的取证入口。
 

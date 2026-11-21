@@ -2,12 +2,12 @@
 name: sandai-admin-task-prompt-export
 type: pitfall
 created: 2026-11-20
-updated: 2026-11-20
+updated: 2026-11-21
 tags: [sandai, api-platform, admin, generation, export]
 links: [sandai-api-platform-development-entrypoints]
 ---
 
-# 管理台批量导出原始任务 Prompt
+# 管理台批量导出原始任务 Prompt 与参考素材
 
 ## 为什么
 
@@ -20,3 +20,9 @@ links: [sandai-api-platform-development-entrypoints]
 3. 按任务 ID 对账后再输出单列纯文本。保留重复内容和多行文本，按用户要求处理空值。对疑似截断先核对来源长度。业务数据留在授权交付位置，知识库只保留入口。
 
 相关入口见[开放平台研发入口](../refs/development-entrypoints.md)。
+
+## 2026-11-21 原始参考素材核对
+
+后台模型显示名随当前配置解析，历史任务可能返回空值。按冻结的组织任务清单统计时，用已查证的内部模型标识与对外模型名共同校对，保留各标识的计数。运行任务类型也可能覆盖多种输入模式。区分纯文本与图片或其他参考输入时，读取详情的 `inputs`，核对素材类型、角色、顺序和 `assetId`。
+
+详情返回的素材下载链接有 `expiresAt`，整批签发后再下载容易过期。下载前分批刷新，按原任务、素材 ID、类型和顺序核对；保留文件哈希和字节数供去重与回查。将原件存入指定云空间时，用回执中的稳定文件链接回填表格并逐行读回。知识库只记录方法和入口。
