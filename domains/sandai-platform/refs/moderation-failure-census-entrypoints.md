@@ -2,7 +2,7 @@
 name: sandai-api-platform-moderation-failure-census-entrypoints
 type: reference
 created: 2026-11-20
-updated: 2026-11-20
+updated: 2026-11-21
 tags: [sandai, api-platform, zeus, athena, moderation, aliyun, sls]
 links: [sandai-api-platform-development-entrypoints, sandai-api-platform-aliyun-output-moderation-receipts]
 ---
@@ -37,3 +37,9 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-aliyun-
 ## 2026-11-20 Beta 与国内生产的文本审核配置对照
 
 环境和入口不同的任务可能共用同一 Athena 审核部署。先按 Job ID 查审核决定所在的 Pod 和镜像，再把发布镜像对应到精确提交。此次 Beta 改稿和国内生产对照任务在同一 Pod 上调用同一 Green 文本服务。该版本按返回的文本标签决定是否拦截，单个 Job 的审核服务覆盖项适用于图片和视频。结合跨环境原回执可区分供应商标签差异与平台决定差异。供应商内部模型和规则版本需以供应商证据核实。工作区证据入口为 `.local/magi2-green-config-compare-20261120/`。[预处理发布](https://github.com/world-sim-dev/athena-admin/actions/runs/44480415355) · [文本服务选择](https://github.com/world-sim-dev/athena-admin/blob/9c633829fb3a479708dbc8247f293ccd2ea52c66/ApiService/clients/green.py#L68-L79) · [标签判定](https://github.com/world-sim-dev/athena-admin/blob/9c633829fb3a479708dbc8247f293ccd2ea52c66/ApiService/clients/green.py#L137-L143)
+
+## 2026-11-21 输入音频原件回查
+
+以原建单 Request ID 和任务 ID 回读提交台账。保留请求里的参考音频类型与资产号，按去除文本项后的素材顺序对应 Athena 的 `inputs[n]`，槽位从 0 开始。对输入音频的 `sexual_sounds`，沿回调 DataId 核对 Green 的语音 Task ID 和风险等级。通过上传或下载校验哈希核对原始文件，内联场景可用同一文件复算当时请求体哈希。合成音频的误报复核可看生成脚本、文件哈希和实际解码。成片音轨开关与输入参考音频各自取证。
+
+本次工作区入口为 `.local/moderation-expanded-20261120/input-audio-evidence.json`。素材生成代码见 `postman/load/magi2/scripts/build_multimodal_dataset.py` 的 `make_audio`。
