@@ -25,3 +25,12 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **How to apply:** 用 ACK 工作负载的「更多 → 重新部署」同镜像重建相关角色，新 Pod 就绪后继续回读 Swagger、模型目录及实际验证结果。验证 `options` 关闭时，使用启用状态也会拒绝的非法字段，按字段错误区分开关，避免切换期间意外创建任务。测视频时长应分别覆盖有编辑列表与可识别时长的文件。只提供纯文本 fake 时，累计时长只能回读生效值，保留实际多段生成的验收缺口。
 
 - 本地配置与 API 回执：`/Users/leslie/Documents/ChatGPT/Apipltform/.local/zeus-pr518-staging-20261121/staging-global-run/RESULTS.md`。沿相邻只读回执核对恢复状态和补测素材。
+
+## 2026-11-21 `generateAudio` 成片音轨查证
+
+**Why:** Zeus 的提交和成功状态只证明任务完成。`generateAudio=false` 是否对用户生效，需要检查查询接口实际交付的文件容器流。Athena #819 的静音后处理依赖最终派发目标支持后处理交接，Zeus #519 的选择依赖成功回调中的已确认产物。
+
+**How to apply:** 核对当前 Magi 环境的 Zeus 和 Athena 部署后，用同模型、同输入和种子，仅改变 `generateAudio` 跑正反对照。两条都从各自任务详情下载最终交付视频，使用 `ffprobe` 检查视频流和音频流，必要时用 `volumedetect` 确认开启对照确有信号。涉及水印或不同执行端时分别复验。
+
+- [Zeus #519](https://github.com/world-sim-dev/zeus/pull/519) · [Athena #819](https://github.com/world-sim-dev/athena-admin/pull/819)
+- 海外与国内环境分开取证。本次 `staging-cn` 自有 v2 `magi-2` A/B 的请求、成片流和终态见 `/Users/leslie/Documents/ChatGPT/Apipltform/.local/zeus-pr519-audio-20261121/RESULTS.md`。
