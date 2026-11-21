@@ -1,3 +1,5 @@
+- 2026-11-21：[生成输入限制与请求覆盖查证入口](domains/sandai-platform/refs/generation-input-limits-and-options.md) — PR #518 的环境阈值、角色开关、账号隔离与素材回读指针。
+
 - 2026-11-21：[分镜生成与切点实测](domains/sandai-platform/refs/playground-account-generation-entrypoints.md#2026-11-21-分镜生成与切点实测) — 独立机位生成、轮轴匹配、屏内外连续帧和声画透视的成片验证。
 
 - 2026-11-21：[单图短片的机身稳定性与切点验收](domains/sandai-platform/refs/playground-account-generation-entrypoints.md#2026-11-21-单图短片的机身稳定性与切点验收) — 用官网单图约束产品姿态，以成片切点和主体结构核对实际效果。
