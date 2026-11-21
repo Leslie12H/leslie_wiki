@@ -474,3 +474,11 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **How to apply**　将切片就绪、`task accepted`、`GPU worker started inference`、推理完成和平台终态用 Job ID 和 Pod 对齐。`task accepted` 到 GPU 开始用于衡量 worker 内等待。同 Pod 查上一条任务的推理起止、降噪和解码进度，再用同部署前缀的其他 Pod 样本验证是否持续完片。用墙钟时间戳核对日志中的计时范围。没有 GPU 利用率、队列深度和有效槽位配置时，保留全池容量是否不足的结论。
 
 - 生产样本查证入口是开放平台任务 `872967989601285`、Athena Job `4518857`，同 Pod 上一条长任务为 `4518849`。按北京时间 2026-11-21 20:15–20:41 搜索，先从 Zeus 查派发，再到 Athena 对齐两个 Job 的接单、GPU 开始与进度。 [Zeus 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/co_sandai_zeus_prod?slsRegion=cn-shanghai) · [Athena Worker 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai)
+
+## 2026-11-21 按创建日统计双区任务量
+
+**Why**　创建回执可能缺失，也可能在创建任务号后于派发前失败。按同日派发数会混入前一天积压，且漏掉只留下失败终态的任务。
+
+**How to apply**　以生产 Admin 的 `createdAt` 为首选，先冻结同一个北京时间窗口，再查上海与美西。在无法读取 Admin 时，从 Zeus SLS 联合创建回执、派发回执和终态，按任务 ID 去重。上海查询结构化 `message`，美西用原始 `content` 解析。对只出现派发或终态的任务，使用已与同版本 Admin 比对的 ID 分配时间判定日界线，必要时回查精确任务号。应保存未匹配 ID、来源及缺口，日志并集只能提供已核实下限。
+
+- 2026-11-21 的双区 SQL、精确差集及独立回算从工作区 `.local/platform-task-volume-20261121/final-snapshot.json` 和 `final-totals.json` 回查。样本覆盖美西昨日建单今日派发，以及在提交阶段失败且无成功创建回执的任务。 [上海 Zeus SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/co_sandai_zeus_prod?slsRegion=cn-shanghai) · [美西 Zeus SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c7c0ede6c71484f8da34a829954c50cd9/logsearch/co_sandai_zeus_prod?slsRegion=us-west-1)

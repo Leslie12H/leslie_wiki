@@ -1,3 +1,5 @@
+- 2026-11-21：[按创建日统计双区任务量](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-21-按创建日统计双区任务量) — 当日创建边界、派发与终态补齐，以及日志去重统计的覆盖范围。
+
 - 2026-11-21：[Worker 接单后的 GPU 等待](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-21-worker-接单后的-gpu-等待) — 按 Job 与 Pod 对齐接单及 GPU 开始事件，核对同 worker 长短任务和同池完片。
 
 - 2026-11-21：[生成输入限制与请求覆盖查证入口](domains/sandai-platform/refs/generation-input-limits-and-options.md) — PR #518 的阈值分轮、账号隔离、ACK 重部署回读与 MP4 时长探测指针。 补 PR #519 / Athena #819 音轨对照和实际交付查证。 补方舟双区阈值与音轨实测。 补国内生产无声反馈的去音轨步骤与交付查证。
