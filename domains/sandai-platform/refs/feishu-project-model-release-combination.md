@@ -21,3 +21,9 @@ links: [sandai-api-platform-development-entrypoints]
 4. 选中条目后页面可以先显示新值。等待保存后重新打开实例，逐项回读 Base、Quant 和 PE。关联回读仅验证版本引用，兼容性和发布状态须回查对应评测与上线记录。
 
 2026-11-21 核验入口见 [对外模型字段管理](https://project.feishu.cn/magi-war-room/setting/workObject/6b013ea22d0cf6415783aa9c?menuTab=fieldManagement)、[版本台账](https://project.feishu.cn/magi-war-room/version/homepage) 和 [发布组合实例](https://project.feishu.cn/magi-war-room/openmodel/detail/7175214507)。
+
+## 流程模板与既有实例升级
+
+2026-11-21 核验了节点流的配置与升级。先保留起始节点 ID，从节点右侧的连接点新增后续节点并保存。重新打开模板，逐个核对前序节点。当前正式配置以[对外模型流程管理](https://project.feishu.cn/magi-war-room/setting/workObject/6b013ea22d0cf6415783aa9c?currentTemplate=6b006fd349d1a0c627c53514_template_1795243682685841082&menuTab=flowManagement&workflowFormTab=wbs_info-bar)为准。
+
+已经创建的工作项在模板保存后仍可能使用旧版本。到该实例的「更多 → 模板升级」，核对需删除和需插入的节点。若新增节点尚未实际执行，选择「全部设为未完成」。等升级提示消失后重新打开实例，确认版本关联及节点详情。页面顶部可能仍显示旧状态名，确认当前进度时以节点详情里实际标为进行中的节点为准。
