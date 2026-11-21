@@ -28,3 +28,7 @@ links: [sandai-api-platform-development-entrypoints]
 详情返回的素材下载链接有 `expiresAt`，整批签发后再下载容易过期。下载前分批刷新，按原任务、素材 ID、类型和顺序核对；保留文件哈希和字节数供去重与回查。用户只需稳定链接时，可将原件存入指定云空间后回填文件链接。
 
 要求在表内直接看到图片时，用 `lark-cli sheets +cells-set-image` 将原图文件上传到目标单元格，回读 `rich_text` 的 `embed-image`、图片 token 和尺寸，再在飞书页面确认图片显示。普通云盘文件 token 直接填入 `embed-image` 会因缺少表格素材关联被拒绝。任务包含多张图时，按原始顺序分别安排图片位置，每个位置都回读校验。知识库只记录方法和入口。
+
+## 2026-11-21 图片 URL 的来源
+
+任务详情的 `inputs[].url` 是按资产签发的素材下载地址。核对域名、签名参数和 `expiresAt`，用 `assetId` 关联原件。创建请求可传 `image.url` 或 `image.assetId`。Zeus 的 URL 导入路径读取外部文件，再以内部资产关联任务。要确认客户当时提交的外部 URL，需查留存的创建请求入参。
