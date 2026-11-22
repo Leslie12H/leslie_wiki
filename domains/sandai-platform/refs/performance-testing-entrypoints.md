@@ -490,3 +490,11 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **How to apply**　用同一个 Job 对齐前处理步骤的 `preprocess_handler_async start`、`reference PE output validated`、切片就绪、worker 接单、GPU 实际开始和 Zeus 终态。GPU 内用 `Step3: Base Denoise Done` 和 `Step4b: SR Denoise` 的计时定位慢段。比较同一部署的 I2FV 分辨率、目标时长和步数，再核对实际输出画幅、基础潜变量形状及所在 Pod。匹配这些字段仍可能有输入内容与运行配置差异。比较资源池时保留统计窗口、事件缺口和样本数。对照时用 GPU 实际开跑时间计算执行区间，另查 Worker 接单后等待。推理慢段的日志用于定位阶段，具体 GPU 硬件或输入根因需要额外证据。
 
 生产回查入口为北京时间 2026-11-22 14:45–15:20 的开放平台任务 `873242443154373` / Athena Job `4574234`、`873245652104197` / `4574345`。同规格执行对照可查 Job `4574231`、`4574232`、`4574369`、`4574372`。本地的脱敏日志和复算脚本位于开放平台工作区 `.local/generation-latency-20261122/`。 [Zeus 生产日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/co_sandai_zeus_prod?slsRegion=cn-shanghai) · [Athena 前处理日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/inference-prod?slsRegion=cn-shanghai) · [Athena Worker 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai)
+
+### 同一 Worker 的 GPU 交接
+
+**Why**　前一个 Job 的编码、上传和交接可以与后一个 Job 的 GPU 推理重叠。从前单的 `inference finished in` 日志时间推 GPU 空闲时间会错过真实交接。
+
+**How to apply**　同一 Pod 上按前单的解码完成时间和后单 `GPU worker started inference at` 消息里的执行时间核对 GPU 交接，再用后单实际开跑减接单时间计算等待。客户端测量从自己的提交起点到读到终态，和服务端终态的差值沿客户端轮询或回调记录验证。
+
+北京时间 2026-11-22 15:00–15:18 的回查样本是开放平台任务 `873244572091397`、Athena Job `4574317`，同 Pod 前单为 `4574239`。核对前单 `Step5: Post Process Done`、后单 GPU 开跑和前单提交产物的先后。本地脱敏证据位于开放平台工作区 `.local/task-873244572091397/`。 [Zeus 生产日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/co_sandai_zeus_prod?slsRegion=cn-shanghai) · [Athena Worker 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai)
