@@ -75,3 +75,12 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 - [Athena 生产 API Service 发布回执](https://github.com/world-sim-dev/athena-admin/actions/runs/44927826060) · [该发布版本的参考素材校验](https://github.com/world-sim-dev/athena-admin/blob/c912bb99586de9b0e8afff027c4a4e2b74281390/ApiService/validators/reference.py#L7-L65)
 
 Athena [#809](https://github.com/world-sim-dev/athena-admin/pull/809) 是数量上限的历史来源。建单调用 `validate_reference_request`，参考 PE 的输出协议开关由 [#840](https://github.com/world-sim-dev/athena-admin/pull/840) 管理。按 [#826](https://github.com/world-sim-dev/athena-admin/pull/826) 关闭增强会跳过这段数量分支，参考素材仍走 [#823](https://github.com/world-sim-dev/athena-admin/pull/823) 抽出的格式、字节和时长预处理。可单独离线调用生产版本的校验函数复核当前上限、单类型超限、完整组合和 PE 开关，再用真实任务覆盖后续阶段。
+
+## 2026-11-22 新数量上限生产验收
+
+**Why**　Athena [#850](https://github.com/world-sim-dev/athena-admin/pull/850) 将参考 PE 的单模态和总数量上限与本轮 Zeus 配置对齐。历史发布的数量值沿旧版本复查。新阈值在两区的在线 Schema 和 Athena 真实作业分别回读。
+
+**How to apply**　先读线上 Schema、核对目标生产模型的分辨率组合及测试组织权限，再使用互异的合规素材发一条开启参考增强的请求。只在明确拒绝且未受理时修正参数。把创建回执与 Athena Job 的素材预处理、参考 PE 结果、推理派发和实际成片分别核对。
+
+- [Athena API Service 发布](https://github.com/world-sim-dev/athena-admin/actions/runs/45012619043) · [Athena 预处理发布](https://github.com/world-sim-dev/athena-admin/actions/runs/45012625674) · [国内生产 Schema](https://api.sandai.cn/openapi.json) · [美国生产 Schema](https://api.sand.ai/openapi.json)
+- 国内自有 v2 验收入口为工作区 `.local/prod-magi-10-5-5-20261122/`。用接受请求和 Zeus 日志定位任务 `873302218822981`，按 Athena Job `4590127` 核对参考 PE、推理和终态。试验模型和参数沿对应请求原件核对。
