@@ -57,3 +57,11 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **How to apply**　核对国内与美国的 OpenAPI 发布回执及镜像版本，再分别只读请求生产 `/openapi.json`。检查 `CreateGenerationV2Request.properties.parts` 的 `maxItems` 和描述中各类素材数量，PR #518 起由环境输入配置生成。单文件大小、单段时长与各类累计时长回查已登录的模型目录和相应 Pod 配置。请求级 `options` 即使开启也从公开 Schema 隐藏，开关需回查部署配置。提高素材阈值时同时核对网关请求大小和 Athena 预处理限制。
 
 - [国内生产部署](https://github.com/world-sim-dev/zeus/actions/runs/44899239152) · [美国生产部署](https://github.com/world-sim-dev/zeus/actions/runs/44898513686) · [国内生产 Schema](https://api.sandai.cn/openapi.json) · [美国生产 Schema](https://api.sand.ai/openapi.json)
+
+## 2026-11-22 模型变体与参考素材阈值
+
+**Why**　Playground 在模型目录同时返回模型能力与素材阈值，两类字段来自不同配置。生成请求的 `duration` 表示成片时长。
+
+**How to apply**　查后台模型配置时，用 `ModelVariant` 和 `ModelVariantSelector` 核对 `sourceType`、成片规格及实际 Athena 路由。查参考素材阈值时，沿 `GenerationInputLimits` 与环境 ConfigMap 核对。Playground 模型目录的顶层 `mediaLimits` 来自环境配置，各模型的 `inputSchema` 结合环境阈值和模型变体生成。需要只给单个模型改素材数量、字节或时长时，先核对 Zeus 对模型字段的实际读取，当前模型变体无这组阈值配置。
+
+- [后台模型配置契约](https://github.com/world-sim-dev/zeus/blob/f04eae7afef28dd3941d9a2ff18ffffff0c52782/docs/admin-api.md#模型配置与白名单) · [Playground 模型目录](https://github.com/world-sim-dev/zeus/blob/f04eae7afef28dd3941d9a2ff18ffffff0c52782/modules/api/src/main/java/co/sandai/zeus/api/platform/generation/PlaygroundModelCatalog.java#L20-L64)
