@@ -2,7 +2,7 @@
 name: sandai-platform-generation-input-limits-and-options
 type: reference
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-22
 tags: [sandai, openapi, staging, generation, validation]
 links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform-development-entrypoints]
 ---
@@ -49,3 +49,11 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 
 - 生产样本的查证锚点是 OpenAPI 任务 `872957884154373`、Athena Job `4518090`、去音轨处理器 `b8d3b434`。在上海 SLS 查询 2026-11-21 19:34–19:53（北京时间），沿任务提交、原片交接、处理器下发和成功终态查证。原始 HTTP 请求体和最终下载 MP4 未直接读回。 [Zeus 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/co_sandai_zeus_prod?slsRegion=cn-shanghai) · [Athena 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/inference-prod?slsRegion=cn-shanghai)
 - 当次接单发生在生产滚动发布中。用发布回执里的 Pod 名和镜像核对逐角色的版本，再检查原请求解析中省略字段的默认值和新版静音产物选择条件。 [方舟请求解析](https://github.com/world-sim-dev/zeus/blob/51b97abc89c633a5b4d6ef42678b6afc69a44bc9/modules/openapi/src/main/java/co/sandai/zeus/openapi/compatible/ark/ArkGenerationRequest.java#L158-L172) · [Zeus 国内生产发布](https://github.com/world-sim-dev/zeus/actions/runs/44899239152) · [Zeus 成片选择逻辑](https://github.com/world-sim-dev/zeus/blob/f04eae7afef28dd3941d9a2ff18ffffff0c52782/modules/domain/src/main/java/co/sandai/zeus/domain/task/dispatch/AthenaVideoDelivery.java#L73-L131)
+
+## 2026-11-22 双区生产输入配置查证
+
+**Why**　发布回执能定位配置功能进入哪个工作负载。公开 Schema 能回读参考素材数量，单文件字节数和时长则需要查模型目录或运行配置。
+
+**How to apply**　核对国内与美国的 OpenAPI 发布回执及镜像版本，再分别只读请求生产 `/openapi.json`。检查 `CreateGenerationV2Request.properties.parts` 的 `maxItems` 和描述中各类素材数量，PR #518 起由环境输入配置生成。单文件大小、单段时长与各类累计时长回查已登录的模型目录和相应 Pod 配置。请求级 `options` 即使开启也从公开 Schema 隐藏，开关需回查部署配置。提高素材阈值时同时核对网关请求大小和 Athena 预处理限制。
+
+- [国内生产部署](https://github.com/world-sim-dev/zeus/actions/runs/44899239152) · [美国生产部署](https://github.com/world-sim-dev/zeus/actions/runs/44898513686) · [国内生产 Schema](https://api.sandai.cn/openapi.json) · [美国生产 Schema](https://api.sand.ai/openapi.json)
