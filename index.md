@@ -1,3 +1,5 @@
+- 2026-11-22：[拆解提示词增强和 GPU 推理长尾](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-22-拆解提示词增强和-gpu-推理长尾) — 对齐切片就绪、GPU 实际开跑、降噪计时与交付，附同规格任务和资源池等待的取证入口。
+
 - 2026-11-22：[开放平台组织赠送余额的操作与回查](domains/sandai-platform/refs/admin-balance-grant-entrypoints.md) — 生产环境与组织归属、金额预览、运营赠送批次和流水的核对入口。
 
 - 2026-11-21：[按创建日统计双区任务量](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-21-按创建日统计双区任务量) — 当日创建边界、派发与终态补齐，以及日志去重统计的覆盖范围。

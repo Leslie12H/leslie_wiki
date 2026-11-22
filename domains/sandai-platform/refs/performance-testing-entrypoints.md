@@ -2,7 +2,7 @@
 name: sandai-api-platform-performance-testing-entrypoints
 type: reference
 created: 2026-10-27
-updated: 2026-11-21
+updated: 2026-11-22
 tags: [sandai, api-platform, performance, testing, quota]
 links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi-quota-entrypoints, sandai-api-platform-test-organization-retirement]
 ---
@@ -482,3 +482,11 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **How to apply**　以生产 Admin 的 `createdAt` 为首选，先冻结同一个北京时间窗口，再查上海与美西。在无法读取 Admin 时，从 Zeus SLS 联合创建回执、派发回执和终态，按任务 ID 去重。上海查询结构化 `message`，美西用原始 `content` 解析。对只出现派发或终态的任务，使用已与同版本 Admin 比对的 ID 分配时间判定日界线，必要时回查精确任务号。应保存未匹配 ID、来源及缺口，日志并集只能提供已核实下限。
 
 - 2026-11-21 的双区 SQL、精确差集及独立回算从工作区 `.local/platform-task-volume-20261121/final-snapshot.json` 和 `final-totals.json` 回查。样本覆盖美西昨日建单今日派发，以及在提交阶段失败且无成功创建回执的任务。 [上海 Zeus SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/co_sandai_zeus_prod?slsRegion=cn-shanghai) · [美西 Zeus SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c7c0ede6c71484f8da34a829954c50cd9/logsearch/co_sandai_zeus_prod?slsRegion=us-west-1)
+
+## 2026-11-22 拆解提示词增强和 GPU 推理长尾
+
+**Why**　相似的端到端耗时可能来自 Athena 切片就绪前的参考素材提示词增强，也可能来自 GPU 开跑后的降噪。提示词增强执行器的总耗时还包含素材准备及结果校验。GPU 开跑到 worker 交接原始 MP4 的耗时还包含编码、合并和上传。
+
+**How to apply**　用同一个 Job 对齐前处理步骤的 `preprocess_handler_async start`、`reference PE output validated`、切片就绪、worker 接单、GPU 实际开始和 Zeus 终态。GPU 内用 `Step3: Base Denoise Done` 和 `Step4b: SR Denoise` 的计时定位慢段。比较同一部署的 I2FV 分辨率、目标时长和步数，再核对实际输出画幅、基础潜变量形状及所在 Pod。匹配这些字段仍可能有输入内容与运行配置差异。比较资源池时保留统计窗口、事件缺口和样本数。对照时用 GPU 实际开跑时间计算执行区间，另查 Worker 接单后等待。推理慢段的日志用于定位阶段，具体 GPU 硬件或输入根因需要额外证据。
+
+生产回查入口为北京时间 2026-11-22 14:45–15:20 的开放平台任务 `873242443154373` / Athena Job `4574234`、`873245652104197` / `4574345`。同规格执行对照可查 Job `4574231`、`4574232`、`4574369`、`4574372`。本地的脱敏日志和复算脚本位于开放平台工作区 `.local/generation-latency-20261122/`。 [Zeus 生产日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/co_sandai_zeus_prod?slsRegion=cn-shanghai) · [Athena 前处理日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/inference-prod?slsRegion=cn-shanghai) · [Athena Worker 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai)
