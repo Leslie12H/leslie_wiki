@@ -73,3 +73,5 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **How to apply**　修改生产素材数量前，按 Athena API Service 的生产发布 SHA 检查 `validate_reference_request` 的启用条件、`REFERENCE_INPUT_COUNT_LIMITS` 和 `REFERENCE_INPUT_TOTAL_LIMIT`。总数按参考素材计，Zeus 的 `parts` 或方舟 `content` 还包含一个文本项。在 staging 用真实模型覆盖开启参考素材提示词增强时的目标组合与各上限加一，分别核对请求受理、Athena 预处理和成片。生产待审批配置和实际生效值以当次变更回执为准。
 
 - [Athena 生产 API Service 发布回执](https://github.com/world-sim-dev/athena-admin/actions/runs/44927826060) · [该发布版本的参考素材校验](https://github.com/world-sim-dev/athena-admin/blob/c912bb99586de9b0e8afff027c4a4e2b74281390/ApiService/validators/reference.py#L7-L65)
+
+Athena [#809](https://github.com/world-sim-dev/athena-admin/pull/809) 是数量上限的历史来源。建单调用 `validate_reference_request`，参考 PE 的输出协议开关由 [#840](https://github.com/world-sim-dev/athena-admin/pull/840) 管理。按 [#826](https://github.com/world-sim-dev/athena-admin/pull/826) 关闭增强会跳过这段数量分支，参考素材仍走 [#823](https://github.com/world-sim-dev/athena-admin/pull/823) 抽出的格式、字节和时长预处理。可单独离线调用生产版本的校验函数复核当前上限、单类型超限、完整组合和 PE 开关，再用真实任务覆盖后续阶段。

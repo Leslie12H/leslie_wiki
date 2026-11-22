@@ -4,7 +4,7 @@
 
 - 2026-11-21：[Worker 接单后的 GPU 等待](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-21-worker-接单后的-gpu-等待) — 按 Job 与 Pod 对齐接单及 GPU 开始事件，核对同 worker 长短任务和同池完片。
 
-- 2026-11-21：[生成输入限制与请求覆盖查证入口](domains/sandai-platform/refs/generation-input-limits-and-options.md) — PR #518 的阈值分轮、账号隔离、ACK 重部署回读与 MP4 时长探测指针。 补 PR #519 / Athena #819 音轨对照和实际交付查证。 补方舟双区阈值与音轨实测。 补国内生产无声反馈的去音轨步骤与交付查证。 补双区生产发布及公开 Schema 回读边界。 补模型变体与 Playground 素材阈值的来源。 补 Athena 参考素材增强的独立数量校验。
+- 2026-11-21：[生成输入限制与请求覆盖查证入口](domains/sandai-platform/refs/generation-input-limits-and-options.md) — PR #518 的阈值分轮、账号隔离、ACK 重部署回读与 MP4 时长探测指针。 补 PR #519 / Athena #819 音轨对照和实际交付查证。 补方舟双区阈值与音轨实测。 补国内生产无声反馈的去音轨步骤与交付查证。 补双区生产发布及公开 Schema 回读边界。 补模型变体与 Playground 素材阈值的来源。 补 Athena 参考素材增强的数量校验、开关及预处理边界。
 
 - 2026-11-21：[分镜生成与切点实测](domains/sandai-platform/refs/playground-account-generation-entrypoints.md#2026-11-21-分镜生成与切点实测) — 独立机位生成、轮轴匹配、屏内外连续帧和声画透视的成片验证。
 
