@@ -65,3 +65,11 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **How to apply**　查后台模型配置时，用 `ModelVariant` 和 `ModelVariantSelector` 核对 `sourceType`、成片规格及实际 Athena 路由。查参考素材阈值时，沿 `GenerationInputLimits` 与环境 ConfigMap 核对。Playground 模型目录的顶层 `mediaLimits` 来自环境配置，各模型的 `inputSchema` 结合环境阈值和模型变体生成。需要只给单个模型改素材数量、字节或时长时，先核对 Zeus 对模型字段的实际读取，当前模型变体无这组阈值配置。
 
 - [后台模型配置契约](https://github.com/world-sim-dev/zeus/blob/f04eae7afef28dd3941d9a2ff18ffffff0c52782/docs/admin-api.md#模型配置与白名单) · [Playground 模型目录](https://github.com/world-sim-dev/zeus/blob/f04eae7afef28dd3941d9a2ff18ffffff0c52782/modules/api/src/main/java/co/sandai/zeus/api/platform/generation/PlaygroundModelCatalog.java#L20-L64)
+
+## 2026-11-22 参考素材数量与 Athena 提示词增强
+
+**Why**　Zeus 的环境配置和 Athena 参考素材提示词增强的 Job 校验分别读取数量上限。Zeus 放宽后，通过入口校验的请求仍可能触发 Athena 的单类型或总数校验。
+
+**How to apply**　修改生产素材数量前，按 Athena API Service 的生产发布 SHA 检查 `validate_reference_request` 的启用条件、`REFERENCE_INPUT_COUNT_LIMITS` 和 `REFERENCE_INPUT_TOTAL_LIMIT`。总数按参考素材计，Zeus 的 `parts` 或方舟 `content` 还包含一个文本项。在 staging 用真实模型覆盖开启参考素材提示词增强时的目标组合与各上限加一，分别核对请求受理、Athena 预处理和成片。生产待审批配置和实际生效值以当次变更回执为准。
+
+- [Athena 生产 API Service 发布回执](https://github.com/world-sim-dev/athena-admin/actions/runs/44927826060) · [该发布版本的参考素材校验](https://github.com/world-sim-dev/athena-admin/blob/c912bb99586de9b0e8afff027c4a4e2b74281390/ApiService/validators/reference.py#L7-L65)
