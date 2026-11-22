@@ -1,3 +1,5 @@
+- 2026-11-22：[开放平台组织赠送余额的操作与回查](domains/sandai-platform/refs/admin-balance-grant-entrypoints.md) — 生产环境与组织归属、金额预览、运营赠送批次和流水的核对入口。
+
 - 2026-11-21：[按创建日统计双区任务量](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-21-按创建日统计双区任务量) — 当日创建边界、派发与终态补齐，以及日志去重统计的覆盖范围。
 
 - 2026-11-21：[Worker 接单后的 GPU 等待](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-21-worker-接单后的-gpu-等待) — 按 Job 与 Pod 对齐接单及 GPU 开始事件，核对同 worker 长短任务和同池完片。
