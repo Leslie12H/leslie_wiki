@@ -1,3 +1,5 @@
+- 2026-11-22：[聚合纯推理耗时](domains/sandai-platform/refs/performance-testing-entrypoints.md#聚合纯推理耗时) — GPU 起止配对、预热排除、精确 Job ID 补齐和 P95 复算入口。
+
 - 2026-11-22：[拆解提示词增强和 GPU 推理长尾](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-22-拆解提示词增强和-gpu-推理长尾) — 对齐切片就绪、GPU 实际开跑、降噪计时与交付，附同规格对照、同 Pod 前后单 GPU 交接和客户端耗时差值的查证入口。
 
 - 2026-11-22：[开放平台组织赠送余额的操作与回查](domains/sandai-platform/refs/admin-balance-grant-entrypoints.md) — 生产环境与组织归属、金额预览、运营赠送批次和流水的核对入口。

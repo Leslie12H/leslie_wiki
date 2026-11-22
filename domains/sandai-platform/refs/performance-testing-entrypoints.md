@@ -498,3 +498,11 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **How to apply**　同一 Pod 上按前单的解码完成时间和后单 `GPU worker started inference at` 消息里的执行时间核对 GPU 交接，再用后单实际开跑减接单时间计算等待。客户端测量从自己的提交起点到读到终态，和服务端终态的差值沿客户端轮询或回调记录验证。
 
 北京时间 2026-11-22 15:00–15:18 的回查样本是开放平台任务 `873244572091397`、Athena Job `4574317`，同 Pod 前单为 `4574239`。核对前单 `Step5: Post Process Done`、后单 GPU 开跑和前单提交产物的先后。本地脱敏证据位于开放平台工作区 `.local/task-873244572091397/`。 [Zeus 生产日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/co_sandai_zeus_prod?slsRegion=cn-shanghai) · [Athena Worker 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai)
+
+### 聚合纯推理耗时
+
+**Why**　生产 Worker 的预热也会输出 `Step5: Post Process Done`。全文筛选的日志数即使对账一致，按 Job 精确查询仍可能找到额外开始事件。两种情况都会影响起止配对及分位数。
+
+**How to apply**　在已核实的 Worker 池中，将实际 GPU 开跑和模型侧 VAE 解码完成按 Job 和 Pod 连接。按完成时间归入窗口，读取跨日开始事件，核对日志分页并按原事件去重。对无 Job ID 的完成标记检查相同 Pod 的预热上下文，对缺开始的 Job 用精确 ID 查回。按所有配对样本计算平均值及 P95，记录窗口、时间单位、池范围、配对覆盖和分位数定义。排队、前处理、交付编码和上传分别取证。
+
+2026-11-22 上海 S5000 的查询计划、逐任务配对、精确回查及复算脚本位于开放平台工作区 `.local/pure-inference-20261122/`。 [Athena Worker 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai)
