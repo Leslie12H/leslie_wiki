@@ -101,3 +101,9 @@ Worker 数属于共享推理池。用户任务 E2E 可按 Zeus 入口地区及�
 2026-11-23 [Zeus #520](https://github.com/world-sim-dev/zeus/pull/520) 将 Top 5 和预计并发拆为默认关闭的独立开关。预计快照的数据库与 Redis 读取走独立执行器，最多一轮在途，原采集线程只接收已完成且属于当前 Leader 任期的结果。超过扫描预算保留上一轮，沿面板新鲜度观察空值。预计配额聚合把主键排序后的组织原始行上限放在联查之前，数据库只返回一行。隔离 MySQL 用合成数据证实组织主键扫描及两次主键点查的计划。生产启用仍要核对实际 `zeus_magi` 的计划与规模，避免用旧 `zeus` 数据源的验证替代。
 
 美西 SLS 可从源控制台查看。确认 [只读 RAM 策略](https://ram.console.aliyun.com/policies/detail?policyType=Custom&policyName=sls-read-zeus-inference-prod) 后还要检查授权管理是否有 Grafana 专用主体，以及 06 工作区是否保存了美西数据源。RAM 报 `ram:CreateUser` 无权限时，由账号管理员用现有或新建的专用主体完成绑定，凭据只在官方配置页录入。验收分别验证日志读取、成功事件/组织字段以及选中海外时的面板实数。
+
+#### 复用已有 SLS 凭据的判断
+
+2026-11-23 复核 [06 工作区](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency/06-e5b9b6-e58f91-e8b584-e6ba90-e7aea1-e79086)。`/api/user` 只确认当前 Grafana 登录人。沿目标面板的数据源 UID 查询 `/api/datasources/uid/{uid}`，已有上海 SLS 连接的 `secureJsonFields` 标注已配置访问密钥。这个响应不返回密钥值或其 RAM 用户归属。不要按登录人或工作区名推断数据源凭据归属。
+
+如已有 Grafana 专用 RAM 用户，由数据源管理员沿原配置来源确认主体，追加 [美西只读策略](https://ram.console.aliyun.com/policies/detail?policyType=Custom&policyName=sls-read-zeus-inference-prod)，再用该身份在同工作区配置独立美西数据源。无需新建 RAM 用户。上海源保留，不能把上海的项目和 Endpoint 当成美西连接。若已有 SLS 详细审计，按 [SLS 服务日志字段](https://help.aliyun.com/zh/sls/log-types) 的请求方字段复查主体。2026-11-23 同项目默认详细日志库查询没有找到记录源，此路径未提供可确认的归属。
