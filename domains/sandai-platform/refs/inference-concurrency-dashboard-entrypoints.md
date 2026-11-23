@@ -133,3 +133,9 @@ Worker 数属于共享推理池。用户任务 E2E 可按 Zeus 入口地区及�
 美西 SLS 在 2026-11-23 同一窗口以 `task_finished` 或 `task_submitted` 作全文检索预过滤返回空，按具体任务 ID 或 `taskId` 检索能找到原始生命周期事件。先按 ID 验证检索命中，再用 SQL 解析事件、成功状态和时间。`jobId=0` 是占位，使用真实派单 Job ID 关联。[06 海外 E2E](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency/06-e5b9b6-e58f91-e8b584-e6ba90-e7aea1-e79086?var-entry_region=us&viewPanel=107) 的查询可用于复查检索和样本口径。
 
 [06 分阶段明细](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency/06-e5b9b6-e58f91-e8b584-e6ba90-e7aea1-e79086?var-entry_region=us&viewPanel=120) 中搜索修正只能补回 Zeus 自身的阶段。检查数据源和 `athena_events`、`worker_raw` 的入口条件判断当前覆盖。SLS SQL 的跨 Logstore JOIN 限于同一项目，[StoreView](https://www.alibabacloud.com/help/en/sls/dataset-storeview-overview) 也不能跨境查询。海外中间阶段按美西 Zeus `taskId` 关联上海 `job_id` 后再按入口、组织和成功任务聚合，优先从已有日志关联。
+
+#### 海外实时分阶段的取数与验收
+
+2026-11-23 在 [06 海外阶段明细](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency/06-e5b9b6-e58f91-e8b584-e6ba90-e7aea1-e79086?var-entry_region=us&viewPanel=120) 接入海外分段。回读面板 120 和以 `phase_us_` 开头的隐藏查询变量。先按所选时间及创建时组织查美西公开成功任务，使用 Athena Job ID 关联上海 `inference-prod` 与 `athena`。两地现有只读 SLS 在 Grafana 里传递查询结果，关联只传 Job ID 和计时字段。SQL 校验时间范围和组织，缺边界的阶段留空。瀑布、P95 排行和顺序明细共用阶段结果，主链路瀑布按阶段齐全的同批任务统计。
+
+长窗口使用扫描 SQL 横跨多个热日志库可能只返回部分事件。分别将 Athena 和 Worker 的时间事件用各自 Logstore 的索引预筛选，再比较同一时段的成功任务数、Job 匹配数、逐阶段有效样本与瀑布的完整样本。对照固定一小时、六小时、单组织及国内入口，再查相对最近一小时是否刷新。现有水印计时留在 Worker 上报后，只有同一 Job 的已验证起止事件落入 Worker 上报至公开成功区间才有独立耗时。没有该事件时看后处理总时长和有样本的输出审核，不拿其他阶段差值填水印。
