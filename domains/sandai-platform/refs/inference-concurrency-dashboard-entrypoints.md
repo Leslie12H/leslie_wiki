@@ -95,3 +95,9 @@ Worker 数属于共享推理池。用户任务 E2E 可按 Zeus 入口地区及�
 2026-11-23 审查 [Zeus #520](https://github.com/world-sim-dev/zeus/pull/520)。`BusinessSnapshotConfiguration` 用同一默认关闭开关控制 Top 5 和预计并发。Top 5 随既有任务扫描，只增加组织 ID 投影及内存汇总。预计并发新增组织、用户与配额联查，并读取继承的 Redis 配置。两类采集的上线成本不同，核验开关、目标规模与真实 SQL 扫描量后再启用。SQL 返回行数上限与数据库扫描量分别核查，先用不执行查询的 EXPLAIN 和既有指标量化。
 
 `BusinessSnapshotCollector` 单线程依次运行各组。联查的语句超时不包括取数据库连接和读 Redis，依赖变慢时可以延后其余快照。失败保留上次成功时间并按原间隔重试。核验 `openapi_snapshot_collection_seconds`、`openapi_snapshot_failures_total` 及 `openapi_snapshot_last_success_timestamp_seconds`，确认任务组仍新鲜，预计组过期时超售比留空。检查用户量超上限、双活组织归属等整轮失败条件。必要时分开启用 Top 5 和预计并发，避免把榜单上线绑在新增数据库读取上。
+
+#### 预计并发隔离与美西只读主体
+
+2026-11-23 [Zeus #520](https://github.com/world-sim-dev/zeus/pull/520) 将 Top 5 和预计并发拆为默认关闭的独立开关。预计快照的数据库与 Redis 读取走独立执行器，最多一轮在途，原采集线程只接收已完成且属于当前 Leader 任期的结果。超过扫描预算保留上一轮，沿面板新鲜度观察空值。预计配额聚合把主键排序后的组织原始行上限放在联查之前，数据库只返回一行。隔离 MySQL 用合成数据证实组织主键扫描及两次主键点查的计划。生产启用仍要核对实际 `zeus_magi` 的计划与规模，避免用旧 `zeus` 数据源的验证替代。
+
+美西 SLS 可从源控制台查看。确认 [只读 RAM 策略](https://ram.console.aliyun.com/policies/detail?policyType=Custom&policyName=sls-read-zeus-inference-prod) 后还要检查授权管理是否有 Grafana 专用主体，以及 06 工作区是否保存了美西数据源。RAM 报 `ram:CreateUser` 无权限时，由账号管理员用现有或新建的专用主体完成绑定，凭据只在官方配置页录入。验收分别验证日志读取、成功事件/组织字段以及选中海外时的面板实数。
