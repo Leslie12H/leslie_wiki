@@ -1,4 +1,4 @@
-- 2026-11-23：[Inference 并发资源看板查证入口](domains/sandai-platform/refs/inference-concurrency-dashboard-entrypoints.md) — Worker、最长排队、平台在途估算和低压力取数的查证入口。
+- 2026-11-23：[Inference 并发资源看板查证入口](domains/sandai-platform/refs/inference-concurrency-dashboard-entrypoints.md) — Worker、最长排队、平台在途估算和低压力取数的查证入口。 补充等待计时失真、已派发快照和分阶段总览查证。
 
 - 2026-11-23：[Reference PE 调用模型与网关 fallback 的取证](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-23-reference-pe-调用模型与网关-fallback-的取证) — Athena PE 调用、首轮校验、阶段耗时与实际出站路由的取证。
 
