@@ -1,3 +1,5 @@
+- 2026-11-24：[Ark 成片分辨率与计费档位](domains/sandai-platform/pitfalls/ark-output-resolution-pricing-key.md) — 生产任务入档 1080p、编码 2206×946 与查询字段的查证入口。
+
 - 2026-11-23：[参考 MP4 音轨编码拒绝](domains/sandai-platform/refs/media-functional-acceptance-entrypoints.md#2026-11-23-参考-mp4-音轨编码拒绝) — Opus 触发 Zeus 同步报错、AAC 对照及建单前拒绝的请求 ID 查证。
 
 - 2026-11-23：[产物水印、输出审核和 Worker 差值](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-23-产物水印输出审核和-worker-差值) — 完整 Celery ID、并行边界、输出审核秒表及 Worker 其他耗时公式。
