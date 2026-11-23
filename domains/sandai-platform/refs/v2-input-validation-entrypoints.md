@@ -100,3 +100,10 @@ Zeus Dev 管理后台任务详情的总体审核状态 `PASS` 可覆盖逐项审
 **Why:** 参考图片 URL 去掉聊天里的 Markdown 包装后，地址格式正确仍可能遇到模型输入角色校验。通用 `invalid_parameter` 需要按回执的 `details` 定位字段。
 
 **How to apply:** 固定生产区域、组织、端点和其余请求字段。实际发送原生 JSON 裸 URL 后，保留 HTTP、Request ID、`code/message/details`。若回执定位 `parts` 并写明模型不支持请求中的输入角色，结合实际参考项和本组织模型配置复核，避免把公网地址可访问性当作模型准入证据。此次固定请求与回执见 API 工作区 `.local/assets-v1-dual-production-20261116/cn-generation-raw-url.MUKiVT/`。
+
+## 生产成片时长与整数秒显示
+
+**Why:** 请求时长、视频流、MP4 容器和接口整数秒有各自的口径。整数秒显示相差一秒时，先核对文件的小数秒和帧数，再定位接口或播放器格式化。容器与视频流时长可因为音轨等媒体流的结束点不同而有差异。
+
+- 2026-11-14 中美 Magi-2 生产冒烟的请求时长、`ffprobe` 视频流和容器时长、旧 Ark 返回值参见 `/Users/leslie/Documents/ChatGPT/Apipltform/docs/production-dual-region-smoke-20261114.md`。复查 Zeus [PR #496](https://github.com/world-sim-dev/zeus/pull/496) 及 `ArkGenerationController.addVideoSpecs`。该改动优先返回有效的整数任务时长，文件完整时长仍按原始输出核对。
+- 2026-11-20 产品短片的 30 秒请求、原始 MP4 和精确时长交付脚本在 `/Users/leslie/Documents/ChatGPT/Apipltform/.local/magi2-product-shorts-20261120`。原片与交付片分别用 `ffprobe` 查 `format.duration`、各 `stream.duration`、平均帧率和帧数。精确 30 秒交付用尾帧补齐和音频补齐，保留原始文件。原片为何少出若干帧需要回查生成和输出的帧数计算，不能从整数显示反推。
