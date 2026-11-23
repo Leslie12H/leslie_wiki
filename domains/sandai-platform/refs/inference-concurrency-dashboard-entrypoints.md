@@ -83,3 +83,9 @@ Worker 数属于共享推理池。用户任务 E2E 可按 Zeus 入口地区及�
 2026-11-23 更新 [06](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency/06-e5b9b6-e58f91-e8b584-e6ba90-e7aea1-e79086)。在「分阶段耗时」首个面板检查组织选择，核对同一固定时段切换组织时区内趋势、瀑布、排行和明细跟随选择，以及顶部全体组织的 E2E 和并发指标不受影响。局部选择通过 Grafana 数据链接更新隐藏的 `org_id`，列表从当期成功任务的创建日志取组织，留意无组织归属和时间窗口上限。推理 Worker 继续看共享池，国内与海外 E2E 沿各自入口。海外源可在 [海外 E2E 看板](https://grafana-cn-8t84id9nh01.grafana.aliyuncs.com/d/openapi-business-v1?orgId=1&var-environment=prod-us)复核。合并显示前查 06 所在工作区的授权接入和区域覆盖。
 
 实际并发采用精确快照优先及带来源的 Zeus 在途估算回退。精确采集复查 [Athena #856](https://github.com/world-sim-dev/athena-admin/pull/856) 的带项目和 group 状态投影，以及 [Zeus #520](https://github.com/world-sim-dev/zeus/pull/520) 的限量、超时、保留最近完整结果和失败状态。Athena 先发布，再在 Zeus 启用采集。核对快照状态、采集新鲜度和 06 的实际来源后验收精确占用、Top 5 和预计并发。
+
+#### 平台非终态并发与美西 SLS
+
+2026-11-23 用户确认并发按开放平台公开状态计量。排队、执行、输出审核等首次请求在终态前均计入，公开成功、失败、取消及终态后复审排除。看板实际值复用 `openapi_tasks_inflight_count`，只收新鲜 leader 快照。Top 5 在同次 `TaskSnapshotReader` 扫描投影组织 ID，最多发布五条序列并清退掉榜指标。无组织归属的任务仍计入总数。查 [Zeus #520](https://github.com/world-sim-dev/zeus/pull/520) 的当前变更及发布状态。原 Athena 方案见已关闭未合并的 [#856](https://github.com/world-sim-dev/athena-admin/pull/856)。
+
+海外日志沿 [美西 Zeus 生产 SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c7c0ede6c71484f8da34a829954c50cd9/logsearch/co_sandai_zeus_prod?slsRegion=us-west-1)验证。06 工作区的集成列表筛选只列已发现的地域。新建 SLS 数据源表单可选「美国（硅谷）」及指定项目和 Logstore，需要专用 RAM 只读凭据。更改 RAM 权限遇到绑定手机验证时，由账号持有人在官方页面完成。保存后对照所选入口的生命周期事件、组织归属和 Worker 日志覆盖，确认每个图的实际数据源及缺失阶段，再发布地区切换。SLS 连接沿阿里云授权路径使用，无需回查生产库。
