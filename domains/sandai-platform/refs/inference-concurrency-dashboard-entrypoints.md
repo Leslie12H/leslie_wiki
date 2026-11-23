@@ -37,3 +37,9 @@ links: [sandai-api-platform-openapi-quota-entrypoints]
 用户 2026-11-23 要求看板按所选时间范围查询。全链路时间瀑布仍需逐任务匹配全部阶段，在 06 先用 Prometheus 的 `openapi_task_stage_seconds` 直方图及计数、求和，分别呈现当前可测阶段的样本量、平均、P50 和 P95。验证两个不同时段返回不同分母。历史五日数据沿原表回查。Grafana 多值 Stat 在低面板高宽比下发生文字堆叠时，使用原生 Table 的单行摘要保存列与数值对齐。
 
 后处理沿 `ApiService/services/postprocess.py` 查下发顺序和依赖。水印、输出审核可能并行，逐段累加时要先核对重叠。输出审核可沿 `ApiService/services/moderation.py` 的 `save_phase`、`finish_review` 和晚到回调 guard，核对 `job_moderation.output_review.started_at` 以及 `stage=output`、`status=passed`、`output_review.finished=true` 的最终写入时间。按 Job 主键执行 EXPLAIN 后，小样本点查对齐 Worker 上报和 Zeus 公开成功。独立水印起止和跨系统实时快照仍需采集覆盖。SLS 走 Grafana 内已有数据源时，先检查连接授权与日志库索引，避免把鉴权失败当成日志缺失。
+
+#### Zeus 状态停留与全链路阶段的区别
+
+2026-11-23 回查 06 底部面板。由 `TaskLifecycleRecorder.transition` 在任务离开一个状态时用当前时间减 `stage_entered_at`，事务成功后记录到 `openapi_task_stage_seconds`。底部曲线每点看前 30 分钟，按 `stage` 汇总桶增量估算 P95。阶段对比表按看板所选范围聚合，平均值为耗时总量增量除以样本数增量。成功、失败和取消的阶段转换均可贡献样本，尚未离开阶段的任务还没有该段的完整计时。
+
+`queued` 是 Zeus 派发 WAITING，`executing` 是 SUBMITTED 或旧 Running 状态。后者离开时可先转 OUTPUT_REVIEW，也可直接终结。复查 `TaskLifecycleStage.resolve` 与图例措辞，避免把状态停留解释成固定的“提交到终态”或纯推理执行。Athena 前处理、Worker 排队、模型细分和后处理需沿原表的逐任务事件边界复核。
