@@ -63,3 +63,9 @@ Worker 上报至公开的总区间可用上述日志验证。独立水印和输�
 2026-11-23 调整 [06](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency/06-e5b9b6-e58f91-e8b584-e6ba90-e7aea1-e79086)。阶段明细按主链路和内部实际边界排，累计、总计和差额集中到末尾。阶段耗时排行与瀑布复用同一查询。排行按各可独立比较阶段的 P95 降序，排除汇总范围和已被输入编码覆盖的输入 VAE。对比长尾时回看每个阶段有效样本数。
 
 Worker 接单到 GPU 开跑止于 `GPU worker started inference at`。Worker 接单到模型准备开始止于模型 `Start: Prepare`。两个累计耗时共享起点，核对差距时按任务将后者的终点减前者的终点，再计算分位数。模型总计自 `Start: Prepare` 至 `Step5: Post Process Done`，覆盖输入编码、基础及超分降噪、VAE 解码。模型结束到产物交付沿模型结束至 Worker 上报核对。Worker 上报的生成计时可能涵盖接单后等待 GPU，Worker 其他耗时沿接单到上报实测区间减上报计时。主链路后处理从 Worker 上报算到首次公开成功，包含交接和输出公开；水印与输出审核是这个区间里的子项。
+
+#### Athena 接单前与 Worker 内排队
+
+2026-11-23 查证 [06 的两层排队](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency/06-e5b9b6-e58f91-e8b584-e6ba90-e7aea1-e79086)。Athena 队列从切片就绪到 Worker 接单。Worker 内排队从同一 Job 的 `task started, running tasks` 到 GPU 实际开跑。对长等待从 [Athena Worker 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai) 回查同 Pod 的前单 GPU 开始和 `Step5: Post Process Done`，用前单模型结束而非前单上报给交接对时。在 S5000 和 5090 的同次长尾抽查均出现接单时 `running tasks: 2`、前单覆盖几乎全部等待的情形。用同 Pod 的忙碌区间解释接单后长尾。判断派发是否有空闲目标还需要当时的可调度槽位和路由记录。
+
+主链路显示「后处理（水印 + 审核）」，采样时间沿 Worker 上报到公开成功，可能含等待、交接与公开。排查趋势先看主链路瀑布上方的成功任务 P50/P95 图，数据仍来自 Zeus 30 分钟滚动直方图，从建单到公开成功。瀑布从开放平台创建请求开始。
