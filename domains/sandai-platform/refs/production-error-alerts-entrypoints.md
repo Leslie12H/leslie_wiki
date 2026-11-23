@@ -2,7 +2,7 @@
 name: sandai-platform-production-error-alerts-entrypoints
 type: reference
 created: 2026-11-16
-updated: 2026-11-20
+updated: 2026-11-23
 tags: [sandai, api-platform, sls, observability, alerting]
 links: [sandai-api-platform-development-entrypoints]
 ---
@@ -75,3 +75,9 @@ links: [sandai-api-platform-development-entrypoints]
 **How to apply:** 先从调用域名或同一 Trace 核对实际部署环境。香港日志按 `staging-cn-openapi-zeus-deployment-*` 限定 Pod，从 `content` 解析 `route`、`httpStatus`、`stage`、`downloadReason`、`sourceHost` 和 `requestId`。用 `stage=DOWNLOAD`、`downloadReason=SocketTimeoutException` 和 HTTP 503 确认这类失败，按 `requestId` 去重。按日统计时，将应用日志行首 UTC 时间转换为北京时间。SLS 计数可用分页读回和 ACK 容器日志复核，滚动发布前后的全窗口覆盖以集中日志为准。[香港日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c4d615674e9994747af45004405e35503/logsearch/co_sandai_zeus_dev?slsRegion=cn-hongkong) · [香港预发部署](https://cs.console.aliyun.com/#/k8s/cluster/c4d615674e9994747af45004405e35503/v2/workload/deployment/detail/default/staging-cn-openapi-zeus-deployment/pods?region=cn-hongkong&ns=default)
 
 2026-11-20 的聚合查询、去重核对与容器取证见 API 平台工作区 `.local/socket-timeout-20261120/` 下的 `hk-dedup.json`、`hk-causes.json` 和 `hk-ack.json`。
+
+## 2026-11-23 用同窗口指标核验 503
+
+**Why:** 上海应用指标在 75 秒的 `increase` 窗口中连成功流量也为空。三分钟窗口回查得到双区应用成功流量及 5xx 计数器，说明必须先证明指标覆盖。美西共享 ALB 的默认域名和其他 Host 有持续 503，可通过目标 Host 的状态分布核对归属。
+
+**How to apply:** 在固定北京时间窗口中，对双区 `http_server_requests_seconds_count` 同查全部状态和 5xx，按服务、路由和状态读计数器增量。过短区间缺样本时先拉长到覆盖多次抓取，确认成功流量和采集标签再解读 5xx。按 `up`、Pod Ready 和重启指标核对波动。入口日志按 Host 和分钟分组，与前后分钟对照。上海目标日志库不可查时，应用结果只覆盖已到应用的请求，入口侧继续按原始域名、路径和请求 ID 回查。现场查询见工作区 `.local/openapi-503-20261123/` 的 `prom3m-cn.json`、`prom3m-us.json`、`sls.json`、`sls-followup.json`。[上海服务大盘](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-services-v1?orgId=1&var-environment=prod-cn) · [美西服务大盘](https://grafana-cn-8t84id9nh01.grafana.aliyuncs.com/d/openapi-services-v1?orgId=1&var-environment=prod-us)
