@@ -125,3 +125,11 @@ Worker 数属于共享推理池。用户任务 E2E 可按 Zeus 入口地区及�
 2026-11-23 在 [06 海外分阶段明细](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency/06-e5b9b6-e58f91-e8b584-e6ba90-e7aea1-e79086?var-entry_region=us&viewPanel=120) 回读已接入的 [美西 SLS 数据源](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/connections/datasources/edit/81adc62632cb93c115265427976eada0)。按 `entry_region` 切换国内与美国生产 SLS，组织选择只影响耗时区。用相同固定时段切换国内、海外和一个组织，复查创建样本数、Athena 阶段与面板错误。顶部指标沿已保存的查询核验其原有范围。
 
 美西 Zeus 有旧格式文件日志，`content` 前 23 字符为 UTC 事件时间。先将时间与 SLS 采集时间对账，再用已受理请求的 `elapsedMs` 还原请求起点，用 Zeus 任务 ID 得到建单时间。美西创建段以已受理的有效任务为样本，国内继续以公开成功任务为准。排查缺失阶段时，在美西源短窗口核对 `task_submitted` 和 `task_finished` 的采集，并校验目标 Project 是否有 Athena 和 Worker 事件。2026-11-23 验收时美西只有创建段有样本，其余阶段显示缺失，E2E 趋势显示无样本。需要美国全链路时，沿实时派单、共享推理和公开成功事件按任务关联，样本不足保持明确空值。
+
+#### 海外入口与共享推理日志的关联
+
+2026-11-23 从美西 Zeus 受理日志抽样，按同一 Zeus `taskId` 查派单和终态。`task_submitted` 带 Athena Job ID，`task_finished` 带 `result=success`。再按 Job ID 查上海 `inference-prod` 和 `athena`，核对 Athena 前处理、Worker 接单、GPU 开跑和 Worker 上报。业务入口归属看 Zeus，推理阶段看共享 Athena Job，不能用入口地区代替推理地区。端点配置和美西独立项目回调见 Zeus 仓库 `deployment/magi/structure/{prod-cn,prod-us}/policy.json` 和 `deployment/magi/README.md`。
+
+美西 SLS 在 2026-11-23 同一窗口以 `task_finished` 或 `task_submitted` 作全文检索预过滤返回空，按具体任务 ID 或 `taskId` 检索能找到原始生命周期事件。先按 ID 验证检索命中，再用 SQL 解析事件、成功状态和时间。`jobId=0` 是占位，使用真实派单 Job ID 关联。[06 海外 E2E](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency/06-e5b9b6-e58f91-e8b584-e6ba90-e7aea1-e79086?var-entry_region=us&viewPanel=107) 的查询可用于复查检索和样本口径。
+
+[06 分阶段明细](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency/06-e5b9b6-e58f91-e8b584-e6ba90-e7aea1-e79086?var-entry_region=us&viewPanel=120) 中搜索修正只能补回 Zeus 自身的阶段。检查数据源和 `athena_events`、`worker_raw` 的入口条件判断当前覆盖。SLS SQL 的跨 Logstore JOIN 限于同一项目，[StoreView](https://www.alibabacloud.com/help/en/sls/dataset-storeview-overview) 也不能跨境查询。海外中间阶段按美西 Zeus `taskId` 关联上海 `job_id` 后再按入口、组织和成功任务聚合，优先从已有日志关联。
