@@ -2,7 +2,7 @@
 name: sandai-api-platform-moderation-failure-census-entrypoints
 type: reference
 created: 2026-11-20
-updated: 2026-11-21
+updated: 2026-11-23
 tags: [sandai, api-platform, zeus, athena, moderation, aliyun, sls]
 links: [sandai-api-platform-development-entrypoints, sandai-api-platform-aliyun-output-moderation-receipts]
 ---
@@ -45,3 +45,9 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-aliyun-
 本次工作区入口为 `.local/moderation-expanded-20261120/input-audio-evidence.json`。素材生成代码见 `postman/load/magi2/scripts/build_multimodal_dataset.py` 的 `make_audio`。
 
 工作簿的相对文件超链接依赖客户端与附件目录。用户反馈无法打开时，先对压缩包内的音频逐个校验 SHA-256 和完整解码，再交付原件内置的离线试听页。用浏览器验证播放时间推进和暂存原件引用。证据指针为工作区 `.local/moderation-expanded-20261120/build-audio-listener.py`。
+
+## 2026-11-23 同稿多次送审与文本误判
+
+**Why**　同一提示词的不同分段可同时取得不同风险标签。普通动作描述也可能被供应商标为成人内容。用户看到整单失败时，先定位 Athena 实际拒绝的分段，其他分段的风险标签随其原回执保存。
+
+**How to apply**　无任务号时，以原稿独特短句查供应商回执，按完整分段指纹、服务、决定时间和标签匹配 Athena，再按 Job ID 反查 Zeus 派发。共享推理日志库不决定提交环境。词项需在原稿上下文和供应商命中字段分别核实。工作区 `.local/moderation-volcanic-20261123/` 保存本次脱敏回查入口。
