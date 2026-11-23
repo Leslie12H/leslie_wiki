@@ -2,7 +2,7 @@
 name: sandai-platform-admin-balance-grant-entrypoints
 type: reference
 created: 2026-11-22
-updated: 2026-11-22
+updated: 2026-11-23
 tags: [sandai, zeus, admin, billing, balance-grant]
 links: [sandai-platform-recharge-settlement-entrypoints, sandai-api-platform-admin-rpm-change-verification-entrypoints]
 ---
@@ -26,3 +26,12 @@ links: [sandai-platform-recharge-settlement-entrypoints, sandai-api-platform-adm
 **How to apply**　按原 `operationId` 读取 `amount`、币种和关联流水号，再在余额流水核对同一笔 `IN`。当 `remainingAmount` 或总余额较低时，取赠额到账后的流水，并按方向和金额核对差额。回执中同时记录实际入账、回读时刻与当前余额。根据原操作流水确认结果后，沿该流水继续核对后续出入账。
 
 - 字段口径和流水入口见 [Zeus Admin API](https://github.com/world-sim-dev/zeus/blob/dev/docs/admin-api.md#余额明细与金额口径)。客户资料和订单号保存在当次受限回执。
+
+## 2026-11-23 批量开白与赠额
+
+**Why**　不同工作簿的同名子表可能保留相同的 `sheet_id`。名单的充值安排也可能留空，而管理台已有白名单成员和赠送流水。只看子表 ID 或安排列容易遗漏名单或重复赠送。
+
+**How to apply**　先把飞书 Wiki 链接解析为工作簿 `obj_token`，再用工作簿 token、子表 ID 和版本确认名单。按来源行号留存核对结果，按目标站点和唯一 `orgId` 去重。使用完整注册手机号精确查组织并复核关联账号。缺联系方式或查无匹配的行保留待处理，待取得可核对账号后再执行。
+
+- 开白前在目标站点核对正式模型名称、启用状态和访问策略。逐组织读回确切白名单成员。赠额前核对既有入账和批次，名单空白时也沿同样方式回查。发现已有同额赠送时保留原流水，核实是否已满足本批目标再决定是否补发。
+- 本次新增额度按管理台默认有效期预览，逐组织保存操作号。赠送回查以相同操作号关联的入账流水和余额批次为准。逐条业务结果保留在管理台与受限回执。
