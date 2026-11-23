@@ -49,3 +49,11 @@ links: [sandai-api-platform-openapi-quota-entrypoints]
 2026-11-23 用户确认 06 按飞书原表复现全部阶段，并用所选时段统计持续采集的数据。复核入口为[原表的计时说明](https://j0yswlgboxz.feishu.cn/docx/H8TMdJsI6oBefWxuWRLcxXvBnHh)、上海 SLS 的 `co_sandai_zeus_prod`、`inference-prod` 和 `athena`。用开放平台任务 ID 对齐 `task_submitted` 的 Athena Job，再用实际执行 Pod 和同次运行窗口对齐模型阶段。Athena 建单日志的 Job ID 位于结构化内容，全文搜索可能匹配不到。用派发回执附近的短窗口搜 `job creation completed`，再按结构化 Job ID 对齐。抽查先逐任务用主链路各段对账 E2E，再聚合，并分别验证重试和缺事件样本。保留建单时区、分段样本数及机器池、实际输出时长、输入视频/图片数量的分组口径。
 
 Worker 上报至公开的总区间可用上述日志验证。独立水印和输出审核需要校验各自的开始、结束和是否实际触发，遗漏的事件留空。水印和审核有重叠时用相对同一任务起点的区间展示。实时看板应消费持续生成的监控数据，验收时复核数据源权限和采集延迟，确认切换时段后重新计算。用户约束为监控取数不增加生产库压力，业务数据保持无损。
+
+#### 06 实时瀑布与组织归属
+
+2026-11-23 的线上面板从上海 SLS 关联 Zeus、Athena 服务与 Worker 事件。参考 [06](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency/06-e5b9b6-e58f91-e8b584-e6ba90-e7aea1-e79086) 的已保存查询。专用 SLS 连接凭据禁用时，检查同项目现有数据源的实际资源权限，按插件的查询级 Logstore 选项尝试只读短窗口。Athena 原始 JSON 可全文命中，但 SQL 普通模式的 `content` 返回 NULL。先用短窗口 `set session mode=scan` 验证 JSON 字段和跨日志库联合查询，监测长窗口耗时、样本覆盖与扫描负担。用一个 Grafana 数据查询共享给明细与各瀑布。时间从所选范围传入，默认最近一小时、五分钟刷新，阶段覆盖在明细可见。
+
+瀑布的偏移以各图命名的零点计算。主链路七段使用同一完整样本组。模型内部使用模型阶段齐全的样本组，GPU 等待、纯模型执行和解码输出包含或重叠其他行。后处理时间按有匹配边界的成功任务计算，水印和审核可重叠。输出审核优先读 Athena `services.moderation` 的 `moderation stage decided`，用 `stage=output`、`status=passed` 与 `duration_ms` 校核，再与 Worker 上报和 Zeus 公开成功对账。水印需独立事件覆盖，缺失留空。
+
+组织维度使用创建请求的 `RequestOutcome.orgId`，经 taskId 关联同一条任务的阶段数据，少量已核验样本具备唯一组织。后续组织筛选沿日志或低频快照查询。保存任务创建时的归属，避免用户转组织后改写历史；组织名称只作展示映射，从授权的现有维表或低频只读快照取得。逐组织的 P95 用该组织的任务样本重新计算。有歧义或缺组织的样本单独揭示覆盖。预计与实际并发仍沿并发快照计量，组织维度不要求在 Prometheus 直方图上展开高基数标签。
