@@ -113,3 +113,9 @@ Worker 数属于共享推理池。用户任务 E2E 可按 Zeus 入口地区及�
 2026-11-23 对现有上海 SLS 数据源执行短窗口计数，在 [上海集中详细日志](https://sls.console.aliyun.com/lognext/project/log-service-1552113873580453-cn-shanghai/logsearch/internal-operation_log?slsRegion=cn-shanghai) 按源 Project、Logstore、探针标记和请求起止秒匹配 `GetLogStoreLogs`。详细日志可放在集中 Project，源 Project 缺 `internal-operation_log` 不代表没开审计。普通 SQL 下未建索引的 `Query` 可能为空。先缩小搜索范围，再用 scan 模式读取标记及 `InvokerUid`、`CallerType`。只对唯一且匹配的记录追认主体。字段定义参见 [SLS 服务日志](https://help.aliyun.com/zh/sls/log-types)。
 
 用现有数据源确认的 RAM UID 打开 RAM 用户详情或在 [美西只读策略](https://ram.console.aliyun.com/policies/detail?policyType=Custom&policyName=sls-read-zeus-inference-prod&activeTab=Permission) 的授权主体搜索框查对应用户。运行后台由凭据主体鉴权，Grafana 登录会话另行鉴权。若 RAM 会话过期，UID 可直接供管理员查人，密钥不出控制台。后续打开 06 只对已完成绑定及美西数据源配置做读回和实数验证。
+
+#### 美西策略绑定回读与密钥验证
+
+2026-11-23 在 [美西只读策略授权管理](https://ram.console.aliyun.com/policies/detail?policyType=Custom&policyName=sls-read-zeus-inference-prod&activeTab=Permission) 回读已有授权主体，并与 [审计已确认的 RAM 用户详情](https://ram.console.aliyun.com/users/detail?userId=205798887368878784) 对齐。Grafana 托管工作区「云服务集成 → SLS 日志服务」的新建表单可预选美西生产项目及 `co_sandai_zeus_prod`，凭据字段在该工作区是必填。账号登录和为已有用户创建 AccessKey 的手机验证是独立两步。若为接入生成额外密钥，先核对既有活动密钥，保持当前连接，并将一时显示的凭据直接填到核对过的配置表单。验证步骤不需要把密钥或验证码写入对话、终端或知识库。
+
+添加并读回数据源后，先用聚合计数验证授权和海外事件覆盖，再按公开成功、派单及组织字段判断可展示阶段。旧格式日志关注 `content` 与已有上海结构化字段的区别。位于共享推理池的 Athena 和 Worker 阶段需用匹配的任务及事件核验，缺样本时标注缺失。
