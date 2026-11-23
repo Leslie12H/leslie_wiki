@@ -89,3 +89,9 @@ Worker 数属于共享推理池。用户任务 E2E 可按 Zeus 入口地区及�
 2026-11-23 用户确认并发按开放平台公开状态计量。排队、执行、输出审核等首次请求在终态前均计入，公开成功、失败、取消及终态后复审排除。看板实际值复用 `openapi_tasks_inflight_count`，只收新鲜 leader 快照。Top 5 在同次 `TaskSnapshotReader` 扫描投影组织 ID，最多发布五条序列并清退掉榜指标。无组织归属的任务仍计入总数。查 [Zeus #520](https://github.com/world-sim-dev/zeus/pull/520) 的当前变更及发布状态。原 Athena 方案见已关闭未合并的 [#856](https://github.com/world-sim-dev/athena-admin/pull/856)。
 
 海外日志沿 [美西 Zeus 生产 SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c7c0ede6c71484f8da34a829954c50cd9/logsearch/co_sandai_zeus_prod?slsRegion=us-west-1)验证。06 工作区的集成列表筛选只列已发现的地域。新建 SLS 数据源表单可选「美国（硅谷）」及指定项目和 Logstore，需要专用 RAM 只读凭据。更改 RAM 权限遇到绑定手机验证时，由账号持有人在官方页面完成。保存后对照所选入口的生命周期事件、组织归属和 Worker 日志覆盖，确认每个图的实际数据源及缺失阶段，再发布地区切换。SLS 连接沿阿里云授权路径使用，无需回查生产库。
+
+#### 并发采集开关与快照故障边界
+
+2026-11-23 审查 [Zeus #520](https://github.com/world-sim-dev/zeus/pull/520)。`BusinessSnapshotConfiguration` 用同一默认关闭开关控制 Top 5 和预计并发。Top 5 随既有任务扫描，只增加组织 ID 投影及内存汇总。预计并发新增组织、用户与配额联查，并读取继承的 Redis 配置。两类采集的上线成本不同，核验开关、目标规模与真实 SQL 扫描量后再启用。SQL 返回行数上限与数据库扫描量分别核查，先用不执行查询的 EXPLAIN 和既有指标量化。
+
+`BusinessSnapshotCollector` 单线程依次运行各组。联查的语句超时不包括取数据库连接和读 Redis，依赖变慢时可以延后其余快照。失败保留上次成功时间并按原间隔重试。核验 `openapi_snapshot_collection_seconds`、`openapi_snapshot_failures_total` 及 `openapi_snapshot_last_success_timestamp_seconds`，确认任务组仍新鲜，预计组过期时超售比留空。检查用户量超上限、双活组织归属等整轮失败条件。必要时分开启用 Top 5 和预计并发，避免把榜单上线绑在新增数据库读取上。
