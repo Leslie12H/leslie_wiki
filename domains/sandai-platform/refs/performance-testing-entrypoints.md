@@ -514,3 +514,11 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **How to apply**　同一个 Job 和 Pod 内用外层带时区的日志时间校准各阶段内嵌时间，校验时差后再配对。单独记录 Worker 开始、实际 GPU 开始和模型 Start: Prepare，旧版本可用模型准备开始至 VAE 后处理完成统计模型执行。文本编码、基础降噪、超分降噪和 VAE 解码分别使用对应的起止标记。遇到 Athena 建单的全文索引缺口，沿首次 Zeus 派发确认时间缩小窗口并按结构 Job ID 回读，最后核对原九段的逐任务加和。按建单日期分桶时一并记录地区、阶段齐全样本数和抽样策略，均值、P50 与 P95 由任务明细复算。
 
 2026-11-18 至 2026-11-22 的只读查询、任务明细和复算脚本在开放平台工作区 `.local/generation-stages-5d-20261123/`。 [国内 Zeus](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/co_sandai_zeus_prod?slsRegion=cn-shanghai) · [美西 Zeus](https://sls.console.aliyun.com/lognext/project/k8s-log-c7c0ede6c71484f8da34a829954c50cd9/logsearch/co_sandai_zeus_prod?slsRegion=us-west-1) · [Athena Worker](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai)
+
+## 2026-11-23 按机器和素材分层的推理计时
+
+**Why**　输出编码帧数体现成片时长，请求时长是目标值。Worker 输入在预处理后可能与用户原始附件不同。输入 VAE 编码日志中前后两个计时检查点都叫 `Step1: Encode Image Done`，用模型准备到文本编码完成的整段会把其他阶段一起计入。独立的 `after vae encode` 诊断日志可能早于第二个模型计时检查点。
+
+**How to apply**　在 Athena Worker 日志用实际 Pod 名的机器池标识，按 `encoding chunk → ts` 的 `frames / fps` 计算输出时长。由同一 `Gaga4Request.reference_groups` 的非空 `image_path` 和 `video_path` 计数，独立的 `image` 字段计入图片数。只输出素材数量。Worker 请求和成片事件可按消息里的 Job ID 抓取。模型阶段的 Job ID 位于结构字段时按 Pod 和运行窗口回查，再逐条严格匹配 Job ID。输入 VAE 编码用同一条 `Time Elapsed` 内两次 `Step1: Encode Image Done` 的起止差值，并核对诊断日志的顺序及后续文本编码的起点。解码输出从 `Step5: Post Process (VAE Decode)` 计到 Worker 的 `inference finished in` 事件时刻。做同池跨日比较时保留样本数、输出时长、分辨率和输入构成。
+
+分组数据及字段表在[近五日生产生成耗时飞书文档](https://j0yswlgboxz.feishu.cn/docx/H8TMdJsI6oBefWxuWRLcxXvBnHh)。只读查询和复算入口位于开放平台工作区 `.local/inference-input-breakdown-20261123/`。

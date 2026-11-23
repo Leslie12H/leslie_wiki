@@ -1,3 +1,5 @@
+- 2026-11-23：[按机器和素材分层的推理计时](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-23-按机器和素材分层的推理计时) — 实际片长、Worker 输入计数、重复 Step1 标记的 VAE 编码配对与输出交付边界。
+
 - 2026-11-23：[五日阶段和模型计时回查](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-23-五日阶段和模型计时回查) — Worker 阶段时区校准、Athena 建单索引补查和逐日样本口径。
 
 - 2026-11-22：[聚合纯推理耗时](domains/sandai-platform/refs/performance-testing-entrypoints.md#聚合纯推理耗时) — GPU 起止配对、预热排除、精确 Job ID 补齐和 P95 复算入口。
