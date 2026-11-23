@@ -36,7 +36,7 @@
 
 - 2026-11-20：[VidMuse Magi-2 抽卡与 CLI 任务关联](domains/vidmuse/refs/magi2-generation-lineage-entrypoints.md) — 从 Thread 或 AION 请求 ID 串到 OpenAPI 与 Athena，核对派发持久化、实际路由、提示词版本和内部查询入口。
 
-- 2026-11-20：[开放平台审核失败全量取数](domains/sandai-platform/refs/moderation-failure-census-entrypoints.md) — 对齐国内及海外的预发和生产任务、Zeus 终态、共享 Athena 审核决定、媒体 DataId、平台建单 Request ID 和供应商原回执。 含输入审核通过及提示词增强顺序的对照核验。 补两环境共用 Athena 文本审核的配置对照。 补参考音频槽位、原始文件与语音审核回执的关联。 补音频离线试听交付与浏览器验证。 补多分段命中与整单拒绝原因的对应查证，以及员工审核回执的任务授权路径。
+- 2026-11-20：[开放平台审核失败全量取数](domains/sandai-platform/refs/moderation-failure-census-entrypoints.md) — 对齐国内及海外的预发和生产任务、Zeus 终态、共享 Athena 审核决定、媒体 DataId、平台建单 Request ID 和供应商原回执。 含输入审核通过及提示词增强顺序的对照核验。 补两环境共用 Athena 文本审核的配置对照。 补参考音频槽位、原始文件与语音审核回执的关联。 补音频离线试听交付与浏览器验证。 补多分段命中与整单拒绝原因的对应查证、员工审核回执的任务授权及门户登录的复核入口。
 
 - 2026-11-19：[Magi-2 与 Seedance 的多素材提示词引用](domains/sandai-platform/refs/magi2-reference-prompt-entrypoints.md) — 按素材类型核对提示词编号、请求数组顺序、Zeus 透传和 Athena 内部标签，附 Seedance 分版本规则。 补充方舟 Python SDK 分包与双图请求模拟验证。 补七张直链图的推理槽位与成片对照、视频和音频混传编号。
 

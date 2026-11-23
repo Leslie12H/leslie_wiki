@@ -57,3 +57,5 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-aliyun-
 **Why**　飞书工作台可以面向全员开放入口，每次查询仍需核对员工与具体任务的授权。中央管理台持有员工会话与审计上下文，区域 Zeus 根据站点 audience 和单操作 scope 验证委托。
 
 **How to apply**　新增查询路由前先看 [区域鉴权与委托约定](https://github.com/world-sim-dev/zeus/blob/f04eae7afef28dd3941d9a2ff18ffffff0c52782/docs/admin-api.md) 及 [路由权限检查](https://github.com/world-sim-dev/zeus/blob/f04eae7afef28dd3941d9a2ff18ffffff0c52782/modules/admin/src/main/java/co/sandai/zeus/admin/security/AdminRoutePolicy.java)。区域校验要求凭证恰好有一个操作 scope。需要将凭证限定到具体任务时，将任务标识绑定到该操作的 scope，并核实另一任务和其他方法均拒绝。审核详情继续沿 [Green 归一化](https://github.com/world-sim-dev/athena-admin/blob/main/ApiService/clients/green.py) 回查，历史记录缺供应商回执时保留缺失状态。
+
+员工入口选址时，可从 [InternalPortal 飞书登录](https://github.com/world-sim-dev/InternalPortal/blob/137ef51c88e14970a7ce12a8b475ebe9c00c87ae/server/app/api/auth/auth.py#L202) 和 [首次开户及默认角色](https://github.com/world-sim-dev/InternalPortal/blob/137ef51c88e14970a7ce12a8b475ebe9c00c87ae/server/app/service/feishu_login.py#L193) 回查。源码具备飞书登录与首次开户，线上应用范围和默认角色权限需要现场复核。用无 Zeus Admin 权限的普通员工账号验证入口，再用该账号的有授权和无授权任务验证查询边界。
