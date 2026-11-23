@@ -522,3 +522,11 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **How to apply**　在 Athena Worker 日志用实际 Pod 名的机器池标识，按 `encoding chunk → ts` 的 `frames / fps` 计算输出时长。由同一 `Gaga4Request.reference_groups` 的非空 `image_path` 和 `video_path` 计数，独立的 `image` 字段计入图片数。只输出素材数量。Worker 请求和成片事件可按消息里的 Job ID 抓取。模型阶段的 Job ID 位于结构字段时按 Pod 和运行窗口回查，再逐条严格匹配 Job ID。输入 VAE 编码用同一条 `Time Elapsed` 内两次 `Step1: Encode Image Done` 的起止差值，并核对诊断日志的顺序及后续文本编码的起点。解码输出从 `Step5: Post Process (VAE Decode)` 计到 Worker 的 `inference finished in` 事件时刻。做同池跨日比较时保留样本数、输出时长、分辨率和输入构成。
 
 分组数据及字段表在[近五日生产生成耗时飞书文档](https://j0yswlgboxz.feishu.cn/docx/H8TMdJsI6oBefWxuWRLcxXvBnHh)。只读查询和复算入口位于开放平台工作区 `.local/inference-input-breakdown-20261123/`。
+
+## 2026-11-23 Reference PE 调用模型与网关 fallback 的取证
+
+**Why**　Athena 的提示词增强阶段包含素材准备和模型调用。Athena 日志能证明调用时声明的模型、增强尝试次数和结果校验。实际出站模型及网关内部 failover 由模型服务调用记录证明。
+
+**How to apply**　按 Athena Job 查询 `inference-prod`，由 `prompt_enhancement.enhance_v2.clients.configured` 的 `model` 确认网关入参，用 `reference PE output validated` 的 `model` 和 `attempt` 核对成功尝试。区分 PE handler 开始到校验完成、模型调用开始到校验完成、Athena 整段建单到切片就绪。用同 Job 的 `httpx` 回执核对网关 HTTP 状态。再按 Worker 的 `Step3` 和 `Step4b` 单独核算两段降噪。若要核对网关内部模型路由，按关联调用的身份和精确时刻缩小范围，从模型服务调用记录的出站模型及 attempt 链路查证。管理端读取需要 `model:admin.call.read`。
+
+[生产 Athena 前处理日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/inference-prod?slsRegion=cn-shanghai) · [模型服务调用记录](https://github.com/world-sim-dev/product-infra-platform/blob/1f5e7294d1d845e3e368b993e2b9f52460205cca/docs/model-service-design/call-records.md)。本次脱敏取证与复算入口位于开放平台工作区 `.local/us-org-pe-20261123/`。

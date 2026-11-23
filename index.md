@@ -1,3 +1,5 @@
+- 2026-11-23：[Reference PE 调用模型与网关 fallback 的取证](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-23-reference-pe-调用模型与网关-fallback-的取证) — Athena PE 调用、首轮校验、阶段耗时与实际出站路由的取证。
+
 - 2026-11-23：[按机器和素材分层的推理计时](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-23-按机器和素材分层的推理计时) — 实际片长、Worker 输入计数、重复 Step1 标记的 VAE 编码配对与输出交付边界。
 
 - 2026-11-23：[五日阶段和模型计时回查](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-23-五日阶段和模型计时回查) — Worker 阶段时区校准、Athena 建单索引补查和逐日样本口径。
