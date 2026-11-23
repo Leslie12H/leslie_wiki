@@ -1,3 +1,5 @@
+- 2026-11-23：[参考 MP4 音轨编码拒绝](domains/sandai-platform/refs/media-functional-acceptance-entrypoints.md#2026-11-23-参考-mp4-音轨编码拒绝) — Opus 触发 Zeus 同步报错、AAC 对照及建单前拒绝的请求 ID 查证。
+
 - 2026-11-23：[产物水印、输出审核和 Worker 差值](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-23-产物水印输出审核和-worker-差值) — 完整 Celery ID、并行边界、输出审核秒表及 Worker 其他耗时公式。
 
 - 2026-11-23：[Inference 并发资源看板查证入口](domains/sandai-platform/refs/inference-concurrency-dashboard-entrypoints.md) — Worker、最长排队、平台在途估算和低压力取数的查证入口。 补充等待计时失真、已派发快照和分阶段总览查证。 补充 E2E 长尾和阶段瀑布。 更新为实时阶段表并补充后处理边界。 核对 Zeus 状态停留与全链路计时的差异。 补充实时跨系统事件关联及 Athena 建单日志的复核方法。 补充线上瀑布、SLS 扫描和创建时组织归属。 补充执行顺序、P95 排行与 Worker 计时起止。 补充接单前后两层队列的长尾查证和上方 E2E 趋势。 补充快照切换与 Athena 全量批查的读放大风险。 补充组织筛选作用域及状态快照上线顺序。 补充 Zeus 非终态并发及美西 SLS 接入授权。 补充按开关区分榜单读放大和预计快照故障。

@@ -2,7 +2,7 @@
 name: sandai-api-platform-media-functional-acceptance-entrypoints
 type: reference
 created: 2026-11-14
-updated: 2026-11-18
+updated: 2026-11-23
 tags: [sandai, api-platform, media, functional-testing, openapi]
 links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform-performance-testing-entrypoints]
 ---
@@ -137,3 +137,11 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 - 同一文件两次执行的可回查证据见工作区 `.local/platform-three-failures-20261118/` 的 `admin-media-projection.json`、`sls-lineage-traces.json`、`sls-next-task-athena.json`、`reference-video-boxes.json`、`reference-video-metadata.json`。保留对象元数据与错误回执，避免留存带签名的链接和用户媒体。
 
 **生产修复的确认（2026-11-18）。** [Athena #834](https://github.com/world-sim-dev/athena-admin/pull/834) 的容器识别优先读取 `ftyp`。核对 [生产预处理发布](https://github.com/world-sim-dev/athena-admin/actions/runs/44300889370)、Deployment 的更新/就绪状态、所有 Pod 的镜像摘要，再在当前生产 Pod 运行实际校验函数。原始冲突素材用 SHA-256 确认：ffprobe 仍报 `qt`，Athena 按 `isom` 文件头识别为 MP4，格式与时长校验通过。正常 MP4 和 MOV 通过，真正 MOV 改名为 `.mp4` 仍被拒。生产复测回执见工作区 `.local/athena-format-verification-20261118/verification.json`。该回执覆盖校验函数，完整生成终态需单独核验。
+
+## 2026-11-23 参考 MP4 音轨编码拒绝
+
+**Why**　MP4 容器和 H.264 画面都正常时，Opus 音轨仍可能触发 Zeus 的 `unsupported audio track codec`。方舟的 `generate_audio` 控制生成输出音轨，输入视频独立校验。
+
+**How to apply**　按错误字段锁定参考视频，用原始文件的 `ffprobe` 查看 `codec_name` 和 `codec_tag_string`。对照 [Zeus 的 MP4 音轨校验](https://github.com/world-sim-dev/zeus/blob/27016701fa35aa63be2f2f514668420c63d7f33b/modules/domain/src/main/java/co/sandai/zeus/domain/asset/service/ReferenceMetadata.java#L173-L187) 与 [输入准备和任务受理顺序](https://github.com/world-sim-dev/zeus/blob/27016701fa35aa63be2f2f514668420c63d7f33b/modules/domain/src/main/java/co/sandai/zeus/domain/platform/generation/OpenApiGenerationService.java#L113-L132)。保留原视频流，仅将音轨转 AAC，重新检查实际音轨和画面哈希。2026-11-23 的原片及 AAC 对照通过本地调用 Zeus 校验方法复核，成片端到端状态另查。
+
+- 国内生产用 [Zeus SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/co_sandai_zeus_prod?slsRegion=cn-shanghai) 查 `stage=INPUT_PREPARATION`、`validationReason=unsupported audio track codec` 与对应字段。在本例中该阶段早于生成任务受理，HTTP 400 提供请求 ID。多个候选的字段及错误相同时，应沿调用方原响应的 Request ID 核对，日志中的同类错误无法唯一绑定原始请求体。
