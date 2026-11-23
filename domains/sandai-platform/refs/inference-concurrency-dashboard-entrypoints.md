@@ -24,10 +24,16 @@ links: [sandai-api-platform-openapi-quota-entrypoints]
 - 最长队列等待先对照相同时间范围内的队列积压。采集端返回成功且等待值全为 0 仍可能漏掉实际积压的年龄。在推理队列监控中分别核对有效分钟样本数、等待值峰值和队列待处理数。积压存在且等待始终为 0 时，把等待计时当成缺失，沿推理队列 exporter 的年龄解析和标签覆盖继续排查。
 - 按用户确认的口径，预计并发取正常开放平台用户所属有效组织的并发配额。继承值从 Redis 全局默认一次读取。有重复有效组织无法判唯一归属时停止更新这一快照。
 - 精确在途沿 Zeus `TaskDispatchMapper.submittedPage` 的覆盖索引获取已确认派发的任务和组织。Athena 使用带 group 的请求 ID 批查确认 pending/running，再由同份结果算总量和 Top 5。复查 [Athena 作业批查](https://github.com/world-sim-dev/athena-admin/blob/main/ApiService/controllers/job.py) 和 jobs 的复合唯一索引。整批缺记录、状态未知、超时或达到读数上限时，沿快照采集日志和 Prometheus 时间戳判不可用。检查对应部署及监控开关的在线状态。
-- 06 的「分阶段耗时」包含国内实时 Zeus 直方图，以及[五日原表](https://j0yswlgboxz.feishu.cn/docx/H8TMdJsI6oBefWxuWRLcxXvBnHh)的固定基线。基线用逐任务配对计算 Athena 排队和模型子阶段。实时 Zeus 完成耗时起点是建单。后处理可对照原表的 Worker 上报到公开总间隔，独立水印或审核耗时需再核对各自的计时字段和覆盖。
+- 06 的「分阶段耗时」使用国内实时 Zeus 直方图。[五日原表](https://j0yswlgboxz.feishu.cn/docx/H8TMdJsI6oBefWxuWRLcxXvBnHh)保留历史基线。基线用逐任务配对计算 Athena 排队和模型子阶段。实时 Zeus 完成耗时起点是建单。后处理可对照原表的 Worker 上报到公开总间隔，独立水印或审核耗时需再核对各自的计时字段和覆盖。
 
 ### E2E 卡和阶段图
 
 用户 2026-11-23 确认关注端到端长尾和最大耗时。实时卡取国内成功任务的 Zeus 建单到首次公开成功。P95 通过 `openapi_task_completion_seconds_bucket` 的区间增量估算。采样最大值沿 `openapi_task_completion_seconds_max` 回查滚动窗口和抓取边界，参考 [Micrometer Timer 指标](https://docs.micrometer.io/micrometer/reference/implementations/prometheus)。当前图以最近 30 分钟样本画 P50 / P95 趋势。遇到有区间总量但走势图空白，比较窗口宽度、实际抓取间隔与每点样本量。
 
-瀑布基线沿五日原表回查同一批阶段齐全任务。用各阶段均值逐段累加，并与同批 E2E 均值对账。不同阶段的 P95 用于各阶段的长尾比较。地区分母、逐日和模型细分放在 06 的分阶段明细中。
+瀑布基线沿五日原表回查同一批阶段齐全任务。用各阶段均值逐段累加，并与同批 E2E 均值对账。不同阶段的 P95 用于各阶段的长尾比较。地区分母、逐日和模型细分沿五日原表回查。
+
+### 06 实时分阶段与后处理计时
+
+用户 2026-11-23 要求看板按所选时间范围查询。全链路时间瀑布仍需逐任务匹配全部阶段，在 06 先用 Prometheus 的 `openapi_task_stage_seconds` 直方图及计数、求和，分别呈现当前可测阶段的样本量、平均、P50 和 P95。验证两个不同时段返回不同分母。历史五日数据沿原表回查。Grafana 多值 Stat 在低面板高宽比下发生文字堆叠时，使用原生 Table 的单行摘要保存列与数值对齐。
+
+后处理沿 `ApiService/services/postprocess.py` 查下发顺序和依赖。水印、输出审核可能并行，逐段累加时要先核对重叠。输出审核可沿 `ApiService/services/moderation.py` 的 `save_phase`、`finish_review` 和晚到回调 guard，核对 `job_moderation.output_review.started_at` 以及 `stage=output`、`status=passed`、`output_review.finished=true` 的最终写入时间。按 Job 主键执行 EXPLAIN 后，小样本点查对齐 Worker 上报和 Zeus 公开成功。独立水印起止和跨系统实时快照仍需采集覆盖。SLS 走 Grafana 内已有数据源时，先检查连接授权与日志库索引，避免把鉴权失败当成日志缺失。
