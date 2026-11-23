@@ -2,7 +2,7 @@
 name: sandai-api-platform-performance-testing-entrypoints
 type: reference
 created: 2026-10-27
-updated: 2026-11-22
+updated: 2026-11-23
 tags: [sandai, api-platform, performance, testing, quota]
 links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi-quota-entrypoints, sandai-api-platform-test-organization-retirement]
 ---
@@ -506,3 +506,11 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **How to apply**　在已核实的 Worker 池中，将实际 GPU 开跑和模型侧 VAE 解码完成按 Job 和 Pod 连接。按完成时间归入窗口，读取跨日开始事件，核对日志分页并按原事件去重。对无 Job ID 的完成标记检查相同 Pod 的预热上下文，对缺开始的 Job 用精确 ID 查回。按所有配对样本计算平均值及 P95，记录窗口、时间单位、池范围、配对覆盖和分位数定义。排队、前处理、交付编码和上传分别取证。
 
 2026-11-22 上海 S5000 的查询计划、逐任务配对、精确回查及复算脚本位于开放平台工作区 `.local/pure-inference-20261122/`。 [Athena Worker 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai)
+
+## 2026-11-23 五日阶段和模型计时回查
+
+**Why**　Worker 阶段日志的内嵌时刻在不同 Pod 或版本中可使用 UTC 或北京时间。按一个时区解读会错配模型起止。Athena 建单事件的 Job ID 在结构字段内，全文按数字查询可能漏掉事件。美西旧日志结构可见时仍需检查平台创建、派发和成功事件是否完整。
+
+**How to apply**　同一个 Job 和 Pod 内用外层带时区的日志时间校准各阶段内嵌时间，校验时差后再配对。单独记录 Worker 开始、实际 GPU 开始和模型 Start: Prepare，旧版本可用模型准备开始至 VAE 后处理完成统计模型执行。文本编码、基础降噪、超分降噪和 VAE 解码分别使用对应的起止标记。遇到 Athena 建单的全文索引缺口，沿首次 Zeus 派发确认时间缩小窗口并按结构 Job ID 回读，最后核对原九段的逐任务加和。按建单日期分桶时一并记录地区、阶段齐全样本数和抽样策略，均值、P50 与 P95 由任务明细复算。
+
+2026-11-18 至 2026-11-22 的只读查询、任务明细和复算脚本在开放平台工作区 `.local/generation-stages-5d-20261123/`。 [国内 Zeus](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/co_sandai_zeus_prod?slsRegion=cn-shanghai) · [美西 Zeus](https://sls.console.aliyun.com/lognext/project/k8s-log-c7c0ede6c71484f8da34a829954c50cd9/logsearch/co_sandai_zeus_prod?slsRegion=us-west-1) · [Athena Worker](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai)
