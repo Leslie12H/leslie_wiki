@@ -69,3 +69,11 @@ Worker 接单到 GPU 开跑止于 `GPU worker started inference at`。Worker 接
 2026-11-23 查证 [06 的两层排队](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency/06-e5b9b6-e58f91-e8b584-e6ba90-e7aea1-e79086)。Athena 队列从切片就绪到 Worker 接单。Worker 内排队从同一 Job 的 `task started, running tasks` 到 GPU 实际开跑。对长等待从 [Athena Worker 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai) 回查同 Pod 的前单 GPU 开始和 `Step5: Post Process Done`，用前单模型结束而非前单上报给交接对时。在 S5000 和 5090 的同次长尾抽查均出现接单时 `running tasks: 2`、前单覆盖几乎全部等待的情形。用同 Pod 的忙碌区间解释接单后长尾。判断派发是否有空闲目标还需要当时的可调度槽位和路由记录。
 
 主链路显示「后处理（水印 + 审核）」，采样时间沿 Worker 上报到公开成功，可能含等待、交接与公开。排查趋势先看主链路瀑布上方的成功任务 P50/P95 图，数据仍来自 Zeus 30 分钟滚动直方图，从建单到公开成功。瀑布从开放平台创建请求开始。
+
+#### 快照切换与共用推理池的口径
+
+2026-11-23 复核 [06 的版本历史](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency/06-e5b9b6-e58f91-e8b584-e6ba90-e7aea1-e79086)。实际并发卡从旧 `openapi_tasks_inflight{stage="executing"}` 切到 `openapi_concurrency_dispatched`，旧采集在线而新分组没有序列时会显示暂无生产快照。切换前用实时查询分别验证 gauge、成功时间和 leader，区分未启用、采集失败、超时和业务零值。在旧来源上标明 Zeus 在途估算口径。
+
+Athena `jobs?request_ids=` 批查走全量任务详情。核对 `JobService.list_jobs`、`build_job_for_query` 和 `build_artifact_inputs_for_query`，每条有素材或产物引用的记录还可能查产物并刷新 URL。只读调用也会在后端放大读数，监控需优先使用已有状态流或仅投影状态的批量查询。单条漏返回或超过上限会让整轮精确快照不发布，应单独说明状态和覆盖。
+
+Worker 数属于共享推理池。用户任务 E2E 可按 Zeus 入口地区及创建时组织筛选，筛选范围与共享容量保持区分。全池超售比的需求侧先覆盖所有入口并核对组织去重，再除共享 Worker 数。
