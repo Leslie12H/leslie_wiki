@@ -51,3 +51,9 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-aliyun-
 **Why**　同一提示词的不同分段可同时取得不同风险标签。普通动作描述也可能被供应商标为成人内容。用户看到整单失败时，先定位 Athena 实际拒绝的分段，其他分段的风险标签随其原回执保存。
 
 **How to apply**　无任务号时，以原稿独特短句查供应商回执，按完整分段指纹、服务、决定时间和标签匹配 Athena，再按 Job ID 反查 Zeus 派发。共享推理日志库不决定提交环境。词项需在原稿上下文和供应商命中字段分别核实。工作区 `.local/moderation-volcanic-20261123/` 保存本次脱敏回查入口。
+
+## 2026-11-23 员工审核回执查询接入
+
+**Why**　飞书工作台可以面向全员开放入口，每次查询仍需核对员工与具体任务的授权。中央管理台持有员工会话与审计上下文，区域 Zeus 根据站点 audience 和单操作 scope 验证委托。
+
+**How to apply**　新增查询路由前先看 [区域鉴权与委托约定](https://github.com/world-sim-dev/zeus/blob/f04eae7afef28dd3941d9a2ff18ffffff0c52782/docs/admin-api.md) 及 [路由权限检查](https://github.com/world-sim-dev/zeus/blob/f04eae7afef28dd3941d9a2ff18ffffff0c52782/modules/admin/src/main/java/co/sandai/zeus/admin/security/AdminRoutePolicy.java)。区域校验要求凭证恰好有一个操作 scope。需要将凭证限定到具体任务时，将任务标识绑定到该操作的 scope，并核实另一任务和其他方法均拒绝。审核详情继续沿 [Green 归一化](https://github.com/world-sim-dev/athena-admin/blob/main/ApiService/clients/green.py) 回查，历史记录缺供应商回执时保留缺失状态。
