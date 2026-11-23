@@ -530,3 +530,11 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **How to apply**　按 Athena Job 查询 `inference-prod`，由 `prompt_enhancement.enhance_v2.clients.configured` 的 `model` 确认网关入参，用 `reference PE output validated` 的 `model` 和 `attempt` 核对成功尝试。区分 PE handler 开始到校验完成、模型调用开始到校验完成、Athena 整段建单到切片就绪。用同 Job 的 `httpx` 回执核对网关 HTTP 状态。再按 Worker 的 `Step3` 和 `Step4b` 单独核算两段降噪。若要核对网关内部模型路由，按关联调用的身份和精确时刻缩小范围，从模型服务调用记录的出站模型及 attempt 链路查证。管理端读取需要 `model:admin.call.read`。
 
 [生产 Athena 前处理日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/inference-prod?slsRegion=cn-shanghai) · [模型服务调用记录](https://github.com/world-sim-dev/product-infra-platform/blob/1f5e7294d1d845e3e368b993e2b9f52460205cca/docs/model-service-design/call-records.md)。本次脱敏取证与复算入口位于开放平台工作区 `.local/us-org-pe-20261123/`。
+
+## 2026-11-23 产物水印、输出审核和 Worker 差值
+
+**Why**　同一个 Athena Job 的独立水印和输出审核可以并行，审核通过后仍可能等待水印或平台公开。Worker 的完成日志时刻与 Athena HTTP 接收时刻存在顺序差异。Worker 自报秒表的区间也与模型阶段计时不同。
+
+**How to apply**　从 `inference-prod` 的 `postprocessor published` 取同一 Job 的 `processor_type=post_watermark` 和 `processor_id`，按部署使用的 `job_id-processor_id-POST_PROCESS_VERSION` 组合为完整 Celery 任务 ID。查询相同 `athena.post_processor` 的成功执行日志秒数，按 Worker 收到和成功事件核对顺序。用 `moderation stage decided` 的 `stage=output`、`duration_ms` 量审核，用 `moderation stage started` 和 Zeus 首次公开成功核对可按事件时间逐段相加的样本。若审核已经开始才打印 Worker 完成日志，保留事件原序，并从顺序拆分分母移出。按同一 Job 和 Pod 计算 Worker 其他差值 `(完成日志 timestamp − task started timestamp) − inference finished in 自报秒数`，以非负且起止配对为取数边界。模型和实际 GPU 等待的独立计时用于定位，未归因的差值保留原定义。
+
+[分段数据与字段表](https://j0yswlgboxz.feishu.cn/docx/H8TMdJsI6oBefWxuWRLcxXvBnHh) · [后处理派发和 Celery ID](https://github.com/world-sim-dev/athena-admin/blob/e278f4d1646ea0810e663c81c3f5851800ba52c7/ApiService/services/postprocess.py#L157-L202) · [审核秒表](https://github.com/world-sim-dev/athena-admin/blob/e278f4d1646ea0810e663c81c3f5851800ba52c7/ApiService/services/moderation.py#L325-L341)。本次脱敏取数及复算入口在工作区 `.local/output-postprocess-20261123/`。
