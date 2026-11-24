@@ -163,3 +163,9 @@ Worker 数属于共享推理池。用户任务 E2E 可按 Zeus 入口地区及�
 2026-11-24 核对 [Magi 国内部署](https://github.com/world-sim-dev/zeus/actions/runs/45320457134) 对应 [采集源码](https://github.com/world-sim-dev/zeus/blob/8a5c0c011ff886c4ef675261e45125ff2d72d14f/modules/domain/src/main/java/co/sandai/zeus/domain/observability/snapshot/ConcurrencySnapshotReader.java#L21-L56) 和 [06 的预计并发卡](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=4)。面板短单位加零位小数会把原始的四位数四舍五入为 k。对图中数字先查面板的原始 Prometheus 结果与 `expected_concurrency` 的快照成功时间。
 
 预计快照按正常账号拥有的 ACTIVE 组织累加并发覆盖值，无覆盖时用当轮全局默认。状态过滤与按近 7 天、30 天发任务的活跃度是不同口径，查部署源码确认有没有附加条件。预计指标只上报总量，未保存这轮贡献组织的 ID 和份额；并排的 Top 5 用任务组的非终态快照，无法反推预计总额的组成。
+
+#### 06 发布分阶段 P95 趋势
+
+2026-11-24 在 [06 分阶段趋势](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?from=now-6h&to=now&var-entry_region=us&var-org_id=all&viewPanel=132) 发布原生 Grafana 面板 132，位置在 E2E 趋势与阶段统计范围之间。趋势读取同一时间窗的 Zeus、Athena 与 Worker SLS，在 Grafana 按 Job ID 关联，以公开成功时间每 30 分钟分桶。右轴为各桶成功任务数。入口和组织筛选只影响对应的阶段统计。阶段定义、数据源和维护设置回读面板本身。
+
+验收先查相对最近六小时的时间跨度、Zeus 返回任务数与分桶数，再固定同一窗口切组织并抽查国内入口。首开渲染时长和单独的取数探针时长分别测量。趋势的六小时取数和瀑布的范围提示使用各自口径，精确范围见各面板。若图库插件把同数据源的两路查询合在一个请求，优先测上海 Athena 和 Worker 的该请求耗时。
