@@ -219,3 +219,9 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 2026-11-24 通过国内生产 Zeus 单任务素材详情回读该失败案例，调用方素材只有图片和视频，音频来自视频内的第一条 AAC 音轨。[Athena 视频准备](https://github.com/world-sim-dev/athena-admin/blob/833aea1eb92c30ffcd0c75b6100308bfb7191213/ApiService/preprocessors/reference_media.py#L295-L373) 输出不带音轨的参考视频并单独抽取 WAV，[参考素材准备](https://github.com/world-sim-dev/athena-admin/blob/833aea1eb92c30ffcd0c75b6100308bfb7191213/ApiService/preprocessors/reference_prompt.py#L221-L261) 把这条派生音轨追加为音频输入。Worker 的独立音频校验覆盖此派生素材。
 
 排查时先按原任务投影对齐素材清单，再用 `ffprobe` 分别读容器、视频流和音频包。容器 9.458333 秒的样本只有三个 AAC 包，包时间戳都为 0，单包 1024 个采样点。头部音频流时长 0.023220 秒。按生产命令 `-map 0:a:0 -vn -af aresample=async=1:first_pts=0 -c:a pcm_s16le` 抽轨复算，WAV 有 3072 个采样点，44100 Hz 下为 0.069660 秒，与 Worker 的 `0.07 s` 一致。用解码后的抽轨样本核对 Worker 判定；原始文件已经只有极短音轨。查证只保留轨道元数据和路径指针，临时签名地址取证后清除。
+
+#### 全局实际超售比
+
+2026-11-24 在 [06 并发资源管理](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?var-entry_region=us&var-org_id=all&viewPanel=133) 发布「全局实际超售比」。分子复用全局实际并发卡的国内与海外有效任务快照，分母复用共享池可推理 Worker。两地快照缺一时显示对应缺失状态，Worker 数不可用或为零时不计算倍率。入口地区选择用于入口耗时，倍率解释为全局任务数对共享池。
+
+验收从线上读取面板定义，使用同一时点执行国内、海外、Worker 及 Grafana 表达式，对照 `（国内实际 + 海外实际）÷ Worker`。保留预计并发分子的既有「全局超售比」，可在相邻两张卡对照当下占用与配额压力。
