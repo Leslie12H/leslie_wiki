@@ -58,7 +58,7 @@
 
 - 2026-11-17：[火山方舟 Seedance 2.5 提示词改写查证入口](domains/sandai-platform/refs/seedance-25-pe-entrypoints.md) — 视频生成 API 参数与 `sd25-pe` 调优技能的官方查证入口。
 
-- 2026-11-17：[Magi-2 单次请求控制 PE](domains/sandai-platform/refs/magi2-request-pe-control.md) — 严格请求解析、任务快照覆盖、参考增强类型、素材校验及实际推理派发的查证入口。 补 PE 关闭却保留参考增强类型导致的请求体 422。
+- 2026-11-17：[Magi-2 单次请求控制 PE](domains/sandai-platform/refs/magi2-request-pe-control.md) — 严格请求解析、任务快照覆盖、参考增强类型、素材校验及实际推理派发的查证入口。 补 PE 关闭却保留参考增强类型导致的请求体 422。 补按码点切换 PE 的 staging 边界及 Athena 实际执行查证。
 
 - 2026-11-16：[Playground 模型 Schema 不兼容](domains/sandai-platform/pitfalls/playground-catalog-schema-mismatch.md) — 目录 200 后的前端错误、线上构建与单模型复现、正则和枚举约束的回查入口。
 

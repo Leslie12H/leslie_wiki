@@ -2,7 +2,7 @@
 name: sandai-platform-magi2-request-pe-control
 type: reference
 created: 2026-11-17
-updated: 2026-11-17
+updated: 2026-11-24
 tags: [sandai, api-platform, magi2, zeus, athena, prompt-enhancement]
 links: [sandai-api-platform-development-entrypoints, sandai-platform-magi2-cn-native-production-entrypoints]
 ---
@@ -21,3 +21,13 @@ links: [sandai-api-platform-development-entrypoints, sandai-platform-magi2-cn-na
 ## 2026-11-17 上海控制台 PE 关闭时发生 422
 
 生产任务快照同时保留显式关闭的 `options.promptEnhancement` 和 `gaga4r2v` 类型。按精确派发 trace 命中的 Athena 访问日志提供 HTTP 状态和镜像，未记录响应体。[该版本请求模型的整体校验钩子](https://github.com/world-sim-dev/athena-admin/blob/a1fe83db6121e6577f3e40eae464ee95f54f7006/ApiService/services/job.py#L240)依据增强类型运行[参考增强准入](https://github.com/world-sim-dev/athena-admin/blob/a1fe83db6121e6577f3e40eae464ee95f54f7006/ApiService/validators/reference.py#L30)，所以 `loc=["body"]` 可指向多个选项组合失败。用保存的任务快照和[部署版本派发组装](https://github.com/world-sim-dev/zeus/blob/aa0add01bfdde4c3d4300264f829ddc901f1d3f8/modules/domain/src/main/java/co/sandai/zeus/domain/service/impl/TaskDomainServiceImpl.java#L295)离线恢复后，同一请求改开关为 true 或删除参考增强类型都通过了请求模型校验。生成服务层和最终成片仍需分别验收。生产原始响应与离线错误输出须注明来源。
+
+## 2026-11-24 提示词码点路由
+
+**Why**　[Zeus #522](https://github.com/world-sim-dev/zeus/pull/522) 支持按提示词正文的 Unicode 码点选择 PE 类型。发布成功与模型下发的规则是两条证据，任务受理与 Athena 加载对应配置也需要分开核对。
+
+**How to apply**　先通过 [Magi staging 发布](https://github.com/world-sim-dev/zeus/actions/runs/45360688665) 对照目标 OpenAPI 和 Dispatcher 版本，再从 [预发 Zeus Admin 模型配置](https://zeus-admin-dev.sandaii.cn/platform/models) 按站点回读模型、变体和组织权限。规则的 `gt` 严格大于，等于阈值时继续使用固定值，前提是没有其他匹配规则或显式 PE 类型覆盖。建议用同规格、同变体的阈值 −1、阈值、阈值 +1 输入测试，加入一个补充平面字符校验码点计数。
+
+回查已有国内 staging 任务时，从 Admin 的 `/tasks/{id}/content` 对未截断正文计数，在香港 SLS 的 `co_sandai_zeus_dev` 用 `task_submitted` 将任务映射到 Athena Job。在上海 SLS 的 `inference-prod` 按 Job ID 查 `services.config` 中的完整 PE 类型及 `reference PE output accepted`。可回查 Job `4840739`（24 码点）和 `4840833`（101 码点），分别有阈值下、阈值上实际执行的证据。等于阈值的结果来自部署版本规则与当时配置的离线复算。
+
+提交前确认当前组织在对应模型白名单。管理台白名单读回的 `writable` 表示当前 Redis 键可写，调用仍需中央的 `model.whitelist.write` 权限。产品生成请求和管理台写入各自有鉴权。
