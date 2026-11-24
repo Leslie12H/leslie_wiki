@@ -105,3 +105,9 @@ links: [sandai-api-platform-development-entrypoints]
 同日 01:59（北京时间）同规则再次触发。同镜像的两个 Pod 在 01:54:58–01:59:28 共记录 28 笔 HTTP 500。社区会话列表占 21 笔，其余涉及分享、详情、消息和产物。各请求的 Trace 均关联 `SQLSyntaxErrorException`。社区列表 Trace `133028c17ba716db7328233c5f562425` 指向 `countCommunityThreads`，对应 SQL 查询 `agent_thread`。本轮日志只保留异常类型和栈，缺表文案取自 01:17 同镜像的原始报错。现场证据见 `.local/us-platform-5xx-0159-20261125/`。[社区列表 SQL](https://github.com/world-sim-dev/zeus/blob/f04eae7afef28dd3941d9a2ff18ffffff0c52782/modules/domain/src/main/resources/mapper/AgentThreadMapper.xml#L68-L71)
 
 02:03:25 分享详情再次返回 HTTP 500，Trace `92bc07e7d88e5537429676f48cb57eb7` 对应 `getSharedThreadFullDetail` 的同类 SQL 异常。
+
+## 2026-11-25 美国 Platform 分享预览 404 记为 ERROR
+
+**Why**　02:12:48（北京时间）美国 Platform 的 `GET /api/v1/share/{shareId}/preview` 查不到可用分享记录，`ShareController.getGenerationSharePreview` 抛出 `share not found`。`@PrintLog` 的 `LogAspect` 把异常记为 `ErrorLogger`，同一 Trace 的 `RequestCompletionLog` 显示实际响应为 HTTP 404。锚点为 Trace `8e80bde54147630435b6b3d390e0f01e`。[分享预览 Controller](https://github.com/world-sim-dev/zeus/blob/f04eae7afef28dd3941d9a2ff18ffffff0c52782/modules/api/src/main/java/co/sandai/zeus/api/share/ShareController.java#L92-L105)
+
+**How to apply**　美国共享 SLS 库的 Trace 全文索引可能没有命中。同一时间窗可用 `set session mode=scan` 和 `strpos(content, '<trace>')` 查原始行，按 Trace 对齐两个日志文件及请求完成状态。`ShareMapper.getShareById` 会过滤用户状态，查不到可用记录时需回查实际 `shareId` 及关联用户，才能细分 ID 不存在和记录不可见。现场数据见 `.local/error-8e80bde5-20261125/`。[分享查询 Mapper](https://github.com/world-sim-dev/zeus/blob/f04eae7afef28dd3941d9a2ff18ffffff0c52782/modules/domain/src/main/java/co/sandai/zeus/domain/share/dao/ShareMapper.java#L25-L27)
