@@ -1,3 +1,5 @@
+- 2026-11-24：[VidMuse MAGI-2 专属积分包](domains/vidmuse/refs/magi-credit-package-dev-acceptance.md) — DEV 目录、Stripe 沙箱订单、到账批次、跨模型扣减和结算查证入口。
+
 - 2026-11-24：[Ark 成片分辨率与计费档位](domains/sandai-platform/pitfalls/ark-output-resolution-pricing-key.md) — 生产任务入档 1080p、编码 2206×946 与查询字段的查证入口。
 
 - 2026-11-23：[参考 MP4 音轨编码拒绝](domains/sandai-platform/refs/media-functional-acceptance-entrypoints.md#2026-11-23-参考-mp4-音轨编码拒绝) — Opus 触发 Zeus 同步报错、AAC 对照及建单前拒绝的请求 ID 查证。
