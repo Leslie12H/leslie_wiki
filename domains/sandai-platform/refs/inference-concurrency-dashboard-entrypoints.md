@@ -213,3 +213,9 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 2026-11-24 在单任务排障中，开放平台已受理，Athena 已完成预处理并派发。GPU Worker 进入 VAE 参考输入编码后，`check_reference_limits` 抛出 `Reference standalone audios run 2-30 s each, got 0.07 s`，同一 Job 的最终日志记为 `UnRetryableError`，Zeus 记 `stage=EXECUTION`。这条路径会先经历待执行时间，再在真正开始推理时很快失败。
 
 用 Zeus 的 `task_submitted` 定 Job ID，用 Worker 接单确定 Pod 和开跑秒级窗口。若只按 Job ID 检索拿不到栈，在该 Pod 的短窗口找原始 `GPU worker inference failed`，再用带 Job ID 的终态异常核对是否为同一任务。限制口径以当次部署报错为准，区分推理实际读到的时长与源素材时长；日志无素材序号时不指认具体附件。入口见 [上海 Worker 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai)。
+
+#### 参考视频的画面时长与抽取音轨时长分开核对
+
+2026-11-24 通过国内生产 Zeus 单任务素材详情回读该失败案例，调用方素材只有图片和视频，音频来自视频内的第一条 AAC 音轨。[Athena 视频准备](https://github.com/world-sim-dev/athena-admin/blob/833aea1eb92c30ffcd0c75b6100308bfb7191213/ApiService/preprocessors/reference_media.py#L295-L373) 输出不带音轨的参考视频并单独抽取 WAV，[参考素材准备](https://github.com/world-sim-dev/athena-admin/blob/833aea1eb92c30ffcd0c75b6100308bfb7191213/ApiService/preprocessors/reference_prompt.py#L221-L261) 把这条派生音轨追加为音频输入。Worker 的独立音频校验覆盖此派生素材。
+
+排查时先按原任务投影对齐素材清单，再用 `ffprobe` 分别读容器、视频流和音频包。容器 9.458333 秒的样本只有三个 AAC 包，包时间戳都为 0，单包 1024 个采样点。头部音频流时长 0.023220 秒。按生产命令 `-map 0:a:0 -vn -af aresample=async=1:first_pts=0 -c:a pcm_s16le` 抽轨复算，WAV 有 3072 个采样点，44100 Hz 下为 0.069660 秒，与 Worker 的 `0.07 s` 一致。用解码后的抽轨样本核对 Worker 判定；原始文件已经只有极短音轨。查证只保留轨道元数据和路径指针，临时签名地址取证后清除。
