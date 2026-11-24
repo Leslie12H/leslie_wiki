@@ -2,7 +2,7 @@
 name: sandai-inference-concurrency-dashboard-entrypoints
 type: reference
 created: 2026-11-23
-updated: 2026-11-24
+updated: 2026-11-25
 tags: [sandai, inference, grafana, concurrency, prometheus]
 links: [sandai-api-platform-openapi-quota-entrypoints]
 ---
@@ -225,3 +225,11 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 2026-11-24 在 [06 并发资源管理](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?var-entry_region=us&var-org_id=all&viewPanel=133) 发布「全局实际超售比」。分子复用全局实际并发卡的国内与海外有效任务快照，分母复用共享池可推理 Worker。两地快照缺一时显示对应缺失状态，Worker 数不可用或为零时不计算倍率。入口地区选择用于入口耗时，倍率解释为全局任务数对共享池。
 
 验收从线上读取面板定义，使用同一时点执行国内、海外、Worker 及 Grafana 表达式，对照 `（国内实际 + 海外实际）÷ Worker`。保留预计并发分子的既有「全局超售比」，可在相邻两张卡对照当下占用与配额压力。
+
+### 启用双区活跃预计并发
+
+2026-11-25 回读两地 ACK 后确认，预计并发总开关已开，活跃窗口参数需要在生产 ConfigMap 的 `dispatcher.properties` 单独配置。[Zeus 活跃配额口径](https://github.com/world-sim-dev/zeus/blob/c8482c6229cbf6a1b830bda113dd9c3b45244a4a/docs/openapi-task-dispatch.md#L78-L91) 给出配置键、滚动窗口和采集节奏。[Magi 环境拓扑](https://github.com/world-sim-dev/zeus/blob/dev/deployment/magi/targets.json) 给出两地配置项和命名空间。
+
+**Why:** 代码发布或原全量快照正常更新时，活跃快照仍可能没有注册。Dispatcher 通过 `subPath` 挂载配置文件，保存后需要新 Pod 加载。两地 Dispatcher 为独立部署，重建应逐区进行，降低两地派单同时暂停的风险。
+
+**How to apply:** 逐区回读目标文件和两项活动窗口参数，按获批范围补缺。走 [Magi 维护](https://github.com/world-sim-dev/zeus/actions/workflows/magi-maintenance.yml) 的同镜像 restart，只选择 Dispatcher。核对部署就绪、任务快照恢复，及 Prometheus 的 `openapi_concurrency_expected_active`、对应 `expected_concurrency_active` 组的采集成功时间和错误计数。一地恢复后再处理另一地。两地新快照均有效后，先预执行 [06 看板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency) 的全局及入口预计查询和倍率表达式。用同一时点的两地活跃配额之和除一次共享池可推理 Worker，并回读保存版本；一地缺失或 Worker 为零时显示不可用。
