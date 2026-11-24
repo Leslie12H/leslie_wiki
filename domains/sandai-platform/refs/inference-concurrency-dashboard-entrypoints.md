@@ -181,3 +181,9 @@ Worker 数属于共享推理池。用户任务 E2E 可按 Zeus 入口地区及�
 2026-11-24 优化 [06 趋势面板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?from=now-6h&to=now&var-entry_region=us&var-org_id=all&viewPanel=132)。Grafana Mixed 原先按同一个上海数据源引用将 Athena 与 Worker 放进一条请求。Worker 使用隐藏常量 `phase_worker_sls` 引用同一个既有上海数据源，让 Mixed 分两个请求并行发出。以浏览器网络实际解析的 UID、子查询起始时间及响应为准。Worker 在竖线前筛接单、完成、GPU 启动和阶段耗时四类日志，竖线后的计时与去重规则保持原口径。
 
 Athena 输出审核的日志全文检索加状态词曾漏事件，保留原有审核事件检索和 SQL 内字段过滤。变更前后用同一个固定六小时窗口逐 Job 比对有效字段，另验收相对六小时、同窗组织筛选和国内入口。区分上海请求耗时和打开面板到渲染的耗时。查询仍走既有 SLS，无业务数据库读取或跨区投递。
+
+#### 单任务 Athena 前处理长尾与提示词增强
+
+2026-11-24 按 Zeus 任务 ID 和 Athena Job ID 对账时，在 Athena 建单至切片就绪的长窗口查到多次提示词增强启动。沿上海 `inference-prod` 的 `prompt_enhancement.enhance_v2` 日志，以结构化 `job_id` 核对 `Enhancing with provider` 和 `reference PE output accepted`。前处理整段包含提示词增强；单次调用失败、超时或重试原因需要同 Job 或同次调用的异常事件。只有两条启动事件时，报告其间隔和已确认的成功时间。
+
+Worker 等 GPU 的归因另外对齐同一 Pod 前单的模型结束及本单实际 GPU 开始，避免用前单上报当作 GPU 空闲时间。各段从实际日志边界计算；结果审核使用独立审核时长，给 Worker 上报至审核开始、审核通过至公开成功留出交接间隔。没有水印起止日志时，独立水印时间留空。先按日志索引缩小事件和时间范围，再在 SQL 内精确匹配结构化 Job ID。
