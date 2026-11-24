@@ -35,3 +35,11 @@ links: [sandai-api-platform-development-entrypoints, sandai-platform-magi2-cn-na
 2026-11-24 白名单生效后，用真实 v2 请求补测阈值 −1、等值和 +1。对应 Athena Job 为 `4841003`、`4841004`、`4841005`，三单均有增强结果被接受的日志。最后一单的 Worker 日志包含完整 PE 名。前两单的普通 PE 日志只显示 provider 和 LLM 模型，同名模型及相同生成选项不能区分两个 PE 版本。需要逐单证实时，应使用经过授权的 Job 选项或类型日志。若 `services.config` 没有记录配置名，检查缓存命中行为。
 
 排查管理台写操作 403 时，可从 `/admin/api/v1/me` 复核站点权限及 CSRF 头字段。优先使用原生白名单页面。缺少防伪头的手工请求返回 403，不能据此判断账号缺少白名单写权限。
+
+## 2026-11-24 改按 Qwen3-8B token 路由
+
+**Why**　[Zeus #524](https://github.com/world-sim-dev/zeus/pull/524) 将规则改成 `when.promptTokens.gt`。升级后按正文 token 数选择 PE，旧 `promptCodePoints` 条件需要随发布迁移。公开输入长度上限仍按 Unicode 码点校验。
+
+**How to apply**　从合并版本的 `tokenizers/qwen3-8b/SOURCE` 取固定词表版本与 SHA-256，对原文编码并关闭截断、填充和新增特殊 token。用阈值 −1、等值、+1 样本验证，且让码点数明显超过阈值以区分两种计数。保存后回读当前站点配置，并用任务详情正文哈希确认样本在入口与任务存储间一致。`gt` 是严格大于，单条规则等值时使用该层固定值。 [双区 staging 发布](https://github.com/world-sim-dev/zeus/actions/runs/45387411879)
+
+Athena 配置缓存命中可能不会记录配置名。按 Job ID 找带 ID 的 `preprocess_handler_async start` 与 `Enhancing with provider`，再按 PE 全名查看 `provider_factory` 的 `Created total … provider factories`。仅在同一个 Worker Pod、两个带 Job ID 事件之间恰有一条候选时，用它关联实际类型。最后回读 `reference PE output accepted`。2026-11-24 国内 staging 可回查 149、150、151 和 404 token 的 Job `4865013` 至 `4865016`。最后一单复用原 2,000 码点样本。
