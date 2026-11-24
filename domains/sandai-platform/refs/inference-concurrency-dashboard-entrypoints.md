@@ -193,3 +193,9 @@ Worker 等 GPU 的归因另外对齐同一 Pod 前单的模型结束及本单实
 2026-11-24 复核成片出现疑似公众人物的案例。先按 Zeus `task_submitted` 核对 task ID 与 Athena Job ID，再看 `inference-prod` 中 `stage=output` 的审核启动、结果、耗时及 Zeus 公开成功。Athena 记录的 `passed` 为本地汇总状态，供应商服务代码、逐帧标签和风险等级需要读取 [阿里云视频审核结果](https://yundun.console.aliyun.com/?p=cts#/videoReview/resultQuery/cn-shanghai)。
 
 优先用 Green `TaskId` 或 `DataId` 做精确关联。应用日志缺供应商 ID 时，按 Athena 送审时刻缩到秒级查候选，再核对供应商预览、片长、任务和审核事件。只靠时间不足以认定同一成片。区分实际 `ServiceCode` 与画面 `ImageService`，同一生产账号可能同时存在通用和 VidMuse 模板。确认 `RiskLevel`、截帧数和标签后，回查 [Athena 风险等级判定](https://github.com/world-sim-dev/athena-admin/blob/main/ApiService/clients/green.py#L137-L149)。`none` 和 `nonLabel` 表示适用规则下未检出风险，无法据此确认人物身份或断定未命中的算法原因。记录结果字段和入口，避免保存或转贴签名视频 URL。
+
+#### 素材编码失败和输入自定义词库拒绝
+
+2026-11-24 复核受理后失败的两类样本。先沿 Zeus 派单回执确定 Job ID，再查上海 `inference-prod`。输入已通过但没有 Worker 事件时，查 `preprocess_handler rejected invalid input` 的 `reason`，它会带输入编号、素材类型和校验限制。参考视频的校验包括独立音轨编码，文件容器或画面编码正常也可能因 PCM 音轨失败。支持范围以当次日志和部署校验为准。Zeus 公开查询沿 [参考素材错误投影](https://github.com/world-sim-dev/zeus/blob/main/modules/domain/src/main/java/co/sandai/zeus/domain/task/dispatch/AthenaReferenceMediaFailure.java) 返回 `invalid_reference_media`。
+
+Athena `stage=input, item=prompt, reason=C_customized` 表示提示词命中 Green 自定义词库。去 [文本审核结果](https://yundun.console.aliyun.com/?p=cts#/textReview/resultQuery/cn-shanghai) 看实际 `customizedWords` 和 `customizedLibs`。并行送审可能在同一秒出现多条文本结果；回查任务事件、秒级候选和标签一致性，缺单条关联 ID 时不要指认某条具体 RequestId。
