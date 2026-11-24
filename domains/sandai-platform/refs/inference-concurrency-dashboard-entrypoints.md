@@ -145,3 +145,9 @@ Worker 数属于共享推理池。用户任务 E2E 可按 Zeus 入口地区及�
 2026-11-24 在 [06 海外](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency/06-e5b9b6-e58f91-e8b584-e6ba90-e7aea1-e79086?from=now-6h&to=now&var-entry_region=us&refresh=5m) 复现低量验收通过后高量时阶段图空白。看板可单独回查 E2E；若 E2E 有数、阶段无数，检查 `phase_us_tasks` 与 `phase_us_athena` 返回值。对同一请求时段查成功任务量、Job ID 覆盖和序列化大小。旧方案容量保护返回空值，后续图都会空白。SLS GetLogs SQL 的长度上限及同 Project JOIN 约束见[阿里云文档](https://www.alibabacloud.com/help/en/sls/dedicated-sql/)。通过限制任务批量、增设「阶段统计范围」明确实际时段及两种任务数，避免将短窗口阶段 P95 解读为整个所选时段。
 
 长窗口高量持续扩展时，可在独立监控链路按 Athena Job ID 提前关联既有日志，逐任务保留入口、组织、阶段耗时与覆盖，并处理重放和迟到事件。Grafana 读取归并后的结果后按所选窗口计算分位数。比较变更前后三个阶段查询耗时、六小时任务分母、覆盖、刷新负担及监控数据新鲜度。该取数升级需在落地后核验，当前看板回退参考面板 120、131 和隐藏查询变量的已保存配置。
+
+#### 跨境投递停用与按 Job ID 查证
+
+2026-11-24 原生 SLS 定时 SQL 从美西选华东 2 时，控制台明确要求数据跨境合规承诺。用户要求停止该方案，未发布跨区任务。上海项目的空监控库 `inference-phase-inputs` 和 `inference-task-phases` 是尝试期间建的隔离资源。查当前看板版本及云端作业启用状态，06 的取数继续沿本页上节，完整六小时的预关联和撤回退未验收。
+
+在上海 `inference-prod` 与 `athena` 用此前已关联的海外 Job 做短窗口复核。可看建单和执行事件，抽查日志未见可靠的海外入口或组织标签。按单任务钻取使用 [05 单任务时间线](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-job-detail) 的 Job ID 输入，海外自身 E2E 使用当地的开放平台看板。若组织允许现有 Grafana 两地只读查询，可在各区先缩小为逐任务的必要字段，再在查询时按 Job ID 匹配；它不产生跨区持久副本，但仍需要查询路径的数据使用授权。若只允许区域内处理，则分别呈现入口 E2E 和共享推理阶段，不以两个聚合值反推同一组织的全链路分位数。
