@@ -187,3 +187,9 @@ Athena 输出审核的日志全文检索加状态词曾漏事件，保留原有�
 2026-11-24 按 Zeus 任务 ID 和 Athena Job ID 对账时，在 Athena 建单至切片就绪的长窗口查到多次提示词增强启动。沿上海 `inference-prod` 的 `prompt_enhancement.enhance_v2` 日志，以结构化 `job_id` 核对 `Enhancing with provider` 和 `reference PE output accepted`。前处理整段包含提示词增强；单次调用失败、超时或重试原因需要同 Job 或同次调用的异常事件。只有两条启动事件时，报告其间隔和已确认的成功时间。
 
 Worker 等 GPU 的归因另外对齐同一 Pod 前单的模型结束及本单实际 GPU 开始，避免用前单上报当作 GPU 空闲时间。各段从实际日志边界计算；结果审核使用独立审核时长，给 Worker 上报至审核开始、审核通过至公开成功留出交接间隔。没有水印起止日志时，独立水印时间留空。先按日志索引缩小事件和时间范围，再在 SQL 内精确匹配结构化 Job ID。
+
+#### 成片放行复核与 Green 原始标签
+
+2026-11-24 复核成片出现疑似公众人物的案例。先按 Zeus `task_submitted` 核对 task ID 与 Athena Job ID，再看 `inference-prod` 中 `stage=output` 的审核启动、结果、耗时及 Zeus 公开成功。Athena 记录的 `passed` 为本地汇总状态，供应商服务代码、逐帧标签和风险等级需要读取 [阿里云视频审核结果](https://yundun.console.aliyun.com/?p=cts#/videoReview/resultQuery/cn-shanghai)。
+
+优先用 Green `TaskId` 或 `DataId` 做精确关联。应用日志缺供应商 ID 时，按 Athena 送审时刻缩到秒级查候选，再核对供应商预览、片长、任务和审核事件。只靠时间不足以认定同一成片。区分实际 `ServiceCode` 与画面 `ImageService`，同一生产账号可能同时存在通用和 VidMuse 模板。确认 `RiskLevel`、截帧数和标签后，回查 [Athena 风险等级判定](https://github.com/world-sim-dev/athena-admin/blob/main/ApiService/clients/green.py#L137-L149)。`none` 和 `nonLabel` 表示适用规则下未检出风险，无法据此确认人物身份或断定未命中的算法原因。记录结果字段和入口，避免保存或转贴签名视频 URL。
