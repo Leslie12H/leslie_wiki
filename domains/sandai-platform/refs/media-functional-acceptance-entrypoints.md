@@ -2,7 +2,7 @@
 name: sandai-api-platform-media-functional-acceptance-entrypoints
 type: reference
 created: 2026-11-14
-updated: 2026-11-23
+updated: 2026-11-25
 tags: [sandai, api-platform, media, functional-testing, openapi]
 links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform-performance-testing-entrypoints]
 ---
@@ -145,3 +145,9 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **How to apply**　按错误字段锁定参考视频，用原始文件的 `ffprobe` 查看 `codec_name` 和 `codec_tag_string`。对照 [Zeus 的 MP4 音轨校验](https://github.com/world-sim-dev/zeus/blob/27016701fa35aa63be2f2f514668420c63d7f33b/modules/domain/src/main/java/co/sandai/zeus/domain/asset/service/ReferenceMetadata.java#L173-L187) 与 [输入准备和任务受理顺序](https://github.com/world-sim-dev/zeus/blob/27016701fa35aa63be2f2f514668420c63d7f33b/modules/domain/src/main/java/co/sandai/zeus/domain/platform/generation/OpenApiGenerationService.java#L113-L132)。保留原视频流，仅将音轨转 AAC，重新检查实际音轨和画面哈希。2026-11-23 的原片及 AAC 对照通过本地调用 Zeus 校验方法复核，成片端到端状态另查。
 
 - 国内生产用 [Zeus SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/co_sandai_zeus_prod?slsRegion=cn-shanghai) 查 `stage=INPUT_PREPARATION`、`validationReason=unsupported audio track codec` 与对应字段。在本例中该阶段早于生成任务受理，HTTP 400 提供请求 ID。多个候选的字段及错误相同时，应沿调用方原响应的 Request ID 核对，日志中的同类错误无法唯一绑定原始请求体。
+
+## 2026-11-25 JPEG 后缀与 MPO 实际格式
+
+**Why**　国内生产参考图失败样本的 URL 后缀为 `.jpeg`，Athena 解码识别为 MPO 并返回 `INVALID_REFERENCE_MEDIA`。MPO 可封装多张 JPEG 图片。回查样本为 Zeus 任务 `874092222712261`、Athena Job `4918041`。 [Pillow MPO 说明](https://pillow.readthedocs.io/en/stable/handbook/image-file-formats.html#mpo)
+
+**How to apply**　沿 [Athena 格式允许列表](https://github.com/world-sim-dev/athena-admin/blob/9930d3168401f7d3edf1e353f233299296eccbc4/ApiService/validators/media.py#L3-L11) 和 [解码校验](https://github.com/world-sim-dev/athena-admin/blob/9930d3168401f7d3edf1e353f233299296eccbc4/ApiService/preprocessors/media_images.py#L20-L49) 核对实际格式及已识别的扩展名。普通 JPEG 支持 `.jpg` 和 `.jpeg`。需要提交 MPO 主图时，将其重新编码为单张 JPEG 或 PNG，以重新解码后的格式作为验收依据。
