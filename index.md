@@ -557,6 +557,7 @@
 
 ### sisyphus — [质量平台](domains/sisyphus/README.md)
 - 2026-11-21：[Musi SSE 心跳与 Sandbox JWT 续期拒绝](domains/sisyphus/pitfalls/musi-sandbox-jwt-renewal-rejected.md) — Sisyphus 原始流证据、AION 收件 401 与 ACS 凭据 PATCH 422 的核对入口。
+- 2026-11-24：[Musi 队列满与跨区修复发布核对](domains/sisyphus/pitfalls/musi-sandbox-jwt-renewal-rejected.md#2026-11-24-按请求实际命中的镜像查跨区发布) — 原始 SSE、海外实际镜像与中国发布的核对入口，以及旧基线回补的消息准入回归。
 - 2026-11-18：[VidMuse Playground OSS 配置查证入口](domains/sisyphus/refs/vidmuse-playground-oss-entrypoints.md) — 发布 Secret 映射、运行时引用、OSS 只读验证及凭证生效步骤。
 - 2026-11-14：[VidMuse UI 全量回归的滑块重试和空提示词断言](domains/sisyphus/pitfalls/vidmuse-ui-full-captcha-and-empty-prompt.md) — 422/00102、备用会话与空输入的网络断言查证入口。
 - [Sisyphus 质量平台](domains/sisyphus/README.md) — quality_dashboard 日投影/发版门禁、automation_triggers、Agent Token 与 project 边界；调度模型与 admin 不同

@@ -2,7 +2,7 @@
 name: sisyphus-musi-sandbox-jwt-renewal-rejected
 type: pitfall
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-24
 tags: [sisyphus, vidmuse, aion, musi, sandbox, sse]
 links: [sisyphus, vidmuse-aion, vidmuse-zeus, vidmuse-testing]
 ---
@@ -14,3 +14,9 @@ links: [sisyphus, vidmuse-aion, vidmuse-zeus, vidmuse-testing]
 **How to apply:** 先按执行编号核对 JUnit 和流事件附件，区分一直收到心跳、已收到回复，以及回复已持久化但缺少 `done`。沿 [Zeus V2 relay](../../vidmuse/systems/zeus.md) 把产品 Thread 与 AION 身份对应起来。在 [Manager 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c7c0ede6c71484f8da34a829954c50cd9/logsearch/vidmuse-aion?slsRegion=us-west-1)按 Thread 和 execution 查 `Sandbox JWT`；在 [Sandbox Runner 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c7c0ede6c71484f8da34a829954c50cd9/logsearch/aion-sandbox-runner?slsRegion=us-west-1)查 `/inbox/pull` 续期前后的状态。审计查目标 [ACS 集群日志库](https://sls.console.aliyun.com/lognext/project/k8s-log-c7c0ede6c71484f8da34a829954c50cd9/logsearch/audit-c33c6749d1306419ea91f5f4dd5e2e6bf?slsRegion=us-west-1)，区分租期写入和 JWT 写入，只摘取状态码、补丁操作路径和时间。不要导出注解值或原始 Kubernetes 请求对象。
 
 凭据写入归属 [AION `acs_sandbox_jwt.py`](https://github.com/world-sim-dev/aion/blob/main/apps/manager/runner_wrapper/acs_sandbox_jwt.py)。修复验收需在隔离执行中观察 Sandbox 及 Pod 写入、sidecar 加载投影、旧凭据过期后的收件 200，再核对 Musi 真实新回复及 `done`。用例超时、断言和历史 Run 都不能用来替代这条验收链。
+
+## 2026-11-24 按请求实际命中的镜像查跨区发布
+
+**Why:** [16:30 的 online / musi 执行](https://sisyphus.sandaii.cn/#/projects/1/execution/runs/RUN-20261124-0021)中，9 个失败用例复用同一个测试 Thread。原始事件均为 HTTP 200 内的 SSE `00003`，业务含义是用户消息队列已满。以该 Thread 和原执行窗口查 [美国生产 Manager 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c7c0ede6c71484f8da34a829954c50cd9/logsearch/vidmuse-aion?slsRegion=us-west-1)，按 `_image_name_` 和 `_pod_name_` 聚合。命中 [海外部署回执](https://github.com/world-sim-dev/aion/actions/runs/44911504737)的旧镜像，不包含 [AION PR #2099](https://github.com/world-sim-dev/aion/pull/2099)。[同日成功的另一次发布](https://github.com/world-sim-dev/aion/actions/runs/45317490198)只有中国生产 Job 成功，海外 Job 跳过。#2099 记录了历史 422 的逐项隔离、JSON 编码差异和 PA 消费者恢复实现。11 月 24 日的原始流证明队列已满，这轮附件无法定位本轮失联的起始时间。
+
+**How to apply:** 从 SSE 附件提取 Thread 与时间窗，按请求实际命中的镜像检查修复提交是否为祖先。比较 Actions 的实际环境 Job、镜像入参、rollout 和线上日志。同 SHA 的 [构建失败](https://github.com/world-sim-dev/aion/actions/runs/45351730084)是镜像仓拒绝覆盖既有不可变标签，应查该标签的镜像来源和部署回执。从旧生产基线回补 #2099 时需同时移植显式恢复的消息准入结果。该基线只有 `ready`，它不能区分已接受的新启动与正在取消或删除的旧实例。用已有恢复集成测试覆盖存活、缺失、未知、解绑和取消，在真实 PA SSE 路径断言先恢复消费者，再拒绝队列满的新输入。发布后核对新消息回复与 `done`，并跨原 JWT 过期窗口观察下一次轮换与持续消费。
