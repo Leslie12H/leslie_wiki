@@ -3275,3 +3275,5 @@
 - 2026-11-24：补充 Beta 首页示例生成的受理回执与重开回读方法。
 
 - 2026-11-24：记录 Zeus #524 按 Qwen3-8B token 路由的 staging 验收和 Athena Worker 同 Pod 类型取证方法。
+
+- 2026-11-24：记录国内 Ark 外链图协议异常 503 的精确 Trace 和 Grafana 只读查证路径。

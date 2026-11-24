@@ -2,7 +2,7 @@
 name: sandai-platform-production-error-alerts-entrypoints
 type: reference
 created: 2026-11-16
-updated: 2026-11-23
+updated: 2026-11-24
 tags: [sandai, api-platform, sls, observability, alerting]
 links: [sandai-api-platform-development-entrypoints]
 ---
@@ -81,3 +81,9 @@ links: [sandai-api-platform-development-entrypoints]
 **Why:** 上海应用指标在 75 秒的 `increase` 窗口中连成功流量也为空。三分钟窗口回查得到双区应用成功流量及 5xx 计数器，说明必须先证明指标覆盖。美西共享 ALB 的默认域名和其他 Host 有持续 503，可通过目标 Host 的状态分布核对归属。
 
 **How to apply:** 在固定北京时间窗口中，对双区 `http_server_requests_seconds_count` 同查全部状态和 5xx，按服务、路由和状态读计数器增量。过短区间缺样本时先拉长到覆盖多次抓取，确认成功流量和采集标签再解读 5xx。按 `up`、Pod Ready 和重启指标核对波动。入口日志按 Host 和分钟分组，与前后分钟对照。上海目标日志库不可查时，应用结果只覆盖已到应用的请求，入口侧继续按原始域名、路径和请求 ID 回查。现场查询见工作区 `.local/openapi-503-20261123/` 的 `prom3m-cn.json`、`prom3m-us.json`、`sls.json`、`sls-followup.json`。[上海服务大盘](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-services-v1?orgId=1&var-environment=prod-cn) · [美西服务大盘](https://grafana-cn-8t84id9nh01.grafana.aliyuncs.com/d/openapi-services-v1?orgId=1&var-environment=prod-us)
+
+## 2026-11-24 Ark 外链图协议异常
+
+**Why**　国内生产的 Ark 创建请求在下载参考图期间出现 `ProtocolException`。Zeus 将这一段失败映射为 `503 SERVICE_UNAVAILABLE`；响应状态由 Zeus 返回，日志没有给出素材源的 HTTP 状态和详细协议异常。回查锚点为 Trace `8679c53c6cd362deb18750e1d226c9d4`，北京时间 21:15:25。
+
+**How to apply**　先按 Trace 查 OpenAPI 的 `RequestOutcome`，核对 `stage=DOWNLOAD`、`field`、`sourceHost`、`downloadReason` 及有没有任务 ID。若 SLS 控制台会话过期，已有权限的 [上海 Grafana 工作区](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-services-v1?orgId=1&var-environment=prod-cn) 可用已配置的上海只读 SLS 数据源，在查询中选 `co_sandai_zeus_prod` 进行精确搜索。批量查询各数据源的权限与结果分别读取。Grafana 聚合请求失败时，可将返回有证据的子查询单独重跑，核对 Trace、请求 ID、环境及 Pod。相邻的同源失败需要按各自 Trace 复核，不能从两个相同素材字段推断同一个 URL。
