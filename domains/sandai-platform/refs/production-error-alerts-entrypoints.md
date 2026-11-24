@@ -95,3 +95,9 @@ links: [sandai-api-platform-development-entrypoints]
 **How to apply**　冻结北京时间窗口，两区分别按应用事件时间、任务 ID 去重，并对照 Prometheus 终态与原因计数。Prometheus `increase` 会按采样外推，窗口边界的逐单统计以应用事件为准。关联 `task_submitted` 后，在上海 `inference-prod` 用 `moderation stage decided` 做索引预过滤，再按结构化 `job_id` 查询。部分结构化 Job ID 的反向全文检索只会命中 Celery 记录。审核依赖的 `green_code_400` 需要供应商正文才能细分限流与入参问题。
 
 执行侧按参考素材校验、Worker 异常和下游回报证据分类。查 `Post-process source artifact already set` 时，把 Worker 异常与 Athena `/inference-completed` 访问日志按 Job 对齐。2026-11-25 00:22:02–00:52:02 的冲突样本包含 Job `4916496`、`4916470`。这些 Job 有至少两次完成回报且传输均为 HTTP 200，Worker 随后记录业务冲突。分别核对首次写入和后续原片或 session 的匹配情况，现有回执无法解释重复上报的来源。 [早期完成回报查证](magi2-cn-native-production-entrypoints.md#2026-11-17-推理执行阶段失败的-worker-取证)
+
+## 2026-11-25 美国 Platform 会话查询缺表
+
+**Why**　美国 Platform 的两个会话查询接口在读取 `zeus_magi.agent_thread` 时遇到 MySQL 缺表错误，两个 Pod 均记录了该异常。告警涉及的 HTTP 500 在 Prometheus 多数标为 `exception=none`，相同 Trace 的应用日志则记录了 SQL 异常。例证为 Trace `b9b0b389f90a40d6911389ecd21930ed`。[飞书告警](https://applink.feishu.cn/client/chat/open?openChatId=oc_8baec17ece7a9ebceffa89517b3a5b25&position=57058)
+
+**How to apply**　先按 `method`、`uri` 和 `status` 从美区 Platform 请求指标定位，再用 Ready 指标取得事件窗口内的 Pod 全名。美国 SLS 共享库按 `__tag__:_pod_name_` 精确限定 Pod，以 SQL `set session mode=scan` 读取 `RequestCompletionLog`、应用异常和 Servlet 原始报错。用 Trace 或请求 ID 去重，并核对原始 SQL 错误文案。缺表的来由要审查实际连接的 schema、该 schema 的迁移记录及路由预期。以新请求成功和库表核验确认修复。现场证据见 API 平台工作区 `.local/us-platform-5xx-20261125/`。[美区 Platform 指标](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-services-v1?orgId=1&var-environment=prod-us) · [美区生产日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c7c0ede6c71484f8da34a829954c50cd9/logsearch/co_sandai_zeus_prod?slsRegion=us-west-1)
