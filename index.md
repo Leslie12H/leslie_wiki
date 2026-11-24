@@ -503,7 +503,7 @@
 ## Domains(业务系统)
 
 ### vidmuse — [业务全景](domains/vidmuse/README.md)
-- [Beta 首页 MAGI-2 示例复跑与候选数量](domains/vidmuse/pitfalls/beta-homepage-magi-2-comparison.md) — 核对预填长提示词与原图、一次提交触发多候选、逐候选验收。
+- [Beta 首页 MAGI-2 示例复跑与候选数量](domains/vidmuse/pitfalls/beta-homepage-magi-2-comparison.md) — 核对预填长提示词与原图、一次提交触发多候选、正式受理回读与逐候选验收。
 - [Workflow Catalog、Thread 与 Plugin](domains/vidmuse/refs/workflow-catalog-thread-plugin.md) — 返回体限额、Git revision 发布、缓存/Job 重建验收、路径执行和字符串 null 过滤排查指针
 - [aion](domains/vidmuse/systems/aion.md) — agent/runtime/media generation 后端平台
 - [vidmuse-zeus](domains/vidmuse/systems/zeus.md) — Vidmuse 产品 REST API + AION relay
