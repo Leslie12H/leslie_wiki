@@ -31,3 +31,7 @@ links: [sandai-api-platform-development-entrypoints, sandai-platform-magi2-cn-na
 回查已有国内 staging 任务时，从 Admin 的 `/tasks/{id}/content` 对未截断正文计数，在香港 SLS 的 `co_sandai_zeus_dev` 用 `task_submitted` 将任务映射到 Athena Job。在上海 SLS 的 `inference-prod` 按 Job ID 查 `services.config` 中的完整 PE 类型及 `reference PE output accepted`。可回查 Job `4840739`（24 码点）和 `4840833`（101 码点），分别有阈值下、阈值上实际执行的证据。等于阈值的结果来自部署版本规则与当时配置的离线复算。
 
 提交前确认当前组织在对应模型白名单。管理台白名单读回的 `writable` 表示当前 Redis 键可写，调用仍需中央的 `model.whitelist.write` 权限。产品生成请求和管理台写入各自有鉴权。
+
+2026-11-24 白名单生效后，用真实 v2 请求补测阈值 −1、等值和 +1。对应 Athena Job 为 `4841003`、`4841004`、`4841005`，三单均有增强结果被接受的日志。最后一单的 Worker 日志包含完整 PE 名。前两单的普通 PE 日志只显示 provider 和 LLM 模型，同名模型及相同生成选项不能区分两个 PE 版本。需要逐单证实时，应使用经过授权的 Job 选项或类型日志。若 `services.config` 没有记录配置名，检查缓存命中行为。
+
+排查管理台写操作 403 时，可从 `/admin/api/v1/me` 复核站点权限及 CSRF 头字段。优先使用原生白名单页面。缺少防伪头的手工请求返回 403，不能据此判断账号缺少白名单写权限。
