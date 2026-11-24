@@ -2,7 +2,7 @@
 name: sandai-platform-production-error-alerts-entrypoints
 type: reference
 created: 2026-11-16
-updated: 2026-11-24
+updated: 2026-11-25
 tags: [sandai, api-platform, sls, observability, alerting]
 links: [sandai-api-platform-development-entrypoints]
 ---
@@ -87,3 +87,11 @@ links: [sandai-api-platform-development-entrypoints]
 **Why**　国内生产的 Ark 创建请求在下载参考图期间出现 `ProtocolException`。Zeus 将这一段失败映射为 `503 SERVICE_UNAVAILABLE`；响应状态由 Zeus 返回，日志没有给出素材源的 HTTP 状态和详细协议异常。回查锚点为 Trace `8679c53c6cd362deb18750e1d226c9d4`，北京时间 21:15:25。
 
 **How to apply**　先按 Trace 查 OpenAPI 的 `RequestOutcome`，核对 `stage=DOWNLOAD`、`field`、`sourceHost`、`downloadReason` 及有没有任务 ID。若 SLS 控制台会话过期，已有权限的 [上海 Grafana 工作区](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-services-v1?orgId=1&var-environment=prod-cn) 可用已配置的上海只读 SLS 数据源，在查询中选 `co_sandai_zeus_prod` 进行精确搜索。批量查询各数据源的权限与结果分别读取。Grafana 聚合请求失败时，可将返回有证据的子查询单独重跑，核对 Trace、请求 ID、环境及 Pod。相邻的同源失败需要按各自 Trace 复核，不能从两个相同素材字段推断同一个 URL。
+
+## 2026-11-25 终态失败分组与完成回报冲突
+
+**Why**　Zeus 的 `task_finished` 可精确对齐首次终态，但 `MODERATION` 同时包含审核策略拦截和依赖错误，`EXECUTION` 同时包含素材准备拒绝、实际执行及完成回报异常。按阶段聚合只能定位排查入口。
+
+**How to apply**　冻结北京时间窗口，两区分别按应用事件时间、任务 ID 去重，并对照 Prometheus 终态与原因计数。Prometheus `increase` 会按采样外推，窗口边界的逐单统计以应用事件为准。关联 `task_submitted` 后，在上海 `inference-prod` 用 `moderation stage decided` 做索引预过滤，再按结构化 `job_id` 查询。部分结构化 Job ID 的反向全文检索只会命中 Celery 记录。审核依赖的 `green_code_400` 需要供应商正文才能细分限流与入参问题。
+
+执行侧按参考素材校验、Worker 异常和下游回报证据分类。查 `Post-process source artifact already set` 时，把 Worker 异常与 Athena `/inference-completed` 访问日志按 Job 对齐。2026-11-25 00:22:02–00:52:02 的冲突样本包含 Job `4916496`、`4916470`。这些 Job 有至少两次完成回报且传输均为 HTTP 200，Worker 随后记录业务冲突。分别核对首次写入和后续原片或 session 的匹配情况，现有回执无法解释重复上报的来源。 [早期完成回报查证](magi2-cn-native-production-entrypoints.md#2026-11-17-推理执行阶段失败的-worker-取证)
