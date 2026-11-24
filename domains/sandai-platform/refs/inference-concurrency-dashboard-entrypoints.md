@@ -2,7 +2,7 @@
 name: sandai-inference-concurrency-dashboard-entrypoints
 type: reference
 created: 2026-11-23
-updated: 2026-11-23
+updated: 2026-11-24
 tags: [sandai, inference, grafana, concurrency, prometheus]
 links: [sandai-api-platform-openapi-quota-entrypoints]
 ---
@@ -139,3 +139,9 @@ Worker 数属于共享推理池。用户任务 E2E 可按 Zeus 入口地区及�
 2026-11-23 在 [06 海外阶段明细](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency/06-e5b9b6-e58f91-e8b584-e6ba90-e7aea1-e79086?var-entry_region=us&viewPanel=120) 接入海外分段。回读面板 120 和以 `phase_us_` 开头的隐藏查询变量。先按所选时间及创建时组织查美西公开成功任务，使用 Athena Job ID 关联上海 `inference-prod` 与 `athena`。两地现有只读 SLS 在 Grafana 里传递查询结果，关联只传 Job ID 和计时字段。SQL 校验时间范围和组织，缺边界的阶段留空。瀑布、P95 排行和顺序明细共用阶段结果，主链路瀑布按阶段齐全的同批任务统计。
 
 长窗口使用扫描 SQL 横跨多个热日志库可能只返回部分事件。分别将 Athena 和 Worker 的时间事件用各自 Logstore 的索引预筛选，再比较同一时段的成功任务数、Job 匹配数、逐阶段有效样本与瀑布的完整样本。对照固定一小时、六小时、单组织及国内入口，再查相对最近一小时是否刷新。现有水印计时留在 Worker 上报后，只有同一 Job 的已验证起止事件落入 Worker 上报至公开成功区间才有独立耗时。没有该事件时看后处理总时长和有样本的输出审核，不拿其他阶段差值填水印。
+
+#### 海外六小时关联容量与回退
+
+2026-11-24 在 [06 海外](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency/06-e5b9b6-e58f91-e8b584-e6ba90-e7aea1-e79086?from=now-6h&to=now&var-entry_region=us&refresh=5m) 复现低量验收通过后高量时阶段图空白。看板可单独回查 E2E；若 E2E 有数、阶段无数，检查 `phase_us_tasks` 与 `phase_us_athena` 返回值。对同一请求时段查成功任务量、Job ID 覆盖和序列化大小。旧方案容量保护返回空值，后续图都会空白。SLS GetLogs SQL 的长度上限及同 Project JOIN 约束见[阿里云文档](https://www.alibabacloud.com/help/en/sls/dedicated-sql/)。通过限制任务批量、增设「阶段统计范围」明确实际时段及两种任务数，避免将短窗口阶段 P95 解读为整个所选时段。
+
+长窗口高量持续扩展时，可在独立监控链路按 Athena Job ID 提前关联既有日志，逐任务保留入口、组织、阶段耗时与覆盖，并处理重放和迟到事件。Grafana 读取归并后的结果后按所选窗口计算分位数。比较变更前后三个阶段查询耗时、六小时任务分母、覆盖、刷新负担及监控数据新鲜度。该取数升级需在落地后核验，当前看板回退参考面板 120、131 和隐藏查询变量的已保存配置。
