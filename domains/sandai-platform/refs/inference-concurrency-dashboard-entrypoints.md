@@ -207,3 +207,9 @@ Athena `stage=input, item=prompt, reason=C_customized` 表示提示词命中 Gre
 2026-11-24 在美西生产任务 `874043806303557` 与上海 Athena Job `4873764` 的计时查证中，Grafana SLS 原始日志查询只返回最新的一条终态事件。对同一任务 ID 和时间范围使用全文预过滤加 `set session mode=scan; SELECT content, __time__ FROM log …`，回读了完整的受理、派发和终态三条。核对美西应用事件时间时，读取 `content` 行首 UTC 时间。用受理事件的 `elapsedMs` 还原请求开始时间。
 
 Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，可能包含排队。查单次任务时应分别读取 Worker 接单、`GPU worker started inference at` 消息内的实际开始时间、首次 `encoding chunk` 及原片上报。对同一 Pod 的前单用 `__tag__:_pod_name_` 查询交接点。该次前单 `4873741` 的 GPU 区间覆盖目标单进入 Worker 到 GPU 开跑的等待，前单原片随后才上报。 [05 单任务时间线](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-job-detail)
+
+#### 独立参考音频过短在 Worker 编码阶段拒绝
+
+2026-11-24 在单任务排障中，开放平台已受理，Athena 已完成预处理并派发。GPU Worker 进入 VAE 参考输入编码后，`check_reference_limits` 抛出 `Reference standalone audios run 2-30 s each, got 0.07 s`，同一 Job 的最终日志记为 `UnRetryableError`，Zeus 记 `stage=EXECUTION`。这条路径会先经历待执行时间，再在真正开始推理时很快失败。
+
+用 Zeus 的 `task_submitted` 定 Job ID，用 Worker 接单确定 Pod 和开跑秒级窗口。若只按 Job ID 检索拿不到栈，在该 Pod 的短窗口找原始 `GPU worker inference failed`，再用带 Job ID 的终态异常核对是否为同一任务。限制口径以当次部署报错为准，区分推理实际读到的时长与源素材时长；日志无素材序号时不指认具体附件。入口见 [上海 Worker 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai)。
