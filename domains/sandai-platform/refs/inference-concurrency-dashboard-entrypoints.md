@@ -201,3 +201,9 @@ Worker 等 GPU 的归因另外对齐同一 Pod 前单的模型结束及本单实
 2026-11-24 复核受理后失败的两类样本。先沿 Zeus 派单回执确定 Job ID，再查上海 `inference-prod`。输入已通过但没有 Worker 事件时，查 `preprocess_handler rejected invalid input` 的 `reason`，它会带输入编号、素材类型和校验限制。参考视频的校验包括独立音轨编码，文件容器或画面编码正常也可能因 PCM 音轨失败。支持范围以当次日志和部署校验为准。Zeus 公开查询沿 [参考素材错误投影](https://github.com/world-sim-dev/zeus/blob/main/modules/domain/src/main/java/co/sandai/zeus/domain/task/dispatch/AthenaReferenceMediaFailure.java) 返回 `invalid_reference_media`。
 
 Athena `stage=input, item=prompt, reason=C_customized` 表示提示词命中 Green 自定义词库。去 [文本审核结果](https://yundun.console.aliyun.com/?p=cts#/textReview/resultQuery/cn-shanghai) 看实际 `customizedWords` 和 `customizedLibs`。并行送审可能在同一秒出现多条文本结果；回查任务事件、秒级候选和标签一致性，缺单条关联 ID 时不要指认某条具体 RequestId。
+
+#### Grafana 精确任务日志与同 Worker 交接
+
+2026-11-24 在美西生产任务 `874043806303557` 与上海 Athena Job `4873764` 的计时查证中，Grafana SLS 原始日志查询只返回最新的一条终态事件。对同一任务 ID 和时间范围使用全文预过滤加 `set session mode=scan; SELECT content, __time__ FROM log …`，回读了完整的受理、派发和终态三条。核对美西应用事件时间时，读取 `content` 行首 UTC 时间。用受理事件的 `elapsedMs` 还原请求开始时间。
+
+Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，可能包含排队。查单次任务时应分别读取 Worker 接单、`GPU worker started inference at` 消息内的实际开始时间、首次 `encoding chunk` 及原片上报。对同一 Pod 的前单用 `__tag__:_pod_name_` 查询交接点。该次前单 `4873741` 的 GPU 区间覆盖目标单进入 Worker 到 GPU 开跑的等待，前单原片随后才上报。 [05 单任务时间线](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-job-detail)

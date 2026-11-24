@@ -3277,3 +3277,5 @@
 - 2026-11-24：记录 Zeus #524 按 Qwen3-8B token 路由的 staging 验收和 Athena Worker 同 Pod 类型取证方法。
 
 - 2026-11-24：记录国内 Ark 外链图协议异常 503 的精确 Trace 和 Grafana 只读查证路径。
+
+- 2026-11-24：补充 Grafana 精确任务按扫描模式还原生命周期，以及 Worker 内等待和实际 GPU 开始时间的取证方法。
