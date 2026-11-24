@@ -175,3 +175,9 @@ Worker 数属于共享推理池。用户任务 E2E 可按 Zeus 入口地区及�
 2026-11-24 将滚动口径、配置名和边界样例记录在 [Zeus #523](https://github.com/world-sim-dev/zeus/pull/523)。用户希望排除窗口之外注册或未受理过任务的组织，并让起始日与滚动天数可配置。验收从 PR 查最新源码与时区口径，从两地 Prometheus 回读同口径且新鲜的活跃配额后切换 06 的预计并发和超售比。
 
 查 SQL 时关注 `ORDER BY ... LIMIT 1` 是否在取首条之前排序。2026-11-24 合成 MySQL 对照中，原写法虽然命中组织与派发状态索引，仍为旧任务做了排序读取。存在性判断用时间窗口内的 `EXISTS`，并以隔离样本核对索引条件、重复探测次数和首条命中停止。生产口径切换前确认实际目标索引和异步采集耗时，避免以索引名或 LIMIT 代替扫描量的验证。
+
+#### 上海 SLS 并行与 Worker 日志预筛选
+
+2026-11-24 优化 [06 趋势面板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?from=now-6h&to=now&var-entry_region=us&var-org_id=all&viewPanel=132)。Grafana Mixed 原先按同一个上海数据源引用将 Athena 与 Worker 放进一条请求。Worker 使用隐藏常量 `phase_worker_sls` 引用同一个既有上海数据源，让 Mixed 分两个请求并行发出。以浏览器网络实际解析的 UID、子查询起始时间及响应为准。Worker 在竖线前筛接单、完成、GPU 启动和阶段耗时四类日志，竖线后的计时与去重规则保持原口径。
+
+Athena 输出审核的日志全文检索加状态词曾漏事件，保留原有审核事件检索和 SQL 内字段过滤。变更前后用同一个固定六小时窗口逐 Job 比对有效字段，另验收相对六小时、同窗组织筛选和国内入口。区分上海请求耗时和打开面板到渲染的耗时。查询仍走既有 SLS，无业务数据库读取或跨区投递。
