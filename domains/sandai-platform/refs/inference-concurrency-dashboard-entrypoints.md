@@ -417,3 +417,11 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 将同一 Worker 的任务生命周期与 Redis 连接对时。Job 5085942 的首次入队时间和原始采样反推起点相差约 4 毫秒，Worker 接单后发生 broker 读超时。Celery 提示断连使正在执行且延迟确认的消息无法通过旧连接确认，随后重连，旧计时起点在下一分钟重新出现，原执行稍后成功。这个组合支持断连后消息重新入队。单任务的再次领取或重复执行还需独立回执。[Athena 单任务时间线](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-job-detail?var-job_id=5085942)
 
 **How to apply** 在告警时间点先对齐来源、Redis DB、模型及采集状态，再并列查询模型级的 `athena_inference_queue_max_wait_seconds` 和分优先级的 `athena_inference_queue_pending`。保留回落、重新出现等变化。最大等待指标没有任务 ID 或优先级，要确认具体任务需有队首消息或可关联的投递、重投、领取证据。用 Prometheus 原始 range vector 的样本时间减去等待秒数，避免查询网格和飞书发送时间引入的秒级误差。将反推时刻与 Athena 的首次推理入队记录、SLS 投递和 Worker 接单及终态交叉核对。普通请求可按 Athena `jobs.started_at` 限时分组，统计各 `queue` 的 `state.inference_start_wait_duration`，同时说明分母只包括窗口内已开始的任务。[队列看板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks?viewPanel=14&from=1795617600000&to=1795623600000)
+
+#### 02 推理中任务的分钟存量回算
+
+**Why** [任务创建趋势](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks?viewPanel=7) 把任务按创建分钟分桶，再用查询当下的状态给每桶着色。末端近期任务集中在预处理和待推理，推理中曲线也会因此下弯。[当前阶段卡片](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks?viewPanel=8) 统计所选创建范围内当前处于推理阶段的任务，单位是任务。一位点的任务存量需沿实际开跑和终态时间线复算。
+
+**How to apply** 固定模型和时间，先按卡片的实际 SQL 复查快照。用 Athena 任务的 `started_at` 和终态时刻回算分钟存量。缺少 `completed_at` 的终态只能用 `updated_at` 近似；跟随 Last 1 hour 模拟滚动时，另扣创建时间滑出一小时的存量。用分钟新增开跑减已开跑后进入终态减滑出窗口，在数值偏差较大时检查状态回报和重试。实际 GPU 开跑对照 [Worker SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai) 的 GPU 开跑事件，按 Job ID 去重并通过 Athena 反查模型。同一个 Job 可以有多次开跑日志，Job 的首个 `started_at` 可以早于在窗口里观察到的 Worker 开跑事件。Worker 活跃度另按设备和采样窗口交叉验证。
+
+2026-11-26 在模型 `test-magi-2-1118-prod` 复核中，右端创建桶的视觉下弯与分钟存量回落同时出现。窗口滑出数为零的时段里，成功完成速率稳定，Athena 新开跑速率低于退出速率。GPU 开跑日志计数也下降，但幅度小于 Athena 新开跑的降幅，说明两个口径需分别解读。持续诊断时同时查 [Redis 排队](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks?viewPanel=14) 和 Worker 分组指标。
