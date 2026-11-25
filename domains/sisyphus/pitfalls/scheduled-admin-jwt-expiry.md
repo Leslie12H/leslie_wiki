@@ -51,3 +51,9 @@ links: [sisyphus, admin-service-jwt-permissions-and-expiry]
 **Why:** GitHub production 环境保存凭据、发布同步到 Kubernetes、Runner Job 投影以及实际 Admin 验证是不同环节。一项新 GitHub Secret 存在时，当前 Workflow 和 Job 仍可能没有引用。现有 Job 的同名变量也可能仍来自普通项目环境变量。
 
 **How to apply:** 先比较 [发布部署](https://github.com/world-sim-dev/sisyphus/blob/main/.github/workflows/release.yml)、[既有镜像部署](https://github.com/world-sim-dev/sisyphus/blob/main/.github/workflows/deploy-existing.yml)、[Secret 同步脚本](https://github.com/world-sim-dev/sisyphus/blob/main/scripts/release/deploy.sh) 和 [Job 投影](https://github.com/world-sim-dev/sisyphus/blob/main/backend/app/integrations/kubernetes/job_manifest_env.py)。对现有 Run，只检查变量的 Secret 引用，必要时只解析类型、到期等非敏感 JWT 元数据。新增接线按项目与目标环境投影，并核对历史变量的优先级。保存回执只能证明 GitHub 持久化，须以新 Run 的引用与只读 Admin 请求确认生效。
+
+### 2026-11-25 国内 Beta、国内正式与海外生产签发核对
+
+**Why:** 国内 Beta、国内正式和海外生产的 Admin 归属不同。国内 Beta 当天在运行中的 Admin 对无凭据、有签名但无权限、具备号池权限的三个只读列表请求分别返回 401、403、500，说明服务鉴权与后续业务结果需要分别验收。
+
+**How to apply:** 从 [国内 Beta 路由](https://github.com/world-sim-dev/vidmuse.ai/blob/main/docs/specs/cn-shanghai-staging-deployment.md)、[国内生产部署](https://github.com/world-sim-dev/vidmuse-admin/blob/main/deployment/scripts/vidmuse_cn_prod.py) 和 [海外部署](https://github.com/world-sim-dev/vidmuse-admin/blob/main/.github/workflows/admin-deploy.yml) 定位目标，进入集群后核对实际 Admin Deployment。ACK 临时访问要求用户明确授权且当前账号拥有集群 RBAC。列表异常时只读对照鉴权状态，签发验签与列表业务可用性分开记录。
