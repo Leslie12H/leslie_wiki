@@ -337,3 +337,9 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 2026-11-25 查证 [Athena Worker SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai) 当前忙碌实例。按同一个 Pod 和 Job ID 配对 `GPU worker started inference at` 与 `Step5: Post Process Done`、`inference finished in` 或明确失败。同一 Worker 有开跑且截至采样点未见对应结束才进入候选，先按 Worker 去重，再与 [06 的在线就绪快照](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=1) 对账。Worker 接单事件可早于 GPU 开跑，用于另看上机等待。
 
 **How to apply:** 结合逻辑组核对 Worker 心跳名与 SLS Pod 名，重命名的实例须一对一匹配。比较事件时间和采集延迟，过滤无当期心跳的旧尝试。不同组的日志覆盖可能不同，2026-11-25 对 i35 实测近期缺少同口径的开跑／结束事件，另用 [03 的 GPU 采样](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-compute) 对仍在线的实例补充活动信号。合并时按 Worker 去重，同时报告 SLS 对账数、仅 GPU 样本信号数、在线就绪数与采样时间。GPU 利用率阈值和日志未见结束都属于估算信号，不能替代逐实例实时执行状态。
+
+#### 从模型执行进程采集实际推理实例状态
+
+2026-11-25 回读 [Athena #788](https://github.com/world-sim-dev/athena-admin/issues/788) 和 [GPU 心跳契约](https://github.com/world-sim-dev/athena-admin/blob/main/ApiService/docs/gpu-heartbeat.md)。现有生产 Prometheus 可见在线、就绪、设备采样以及前处理在途指标，未查到该票的推理实例状态指标。Coworker 已有 [GPU 批次的资源用量记录](https://github.com/world-sim-dev/athena-admin/blob/b8bcf4bfbca03bb79f378b2ad70355b3d7f0eb22/Coworker/coworker/tracking.py#L96-L149)。Grafana 当前使用的 Athena 生产数据源未看到对应公有 schema 表，覆盖范围和异常退出后的记录回收仍需确认。
+
+**How to apply:** 从各实际执行路径的模型调用边界上报活跃请求数。同一逻辑推理实例的多 rank 由指定 rank 统一上报，活跃请求大于零时只计一个实例。按稳定实例身份对账，通过启动代次、采样时间和过期语义处理重启、失联及迟到样本。取消后等执行实际退出再减计数。有共享采集器时聚合整份最新快照并显示未知覆盖，避免不同副本的状态拼成双计数。遇 broker 通路中断时复查心跳采集依赖，用 GPU 指标和 SLS 对照。验收执行数从 0 到 N 再回 0，并覆盖失败、取消、重启和失联。
