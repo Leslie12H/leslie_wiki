@@ -2,7 +2,7 @@
 name: sandai-api-platform-v2-input-validation-entrypoints
 type: reference
 created: 2026-10-26
-updated: 2026-11-16
+updated: 2026-11-25
 tags: [sandai, openapi, v2, validation, testing, quota]
 links: [sandai-api-platform-openapi-quota-entrypoints, sandai-api-platform-global-acceptance-20261026]
 ---
@@ -107,3 +107,9 @@ Zeus Dev 管理后台任务详情的总体审核状态 `PASS` 可覆盖逐项审
 
 - 2026-11-14 中美 Magi-2 生产冒烟的请求时长、`ffprobe` 视频流和容器时长、旧 Ark 返回值参见 `/Users/leslie/Documents/ChatGPT/Apipltform/docs/production-dual-region-smoke-20261114.md`。复查 Zeus [PR #496](https://github.com/world-sim-dev/zeus/pull/496) 及 `ArkGenerationController.addVideoSpecs`。该改动优先返回有效的整数任务时长，文件完整时长仍按原始输出核对。
 - 2026-11-20 产品短片的 30 秒请求、原始 MP4 和精确时长交付脚本在 `/Users/leslie/Documents/ChatGPT/Apipltform/.local/magi2-product-shorts-20261120`。原片与交付片分别用 `ffprobe` 查 `format.duration`、各 `stream.duration`、平均帧率和帧数。精确 30 秒交付用尾帧补齐和音频补齐，保留原始文件。原片为何少出若干帧需要回查生成和输出的帧数计算，不能从整数显示反推。
+
+## 2026-11-25 按组织选择 MAGI 内部模型
+
+公开模型名相同的两次请求可以走不同的 Athena 内部模型。验收前核对目标环境各入口运行的 Zeus 版本，再沿候选 [PR #530](https://github.com/world-sim-dev/zeus/pull/530) 和[配置示例](https://github.com/world-sim-dev/zeus/blob/5447924cf6daa7af018a949cf5f8fd53c78cd747/docs/admin-api.md#模型配置与白名单)准备测试变体和专用名单。
+
+固定请求参数、公开模型和变体，分别覆盖第一条命中、仅第二条命中、两条均命中、均未命中。保存每次的组织、任务 ID 和预期内部模型，按任务 ID 比较 `task.model` 或管理端原始 `model`。双命中核对第一条规则优先。改变名单后比较新任务与原任务的重试，核对新任务重新选模、原任务沿用建单值。[路由实现](https://github.com/world-sim-dev/zeus/blob/5447924cf6daa7af018a949cf5f8fd53c78cd747/modules/domain/src/main/java/co/sandai/zeus/domain/modelconfig/ModelConfigService.java) · [管理端字段测试](https://github.com/world-sim-dev/zeus/blob/5447924cf6daa7af018a949cf5f8fd53c78cd747/modules/admin/src/test/java/co/sandai/zeus/admin/task/AdminTaskQueryServiceTest.java)
