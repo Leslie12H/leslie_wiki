@@ -33,3 +33,11 @@ links: [inference-concurrency-dashboard-entrypoints, development-entrypoints]
 2026-11-25 更新 [组织任务量看板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume/aaa73be)。按入口和组织 ID 关联组织所有者的个人实名、企业四要素和对公认证。回读隐藏的 `org_certifications` 变量和表格上方的北京时间，确认认证快照覆盖与新鲜度。任务量随所选时间变化，认证展示采集时的状态。只记录状态，判断已通过优先看有效通过标志，其次用最近记录区分待完成、处理中、未通过和未认证。快照未覆盖与数据不可用各自显示。
 
 成功率为成功任务量除以完成任务量，完成含成功、失败和取消。零完成量显示空缺。验收固定时间窗口的双区逐组织的原始计数、成功率和状态，切换单组织检查表与概览卡同值。新组织或认证变更沿上节的 Admin 查证入口补齐。
+
+## 全用户任务的 PE 开关占比
+
+2026-11-25 核对国内和美西生产。分母按任务创建时间和任务 ID 去重，覆盖开放平台 API 与在线体验已创建任务及其各状态。任务持久化的开关是 `task.enable_prompt_enhancement`，在 [Zeus Admin 任务详情](https://zeus-admin.sandaii.cn/tasks) 可回读 `parameters.enablePromptEnhancement`。Athena 生产的 `jobs.options.promptEnhancement` 记录派发给推理的开关。模型默认值和请求参数的再解析方式沿模型配置与任务组装代码回查。
+
+**Why**　PE 阶段事件只覆盖实际走到前处理的作业。受理日志没有任务级开关，Athena 缺少派发前失败和仍在排队的任务。仅比较两个总数还会掩盖两边各自缺少的任务。
+
+**How to apply**　沿 [组织任务量看板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume/aaa73be) 的 SLS 区域和创建入口，以完整分段查询形成受理任务 ID 集合。Athena 从对应国内和美西生产项目过滤任务时间窗，按项目与 `request_id` 去重。按区域和 ID 核对双向差异，对缺少开关的 ID 点查 Zeus Admin，抽查 Athena 开关与任务详情一致。另查 Zeus 提交与终态日志是否有前两源共同漏掉的任务，再用 Admin 短窗分页独立抽验。任务 ID 含有分配时间，可用于限制日志扫描。起止边界用 Admin `createdAt` 复核，避免把在截止秒才持久化的任务计入半开区间。双源均缺失的记录需要另用生产任务库核对。复算时记录实际截止时间、未知值和各区分母。
