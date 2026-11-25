@@ -3384,3 +3384,5 @@
 - 2026-11-25：补记双区完整窗口模拟中，发单时间窗与 NAS 同步持久化发生冲突的诊断方法及逐秒证据入口。
 - 2026-11-25：补充按组织选模验收中旧配置的回滚校验、专用 dryRun 模型的停用撤权和同一任务的组织用量核对。[生成接口验收](domains/sandai-platform/refs/v2-input-validation-entrypoints.md#2026-11-25-按组织选择-magi-内部模型)
 - 2026-11-25：按 staging-global 六个 dryRun 任务回执补记组织路由优先级、名单撤销和键类型错误回退告警；同任务重试沿用原模型沿本地契约复核。[生成接口验收](domains/sandai-platform/refs/v2-input-validation-entrypoints.md#2026-11-25-按组织选择-magi-内部模型)
+
+- 2026-11-25：补充 06 Athena 排队趋势的起止事件、完成分桶和阶段样本分母。

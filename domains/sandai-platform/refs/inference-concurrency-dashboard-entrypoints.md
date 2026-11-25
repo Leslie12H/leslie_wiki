@@ -307,3 +307,9 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 **How to apply:** 优先按时间对齐主节点、只读副本、各 Proxy 出入流量及复制指标。已有的 [Top Key 统计](https://kvstore.console.aliyun.com/Redis/instance/cn-beijing/r-2zetxnct3dc6y6dd8l/Normal/VPC/tair.rdb.with.proxy.4g/keyinfo) 要看按字节流量的启用与覆盖情况，QPS 热 Key 的空结果不能代替流量归因。对照 [Athena 心跳实现说明](https://github.com/world-sim-dev/athena-admin/blob/main/ApiService/docs/gpu-heartbeat.md) 确认任务 broker 与 Celery 事件共用连接目标，再用实测区分正常任务传输、Pub/Sub、共用客户端和主从复制。从 [服务可用性](https://kvstore.console.aliyun.com/Redis/instance/cn-beijing/r-2zetxnct3dc6y6dd8l/Normal/VPC/tair.rdb.with.proxy.4g/serviceAvailability) 将节点 ID 对齐 MASTER/READONLY，再比较 [全局节点实时性能](https://kvstore.console.aliyun.com/Redis/instance/cn-beijing/r-2zetxnct3dc6y6dd8l/Normal/VPC/tair.rdb.with.proxy.4g/realTime)。本次观察到单个写主出向集中、各只读节点入向读数远低于写主出向。节点出向、代理和副本的读数差异只用于选择排查方向，复制要用同窗复制字节计数或云侧流量拆分确认。
 
 长期候选为独立写主的 broker 分流。先通过同模型、同 Worker 条件验证新 broker 的投递、领取、ACK 和重连，再按比例分配新任务。Job 持久化有效路由，重试复用，原 broker 由原消费者处理到待取、未确认及重试都清空，对账终态和占槽。回退只关闭新流量并保留两边排空。恢复期间的入队预算以实际领取速率减去目标排空速率估算，按已确认消费信号和各优先级下的排队水位调整。此段为设计候选，待独立验收。
+
+#### 06 Athena 排队趋势的分桶与阶段分母
+
+2026-11-25 回读 [06 分阶段趋势面板 132](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=132)。`Athena 排队` 用同 Job ID 的 `worker_at - ready_at`。保存查询的起点匹配唯一 `Created 1 task chunks for job …` 日志，终点取唯一 `task started, running tasks:` 日志。切片日志是投递前的观测锚点。缺两侧有效锚点或时间倒序的样本不能贡献该段；多切片日志本身不满足起点规则。接单到 GPU 开跑另看 `Worker 等 GPU`。
+
+**How to apply:** 按当前入口、组织和时间范围选首次公开成功任务，以公开成功时刻每 30 分钟分桶，再按该阶段有效耗时取 P95。首尾分桶可短于 30 分钟。灰色成功任务数是整个桶的成功 Job 数，阶段有效分母沿面板聚合的 `nonNullCount` 查证，图上该统计列未显示。对具体长尾查单任务日志或分阶段明细。若需要纯 Redis 等待，须按发布和领取的直接事件另验，不能从切片日志精确反推。
