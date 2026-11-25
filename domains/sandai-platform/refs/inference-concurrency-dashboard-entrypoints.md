@@ -343,3 +343,9 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 2026-11-25 回读 [Athena #788](https://github.com/world-sim-dev/athena-admin/issues/788) 和 [GPU 心跳契约](https://github.com/world-sim-dev/athena-admin/blob/main/ApiService/docs/gpu-heartbeat.md)。现有生产 Prometheus 可见在线、就绪、设备采样以及前处理在途指标，未查到该票的推理实例状态指标。Coworker 已有 [GPU 批次的资源用量记录](https://github.com/world-sim-dev/athena-admin/blob/b8bcf4bfbca03bb79f378b2ad70355b3d7f0eb22/Coworker/coworker/tracking.py#L96-L149)。Grafana 当前使用的 Athena 生产数据源未看到对应公有 schema 表，覆盖范围和异常退出后的记录回收仍需确认。
 
 **How to apply:** 从各实际执行路径的模型调用边界上报活跃请求数。同一逻辑推理实例的多 rank 由指定 rank 统一上报，活跃请求大于零时只计一个实例。按稳定实例身份对账，通过启动代次、采样时间和过期语义处理重启、失联及迟到样本。取消后等执行实际退出再减计数。有共享采集器时聚合整份最新快照并显示未知覆盖，避免不同副本的状态拼成双计数。遇 broker 通路中断时复查心跳采集依赖，用 GPU 指标和 SLS 对照。验收执行数从 0 到 N 再回 0，并覆盖失败、取消、重启和失联。
+
+#### 现有遥测对账的采样对齐
+
+2026-11-25 在同一截止时点复核 SLS 和 Prometheus 的忙碌 Worker 估算。对每个 Worker 取最后接收心跳的采集副本，再关联该副本的在线、就绪信号。GPU 补充信号使用同一采集副本的最近有效设备样本和时间戳。只为缺少可配对执行日志的在线实例补计，并排除已被更新的结束事件覆盖的 GPU 采样。复核不同利用率阈值下的补计人数以识别阈值敏感性。
+
+**How to apply:** 口径区分在线和可接新任务的就绪。已有在线实例短暂变成未就绪时，同一时点仍可有正在执行的任务。核对当前心跳与最近 GPU 开始事件，容量比较按明确的在线或就绪范围注明分母。保留每个来源的覆盖及采样时点，使用 [SLS 与现有监控取数入口](#从-sls-估算共享池实际推理-worker) 回查。
