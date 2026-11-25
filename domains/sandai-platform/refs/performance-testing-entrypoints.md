@@ -546,3 +546,9 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **How to apply:** 在 [Athena 任务看板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks) 核对正式项目和执行模型。按同刻去重 Job 的 pending/running 算生产在途，沿 Zeus 派发回执标记本批；单列长期未推进任务、各入口与 GPU 已开跑。历史重建只采用可信的开始和终态边界，说明截窗遗漏。结合队龄、客户延迟和完成速率区分正常高峰与故障积压。估算补位速率用同类长视频的平均 Athena 周转，爬坡、保持、排空分别计数。两区单进程运行器分摊同一预算，需同时停发并继续各自的终态对账。
 
 组织和模型的实时配置、两区样本分布、Runner 校准及现场原件沿 API 工作区 `docs/athena-production-load-20261125.md` 回查。两区组织准入开通后检查实际执行模型，旧公开别名可能指向不同模型池。案例保留同源原文和有序参考；以创建合同或实际投递的语义核对首尾帧、重复槽位和音视频。短期签发 URL、客户原文和资产标识仅进入受限作业环境。参见[任务内容导出](../pitfalls/admin-task-prompt-export.md)、[并发和资源观测](inference-concurrency-dashboard-entrypoints.md)和[发压机验收](../pitfalls/load-generator-readiness.md)。
+
+### 实际原件 URL 回放
+
+**Why:** 外链、内联输入及已有资产在 Zeus 入队时均可归一成内部资产，成功 Job 的 HTTPS 字段能用于回源，却不能还原客户原始传参方式的比例。美国业务入口和原件存储的地域也可能不同。
+
+**How to apply:** 沿 Zeus `GenerationMedia.prepare`、`ReferenceMediaImporter.prepareUrl` 核对当前导入和转存行为。对成功 Athena Job 使用源项目、原始输入槽和 Artifact UUID 对账；核对派生音轨、顺序、角色和真实存储地域。按需获取原件的授权 HTTPS URL，在内存构造对应地区的生成请求。对照源项目、对象路径、到期时间并抽查 Range，分别计量发压机的 JSON 字节与服务端读取的媒体字节。原件映射、样本冻结及运行入口见 API 工作区的 `docs/athena-production-load-20261125.md` 和受限目录 `url-replay/README.md`。〔[Zeus 输入处理](https://github.com/world-sim-dev/zeus/blob/365eee6f2892b884bdf5926e05f002d90cddb5aa/modules/domain/src/main/java/co/sandai/zeus/domain/platform/generation/GenerationMedia.java) · [Athena 原件查询](https://github.com/world-sim-dev/athena-admin/blob/833aea1eb92c30ffcd0c75b6100308bfb7191213/ApiService/services/artifact.py)〕
