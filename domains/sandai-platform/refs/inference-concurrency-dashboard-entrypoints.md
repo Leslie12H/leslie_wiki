@@ -287,3 +287,9 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 2026-11-25 在 [06 国内入口筛选 libtv](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?from=now-15m&to=now&var-entry_region=cn&var-org_id=871466884966341) 复现短窗内有公开成功任务但 E2E 趋势空白。旧查询要求任务在展示窗内建单和完成，丢失窗口以前建单的慢任务，且部分窗口只剩统计卡样本而无完整趋势刻度。按首次公开成功时间选样，E2E 图先补齐每个显示点需要的 30 分钟滚动桶，再独立裁剪显示点。统计卡只使用显示窗内的完成样本。各数据源 SQL 用 `__time__` 显式回看关联所需窗口，组织归属与阶段事件向前回查 1 小时。对照同结束时点的 15 分钟、1 小时查询，检查重叠点的样本数及 P50/P95 一致。
 
 国内阶段明细原先在 Zeus 请求内跨日志库关联。对同一批候选直接读取 Athena 有事件，复合查询未覆盖这些事件，即使扩大请求时间也未恢复。复用已验证的海外分源取数方式，`phase_tasks` 取当前入口的成功任务，`phase_athena` 读上海 Athena，明细直接读 Worker，并按 Job ID 关联。明细、相应瀑布和阶段排行走单次最多 500 个的完成子窗口，超出时「阶段统计范围」显示实际覆盖。完整 E2E 和分阶段趋势保持各自窗口口径。验收先看源请求与字段，再对照选定组织的页面及阶段有效样本。
+
+#### 北京推理 Redis 消费断连与公网带宽判别
+
+2026-11-25 生产 Magi2 任务已进入 Athena 北京 Redis DB2，在普通优先级队列形成持续积压。Worker 日志显示多个推理组在 Redis `BRPOP` 发送或接收阶段集中断连、超时后重连。上海总览的共享公网出方向带宽在该窗口有余量。同窗北京 Tair 数据节点出方向流量使用率长时间贴近配额，入方向、连接和 CPU 有余量，为该次有效消费能力下降的已确认带宽瓶颈。出向流量由哪个客户端或通道驱动，仍需实例侧流量归因。
+
+**How to apply:** [02 任务运行](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks) 的「任务创建趋势」按建单时间查看当前状态，吞吐用同一模型的 Athena `completed_at` 分桶，开跑用 `state.inference_started_at`，入队用 `state._inference_queued_at`。对齐 Redis 的 broker、DB、模型、优先级和采集新鲜度，从 [Worker SLS 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai) 统计 `Connection to broker lost` 的短窗事件和去重 Pod，再用原始栈和同 Pod 的重连记录确认 broker。仅搜整段短语可能漏数，可用异常类型做索引预筛后在 SQL 精确匹配消息。Worker 的心跳在线不能证明消费连接正常，GPU 利用率先核 `athena_gpu_sample_timestamp_seconds`，陈旧值不能当作实时空闲容量。[生产总览的上海公网指标](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-overview?viewPanel=17) 只覆盖所列 EIP，Redis 实例吞吐、连接和时延沿 [北京 Tair 实例性能监控](https://kvstore.console.aliyun.com/Redis/instance/cn-beijing/r-2zetxnct3dc6y6dd8l/Normal/VPC/tair.rdb.with.proxy.4g/redisHistory) 回查。容量判断使用该节点的流量使用率和同一监控序列的配额，控制台实例规格可能采用其他汇总范围。生产恢复用队列回落、开跑及完成速率一起验证。
