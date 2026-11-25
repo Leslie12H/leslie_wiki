@@ -1,3 +1,5 @@
+- 2026-11-25：[开放平台组织任务量看板查证](domains/sandai-platform/refs/openapi-organization-task-volume.md) — 组织归属、按公开终态分桶、在途推算及双区取数验收。
+
 - 2026-11-25：[Athena 预处理扩容和推理 Worker 接单查证](domains/sandai-platform/pitfalls/preprocess-scale-and-worker-acceptance.md) — 首尾帧与 PE 计时、共享 CI 流量、节点池调度容量和 Worker 多窗口接单对照。
 
 - 2026-11-25：[ACK 节点池绑定下的 Worker 容量核算](domains/sandai-platform/pitfalls/ack-nodepool-pinned-worker-capacity.md) — 预后处理共享 hostname 反亲和、节点池硬绑定、分批手动扩容及补副本的查证入口。
