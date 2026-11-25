@@ -2,7 +2,7 @@
 name: sandai-platform-recharge-settlement-entrypoints
 type: reference
 created: 2026-11-11
-updated: 2026-11-12
+updated: 2026-11-25
 tags: [sandai, zeus, recharge, alipay, stripe, reconciliation]
 links: [sandai-api-platform, sandai-api-platform-development-entrypoints]
 ---
@@ -33,3 +33,11 @@ links: [sandai-api-platform, sandai-api-platform-development-entrypoints]
 2026-11-12 按国内生产发布版本复核。对公汇款先有渠道资金，再经资金通知、认款及权威查单生成本地履约证据。排查时按[资金通知与认款流程](https://github.com/world-sim-dev/zeus/blob/4e8b927d966b4bdff9f901eee13bf668086313a4/docs/zeus/alipay-bank-transfer-api.md#L109-L160)核对收款绑定、付款主体、原资金号、认款请求号、订单和积分流水，按[对账与恢复](https://github.com/world-sim-dev/zeus/blob/4e8b927d966b4bdff9f901eee13bf668086313a4/docs/zeus/alipay-bank-reconciliation-api.md#L9-L43)区分已知待处理、需人工核对、漏通知和退款。
 
 银行账单任务与网页查单任务各自调度，任务 ID 回查生产清单。诊断自动发现时同时读 SchedulerX 结果的 `enabled`、`discoveryEnabled` 和超管只读对账状态中的最近成功账单日期、失败账单及未解决差异。理由和步骤见[银行账单调度结果](https://github.com/world-sim-dev/zeus/blob/4e8b927d966b4bdff9f901eee13bf668086313a4/docs/zeus/alipay-bank-reconciliation-api.md#L130-L159)。资金通知漏送要按原签名和原资金号恢复。停用前核对客户已保存的收款账号、原商户与未决资金，退款时回查对应积分流水。
+
+## 2026-11-25 组织与邮箱域名充值准入验收
+
+先确认目标地区运行的 Platform 镜像包含这次变更，再核对该进程实际加载的 `zeus.platform.recharge.mode`，以及当地至少一个渠道和对应币种已启用。`OPEN` 会放行全部组织，`CLOSED` 会关闭充值，这两种模式下的结果都无法证明某条白名单已命中。模式和返回码查 [Zeus #528](https://github.com/world-sim-dev/zeus/pull/528)。
+
+在 `ALLOWLIST` 下使用三个已正常登录的测试组织，逐一确认名单条件：仅组织 ID 命中、仅所有者已验证邮箱的完整域名命中、两项均未命中。域名按小写完整匹配。需要验证匹配边界时，可用仅父域列入名单的子域邮箱，或域名命中但邮箱未验证的所有者作对照。组织所有者身份及有效状态的取数条件见 [PlatformRechargeAccess 测试](https://github.com/world-sim-dev/zeus/blob/8550c36bdc54c3f398da1ee61e54119e6dfe4895/modules/domain/src/test/java/co/sandai/zeus/domain/payment/PlatformRechargeAccessTest.java)。
+
+分别读取 `GET /api/v1/platform/payments/methods` 的 `rechargeEnabled` 和渠道启用状态。对于两项均未命中的组织，以已启用渠道的有效请求验证发起端返回 HTTP 403 和业务码 `00002`。未登录、无效参数或渠道不可用的回执无法定位到白名单判断。入口说明和故障降级行为见 [充值部署文档](https://github.com/world-sim-dev/zeus/blob/8550c36bdc54c3f398da1ee61e54119e6dfe4895/deployment/README.md)。
