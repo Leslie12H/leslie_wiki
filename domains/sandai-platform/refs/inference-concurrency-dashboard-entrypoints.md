@@ -313,3 +313,9 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 2026-11-25 回读 [06 分阶段趋势面板 132](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=132)。`Athena 排队` 用同 Job ID 的 `worker_at - ready_at`。保存查询的起点匹配唯一 `Created 1 task chunks for job …` 日志，终点取唯一 `task started, running tasks:` 日志。切片日志是投递前的观测锚点。缺两侧有效锚点或时间倒序的样本不能贡献该段；多切片日志本身不满足起点规则。接单到 GPU 开跑另看 `Worker 等 GPU`。
 
 **How to apply:** 按当前入口、组织和时间范围选首次公开成功任务，以公开成功时刻每 30 分钟分桶，再按该阶段有效耗时取 P95。首尾分桶可短于 30 分钟。灰色成功任务数是整个桶的成功 Job 数，阶段有效分母沿面板聚合的 `nonNullCount` 查证，图上该统计列未显示。对具体长尾查单任务日志或分阶段明细。若需要纯 Redis 等待，须按发布和领取的直接事件另验，不能从切片日志精确反推。
+
+#### 2026-11-25 晚间 i35 OSS 超时与 Redis 取单断连
+
+**Why:** 同模型的晚间完成吞吐下台阶，首先对应 i35/B300 在 Worker 已接单后向上海素材 OSS 发起 GET 时出现连接和读取超时。原始栈从 Athena 的 `_build_request`、`_resolve_reference_groups` 到 `artifact_loader._download_http_into_file`，发生在 GPU 开跑前。亦抽到当时的产物/缩略图上传调用超时。取已接单但在 i35 查询窗未见 GPU 开跑的 Job ID 回查，许多后来由其他逻辑组完成。晚些时候多个推理组又在 Redis 取单路径断连，Redis 普通队列积压扩大。该时段部分分钟的 Redis 出向已低于早前持续触顶的水位，不能用下午的饱和状态替代同窗取证。
+
+**How to apply:** 在 [02 任务运行](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks) 用 `completed_at` 按同一模型和时间桶分组，比较逻辑组完成量。用 [Worker SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai) 对照同一 Job 的接单、网络异常、GPU 开跑及后续尝试，由心跳标签确认逻辑组和 Pod 家族。记录异常的调用阶段、主机与端口，只保留脱敏证据。对照 [Tair 同窗带宽](https://kvstore.console.aliyun.com/Redis/instance/cn-beijing/r-2zetxnct3dc6y6dd8l/Normal/VPC/tair.rdb.with.proxy.4g/redisHistory)、Redis `BRPOP` 栈和逐队列水位。GPU 开跑的 Athena 数据库状态可能晚于直接 Worker 日志，近端不完整窗口需回查。i35 的具体网络设备或限额及后来 Redis 断连的触发原因在本次未证实。
