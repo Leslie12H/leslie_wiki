@@ -331,3 +331,9 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 **Why** 21:58:07 复发时，Worker 读到已有连接关闭，部分 Pod 重连北京 Tair 公网端口时记录 `ECONNREFUSED`。四台 Proxy 中，`55473037` 的已使用连接数独自急降并维持低位，另外三台新连接及活跃连接上升。共享主节点的 `LPUSH` 和读取仍有采样，数据库整体停止服务的解释缺乏支持。21:39 首波的四台代理分钟指标同向变化，现有证据仅把复发定位到该节点及其公网接入路径。重启、摘流量或入口设备关闭连接仍依赖提供方内部记录。
 
 **How to apply** 在 [服务可用性](https://kvstore.console.aliyun.com/Redis/instance/cn-beijing/r-2zetxnct3dc6y6dd8l/Normal/VPC/tair.rdb.with.proxy.4g/serviceAvailability) 确认实际节点清单，在 [历史监控](https://kvstore.console.aliyun.com/Redis/instance/cn-beijing/r-2zetxnct3dc6y6dd8l/Normal/VPC/tair.rdb.with.proxy.4g/redisHistory) 按 Parent Node ID 加物理 ID 逐个读 `UsedConnection` 和 `NewUserConnQps`，避免把默认节点当成全实例。应用侧对齐 [Worker SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai) 的 EOF、TCP reset、ECONNREFUSED 和重连，实例侧对照主节点命令计数和 Grafana 的队列采集成功时间，区分仍在采样和沿用旧值。代理慢日志用有记录的时间段验证查询口径后再查故障分钟，慢日志缺失不能定位 TCP 重置来源。保留复发秒级起点与物理节点 ID，供定位入口后端健康检查、摘挂流量、代理进程生命周期及连接关闭原因。
+
+#### 从 SLS 估算共享池实际推理 Worker
+
+2026-11-25 查证 [Athena Worker SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai) 当前忙碌实例。按同一个 Pod 和 Job ID 配对 `GPU worker started inference at` 与 `Step5: Post Process Done`、`inference finished in` 或明确失败。同一 Worker 有开跑且截至采样点未见对应结束才进入候选，先按 Worker 去重，再与 [06 的在线就绪快照](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=1) 对账。Worker 接单事件可早于 GPU 开跑，用于另看上机等待。
+
+**How to apply:** 结合逻辑组核对 Worker 心跳名与 SLS Pod 名，重命名的实例须一对一匹配。比较事件时间和采集延迟，过滤无当期心跳的旧尝试。不同组的日志覆盖可能不同，2026-11-25 对 i35 实测近期缺少同口径的开跑／结束事件，另用 [03 的 GPU 采样](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-compute) 对仍在线的实例补充活动信号。合并时按 Worker 去重，同时报告 SLS 对账数、仅 GPU 样本信号数、在线就绪数与采样时间。GPU 利用率阈值和日志未见结束都属于估算信号，不能替代逐实例实时执行状态。
