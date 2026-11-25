@@ -259,3 +259,9 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 2026-11-25 在国内入口核对 libtv 的 [任务与并发面板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=7)。该面板的 Zeus WAITING 是入口整体，组织 Top 5 是组织的首次非终态总数，包含已派发与尚未派发。量化某组织积压先按受理日志中的组织 ID 关联任务的派发回执和首次公开终态，再同刻比较队列快照。受理未见派发是日志重建，仍可能含前处理、审核或未采到回执的任务。
 
 按 Zeus Admin 的有效组织配额，同一时点以部署所用 Redis 的 `SCARD` 读实际占槽，先核对地区、工作负载和镜像。后续回查 [该次部署的 TaskDispatcherRuntime](https://github.com/world-sim-dev/zeus/blob/c8482c6229cbf6a1b830bda113dd9c3b45244a4a/modules/domain/src/main/java/co/sandai/zeus/domain/task/dispatch/TaskDispatcherRuntime.java#L153-L187) 和 [TaskDispatchWorker](https://github.com/world-sim-dev/zeus/blob/c8482c6229cbf6a1b830bda113dd9c3b45244a4a/modules/domain/src/main/java/co/sandai/zeus/domain/task/dispatch/TaskDispatchWorker.java#L58-L88)。单组织同时一轮，每轮最多派发一个任务，页游标回绕与轮询影响持续吞吐。该案例仍有槽位，短时受理超过实测派发速率形成队列，Redis 现场样本仅用于该采样时点，历史沿 Prometheus 和 SLS 回查。区分组织串行派发、真实满槽、远程提交拒绝与派发依赖异常，再定位数据活跃度及积压。
+
+#### libtv 待派发的历史对照
+
+2026-11-25 对照 11 月 23–25 日国内入口 libtv 的 SLS 受理事件、逐任务派发回执和 [国内待派发历史](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=7)。按绝对时间对齐 5 分钟的新受理、派发和期末未见派发；分辨排空阶段与持续流入。代码对照此前已部署镜像与本次镜像的 `TaskDispatcherRuntime`、`TaskDispatchWorker`，单组织一轮一单的规则一致。
+
+历史取数要区分两类形态。当天上午已派发在途长时间贴近一个水平，随后在途和派发输出同步抬升，待派发快速回落。运行曲线可提示并发约束，历史配置仍需查正式变更记录。下午积压对应受理量超过单组织可持续派发速率，同时实际槽位有余量。对照更早的低流量日期，用受理与派发逐任务对账，避免把当时很少排队归因为派发器规则变化。
