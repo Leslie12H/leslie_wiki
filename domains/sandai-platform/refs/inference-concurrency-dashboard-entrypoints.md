@@ -349,3 +349,9 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 2026-11-25 在同一截止时点复核 SLS 和 Prometheus 的忙碌 Worker 估算。对每个 Worker 取最后接收心跳的采集副本，再关联该副本的在线、就绪信号。GPU 补充信号使用同一采集副本的最近有效设备样本和时间戳。只为缺少可配对执行日志的在线实例补计，并排除已被更新的结束事件覆盖的 GPU 采样。复核不同利用率阈值下的补计人数以识别阈值敏感性。
 
 **How to apply:** 口径区分在线和可接新任务的就绪。已有在线实例短暂变成未就绪时，同一时点仍可有正在执行的任务。核对当前心跳与最近 GPU 开始事件，容量比较按明确的在线或就绪范围注明分母。保留每个来源的覆盖及采样时点，使用 [SLS 与现有监控取数入口](#从-sls-估算共享池实际推理-worker) 回查。
+
+#### 2026-11-25 北京 Tair 不同 Proxy 先后出现公网连接骤降
+
+**Why** 21:58:07 与 22:09:48，Worker 两次集中记录北京 Tair 公网端口拒绝新连接及已有连接关闭。第一次对应 `55473037` 的活跃连接骤降，第二次对应 `55473033`。同窗其余代理新连接上升，主数据节点仍可读写，出向未出现分钟级触顶。按实例核对云监控秒级事件，20:49 与 20:54 有可读取的出口流控记录，三次断连窗口未返回出口流控或故障切换事件。该模式支持优先查代理逐节点轮换、重启或公网入口摘挂。具体动作及是否属于计划运维仍需供应商日志确认，不能从失败波形推定操作人或变更类型。
+
+**How to apply** 对 [Tair 逐节点历史监控](https://kvstore.console.aliyun.com/Redis/instance/cn-beijing/r-2zetxnct3dc6y6dd8l/Normal/VPC/tair.rdb.with.proxy.4g/redisHistory) 的 `UsedConnection` 做相邻分钟差分，同时看其他 Proxy 的 `NewUserConnQps` 及主节点的 `LPUSH`、`BRPOP` 和出向比例。以 [Worker 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai) 中第一条 `ECONNREFUSED` 明确秒级起点。用 [Tair 任务中心](https://kvstore.console.aliyun.com/Redis/jobCenter/cn-beijing) 与 [云监控系统事件](https://cloudmonitornext.console.aliyun.com/system-events) 交叉核对租户可见的变配、故障切换及出口流控。查询空结果前先用该实例已知流控分钟验证筛选。若无匹配记录，向供应商提供公网端口、节点 ID 和时刻，查入口健康检查、摘挂记录、代理进程启动时间及连接关闭原因。
