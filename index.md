@@ -1,3 +1,5 @@
+- 2026-11-25：[参考 PE 空正文与派发前引号转换](domains/sandai-platform/refs/magi2-request-pe-control.md#2026-11-25-pe-结果渲染和派发前引号转换) — 逐 Job 原文和增强文引号、PE 产物、重试及推理派发证据。
+
 - 2026-11-25：[组织生成失败按终态和下游原因对账](domains/sandai-platform/refs/openapi-organization-task-volume.md#2026-11-25-组织失败按终态阶段和下游原因对账) — 批量关联 Zeus 与 Athena，核对审核拒绝、服务异常、素材、PE 和提交失败。
 
 - 2026-11-25：[开放平台充值与赠送余额的扣减顺序](domains/sandai-platform/refs/admin-balance-grant-entrypoints.md#2026-11-25-生成扣费按可用批次到期时间排序) — 有效期和同到期批次的排序、跨批次以及双区源码验证。
