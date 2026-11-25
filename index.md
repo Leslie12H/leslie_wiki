@@ -1,3 +1,5 @@
+- 2026-11-25：[Athena 预处理扩容和推理 Worker 接单查证](domains/sandai-platform/pitfalls/preprocess-scale-and-worker-acceptance.md) — 首尾帧与 PE 计时、共享 CI 流量、节点池调度容量和 Worker 多窗口接单对照。
+
 - 2026-11-25：[ACK 节点池绑定下的 Worker 容量核算](domains/sandai-platform/pitfalls/ack-nodepool-pinned-worker-capacity.md) — 预后处理共享 hostname 反亲和、节点池硬绑定、分批手动扩容及补副本的查证入口。
 
 - 2026-11-24：[VidMuse MAGI-2 专属积分包](domains/vidmuse/refs/magi-credit-package-dev-acceptance.md) — DEV 目录、Stripe 沙箱订单、到账批次、跨模型扣减和结算查证入口。含音频开启时报价缺失、购买拒绝回跳与套餐时长口径。
