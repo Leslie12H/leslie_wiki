@@ -561,3 +561,5 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **How to apply:** 明确要求的是测试组织实际贡献的同刻在途，还是含自然流量的全池数量。将两区持久台账的已受理公共任务 ID 与 Athena Job 的源项目、request_id 和目标模型关联，过滤 dry run、状态及终态时间，核对匹配的 Job 与公共 ID 是否一一对应。固定 QPS 采用独立到达时钟，分别记录计划时隙、启动的 HTTP、收到响应、明确漏发和受理未知。公开成功率、Worker 实际执行和客户侧延迟另做验收。
 
 源项目、入口地区、对象存储地区三项分别查证。带签名的下游 HTTPS 地址可通过已授权的 Artifact 核对对象身份、地域、有效期；任务记录中这类地址主要反映已转存的引用。若限制使用本区素材，先验证原件所在地区，再固化区域分片和 worker 接受的摘要。纯文本可跨窗口检索本区原始任务，并按原文和分镜复核来源。执行准备与覆盖的回查入口为 API 工作区 `docs/athena-production-load-20261125.md`、`docs/athena-load-case-coverage-20261125.md` 及受限控制器 `controls/athena.py`。当前配额、余额、上线状况和运行指标以当次实时回读与演练回执为准。
+
+固定创建速率出现缺口时，先在两个实际发压 Pod 分别预置满额模拟台账，按时隙拆分轮询与持久化导致的调度迟到，以及任务未释放名额造成的容量漏发。版本指纹、双区对照回执和恢复约束见[满账本下复核固定创建 QPS](../pitfalls/load-generator-readiness.md#2026-11-25-满账本下复核固定创建-qps)。

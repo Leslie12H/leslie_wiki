@@ -2,7 +2,7 @@
 name: sandai-api-platform-load-generator-readiness
 type: pitfall
 created: 2026-11-14
-updated: 2026-11-14
+updated: 2026-11-25
 tags: [sandai, api-platform, performance, runner, readiness]
 links: [sandai-api-platform-performance-testing-entrypoints]
 ---
@@ -55,3 +55,15 @@ links: [sandai-api-platform-performance-testing-entrypoints]
 一个旧IP返回200仍可能已变成其他角色，须把当前Pod UID、角色和完整目标集合共同核验。恢复脚本失败也可能发生在新只读源已启动、采集器尚未切换的中间阶段；先读回进程身份、配置hash和审计文件，再按冻结计划仅续办缺失步骤，不能直接重跑整段安装而创建重复源。采集恢复健康和allowAdvance为true，不证明旧运行的UNKNOWN、在途任务或区域锁已经清理。
 
 两区重接的部署、临时源有效期、HTTP窗口、分阶段恢复回执与实时就绪状态，沿API工作区 `docs/shanghai-telemetry-reconnect-20261114.md` 和 `docs/us-telemetry-reconnect-20261114.md` 回查；知识库不固化临时地址、Token、运行计数或当前健康快照。
+
+## 2026-11-25 满账本下复核固定创建 QPS
+
+**Why**　短时回环可以按计划接收全部创建。一旦每区已有大量未终态任务，发压器还要并行轮询、更新 SQLite 台账、发布状态快照。2026-11-25 在两区实际 Pod 的 NFS 挂载上预置满账本后，旧版在高档速率下出现调度漏发。减少重复同步事务后，短窗漏发减少，仍可见个别时隙因调度迟到或在途名额用尽而跳过。这组对照定位到了发压器自身的开销，生产 API 吞吐须另行实测。
+
+**How to apply**
+
+1. 两区各用实际发压 Pod、正式台账挂载和同一份 worker 文件，记录文件 SHA、挂载类型和 Node 版本。在隔离目录内各预置 2,000 条已受理、待查询的模拟任务。保留真实 SQLite 提交、查询调度和状态输出，只替换请求接收端与素材输入。用同版 worker 对照回环与满账本。评估优化前后差异时，逐项核对版本、区域、时长和目标速率。
+2. 每区按固定时间窗核对计划时隙、实发、回包与各类漏发。先按每秒计划次数和窗长检查分母，再对照 `arrival.missedBy`。`timing` 表示调度醒来时已错过时隙，对照 `timingMs.period`、`tick`、`refresh`、`status` 的尾延迟和存储提交次数。`capacity` 表示该时隙尚无可用在途名额，对照当时仍占用的名额和模拟终态释放节奏。保留遗漏时隙，避免集中补发影响后续窗口。
+3. 优化持久化优先合并同一事件的计数和游标更新，批量提交已知任务可再次查询的结果。在 POST 前提交创建意图，收到受理回执后持久保存回执与任务 ID，查询到终态并提交后才释放名额。进程中断后仍为意图态的记录按受理未知保留，停止新增并对账，避免重发。
+
+API 工作区的受限目录 `.local/athena-load-20261125/controls/` 保存 `worker-mock-rehearsal.json`（短时回环）、`worker-storage-baseline.json` 和 `worker-storage-verified.json`（两区满账本）。用 `worker-storage-rehearsal.mjs` 复核预置数据、模拟释放和计时，用 `worker.mjs` 及 `worker.test.mjs` 核对运行版本与崩溃恢复。实际速率、窗口、漏发分布及发布指纹以各自回执为准。业务在途口径见[双区测试组织实际在途与固定创建 QPS](../refs/performance-testing-entrypoints.md#2026-11-25-双区测试组织实际在途与固定创建-qps)。
