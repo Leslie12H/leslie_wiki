@@ -367,3 +367,9 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 **Why** 多个 Proxy 先后出现连接骤降只能证明故障集中于代理及其入口链路。版本管理中心的当晚快照显示该实例未开启自动小版本升级，断连也在当时配置的可维护时间之外。版本号和窗口会变，当前配置也不能还原历史。站内信和操作审计权限独立于实例监控权限，无法读取的来源不能记成零事件。
 
 **How to apply** 在 [版本管理中心](https://kvstore.console.aliyun.com/Redis/versionUpgrade/cn-beijing/setting) 点开实例的配置面板读取自动升级与时段，结合 [Tair 计划事件](https://kvstore.console.aliyun.com/Redis/eventToDo/cn-beijing) 与 [任务中心](https://kvstore.console.aliyun.com/Redis/jobCenter/cn-beijing) 核对真实执行记录。[我的工单](https://smartservice.console.aliyun.com/service/list?entrance=101&product=kvstore) 用实例 ID 和产品关键词查已有回执。已有证据仍缺代理进程启动退出及公网入口后端摘挂时，以脱敏秒级时间线提交给云厂商查证，保留返回的事件或任务标识。
+
+#### 06 就绪 Worker 与推理中差额的分组核对
+
+2026-11-25 对照 [06 共享池](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency) 的就绪与推理中读数。两个面板的采集副本选择和就绪范围可不同。先固定截止时点，用同一份最新心跳按 Worker 对齐，就绪 Worker 内部再拆已开跑、近期低 GPU、已结束等下一单和信号缺失。部分 Worker 未就绪时仍可能完成手头任务，另计该部分。
+
+**How to apply:** 对差额按模型、broker 和逻辑组汇总，同窗核对 [02 的逐队列待处理](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks?viewPanel=14) 和采集时间；同模型排队表明有积压，逐组可领取范围仍需验证。用最近 10 分钟的逐 Worker GPU 采样区分固定低负载和轮换，以前一条结束、后一条接单和 GPU 开跑对时验证任务交接。i35 当次低 GPU 在实例间轮换，相关 SLS 生命周期事件缺失，取单与开跑前的具体耗时分段仍待核实。
