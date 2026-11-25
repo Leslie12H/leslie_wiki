@@ -27,3 +27,9 @@ links: [sisyphus, admin-service-jwt-permissions-and-expiry]
 - AI UI 号池调用沿 [Admin 号池 MCP 部署说明](https://github.com/world-sim-dev/vidmuse-admin/blob/main/apps/admin/mcp_servers/README.account-pool.md) 与 [Sisyphus Midscene MCP 接入说明](https://github.com/world-sim-dev/sisyphus/blob/main/docs/operations/midscene-mcp.md) 配目标环境的专用 Bearer、已绑定的号池测试主体和工具白名单。连接测试只覆盖工具发现。变更后以新 Run 验证实际业务动作与清理。
 
 2026-11-25 通过两个仓库的 GitHub 主线核对上述入口。现场部署版本、Secret 是否已配置及现有 Runner 是否引用相应键仍需按目标环境回查。
+
+## 2026-11-25 AI UI 创建与执行的鉴权
+
+**Why:** 创建 AI UI 用例或 Run 属于 Sisyphus 控制面，运行中的号池动作才调用 VidMuse Admin。Sisyphus 的号池操作手册曾写为 Runner 拦截新注册模式，而主线桥接实现已将模式和业务准入交给上游 Admin。
+
+**How to apply:** 创建接口的项目访问与 Agent scope 沿 [AI UI 路由](https://github.com/world-sim-dev/sisyphus/blob/main/backend/app/api/routes_ai_ui.py) 和 [鉴权依赖](https://github.com/world-sim-dev/sisyphus/blob/main/backend/app/api/auth_dependencies.py) 回查。号池配置绑定项目环境，运行时开关沿 [AI UI 运行选项](https://github.com/world-sim-dev/sisyphus/blob/main/frontend/src/domains/ai-ui/ui/AiUiRunOptions.tsx) 回查，Bearer 走 MCP 私有运行时输入。需要验证新账号流程时，沿 [MCP 运行契约](https://github.com/world-sim-dev/sisyphus/blob/main/docs/architecture/mcp-midscene.md)、[新注册传输回归](https://github.com/world-sim-dev/sisyphus/blob/main/runner/tests/mcp_new_registration.test.mjs) 和目标环境冻结的 Runner 版本核对。Runner 转发模式与目标环境实际完成注册、登录和释放分别验收。
