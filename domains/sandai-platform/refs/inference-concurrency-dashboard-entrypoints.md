@@ -373,3 +373,9 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 2026-11-25 对照 [06 共享池](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency) 的就绪与推理中读数。两个面板的采集副本选择和就绪范围可不同。先固定截止时点，用同一份最新心跳按 Worker 对齐，就绪 Worker 内部再拆已开跑、近期低 GPU、已结束等下一单和信号缺失。部分 Worker 未就绪时仍可能完成手头任务，另计该部分。
 
 **How to apply:** 对差额按模型、broker 和逻辑组汇总，同窗核对 [02 的逐队列待处理](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks?viewPanel=14) 和采集时间；同模型排队表明有积压，逐组可领取范围仍需验证。用最近 10 分钟的逐 Worker GPU 采样区分固定低负载和轮换，以前一条结束、后一条接单和 GPU 开跑对时验证任务交接。i35 当次低 GPU 在实例间轮换，相关 SLS 生命周期事件缺失，取单与开跑前的具体耗时分段仍待核实。
+
+#### i35 提交 GPU 前与执行器内部耗时对账
+
+**Why** 2026-11-25 北京时间 22:20–22:35 完成的 1,435 条 i35 同模型成功 Job，从首次派到推理队列到记录 GPU 开跑的 P50 / P95 为 232.9 / 418.3 秒。1,300 条 Job 的 API `running` 与 GPU 开跑相差不超过 1 秒，同 Job 跨组重试时旧 `running` 可能属于其他尝试。以这 1,300 条计时可对齐的 Job 估算，1,299 条在提交 GPU 执行器前已累计超过 2 分钟，该段耗时下界中位数为 204.4 秒。提交后到 GPU 开跑的耗时上界中位数为 6.1 秒，下界超过 60 秒的有 138 条。长尾仍可包含执行器内部等待。Job 完成样本不能逐台对应 GPU 低读数的 Worker。
+
+**How to apply** 用 [Athena 计时定义](https://github.com/world-sim-dev/athena-admin/blob/b8bcf4bfbca03bb79f378b2ad70355b3d7f0eb22/docs/architecture/README.md#L344-L381) 的首次入队、实际开跑、完成和执行器上报时间对账。仅在 Job 时间戳与执行器耗时可视作同一次尝试的情况下，以逐 Job 的 `celery_job_duration - dit_job_duration` 估计 GPU 执行器内部开跑等待的上界，因其中还包含超分和返回开销。用提交执行器的总耗时减去 GPU 开跑至 Job 完成的墙钟区间，取非负值估计等待下界。先逐 Job 计算再取分位数。入队至 GPU 开跑减去执行器内部等待上界，可估计提交执行器前累计耗时的下界。用 [Worker SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai) 的实际 Pod、Job ID 及开跑时间关联同一次尝试，避免把其他机型的接单记录算到 i35。该窗口针对 i35 成功样本未找到同 Pod 的接单和素材准备记录，队列取单与接单后的准备耗时仍待逐次对账。
