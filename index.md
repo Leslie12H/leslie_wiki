@@ -578,7 +578,7 @@
 - 2026-11-18：[VidMuse Playground OSS 配置查证入口](domains/sisyphus/refs/vidmuse-playground-oss-entrypoints.md) — 发布 Secret 映射、运行时引用、OSS 只读验证及凭证生效步骤。
 - 2026-11-14：[VidMuse UI 全量回归的滑块重试和空提示词断言](domains/sisyphus/pitfalls/vidmuse-ui-full-captcha-and-empty-prompt.md) — 422/00102、备用会话与空输入的网络断言查证入口。
 - [Sisyphus 质量平台](domains/sisyphus/README.md) — quality_dashboard 日投影/发版门禁、automation_triggers、Agent Token 与 project 边界；调度模型与 admin 不同
-- [定时用例的 Admin 会话凭据过期](domains/sisyphus/pitfalls/scheduled-admin-jwt-expiry.md) — `event-tracking` setup 401 的时间线、Runner 凭据映射、Attempt 2 验证与账号池探测陷阱（2026-09-29）。补充 REST 与号池 MCP 凭据入口、环境变量明文边界以及 Job Secret 投影核对（2026-11-25）。 含 AI UI 创建权限与新注册 MCP 模式核对。 含长期凭据的有效期和轮换查证。 补跨发版验签查证。 补 GitHub Secret 保存与 Runner 生效边界。 补国内与海外签发入口。
+- [定时用例的 Admin 会话凭据过期](domains/sisyphus/pitfalls/scheduled-admin-jwt-expiry.md) — `event-tracking` setup 401 的时间线、Runner 凭据映射、Attempt 2 验证与账号池探测陷阱（2026-09-29）。补充 REST 与号池 MCP 凭据入口、环境变量明文边界以及 Job Secret 投影核对（2026-11-25）。 含 AI UI 创建权限与新注册 MCP 模式核对。 含长期凭据的有效期和轮换查证。 补跨发版验签查证。 补 GitHub Secret 保存与 Runner 生效边界。 补国内与海外签发入口。 含国内 Beta 列表 500 两层排查。
 
 ## Disciplines(职业知识)
 - [CI 范围与间接门禁](disciplines/testing/ci-scope-and-indirect-gates.md) — 路径分类、步骤条件、检查依赖图、失败聚合，以及 PR 事件基线与浅克隆的核验方法（2026-10-15）

@@ -57,3 +57,9 @@ links: [sisyphus, admin-service-jwt-permissions-and-expiry]
 **Why:** 国内 Beta、国内正式和海外生产的 Admin 归属不同。国内 Beta 当天在运行中的 Admin 对无凭据、有签名但无权限、具备号池权限的三个只读列表请求分别返回 401、403、500，说明服务鉴权与后续业务结果需要分别验收。
 
 **How to apply:** 从 [国内 Beta 路由](https://github.com/world-sim-dev/vidmuse.ai/blob/main/docs/specs/cn-shanghai-staging-deployment.md)、[国内生产部署](https://github.com/world-sim-dev/vidmuse-admin/blob/main/deployment/scripts/vidmuse_cn_prod.py) 和 [海外部署](https://github.com/world-sim-dev/vidmuse-admin/blob/main/.github/workflows/admin-deploy.yml) 定位目标，进入集群后核对实际 Admin Deployment。ACK 临时访问要求用户明确授权且当前账号拥有集群 RBAC。列表异常时只读对照鉴权状态，签发验签与列表业务可用性分开记录。
+
+### 2026-11-25 国内 Beta 号池列表 500 的两处缺项
+
+**Why:** 国内 Beta 运行中的 Admin 通过鉴权后，实例化号池服务即因邮箱域配置为空抛出 500，尚未读表。只在独立诊断进程设置保留域并执行只读列表后，MySQL 返回 1054；目标表缺少 MCP 迁移的两列和唯一索引。只补域名仍会失败。
+
+**How to apply:** 在目标部署回查 `AccountPoolService.__init__` 对 `ACCOUNT_POOL_EMAIL_DOMAIN` 的校验，以及 `AdminSessionLocal` 实际连接的 schema。只在独立进程对比跟踪后续 SQL，不修改在线配置。迁移定义沿 [账号池 MCP 迁移](https://github.com/world-sim-dev/vidmuse-admin/blob/main/apps/admin/script/migrations/2026_10_19_account_pool_mcp.sql) 回查，并核验 `information_schema.COLUMNS` 与 `STATISTICS`。由环境维护方补齐该环境适用的域名和缺失迁移后，使用真实服务 JWT 重跑只读列表验收。
