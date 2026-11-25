@@ -2,7 +2,7 @@
 name: sandai-inference-concurrency-dashboard-entrypoints
 type: reference
 created: 2026-11-23
-updated: 2026-11-25
+updated: 2026-11-26
 tags: [sandai, inference, grafana, concurrency, prometheus]
 links: [sandai-api-platform-openapi-quota-entrypoints]
 ---
@@ -409,3 +409,9 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 **Why** 以 [研发群 00:17 的故障查证](https://applink.feishu.cn/client/thread/open?open_chat_id=oc_0d19c3545bfd03bea5bd4d9bba23a1dc&open_thread_id=omt_18628147f0cf1c96&openchatid=oc_0d19c3545bfd03bea5bd4d9bba23a1dc&openthreadid=omt_18628147f0cf1c96&thread_position=2) 和 [00:21 恢复证据](https://applink.feishu.cn/client/thread/open?open_chat_id=oc_0d19c3545bfd03bea5bd4d9bba23a1dc&open_thread_id=omt_18628147f0cf1c96&openchatid=oc_0d19c3545bfd03bea5bd4d9bba23a1dc&openthreadid=omt_18628147f0cf1c96&thread_position=3) 为当次变更指针。i35 两个 CoreDNS 副本把外部域名转发到 Google 公共 DNS，查询 Athena 生产入口时出现上游超时。两个节点的 B300 Pod 分别复现失败，从这些 Pod 直查已验证的阿里云解析器可得到负载均衡地址。平台给该域名单独配置转发并热加载两个副本，业务恢复。该变更的范围为 Athena 入口域名，默认上游为何超时及故障窗口的回报是否全部补齐仍待确认。
 
 **How to apply** 用 [Worker SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai) 的原始事件时间核对规模与起止。2026-11-25 北京时间 23:05:58 左右首见解析失败，23:22 单分钟涉及 102 个 Pod。2026-11-26 00:17:27 任务库重新出现 i35 成功完成，最后一条同类 DNS 错误为 00:17:31。故障前后均观察到同一批 115 个 Pod 有真实开跑。按回滚和现网修复证据检查 CoreDNS 副本的实际生效规则、集群服务和 OSS 解析，以及同一批 i35 的产物登记与完成回报。默认转发出口的根因需查 i35 侧解析器日志与 DNS 网络路径，公网域名操作日志是判断公开记录是否改过的独立证据。
+
+#### 追溯 FIFO 最长等待告警
+
+**Why** 2026-11-26 北京时间 00:03 的 Magi-2 告警报 189.3 分钟。复核同一轮三张飞书卡片及北京 DB2 的原始时间序列，最长值每隔 30 分钟增长约 30 分钟。极低优先级队列重新出现在指标中的时点，模型最大值从很小的值跳回两个多小时。此类跳变要区分队列消息的年龄、一次连续排队时长和首次进入 running 前的实际等待。[原始飞书告警](https://applink.feishu.cn/client/chat/open?openChatId=oc_8baec17ece7a9ebceffa89517b3a5b25&position=57122)
+
+**How to apply** 在告警时间点先对齐来源、Redis DB、模型及采集状态，再并列查询模型级的 `athena_inference_queue_max_wait_seconds` 和分优先级的 `athena_inference_queue_pending`。保留回落、重新出现等变化。最大等待指标没有任务 ID 或优先级，要确认具体任务需有队首消息或可关联的投递、重投、领取证据。用 Prometheus 原始 range vector 的样本时间减去等待秒数，避免查询网格和飞书发送时间引入的秒级误差。将反推时刻与 Athena 的首次推理入队记录、SLS 投递和 Worker 接单及终态交叉核对。普通请求可按 Athena `jobs.started_at` 限时分组，统计各 `queue` 的 `state.inference_start_wait_duration`，同时说明分母只包括窗口内已开始的任务。[队列看板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks?viewPanel=14&from=1795617600000&to=1795623600000)
