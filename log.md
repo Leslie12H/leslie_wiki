@@ -3379,3 +3379,4 @@
 - 2026-11-25：补充双区满账本预演的发压器漏发归因、创建意图持久化边界与回执入口。
 - 2026-11-25：补充 Magi 充值组织白名单、所有者已验证邮箱域名的独立命中与发起端拒绝验收。[充值查证入口](domains/sandai-platform/refs/recharge-settlement-entrypoints.md)
 - 2026-11-25：记录双区不对称启动与停发、worker 失联后的查询恢复演练，补充 URL 回放在目标组织导入资产的源码入口。
+- 2026-11-25：补充 Athena 在途区间回算、缺失受理记录的覆盖标记和固定创建 QPS 尾部时隙的核对方法。[双区发压器就绪核验](domains/sandai-platform/pitfalls/load-generator-readiness.md#2026-11-25-核对在途峰值与固定速率窗口)
