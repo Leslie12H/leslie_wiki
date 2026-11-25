@@ -2,7 +2,7 @@
 name: sandai-platform-admin-balance-grant-entrypoints
 type: reference
 created: 2026-11-22
-updated: 2026-11-23
+updated: 2026-11-25
 tags: [sandai, zeus, admin, billing, balance-grant]
 links: [sandai-platform-recharge-settlement-entrypoints, sandai-api-platform-admin-rpm-change-verification-entrypoints]
 ---
@@ -41,3 +41,11 @@ links: [sandai-platform-recharge-settlement-entrypoints, sandai-api-platform-adm
 **Why**　组织可能在短时间内收到多笔赠送。可用额度取余额批次，原入账流水还承担赠送回执和幂等校验。直接覆写原入账金额会破坏回执中的原金额约束。
 
 **How to apply**　先在正确站点用精确账号确认组织，再按创建时间、原始流水和余额批次识别唯一错单。获授权后在主库同一事务核对组织归属、批次 ID、原入账 ID 与两者的请求关联，锁定批次并复核待撤销额度仍未被使用。将该批次剩余金额归零，保留原入账，按余额生命周期既有的过期扣除子类型写入等额冲销，并使用关联原流水的唯一标记。被部分使用的批次需先对账。提交后从管理台分别回读批次、原入账、冲销和组织可用余额，核对其他批次的自然消费。[赠送回执实现](https://github.com/world-sim-dev/zeus/blob/f04eae7afef28dd3941d9a2ff18ffffff0c52782/modules/domain/src/main/java/co/sandai/zeus/domain/credit/grant/OrganizationCreditGrantService.java)
+
+## 2026-11-25 生成扣费按可用批次到期时间排序
+
+**Why**　组织同时有运营赠送和实付充值时，任务计费额度与额度来源是两件事。赠送有独立批次，发放先后无法反推出消费先后。
+
+**How to apply**　从双区运行的 OpenAPI 与 Platform 镜像 tag 定位 [任务扣费服务](https://github.com/world-sim-dev/zeus/blob/c8482c6229cbf6a1b830bda113dd9c3b45244a4a/modules/domain/src/main/java/co/sandai/zeus/domain/credit/refund/TaskCreditChargeService.java#L72-L113)。在目标组织内，只考虑未删除、未过期且有余额的批次。越早到期越先扣，没有到期时间的排最后，到期时刻相同时先扣较小的余额批次 ID。单笔可用余额不足时继续扣下一批。普通实付充值和运营赠送的有效期要沿各自入账服务回读；批次来源类型没有单独排序权重。逐任务对账优先回查实际扣费回执记录的批次及扣减金额。
+
+2026-11-25 两地 OpenAPI 与 Platform 的运行镜像对应扣费服务实现相同。此结论按生产镜像和源码核对，未发起扣费。
