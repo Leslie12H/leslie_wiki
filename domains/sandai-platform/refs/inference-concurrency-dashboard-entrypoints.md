@@ -241,3 +241,9 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 **Why:** Zeus 等待派发会扩大积压，组织配额则按 Dispatcher 已取得的 Redis 槽位限制新增派发。执行阶段快照观察 Athena 侧任务压力，也受 Zeus 回执和状态写回时效影响。Top 5 的组织指标没有阶段标签，榜单标为在途组织。查 [阶段映射](https://github.com/world-sim-dev/zeus/blob/dev/modules/domain/src/main/java/co/sandai/zeus/domain/task/metrics/TaskLifecycleStage.java) 与 [派发规则](https://github.com/world-sim-dev/zeus/blob/dev/docs/openapi-task-dispatch.md)。
 
 **How to apply:** 对每个入口只用新鲜任务快照，阶段值和同实例总量的采集时间需相同。健康快照缺某个阶段时该阶段为零，快照缺失时保留缺失状态。按同一时点对照各阶段之和与任务总数。全局 Athena 在途倍率以两地执行阶段之和除一次共享 Worker 数，预计并发和预计超售比沿活跃配额取数。由 [Athena 在途倍率](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=133) 核对表达式。
+
+#### E2E 趋势切换时间范围后的样本截断
+
+2026-11-25 在 [06 的成功任务 E2E 趋势](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=107) 复现同一时间点缩短所选范围后 P95 偏低。面板 107 的描述按公开成功时间做固定 30 分钟滚动统计，但 SQL 先将 `created_at` 限制在看板选择区间，且 SLS 查询外层范围随时间选择器缩短。短窗会过滤区间前建单但区间内完成的任务，慢任务优先被排除。
+
+复核时固定地区、组织和共同结束时间，比较同一 5 分钟刻度的 P95 和样本数。按该点之前 30 分钟的公开成功时刻取样，再统计建单早于短窗起点的任务数与它们的时长。若要使同一完成时间点可比，数据读取需覆盖最早可见点前 30 分钟，并按需向前读组织归属日志。用于聚合的样本以完成时间窗口选择，显示范围独立裁剪。回查面板目前保存的 SQL 后再判断修正是否生效。
