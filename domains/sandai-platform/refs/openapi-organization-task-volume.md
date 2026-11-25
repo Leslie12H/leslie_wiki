@@ -21,3 +21,9 @@ links: [inference-concurrency-dashboard-entrypoints, development-entrypoints]
 2026-11-25 在同一看板接入组织名称。组织下拉仍按所选入口与时间窗口从 SLS 获取组织 ID，使用「Zeus Admin 显示名 · ID」供搜索，提交给任务 SQL 的筛选值仍是 ID。组织表与下拉用同一份按入口和组织 ID 建键的名称映射。后台个人组织的显示名沿用脱敏值。
 
 名称映射是对有任务的组织从 [Zeus Admin 组织目录](https://zeus-admin.sandaii.cn/organizations)作的点查快照，和日志取数独立。回读看板中隐藏的 `org_names` 常量可核对采集时间。组织改名或新增组织需回查后台并更新映射，名称没有覆盖时下拉仍支持按 ID 筛选。验收用同一固定窗口核对名称和 ID 搜索是否定位同一值，并逐行对比增加名称前后的任务量。
+
+## 组织认证状态取数
+
+2026-11-25 在 Zeus Admin 国内、海外生产各核验一条组织记录。组织列表支持按组织 ID 点查，`certifications` 提供个人实名、企业四要素的可用与通过标志。详情的 `/organizations/{orgId}/certifications` 还提供企业对公账户认证状态。沿 Zeus 的 `AdminOrganizationCertifications` 核对当前代码，认证记录归属于组织所有者。企业四要素和对公认证分开读取。
+
+**How to apply:** 组织状态（如 ACTIVE）与认证分别取值。按入口和组织 ID 关联看板，区分通过、未通过和结果不可用，仅同步状态字段。查询别名时先用已授权目录候选确认身份。目录的精确查询按 ID、完整邮箱或手机号匹配，脱敏显示名可能省略账号前缀，不能据别名未匹配判断没有认证。复核入口见 [Zeus Admin 组织目录](https://zeus-admin.sandaii.cn/organizations)。
