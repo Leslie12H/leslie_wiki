@@ -361,3 +361,9 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 2026-11-25 在 [06 面板 135](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=135) 增加「正在推理 Worker（估算）」，与共享池就绪 Worker 卡相邻。面板跟随看板结束时点和刷新周期，从既有 SLS、Prometheus 读取。SLS 使用原始 `_pod_name_` 与心跳中的实际 Worker Pod 名关联，标准化 Pod 标签只作为回退。执行日志回看 52 分钟，按 Pod 和 Job 匹配最新开跑与结束，然后按在线 Worker 去重。
 
 **How to apply:** GPU 补计限最近 60 秒利用率至少 50% 的有效样本，只补日志无法确认的在线 Worker。使用同一个采集副本的数据，有更晚的结束事件即排除旧采样。跨源外连接时，缺少结束日志的行在时间比较中按无结束处理，外连接出的离线行不计。固定绝对时间复算 SLS 与 GPU 的分类、总和与页面读数，再验证相对时间刷新确实用新的截止时点。历史日志补到后，同一时点的估算可能小幅调整。
+
+#### 2026-11-25 北京 Tair 代理闪断的升级与支持渠道复核
+
+**Why** 多个 Proxy 先后出现连接骤降只能证明故障集中于代理及其入口链路。版本管理中心的当晚快照显示该实例未开启自动小版本升级，断连也在当时配置的可维护时间之外。版本号和窗口会变，当前配置也不能还原历史。站内信和操作审计权限独立于实例监控权限，无法读取的来源不能记成零事件。
+
+**How to apply** 在 [版本管理中心](https://kvstore.console.aliyun.com/Redis/versionUpgrade/cn-beijing/setting) 点开实例的配置面板读取自动升级与时段，结合 [Tair 计划事件](https://kvstore.console.aliyun.com/Redis/eventToDo/cn-beijing) 与 [任务中心](https://kvstore.console.aliyun.com/Redis/jobCenter/cn-beijing) 核对真实执行记录。[我的工单](https://smartservice.console.aliyun.com/service/list?entrance=101&product=kvstore) 用实例 ID 和产品关键词查已有回执。已有证据仍缺代理进程启动退出及公网入口后端摘挂时，以脱敏秒级时间线提交给云厂商查证，保留返回的事件或任务标识。
