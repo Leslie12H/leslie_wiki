@@ -116,4 +116,6 @@ Zeus Dev 管理后台任务详情的总体审核状态 `PASS` 可覆盖逐项审
 
 2026-11-25 在 staging 验证时，已有模型的配置操作返回 `400 MODEL_CONFIG_INVALID`，原配置版本保持不变。改动共享模型前，先用当前版本的 [ModelConfigValidator](https://github.com/world-sim-dev/zeus/blob/5447924cf6daa7af018a949cf5f8fd53c78cd747/modules/domain/src/main/java/co/sandai/zeus/domain/modelconfig/ModelConfigValidator.java) 核对原始配置能否原样保存和启用。若原值无法恢复，可创建独立的 `dryRun` 测试模型，将 `accessPolicy` 设为 `ALLOWLIST`，仅给测试组织授予模型访问权。测试结束后停用专用模型并撤销测试组织的访问权。配置及管理端回执见 API 工作区 `.local/pr530-staging-acceptance-20261125/`。
 
-首个 staging `dryRun` 任务成功，组织用量明细有非零记录。保留任务 ID，分别从任务详情核对内部模型和执行状态，再从所属组织的用量明细核对同一任务的计量。账单实扣需要另外核对账单或余额流水。两个路由名单的命中与优先级仍须对应的任务回执逐项取证。
+首个 staging `dryRun` 任务成功，组织用量明细有非零记录。保留任务 ID，分别从任务详情核对内部模型和执行状态，再从所属组织的用量明细核对同一任务的计量。账单实扣需要另外核对账单或余额流水。
+
+2026-11-25 staging-global 六个 `dryRun` 用例均取得任务的 `model` 和 Athena `jobId`。覆盖双名单初始为空、仅命中 B、同时命中 A 与 B、撤销 A、首个名单键类型错误且 B 命中、撤销全部成员。双命中取 A，撤销 A 后新任务取 B，键类型错误时新任务回到默认模型且 SLS 出现告警。同一任务重试沿用原模型的证据来自本地派发契约测试。任务回执与告警索引见 API 工作区 `.local/pr530-staging-acceptance-20261125/REPORT.md`。
