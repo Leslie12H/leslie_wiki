@@ -2,7 +2,7 @@
 name: sisyphus-scheduled-admin-jwt-expiry
 type: pitfall
 created: 2026-09-29
-updated: 2026-09-29
+updated: 2026-11-25
 tags: [sisyphus, vidmuse, schedule, account-pool, auth]
 links: [sisyphus, admin-service-jwt-permissions-and-expiry]
 ---
@@ -16,3 +16,14 @@ links: [sisyphus, admin-service-jwt-permissions-and-expiry]
 **2026-09-29 验证：** 当次生产 Admin 路由要求 `registration.account_pool.manage`；仅给 Sisyphus 项目 1 的 `prod` 环境 `ADMIN_JWT` 换成带该权限的 `admin_service` 凭据。`RUN-20260929-0030` 的 Attempt 2 在相同 commit 上通过 2/2 用例，`new_user_join` 的账号创建、领用与登录流程均已越过原来的 401。原 Attempt 1 保留失败记录。当前凭据内容及是否仍有效，应到环境配置和生产鉴权处重新核对。
 
 **探测陷阱：** 生产 `POST /admin/api/v1/account-pool/accounts` 的空 JSON 会创建随机账号，不能用它作为“无副作用的鉴权探针”。当次探测误建的唯一待领用账号已按创建者与时间限定删除并读回确认。下次应先看请求模型和业务实现，再选确实无副作用的探测方式。
+
+## 2026-11-25 按自动化入口提供后台凭据
+
+**Why:** 传统 Runner 的 Admin REST 和 AI UI 的号池 MCP 使用不同的凭据。传统项目环境变量即使在派发阶段被装进 Run Secret，Sisyphus 主线的环境保存及读取入口仍处理原值。2026-09-29 的生产修复记录用于说明当时的变量映射及故障恢复，不能作为生产凭据的长期存放指引。
+
+**How to apply:**
+
+- REST 调用从 Admin 的 `RequireTokenPermission` 和目标路由回查服务 JWT 类型、有效期与显式路由权限。由目标环境的 Admin 维护方签发独立、有到期时间且可轮换的机器凭据，走受控部署 Secret。Sisyphus 侧沿 [Runner 变量组装](https://github.com/world-sim-dev/sisyphus/blob/main/backend/app/modules/runtime_config/job_config.py)、[Job Secret 投影](https://github.com/world-sim-dev/sisyphus/blob/main/backend/app/integrations/kubernetes/job_manifest_env.py) 和 [ACK 发布流程](https://github.com/world-sim-dev/sisyphus/blob/main/deploy/README.md) 确认脚本所需的键会在选定环境被投影。只写入 Secret 键不保证 Job 会引用它。避开普通测试环境变量的值字段，其写入和回读边界见 [环境保存](https://github.com/world-sim-dev/sisyphus/blob/main/backend/app/modules/execution_resources/environments.py) 与 [环境响应](https://github.com/world-sim-dev/sisyphus/blob/main/backend/app/api/resources/presenters.py)。
+- AI UI 号池调用沿 [Admin 号池 MCP 部署说明](https://github.com/world-sim-dev/vidmuse-admin/blob/main/apps/admin/mcp_servers/README.account-pool.md) 与 [Sisyphus Midscene MCP 接入说明](https://github.com/world-sim-dev/sisyphus/blob/main/docs/operations/midscene-mcp.md) 配目标环境的专用 Bearer、已绑定的号池测试主体和工具白名单。连接测试只覆盖工具发现。变更后以新 Run 验证实际业务动作与清理。
+
+2026-11-25 通过两个仓库的 GitHub 主线核对上述入口。现场部署版本、Secret 是否已配置及现有 Runner 是否引用相应键仍需按目标环境回查。
