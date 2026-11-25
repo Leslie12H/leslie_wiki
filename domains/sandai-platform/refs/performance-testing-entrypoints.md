@@ -552,3 +552,12 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **Why:** 外链、内联输入及已有资产在 Zeus 入队时均可归一成内部资产，成功 Job 的 HTTPS 字段能用于回源，却不能还原客户原始传参方式的比例。美国业务入口和原件存储的地域也可能不同。
 
 **How to apply:** 沿 Zeus `GenerationMedia.prepare`、`ReferenceMediaImporter.prepareUrl` 核对当前导入和转存行为。对成功 Athena Job 使用源项目、原始输入槽和 Artifact UUID 对账；核对派生音轨、顺序、角色和真实存储地域。按需获取原件的授权 HTTPS URL，在内存构造对应地区的生成请求。对照源项目、对象路径、到期时间并抽查 Range，分别计量发压机的 JSON 字节与服务端读取的媒体字节。原件映射、样本冻结及运行入口见 API 工作区的 `docs/athena-production-load-20261125.md` 和受限目录 `url-replay/README.md`。〔[Zeus 输入处理](https://github.com/world-sim-dev/zeus/blob/365eee6f2892b884bdf5926e05f002d90cddb5aa/modules/domain/src/main/java/co/sandai/zeus/domain/platform/generation/GenerationMedia.java) · [Athena 原件查询](https://github.com/world-sim-dev/athena-admin/blob/833aea1eb92c30ffcd0c75b6100308bfb7191213/ApiService/services/artifact.py)〕
+
+
+### 2026-11-25 双区测试组织实际在途与固定创建 QPS
+
+**Why:** 异步视频生成的组织配额约束、Zeus 未终态数量、Athena 当前在途和固定创建速率各有独立的验收指标。真实区域入口接收的媒体也可能来自另一地域的存储。混用这些指标会把上游积压、其它客户的自然任务或跨区回源成本计入测试结果。
+
+**How to apply:** 明确要求的是测试组织实际贡献的同刻在途，还是含自然流量的全池数量。将两区持久台账的已受理公共任务 ID 与 Athena Job 的源项目、request_id 和目标模型关联，过滤 dry run、状态及终态时间，核对匹配的 Job 与公共 ID 是否一一对应。固定 QPS 采用独立到达时钟，分别记录计划时隙、启动的 HTTP、收到响应、明确漏发和受理未知。公开成功率、Worker 实际执行和客户侧延迟另做验收。
+
+源项目、入口地区、对象存储地区三项分别查证。带签名的下游 HTTPS 地址可通过已授权的 Artifact 核对对象身份、地域、有效期；任务记录中这类地址主要反映已转存的引用。若限制使用本区素材，先验证原件所在地区，再固化区域分片和 worker 接受的摘要。纯文本可跨窗口检索本区原始任务，并按原文和分镜复核来源。执行准备与覆盖的回查入口为 API 工作区 `docs/athena-production-load-20261125.md`、`docs/athena-load-case-coverage-20261125.md` 及受限控制器 `controls/athena.py`。当前配额、余额、上线状况和运行指标以当次实时回读与演练回执为准。
