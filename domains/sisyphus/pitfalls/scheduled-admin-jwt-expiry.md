@@ -33,3 +33,9 @@ links: [sisyphus, admin-service-jwt-permissions-and-expiry]
 **Why:** 创建 AI UI 用例或 Run 属于 Sisyphus 控制面，运行中的号池动作才调用 VidMuse Admin。Sisyphus 的号池操作手册曾写为 Runner 拦截新注册模式，而主线桥接实现已将模式和业务准入交给上游 Admin。
 
 **How to apply:** 创建接口的项目访问与 Agent scope 沿 [AI UI 路由](https://github.com/world-sim-dev/sisyphus/blob/main/backend/app/api/routes_ai_ui.py) 和 [鉴权依赖](https://github.com/world-sim-dev/sisyphus/blob/main/backend/app/api/auth_dependencies.py) 回查。号池配置绑定项目环境，运行时开关沿 [AI UI 运行选项](https://github.com/world-sim-dev/sisyphus/blob/main/frontend/src/domains/ai-ui/ui/AiUiRunOptions.tsx) 回查，Bearer 走 MCP 私有运行时输入。需要验证新账号流程时，沿 [MCP 运行契约](https://github.com/world-sim-dev/sisyphus/blob/main/docs/architecture/mcp-midscene.md)、[新注册传输回归](https://github.com/world-sim-dev/sisyphus/blob/main/runner/tests/mcp_new_registration.test.mjs) 和目标环境冻结的 Runner 版本核对。Runner 转发模式与目标环境实际完成注册、登录和释放分别验收。
+
+## 2026-11-25 长期凭据的有效期核对
+
+**Why:** REST 服务 JWT、号池 MCP Bearer 与 Sisyphus Agent Token 的过期和失效机制各自实现。号池 MCP 对照部署里的单个 Bearer 值，替换时需要核对同环境的其他消费者；长期有效并不等于具备独立签发期限。
+
+**How to apply:** 先确认入口、目标环境与权限范围。REST JWT 的 `exp` 取 [Admin 签发器](https://github.com/world-sim-dev/vidmuse-admin/blob/main/apps/admin/service/jwt_service.py) 与 [权限校验](https://github.com/world-sim-dev/vidmuse-admin/blob/main/apps/admin/service/auth.py) 的契约。号池 MCP 的凭据比较沿 [MCP 鉴权](https://github.com/world-sim-dev/vidmuse-admin/blob/main/apps/admin/service/account_pool_mcp_auth.py)，部署 Secret 名及现有消费者另查目标环境。Sisyphus Agent Token 的配置上限沿 [有效期配置](https://github.com/world-sim-dev/sisyphus/blob/main/backend/app/core/config.py) 与 [CLI 签发入口](https://github.com/world-sim-dev/sisyphus/blob/main/backend/app/api/routes_auth.py) 回查。本次仅核对代码契约，未创建或更新凭据。
