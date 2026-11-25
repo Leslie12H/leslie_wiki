@@ -41,3 +41,11 @@ links: [inference-concurrency-dashboard-entrypoints, development-entrypoints]
 **Why**　PE 阶段事件只覆盖实际走到前处理的作业。受理日志没有任务级开关，Athena 缺少派发前失败和仍在排队的任务。仅比较两个总数还会掩盖两边各自缺少的任务。
 
 **How to apply**　沿 [组织任务量看板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume/aaa73be) 的 SLS 区域和创建入口，以完整分段查询形成受理任务 ID 集合。Athena 从对应国内和美西生产项目过滤任务时间窗，按项目与 `request_id` 去重。按区域和 ID 核对双向差异，对缺少开关的 ID 点查 Zeus Admin，抽查 Athena 开关与任务详情一致。另查 Zeus 提交与终态日志是否有前两源共同漏掉的任务，再用 Admin 短窗分页独立抽验。任务 ID 含有分配时间，可用于限制日志扫描。起止边界用 Admin `createdAt` 复核，避免把在截止秒才持久化的任务计入半开区间。双源均缺失的记录需要另用生产任务库核对。复算时记录实际截止时间、未知值和各区分母。
+
+## 2026-11-25 组织失败按终态阶段和下游原因对账
+
+**Why**　公开终态中的 `MODERATION` 同时包含审核拦截和审核服务错误，`EXECUTION` 也包含进入 GPU 前的素材和 PE 错误。按阶段汇总后仍需读取对应的下游原因，避免把内容审核统称为生成异常。
+
+**How to apply**　固定结束时刻，沿看板的任务 ID 去重及首次终态口径，对已受理目标组织核算成功与失败。Zeus 日志用 `jobId` 索引词联合受理和终态检索，在 SQL 内抽取 `task_submitted taskId=… jobId=…`。在美国索引里直接全文搜 `task_submitted` 可能漏派发。确认每单有唯一 Job ID 后，逐单回查上海 `inference-prod` 的 `moderation stage decided`，按输入或输出、拒绝或服务错误、审核项和 reason 分组，保留组合标签。执行失败先查日志，具体原因缺失时，在检查语句计划和主键索引后以已知 Job ID 限量只读回查 Athena `jobs.state` 的终态错误与前后处理步骤。提交失败无 Job 时，使用 Zeus 终态 Trace 核对 Athena 建单访问状态，响应体缺失则保留字段原因未知。汇总必须与公开失败任务数闭合。
+
+同一客户的失败标签是审核服务判定。标签错误率和是否需要规则调整需独立核对申诉或人工样本。复查入口为 [组织任务量](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume/aaa73be)、[美西 Zeus 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c7c0ede6c71484f8da34a829954c50cd9/logsearch/co_sandai_zeus_prod?slsRegion=us-west-1) 和 [上海 Athena 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/inference-prod?slsRegion=cn-shanghai)。
