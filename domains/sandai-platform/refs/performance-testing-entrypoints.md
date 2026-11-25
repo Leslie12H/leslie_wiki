@@ -2,7 +2,7 @@
 name: sandai-api-platform-performance-testing-entrypoints
 type: reference
 created: 2026-10-27
-updated: 2026-11-23
+updated: 2026-11-25
 tags: [sandai, api-platform, performance, testing, quota]
 links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi-quota-entrypoints, sandai-api-platform-test-organization-retirement]
 ---
@@ -538,3 +538,11 @@ links: [sandai-api-platform-development-entrypoints, sandai-api-platform-openapi
 **How to apply**　从 `inference-prod` 的 `postprocessor published` 取同一 Job 的 `processor_type=post_watermark` 和 `processor_id`，按部署使用的 `job_id-processor_id-POST_PROCESS_VERSION` 组合为完整 Celery 任务 ID。查询相同 `athena.post_processor` 的成功执行日志秒数，按 Worker 收到和成功事件核对顺序。用 `moderation stage decided` 的 `stage=output`、`duration_ms` 量审核，用 `moderation stage started` 和 Zeus 首次公开成功核对可按事件时间逐段相加的样本。若审核已经开始才打印 Worker 完成日志，保留事件原序，并从顺序拆分分母移出。按同一 Job 和 Pod 计算 Worker 其他差值 `(完成日志 timestamp − task started timestamp) − inference finished in 自报秒数`，以非负且起止配对为取数边界。模型和实际 GPU 等待的独立计时用于定位，未归因的差值保留原定义。
 
 [分段数据与字段表](https://j0yswlgboxz.feishu.cn/docx/H8TMdJsI6oBefWxuWRLcxXvBnHh) · [后处理派发和 Celery ID](https://github.com/world-sim-dev/athena-admin/blob/e278f4d1646ea0810e663c81c3f5851800ba52c7/ApiService/services/postprocess.py#L157-L202) · [审核秒表](https://github.com/world-sim-dev/athena-admin/blob/e278f4d1646ea0810e663c81c3f5851800ba52c7/ApiService/services/moderation.py#L325-L341)。本次脱敏取数及复算入口在工作区 `.local/output-postprocess-20261123/`。
+
+## 2026-11-25 双区共享 Athena 的在途压测
+
+**Why:** 客户和压测共用生产推理池。双区入口获受理、组织有额度、Worker 心跳在线和 Athena 尚未终态分别衡量不同阶段。组织上限与样本总条数不足以确定系统能达到的水位和保持时长。
+
+**How to apply:** 在 [Athena 任务看板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks) 核对正式项目和执行模型。按同刻去重 Job 的 pending/running 算生产在途，沿 Zeus 派发回执标记本批；单列长期未推进任务、各入口与 GPU 已开跑。历史重建只采用可信的开始和终态边界，说明截窗遗漏。结合队龄、客户延迟和完成速率区分正常高峰与故障积压。估算补位速率用同类长视频的平均 Athena 周转，爬坡、保持、排空分别计数。两区单进程运行器分摊同一预算，需同时停发并继续各自的终态对账。
+
+组织和模型的实时配置、两区样本分布、Runner 校准及现场原件沿 API 工作区 `docs/athena-production-load-20261125.md` 回查。两区组织准入开通后检查实际执行模型，旧公开别名可能指向不同模型池。案例保留同源原文和有序参考；以创建合同或实际投递的语义核对首尾帧、重复槽位和音视频。短期签发 URL、客户原文和资产标识仅进入受限作业环境。参见[任务内容导出](../pitfalls/admin-task-prompt-export.md)、[并发和资源观测](inference-concurrency-dashboard-entrypoints.md)和[发压机验收](../pitfalls/load-generator-readiness.md)。
