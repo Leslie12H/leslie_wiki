@@ -1,3 +1,5 @@
+- 2026-11-25：[ACK 节点池绑定下的 Worker 容量核算](domains/sandai-platform/pitfalls/ack-nodepool-pinned-worker-capacity.md) — 预后处理共享 hostname 反亲和、节点池硬绑定与手动伸缩的查证入口。
+
 - 2026-11-24：[VidMuse MAGI-2 专属积分包](domains/vidmuse/refs/magi-credit-package-dev-acceptance.md) — DEV 目录、Stripe 沙箱订单、到账批次、跨模型扣减和结算查证入口。含音频开启时报价缺失、购买拒绝回跳与套餐时长口径。
 
 - 2026-11-24：[Ark 成片分辨率与计费档位](domains/sandai-platform/pitfalls/ark-output-resolution-pricing-key.md) — 生产任务入档 1080p、编码 2206×946 与查询字段的查证入口。
