@@ -1,4 +1,4 @@
-- 2026-11-25：[开放平台组织任务量看板查证](domains/sandai-platform/refs/openapi-organization-task-volume.md) — 组织归属、按公开终态分桶、在途推算及双区取数验收。 含名称与 ID 搜索及组织显示名查证。 含个人实名与企业认证状态查证。
+- 2026-11-25：[开放平台组织任务量看板查证](domains/sandai-platform/refs/openapi-organization-task-volume.md) — 组织归属、按公开终态分桶、在途推算及双区取数验收。 含名称与 ID 搜索及组织显示名查证。 含个人实名与企业认证状态查证。 含认证快照和成功率展示。
 
 - 2026-11-25：[Athena 预处理扩容和推理 Worker 接单查证](domains/sandai-platform/pitfalls/preprocess-scale-and-worker-acceptance.md) — 首尾帧与 PE 计时、共享 CI 流量、节点池调度容量和 Worker 多窗口接单对照。
 
