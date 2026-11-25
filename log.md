@@ -3381,3 +3381,4 @@
 - 2026-11-25：记录双区不对称启动与停发、worker 失联后的查询恢复演练，补充 URL 回放在目标组织导入资产的源码入口。
 - 2026-11-25：补充 Athena 在途区间回算、缺失受理记录的覆盖标记和固定创建 QPS 尾部时隙的核对方法。[双区发压器就绪核验](domains/sandai-platform/pitfalls/load-generator-readiness.md#2026-11-25-核对在途峰值与固定速率窗口)
 - 2026-11-25：补充候选 Zeus #530 的组织名单、规则优先级和重试沿用内部模型验收指针。[生成接口验收](domains/sandai-platform/refs/v2-input-validation-entrypoints.md#2026-11-25-按组织选择-magi-内部模型)
+- 2026-11-25：补记双区完整窗口模拟中，发单时间窗与 NAS 同步持久化发生冲突的诊断方法及逐秒证据入口。
