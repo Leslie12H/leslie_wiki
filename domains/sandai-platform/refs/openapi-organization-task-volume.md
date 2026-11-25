@@ -67,3 +67,7 @@ links: [inference-concurrency-dashboard-entrypoints, development-entrypoints]
 2026-11-25 在 [06 的国内、海外 Top 5 榜单](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency) 补齐组织名称。取当前「组织任务量」看板的组织名称映射，按生产入口和组织 ID 补查榜单候选。已核实的展示名或品牌别名通过 Grafana 表格值映射显示为「名称 · ID」。只有脱敏账号或仍无名称的组织保留 ID。
 
 查证时回读面板 5 和 9 的 `组织` 字段值映射，并选同一时点验证双区已命名值和 ID 回退。面板名称是低频同步的展示快照，新增或改名时回查目录再更新；原始 `org_id`、排名查询及任务数沿 Zeus 的 Prometheus 快照复核。
+
+## Vidmuse 显示别名
+
+2026-11-25 按用户指定，国内生产组织 `871184089599493` 在 06 国内 Top 5 与 07 组织任务量看板显示为 `Vidmuse`。06 通过面板 5 的组织值映射并列显示原始 ID，07 通过 `org_names` 中的 `cn:871184089599493` 同步组织表和搜索选项。更新目录快照时保留该别名。
