@@ -113,3 +113,7 @@ Zeus Dev 管理后台任务详情的总体审核状态 `PASS` 可覆盖逐项审
 公开模型名相同的两次请求可以走不同的 Athena 内部模型。验收前核对目标环境各入口运行的 Zeus 版本，再沿候选 [PR #530](https://github.com/world-sim-dev/zeus/pull/530) 和[配置示例](https://github.com/world-sim-dev/zeus/blob/5447924cf6daa7af018a949cf5f8fd53c78cd747/docs/admin-api.md#模型配置与白名单)准备测试变体和专用名单。
 
 固定请求参数、公开模型和变体，分别覆盖第一条命中、仅第二条命中、两条均命中、均未命中。保存每次的组织、任务 ID 和预期内部模型，按任务 ID 比较 `task.model` 或管理端原始 `model`。双命中核对第一条规则优先。改变名单后比较新任务与原任务的重试，核对新任务重新选模、原任务沿用建单值。[路由实现](https://github.com/world-sim-dev/zeus/blob/5447924cf6daa7af018a949cf5f8fd53c78cd747/modules/domain/src/main/java/co/sandai/zeus/domain/modelconfig/ModelConfigService.java) · [管理端字段测试](https://github.com/world-sim-dev/zeus/blob/5447924cf6daa7af018a949cf5f8fd53c78cd747/modules/admin/src/test/java/co/sandai/zeus/admin/task/AdminTaskQueryServiceTest.java)
+
+2026-11-25 在 staging 验证时，已有模型的配置操作返回 `400 MODEL_CONFIG_INVALID`，原配置版本保持不变。改动共享模型前，先用当前版本的 [ModelConfigValidator](https://github.com/world-sim-dev/zeus/blob/5447924cf6daa7af018a949cf5f8fd53c78cd747/modules/domain/src/main/java/co/sandai/zeus/domain/modelconfig/ModelConfigValidator.java) 核对原始配置能否原样保存和启用。若原值无法恢复，可创建独立的 `dryRun` 测试模型，将 `accessPolicy` 设为 `ALLOWLIST`，仅给测试组织授予模型访问权。测试结束后停用专用模型并撤销测试组织的访问权。配置及管理端回执见 API 工作区 `.local/pr530-staging-acceptance-20261125/`。
+
+首个 staging `dryRun` 任务成功，组织用量明细有非零记录。保留任务 ID，分别从任务详情核对内部模型和执行状态，再从所属组织的用量明细核对同一任务的计量。账单实扣需要另外核对账单或余额流水。两个路由名单的命中与优先级仍须对应的任务回执逐项取证。
