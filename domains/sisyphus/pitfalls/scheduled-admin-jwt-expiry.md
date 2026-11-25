@@ -39,3 +39,9 @@ links: [sisyphus, admin-service-jwt-permissions-and-expiry]
 **Why:** REST 服务 JWT、号池 MCP Bearer 与 Sisyphus Agent Token 的过期和失效机制各自实现。号池 MCP 对照部署里的单个 Bearer 值，替换时需要核对同环境的其他消费者；长期有效并不等于具备独立签发期限。
 
 **How to apply:** 先确认入口、目标环境与权限范围。REST JWT 的 `exp` 取 [Admin 签发器](https://github.com/world-sim-dev/vidmuse-admin/blob/main/apps/admin/service/jwt_service.py) 与 [权限校验](https://github.com/world-sim-dev/vidmuse-admin/blob/main/apps/admin/service/auth.py) 的契约。号池 MCP 的凭据比较沿 [MCP 鉴权](https://github.com/world-sim-dev/vidmuse-admin/blob/main/apps/admin/service/account_pool_mcp_auth.py)，部署 Secret 名及现有消费者另查目标环境。Sisyphus Agent Token 的配置上限沿 [有效期配置](https://github.com/world-sim-dev/sisyphus/blob/main/backend/app/core/config.py) 与 [CLI 签发入口](https://github.com/world-sim-dev/sisyphus/blob/main/backend/app/api/routes_auth.py) 回查。本次仅核对代码契约，未创建或更新凭据。
+
+### 2026-11-25 发版后的 REST JWT 有效性
+
+**Why:** REST JWT 由 Admin 验签，Pod 换代与凭据轮换是不同事件。海外 Dev 和 Staging 当天签发的服务 JWT 使用 HS256，两套 Deployment 均引用已有环境配置。
+
+**How to apply:** 先从 JWT 头核对算法，再核对运行中 Deployment 的配置引用和 [Admin 发版步骤](https://github.com/world-sim-dev/vidmuse-admin/blob/main/.github/workflows/admin-deploy.yml) 是否保留原验签配置。常规镜像发版沿用相同验签密钥和权限契约时，旧 JWT 可继续用到期。发版后若出现 401，核对实际部署的验签配置及缺失、到期或替换情况。用号池列表 GET 验证，记录状态与响应结构。2026-11-25 仅检查部署引用和主线发布流程，未执行实际发版。
