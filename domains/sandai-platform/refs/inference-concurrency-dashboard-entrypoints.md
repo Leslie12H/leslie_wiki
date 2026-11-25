@@ -355,3 +355,9 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 **Why** 21:58:07 与 22:09:48，Worker 两次集中记录北京 Tair 公网端口拒绝新连接及已有连接关闭。第一次对应 `55473037` 的活跃连接骤降，第二次对应 `55473033`。同窗其余代理新连接上升，主数据节点仍可读写，出向未出现分钟级触顶。按实例核对云监控秒级事件，20:49 与 20:54 有可读取的出口流控记录，三次断连窗口未返回出口流控或故障切换事件。该模式支持优先查代理逐节点轮换、重启或公网入口摘挂。具体动作及是否属于计划运维仍需供应商日志确认，不能从失败波形推定操作人或变更类型。
 
 **How to apply** 对 [Tair 逐节点历史监控](https://kvstore.console.aliyun.com/Redis/instance/cn-beijing/r-2zetxnct3dc6y6dd8l/Normal/VPC/tair.rdb.with.proxy.4g/redisHistory) 的 `UsedConnection` 做相邻分钟差分，同时看其他 Proxy 的 `NewUserConnQps` 及主节点的 `LPUSH`、`BRPOP` 和出向比例。以 [Worker 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai) 中第一条 `ECONNREFUSED` 明确秒级起点。用 [Tair 任务中心](https://kvstore.console.aliyun.com/Redis/jobCenter/cn-beijing) 与 [云监控系统事件](https://cloudmonitornext.console.aliyun.com/system-events) 交叉核对租户可见的变配、故障切换及出口流控。查询空结果前先用该实例已知流控分钟验证筛选。若无匹配记录，向供应商提供公网端口、节点 ID 和时刻，查入口健康检查、摘挂记录、代理进程启动时间及连接关闭原因。
+
+#### 06 正在推理 Worker 估算卡片
+
+2026-11-25 在 [06 面板 135](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=135) 增加「正在推理 Worker（估算）」，与共享池就绪 Worker 卡相邻。面板跟随看板结束时点和刷新周期，从既有 SLS、Prometheus 读取。SLS 使用原始 `_pod_name_` 与心跳中的实际 Worker Pod 名关联，标准化 Pod 标签只作为回退。执行日志回看 52 分钟，按 Pod 和 Job 匹配最新开跑与结束，然后按在线 Worker 去重。
+
+**How to apply:** GPU 补计限最近 60 秒利用率至少 50% 的有效样本，只补日志无法确认的在线 Worker。使用同一个采集副本的数据，有更晚的结束事件即排除旧采样。跨源外连接时，缺少结束日志的行在时间比较中按无结束处理，外连接出的离线行不计。固定绝对时间复算 SLS 与 GPU 的分类、总和与页面读数，再验证相对时间刷新确实用新的截止时点。历史日志补到后，同一时点的估算可能小幅调整。
