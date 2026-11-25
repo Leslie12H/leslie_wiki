@@ -45,3 +45,9 @@ links: [sisyphus, admin-service-jwt-permissions-and-expiry]
 **Why:** REST JWT 由 Admin 验签，Pod 换代与凭据轮换是不同事件。海外 Dev 和 Staging 当天签发的服务 JWT 使用 HS256，两套 Deployment 均引用已有环境配置。
 
 **How to apply:** 先从 JWT 头核对算法，再核对运行中 Deployment 的配置引用和 [Admin 发版步骤](https://github.com/world-sim-dev/vidmuse-admin/blob/main/.github/workflows/admin-deploy.yml) 是否保留原验签配置。常规镜像发版沿用相同验签密钥和权限契约时，旧 JWT 可继续用到期。发版后若出现 401，核对实际部署的验签配置及缺失、到期或替换情况。用号池列表 GET 验证，记录状态与响应结构。2026-11-25 仅检查部署引用和主线发布流程，未执行实际发版。
+
+### 2026-11-25 GitHub Secret 保存与 Runner 生效
+
+**Why:** GitHub production 环境保存凭据、发布同步到 Kubernetes、Runner Job 投影以及实际 Admin 验证是不同环节。一项新 GitHub Secret 存在时，当前 Workflow 和 Job 仍可能没有引用。现有 Job 的同名变量也可能仍来自普通项目环境变量。
+
+**How to apply:** 先比较 [发布部署](https://github.com/world-sim-dev/sisyphus/blob/main/.github/workflows/release.yml)、[既有镜像部署](https://github.com/world-sim-dev/sisyphus/blob/main/.github/workflows/deploy-existing.yml)、[Secret 同步脚本](https://github.com/world-sim-dev/sisyphus/blob/main/scripts/release/deploy.sh) 和 [Job 投影](https://github.com/world-sim-dev/sisyphus/blob/main/backend/app/integrations/kubernetes/job_manifest_env.py)。对现有 Run，只检查变量的 Secret 引用，必要时只解析类型、到期等非敏感 JWT 元数据。新增接线按项目与目标环境投影，并核对历史变量的优先级。保存回执只能证明 GitHub 持久化，须以新 Run 的引用与只读 Admin 请求确认生效。
