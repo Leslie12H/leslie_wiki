@@ -1,7 +1,7 @@
 - 2026-11-25：[参考 PE 空正文与派发前引号转换](domains/sandai-platform/refs/magi2-request-pe-control.md#2026-11-25-pe-结果渲染和派发前引号转换) — 逐 Job 原文和增强文引号、PE 产物、重试及推理派发证据。
 
 - 2026-11-25：[双区启停故障演练](domains/sandai-platform/pitfalls/load-generator-readiness.md#2026-11-25-双区启停故障演练) — 首租约共同放行、部分停发回执、从原账本恢复在途查询。
-- 2026-11-25：[核对在途峰值与固定速率窗口](domains/sandai-platform/pitfalls/load-generator-readiness.md#2026-11-25-核对在途峰值与固定速率窗口) — 回算跨采样点的峰值，核对尾部时隙、NAS 同步提交和逐秒实发。
+- 2026-11-25：[核对在途峰值与固定速率窗口](domains/sandai-platform/pitfalls/load-generator-readiness.md#2026-11-25-核对在途峰值与固定速率窗口) — 回算峰值，核对 NAS、逐秒实发，以及日志写入失败后的线程退出与账本接管。
 - 2026-11-25：[满账本下复核固定创建 QPS](domains/sandai-platform/pitfalls/load-generator-readiness.md#2026-11-25-满账本下复核固定创建-qps) — 双区真实 Pod、SQLite 持久账本、调度迟到与名额用尽的漏发归因。
 - 2026-11-25：[双区共享 Athena 的在途压测](domains/sandai-platform/refs/performance-testing-entrypoints.md#2026-11-25-双区共享-athena-的在途压测) — 自然与测试流量去重、测试组织实际在途、固定创建 QPS、双区预算及原件回源地域的核验。
 

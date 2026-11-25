@@ -91,3 +91,5 @@ API 工作区的受限目录 `.local/athena-load-20261125/controls/` 保存 `wor
 固定速率模式从共同起点错开两区发车，直到窗口结束或实际停发时刻，逐区核对计划、实发、受理与漏发。掉线恢复只查原台账中的已知任务；POST 结果不明的意图保留待核。开放平台工作区的 `controls/outcome.py`、`observation-model.mjs`、`reconcile.ego.js` 记录判定方法，实际来源、窗口及回算覆盖率查看对应 run 的 `stop-summary.json`。
 
 短窗结果也可能掩盖发压器本身的限速。2026-11-25 用双区真实 NAS 和模拟接收端复测完整五分钟，发现一版错峰调度要求在极窄的时间段内完成 SQLite 同步意图提交、读租约和发送，实际循环间隔经常超出这个时间段。复核时分别计数调度醒来前错过的时隙、意图提交后过期的时隙，并与接收端逐秒计数比对。若 CPU 和在途名额仍有余量，先检查发单路径中同步 I/O 与发送截止时间的关系。证据入口为同目录 `worker-storage-window15-before.json`、`worker-storage-window15-verified.json` 和 `worker-storage-rehearsal.mjs`。
+
+把持久写入与定时发送分到两个线程后，还要注入一次真实的落盘故障。Node 进程只设置退出码时，打开的线程消息端口可能维持进程存活，SQLite 独占锁也随之保留。先用独立测试目录复现，再核对停止新增、进程退出、原账本可接管、已知 ID 查至终态、未知创建未被重发。预留而尚未发送的意图占用容量；HTTP 在途另数已经发出且未收到回复的调用。回归入口为 API 工作区本轮 `controls/worker_wallclock_test.py`。
