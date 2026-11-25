@@ -49,3 +49,9 @@ links: [inference-concurrency-dashboard-entrypoints, development-entrypoints]
 **How to apply**　固定结束时刻，沿看板的任务 ID 去重及首次终态口径，对已受理目标组织核算成功与失败。Zeus 日志用 `jobId` 索引词联合受理和终态检索，在 SQL 内抽取 `task_submitted taskId=… jobId=…`。在美国索引里直接全文搜 `task_submitted` 可能漏派发。确认每单有唯一 Job ID 后，逐单回查上海 `inference-prod` 的 `moderation stage decided`，按输入或输出、拒绝或服务错误、审核项和 reason 分组，保留组合标签。执行失败先查日志，具体原因缺失时，在检查语句计划和主键索引后以已知 Job ID 限量只读回查 Athena `jobs.state` 的终态错误与前后处理步骤。提交失败无 Job 时，使用 Zeus 终态 Trace 核对 Athena 建单访问状态，响应体缺失则保留字段原因未知。汇总必须与公开失败任务数闭合。
 
 同一客户的失败标签是审核服务判定。标签错误率和是否需要规则调整需独立核对申诉或人工样本。复查入口为 [组织任务量](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume/aaa73be)、[美西 Zeus 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c7c0ede6c71484f8da34a829954c50cd9/logsearch/co_sandai_zeus_prod?slsRegion=us-west-1) 和 [上海 Athena 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/inference-prod?slsRegion=cn-shanghai)。
+
+## 2026-11-25 按组织或关联用户核对 PE
+
+**Why**　组织 ID 和关联用户 ID 同为数字，查询条件含义不同。任务列表还返回 `submittedUserId`，逐单归属需要结合相应字段。建单前被拦截的请求可能缺少可关联的任务 ID、身份字段或 PE 参数。
+
+**How to apply**　先在 [Zeus Admin](https://zeus-admin.sandaii.cn/tasks) 对照国内生产与美国生产，分别以 `orgId` 和 `ownerUserId` 检查输入 ID，沿组织详情核对关联用户。固定创建截止时间，使用 `deleted=all` 翻完游标，检查组织范围与关联用户范围的任务 ID 是否一致。逐单对照 Zeus 详情的 PE 开关及 Athena `request_id` 的下游开关。需要核对是否产出增强文时只保留字段是否有值。已建任务的分母按任务 ID 去重。要统计建单前请求，另沿对应入口的请求 ID 与已记录身份核对覆盖，缺少身份或原始开关时保留未确认边界。
