@@ -433,3 +433,9 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 **How to apply** [ApiService](https://github.com/world-sim-dev/athena-admin/blob/b8bcf4bfbca03bb79f378b2ad70355b3d7f0eb22/ApiService/services/job.py#L1430-L1441) 在首次 pending → running 处理时写 `started_at`。用 [Worker SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai) 的真实 GPU 时间与该字段对齐，先分同一次回报、已早先回报的重复尝试、回报偏晚及缺回报。重复开跑按真实 Pod 和尝试时刻判定，任务最终组只用于检查结果。模型阶段的 Job ID 在结构化 `job_id`，接单和 GPU 开跑也可能用正文里的方括号 ID。用同 Pod 前单 GPU 开跑到 `Step5: Post Process Done` 的区间检查接单后等待，避免把已有任务占用 GPU 的时间算成素材下载。该窗口后四分钟，sensecore-s5000 接单后等待至少 30 秒的 241 个样本中，240 个至少 80% 的等待与前单模型运行重叠。
 
 SLS broker 断连应把 `ConnectionError`、`TimeoutError` 等作为索引预筛，随后在完整 `content` 里验证 `Connection to broker lost`，用 Celery 的自动重投告警和同 Pod 重连补证。只按整段短语预筛或只读拆出的 `message` 可能漏掉 Python 栈。按先前开跑、原 Pod 断连、另一 Pod 领取及再次开跑，逐次区分重复执行与状态回报。对 Tair 代理节点和链路触发点的复核沿[实例性能监控](https://kvstore.console.aliyun.com/Redis/instance/cn-beijing/r-2zetxnct3dc6y6dd8l/Normal/VPC/tair.rdb.with.proxy.4g/redisHistory) 继续。
+
+#### 按 Worker 组核对最终失败率
+
+**Why** 2026-11-26 核对生产 Magi-2 告警时，Athena 有状态已为 `failed`、`completed_at` 仍为空的 Job。仅按 `completed_at` 过滤会漏计失败。部分失败发生在输入审核或预处理阶段，任务没有记录推理组。跨组重试还会使最终记录的组与某次尝试所在的 Pod 不同。
+
+**How to apply** 固定模型和终态时间窗，从 [02 任务运行](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks) 所用的 Athena `public.jobs` 按 Job 计数。缺少 `completed_at` 的终态以 `updated_at` 近似归桶，报告近似计数。以 `state.inference_group` 分组，失败率取 `failed / (succeeded + failed)`，取消单列。保留未记录组名的任务，使全模型成功数和失败数分别等于各组及未归组之和。未归组失败沿 `state.failed_stage`、`state.failed_error_code` 核对是否发生于推理前。定位某组执行异常时，按 Pod、Job 和尝试时间回查 [Worker 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai)。
