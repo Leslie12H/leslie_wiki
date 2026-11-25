@@ -2,7 +2,7 @@
 name: sandai-platform-magi2-reference-prompt-entrypoints
 type: reference
 created: 2026-11-19
-updated: 2026-11-20
+updated: 2026-11-25
 tags: [sandai, api-platform, magi2, seedance, reference-media]
 links: [sandai-playground-account-generation-entrypoints, ark-seedance-25-pe-entrypoints, sandai-api-platform-reference-pe-structured-output-pattern]
 ---
@@ -49,3 +49,11 @@ links: [sandai-playground-account-generation-entrypoints, ark-seedance-25-pe-ent
 **Why**　分镜末尾时间可能超过 API 输出时长。请求中也可能只传角色图、道具和场景概念图，却在提示词里要求逐格复现未提供的分镜板。
 
 **How to apply**　先将最后一个镜头的结束时间与请求 `duration` 对齐。按素材类型编号生成清单，通过预览图和视频抽帧核对分镜板、角色和场景用途，为普通场景图和构图参考分别绑定引用。将音频引用定位到实际镜头或画外音，并与逐镜台词要求对齐。校验外链时读取实际文件并探测尺寸、编码和时长。返回泛型 Content-Type 的音频可进一步核对文件名与字节签名，按目标部署复核服务端接收。 [原生 v2 创建参数](https://platform.sand.ai/docs/create-generation/) · [Zeus 外链素材导入](https://github.com/world-sim-dev/zeus/blob/51b97abc89c633a5b4d6ef42678b6afc69a44bc9/modules/domain/src/main/java/co/sandai/zeus/domain/asset/service/ReferenceMediaImporter.java)
+
+## 2026-11-25 素材已进入推理而正文引用未对应
+
+**Why**　Magi-2 单图任务可同时存在三个独立问题。文字所描述的角色与实际素材冲突，增强后正文仍带来源工具的混合素材占位符，且正文中的画幅文字与结构化生成选项不同。任务和 PE 成功只证明流程完成。
+
+**How to apply**　沿 Zeus 派发取 Athena Job，用同一 Job 主键读取原始和增强提示词、`inputs[].patch.meta.reference` 与 `options.aspectRatio`。按槽位核对原图和准备产物，确认是否为同一画面。Worker 的 `Gaga4Request` 要同时核对最终正文与 `reference_groups`，分别确认占位符是否转换和图像是否真的进入 Worker。核对输入角色是普通参考还是首帧，比较请求画幅和最终像素尺寸。若模板占位符一路保留，可确认没有转换成 Athena 引用标识，单个成片不足以隔离其对模型生成的影响。不要在知识库保留客户提示词或素材地址。
+
+复查入口为 [Athena Job 5006057](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-job-detail?var-job_id=5006057)、[Worker 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai) 和 [Athena 参考输入契约](https://github.com/world-sim-dev/athena-admin/blob/c912bb9/docs/architecture/i2fv-reference-inputs.md)。
