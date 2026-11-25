@@ -233,3 +233,11 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 **Why:** 代码发布或原全量快照正常更新时，活跃快照仍可能没有注册。Dispatcher 通过 `subPath` 挂载配置文件，保存后需要新 Pod 加载。两地 Dispatcher 为独立部署，重建应逐区进行，降低两地派单同时暂停的风险。
 
 **How to apply:** 逐区回读目标文件和两项活动窗口参数，按获批范围补缺。走 [Magi 维护](https://github.com/world-sim-dev/zeus/actions/workflows/magi-maintenance.yml) 的同镜像 restart，只选择 Dispatcher。核对部署就绪、任务快照恢复，及 Prometheus 的 `openapi_concurrency_expected_active`、对应 `expected_concurrency_active` 组的采集成功时间和错误计数。一地恢复后再处理另一地。两地新快照均有效后，先预执行 [06 看板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency) 的全局及入口预计查询和倍率表达式。用同一时点的两地活跃配额之和除一次共享池可推理 Worker，并回读保存版本；一地缺失或 Worker 为零时显示不可用。
+
+### Zeus 待派发与 Athena 在途分开统计
+
+2026-11-25 更新 [06 并发资源管理](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency) 的全局与两地入口任务卡。Zeus 待派发对应 `openapi_tasks_inflight{stage="queued"}`，包含尚待确认 Athena 受理的派发尝试。Athena 在途使用 `stage="executing"`，以 Zeus 记录的已派发状态为主并兼容旧 Running 状态，包含下游排队。单独分类的输入审核、前处理、输出审核保留在首次非终态汇总口径，独立计数适用范围以当前面板说明为准。
+
+**Why:** Zeus 等待派发会扩大积压，组织配额则按 Dispatcher 已取得的 Redis 槽位限制新增派发。执行阶段快照观察 Athena 侧任务压力，也受 Zeus 回执和状态写回时效影响。Top 5 的组织指标没有阶段标签，榜单标为在途组织。查 [阶段映射](https://github.com/world-sim-dev/zeus/blob/dev/modules/domain/src/main/java/co/sandai/zeus/domain/task/metrics/TaskLifecycleStage.java) 与 [派发规则](https://github.com/world-sim-dev/zeus/blob/dev/docs/openapi-task-dispatch.md)。
+
+**How to apply:** 对每个入口只用新鲜任务快照，阶段值和同实例总量的采集时间需相同。健康快照缺某个阶段时该阶段为零，快照缺失时保留缺失状态。按同一时点对照各阶段之和与任务总数。全局 Athena 在途倍率以两地执行阶段之和除一次共享 Worker 数，预计并发和预计超售比沿活跃配额取数。由 [Athena 在途倍率](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=133) 核对表达式。
