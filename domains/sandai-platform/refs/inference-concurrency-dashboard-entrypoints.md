@@ -271,3 +271,7 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 2026-11-25 验证一条通过上海共享推理池执行的美西 Ark 兼容任务。先在 Athena `inference-prod` 用提示词的稀有词组合预筛日志，严格比对用户原文。若 `services.job` 的步骤提示词日志缺少 Job ID，按 Pod 和毫秒时间找相邻切片事件，将 Job ID 作为候选。并发时同一秒可出现不同入口的候选，需再沿双区 `task_submitted` 反查 Zeus 任务，并用 [Zeus Admin](https://zeus-admin.sandaii.cn/organizations) 的任务内容核对原始提示词字段与增强结果。
 
 归属与用键以对应入口的 Admin 任务记录 `orgId`、`apiKeyId` 为准。按 Key ID 从该组织的 Key 列表获取名称、掩码、创建时间，沿任务受理日志确认实际 API 路径和 Trace。归属、创建记录、接口与调用方如何取得密钥是不同证据，留档仅保留查证方法和必要指针。
+
+#### 同文提示词按发起窗口核对
+
+2026-11-25 复核原文相同却发生在不同时段的生成记录。用户给出时间时用 Zeus 的创建时间和入口筛选，再对照原始 prompt 与分镜字段。Athena 日志出现时间代表处理阶段，适合反查 Job 和任务 ID。若生产已存记录在目标窗口中无法配对，保留地区和查证窗口，沿调用域名、请求 ID 或发起页面追查测试环境和受理前失败。
