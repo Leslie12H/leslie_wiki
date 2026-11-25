@@ -414,4 +414,6 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 
 **Why** 2026-11-26 北京时间 00:03 的 Magi-2 告警报 189.3 分钟。复核同一轮三张飞书卡片及北京 DB2 的原始时间序列，最长值每隔 30 分钟增长约 30 分钟。极低优先级队列重新出现在指标中的时点，模型最大值从很小的值跳回两个多小时。此类跳变要区分队列消息的年龄、一次连续排队时长和首次进入 running 前的实际等待。[原始飞书告警](https://applink.feishu.cn/client/chat/open?openChatId=oc_8baec17ece7a9ebceffa89517b3a5b25&position=57122)
 
+将同一 Worker 的任务生命周期与 Redis 连接对时。Job 5085942 的首次入队时间和原始采样反推起点相差约 4 毫秒，Worker 接单后发生 broker 读超时。Celery 提示断连使正在执行且延迟确认的消息无法通过旧连接确认，随后重连，旧计时起点在下一分钟重新出现，原执行稍后成功。这个组合支持断连后消息重新入队。单任务的再次领取或重复执行还需独立回执。[Athena 单任务时间线](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-job-detail?var-job_id=5085942)
+
 **How to apply** 在告警时间点先对齐来源、Redis DB、模型及采集状态，再并列查询模型级的 `athena_inference_queue_max_wait_seconds` 和分优先级的 `athena_inference_queue_pending`。保留回落、重新出现等变化。最大等待指标没有任务 ID 或优先级，要确认具体任务需有队首消息或可关联的投递、重投、领取证据。用 Prometheus 原始 range vector 的样本时间减去等待秒数，避免查询网格和飞书发送时间引入的秒级误差。将反推时刻与 Athena 的首次推理入队记录、SLS 投递和 Worker 接单及终态交叉核对。普通请求可按 Athena `jobs.started_at` 限时分组，统计各 `queue` 的 `state.inference_start_wait_duration`，同时说明分母只包括窗口内已开始的任务。[队列看板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks?viewPanel=14&from=1795617600000&to=1795623600000)
