@@ -55,3 +55,9 @@ links: [inference-concurrency-dashboard-entrypoints, development-entrypoints]
 **Why**　组织 ID 和关联用户 ID 同为数字，查询条件含义不同。任务列表还返回 `submittedUserId`，逐单归属需要结合相应字段。建单前被拦截的请求可能缺少可关联的任务 ID、身份字段或 PE 参数。
 
 **How to apply**　先在 [Zeus Admin](https://zeus-admin.sandaii.cn/tasks) 对照国内生产与美国生产，分别以 `orgId` 和 `ownerUserId` 检查输入 ID，沿组织详情核对关联用户。固定创建截止时间，使用 `deleted=all` 翻完游标，检查组织范围与关联用户范围的任务 ID 是否一致。逐单对照 Zeus 详情的 PE 开关及 Athena `request_id` 的下游开关。需要核对是否产出增强文时只保留字段是否有值。已建任务的分母按任务 ID 去重。要统计建单前请求，另沿对应入口的请求 ID 与已记录身份核对覆盖，缺少身份或原始开关时保留未确认边界。
+
+## 组织显示别名
+
+2026-11-25 按用户指定将美西入口组织 `871185370785733` 显示为 `Sand.ai`。在组织任务量看板的隐藏变量 `org_names` 中使用 `us:871185370785733` 作为键，供组织搜索与表格共同读取。Inference 并发资源看板海外 Top 5 使用表格值映射，同时显示别名和原始组织 ID。
+
+更新目录名称快照时保留已确认的显示别名。固定同一美西时段，用别名与组织 ID 分别搜索并确认得到同一筛选值，再对照两个看板的表格显示。认证按入口与组织 ID 关联。
