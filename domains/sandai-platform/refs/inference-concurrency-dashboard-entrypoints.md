@@ -253,3 +253,9 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 2026-11-25 对国内入口同一批首次公开成功任务，按完成时间复算 5 分钟独立分桶和 30 分钟滚动分位数，样本无需在显示区间内建单。16:35–16:55 的 5 分钟 P50 持续回落，P95 仍受同时完成的二十分钟以上任务影响。看长尾变化前应同时对照样本数和长任务占比。
 
 复核 [成功任务 E2E 趋势](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=107) 时，用 5 分钟独立完成桶观察变化，30 分钟滚动作为平滑参考。图例或提示中写清窗口并显示分母。当前未结束分桶显式标注。时间选择器只裁剪显示点，固定同一刻度检查分位数和样本数。若需观察新进任务的体验，另看建单批次，并在窗口成熟后结合终态覆盖率解释完成任务的耗时。
+
+#### 单组织待派发积压、派发速率与实际占槽
+
+2026-11-25 在国内入口核对 libtv 的 [任务与并发面板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=7)。该面板的 Zeus WAITING 是入口整体，组织 Top 5 是组织的首次非终态总数，包含已派发与尚未派发。量化某组织积压先按受理日志中的组织 ID 关联任务的派发回执和首次公开终态，再同刻比较队列快照。受理未见派发是日志重建，仍可能含前处理、审核或未采到回执的任务。
+
+按 Zeus Admin 的有效组织配额，同一时点以部署所用 Redis 的 `SCARD` 读实际占槽，先核对地区、工作负载和镜像。后续回查 [该次部署的 TaskDispatcherRuntime](https://github.com/world-sim-dev/zeus/blob/c8482c6229cbf6a1b830bda113dd9c3b45244a4a/modules/domain/src/main/java/co/sandai/zeus/domain/task/dispatch/TaskDispatcherRuntime.java#L153-L187) 和 [TaskDispatchWorker](https://github.com/world-sim-dev/zeus/blob/c8482c6229cbf6a1b830bda113dd9c3b45244a4a/modules/domain/src/main/java/co/sandai/zeus/domain/task/dispatch/TaskDispatchWorker.java#L58-L88)。单组织同时一轮，每轮最多派发一个任务，页游标回绕与轮询影响持续吞吐。该案例仍有槽位，短时受理超过实测派发速率形成队列，Redis 现场样本仅用于该采样时点，历史沿 Prometheus 和 SLS 回查。区分组织串行派发、真实满槽、远程提交拒绝与派发依赖异常，再定位数据活跃度及积压。
