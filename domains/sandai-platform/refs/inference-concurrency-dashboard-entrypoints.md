@@ -425,3 +425,11 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 **How to apply** 固定模型和时间，先按卡片的实际 SQL 复查快照。用 Athena 任务的 `started_at` 和终态时刻回算分钟存量。缺少 `completed_at` 的终态只能用 `updated_at` 近似；跟随 Last 1 hour 模拟滚动时，另扣创建时间滑出一小时的存量。用分钟新增开跑减已开跑后进入终态减滑出窗口，在数值偏差较大时检查状态回报和重试。实际 GPU 开跑对照 [Worker SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai) 的 GPU 开跑事件，按 Job ID 去重并通过 Athena 反查模型。同一个 Job 可以有多次开跑日志，Job 的首个 `started_at` 可以早于在窗口里观察到的 Worker 开跑事件。Worker 活跃度另按设备和采样窗口交叉验证。
 
 2026-11-26 在模型 `test-magi-2-1118-prod` 复核中，右端创建桶的视觉下弯与分钟存量回落同时出现。窗口滑出数为零的时段里，成功完成速率稳定，Athena 新开跑速率低于退出速率。GPU 开跑日志计数也下降，但幅度小于 Athena 新开跑的降幅，说明两个口径需分别解读。持续诊断时同时查 [Redis 排队](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks?viewPanel=14) 和 Worker 分组指标。
+
+#### 北京 Redis 断连后的重复 GPU 开跑
+
+**Why** 2026-11-26 北京时间 00:31–00:35 与 00:35–00:39，模型 `test-magi-2-1118-prod` 的 Athena 首次 running 从 875 降到 761，同期按实际 Pod 与 Job 对齐的 GPU 开跑从 961 降到 943。已记过 running 的 Job 再开跑从 85 升到 181，后窗中 179 次查到另一 Pod 更早的 GPU 开跑，129 次查到原 Pod 在首次 GPU 开跑后、再次接单前丢失消费连接。i35 的实际 GPU 开跑 402 → 408，再开跑 20 → 64。00:35–00:39 真正的 broker 丢失事件命中 252 个去重 Pod，i35 占 67 个。重连回北京 Tair 公网 broker。同窗见 Redis Pub/Sub 读超时和 BRPOP 读取时连接被关闭。00:41、00:42 再次放大。具体 Tair 代理或网络触发原因仍待实例侧证据。
+
+**How to apply** [ApiService](https://github.com/world-sim-dev/athena-admin/blob/b8bcf4bfbca03bb79f378b2ad70355b3d7f0eb22/ApiService/services/job.py#L1430-L1441) 在首次 pending → running 处理时写 `started_at`。用 [Worker SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai) 的真实 GPU 时间与该字段对齐，先分同一次回报、已早先回报的重复尝试、回报偏晚及缺回报。重复开跑按真实 Pod 和尝试时刻判定，任务最终组只用于检查结果。模型阶段的 Job ID 在结构化 `job_id`，接单和 GPU 开跑也可能用正文里的方括号 ID。用同 Pod 前单 GPU 开跑到 `Step5: Post Process Done` 的区间检查接单后等待，避免把已有任务占用 GPU 的时间算成素材下载。该窗口后四分钟，sensecore-s5000 接单后等待至少 30 秒的 241 个样本中，240 个至少 80% 的等待与前单模型运行重叠。
+
+SLS broker 断连应把 `ConnectionError`、`TimeoutError` 等作为索引预筛，随后在完整 `content` 里验证 `Connection to broker lost`，用 Celery 的自动重投告警和同 Pod 重连补证。只按整段短语预筛或只读拆出的 `message` 可能漏掉 Python 栈。按先前开跑、原 Pod 断连、另一 Pod 领取及再次开跑，逐次区分重复执行与状态回报。对 Tair 代理节点和链路触发点的复核沿[实例性能监控](https://kvstore.console.aliyun.com/Redis/instance/cn-beijing/r-2zetxnct3dc6y6dd8l/Normal/VPC/tair.rdb.with.proxy.4g/redisHistory) 继续。
