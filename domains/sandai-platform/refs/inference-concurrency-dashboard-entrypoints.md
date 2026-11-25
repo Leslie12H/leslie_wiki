@@ -265,3 +265,9 @@ Worker 的 `inference finished in …` 从 Worker 内部较早的事件计时，
 2026-11-25 对照 11 月 23–25 日国内入口 libtv 的 SLS 受理事件、逐任务派发回执和 [国内待派发历史](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=7)。按绝对时间对齐 5 分钟的新受理、派发和期末未见派发；分辨排空阶段与持续流入。代码对照此前已部署镜像与本次镜像的 `TaskDispatcherRuntime`、`TaskDispatchWorker`，单组织一轮一单的规则一致。
 
 历史取数要区分两类形态。当天上午已派发在途长时间贴近一个水平，随后在途和派发输出同步抬升，待派发快速回落。运行曲线可提示并发约束，历史配置仍需查正式变更记录。下午积压对应受理量超过单组织可持续派发速率，同时实际槽位有余量。对照更早的低流量日期，用受理与派发逐任务对账，避免把当时很少排队归因为派发器规则变化。
+
+#### 从原始提示词反查 OpenAPI 任务与脱敏 Key
+
+2026-11-25 验证一条通过上海共享推理池执行的美西 Ark 兼容任务。先在 Athena `inference-prod` 用提示词的稀有词组合预筛日志，严格比对用户原文。若 `services.job` 的步骤提示词日志缺少 Job ID，按 Pod 和毫秒时间找相邻切片事件，将 Job ID 作为候选。并发时同一秒可出现不同入口的候选，需再沿双区 `task_submitted` 反查 Zeus 任务，并用 [Zeus Admin](https://zeus-admin.sandaii.cn/organizations) 的任务内容核对原始提示词字段与增强结果。
+
+归属与用键以对应入口的 Admin 任务记录 `orgId`、`apiKeyId` 为准。按 Key ID 从该组织的 Key 列表获取名称、掩码、创建时间，沿任务受理日志确认实际 API 路径和 Trace。归属、创建记录、接口与调用方如何取得密钥是不同证据，留档仅保留查证方法和必要指针。
