@@ -20,3 +20,11 @@ links: [sandai-openapi-task-config-dashboard, openapi-organization-task-volume]
 任务创建时间用于选择滚动窗口。档位按 [请求视频时长分布](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-task-params-stats/a168183?orgId=1&timezone=Asia%2FShanghai&var-entry_region=us&viewPanel=4) 的时长字段计算。先回读面板 SQL 核对有效 duration、历史分段时长回退和无效值口径，再在同一截止点对照各原始秒数的任务量。
 
 档位边界需要明确。采用含上限的五秒档时，恰好 5 秒归 0–5 秒，恰好 30 秒归 25–30 秒。按窗口内全部任务计算占比时，超过 30 秒和时长未记录分别保留，合计对齐独立任务计数。
+
+## 海外组织时长分档
+
+**Why:** 任务参数看板按地区筛选。组织时长分布需要将时长数据和任务创建时的组织归属按任务 ID 关联。
+
+**How to apply:** 从 [美西 Zeus 生产 SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c7c0ede6c71484f8da34a829954c50cd9/logsearch/co_sandai_zeus_prod?slsRegion=us-west-1) 读取目标组织成功受理事件，使用事件上的组织 ID，按 Zeus taskId 去重，再按 Athena request_id 归属。用已核实归属的样本串联两个数据源。同口径报表按 Athena Job 创建时间裁剪窗口，沿参数面板的任务类型和时长表达式，覆盖能归属的 Athena Job。单列 Zeus 已受理、截止时在范围内没有 Athena Job 的记录数。
+
+2026-11-27 核实美西宽窗口扫描模式曾返回空结果，而同一时段的已知任务和短窗查询均有记录。使用美西已索引的 content 字段和组织检索词，分窗口读取。逐窗对照独立计数与返回的唯一 ID 数，缺少计数行时标记查询失败。首次匹配时点和历史范围随当前数据及归属覆盖核对，工作簿用「自首条匹配任务」注明历史起点。

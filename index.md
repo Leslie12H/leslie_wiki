@@ -1,4 +1,4 @@
-- 2026-11-27：[开放平台任务参数看板的任务量取数](domains/sandai-platform/refs/openapi-task-params-volume.md) — 用 Athena Job 复算创建时间分桶、请求视频时长五秒档位及占比，与参数面板和历史总数对账。
+- 2026-11-27：[开放平台任务参数看板的任务量取数](domains/sandai-platform/refs/openapi-task-params-volume.md) — 用 Athena Job 复算任务量、请求时长五秒档位与累计占比，按 Zeus 受理日志归属海外组织。
 
 - 2026-11-26：[开放平台成片来源和 API Key 归属查证](domains/sandai-platform/refs/openapi-video-provenance-and-key-attribution.md) — 用 MP4 隐式标识、产物和任务记录核对实际模型及用 Key 情况。
 
