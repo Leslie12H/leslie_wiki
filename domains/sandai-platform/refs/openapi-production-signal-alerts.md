@@ -31,3 +31,13 @@ links: [sandai-api-platform-development-entrypoints, sandai-platform-production-
 2026-11-26 北京时间 06:00–08:00 的结构化请求摘要按分钟回放，Higgsfield 美西在 06:56 的第一个符合条件的评估时点进入告警，窗口结束前保持同一轮告警。LibTv 上海未返回同码拒单。回放按事件时间，线上评估时点还受入库延迟和调度影响。以稳定的组织和地区为告警身份，核对首次通知、重复等待和恢复行为。原生 SLS 评估及飞书送达沿[生产日志告警查证](production-error-alerts-entrypoints.md)回读。
 
 固定余额阈值沿 [Admin 余额 API](https://github.com/world-sim-dev/zeus/blob/dev/docs/admin-api.md#余额明细与金额口径)读取 `amount`、`currency` 与 `asOf`。阈值和采样使用同一站点的主货币单位，可用额度来自未到期的正余额批次。内部积分字段另有换算口径。自动采集需要站点 `billing.read` 权限，按组织维护越阈状态，区分余额恢复和采样失效。
+
+### 双区拒单上线与飞书、语音路由
+
+2026-11-26 启用 [Higgsfield 美西规则](https://sls.console.aliyun.com/lognext/project/k8s-log-c7c0ede6c71484f8da34a829954c50cd9/alert/alert-1795660220-268061?slsRegion=us-west-1) 与 [LibTv 上海规则](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/alert/alert-1795660220-513956?slsRegion=cn-shanghai)。回读规则的各自生产日志库、查询窗口、条件、重复等待和行动策略。按用户要求复用已有开放平台生产电话策略。该策略含两条飞书集成与生产值班组语音，恢复通知在余额拒单规则中关闭。上线后两区原生评估均成功，当次回读窗没有达到触发条件。发送结果须沿真实告警的通知历史核验。
+
+**Why:** SLS 规则能够显示已启用，但查询统计若未完成原生预览和确认，会保留旧的日志库与时间参数。两条规则最初因日志库为空而返回 `InvalidMethod` 和 `/logstores//logs`。
+
+**How to apply:** 编辑查询统计时选定生产项目、日志库和窗口，先执行预览，再确认子弹窗和外层规则。保存后独立回读实际查询源和窗口，再看 `internal-alert-history` 的最新成功评估。涉及升级电话时先查当前行动策略的飞书集成和语音接收组，再只替换目标规则的路由。回放用固定历史窗口取数，触发和真实送达分别验收。
+
+2026-11-26 用户明确固定余额阈值由阿里云侧运行。服务端余额采集可复用 [Zeus 只读余额 SQL](https://github.com/world-sim-dev/zeus/blob/dev/modules/domain/src/main/java/co/sandai/zeus/domain/credit/dao/UserCreditMapper.java) 与 [快照采集器](https://github.com/world-sim-dev/zeus/blob/dev/modules/domain/src/main/java/co/sandai/zeus/domain/observability/snapshot/BusinessSnapshotCollector.java) 的租约和新鲜度，以固定的组织范围读取，再由 ARMS 评估。首次启用先核对生产查询计划、地区和币种。余额采集在本次交付时仍是本地代码，生产无此阈值通知；桌面巡检已暂停。
