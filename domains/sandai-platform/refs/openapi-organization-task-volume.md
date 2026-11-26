@@ -101,3 +101,5 @@ links: [inference-concurrency-dashboard-entrypoints, development-entrypoints]
 [失败分类](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume?viewPanel=21) 直接在阶段行下展示审核拦截、审核服务不可用、执行超时和其他执行失败。表中「失败任务数」和占比沿 Zeus SLS 的首次公开失败口径，「全入口估算」沿同生产入口的 Prometheus 原因指标。估算行只在全部组织时有值，阶段合计不再加计子行。单组织按创建归属查阶段数量。
 
 **How to apply** 固定时间范围切换国内、海外以及一个组织，回读阶段合计、四类估算值和单组织空估算。Grafana 11.5 的外连接遇到缺连接字段的空帧时曾清空阶段行；保留仅供连接使用的固定键，在展示前滤除。看板刷新只用 SLS 和 Prometheus。Athena 审核决策日志有 Job ID，缺少组织和平台请求 ID；当前 Athena 生产 PostgreSQL 数据源的元数据核对显示为主库。按组织精确拆原因，沿 Zeus 首次公开失败的结构化事件补齐原因后再复核字段覆盖率。
+
+2026-11-26 抽查双区的执行终态日志，按任务 ID 统计失败原因字段覆盖，再用同一范围分别打开全部组织和单组织，区分没有细类值与阶段统计空白。能够核实的执行子类沿 Athena 前处理错误码、PE 输出与后处理产物登记事件回查。Prometheus 的执行超时沿 Zeus 的到期终态分支解释。
