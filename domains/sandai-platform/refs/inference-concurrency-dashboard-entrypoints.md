@@ -529,3 +529,9 @@ SLS broker 断连应把 `ConnectionError`、`TimeoutError` 等作为索引预筛
 **Why:** 2026-11-27 复核 Athena 通知服务水平扩容。多个 Celery 副本使用相同 broker 与顺序状态 Redis。不同 Job 可以并行，单 Job 通知有共享顺序队列和重试。线程数、预取、待投递消息组成和状态回调耗时会影响扩容后的吞吐。生产声明由 [Athena 生产 overlay](https://github.com/world-sim-dev/athena-admin/blob/9930d3168401f7d3edf1e353f233299296eccbc4/ApiService/k8s-manifest/overlays/prod/kustomization.yaml#L36-L42) 下发，临时副本数可能被下一次发布覆盖。
 
 **How to apply:** 先在实际 Deployment 读取副本数、线程参数、HPA 和资源。间隔两次采样 broker 各优先级水位与 unacked，并以完整分钟的成功 HTTP 投递量估计现有处理速率。由成功投递与积压净变化估计有效到达量，评估丢弃或重试对估计的影响。所需总吞吐等于有效到达量加上积压除以清理目标时长。按每副本实测量做线性和折损场景，清理时间从新副本就绪后计算。验证时以连续分钟的成功投递、队列净降和最老消息年龄对照终态延迟，额外核对回调 429/5xx 与顺序重试耗尽。新增副本的预取会把一部分队列移入 unacked，且 Zeus 完成释放槽位后新单可能推高到达量。复算脚本和 2026-11-27 的快照见 API 工作区 `.local/athena-worker-now-20261127/scale-*.json`。
+
+#### 输出与参考视频的合计时长
+
+2026-11-27 核对按合计视频时长分析模型执行耗时的口径。按任务读取原始输出 MP4 的实际秒数，再加各个参考视频输入的时长。先确认输入清单，只有确定没有视频时才加零。画面衍生的音轨与独立音频均不计入。
+
+预处理有两条路径。素材准备路径按每个视频输入取已准备的时长并相加，见[参考槽位元数据](https://github.com/world-sim-dev/athena-admin/blob/9930d3168401f7d3edf1e353f233299296eccbc4/ApiService/preprocessors/reference_prompt.py#L126-L146)。仅校验路径不会回填槽位时长，按任务 ID 读取校验完成事件的实测视频总秒数，见[参考媒体校验](https://github.com/world-sim-dev/athena-admin/blob/9930d3168401f7d3edf1e353f233299296eccbc4/ApiService/preprocessors/reference_validation.py#L56-L82)。同一任务的校验总数只用一次。有视频但两处均缺少完整信息时，保留未知。逐任务相加后再分档，避免先对各段时长取整造成边界偏移。
