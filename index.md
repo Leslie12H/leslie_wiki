@@ -97,7 +97,7 @@
 
 - 2026-11-16：[国内生产 Magi-2 原生全链路验收入口](domains/sandai-platform/refs/magi2-cn-native-production-entrypoints.md) — 精确模型、素材回读、同步与异步参数边界，以及原任务到成片的查证。 含[纯文本任务提交校验](domains/sandai-platform/refs/magi2-cn-native-production-entrypoints.md#2026-11-16-纯文本任务提交校验)和模型变体配置回查。 补两档分辨率全画幅、显式水印对照和成片验收流程。
 
-- 2026-11-16：[API 平台生产 ERROR 日志告警](domains/sandai-platform/refs/production-error-alerts-entrypoints.md) — 双区日志级别采集差异、应用错误文件去重、告警评估与飞书送达的回查入口。含运维群追加与双渠道回读。 补素材查询 429 计入 ERROR 时的查证方法。 补原始应用日志、ALB 与重试去重的查证。 补 OSS 删除被拒、Athena HTTP 200 与测试请求对账。 补异步生成失败的 INFO 终态回查。 补上传暂存对象删除失败的回查。 补日志晚到与实际事件时间核对。 补按域名拆分 HTTP 503、全文命中复核、素材阶段与下载重试取证。 补邮箱登录验证码 F002 和同 Pod 原始日志回查。 补香港国内预发下载超时、应用时间和请求去重入口。 补 Prometheus 抓取窗口和共享 ALB 503 归属核验。 补 Ark 外链图协议异常和 Grafana 精确 Trace 查证。 补首次终态失败分组、审核业务码和原片回报冲突查证。 补美国 Platform 会话查询缺表、同规则再触发与 Trace 对照。 补分享预览 404 触发错误日志告警的查证。 含美西 OpenAPI 限流依赖 503 与去重计数。
+- 2026-11-16：[API 平台生产 ERROR 日志告警](domains/sandai-platform/refs/production-error-alerts-entrypoints.md) — 双区日志级别采集差异、应用错误文件去重、告警评估与飞书送达的回查入口。含运维群追加与双渠道回读。 补素材查询 429 计入 ERROR 时的查证方法。 补原始应用日志、ALB 与重试去重的查证。 补 OSS 删除被拒、Athena HTTP 200 与测试请求对账。 补异步生成失败的 INFO 终态回查。 补上传暂存对象删除失败的回查。 补日志晚到与实际事件时间核对。 补按域名拆分 HTTP 503、全文命中复核、素材阶段与下载重试取证。 补邮箱登录验证码 F002 和同 Pod 原始日志回查。 补香港国内预发下载超时、应用时间和请求去重入口。 补 Prometheus 抓取窗口和共享 ALB 503 归属核验。 补 Ark 外链图协议异常和 Grafana 精确 Trace 查证。 补首次终态失败分组、审核业务码和原片回报冲突查证。 补美国 Platform 会话查询缺表、同规则再触发与 Trace 对照。 补分享预览 404 触发错误日志告警的查证。 含美西 OpenAPI 限流依赖 503 与去重计数。 补 Redis 规格变更、实例运行日志和秒级连接监控的核验。
 
 - 2026-11-16：[火山方舟 Seedance 音频开关与定价查证](domains/sandai-platform/refs/seedance-ark-audio-pricing-entrypoints.md) — 回查 2.0 与 2.5 的音频开关、输入视频和实际账单，1.5 Pro 历史有声/无声计价，以及 1.0 音频能力、计价和中国站 API 下线批次。
 

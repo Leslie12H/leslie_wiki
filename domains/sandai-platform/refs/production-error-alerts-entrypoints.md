@@ -117,3 +117,9 @@ links: [sandai-api-platform-development-entrypoints]
 11:45:02（北京时间）的 [美国 OpenAPI ERROR 规则](https://sls.console.aliyun.com/lognext/project/k8s-log-c7c0ede6c71484f8da34a829954c50cd9/alert/alert-1794831214-218872?slsRegion=us-west-1) 同时命中状态查询的 `V2ExceptionResolver` 和建单失败的 `RequestOutcome`。样本 Trace `862cc5bfe2458c191a0fe458fbdf7a0f` 在同一 Pod 对齐 `FlowControlHelper.checkOrgRate`、`GenerationController.get` 和 1 毫秒后记录的 HTTP 503。依赖访问异常沿 [流控降级分支](https://github.com/world-sim-dev/zeus/blob/0e755146c0d2bfc23e7e54a461c15682266d5007/modules/domain/src/main/java/co/sandai/zeus/util/FlowControlHelper.java#L66-L78) 查，依赖异常的 503 和正常配额限制的 429 分开统计。
 
 复核该类告警时，按规则冻结错误文件的分钟窗，单独统计 `RequestCompletionLog` 与 `RequestOutcome` 的响应状态。普通文件和错误文件有重复回执，以请求 ID 去重。同一 Trace 可关联建单和多次轮询，用 Pod 与应用毫秒时间找到本次响应。创建侧按 `RATE_LIMIT`、`ACCESS` 与 Redis 客户端异常回查，并用后续分钟的成功响应和最后一笔 503 确认影响是否停止。底层 Redis 实例或网络故障需要实例侧独立证据。
+
+### 从生产配置核对 Redis 规格切换
+
+2026-11-26 美西 OpenAPI 的 503 对齐到同一个 Redis 实例的规格变更。按 ACK 中生产 Deployment 引用的 ConfigMap，只提取 `zeus.redis.host` 以确定实例 ID。Redisson 和 Jedis 共享该地址。告警同窗的 4 个 OpenAPI Pod 均未重启。美西实例 `r-rj9efh6zjg351l6148` 的 [Tair 任务中心](https://kvstore.console.aliyun.com/Redis/jobCenter/us-west-1) 记录 `t-0mqdm8hph3avt3h6pq` 为 `ModifyInsSpec`，规格从 `redis.shard.4xlarge.ce` 升为 `redis.shard.8xlarge.ce`。任务覆盖北京时间 11:42:24–11:48:25，包含准备目标环境、切换服务、清理旧环境。任务显示 `CallerSource=System`，原因字段为空，发起方式仍待明确。
+
+定位切换期间的实际影响时，先用 [实例任务 API](https://www.alibabacloud.com/help/en/redis/developer-reference/api-r-kvstore-2015-01-01-describehistorytasks-redis) 核对规格和步骤，再对齐实例性能监控、DB 运行日志与请求回执。此次 11:44:50 起出现应用错误，11:45:25 连接数采样到 0，旧主进程在 11:45:30.717 记下退出，最后一条 503 在 11:46:02。以运行日志正文时间核对退出时点，采集时间略晚。该窗口的 Tair 事件中心未返回记录，规格变更证据来自任务中心。应用的安全日志只保留异常类型和栈帧，Redis 原始错误正文需从实例日志查证。脱敏证据存 `.local/us-openapi-1145-20261126/`。[实例运行日志查询](https://www.alibabacloud.com/help/en/redis/developer-reference/api-r-kvstore-2015-01-01-describerunninglogrecords-redis)
