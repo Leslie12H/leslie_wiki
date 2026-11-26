@@ -2,7 +2,7 @@
 name: sandai-inference-concurrency-dashboard-entrypoints
 type: reference
 created: 2026-11-23
-updated: 2026-11-26
+updated: 2026-11-27
 tags: [sandai, inference, grafana, concurrency, prometheus]
 links: [sandai-api-platform-openapi-quota-entrypoints]
 ---
@@ -487,3 +487,9 @@ SLS broker 断连应把 `ConnectionError`、`TimeoutError` 等作为索引预筛
 **Why:** 等效算力按同一模型的 Worker 计时，客户可见的完成量来自 Zeus 的首次公开成功。两地日志被分段读取时，日志时间和结构化事件时间不同，邻接窗口硬裁可能漏掉成功或对应的派发事件。
 
 **How to apply:** 以 [06 的国内及海外 E2E 查询](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=107) 取双区首次公开成功。查询外层在每个切片交界加重叠，按结构化事件时间用半开窗口归属，合并后以 Zeus 任务 ID 去重。用公开成功之前的有效派发 Job ID 关联 Athena 模型，同时回查两区原面板成功数。各 20 分钟窗口按平均等效算力算暴露量，全时段汇总用双区同模型公开成功数除以等效算力窗口之和。P95 另从逐任务 E2E 时长取分位数。
+
+#### 海外待派发尖峰与既有组织积压
+
+**Why** 2026-11-27 的 [06 海外待派发固定窗口](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=8&from=1795709640000&to=1795710360000) 同时包含 Higgsfield 的 Ark 兼容接口突发流量和巨日录此前受理的原生 v2 存量。两家组织的等待时长与排出速度差异明显。巨日录一笔首次公开终态后，下笔派发在约一秒内发生，重复出现可以佐证组内补位。Redis 实际持槽和 Admin 有效额度仍须单独查证。
+
+**How to apply** 先把 06 所显示的时刻还原为任务快照采样秒，对齐尖峰前、峰值及回落时的新增受理、派发和公开终态。短窗复算不足以解释入口总量时，以此前稳定底量和同时点组织在途榜单找候选组织。沿美西 Zeus SLS 查询候选组织较长时段的首次受理，按任务 ID 分组查派发和公开终态，再与三个以上快照对账。用终态与下一次派发的时间差区分按组织补位、受理洪峰造成的积压和整个派发器停摆。缺历史槽位样本时只报告可观察到的派发节奏。调度规则从 [美西发布回执](https://github.com/world-sim-dev/zeus/actions/runs/45632146492) 对应版本查，批量上限以生产配置回读为准。
