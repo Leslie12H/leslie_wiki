@@ -1,5 +1,7 @@
 - 2026-11-26：[开放平台成片来源和 API Key 归属查证](domains/sandai-platform/refs/openapi-video-provenance-and-key-attribution.md) — 用 MP4 隐式标识、产物和任务记录核对实际模型及用 Key 情况。
 
+- 2026-11-27：[开放平台在途任务配置看板](domains/sandai-platform/refs/openapi-task-config-dashboard.md) — 06 下钻、复用 Zeus 在途快照、双区 SLS 完整性和生产对账入口。
+
 - 2026-11-26：[历史并发估算与排队 P95](domains/sandai-platform/refs/inference-concurrency-dashboard-entrypoints.md#2026-11-26-历史并发估算与排队-p95-的核对) — 从机型折算原图定位基准和后续更正，按延迟档位复核并发。 含按入队时点核对历史 10 分钟档的方法。 含逐任务合并排队和生成及覆盖验证。 含由机器组吞吐核算客户并发和时效预期。 含双区公开成功按等效算力加权及日志切片边界复核。
 
 - 2026-11-26：[Athena Worker 关停后任务长时间未重投](domains/sandai-platform/pitfalls/athena-worker-shutdown-delayed-redelivery.md) — 面板最大值溯源、关停恢复超时、Redis 重连先后与 Celery 同任务 ID 重投取证。
