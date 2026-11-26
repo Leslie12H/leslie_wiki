@@ -451,3 +451,9 @@ SLS broker 断连应把 `ConnectionError`、`TimeoutError` 等作为索引预筛
 在 [06 并发资源管理](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency) 将全局 Athena 在途与当前入口的 [成功任务 E2E P95](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=107) 上下对齐。两图用同一看板时间范围及固定的左轴宽度，启用共享十字线。P95 悬停提示使用查询返回的同窗口成功样本数。P95 卡继续读取趋势面板的转换前摘要行。
 
 复核时固定同一小时窗口切换国内和海外入口，检查标题、P95、成功样本数及上下两图光标是否对齐。P95 查询的时长上限和滚动口径以面板当前设置为准。若入口切换显示暂无样本，先用相同固定范围复查数据源、搜索词和实际返回行数。
+
+### 2026-11-26 E2E 摘要随所选范围消失
+
+**Why**　[06 看板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency) 的顶部 P95／最大值读取 E2E 趋势查询的摘要行。范围超过 SQL 上限时，两个面板同时返回空，「暂无样本」也可能表示超过上限。仅调大上限时，宽泛的扫描模式还可能超时并返回空帧。生产数据源的可索引字段分区不同，海外公开终态的时间沿 content 日志前缀解析。
+
+**How to apply**　先回读摘要的 Dashboard 数据源引用、E2E 源查询的范围条件和结果行数上限，再用固定结束时点、同一入口和组织验收。扩大范围时同步检查摘要行和全部趋势刻度，并用任务 ID、终态和受理事件的索引预筛后做精确解析。组织筛选依赖向前回看的受理日志，极长任务在不同时间范围中可能有归属覆盖差异。记录实际面板说明中的范围上限，通过原链接核对数值和趋势，参考 [06 E2E 源面板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=107)。
