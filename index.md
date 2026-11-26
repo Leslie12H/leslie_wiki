@@ -1,3 +1,5 @@
+- 2026-11-27：[开放平台任务参数看板的任务量取数](domains/sandai-platform/refs/openapi-task-params-volume.md) — 按 Athena Job 创建时间计算五分钟占比，与参数面板及全历史任务量对账。
+
 - 2026-11-26：[开放平台成片来源和 API Key 归属查证](domains/sandai-platform/refs/openapi-video-provenance-and-key-attribution.md) — 用 MP4 隐式标识、产物和任务记录核对实际模型及用 Key 情况。
 
 - 2026-11-27：[开放平台在途任务配置看板](domains/sandai-platform/refs/openapi-task-config-dashboard.md) — 06 入口、双区 Prometheus 在途阶段、SLS 逐任务配置与覆盖校验。
