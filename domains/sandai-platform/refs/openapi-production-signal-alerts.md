@@ -74,3 +74,14 @@ links: [sandai-api-platform-development-entrypoints, sandai-platform-production-
 **Why:** ARMS 开放平台原策略只绑定一个飞书机器人。两群与轮值电话已在 SLS 行动策略配置，两个产品的通知对象各自管理。
 
 **How to apply:** 对新增 Prometheus 规则独立标记和路由，先核对现有开放告警接入和模板。可通过[阿里云 Prometheus 接入 SLS](https://help.aliyun.com/zh/sls/ingest-managed-service-for-prometheus-alerts-into-log-service)复用 SLS 去重和通知。使用开放告警应用前，核查接口授权和目标策略，避免同一个事件同时匹配两条发送链路。
+
+
+### SLS 直接读取托管 Prometheus 时序库
+
+2026-11-26 启用 [上海整体任务失败率](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/alert/alert-1795666109-918036?slsRegion=cn-shanghai)、[美西整体任务失败率](https://sls.console.aliyun.com/lognext/project/workspace-default-cms-1552113873580453-us-west-1/alert/alert-1795666535-488746?slsRegion=us-west-1)与[共享推理池就绪 Worker 数下降](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/alert/alert-1795666556-502943?slsRegion=cn-shanghai)。回读三条规则的实际时序库、表达式、连续触发阈值和现有双飞书群及生产值班电话行动策略。首次检查时三条规则的 SLS 执行成功率为 100%，真实电话送达须沿首次命中的通知历史核对。
+
+**Why:** 托管 Prometheus 的底层 SLS 时序库可以直接承担同一查询的云端评估。美西生产日志 Project 中看不到同名时序库，数据实际在 Prometheus 实例所关联的云监控工作空间 Project。按实例的实际存储位置核实时序库是否存在。
+
+**How to apply:** 从真实 [Prometheus 实例](https://cmsnext.console.aliyun.com/next/home?workspace_region=us-west-1&redirect_app=app/prom/instance)详情的「存储位置」打开关联的 SLS MetricStore，再点查关键指标。参照 [SLS 时序告警](https://help.aliyun.com/zh/sls/create-an-alert-for-metric-store)查询并另存为告警。先在时序库验证正常窗口和历史窗口，再核对告警中的 `promql_query` 为点查、使用采集缓冲和本地区的指标库。查询应仅在故障条件满足时返回行。查询统计对话框要等待预览完成再确认。逐规则回读配置和原生运行历史，恢复通知和重复等待以生产策略为准。
+
+2026-11-26 复查 DMS 发现，美西 `sandai-us-prod` 是安全托管免登录实例，当前账号能交互式查询，完整功能目录未开放新版数据服务。上海 DMS 的安全访问代理列表未返回可用实例。旧 [DMS `ExecuteScript` API](https://help.aliyun.com/zh/dms/product-overview/announcement-executescript-openapi-upgrade) 已下线，核查云端调用时需要验证实际可用的[新版数据服务](https://help.aliyun.com/en/dms/data-service-new)或专用只读数据源。分别验收交互式查询和告警服务长期可用的连接。
