@@ -103,3 +103,9 @@ links: [inference-concurrency-dashboard-entrypoints, development-entrypoints]
 **How to apply** 固定时间范围切换国内、海外以及一个组织，回读阶段合计、四类估算值和单组织空估算。Grafana 11.5 的外连接遇到缺连接字段的空帧时曾清空阶段行；保留仅供连接使用的固定键，在展示前滤除。看板刷新只用 SLS 和 Prometheus。Athena 审核决策日志有 Job ID，缺少组织和平台请求 ID；当前 Athena 生产 PostgreSQL 数据源的元数据核对显示为主库。按组织精确拆原因，沿 Zeus 首次公开失败的结构化事件补齐原因后再复核字段覆盖率。
 
 2026-11-26 抽查双区的执行终态日志，按任务 ID 统计失败原因字段覆盖，再用同一范围分别打开全部组织和单组织，区分没有细类值与阶段统计空白。能够核实的执行子类沿 Athena 前处理错误码、PE 输出与后处理产物登记事件回查。Prometheus 的执行超时沿 Zeus 的到期终态分支解释。
+
+## Athena 参数校验与 Job 前处理失败
+
+2026-11-26 核对 [Athena 建单与查询入口](https://github.com/world-sim-dev/athena-admin/blob/main/ApiService/controllers/job.py) 和 [前处理失败入状态](https://github.com/world-sim-dev/athena-admin/blob/main/ApiService/preprocess.py)。建单请求校验可返回 400 类业务错误。已建 Job 的不可重试前处理错误可在 Job 状态中保留失败阶段、错误码和详情。用 `INVALID_REFERENCE_MEDIA`、`UNSUPPORTED_INPUT`、`INVALID_REFERENCE_PE_OUTPUT` 等已有结构化值区分素材校验、输入类型和 PE 输出。
+
+Zeus 的 [Job 回调 DTO](https://github.com/world-sim-dev/zeus/blob/dev/modules/infra/src/main/java/co/sandai/zeus/infra/infer/dto/JobStatusUpdated.java) 已接收上述字段。确认任务归属和首次失败时沿 `TaskDispatchStateService` 查映射，再回读 `TaskMetrics` 的公开终态日志。扩展监控时可在已有回调事件中记录稳定的阶段和错误码，复用 SLS 的任务归属。Zeus 受理前拒绝按 HTTP 请求统计；Zeus 已受理的任务若因 Athena 建单拒绝进入公开失败，按提交阶段的任务终态统计。
