@@ -41,3 +41,11 @@ links: [sandai-api-platform-development-entrypoints, sandai-platform-production-
 **How to apply:** 编辑查询统计时选定生产项目、日志库和窗口，先执行预览，再确认子弹窗和外层规则。保存后独立回读实际查询源和窗口，再看 `internal-alert-history` 的最新成功评估。涉及升级电话时先查当前行动策略的飞书集成和语音接收组，再只替换目标规则的路由。回放用固定历史窗口取数，触发和真实送达分别验收。
 
 2026-11-26 用户明确固定余额阈值由阿里云侧运行。服务端余额采集可复用 [Zeus 只读余额 SQL](https://github.com/world-sim-dev/zeus/blob/dev/modules/domain/src/main/java/co/sandai/zeus/domain/credit/dao/UserCreditMapper.java) 与 [快照采集器](https://github.com/world-sim-dev/zeus/blob/dev/modules/domain/src/main/java/co/sandai/zeus/domain/observability/snapshot/BusinessSnapshotCollector.java) 的租约和新鲜度，以固定的组织范围读取，再由 ARMS 评估。首次启用先核对生产查询计划、地区和币种。余额采集在本次交付时仍是本地代码，生产无此阈值通知；桌面巡检已暂停。
+
+### 余额阈值可直接查库
+
+2026-11-26 复查 [Grafana MySQL 告警](https://grafana.com/docs/grafana/latest/datasources/mysql/alerting/) 与 [SLS 外部 MySQL 数据源](https://help.aliyun.com/en/sls/associate-log-service-with-a-mysql-database)。能取得对应生产组织的可用余额时，可以用日志服务或 Grafana 的数据库查询告警。Zeus 内部采集是给 Prometheus 提供指标的另一条接入路径。当天只读点查时，核对的可执行通用 MySQL 数据源未命中目标组织，另一个数据源查询失败。该结果只约束已查连接。
+
+**Why:** 管理台能查余额，代表 Zeus 服务可在自身环境内访问账本。告警平台需要独立核验其数据源实际覆盖的生产地区、组织和只读权限。
+
+**How to apply:** 按地区先点查已知组织，再用 [Admin 余额接口契约](https://github.com/world-sim-dev/zeus/blob/dev/docs/admin-api.md#余额明细与金额口径)复核余额与币种。沿现有 SQL 聚合有效的组织余额批次，显式区分组织不存在、采集失败和实际余额为零。若走 SLS 外部存储，先核对同地域 VPC、既有网络授权和只读源，再用实际告警查询评估历史与实时窗口。
