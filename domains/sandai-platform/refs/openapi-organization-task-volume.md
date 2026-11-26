@@ -2,7 +2,7 @@
 name: openapi-organization-task-volume
 type: reference
 created: 2026-11-25
-updated: 2026-11-25
+updated: 2026-11-26
 tags: [sandai-platform, grafana, sls, openapi, organization]
 links: [inference-concurrency-dashboard-entrypoints, development-entrypoints]
 ---
@@ -71,3 +71,9 @@ links: [inference-concurrency-dashboard-entrypoints, development-entrypoints]
 ## Vidmuse 显示别名
 
 2026-11-25 按用户指定，国内生产组织 `871184089599493` 在 06 国内 Top 5 与 07 组织任务量看板显示为 `Vidmuse`。06 通过面板 5 的组织值映射并列显示原始 ID，07 通过 `org_names` 中的 `cn:871184089599493` 同步组织表和搜索选项。更新目录快照时保留该别名。
+
+## 历史累计任务数的数据源查证
+
+2026-11-26 核对 [组织任务量看板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume/aaa73be) 的全历史统计能力。双区 Zeus Admin 的任务列表按创建游标返回，响应无聚合总数。Grafana 可见的旧 Zeus MySQL 数据源对生产双区刚受理任务做主键点查均未命中，也未见适合按组织重复汇总的索引。现有生产日志在早期日期缺少按组织统计所需的受理和公开终态覆盖，不能直接扩窗作为全历史。
+
+**How to apply** 全历史指标以覆盖双区的 Zeus 任务只读汇总源为准，任务总数按受理任务 ID 去重，累计成功率沿现有公开终态定义取成功除以成功、失败及取消的总和。日志累计预览用明确的覆盖起点和查询当前时刻，并跟随生产入口与组织变量。用同一固定截止时间对比相隔一天的看板时间选择，核对结果一致。若以后上线日志累计，另核实保留策略或汇总基线，避免旧日志过期后累计值回退。
