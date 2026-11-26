@@ -835,6 +835,7 @@
 - 2026-09-23：最新主线的正式交接执行校验仍使用未过滤批次，导致 `SOURCE_SCOPE_CHANGED`；统一 live batch owner、后续 Sand 批次与成果资格的修复指针见 [整包提交排查](domains/sandai-data-smith/refs/sandeval-handoff-duplicate-scope.md)。
 
 - [VidMuse 访问日志入口](domains/vidmuse/refs/access-log-entrypoints.md) — runtime sidecar、网站网关与 ALB/SLS 的覆盖边界，含 CN 生产、beta 预发布和 Dev 的生成取证入口，覆盖开放平台 Trace 关联、提交回执未知的文案归属、香港预发布建单查证、Athena Job 映射 skill、提示词审核分段、阿里云 `regional` 标签、对比生成失败回写及 AION 提交前的 Green 文本审核、命中词回查和积分预扣网络错误，含无 Request ID 时匹配 Athena 审核回执，以及供应商命中词与送审正文的核对（更新至 2026-11-20）。 补新加坡 staging 与上海 Beta 的入口、Manager 和 OpenAPI 下载超时对账，含正常动作语境的跨词边界命中核对。 补 Athena 参考提示词增强后派发失败与终态重试查证。
+- 2026-11-26：[VidMuse Magi-2 批量调用查证](domains/vidmuse/pitfalls/magi-bulk-account-attribution.md) — 建单事件去重、按 Trace 核对扣费账号，以及头部突发、分散增长和入口来源取证。
 
 - [Sand Eval 检查读取与保存性能](domains/sandai-data-smith/refs/sandeval-review-performance.md) — 整包报告、提交链、质检员列表 live 与 summary 路径、单人整改重复读取与批量读取的自动提交校验边界、默认样本展开及 Hologres 查询日志/计划证据边界（更新至 2026-09-29）。
 
