@@ -77,3 +77,9 @@ links: [inference-concurrency-dashboard-entrypoints, development-entrypoints]
 2026-11-26 核对 [组织任务量看板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume/aaa73be) 的全历史统计能力。双区 Zeus Admin 的任务列表按创建游标返回，响应无聚合总数。Grafana 可见的旧 Zeus MySQL 数据源对生产双区刚受理任务做主键点查均未命中，也未见适合按组织重复汇总的索引。现有生产日志在早期日期缺少按组织统计所需的受理和公开终态覆盖，不能直接扩窗作为全历史。
 
 **How to apply** 全历史指标以覆盖双区的 Zeus 任务只读汇总源为准，任务总数按受理任务 ID 去重，累计成功率沿现有公开终态定义取成功除以成功、失败及取消的总和。日志累计预览用明确的覆盖起点和查询当前时刻，并跟随生产入口与组织变量。用同一固定截止时间对比相隔一天的看板时间选择，核对结果一致。若以后上线日志累计，另核实保留策略或汇总基线，避免旧日志过期后累计值回退。
+
+## 组织成功率的失败归因
+
+2026-11-26 在美西生产复核 [组织任务量看板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume)。公开终态成功率的分母是所选时段的完成任务。HTTP 受理率按请求结果和请求时间另算，网关日志若无组织 ID 则无法归属。Zeus 的 `MODERATION` 阶段覆盖策略拒绝和审核服务错误，需要沿 Athena 审核结果区分。
+
+先从看板已保存的受理及首次终态查询圈定组织、时间和失败任务 ID。用美西 Zeus 的 `taskId` 索引检索，按 `task_submitted` 取 Job ID，再通过生产 Athena `jobs.request_id` 回查同一批 Zeus ID，核对两路 Job ID 和覆盖率。沿 `jobs.state` 的失败阶段、错误码和审核项及 `job_moderation` 的阶段和结果拆分失败。输入审核的 `prompt:<offset>` 是原始提示词分段，应和 `prompt` 合并计数。汇总按每单一次归因，分开报告输入文字、参考素材、成片拒绝和审核服务错误。审核标签记录供应商判定，复核误判应另查对应回执与样本。交叉核对技巧见 [Inference 并发资源看板查证入口](inference-concurrency-dashboard-entrypoints.md)。
