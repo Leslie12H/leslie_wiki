@@ -98,7 +98,7 @@ links: [inference-concurrency-dashboard-entrypoints, development-entrypoints]
 
 ### 同日表内展示审核与执行原因
 
-[失败分类](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume?viewPanel=21) 直接在阶段行下展示审核拦截、审核服务不可用、执行超时和其他执行失败。表中「失败任务数」和占比沿 Zeus SLS 的首次公开失败口径，「全入口估算」沿同生产入口的 Prometheus 原因指标。估算行只在全部组织时有值，阶段合计不再加计子行。单组织按创建归属查阶段数量。
+[失败分类](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume?viewPanel=21) 初版直接在阶段行下展示审核拦截、审核服务不可用、执行超时和其他执行失败。表中「失败任务数」和占比沿 Zeus SLS 的首次公开失败口径，「全入口估算」沿同生产入口的 Prometheus 原因指标。估算行只在全部组织时有值，阶段合计不再加计子行。单组织按创建归属查阶段数量。
 
 **How to apply** 固定时间范围切换国内、海外以及一个组织，回读阶段合计、四类估算值和单组织空估算。Grafana 11.5 的外连接遇到缺连接字段的空帧时曾清空阶段行；保留仅供连接使用的固定键，在展示前滤除。看板刷新只用 SLS 和 Prometheus。Athena 审核决策日志有 Job ID，缺少组织和平台请求 ID；当前 Athena 生产 PostgreSQL 数据源的元数据核对显示为主库。按组织精确拆原因，沿 Zeus 首次公开失败的结构化事件补齐原因后再复核字段覆盖率。
 
@@ -109,3 +109,9 @@ links: [inference-concurrency-dashboard-entrypoints, development-entrypoints]
 2026-11-26 核对 [Athena 建单与查询入口](https://github.com/world-sim-dev/athena-admin/blob/main/ApiService/controllers/job.py) 和 [前处理失败入状态](https://github.com/world-sim-dev/athena-admin/blob/main/ApiService/preprocess.py)。建单请求校验可返回 400 类业务错误。已建 Job 的不可重试前处理错误可在 Job 状态中保留失败阶段、错误码和详情。用 `INVALID_REFERENCE_MEDIA`、`UNSUPPORTED_INPUT`、`INVALID_REFERENCE_PE_OUTPUT` 等已有结构化值区分素材校验、输入类型和 PE 输出。
 
 Zeus 的 [Job 回调 DTO](https://github.com/world-sim-dev/zeus/blob/dev/modules/infra/src/main/java/co/sandai/zeus/infra/infer/dto/JobStatusUpdated.java) 已接收上述字段。确认任务归属和首次失败时沿 `TaskDispatchStateService` 查映射，再回读 `TaskMetrics` 的公开终态日志。扩展监控时可在已有回调事件中记录稳定的阶段和错误码，复用 SLS 的任务归属。Zeus 受理前拒绝按 HTTP 请求统计；Zeus 已受理的任务若因 Athena 建单拒绝进入公开失败，按提交阶段的任务终态统计。
+
+## 2026-11-26 按组织关联下游执行原因
+
+[失败分类表](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume?viewPanel=21) 的下游执行子行基于 Zeus 与 Athena SLS 日志关联。按现有首次公开失败和创建时组织圈定全量执行失败，再用唯一的 Athena Job ID 匹配前处理或后处理的非重试失败、核对时间，冲突不归因。按任务去重汇总；原因未确认用阶段总数扣除有唯一证据者。审核子类仍沿入口级指标展示。
+
+**How to apply** 回读面板数据源、执行归因查询变量和实际范围上限。验收历史已知样本、固定 24 小时、单组织和相对时间，核验子类与未确认之和等于下游执行。SLS 的 Job ID 全文检索在 Worker 消息里可命中，在结构化素材校验日志中可能漏掉独立 Job ID 字段，后者先按事件索引预筛，再在 SQL 内精确提取 Job ID。用候选终态范围限制扫描，遇到检索条件上限时减少候选数。只在查询时传递候选 Job ID 和终态时刻，保留未知桶，无生产业务库查询或跨区数据投递。
