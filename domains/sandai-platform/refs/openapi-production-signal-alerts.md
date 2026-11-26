@@ -44,6 +44,12 @@ links: [sandai-api-platform-development-entrypoints, sandai-platform-production-
 
 2026-11-26 回读[行动策略](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/alertcenter?slsRegion=cn-shanghai&tab=action_policy) `sandai-open-platform-prod-5xx-voice` 的语音节点，接收人类型为「静态接收人」，时段为「任意」。以语音节点的类型判定是否轮值，再到[用户组管理](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/alertcenter?slsRegion=cn-shanghai&tab=user_group)打开「开放平台生产电话接听人」回查成员。该组标识为 `sandai-open-platform-prod-shift`。
 
+### Grafana 复用生产电话接听组
+
+**Why** Grafana 使用联系点发送告警，当前接听组由 SLS 管理。2026-11-26 回读推理 Grafana 工作区的联系点和通知策略，已有 Feishu 与 ARMS 的 Webhook。`alerts.aliyuncs.com` 属于 [ARMS 告警接入](https://help.aliyun.com/zh/arms/observable-visualization-grafana-edition/configuration-parameters-unique-to-managed-service-for-grafana)。本次未发现直连 SLS 电话策略的联系点，也未确认当前账号可用的开放告警应用。
+
+**How to apply** 按[阿里云 Grafana 告警接入文档](https://help.aliyun.com/zh/sls/ingest-grafana-alerts-into-log-service-1)核对版本、SLS 开放告警应用、接口授权和行动策略。Grafana 的 Webhook 联系点将选定告警发送给 SLS，SLS 管理接听名单、分组和通知。需要与原有两群一起通知时，引用既有生产行动策略。只需电话时，从语音行动组引用同一个 SLS 用户组。用同一条测试告警核对首次触发、重复期间、恢复和实际语音回执。
+
 ### 余额阈值可直接查库
 
 2026-11-26 复查 [Grafana MySQL 告警](https://grafana.com/docs/grafana/latest/datasources/mysql/alerting/) 与 [SLS 外部 MySQL 数据源](https://help.aliyun.com/en/sls/associate-log-service-with-a-mysql-database)。能取得对应生产组织的可用余额时，可以用日志服务或 Grafana 的数据库查询告警。Zeus 内部采集是给 Prometheus 提供指标的另一条接入路径。当天只读点查时，核对的可执行通用 MySQL 数据源未命中目标组织，另一个数据源查询失败。该结果只约束已查连接。
