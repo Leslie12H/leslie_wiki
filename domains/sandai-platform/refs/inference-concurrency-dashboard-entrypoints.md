@@ -469,3 +469,9 @@ SLS broker 断连应把 `ConnectionError`、`TimeoutError` 等作为索引预筛
 **Why:** 同样的在途量可以因机器池、积压和任务构成变化而出现不同的排队 P95。完成时分桶与任务入队时的系统负载也可能错开。
 
 **How to apply:** 固定 Magi-2 模型及北京时间范围，根据 Athena Job 的入队时间分组，用记录的 GPU 开跑时间减入队时间逐任务取 P95，并核对未开跑、提前终止和倒序记录。同窗按分钟用建单与终态回算 Athena 非终态存量，再取窗内中位数。建单查询向前覆盖积压，另查旧任务存量对敏感性的影响。用 [02 任务运行和队列](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks?from=2026-11-26T05%3A00%3A00.000Z&to=2026-11-26T10%3A00%3A00.000Z&viewPanel=14) 和 [03 推理算力](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-compute?from=2026-11-26T05%3A00%3A00.000Z&to=2026-11-26T10%3A00%3A00.000Z) 对齐当日窗口的队列与就绪 Worker。在业务侧引用 06 双区 Zeus 已派发存量时保留地域及模型覆盖差异。报告一个接近门槛的连续达标窗口，并给出同档在途量超线的观察和机器池差异。
+
+### 2026-11-26 同批任务合并排队与生成
+
+**Why:** 排队和生成的长尾可能出现在不同任务。两个阶段的 P95 之和无法代表同一批任务入队到生成结束的 P95。平台后处理与模型内 VAE 解码也有不同计时边界。
+
+**How to apply:** 用 Athena 的入队时间定样本和分桶，按 Job ID 将记录的 GPU 开跑与 [Worker SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai) 的同次开跑对齐，再找同 Pod、同次尝试的 `Step5: Post Process Done`。逐任务用生成结束减入队时间计算总耗时，最后取分位数，同时给入队分母和结束日志覆盖。判断 10 分钟档时，可把缺失结束事件全部算作达标，检查结论是否仍成立。若验收终点为 Athena 成功，另读成功终态的完成时间以纳入平台后处理。对照 [06 分阶段趋势](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=132) 的阶段说明和样本分桶。

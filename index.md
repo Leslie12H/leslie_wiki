@@ -1,4 +1,4 @@
-- 2026-11-26：[历史并发估算与排队 P95](domains/sandai-platform/refs/inference-concurrency-dashboard-entrypoints.md#2026-11-26-历史并发估算与排队-p95-的核对) — 从机型折算原图定位基准和后续更正，按延迟档位复核并发。 含按入队时点核对历史 10 分钟档的方法。
+- 2026-11-26：[历史并发估算与排队 P95](domains/sandai-platform/refs/inference-concurrency-dashboard-entrypoints.md#2026-11-26-历史并发估算与排队-p95-的核对) — 从机型折算原图定位基准和后续更正，按延迟档位复核并发。 含按入队时点核对历史 10 分钟档的方法。 含逐任务合并排队和生成及覆盖验证。
 
 - 2026-11-26：[Athena Worker 关停后任务长时间未重投](domains/sandai-platform/pitfalls/athena-worker-shutdown-delayed-redelivery.md) — 面板最大值溯源、关停恢复超时、Redis 重连先后与 Celery 同任务 ID 重投取证。
 
