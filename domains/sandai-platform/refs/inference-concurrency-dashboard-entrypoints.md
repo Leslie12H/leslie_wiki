@@ -475,3 +475,9 @@ SLS broker 断连应把 `ConnectionError`、`TimeoutError` 等作为索引预筛
 **Why:** 排队和生成的长尾可能出现在不同任务。两个阶段的 P95 之和无法代表同一批任务入队到生成结束的 P95。平台后处理与模型内 VAE 解码也有不同计时边界。
 
 **How to apply:** 用 Athena 的入队时间定样本和分桶，按 Job ID 将记录的 GPU 开跑与 [Worker SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai) 的同次开跑对齐，再找同 Pod、同次尝试的 `Step5: Post Process Done`。逐任务用生成结束减入队时间计算总耗时，最后取分位数，同时给入队分母和结束日志覆盖。判断 10 分钟档时，可把缺失结束事件全部算作达标，检查结论是否仍成立。若验收终点为 Athena 成功，另读成功终态的完成时间以纳入平台后处理。对照 [06 分阶段趋势](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=132) 的阶段说明和样本分桶。
+
+### 2026-11-26 用机器组吞吐估算对外并发与时效
+
+**Why:** 按机器组核算模型生成吞吐可以用于资源预算。共享池的成功终态吞吐还经过前处理、后处理和结果返回。机器组数量变化时，生成结束和最终成功的计数可以呈现不同趋势。客户组织并发涉及不同的占槽范围。
+
+**How to apply:** 以 [03 推理算力](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-compute) 的逐机型就绪 Worker 分钟数为分母，以 [Worker SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai) 匹配同次开跑并按 Job 去重的模型结束数为分子。保留实测规格组合、路由与积压变化，Worker 数和实体机数按部署单独映射。按机型加总模型吞吐预估，再用 [02 任务运行](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks) 和 [06 端到端](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=107) 复核共享池各环节的完成量与长尾。对外验收约定工作负载、持续及突发提交速率、组织占槽定义、失败处理以及从受理到首次返回可下载结果的时间。达标率的分母沿受理批次追到截止，以便排队和失败组成变化仍可比较。
