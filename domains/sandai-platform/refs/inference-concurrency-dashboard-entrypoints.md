@@ -439,3 +439,9 @@ SLS broker 断连应把 `ConnectionError`、`TimeoutError` 等作为索引预筛
 **Why** 2026-11-26 核对生产 Magi-2 告警时，Athena 有状态已为 `failed`、`completed_at` 仍为空的 Job。仅按 `completed_at` 过滤会漏计失败。部分失败发生在输入审核或预处理阶段，任务没有记录推理组。跨组重试还会使最终记录的组与某次尝试所在的 Pod 不同。
 
 **How to apply** 固定模型和终态时间窗，从 [02 任务运行](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks) 所用的 Athena `public.jobs` 按 Job 计数。缺少 `completed_at` 的终态以 `updated_at` 近似归桶，报告近似计数。以 `state.inference_group` 分组，失败率取 `failed / (succeeded + failed)`，取消单列。保留未记录组名的任务，使全模型成功数和失败数分别等于各组及未归组之和。未归组失败沿 `state.failed_stage`、`state.failed_error_code` 核对是否发生于推理前。定位某组执行异常时，按 Pod、Job 和尝试时间回查 [Worker 日志](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai)。
+
+### 2026-11-26 全局 Athena 在途趋势
+
+在 [06 的顶部趋势面板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=136) 查看所选时间范围的全局 Athena 在途。趋势复用同看板面板 3 的双区 Zeus 执行阶段 Prometheus 快照，含已派发后在下游排队的任务。Grafana 按相同时间戳合计两区；任一区快照缺失时保留断点。用固定结束时间查两区即时值、全局卡与趋势末点，再对比一小时与六小时重叠时段。区间取数、快照有效条件和步骤设置以面板已保存配置为准。
+
+顶部成功任务 E2E P95 和最大值保留在摘要卡，沿原 E2E 趋势回查同入口、组织和时间范围的样本。
