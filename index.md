@@ -1,3 +1,5 @@
+- 2026-11-26：[Athena 成片审核规则与耗时查证入口](domains/sandai-platform/refs/athena-output-video-moderation-entrypoints.md) — 从生产任务和 Green 配置回查规则、分区分位数、排队和送审受理前长尾。
+
 - 2026-11-26：[开放平台 API Key 401 的入口与请求查证](domains/sandai-platform/pitfalls/openapi-invalid-api-key-correlation.md) — 用响应请求 ID 对齐双区鉴权日志，并核对组织归属、域名和错误映射。
 
 - 2026-11-26：[开放平台内容审核不可用的查证方法](domains/sandai-platform/pitfalls/content-review-unavailable.md) — 双区任务去重、Athena 审核异常关联及 Green 视频审核并发错误码核对。
