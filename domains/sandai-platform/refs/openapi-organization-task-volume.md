@@ -86,6 +86,12 @@ links: [inference-concurrency-dashboard-entrypoints, development-entrypoints]
 
 ## 2026-11-26 失败分类与任务明细
 
-[组织任务量看板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume) 的 [失败分类](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume?viewPanel=21) 与 [失败任务明细](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume?viewPanel=22) 使用同一份 Zeus SLS 查询。按现有概览的受理归属、任务 ID 去重和首次公开终态筛出失败，再按终态阶段拆分数量和占比。分类覆盖整个所选范围；明细保留所选类型最近 200 笔，可用任务 ID 跳到单任务时间线。
+初版中，[组织任务量看板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume) 的 [失败分类](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume?viewPanel=21)和失败任务明细使用同一份 Zeus SLS 查询。按现有概览的受理归属、任务 ID 去重和首次公开终态筛出失败，再按终态阶段拆分数量和占比。分类覆盖整个所选范围；明细保留所选类型最近 200 笔，可用任务 ID 跳到单任务时间线。
 
 对固定窗口按生产入口和组织分别验收。各类之和应等于概览的失败卡，切换明细类型时左侧汇总维持完整范围。看板当前的终态日志提供阶段；审核拦截、审核服务异常和下游执行中的更细原因沿前述 Athena 证据逐任务核对。保留未记录或未识别的阶段，避免丢失失败计数。
+
+### 同日精简逐任务明细
+
+按用户要求移除逐任务表和类型筛选，保留 [失败分类](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume?viewPanel=21)。SLS 只返回阶段与全表合计，去除任务行排序和组织名映射。同一固定窗口回读双区和单组织，分类数与旧查询一致。性能验收分别比较扫描、返回行数和传输体积，单次请求耗时用于观察。
+
+失败分类面板的链接按需打开国内或海外业务大盘的失败原因指标。Prometheus 的 `openapi_task_failures_total` 含 `reason` 标签，按全部入口流量和抓取区间估算，可观察审核拦截、审核服务不可用、执行与派发失败。按组织精确拆分仍要在 Zeus 首次公开失败事件记录可靠原因，并沿任务 ID 对账。
