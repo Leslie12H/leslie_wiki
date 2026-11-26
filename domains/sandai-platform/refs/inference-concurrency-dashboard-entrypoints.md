@@ -457,3 +457,9 @@ SLS broker 断连应把 `ConnectionError`、`TimeoutError` 等作为索引预筛
 **Why**　[06 看板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency) 的顶部 P95／最大值读取 E2E 趋势查询的摘要行。范围超过 SQL 上限时，两个面板同时返回空，「暂无样本」也可能表示超过上限。仅调大上限时，宽泛的扫描模式还可能超时并返回空帧。生产数据源的可索引字段分区不同，海外公开终态的时间沿 content 日志前缀解析。
 
 **How to apply**　先回读摘要的 Dashboard 数据源引用、E2E 源查询的范围条件和结果行数上限，再用固定结束时点、同一入口和组织验收。扩大范围时同步检查摘要行和全部趋势刻度，并用任务 ID、终态和受理事件的索引预筛后做精确解析。组织筛选依赖向前回看的受理日志，极长任务在不同时间范围中可能有归属覆盖差异。记录实际面板说明中的范围上限，通过原链接核对数值和趋势，参考 [06 E2E 源面板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=107)。
+
+## 2026-11-26 历史并发估算与排队 P95 的核对
+
+**Why:** 同一次容量讨论里，机型折算、可承载在途数量和排队分位数分别来自不同口径。若把资源交付计划直接当已上线资源，或把一个延迟档位的线性容量外推用于另一个档位，对外给出的容量会失去对应的观测依据。
+
+**How to apply:** 先沿 [研发群容量测算原图](https://applink.feishu.cn/client/chat/open?openChatId=oc_0d19c3545bfd03bea5bd4d9bba23a1dc&position=866) 核对基准机器组、等效权重、基准并发和延迟档位。该图是 20 分钟档的历史测算，发布人随后在[群内补充](https://applink.feishu.cn/client/chat/open?openChatId=oc_0d19c3545bfd03bea5bd4d9bba23a1dc&position=868)称整理可能有误并请同事复盘。10 分钟排队档沿 [原讨论](https://applink.feishu.cn/client/thread/open?open_chat_id=oc_0d19c3545bfd03bea5bd4d9bba23a1dc&open_thread_id=omt_186db9c9bd4f5b43&openchatid=oc_0d19c3545bfd03bea5bd4d9bba23a1dc&openthreadid=omt_186db9c9bd4f5b43) 及 [口径交接消息](https://applink.feishu.cn/client/chat/open?openChatId=oc_0d19c3545bfd03bea5bd4d9bba23a1dc&position=867) 查原始计算或新一档观测。复核时固定模型、入口、样本和时间窗口，用 [03 推理算力](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-compute) 核对当时实际上线的机器组，用 [06 分阶段趋势](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=132) 核对该窗口的排队分段。若口径为入推理队列至 GPU 开跑，先对同一 Job 合并接单前后两段耗时，再计算 P95。
