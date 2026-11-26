@@ -9,7 +9,7 @@ links: [sandai-api-platform-development-entrypoints, sandai-platform-production-
 
 # 开放平台生产信号告警接入
 
-2026-11-26 核对组织建单、公开终态和共享推理池的告警设计。阈值、运行状态、通知策略以生产告警规则为准，本次只读验证取数。
+2026-11-26 核对组织建单、公开终态和共享推理池的告警设计。阈值、运行状态、通知策略以生产告警规则为准，先验证取数，再回读已启用规则的实际配置。
 
 **Why:** 组织建单减少影响入口流量，公开终态失败率反映用户结果，共享推理池就绪数反映可接单容量。三者时间语义和责任归属不同。共享池覆盖多个入口，重复按入口评估会造成重复通知。技术失败规则的分母是技术失败加成功，整体失败率纳入所有公开失败，取消单列。
 
@@ -49,3 +49,28 @@ links: [sandai-api-platform-development-entrypoints, sandai-platform-production-
 **Why:** 管理台能查余额，代表 Zeus 服务可在自身环境内访问账本。告警平台需要独立核验其数据源实际覆盖的生产地区、组织和只读权限。
 
 **How to apply:** 按地区先点查已知组织，再用 [Admin 余额接口契约](https://github.com/world-sim-dev/zeus/blob/dev/docs/admin-api.md#余额明细与金额口径)复核余额与币种。沿现有 SQL 聚合有效的组织余额批次，显式区分组织不存在、采集失败和实际余额为零。若走 SLS 外部存储，先核对同地域 VPC、既有网络授权和只读源，再用实际告警查询评估历史与实时窗口。
+
+
+### 生产 PolarDB 直读与管理台对账
+
+**Why:** Grafana 的 MySQL 数据源名称不代表实际库。2026-11-26 回读时，`Zeus-Prod` 指向 `zeus`，`Zeus-Gaga-Prod` 指向 `zeus_gaga`。Magi 开放平台余额使用 `zeus_magi`。
+
+**How to apply:** 从 [上海部署配置](https://github.com/world-sim-dev/zeus/blob/dev/deployment/magi/structure/prod-cn/policy.json)和[美西部署配置](https://github.com/world-sim-dev/zeus/blob/dev/deployment/magi/structure/prod-us/policy.json)定位 PolarDB，再从生产集群详情的「登录数据库」进入对应地域的 DMS。美西走 `dms-us-west-1.aliyun.com`，上海走 `dms.aliyun.com`。查询前确认库名和查询权限。按组织 ID 锚定 `organization`，对有效的组织级余额批次使用索引点查，额度为零与组织未找到分开处理。存储过期时间按 UTC 判定，内部积分按部署中的每单位换算率转换。用先后两次管理台查询夹住同一时间段的数据库点查，保留查询时间和原始积分，处理活跃扣费造成的读数变化。
+
+2026-11-26 美西 Higgsfield 的 DMS 结果与同秒段管理台的 USD 金额及原始积分一致。上海 LibTv 的管理台币种确认为 CNY，DMS 实例需独立登录，当次未完成库端对账。交互式 DMS 的查询授权和云端告警的独立连接各自验收。固定金额阈值启用前，需验证监控运行身份的只读连接和同地域网络。按 [SLS 外部 MySQL 数据源文档](https://help.aliyun.com/zh/sls/associate-log-service-with-a-mysql-database)核对 PolarDB 连接方式，文档列出的接入类型为 RDS、ADB 和 ECS 自建 MySQL。
+
+### 组织任务受理量告警
+
+2026-11-26 上线 [Higgsfield 美西](https://sls.console.aliyun.com/lognext/project/k8s-log-c7c0ede6c71484f8da34a829954c50cd9/alert/alert-1795664347-345200?slsRegion=us-west-1)与 [LibTv 上海](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/alert/alert-1795663921-666304?slsRegion=cn-shanghai)两条任务量规则。规则以生产 `RequestOutcome` 去重后的成功受理任务数做 30 分钟日同比，并预留日志入库缓冲。11 月 26 日北京时区的回放在 07:35 命中 Higgsfield，30 分钟受理 25 单，昨日同期 1,132 单。当天同时段的 LibTv 未命中。
+
+**Why:** 首次拒单定位已知业务原因，受理量同比能捕捉其他原因造成的流量下降。按完整的比较窗口验证可解释两类规则的触发时间差。
+
+**How to apply:** SLS 选中生产日志库后先执行查询预览，再确认查询统计。用 SQL 同比函数取昨天相同时间窗，由 SLS 的连续触发阈值判断持续下降。界面选中「SLS通知」后还要打开输出开关再选择行动策略。保存后独立回读实际日志库、查询文本、连续阈值、重复等待、输出开关与行动策略，分别核验原生执行结果和真实送达。
+
+### 指标告警回放与通知路由
+
+2026-11-26 以生产 ARMS Prometheus 数据按区域回放首次公开任务终态。用近 15 分钟失败占比与此前两小时基线比较，加上最小样本量和持续时间，候选条件命中上海 2 段和美西 3 段。共享池 Worker 以在线、就绪和新鲜心跳做去重计数，过去 24 小时的候选跌幅无命中。Worker 的全量采集丢失需单独评估，避免把指标缺失当成容量为零。
+
+**Why:** ARMS 开放平台原策略只绑定一个飞书机器人。两群与轮值电话已在 SLS 行动策略配置，两个产品的通知对象各自管理。
+
+**How to apply:** 对新增 Prometheus 规则独立标记和路由，先核对现有开放告警接入和模板。可通过[阿里云 Prometheus 接入 SLS](https://help.aliyun.com/zh/sls/ingest-managed-service-for-prometheus-alerts-into-log-service)复用 SLS 去重和通知。使用开放告警应用前，核查接口授权和目标策略，避免同一个事件同时匹配两条发送链路。
