@@ -94,3 +94,12 @@ links: [sandai-api-platform-development-entrypoints, sandai-platform-production-
 **Why:** 规则所属地域和告警中心日志存储地域可以不同。执行历史的 `Successful` 表示结果进入告警管理，渠道发送和实际接听须沿各自回执核查。
 
 **How to apply:** 从规则详情取评估时间、连续满足状态及查询窗口，用相同截止时间在 Prometheus 查询 `openapi_tasks_terminal_total` 和按 `reason` 聚合的 `openapi_task_failures_total`。从 SLS「告警中心日志」进入实际配置的地域，本次为香港。以 `alert.alert_id` 检索 `alert_notified`，按 `notifierConfig.type` 及错误字段核对详情。13:58:34 有两条 `Lark` 和一条 `Voice` 发送记录，均无发送错误。对照两个群的消息时间验证飞书送达，语音接听沿通话回执另查。字段见[执行历史日志](https://help.aliyun.com/zh/sls/fields-in-alert-rule-evaluation-logs)与[告警中心日志主题](https://help.aliyun.com/zh/sls/use-custom-query-statements-to-analyze-alert-logs)。
+
+
+### 在飞书告警标题补充实时指标
+
+2026-11-26 更新[上海整体任务失败率告警](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/alert/alert-1795666109-918036?slsRegion=cn-shanghai)标题，显示 15 分钟实际失败率、两小时基线、估算失败与终态任务数、最大失败分类及估算数量。
+
+**Why:** 现用飞书卡片显示规则名与 `title`。把字段放入单条规则的动态标题，可以复用共用内容模板和三渠道行动策略。
+
+**How to apply:** 保留原 PromQL 判定，读取同一截止时点的统计量和失败原因，将各输入用固定标签区分，再用 [SLS SQL 与 PromQL](https://help.aliyun.com/zh/sls/time-series-data-query-and-analysis/) 聚合到一行。SQL 只在原判定命中时输出该行。按 [SLS 告警标注](https://help.aliyun.com/en/sls/labels-and-annotations)在 `title` 引用对应列。分别回放真实命中与正常点，核对前者一行、后者零行。保存后独立回读查询窗口、连续触发阈值、分组、通知动作、重复等待及恢复设置。卡片呈现由下一次真实触发验收。
