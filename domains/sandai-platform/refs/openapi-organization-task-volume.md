@@ -83,3 +83,9 @@ links: [inference-concurrency-dashboard-entrypoints, development-entrypoints]
 2026-11-26 在美西生产复核 [组织任务量看板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume)。公开终态成功率的分母是所选时段的完成任务。HTTP 受理率按请求结果和请求时间另算，网关日志若无组织 ID 则无法归属。Zeus 的 `MODERATION` 阶段覆盖策略拒绝和审核服务错误，需要沿 Athena 审核结果区分。
 
 先从看板已保存的受理及首次终态查询圈定组织、时间和失败任务 ID。用美西 Zeus 的 `taskId` 索引检索，按 `task_submitted` 取 Job ID，再通过生产 Athena `jobs.request_id` 回查同一批 Zeus ID，核对两路 Job ID 和覆盖率。沿 `jobs.state` 的失败阶段、错误码和审核项及 `job_moderation` 的阶段和结果拆分失败。输入审核的 `prompt:<offset>` 是原始提示词分段，应和 `prompt` 合并计数。汇总按每单一次归因，分开报告输入文字、参考素材、成片拒绝和审核服务错误。审核标签记录供应商判定，复核误判应另查对应回执与样本。交叉核对技巧见 [Inference 并发资源看板查证入口](inference-concurrency-dashboard-entrypoints.md)。
+
+## 2026-11-26 失败分类与任务明细
+
+[组织任务量看板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume) 的 [失败分类](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume?viewPanel=21) 与 [失败任务明细](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume?viewPanel=22) 使用同一份 Zeus SLS 查询。按现有概览的受理归属、任务 ID 去重和首次公开终态筛出失败，再按终态阶段拆分数量和占比。分类覆盖整个所选范围；明细保留所选类型最近 200 笔，可用任务 ID 跳到单任务时间线。
+
+对固定窗口按生产入口和组织分别验收。各类之和应等于概览的失败卡，切换明细类型时左侧汇总维持完整范围。看板当前的终态日志提供阶段；审核拦截、审核服务异常和下游执行中的更细原因沿前述 Athena 证据逐任务核对。保留未记录或未识别的阶段，避免丢失失败计数。
