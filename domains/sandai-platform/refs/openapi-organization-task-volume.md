@@ -94,4 +94,10 @@ links: [inference-concurrency-dashboard-entrypoints, development-entrypoints]
 
 按用户要求移除逐任务表和类型筛选，保留 [失败分类](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume?viewPanel=21)。SLS 只返回阶段与全表合计，去除任务行排序和组织名映射。同一固定窗口回读双区和单组织，分类数与旧查询一致。性能验收分别比较扫描、返回行数和传输体积，单次请求耗时用于观察。
 
-失败分类面板的链接按需打开国内或海外业务大盘的失败原因指标。Prometheus 的 `openapi_task_failures_total` 含 `reason` 标签，按全部入口流量和抓取区间估算，可观察审核拦截、审核服务不可用、执行与派发失败。按组织精确拆分仍要在 Zeus 首次公开失败事件记录可靠原因，并沿任务 ID 对账。
+精简版曾在失败分类面板提供国内和海外业务大盘的失败原因链接。Prometheus 的 `openapi_task_failures_total` 含 `reason` 标签，按全部入口流量和抓取区间估算，可观察审核拦截、审核服务不可用、执行与派发失败。按组织精确拆分仍要在 Zeus 首次公开失败事件记录可靠原因，并沿任务 ID 对账。
+
+### 同日表内展示审核与执行原因
+
+[失败分类](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume?viewPanel=21) 直接在阶段行下展示审核拦截、审核服务不可用、执行超时和其他执行失败。表中「失败任务数」和占比沿 Zeus SLS 的首次公开失败口径，「全入口估算」沿同生产入口的 Prometheus 原因指标。估算行只在全部组织时有值，阶段合计不再加计子行。单组织按创建归属查阶段数量。
+
+**How to apply** 固定时间范围切换国内、海外以及一个组织，回读阶段合计、四类估算值和单组织空估算。Grafana 11.5 的外连接遇到缺连接字段的空帧时曾清空阶段行；保留仅供连接使用的固定键，在展示前滤除。看板刷新只用 SLS 和 Prometheus。Athena 审核决策日志有 Job ID，缺少组织和平台请求 ID；当前 Athena 生产 PostgreSQL 数据源的元数据核对显示为主库。按组织精确拆原因，沿 Zeus 首次公开失败的结构化事件补齐原因后再复核字段覆盖率。
