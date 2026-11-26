@@ -2,7 +2,7 @@
 name: sandai-platform-production-error-alerts-entrypoints
 type: reference
 created: 2026-11-16
-updated: 2026-11-25
+updated: 2026-11-26
 tags: [sandai, api-platform, sls, observability, alerting]
 links: [sandai-api-platform-development-entrypoints]
 ---
@@ -111,3 +111,9 @@ links: [sandai-api-platform-development-entrypoints]
 **Why**　02:12:48（北京时间）美国 Platform 的 `GET /api/v1/share/{shareId}/preview` 查不到可用分享记录，`ShareController.getGenerationSharePreview` 抛出 `share not found`。`@PrintLog` 的 `LogAspect` 把异常记为 `ErrorLogger`，同一 Trace 的 `RequestCompletionLog` 显示实际响应为 HTTP 404。锚点为 Trace `8e80bde54147630435b6b3d390e0f01e`。[分享预览 Controller](https://github.com/world-sim-dev/zeus/blob/f04eae7afef28dd3941d9a2ff18ffffff0c52782/modules/api/src/main/java/co/sandai/zeus/api/share/ShareController.java#L92-L105)
 
 **How to apply**　美国共享 SLS 库的 Trace 全文索引可能没有命中。同一时间窗可用 `set session mode=scan` 和 `strpos(content, '<trace>')` 查原始行，按 Trace 对齐两个日志文件及请求完成状态。`ShareMapper.getShareById` 会过滤用户状态，查不到可用记录时需回查实际 `shareId` 及关联用户，才能细分 ID 不存在和记录不可见。现场数据见 `.local/error-8e80bde5-20261125/`。[分享查询 Mapper](https://github.com/world-sim-dev/zeus/blob/f04eae7afef28dd3941d9a2ff18ffffff0c52782/modules/domain/src/main/java/co/sandai/zeus/domain/share/dao/ShareMapper.java#L25-L27)
+
+## 2026-11-26 美国 OpenAPI 限流依赖异常
+
+11:45:02（北京时间）的 [美国 OpenAPI ERROR 规则](https://sls.console.aliyun.com/lognext/project/k8s-log-c7c0ede6c71484f8da34a829954c50cd9/alert/alert-1794831214-218872?slsRegion=us-west-1) 同时命中状态查询的 `V2ExceptionResolver` 和建单失败的 `RequestOutcome`。样本 Trace `862cc5bfe2458c191a0fe458fbdf7a0f` 在同一 Pod 对齐 `FlowControlHelper.checkOrgRate`、`GenerationController.get` 和 1 毫秒后记录的 HTTP 503。依赖访问异常沿 [流控降级分支](https://github.com/world-sim-dev/zeus/blob/0e755146c0d2bfc23e7e54a461c15682266d5007/modules/domain/src/main/java/co/sandai/zeus/util/FlowControlHelper.java#L66-L78) 查，依赖异常的 503 和正常配额限制的 429 分开统计。
+
+复核该类告警时，按规则冻结错误文件的分钟窗，单独统计 `RequestCompletionLog` 与 `RequestOutcome` 的响应状态。普通文件和错误文件有重复回执，以请求 ID 去重。同一 Trace 可关联建单和多次轮询，用 Pod 与应用毫秒时间找到本次响应。创建侧按 `RATE_LIMIT`、`ACCESS` 与 Redis 客户端异常回查，并用后续分钟的成功响应和最后一笔 503 确认影响是否停止。底层 Redis 实例或网络故障需要实例侧独立证据。
