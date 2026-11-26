@@ -481,3 +481,9 @@ SLS broker 断连应把 `ConnectionError`、`TimeoutError` 等作为索引预筛
 **Why:** 按机器组核算模型生成吞吐可以用于资源预算。共享池的成功终态吞吐还经过前处理、后处理和结果返回。机器组数量变化时，生成结束和最终成功的计数可以呈现不同趋势。客户组织并发涉及不同的占槽范围。
 
 **How to apply:** 以 [03 推理算力](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-compute) 的逐机型就绪 Worker 分钟数为分母，以 [Worker SLS](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/logsearch/athena?slsRegion=cn-shanghai) 匹配同次开跑并按 Job 去重的模型结束数为分子。保留实测规格组合、路由与积压变化，Worker 数和实体机数按部署单独映射。按机型加总模型吞吐预估，再用 [02 任务运行](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks) 和 [06 端到端](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=107) 复核共享池各环节的完成量与长尾。对外验收约定工作负载、持续及突发提交速率、组织占槽定义、失败处理以及从受理到首次返回可下载结果的时间。达标率的分母沿受理批次追到截止，以便排队和失败组成变化仍可比较。
+
+### 2026-11-26 双区公开成功按等效算力加权
+
+**Why:** 等效算力按同一模型的 Worker 计时，客户可见的完成量来自 Zeus 的首次公开成功。两地日志被分段读取时，日志时间和结构化事件时间不同，邻接窗口硬裁可能漏掉成功或对应的派发事件。
+
+**How to apply:** 以 [06 的国内及海外 E2E 查询](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=107) 取双区首次公开成功。查询外层在每个切片交界加重叠，按结构化事件时间用半开窗口归属，合并后以 Zeus 任务 ID 去重。用公开成功之前的有效派发 Job ID 关联 Athena 模型，同时回查两区原面板成功数。各 20 分钟窗口按平均等效算力算暴露量，全时段汇总用双区同模型公开成功数除以等效算力窗口之和。P95 另从逐任务 E2E 时长取分位数。
