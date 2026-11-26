@@ -493,3 +493,9 @@ SLS broker 断连应把 `ConnectionError`、`TimeoutError` 等作为索引预筛
 **Why** 2026-11-27 的 [06 海外待派发固定窗口](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=8&from=1795709640000&to=1795710360000) 同时包含 Higgsfield 的 Ark 兼容接口突发流量和巨日录此前受理的原生 v2 存量。两家组织的等待时长与排出速度差异明显。巨日录一笔首次公开终态后，下笔派发在约一秒内发生，重复出现可以佐证组内补位。Redis 实际持槽和 Admin 有效额度仍须单独查证。
 
 **How to apply** 先把 06 所显示的时刻还原为任务快照采样秒，对齐尖峰前、峰值及回落时的新增受理、派发和公开终态。短窗复算不足以解释入口总量时，以此前稳定底量和同时点组织在途榜单找候选组织。沿美西 Zeus SLS 查询候选组织较长时段的首次受理，按任务 ID 分组查派发和公开终态，再与三个以上快照对账。用终态与下一次派发的时间差区分按组织补位、受理洪峰造成的积压和整个派发器停摆。缺历史槽位样本时只报告可观察到的派发节奏。调度规则从 [美西发布回执](https://github.com/world-sim-dev/zeus/actions/runs/45632146492) 对应版本查，批量上限以生产配置回读为准。
+
+#### 组织批量派发上线与实际吞吐复核
+
+**Why** [Zeus #529](https://github.com/world-sim-dev/zeus/pull/529) 将每组织一轮的任务数做成可配置的上限。一个组织同时只有一个 worker 执行该轮，worker 在轮内按任务逐笔拿槽、准备、同步提交 Athena 与落库。线程池大小约束跨组织并行，调度 tick 约束查找下一轮的频率。批量派发减少轮间扫描与握手开销，轮内 Athena 提交仍串行。
+
+**How to apply** 从 [上海发布](https://github.com/world-sim-dev/zeus/actions/runs/45633989450) 与 [美西发布](https://github.com/world-sim-dev/zeus/actions/runs/45632146492) 找到当时镜像，读实际 Pod 的 `dispatcher.properties` 挂载与容器启动记录。并发 worker、每组织批量与扫描间隔均以该现场回读为准。2026-11-27 的 [美西尖峰窗口](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=8&from=1795709880000&to=1795710180000) 可用 SLS 的 `task_submitted` 提取组织的成功回执与调度 Trace ID。按 Trace 分轮后，用一轮第一笔到末笔的耗时加末笔到下一轮第一笔的耗时验证吞吐。轮间间隔也含下一轮首单的实际执行，单独比较轮内相邻回执才能估算轮间附加成本。根据 [调度实现](https://github.com/world-sim-dev/zeus/blob/0e755146c0d2bfc23e7e54a461c15682266d5007/modules/domain/src/main/java/co/sandai/zeus/domain/task/dispatch/TaskDispatcherRuntime.java#L148-L195) 对照扫描速率、扫描平均耗时和线程排队。用 Job ID 在上海关联 `job creation completed` 和美西提交后落库事件可拆回执前后时间，两点之间的跨区时间差仍含网络和状态持久化，完整 HTTP 耗时以客户端 span 查证。
