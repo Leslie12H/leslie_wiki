@@ -1,3 +1,5 @@
+- 2026-11-26：[Athena Worker 关停后任务长时间未重投](domains/sandai-platform/pitfalls/athena-worker-shutdown-delayed-redelivery.md) — 面板最大值溯源、关停恢复超时与 Celery 同任务 ID 重投取证。
+
 - 2026-11-26：[Athena 成片审核规则与耗时查证入口](domains/sandai-platform/refs/athena-output-video-moderation-entrypoints.md) — 从生产任务和 Green 配置回查规则、分区分位数、排队和送审受理前长尾。
 
 - 2026-11-26：[开放平台 API Key 401 的入口与请求查证](domains/sandai-platform/pitfalls/openapi-invalid-api-key-correlation.md) — 用响应请求 ID 对齐双区鉴权日志，并核对组织归属、域名和错误映射。
