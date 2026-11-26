@@ -1,3 +1,5 @@
+- 2026-11-26：[开放平台 API Key 401 的入口与请求查证](domains/sandai-platform/pitfalls/openapi-invalid-api-key-correlation.md) — 用响应请求 ID 对齐双区鉴权日志，并核对组织归属、域名和错误映射。
+
 - 2026-11-26：[开放平台内容审核不可用的查证方法](domains/sandai-platform/pitfalls/content-review-unavailable.md) — 双区任务去重、Athena 审核异常关联及 Green 视频审核并发错误码核对。
 
 - 2026-11-26：[开放平台生产信号告警接入](domains/sandai-platform/refs/openapi-production-signal-alerts.md) — 组织建单、首次公开终态、共享推理 Worker 和余额耗尽的告警入口及取数复核。含重点组织首笔拒单回放和固定余额阈值的币种口径。 含双区拒单规则、两群语音路由和 SLS 查询预览校验。 含生产 PolarDB 对账、双区受理量告警、Prometheus 底层 SLS 时序库、三条指标告警、真实通知回执和飞书卡片指标字段。
