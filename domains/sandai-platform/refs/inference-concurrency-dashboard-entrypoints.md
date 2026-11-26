@@ -511,3 +511,9 @@ SLS broker 断连应把 `ConnectionError`、`TimeoutError` 等作为索引预筛
 **Why:** 2026-11-27 复核 [02 当前阶段](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks?viewPanel=8) 与 [06 全局 Athena 在途](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=3)。02 按 Athena 的创建时间和选中模型、项目过滤，以查询时的 Job 状态统计 pending/running。06 汇总两区 Zeus 的 `executing` 快照，其中包含 `SUBMITTED` 和旧 Running，未附加 02 的创建范围或模型筛选。两区快照时刻可不同，并且与 02 查询时刻有偏移。Athena 写入终态到 Zeus 记录结束之间也存在时间差。Worker 卡片按运行实例计，不参与任务数对账。
 
 **How to apply:** 先回读 02/06 已保存查询和 02 筛选，再用 06 的 `openapi_snapshot_last_success_timestamp_seconds{group="tasks"}` 分别找国内、海外实际采样秒。在各自时点按 Athena 的 `magi-prod-cn`、`magi-prod-global` 回算 Job 存量，检查创建范围、模型、终态时间和时间戳缺失。用 Zeus `task_submitted` 的 Job ID 关联 Athena `completed_at` 和 Zeus `task_finished`，用事件先后验证差额，区分已证实的样本与未匹配记录。回查 2026-11-27 00:21 与 00:38（北京时间）的脱敏汇总方法和现场证据见 API 工作区 `.local/athena-worker-gap-20261127/`。判断就绪 Worker 是否有单可取，另查 [02 逐队列](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks?viewPanel=14) 同模型水位及采集成功和更新时间。Athena 的待推理含 Worker 已接单、构建请求或等 GPU 的任务。
+
+#### 同组织有界并行的吞吐回放
+
+**Why** 2026-11-27 针对 Higgsfield 美西突发积压提出同组织内并行提交方案。每轮仍有任务数上限，并行后要等本轮最后一笔收尾才可轮转。用串行吞吐直接乘并行度会漏掉批尾等待和轮间开销。线上基线可从[美西积压窗口](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=8&from=1795709880000&to=1795710180000)与当时的 [Zeus 派发代码](https://github.com/world-sim-dev/zeus/blob/0e755146c0d2bfc23e7e54a461c15682266d5007/modules/domain/src/main/java/co/sandai/zeus/domain/task/dispatch/TaskDispatchWorker.java#L64-L113)复核。
+
+**How to apply** 在同一组织持续积压且有可用配额的窗口，按调度 Trace ID 整理成功派发回执，用同轮相邻回执间距作为单笔耗时的近似样本，用跨轮与同轮的平均间隔之差估算额外轮转时间。按拟议轮大小重组按时间排序的样本，模拟并行上限，某笔收尾就补下一笔，轮末取最后完成时间，再加入轮转时间。先用串行配置回算原窗口吞吐，再将其他档位的结果作为 staging 压测的比较基线。该回放只覆盖历史成功回执，在并发下的下游排队、数据库争用和异常恢复要靠实测确认。此方法对应拟案，线上效果以灰度数据为准。
