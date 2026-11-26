@@ -85,3 +85,12 @@ links: [sandai-api-platform-development-entrypoints, sandai-platform-production-
 **How to apply:** 从真实 [Prometheus 实例](https://cmsnext.console.aliyun.com/next/home?workspace_region=us-west-1&redirect_app=app/prom/instance)详情的「存储位置」打开关联的 SLS MetricStore，再点查关键指标。参照 [SLS 时序告警](https://help.aliyun.com/zh/sls/create-an-alert-for-metric-store)查询并另存为告警。先在时序库验证正常窗口和历史窗口，再核对告警中的 `promql_query` 为点查、使用采集缓冲和本地区的指标库。查询应仅在故障条件满足时返回行。查询统计对话框要等待预览完成再确认。逐规则回读配置和原生运行历史，恢复通知和重复等待以生产策略为准。
 
 2026-11-26 复查 DMS 发现，美西 `sandai-us-prod` 是安全托管免登录实例，当前账号能交互式查询，完整功能目录未开放新版数据服务。上海 DMS 的安全访问代理列表未返回可用实例。旧 [DMS `ExecuteScript` API](https://help.aliyun.com/zh/dms/product-overview/announcement-executescript-openapi-upgrade) 已下线，核查云端调用时需要验证实际可用的[新版数据服务](https://help.aliyun.com/en/dms/data-service-new)或专用只读数据源。分别验收交互式查询和告警服务长期可用的连接。
+
+
+### 真实触发与三渠道发送查证
+
+2026-11-26 北京时间 13:58:33，[上海整体任务失败率](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/alert/alert-1795666109-918036?slsRegion=cn-shanghai)首次达到连续三次的通知阈值。按规则查询截止时点复算，最后一窗失败率为 12.64%，基线为 5.66%。同窗口按失败原因复核，审核不可用约占失败数的 77%。`increase` 的计数存在窗口边界外推，引用为近似量。
+
+**Why:** 规则所属地域和告警中心日志存储地域可以不同。执行历史的 `Successful` 表示结果进入告警管理，渠道发送和实际接听须沿各自回执核查。
+
+**How to apply:** 从规则详情取评估时间、连续满足状态及查询窗口，用相同截止时间在 Prometheus 查询 `openapi_tasks_terminal_total` 和按 `reason` 聚合的 `openapi_task_failures_total`。从 SLS「告警中心日志」进入实际配置的地域，本次为香港。以 `alert.alert_id` 检索 `alert_notified`，按 `notifierConfig.type` 及错误字段核对详情。13:58:34 有两条 `Lark` 和一条 `Voice` 发送记录，均无发送错误。对照两个群的消息时间验证飞书送达，语音接听沿通话回执另查。字段见[执行历史日志](https://help.aliyun.com/zh/sls/fields-in-alert-rule-evaluation-logs)与[告警中心日志主题](https://help.aliyun.com/zh/sls/use-custom-query-statements-to-analyze-alert-logs)。
