@@ -1,3 +1,5 @@
+- 2026-11-26：[开放平台生产信号告警接入](domains/sandai-platform/refs/openapi-production-signal-alerts.md) — 组织建单、首次公开终态和共享推理 Worker 的告警入口及取数复核。
+
 - 2026-11-25：[参考 PE 空正文与派发前引号转换](domains/sandai-platform/refs/magi2-request-pe-control.md#2026-11-25-pe-结果渲染和派发前引号转换) — 逐 Job 原文和增强文引号、PE 产物、重试及推理派发证据。
 
 - 2026-11-25：[双区启停故障演练](domains/sandai-platform/pitfalls/load-generator-readiness.md#2026-11-25-双区启停故障演练) — 首租约共同放行、部分停发回执、从原账本恢复在途查询。
