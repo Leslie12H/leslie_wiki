@@ -250,7 +250,7 @@
 
 - 2026-11-20：[PE 滚动发布的时间与任务统计](domains/sandai-platform/pitfalls/pe-rollout-audit-window.md) — Deployment 审计、运行日志和任务归属的取证入口。
 
-- 2026-10-26：[API 开放平台研发入口](domains/sandai-platform/refs/development-entrypoints.md) — sandai-website / zeus 双仓库、PRD 与首发 TODO、Codex 工作区及需求差异的回查方法；与 VidMuse Zeus 分开。
+- 2026-10-26：[API 开放平台研发入口](domains/sandai-platform/refs/development-entrypoints.md) — sandai-website / zeus 双仓库、PRD 与首发 TODO、Codex 工作区及需求差异的回查方法；与 VidMuse Zeus 分开。 补充 Platform ERROR 告警和手机号登录业务拒绝查证。
 
 - 2026-11-19：[开放平台个人账号的在线体验生成与回读](domains/sandai-platform/refs/playground-account-generation-entrypoints.md) — 国内生产账号的控制台会话、素材顺序与引用、任务终态及逐笔用量查证。 补充批次切换停发确认与防重复提交。 补充生产看板的入口归属、低流量分位数和错误率取证。 附 Playground 请求省略 seed 与历史记录生效值的核验入口。
 

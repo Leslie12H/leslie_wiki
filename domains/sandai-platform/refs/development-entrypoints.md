@@ -2,7 +2,7 @@
 name: sandai-api-platform-development-entrypoints
 type: reference
 created: 2026-10-26
-updated: 2026-10-26
+updated: 2026-11-27
 tags: [sandai, api-platform, prd, frontend, zeus, development]
 links: [sandai-api-platform]
 ---
@@ -29,3 +29,9 @@ links: [sandai-api-platform]
 5. Zeus `docs/zeus/README.md` 说明部分文档由共享源生成，修改应走源文件与发布脚本；不要直接覆盖生成文档。
 
 **How to apply:** 后续开发从该工作区继续，以实时 PRD 和代码为准；preview、基础检查、实际联调、部署及首次生成成功分别报告。私有读取响应保存在忽略的 `.local/`，不把文档正文或凭据复制进知识库。
+
+## Platform ERROR 告警与手机号登录业务拒绝
+
+**Why:** 2026-11-27，上海生产手机号登录 HTTP 400 触发 Platform ERROR 告警。日志切面把这次业务拒绝记为一条 ERROR。告警规则按 ERROR 日志级别计数，业务码 `00900` 也可触发。告警只提示请求处理失败时，HTTP 状态、业务错误码和触发规则仍可分别查证。实际 `errorKey` 在该样本中未记录，不能根据 `00900` 判定具体验证分支。
+
+**How to apply:** 从 [上海 Platform ERROR 规则](https://sls.console.aliyun.com/lognext/project/k8s-log-c9838d6fa878b43c59a6d37586f0c0747/alert/alert-1794831493-905681?slsRegion=cn-shanghai) 的 `internal-alert-history` 取触发评估窗口、`Results` 的计数和 `sample_trace`。按 Trace ID 在上海 Zeus SLS 同时读 `RequestCompletionLog` 的 HTTP 状态、`DigestLogger` 的 Controller 和业务码、`ErrorLogger` 的脱敏情况。缺 `errorKey` 时沿 [手机号登录入口](https://github.com/world-sim-dev/zeus/blob/b9a13124e27232ef794ab8b66d5bbadb7845de47/modules/api/src/main/java/co/sandai/zeus/api/user/PhoneLoginController.java) 和服务实现核对可能分支，精确分支以客户端原响应或同一 Trace 的允许日志为准。告警通知与恢复从 [开放平台监控告警群](https://applink.feishu.cn/client/chat/open?openChatId=oc_290876bfe3d0050c2ab37ef63aec3a34) 核对；案例见 [触发卡片](https://applink.feishu.cn/client/chat/open?openChatId=oc_290876bfe3d0050c2ab37ef63aec3a34&position=794)。
