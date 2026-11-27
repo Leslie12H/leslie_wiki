@@ -3548,3 +3548,5 @@
 - 2026-11-27 ingest: [domains/sandai-platform/refs/offline-ops-diagnostics-skill.md](domains/sandai-platform/refs/offline-ops-diagnostics-skill.md) — 记录离线排障分享包和断网验收入口。
 
 - 2026-11-27 ingest: [domains/sandai-platform/refs/athena-reference-video-audio-verification.md](domains/sandai-platform/refs/athena-reference-video-audio-verification.md) — 记录 Athena 参考视频音轨的开关、PE 与实际派发验收入口。
+
+- 2026-11-27：记录 Ark 参考图 URL 返回 503 的去重、链路归因和发布核验方法。

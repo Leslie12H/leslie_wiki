@@ -1,3 +1,5 @@
+- 2026-11-27：[Ark 参考图 URL 返回 ServiceUnavailable](domains/sandai-platform/pitfalls/ark-reference-image-url-503.md) — 双区按请求去重、素材下载与 OSS / Athena 注册归因、版本和重试生效查证。
+
 - 2026-11-27：[Athena 参考视频音轨的派发验收](domains/sandai-platform/refs/athena-reference-video-audio-verification.md) — 任务级开关、PE 配置、独立音频与拆轨来源的对照取证。
 
 - 2026-11-27：[输出与参考视频的合计时长](domains/sandai-platform/refs/inference-concurrency-dashboard-entrypoints.md#输出与参考视频的合计时长) — 参考视频逐段准备及整单校验两条计时来源。
