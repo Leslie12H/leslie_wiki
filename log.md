@@ -3560,3 +3560,5 @@
 - 2026-11-27：补充 Ark 与 Athena 的内嵌音轨支持及生产版本查证。
 
 - 2026-11-27 ingest: [domains/sandai-platform/refs/athena-reference-video-audio-verification.md](domains/sandai-platform/refs/athena-reference-video-audio-verification.md) — 补开关对照中 WAV 派发正确但 PE 仍引用静音视频的查证方法。
+
+- 2026-11-27 ingest: [domains/sandai-platform/refs/athena-reference-video-audio-verification.md](domains/sandai-platform/refs/athena-reference-video-audio-verification.md) — 补声音错绑的系统提示词冲突与输出校验取证。

@@ -32,3 +32,9 @@ links: [inference-concurrency-dashboard-entrypoints]
 **Why**　2026-11-27 的 Dev 对照中，关闭内嵌音轨后，多视频与混合视频加独立音频的 WAV 产物、顺序和派发均正确，PE 改写仍把原声指向静音视频。单视频同组样本正确引用了拆轨。Fake Worker 的成功结果只能证明任务完成，不能回读真实模型是否采纳了声音指令。
 
 **How to apply**　从开放平台 Task ID 按 `request_id` 对齐同环境 Athena Job。已授权的 Grafana 数据源 Athena Admin Dev 可只读回查检查点和有效输入，使用 `inference_task_id` 确认已发布。逐个校验有效产物，而后在 PE 原文里查声音语义对应的标签，区分用于画面描述的 Video 标签和误用于声音的 Video 标签。混合场景单独核对独立音频与拆出 WAV 的位置和身份。编号及开关口径回看 [Athena 参考输入契约](https://github.com/world-sim-dev/athena-admin/blob/main/docs/architecture/i2fv-reference-inputs.md)。当次 Dev 可回查 Job 15396 和 15397。
+
+## 系统提示词必须与逐单声音映射一致
+
+**Why**　2026-11-27 查明 Dev 对照中的 PE 错绑。该次 v7.1 系统提示词配置把所有视频的声音绑定写成内嵌音轨口径，和关闭时逐单消息给出的拆轨映射冲突。两条错误声音引用已存在于 PE 的原始 JSON，渲染和派发转换发生在其后。
+
+**How to apply**　从 [系统提示词的实际取值](https://github.com/world-sim-dev/athena-admin/blob/main/ApiService/prompt_enhancement/enhance_v2/providers/base.py) 核对请求覆盖及动态配置键，再对照 [逐单素材消息](https://github.com/world-sim-dev/athena-admin/blob/main/ApiService/prompt_enhancement/enhance_v2/providers/gaga4_reference_enhance.py) 的角色、拆轨标签和输出处理分支。读取该次 Job 的 PE 产物查 `global_audio` 和镜头文本。默认 JSON 输出及现有编号范围检查都不具备静音视频作声音来源的语义校验。以 [输出契约和校验](https://github.com/world-sim-dev/athena-admin/tree/main/ApiService/prompt_enhancement/enhance_v2/reference) 回查当前行为。动态配置只保留键和当次 Job 指针，供按环境重新读取。
