@@ -3543,3 +3543,4 @@
 - 2026-11-27 ingest: [domains/vidmuse/admin/pitfalls/monitoring-sls-pagination-budget.md](domains/vidmuse/admin/pitfalls/monitoring-sls-pagination-budget.md) — 补告警调查 SLS 重读、分页与 Runtime 预算核查入口。
 
 - 2026-11-27：补充 Ark 提示词增强空值、显式覆盖和生产模型默认值查证入口。
+- 2026-11-27 ingest: 补告警调查精准错误取证、线上 Skill 同步及卡片展示边界，链接三仓库修复 PR。
