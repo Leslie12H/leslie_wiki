@@ -20,3 +20,9 @@ links: [inference-concurrency-dashboard-entrypoints]
 **Why**　2026-11-27 从开放平台 Dev 验证时，入口拒绝了请求级 `options`，参考输入的规格校验和组织的模型访问校验也分别给出拒绝。Athena 已部署的参数与 PE 配置有独立的验证边界。
 
 **How to apply**　先看 [Zeus v2 请求级选项解析](https://github.com/world-sim-dev/zeus/blob/dev/modules/generation-api/src/main/java/co/sandai/zeus/openapi/v2/generations/GenerationRequestOptions.java) 和目标部署的选项开关。若入口不接受该字段，沿 [Zeus 模型与变体选项合并](https://github.com/world-sim-dev/zeus/blob/dev/modules/domain/src/main/java/co/sandai/zeus/domain/modelconfig/ModelOptionResolver.java) 回读匹配变体的 PE 与 `extra`，同时确认变体的参考输入、分辨率和测试组织对白名单的命中。两种开关值各新建任务，用平台 Task ID 找 Athena Job，回读最终派发的有序素材。
+
+## Ark 建单前的音轨编码拒绝
+
+**Why**　2026-11-27 核对 LibTV 的 Ark HTTP 400，`content[i].video_url.url` 和 `unsupported audio track codec` 来自 Zeus 参考素材导入的容器轨道校验。该校验在任务受理前执行。[Athena #873](https://github.com/world-sim-dev/athena-admin/pull/873) 与 [#880](https://github.com/world-sim-dev/athena-admin/pull/880) 只改变已受理任务的参考视频预处理与参数位置，保留内嵌音轨的设置不会跳过 Zeus 的入参校验。
+
+**How to apply**　按 `validationReason=unsupported audio track codec`、Ark 创建路由和 `field=content[i].video_url.url` 查双区 Zeus SLS，以 `request_id` 去重，核对 HTTP 状态、组织和不存在的 `taskId`。双区检索失败时缩短扫描窗口，并用原始索引聚合核对覆盖。若已经有 Task ID，需另查 Athena 验证或派发失败。入口编码拒绝的检查和对照素材见 [媒体功能验收入口](media-functional-acceptance-entrypoints.md#2026-11-23-参考-mp4-音轨编码拒绝)，源码沿 [Zeus 轨道校验](https://github.com/world-sim-dev/zeus/blob/0e755146c0d2bfc23e7e54a461c15682266d5007/modules/domain/src/main/java/co/sandai/zeus/domain/asset/service/ReferenceMetadata.java#L155-L182) 与 [受理顺序](https://github.com/world-sim-dev/zeus/blob/0e755146c0d2bfc23e7e54a461c15682266d5007/modules/domain/src/main/java/co/sandai/zeus/domain/platform/generation/OpenApiGenerationService.java#L119-L135) 回查。对确认为不支持编码的文件，可保留视频流并把音轨转为 AAC，再按生产路径验收两个音轨模式。2026-11-27 统计查询及脱敏回执在 API 平台工作区 `.local/ark-reference-video-audio-20261127/`。

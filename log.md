@@ -3554,3 +3554,5 @@
 - 2026-11-27 ingest: [domains/sandai-platform/refs/athena-reference-video-audio-verification.md](domains/sandai-platform/refs/athena-reference-video-audio-verification.md) — 补开放平台请求选项准入、模型变体及组织访问的查证入口。
 
 - 2026-11-27：补充 Ark 外链下载超时、生产覆盖核验与重试适用条件。
+
+- 2026-11-27：补充 Zeus 参考视频音轨拒绝与 Athena 不拆轨的链路边界。
