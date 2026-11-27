@@ -612,6 +612,7 @@
 - [dev](disciplines/dev/README.md) — 开发实践 *(暂空)*
 
 ## Global(通用)
+- [视频编码元数据与隐形水印的查证](global/pitfalls/video-codec-metadata-watermark-attribution.md) — 核对 MP4 box、H.264 SEI 实际载荷与 C2PA，说明 ffprobe 的检测范围。
 - [GestaltX 尝试开启 Apple 智能](global/pitfalls/gestaltx-apple-intelligence-eligibility.md) — IPA 安装、本机缓存读写、签名和服务可用性的查证入口，含 USB 与历史配对识别
 - [2026 年 9–10 月 OKR 照野责任范围](global/projects/2026-09-okr-zhaoye-scope.md) — O2 整体 owner、O1-KR4 独担、O1-KR1 / O3-KR3 共担，及跨团队阻塞的排期含义
 - [飞书表格字段与合并行同步](global/pitfalls/feishu-sheet-header-and-merge-sync.md) — 表头映射、完整读取、状态优先级及幂等核验指针
