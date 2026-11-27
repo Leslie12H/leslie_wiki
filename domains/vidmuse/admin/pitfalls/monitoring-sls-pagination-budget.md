@@ -33,3 +33,11 @@ links: [monitoring-thread-scan-pagination-exhaustion, monitoring-report-vs-chat-
 
 - [SLS 探针按 Logstore 复用审核查询](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/pull/76)。
 - [重分析编排回执](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/45963216208)与[同一事故只读检查](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/45964150028)。
+
+## 2026-11-27 查询精确性与模型上下文成本
+
+**Why:** 精确过滤和连续分页可消除无关查询与同链重读。把每页原始日志持续带入下次模型请求，仍会增加输入规模。Admin 的调查期限也可能先于 Runtime 生成正式报告到期，并触发跨 Run 的重新取证。
+
+**How to apply:** 除了对照 `agent.tool.call` 与 `agent.tool.result`，核对相邻 `model.completed` 的 `inputTokens`、最后一次 `model.request` 是否完成、Admin 判定和正式报告的持久化。区分同链 offset 回退与超时后新 Run 重新取证。压缩卡点需要运行时的压缩状态或失败回执佐证。
+
+- [同窗手工 Run Trace](https://agent.sandaii.cn/threads?businessId=b020d1a5-f7c1-400b-8ade-f6132ebd5138&threadId=thr_01M8E0Q6FP815P6WX0DC7ECKH6&runId=run-54789627714290a7daadc4311c831144&tab=trace)和[Admin 调查超时回执](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/45967146846)。
