@@ -331,7 +331,7 @@
 
 # leslie_wiki 目录
 
-- 2026-11-27：[告警调查 SLS 重读与 Runtime 预算](domains/vidmuse/admin/pitfalls/monitoring-sls-pagination-budget.md) — 精确错误取证、连续分页、历史日志有界回执、原文回读、上下文成本和重跑验收。
+- 2026-11-27：[告警调查 SLS 重读与 Runtime 预算](domains/vidmuse/admin/pitfalls/monitoring-sls-pagination-budget.md) — 精确错误取证、工具内归组、覆盖验收、历史日志回执、原文回读和上下文成本。
 
 - 2026-11-21：[飞书项目发布组合与已有版本的关联](domains/sandai-platform/refs/feishu-project-model-release-combination.md) — 原生关联字段、版本类型筛选、流程模板升级和实例回读入口。
 

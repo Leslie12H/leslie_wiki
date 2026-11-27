@@ -50,3 +50,11 @@ links: [monitoring-thread-scan-pagination-exhaustion, monitoring-report-vs-chat-
 **How to apply:** 首次给模型完整的当前页与结果事件引用。已消费页可在模型侧压成有界回执，保留真实游标、错误候选和记录身份，遗漏正文沿同 Thread 的引用和哈希按需回读。保留持久原始事件和历史摘要的既有输入视图，以便报告核验及摘要接续。合成回放对比模型请求中的工具输入字节，实测费用另看同窗生产 token、缓存和账单。正式报告以 Admin 接收为准。
 
 - [Maxwell #490](https://github.com/world-sim-dev/maxwell-ai/pull/490)记录模型视图、历史证据回读、摘要兼容与合成样本的测试入口。发布情况从 PR 和部署回执核对。
+
+## 2026-11-27 监控工具内归组
+
+**Why:** 逐页把结果交回模型会让模型承担机械翻页，即使每轮输入已压缩，调查仍会消耗许多轮。错误分组的计数可用于挑选有区分度的查证，代表样本的原文及其来源用于核验具体结论。
+
+**How to apply:** 仅在审核过的告警主窗口启用归组。连接器用固定查询和有限的上游读取预算完成分页，保留消息、异常、位置与相关错误字段的差异，并交付可校验原文。截止时仍缺覆盖、上游计数不相符或样本超出预算，走同窗原始分页回退。验收同时核对 MCP 调用数、SLS 请求数及正式报告落库。分组总量不能外推全部请求的根因。
+
+- [监控 MCP #77](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/pull/77)实现有界归组，[Admin #1039](https://github.com/world-sim-dev/vidmuse-admin/pull/1039)实现策略和覆盖核验。发布时先确认 MCP 及工具目录，再核验 Admin 和线上 Skill。合成回放与生产同窗结果分别从相应回执读取。
