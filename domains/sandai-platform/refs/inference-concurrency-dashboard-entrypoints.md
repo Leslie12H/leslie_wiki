@@ -552,3 +552,8 @@ SLS broker 断连应把 `ConnectionError`、`TimeoutError` 等作为索引预筛
 
 - [02 · 任务运行，四阶段耗时面板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks?viewPanel=17)。2026-11-27 核对，均值与各阶段的分位数应复用同一个过滤和校验后的样本，在原聚合查询里加 `AVG` 即可，避免为新增统计重复取数。
 - 横向条形图若已通过 Grafana 图例隔离某些序列，保存后的 `hideSeriesFrom` 排除式匹配也会隐藏新列。为新列加入可见名单，保留原有默认显示，再用固定短窗口核对数据源返回和页面图例。
+
+## 分逻辑组耗时的统计切换
+
+- [02 · 任务运行，模型 / 逻辑组耗时比较](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks?viewPanel=19)。2026-11-27 核对，均值对各阶段的有效耗时直接求平均。切换统计口径时保留原有逻辑组选取和排序边界，避免 LIMIT 前换排序改变比较对象。用固定短窗口核对两种口径的分组、样本数和值。
+- 在 Grafana 11.5 的表格上方可以用原生文本链接切换隐藏变量，同一张表按变量查询所选统计。链接应携带时间和筛选并聚焦原表。在此实例，文本链接插值的 `${__url_time_range}` 不带问号，发布后应从实渲染链接核对参数和点回原口径。

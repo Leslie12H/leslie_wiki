@@ -1,3 +1,5 @@
+- 2026-11-27：[分逻辑组耗时的统计切换](domains/sandai-platform/refs/inference-concurrency-dashboard-entrypoints.md#分逻辑组耗时的统计切换) — 同表切换 P95 和均值，固定样本和逻辑组范围的验收。
+
 - 2026-11-27：[四阶段耗时的均值和图例](domains/sandai-platform/refs/inference-concurrency-dashboard-entrypoints.md#四阶段耗时的均值和图例) — 复用同一聚合和有效样本，核对图例隔离对新序列的影响。
 
 - 2026-11-27：[Ark 参考图 URL 返回 ServiceUnavailable](domains/sandai-platform/pitfalls/ark-reference-image-url-503.md) — 双区按请求去重、素材下载与 OSS / Athena 注册归因、版本和重试生效查证。 含逐次读超时、共享素材预算与外链重试。
