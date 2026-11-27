@@ -2,7 +2,7 @@
 
 - 2026-11-27：[开放平台任务参数看板的任务量取数](domains/sandai-platform/refs/openapi-task-params-volume.md) — 用 Athena Job 复算任务量、请求时长五秒档位与累计占比，按 Zeus 受理日志归属海外组织。
 
-- 2026-11-26：[开放平台成片来源和 API Key 归属查证](domains/sandai-platform/refs/openapi-video-provenance-and-key-attribution.md) — 用 MP4 隐式标识、产物和任务记录核对实际模型及用 Key 情况。
+- 2026-11-26：[开放平台成片来源和 API Key 归属查证](domains/sandai-platform/refs/openapi-video-provenance-and-key-attribution.md) — 用 MP4 隐式标识、产物和任务记录核对实际模型及用 Key 情况。 附 X 分发版与原始成片的 AIGC 读取对照。
 
 - 2026-11-27：[开放平台在途任务配置看板](domains/sandai-platform/refs/openapi-task-config-dashboard.md) — 06 入口、双区 Prometheus 在途阶段、SLS 逐任务配置与覆盖校验。
 
