@@ -1,5 +1,7 @@
 - 2026-11-27：[输出与参考视频的合计时长](domains/sandai-platform/refs/inference-concurrency-dashboard-entrypoints.md#输出与参考视频的合计时长) — 参考视频逐段准备及整单校验两条计时来源。
 
+- 2026-11-27：[开放平台与推理中台离线排障 Skill](domains/sandai-platform/refs/offline-ops-diagnostics-skill.md) — 分享包、无账号断网验收、脱敏输入与仅 Task ID 的取数交接指针。
+
 - 2026-11-27：[开放平台任务参数看板的任务量取数](domains/sandai-platform/refs/openapi-task-params-volume.md) — 用 Athena Job 复算任务量、请求时长五秒档位与累计占比，按 Zeus 受理日志归属海外组织。
 
 - 2026-11-26：[开放平台成片来源和 API Key 归属查证](domains/sandai-platform/refs/openapi-video-provenance-and-key-attribution.md) — 用 MP4 隐式标识、产物和任务记录核对实际模型及用 Key 情况。 附 X 分发版与原始成片的 AIGC 读取对照。

@@ -3544,3 +3544,5 @@
 
 - 2026-11-27：补充 Ark 提示词增强空值、显式覆盖和生产模型默认值查证入口。
 - 2026-11-27 ingest: 补告警调查精准错误取证、线上 Skill 同步及卡片展示边界，链接三仓库修复 PR。
+
+- 2026-11-27 ingest: [domains/sandai-platform/refs/offline-ops-diagnostics-skill.md](domains/sandai-platform/refs/offline-ops-diagnostics-skill.md) — 记录离线排障分享包和断网验收入口。
