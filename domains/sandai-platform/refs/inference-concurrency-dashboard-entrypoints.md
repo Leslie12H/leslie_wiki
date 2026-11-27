@@ -541,3 +541,9 @@ SLS broker 断连应把 `ConnectionError`、`TimeoutError` 等作为索引预筛
 **Why** 2026-11-27 在 [06 成功任务 E2E 趋势](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=107) 验证了顶部「E2E 趋势统计」的 P95 与平均值切换。每个点统计截至该点前 30 分钟首次公开成功的任务，每 5 分钟显示一个点。平均值反映这批任务从建单到公开成功的算术平均时长，P95 用于观察长尾。国内和海外入口共用该面板。
 
 **How to apply** 固定入口、组织、看板时间和同一曲线时间点，切换两个选项，核对标题、悬浮指标名及成功样本数。用同一桶的逐任务耗时分别复算平均值和 P95。回读[顶部 P95 / 最大值统计卡](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=2)的共享查询来源；趋势使用所选指标列，统计卡从原始汇总行保留 P95 和最大值。两处一起验收可发现切换趋势时误改统计卡或额外显示一列的问题。
+
+#### 后处理瀑布的分段均值与总时长对账
+
+**Why** 2026-11-27 回读 [06 后处理瀑布](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=122) 的分段均值及共享明细查询。图上的黑条表示距 Worker 完成日志的平均起点，绿条表示本段平均耗时。审核开始早于 Worker 完成日志的任务可有有效的审核服务耗时，但当前瀑布的审核及审核后放行均要求审核区间落在 Worker 完成日志至 Zeus 公开成功之间。水印有自己的有效样本，柱尾只能按对应行的样本解释。
+
+**How to apply** 用[阶段统计范围](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=131) 对齐入口、组织、公开成功窗口与任务数。成功任务较多时核对最近关联子窗口。用 [全链路耗时明细](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=120) 查有效样本量及 Worker 完成日志到首次公开成功的后处理均值。若外部统计从模型 `Step5: Post Process Done` 起算，按同一 Job 补算从该事件到 Worker 完成日志的交付区间。若用 Athena 审核计时，确认是否从审核入队起算、是否纳入其他审核终态及审核早于 Worker 完成的样本。Athena 回调排队沿本页「Athena 终态 HTTPS 回调积压造成 Zeus 在途偏高」核查，同一终点区间内的等待勿重复加算。
