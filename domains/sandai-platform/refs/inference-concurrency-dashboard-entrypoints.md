@@ -547,3 +547,8 @@ SLS broker 断连应把 `ConnectionError`、`TimeoutError` 等作为索引预筛
 **Why** 2026-11-27 回读 [06 后处理瀑布](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=122) 的分段均值及共享明细查询。图上的黑条表示距 Worker 完成日志的平均起点，绿条表示本段平均耗时。审核开始早于 Worker 完成日志的任务可有有效的审核服务耗时，但当前瀑布的审核及审核后放行均要求审核区间落在 Worker 完成日志至 Zeus 公开成功之间。水印有自己的有效样本，柱尾只能按对应行的样本解释。
 
 **How to apply** 用[阶段统计范围](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=131) 对齐入口、组织、公开成功窗口与任务数。成功任务较多时核对最近关联子窗口。用 [全链路耗时明细](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-concurrency?viewPanel=120) 查有效样本量及 Worker 完成日志到首次公开成功的后处理均值。若外部统计从模型 `Step5: Post Process Done` 起算，按同一 Job 补算从该事件到 Worker 完成日志的交付区间。若用 Athena 审核计时，确认是否从审核入队起算、是否纳入其他审核终态及审核早于 Worker 完成的样本。Athena 回调排队沿本页「Athena 终态 HTTPS 回调积压造成 Zeus 在途偏高」核查，同一终点区间内的等待勿重复加算。
+
+## 四阶段耗时的均值和图例
+
+- [02 · 任务运行，四阶段耗时面板](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/inference-v2-tasks?viewPanel=17)。2026-11-27 核对，均值与各阶段的分位数应复用同一个过滤和校验后的样本，在原聚合查询里加 `AVG` 即可，避免为新增统计重复取数。
+- 横向条形图若已通过 Grafana 图例隔离某些序列，保存后的 `hideSeriesFrom` 排除式匹配也会隐藏新列。为新列加入可见名单，保留原有默认显示，再用固定短窗口核对数据源返回和页面图例。
