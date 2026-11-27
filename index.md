@@ -1,4 +1,4 @@
-- 2026-11-27：[分逻辑组耗时的统计切换](domains/sandai-platform/refs/inference-concurrency-dashboard-entrypoints.md#分逻辑组耗时的统计切换) — 同表切换 P95 和均值，固定样本和逻辑组范围的验收。
+- 2026-11-27：[分逻辑组耗时的统计切换](domains/sandai-platform/refs/inference-concurrency-dashboard-entrypoints.md#分逻辑组耗时的统计切换) — 用表格原生下拉原地切换 P95 和均值，核对同批样本及查询复用。
 
 - 2026-11-27：[四阶段耗时的均值和图例](domains/sandai-platform/refs/inference-concurrency-dashboard-entrypoints.md#四阶段耗时的均值和图例) — 复用同一聚合和有效样本，核对图例隔离对新序列的影响。
 
