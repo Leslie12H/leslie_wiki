@@ -2,7 +2,7 @@
 name: sandai-api-platform-v2-input-validation-entrypoints
 type: reference
 created: 2026-10-26
-updated: 2026-11-25
+updated: 2026-11-27
 tags: [sandai, openapi, v2, validation, testing, quota]
 links: [sandai-api-platform-openapi-quota-entrypoints, sandai-api-platform-global-acceptance-20261026]
 ---
@@ -119,3 +119,9 @@ Zeus Dev 管理后台任务详情的总体审核状态 `PASS` 可覆盖逐项审
 首个 staging `dryRun` 任务成功，组织用量明细有非零记录。保留任务 ID，分别从任务详情核对内部模型和执行状态，再从所属组织的用量明细核对同一任务的计量。账单实扣需要另外核对账单或余额流水。
 
 2026-11-25 staging-global 六个 `dryRun` 用例均取得任务的 `model` 和 Athena `jobId`。覆盖双名单初始为空、仅命中 B、同时命中 A 与 B、撤销 A、首个名单键类型错误且 B 命中、撤销全部成员。双命中取 A，撤销 A 后新任务取 B，键类型错误时新任务回到默认模型且 SLS 出现告警。同一任务重试沿用原模型的证据来自本地派发契约测试。任务回执与告警索引见 API 工作区 `.local/pr530-staging-acceptance-20261125/REPORT.md`。
+
+#### Ark 提示词增强的模型默认值
+
+**Why**　2026-11-27 核对 Ark 兼容接口时，JSON 字段 `enhance_prompt` 传 `null` 和省略字段都会交由模型配置决定。显式布尔值会覆盖该默认值。[Ark 入参用例](https://github.com/world-sim-dev/zeus/blob/0e755146c0d2bfc23e7e54a461c15682266d5007/modules/openapi/src/test/java/co/sandai/zeus/openapi/compatible/ark/ArkGenerationRequestTest.java#L42-L49) · [模型选项解析](https://github.com/world-sim-dev/zeus/blob/0e755146c0d2bfc23e7e54a461c15682266d5007/modules/domain/src/main/java/co/sandai/zeus/domain/modelconfig/ModelOptionResolver.java#L12-L39)
+
+**How to apply**　在目标地区的控制台模型目录中按请求的模型名读取 `inputSchema.properties.enhancePrompt.default`。回查某一任务实际执行的提示词增强时，另按该任务的 Athena Job ID 对齐运行记录。[海外生产模型目录](https://platform.sand.ai/api/v1/platform/models) · [逐任务 PE 查证](openapi-task-config-dashboard.md)

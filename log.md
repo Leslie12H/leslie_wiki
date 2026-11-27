@@ -3541,3 +3541,5 @@
 - 2026-11-27：补充 06 成功任务 E2E 趋势切换与共享统计卡验收方法。
 
 - 2026-11-27 ingest: [domains/vidmuse/admin/pitfalls/monitoring-sls-pagination-budget.md](domains/vidmuse/admin/pitfalls/monitoring-sls-pagination-budget.md) — 补告警调查 SLS 重读、分页与 Runtime 预算核查入口。
+
+- 2026-11-27：补充 Ark 提示词增强空值、显式覆盖和生产模型默认值查证入口。
