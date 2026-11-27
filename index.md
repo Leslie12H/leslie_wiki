@@ -325,6 +325,8 @@
 
 # leslie_wiki 目录
 
+- 2026-11-27：[告警调查 SLS 重读与 Runtime 预算](domains/vidmuse/admin/pitfalls/monitoring-sls-pagination-budget.md) — 同范围分页、连续前缀与稳定记录身份的核查和修复入口。
+
 - 2026-11-21：[飞书项目发布组合与已有版本的关联](domains/sandai-platform/refs/feishu-project-model-release-combination.md) — 原生关联字段、版本类型筛选、流程模板升级和实例回读入口。
 
 - 2026-11-14：[上传失败回执与暂存清理](domains/sandai-platform/pitfalls/upload-preparation-recovery.md) — 失败回执与真实资产、暂存删除权限、多媒体合同/计划承接、已受理追加对账、长探针结果留存及资产清理边界。
