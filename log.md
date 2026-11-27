@@ -3564,3 +3564,5 @@
 - 2026-11-27 ingest: [domains/sandai-platform/refs/athena-reference-video-audio-verification.md](domains/sandai-platform/refs/athena-reference-video-audio-verification.md) — 补声音错绑的系统提示词冲突与输出校验取证。
 
 - 2026-11-27 ingest: [domains/sandai-platform/refs/athena-reference-video-audio-verification.md](domains/sandai-platform/refs/athena-reference-video-audio-verification.md) — 校正按开关和 PE 配套发布组合验收，并记 CN Staging 开启组合查证指针。
+
+- 2026-11-27：补充 Seedance 参考视频音轨规格对照和归一化回归入口。
