@@ -1,3 +1,5 @@
+- 2026-11-27：[Athena 参考视频音轨的派发验收](domains/sandai-platform/refs/athena-reference-video-audio-verification.md) — 任务级开关、PE 配置、独立音频与拆轨来源的对照取证。
+
 - 2026-11-27：[输出与参考视频的合计时长](domains/sandai-platform/refs/inference-concurrency-dashboard-entrypoints.md#输出与参考视频的合计时长) — 参考视频逐段准备及整单校验两条计时来源。
 
 - 2026-11-27：[开放平台与推理中台离线排障 Skill](domains/sandai-platform/refs/offline-ops-diagnostics-skill.md) — 分享包、无账号断网验收、脱敏输入与仅 Task ID 的取数交接指针。
