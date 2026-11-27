@@ -2,7 +2,7 @@
 name: openapi-organization-task-volume
 type: reference
 created: 2026-11-25
-updated: 2026-11-26
+updated: 2026-11-27
 tags: [sandai-platform, grafana, sls, openapi, organization]
 links: [inference-concurrency-dashboard-entrypoints, development-entrypoints]
 ---
@@ -125,3 +125,9 @@ Zeus 的 [Job 回调 DTO](https://github.com/world-sim-dev/zeus/blob/dev/modules
 **Why**　同一时间范围可以核对国内、海外及双区合计，并按生成受理量查看跨区主要调用组织。受理量按创建请求受理时刻统计去重的生成任务，完成量沿首次公开终态时刻统计。跨入口排名按生产入口与组织 ID 共同区分。比率按双区成功数除以双区完成数。
 
 **How to apply**　在 [07 组织任务量](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-org-task-volume/aaa73be) 展开顶部「国内＋海外 · 任务量汇总与组织 Top 5」。需要核对榜外组织时，在「汇总组织 ID」输入完整 ID 并回车，清空后恢复总量和排行。该输入仅用于双区区块。回读汇总面板的双区 SLS 查询、排行面板复用的结果和失败时合计行的覆盖条件。验收用固定窗口和两区原有面板分别对账，实查榜外、无活动 ID 和清空恢复。收起区块时不发起双区查询，展开时每区一次 SLS 聚合。
+
+## 生成创建请求与 OpenAPI 全部 HTTP 调用的口径
+
+**Why** 2026-11-27 在 Grafana 预测午夜请求量时，按 URI 和方法回读生产 Micrometer 计数，确认 OpenAPI 服务 HTTP 总量同时覆盖生成提交、状态查询和 readiness 探针。在上海生产，直接把服务全量 HTTP 加总会将大量 `/actuator/readiness` 记为业务请求。受理任务应回到带任务 ID 的成功受理事件。
+
+**How to apply** 在 [开放平台服务大盘](https://grafana-cn-to345ha5507.grafana.aliyuncs.com/d/openapi-services-v1) 核对双区实际 Prometheus 源、生产环境、HTTP method 和 uri 标签。生成流量按生成提交 POST 的路由取各状态，原生 v2 与 Ark v3 的实际 URI 都要核对。若统计含查询与轮询的服务调用量，用 URI 明确过滤 actuator，再检查是否存在其他基础设施路径。精确受理量用 Zeus SLS 的成功受理事件按 task ID 去重。窗口较短时，注明 Prometheus `increase` 的采样估算和 SLS 的事件边界。
