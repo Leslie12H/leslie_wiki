@@ -24,3 +24,12 @@ links: [monitoring-thread-scan-pagination-exhaustion, monitoring-report-vs-chat-
 **How to apply:** 首先用事故已审核的 ERROR 条件、错误签名或实际可关联的请求 ID。只有已关联请求确实需要时才读其他日志级别，无法关联就保留证据缺口。验证证据契约时在 Admin 读取持久报告，飞书卡只检查结论、直接故障、缺口和人工操作。分别回读仓库 Skill，以及 V4 Preset 实际引用的线上 Skill。同步时保留线上现有的报告协议。
 
 - 实现入口：[Maxwell #487](https://github.com/world-sim-dev/maxwell-ai/pull/487)、[监控 MCP #74](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/pull/74)、[Admin #1036](https://github.com/world-sim-dev/vidmuse-admin/pull/1036)。合并、镜像和同窗复验从实际回执核对。
+
+## 2026-11-27 发布探针与重跑状态
+
+**Why:** 业务取证拒绝通配后，发布探针如果仍用 `*` 就会被同一入口拦截。不同 Logstore 的错误字段索引不一定一致。重分析工作流启动的轮询进程也可能先于已经提交的 Runtime Run 退出。
+
+**How to apply:** 发布探针复用各 Logstore 已审核的精确谓词，从探针回执和最新生产就绪度分别判断证据源与部署状态。重分析编排中断后，先用已持久化的事故 Generation、Thread 和 Run 判断现有任务是否还在执行。Run 继续推进时，跟踪同一次执行及 Admin 的结论回写，避免重复排队。
+
+- [SLS 探针按 Logstore 复用审核查询](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/pull/76)。
+- [重分析编排回执](https://github.com/world-sim-dev/vidmuse-admin/actions/runs/45963216208)与[同一事故只读检查](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/45964150028)。
