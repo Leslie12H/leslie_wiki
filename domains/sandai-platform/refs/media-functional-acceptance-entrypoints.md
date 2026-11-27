@@ -151,3 +151,9 @@ links: [sandai-api-platform-v2-input-validation-entrypoints, sandai-api-platform
 **Why**　国内生产参考图失败样本的 URL 后缀为 `.jpeg`，Athena 解码识别为 MPO 并返回 `INVALID_REFERENCE_MEDIA`。MPO 可封装多张 JPEG 图片。回查样本为 Zeus 任务 `874092222712261`、Athena Job `4918041`。 [Pillow MPO 说明](https://pillow.readthedocs.io/en/stable/handbook/image-file-formats.html#mpo)
 
 **How to apply**　沿 [Athena 格式允许列表](https://github.com/world-sim-dev/athena-admin/blob/9930d3168401f7d3edf1e353f233299296eccbc4/ApiService/validators/media.py#L3-L11) 和 [解码校验](https://github.com/world-sim-dev/athena-admin/blob/9930d3168401f7d3edf1e353f233299296eccbc4/ApiService/preprocessors/media_images.py#L20-L49) 核对实际格式及已识别的扩展名。普通 JPEG 支持 `.jpg` 和 `.jpeg`。需要提交 MPO 主图时，将其重新编码为单张 JPEG 或 PNG，以重新解码后的格式作为验收依据。
+
+## 开放平台与 Athena 的内嵌音轨支持范围
+
+**Why**　2026-11-27 核对发现，双区 Zeus OpenAPI 的部署代码仍包含识别为 MP4 时的 PCM 拒绝。上海生产 Athena 预处理已使用支持 MP4/MOV 内嵌 PCM 的实现。仅查下游契约会把 Athena 能接受的素材误当成 Ark 对外保证支持的输入。
+
+**How to apply**　先以双区 `kube_pod_container_info.image_spec` 对齐 Zeus 与实际 Athena 预处理镜像。2026-11-27 的 [Athena 生产预处理发布](https://github.com/world-sim-dev/athena-admin/actions/runs/45937815431) 对应 `prod-preprocess-20261127-040447`。回查 [Zeus 轨道判定](https://github.com/world-sim-dev/zeus/blob/0e755146c0d2bfc23e7e54a461c15682266d5007/modules/domain/src/main/java/co/sandai/zeus/domain/asset/service/ReferenceMetadata.java#L155-L182)、[Athena 容器和编解码检查](https://github.com/world-sim-dev/athena-admin/blob/65a3adeb9db5abbdd9ddcd4ebbf6a2ba84a5607c/ApiService/preprocessors/reference_checks.py#L28-L45) 以及 [PCM 下游归一化](https://github.com/world-sim-dev/athena-admin/pull/872)。验收以入口受理、下游探测和最终任务为准。Zeus 的前缀检查会受可辨认容器及 `moov` 位置影响，单个 MP4/PCM 文件受理不等于对外支持这一组合。区分内嵌音轨编码、独立参考音频容器、输出音轨及不拆轨模式。镜像对照回执见 API 平台工作区 `.local/ark-reference-video-audio-20261127/format/versions.json`。
