@@ -42,3 +42,11 @@ links: [monitoring-thread-scan-pagination-exhaustion, monitoring-report-vs-chat-
 
 - [同窗手工 Run Trace](https://agent.sandaii.cn/threads?businessId=b020d1a5-f7c1-400b-8ade-f6132ebd5138&threadId=thr_01M8E0Q6FP815P6WX0DC7ECKH6&runId=run-54789627714290a7daadc4311c831144&tab=trace)和[Admin 调查超时回执](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/45967146846)。
 - [同窗验收终态](https://github.com/world-sim-dev/vidmuse-monitoring-mcp/actions/runs/45971204357)用于核对正式报告与自动重试状态。手工 Run 的工具结果回读错误及软预算终态从上方 Trace 读取。
+
+## 2026-11-27 低成本日志回读
+
+**Why:** 每个 SLS 响应适合单独阅读，仍可能在多轮请求中反复传输。日志候选与报告证据需要不同的精度，历史结果回执适合定位，因果核验需要可校验的原文。
+
+**How to apply:** 首次给模型完整的当前页与结果事件引用。已消费页可在模型侧压成有界回执，保留真实游标、错误候选和记录身份，遗漏正文沿同 Thread 的引用和哈希按需回读。保留持久原始事件和历史摘要的既有输入视图，以便报告核验及摘要接续。合成回放对比模型请求中的工具输入字节，实测费用另看同窗生产 token、缓存和账单。正式报告以 Admin 接收为准。
+
+- [Maxwell #490](https://github.com/world-sim-dev/maxwell-ai/pull/490)记录模型视图、历史证据回读、摘要兼容与合成样本的测试入口。发布情况从 PR 和部署回执核对。
