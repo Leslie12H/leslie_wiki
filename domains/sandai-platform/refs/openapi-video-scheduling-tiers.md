@@ -18,6 +18,13 @@ links: [sandai-api-platform-openapi-quota-entrypoints, sandai-inference-concurre
 - [DeepSeek 模型与价格](https://api-docs.deepseek.com/zh-cn/quick_start/pricing/)用于核对固定峰谷、时区和适用模型。当前价格页优先于历史促销公告；如需跨时段计费口径，另查官方确认。
 - [fal 入队 API](https://fal.ai/docs/api-reference/inference-api/queue/submit)用于核对请求可选择的排队等级和账号权限上限。[Runway API 用量层级](https://docs.dev.runwayml.com/usage/tiers/)用于核对项目并发、等待状态、按负载兑现的配额及企业保障入口。
 
+## Seedance 定价与账单查证
+
+- 先读 [方舟模型价格的「视频生成模型」](https://console.volcengine.com/ark/region:cn-beijing/docs/model-pricing)，按型号、输出分辨率、是否含输入视频查单价，并用同宽高比、输出时长与输入视频时长的官方示例对比单条价格。含视频输入同时改变单价和用量，且有最低用量。对账读查询 API 的 `usage.completion_tokens`，对 4K 与低分辨率须比较单条总价。
+- 将创建任务文档的 `priority` 定义与视频价目表对照。2026-11-28 公开文档查证仅覆盖排队语义及公开计费项。企业协议、账号权益或须验证的实际扣费以对应合同和账单为准。方舟价表的大语言模型部分单列 DeepSeek 峰谷，注意模型归属与计费时间口径。
+- [Seedance 开通、使用与退订](https://docs.volcengine.com/docs/ark/seedance-model-activation-usage-and-refund?lang=zh)用于核对开通金额、节省计划和抵扣顺序。[资源包规则](https://docs.volcengine.com/docs/ark/seedance-2-0-model-resource-pack-rules?lang=zh)用于核对型号适用、比例、有效期与超额。优惠按所购产品规则复核；预购额度应换算为同规格每条成本，再和按量价比较。
+- [Sand.ai 海外模型与价格](https://platform.sand.ai/docs/model-pricing/)用于核对公开秒价。试算闲时折扣时复核地区价表及适用费率，用每单边际成本、目标贡献毛利、标准档延迟和实际增量订单验收。示例折扣和对照组仅用于试算。
+
 ## Sand.ai 落地查证
 
 - 先看 [Zeus 派发约定](https://github.com/world-sim-dev/zeus/blob/dev/docs/openapi-task-dispatch.md)、[方舟兼容请求解析](https://github.com/world-sim-dev/zeus/blob/dev/modules/openapi/src/main/java/co/sandai/zeus/openapi/compatible/ark/ArkGenerationRequest.java)与 [WAITING 候选顺序](https://github.com/world-sim-dev/zeus/blob/dev/modules/domain/src/main/java/co/sandai/zeus/domain/task/dispatch/TaskDispatchMapper.java)，核对目标地区部署版本、已有字段、幂等边界和组织轮转。
