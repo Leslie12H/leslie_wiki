@@ -2,7 +2,7 @@
 name: sandai-api-platform-v2-input-validation-entrypoints
 type: reference
 created: 2026-10-26
-updated: 2026-11-27
+updated: 2026-11-28
 tags: [sandai, openapi, v2, validation, testing, quota]
 links: [sandai-api-platform-openapi-quota-entrypoints, sandai-api-platform-global-acceptance-20261026]
 ---
@@ -125,3 +125,10 @@ Zeus Dev 管理后台任务详情的总体审核状态 `PASS` 可覆盖逐项审
 **Why**　2026-11-27 核对 Ark 兼容接口时，JSON 字段 `enhance_prompt` 传 `null` 和省略字段都会交由模型配置决定。显式布尔值会覆盖该默认值。[Ark 入参用例](https://github.com/world-sim-dev/zeus/blob/0e755146c0d2bfc23e7e54a461c15682266d5007/modules/openapi/src/test/java/co/sandai/zeus/openapi/compatible/ark/ArkGenerationRequestTest.java#L42-L49) · [模型选项解析](https://github.com/world-sim-dev/zeus/blob/0e755146c0d2bfc23e7e54a461c15682266d5007/modules/domain/src/main/java/co/sandai/zeus/domain/modelconfig/ModelOptionResolver.java#L12-L39)
 
 **How to apply**　在目标地区的控制台模型目录中按请求的模型名读取 `inputSchema.properties.enhancePrompt.default`。回查某一任务实际执行的提示词增强时，另按该任务的 Athena Job ID 对齐运行记录。[海外生产模型目录](https://platform.sand.ai/api/v1/platform/models) · [逐任务 PE 查证](openapi-task-config-dashboard.md)
+
+
+#### 指定模型的临时准入与成片帧数查证
+
+**Why**　2026-11-28 美国生产 `magi-2-1128` 冒烟中，测试组织的模型准入需要单独回读。生成成功后仍需对照请求秒数、Worker 编码帧数和原片时基，才能判断成片时长是否符合验收。逐次请求、临时开通与撤销、任务账本和媒体规格见 `Apipltform/.local/magi-2-1128-prod-smoke-20261128/REPORT.md`。
+
+**How to apply**　按地区和精确模型名查生产模型目录、组织白名单及传播时间。保留授权前 API 回执。获准临时加白后按同一请求提交一次，用任务 ID 追踪 Zeus 派发、Athena Job、审核、下载和单笔扣费。用 `ffprobe` 将视频流帧数除以平均帧率，再与容器时长和 Worker 编码日志比对。撤销本次新增成员后独立回读成员状态。运行时部署、名单和定价以当次证据为准。
