@@ -49,3 +49,14 @@ links: [sandai-api-platform, sandai-api-platform-development-entrypoints]
 **How to apply**　先读 [DeepSeek 开放平台官方 FAQ](https://static.deepseek.com/faq/index.html?lang=zh) 的「如何充值」与「个人认证账号可以更改为企业实名账号吗」。企业实名认证后的收款主体、开户行和专属账号在 [充值 → 对公汇款](https://platform.deepseek.com/top_up) 当场核对。2026-11-28 登录只读查到了充值收款行和「企业实名认证」入口。个人账号跳转到企业认证前先提示变更的不可逆性，因此核查停在确认前。
 
 认证小额打款的实际付款方看认证页服务协议或脱敏的认证入账回单，避免把充值收款行或在线扫码渠道当成核验服务商。[开放平台隐私政策](https://cdn.deepseek.com/policies/zh-CN/deepseek-open-platform-privacy-policy.html)的「身份及企业认证信息」和「委托服务提供商处理」可作为公开资料入口。本次材料未证实小额验证用的具体服务商。
+
+## 对公小额打款核验供应商查证
+
+**Why**　企业对公账户持有权核验需要实际入账和金额或附言回填。账号要素匹配只确认字段一致。付款通道、认证服务商与平台的采购主体分别核对。
+
+**How to apply**　2026-11-28 公开文档查证入口如下。采购时复核能否独立用于第三方平台用户企业实名，核对申请、查询、回调与回填校验，确认付款回单主体、支持银行、待处理重试和实际计费节点。未进行采购或真实打款。
+
+- API 查 [天威诚信企业对公银行账户打款](https://www.itrus.com.cn/platform/3512.html)和 [京东云实名认证接口概览](https://docs.jdcloud.com/cn/real-name-authentication/api/overview)。天威文档含银联打款、查询、校验与回调，京东文档另有新版接口，开通时核实适用版本。
+- 托管认证页面及签署关联查 [e签宝认证服务](https://open.esign.cn/doc/opendoc/paas_api/tzeh8f1f49ptonk0)、[爱签企业认证链接](https://web.asign.cn/platform/openDoc/docDetail?mid=companyIdentifyUrl)，另对照[腾讯电子签企业认证链接](https://cloud.tencent.com/document/product/1323/105134)与[企业认证 FAQ](https://cloud.tencent.com/document/product/1323/116841)，按产品线确认合作企业、SaaS 或子客户的适用范围。
+- 若供应商 API 直接返回转账金额，例如[聚合数据企业打款认证](https://www.juhe.cn/docs/api/id/712)，业务后台须保留校验值，回填正确才更新认证状态，并核对可用的流水与重试能力。
+- [阿里云企业银行卡收款认证](https://help.aliyun.com/zh/account/enterprise-bank-account-verification)可证明其自身账号认证用到银联商务。[支付宝商家认证说明](https://help.alipay.com/support/help_detail.htm?help_id=425167)适用支付宝商家入驻。第三方业务不能用这些页面推定能购买同一打款认证 API，或据此归因 DeepSeek 的认证供应商。
