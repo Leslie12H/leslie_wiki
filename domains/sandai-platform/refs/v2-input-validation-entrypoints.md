@@ -132,3 +132,10 @@ Zeus Dev 管理后台任务详情的总体审核状态 `PASS` 可覆盖逐项审
 **Why**　2026-11-28 美国生产 `magi-2-1128` 冒烟中，测试组织的模型准入需要单独回读。生成成功后仍需对照请求秒数、Worker 编码帧数和原片时基，才能判断成片时长是否符合验收。逐次请求、临时开通与撤销、任务账本和媒体规格见 `Apipltform/.local/magi-2-1128-prod-smoke-20261128/REPORT.md`。
 
 **How to apply**　按地区和精确模型名查生产模型目录、组织白名单及传播时间。保留授权前 API 回执。获准临时加白后按同一请求提交一次，用任务 ID 追踪 Zeus 派发、Athena Job、审核、下载和单笔扣费。用 `ffprobe` 将视频流帧数除以平均帧率，再与容器时长和 Worker 编码日志比对。撤销本次新增成员后独立回读成员状态。运行时部署、名单和定价以当次证据为准。
+
+
+#### 参考图限额的 Zeus 和 Athena 配置
+
+**Why**　2026-11-28 核查提升 `magi-2-1128` 单次参考图数量时，Zeus 入口共享限额与 Athena 参考 PE 的建单校验各自读取环境配置。接口放宽后，Athena 的单类上限和总上限仍分别生效。
+
+**How to apply**　沿 Zeus 的 `GenerationInputLimits` 和生成接口实时 schema 核对 `reference.image.max-count`、音视频数量及 `maxParts()`。沿 Athena `validate_reference_request` 查 `REFERENCE_IMAGE_COUNT_LIMIT` 与 `REFERENCE_TOTAL_COUNT_LIMIT`，按可混用的媒体组合核对总量，并确认当前生产 API 和预处理进程实际加载的 ConfigMap。`20` 张图加一段参考媒体会使用 `21` 个素材名额，文本计入 Zeus 请求项数。配置传播后用实际参考 PE 路线验证数量边界和 Worker 成片。2026-11-28 线上 OpenAPI schema 可读，Athena 生产配置未直接回读，历史纯文本冒烟无法验证参考图边界。[Zeus 配置契约](https://github.com/world-sim-dev/zeus/blob/b9a13124e27232ef794ab8b66d5bbadb7845de47/docs/openapi-v2-generations.md#L37) · [Athena 配置变更](https://github.com/world-sim-dev/athena-admin/pull/836) · [Athena 建单校验](https://github.com/world-sim-dev/athena-admin/blob/1f110631751e7233a948e48cf960525afc38c7a7/ApiService/validators/reference.py#L60)
