@@ -1,3 +1,5 @@
+- 2026-11-28：[OpenAPI 视频生成峰谷与优先级查证入口](domains/sandai-platform/refs/openapi-video-scheduling-tiers.md) — 官方计价、请求级排队、配额等级及 Zeus / Athena 落地查证。
+
 - 2026-11-27：[分逻辑组耗时的统计切换](domains/sandai-platform/refs/inference-concurrency-dashboard-entrypoints.md#分逻辑组耗时的统计切换) — 用表格原生下拉原地切换 P95 和均值，核对同批样本及查询复用。
 
 - 2026-11-27：[四阶段耗时的均值和图例](domains/sandai-platform/refs/inference-concurrency-dashboard-entrypoints.md#四阶段耗时的均值和图例) — 复用同一聚合和有效样本，核对图例隔离对新序列的影响。
