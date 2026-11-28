@@ -16,6 +16,7 @@ links: [sandai-api-platform-openapi-quota-entrypoints, sandai-inference-concurre
 - [火山方舟创建视频任务](https://docs.volcengine.com/docs/ark/create-video-generation-task-api?lang=zh)与[查询视频任务](https://docs.volcengine.com/docs/ark/get-video-generation-task-api?lang=zh)。查 `priority` 的作用域、取值、同级排序、运行中任务及各型号覆盖。另查 [Seedance 型号能力对照](https://docs.volcengine.com/docs/ark/seedance-2-5?lang=zh)的离线推理行，避免把其他模型的 Flex 能力或计费套给 Seedance。
 - [Kimi API 开放平台](https://platform.kimi.com/)、[国际站](https://platform.kimi.ai/)、[充值与限速](https://platform.kimi.com/docs/pricing/limits)与[故障排查](https://www.kimi.com/help/kimi-api/api-troubleshooting)。分别核对高速型号、账户限速等级、服务过载和触发组织配额的行为。同品牌的消费端会员、开发者 API 和其他供应商接入规则需分别核对。
 - [DeepSeek 模型与价格](https://api-docs.deepseek.com/zh-cn/quick_start/pricing/)用于核对固定峰谷、时区和适用模型。当前价格页优先于历史促销公告；如需跨时段计费口径，另查官方确认。
+- [方舟在线推理（低优）](https://console.volcengine.com/ark/region:cn-beijing/docs/online-inference-flex)与[模型价目表](https://console.volcengine.com/ark/region:cn-beijing/docs/model-pricing)用于核对语言模型 `service_tier=flex` 的请求开关、独立准入配额及等待上限。同一模型兼有峰谷和低优时，检查完成时间、适用价表和优惠是否叠加，切勿把语言模型档位套用到 Seedance 视频任务。
 - [fal 入队 API](https://fal.ai/docs/api-reference/inference-api/queue/submit)用于核对请求可选择的排队等级和账号权限上限。[Runway API 用量层级](https://docs.dev.runwayml.com/usage/tiers/)用于核对项目并发、等待状态、按负载兑现的配额及企业保障入口。
 
 ## Seedance 定价与账单查证
