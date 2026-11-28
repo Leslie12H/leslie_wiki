@@ -2,7 +2,7 @@
 name: sandai-platform-recharge-settlement-entrypoints
 type: reference
 created: 2026-11-11
-updated: 2026-11-25
+updated: 2026-11-28
 tags: [sandai, zeus, recharge, alipay, stripe, reconciliation]
 links: [sandai-api-platform, sandai-api-platform-development-entrypoints]
 ---
@@ -41,3 +41,11 @@ links: [sandai-api-platform, sandai-api-platform-development-entrypoints]
 在 `ALLOWLIST` 下使用三个已正常登录的测试组织，逐一确认名单条件：仅组织 ID 命中、仅所有者已验证邮箱的完整域名命中、两项均未命中。域名按小写完整匹配。需要验证匹配边界时，可用仅父域列入名单的子域邮箱，或域名命中但邮箱未验证的所有者作对照。组织所有者身份及有效状态的取数条件见 [PlatformRechargeAccess 测试](https://github.com/world-sim-dev/zeus/blob/8550c36bdc54c3f398da1ee61e54119e6dfe4895/modules/domain/src/test/java/co/sandai/zeus/domain/payment/PlatformRechargeAccessTest.java)。
 
 分别读取 `GET /api/v1/platform/payments/methods` 的 `rechargeEnabled` 和渠道启用状态。对于两项均未命中的组织，以已启用渠道的有效请求验证发起端返回 HTTP 403 和业务码 `00002`。未登录、无效参数或渠道不可用的回执无法定位到白名单判断。入口说明和故障降级行为见 [充值部署文档](https://github.com/world-sim-dev/zeus/blob/8550c36bdc54c3f398da1ee61e54119e6dfe4895/deployment/README.md)。
+
+## DeepSeek 企业认证与对公充值渠道查证
+
+**Why**　同一个「对公打款」表述可指企业身份核验时的小额验证，或企业通过银行给 API 余额充值。在线充值方式、充值收款银行、实名认证的服务商分别需要对应的证据。
+
+**How to apply**　先读 [DeepSeek 开放平台官方 FAQ](https://static.deepseek.com/faq/index.html?lang=zh) 的「如何充值」与「个人认证账号可以更改为企业实名账号吗」。企业实名认证后的收款主体、开户行和专属账号在 [充值 → 对公汇款](https://platform.deepseek.com/top_up) 当场核对。2026-11-28 登录只读查到了充值收款行和「企业实名认证」入口。个人账号跳转到企业认证前先提示变更的不可逆性，因此核查停在确认前。
+
+认证小额打款的实际付款方看认证页服务协议或脱敏的认证入账回单，避免把充值收款行或在线扫码渠道当成核验服务商。[开放平台隐私政策](https://cdn.deepseek.com/policies/zh-CN/deepseek-open-platform-privacy-policy.html)的「身份及企业认证信息」和「委托服务提供商处理」可作为公开资料入口。本次材料未证实小额验证用的具体服务商。
